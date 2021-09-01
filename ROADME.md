@@ -6,7 +6,11 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.1
 ------------------
 
-task-3: aboutproject.py
+[DONE] task-3
+
+New file: aboutproject.py.
+
+    * new file: aboutproject.py
 
 [DONE] task-2
 
