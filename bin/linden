@@ -1,0 +1,50 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+################################################################################
+#    linden Copyright (C) 2012 Xavier Faure
+#    Contact: suizozukan arrobas orange dot fr
+#
+#    This file is part of linden.
+#    linden is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    linden is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with linden.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+"""
+        ❏linden❏ bin/linden
+        ________________________________________________________________________
+
+        Entry point of the project .
+
+        see e.g. http://as.ynchrono.us/2007/12/filesystem-structure-of-python-project_21.html
+                 http://stackoverflow.com/questions/193161
+
+
+        BEWARE ! This file is only here to easily create an executable script
+                 to be used by developpers. But this file isn't the entry
+                 point of the program, which is linden.main.py::main().
+                 Pypi creates an entry point from this last file, not from
+                 the current one !
+
+        ________________________________________________________________________
+
+        about exit codes, see documentation : 'exit codes'
+
+          This script stops and raises a -999 exit code if linden is already
+        installed.
+"""
+import os
+import sys
+
+sys.path.append(os.path.join("..", "linden"))
+
+from linden.linden import main
+main()
