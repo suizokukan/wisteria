@@ -1,2 +1,2 @@
 # linden
-Comparisons of different Python serializer
+Comparisons of different Python serializers.
