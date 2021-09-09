@@ -82,6 +82,12 @@ from rich import print as rprint
 
 from linden.aboutproject import __projectname__, __version__
 
+VERBOSITY_MINIMAL = 0
+VERBOSITY_NORMAL = 1
+VERBOSITY_DETAILS = 2
+VERBOSITY_DEBUG = 3
+
+
 TIMEITNUMBER = 10
 
 MODULES = {}
@@ -101,17 +107,13 @@ PARSER.add_argument('--version', '-v',
                     action='version',
                     version=f"{__projectname__}: {__version__}",
                     help="Show the version and exit")
-PARSER.add_argument('--showwarmup',
-                    action='store_true',
-                    default=False,
-                    help="Show warm up.")
-PARSER.add_argument('--debug',
-                    action='store_true',
-                    default=False,
-                    help="Show debug details.")
+PARSER.add_argument('--verbosity',
+                    type=int,
+                    default=VERBOSITY_NORMAL,
+                    help="Verbosity level: 0(=silencieux), 1(=normal), 2(=normal+), 3(=debug)")
 ARGS = PARSER.parse_args()
 
-if ARGS.showwarmup or ARGS.debug:
+if ARGS.verbosity>=VERBOSITY_DETAILS:
     rprint(__projectname__, __version__)
 
 
@@ -183,7 +185,7 @@ def trytoimport(module_name):
     res = True
     try:
         MODULES[module_name] = importlib.import_module(module_name)
-        if ARGS.showwarmup or ARGS.debug:
+        if ARGS.verbosity>=VERBOSITY_DETAILS:
             rprint(f"Module '{module_name}' successfully imported.")
     except ModuleNotFoundError:
         res = False
@@ -221,7 +223,7 @@ def read_inifile(filename="linden.ini"):
         res['tasks'][task] = config['tasks'][task]
     res['tasks']["tasks"] = (task for task in res['tasks']["tasks"].split(";") if task.strip() != "")
 
-    if ARGS.showwarmup or ARGS.debug:
+    if ARGS.verbosity>=VERBOSITY_DETAILS:
         rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
 
     return res
@@ -454,7 +456,7 @@ DATA = {
     "tuple(empty)": (),
     "tuple(+subtuples)": ("1", "2", ("3", ("4",))),
     }
-if ARGS.debug:
+if ARGS.verbosity==VERBOSITY_DEBUG:
     rprint("* known data:", list(DATA.keys()))
 
 SERIALIZERS = {
@@ -468,7 +470,7 @@ SERIALIZERS = {
 for serializer in SERIALIZERS:
     if SERIALIZERS[serializer].available:
         SERIALIZERS[serializer].version = SERIALIZERS[serializer].func("version")
-if ARGS.debug:
+if ARGS.verbosity==VERBOSITY_DEBUG:
     rprint("* known serializers:", SERIALIZERS)
 
 CONFIG = read_inifile()
