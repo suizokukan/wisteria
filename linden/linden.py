@@ -101,6 +101,10 @@ PARSER.add_argument('--version', '-v',
                     action='version',
                     version=f"{__projectname__}: {__version__}",
                     help="Show the version and exit")
+PARSER.add_argument('--inifile',
+                    action='store',
+                    default="linden.ini",
+                    help=".ini file to be used.")
 PARSER.add_argument('--verbosity',
                     type=int,
                     default=VERBOSITY_NORMAL,
@@ -138,7 +142,14 @@ class LindenError(Exception):
     """
 
 
-def read_inifile(filename="linden.ini"):
+def read_inifile(filename):
+    """
+        None if problem
+    """
+    if not os.path.exists(filename):
+        print(f"ERROR: missing config file '{filename}' ({normpath(filename)}).")
+        return None
+
     # TODO : quid si le .ini est mal formé ?
     res = {"serializers": {},
            "data sets": {},
@@ -168,8 +179,6 @@ def read_inifile(filename="linden.ini"):
 
     return res
 
-
-CONFIG = read_inifile()
 
 def get_data_selection(config):
     # TODO
@@ -228,6 +237,11 @@ def get_serializers_selection(config):
     return _res
 
 def main():
+    CONFIG = read_inifile(ARGS.inifile)
+
+    if CONFIG is None:
+        return -1  # TODO returned value
+
     try:
         if ARGS.verbosity>=VERBOSITY_DETAILS:
             rprint(__projectname__, __version__)

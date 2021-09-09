@@ -7,11 +7,7 @@ See TODOs at the end of this file.
 ------------------
 
 --downloaddfltini
---inifile
 i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-
---cmp="iaswn vs others(A)"  (A) (CWC) (INI)
---cmp="iaswn vs jsonpickle;json(A)"  (A) (CWC) (INI)
 
 Conclusion:
 According to the tests conducted on all data...
@@ -29,6 +25,11 @@ task-9:
                  None i.e all | "jsonpickle",
                  "all"/"cwc"/"ini")
 
+[DONE] task-9
+
+--inifile argument: modify config file name.
+
+    * --inifile argument
 
 [DONE] task-8
 
