@@ -86,9 +86,12 @@ TIMEITNUMBER = 10
 
 MODULES = {}
 
-TMPFILE = "linden.tmp"
-with open("linden.tmp", "w") as tmpfile:
-    pass
+# Such a file is required to create file descriptor objects.
+# The temp. file will be removed at the end of the program.
+TMPFILENAME = "linden.tmp"
+if not os.path.exists(TMPFILENAME):
+    with open(TMPFILENAME, "w") as tmpfile:
+        pass
 
 PARSER = \
     argparse.ArgumentParser(description="Comparisons of different Python serializers",
@@ -394,7 +397,7 @@ DATA = {
     "dict(keys/str)": {"key1":"value1", "key2":"value2"},
     "dict(keys/str+subdicts)": {"key1":"value1", "key2":"value2", "key3": {"key4": "key4",}},
 
-    "file descriptor": open(TMPFILE),
+    "file descriptor": open(TMPFILENAME),
 
     "float": 1.1,
 
@@ -535,6 +538,10 @@ def main():
                     for serializer in get_serializers_selection(CONFIG):
                         result = SERIALIZERS[serializer].func(action="serialize",
                                                           obj=DATA[data])
+
+        if os.path.exists(TMPFILENAME):
+            os.remove(TMPFILENAME)
+
     except LindenError as exception:
         rprint(exception)
 

@@ -6,7 +6,6 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.1
 ------------------
 
-rm .tmp
 fullpath() pour les print
 --downloaddfltini
 --inifile
@@ -20,6 +19,13 @@ According to the tests conducted on all data...
 According to the tests conducted on the data of the "comparing what is comparable" type
 According to the tests conducted on the data read in the %%% file
 Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
+
+[DONE] task-6
+
+temp. file is now deleted at the end of the program.
+
+    * temp. file is now deleted at the end of the program.
+    * TMPFILE > TMPFILENAME 
 
 [DONE] task-5
 
