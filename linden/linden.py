@@ -74,6 +74,7 @@ import configparser
 import importlib
 import numbers
 import io
+import os
 import re
 import timeit
 
@@ -109,6 +110,24 @@ ARGS = PARSER.parse_args()
 
 if ARGS.showwarmup or ARGS.debug:
     rprint(__projectname__, __version__)
+
+
+def normpath(path):
+    """
+        normpath()
+
+        Return a human-readable (e.g. "~" -> "/home/myhome/") normalized 
+        version of a file path.
+        ________________________________________________________________________
+
+        PARAMETER : (str)path
+
+        RETURNED VALUE : the normalized <path>
+    """
+    res = os.path.normpath(os.path.abspath(os.path.expanduser(path)))
+    if res == ".":
+        res = os.getcwd()
+    return res
 
 
 class LindenError(Exception):
@@ -200,7 +219,7 @@ def read_inifile(filename="linden.ini"):
     res['tasks']["tasks"] = (task for task in res['tasks']["tasks"].split(";") if task.strip() != "")
 
     if ARGS.showwarmup or ARGS.debug:
-        rprint(f"Init file '{filename}' has been read.")
+        rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
 
     return res
 
