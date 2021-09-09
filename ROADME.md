@@ -19,6 +19,25 @@ According to the tests conducted on the data of the "comparing what is comparabl
 According to the tests conducted on the data read in the %%% file
 Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 
+task-9:
+(1) [empty string] --cmp="" > all vs|versus|against all ""=(A)
+(2)                --cmp="jsonpickle vs|versus|against json(A)" / ""=(A) (CWC) (INI)
+(3)                --cmp="jsonpickle(A)" / "" (A) (CWC) (INI)
+(3')               --cmp="jsonpickle vs|versus|against others|all(A)" / ""=(A) (CWC) (INI)
+
+    cmpsyntax = (None i.e all | "jsonpickle",
+                 None i.e all | "jsonpickle",
+                 "all"/"cwc"/"ini")
+
+
+[DONE] task-8
+
+Code has been splitted: data in linden/data.py and serializers in 
+linden/serializers.py
+
+    * linden/data.py and linden/serializers.py
+    * --verbosity value has now to be choosed among VERBOSITY_xxx values
+
 [DONE] task-7
 
 --verbosity option
