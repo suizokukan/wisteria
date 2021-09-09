@@ -84,15 +84,6 @@ from linden.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS,
 from linden.aboutproject import __projectname__, __version__
 
 
-# Such a file is required to create file descriptor objects.
-# The temp. file will be removed at the end of the program.
-if not os.path.exists(TMPFILENAME):
-    with open(TMPFILENAME, "w") as tmpfile:
-        pass
-
-from linden.data import DATA
-
-
 PARSER = \
     argparse.ArgumentParser(description="Comparisons of different Python serializers",
                             epilog=f"{__projectname__}: {__version__}",
@@ -100,11 +91,11 @@ PARSER = \
 PARSER.add_argument('--version', '-v',
                     action='version',
                     version=f"{__projectname__}: {__version__}",
-                    help="Show the version and exit")
+                    help="Show the version and exit.")
 PARSER.add_argument('--inifile',
                     action='store',
                     default="linden.ini",
-                    help=".ini file to be used.")
+                    help="config file to be used.")
 PARSER.add_argument('--verbosity',
                     type=int,
                     default=VERBOSITY_NORMAL,
@@ -112,11 +103,24 @@ PARSER.add_argument('--verbosity',
                              VERBOSITY_NORMAL,
                              VERBOSITY_DETAILS,
                              VERBOSITY_DEBUG),
-                    help="Verbosity level: 0(=silencieux), 1(=normal), 2(=normal+), 3(=debug)")
+                    help="Verbosity level: 0(=mute), 1(=normal), 2(=normal+details), 3(=debug)")
 linden.globs.ARGS = PARSER.parse_args()
+
+# =============================================================================
+# This point is only reached if there's no --version/--help argument 
+# on the command line.
+# =============================================================================
 ARGS = linden.globs.ARGS
 
 from linden.serializers import SERIALIZERS
+
+# Such a file is required to create file descriptor objects.
+# The temp. file will be removed at the end of the program.
+if not os.path.exists(TMPFILENAME):
+    with open(TMPFILENAME, "w") as tmpfile:
+        pass
+
+from linden.data import DATA
 
 
 def normpath(path):

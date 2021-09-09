@@ -7,7 +7,7 @@ See TODOs at the end of this file.
 ------------------
 
 --downloaddfltini
-i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
+i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 
 Conclusion:
 According to the tests conducted on all data...
@@ -24,6 +24,15 @@ task-9:
     cmpsyntax = (None i.e all | "jsonpickle",
                  None i.e all | "jsonpickle",
                  "all"/"cwc"/"ini")
+                 
+[DONE] task-10
+
+Fixed a minor bug: tmp file is now created only if there's no 
+--help/--version argument on the command line.
+
+    * Improved help message..
+    * Fixed a minor bug: tmp file is now created only if there's no 
+      --help/--version argument on the command line.
 
 [DONE] task-9
 
