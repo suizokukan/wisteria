@@ -35,7 +35,13 @@
     o  TIMEITNUMBER
 
     o  TMPFILENAME
+
+    o  REGEX_CMP
+    o  REGEX_CMP__HELP
 """
+import re
+
+
 VERBOSITY_MINIMAL = 0
 VERBOSITY_NORMAL = 1
 VERBOSITY_DETAILS = 2
@@ -46,3 +52,6 @@ ARGS = None
 TIMEITNUMBER = 10
 
 TMPFILENAME = "linden.tmp"
+
+REGEX_CMP = re.compile("^\s*(?P<serializer1>[^\s\(\)]+)((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?(\s*\((?P<data>all|cwc|ini)\))?\s*$")
+REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"

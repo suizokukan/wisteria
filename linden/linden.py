@@ -70,6 +70,7 @@
 - transformer les print en logging.
 """
 import argparse
+import atexit
 import configparser
 import numbers
 import io
@@ -79,7 +80,7 @@ import re
 from rich import print as rprint
 
 import linden.globs
-from linden.globs import TMPFILENAME
+from linden.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
 from linden.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from linden.aboutproject import __projectname__, __version__
 
@@ -92,7 +93,13 @@ PARSER.add_argument('--version', '-v',
                     action='version',
                     version=f"{__projectname__}: {__version__}",
                     help="Show the version and exit.")
-PARSER.add_argument('--inifile',
+
+PARSER.add_argument('--cmp',
+                    action='store',
+                    default="all vs all",
+                    help=f"Comparisons details. Expected syntax: '{REGEX_CMP__HELP}'.")
+
+PARSER.add_argument('--cfgfile',
                     action='store',
                     default="linden.ini",
                     help="config file to be used.")
@@ -107,10 +114,21 @@ PARSER.add_argument('--verbosity',
 linden.globs.ARGS = PARSER.parse_args()
 
 # =============================================================================
-# This point is only reached if there's no --version/--help argument 
+# This point is only reached if there's no --version/--help argument
 # on the command line.
 # =============================================================================
 ARGS = linden.globs.ARGS
+
+# exit handler: let's remove the tmp file if it exists.
+def exit_handler():
+    """
+        exit_handler()
+
+        Remove the tmp file if it exists
+    """
+    if os.path.exists(TMPFILENAME):
+        os.remove(TMPFILENAME)
+atexit.register(exit_handler)
 
 from linden.serializers import SERIALIZERS
 
@@ -146,7 +164,7 @@ class LindenError(Exception):
     """
 
 
-def read_inifile(filename):
+def read_cfgfile(filename):
     """
         None if problem
     """
@@ -158,7 +176,6 @@ def read_inifile(filename):
     res = {"serializers": {},
            "data sets": {},
            "data": {},
-           "tasks": {},
            }
     try:
         config = configparser.ConfigParser()
@@ -174,9 +191,6 @@ def read_inifile(filename):
     for data_set in config['data sets']:
         res['data sets'][data_set] = \
             (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
-    for task in config['tasks']:
-        res['tasks'][task] = config['tasks'][task]
-    res['tasks']["tasks"] = (task for task in res['tasks']["tasks"].split(";") if task.strip() != "")
 
     if ARGS.verbosity>=VERBOSITY_DETAILS:
         rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
@@ -240,33 +254,96 @@ def get_serializers_selection(config):
 
     return _res
 
+
+def read_cmpstring(src_string):
+    """
+        read_cmpstring()
+
+        Return a simpler representation of (str)<src_string>.
+
+        Some valid examples, "..." being "(bool/success)True".
+        --cmp="jsonpickle vs all (all)"
+        --cmp="jsonpickle vs all"
+        --cmp="jsonpickle"
+          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (data/str)"all"
+
+        --cmp="jsonpickle (ini)"
+          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (data/str)"ini"
+
+        --cmp="jsonpickle vs json"
+          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"json", (data/str)"all"
+
+        "vs" may be used as well as "versus" or "against".
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)src_string, the source string to be read.
+                syntax: "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
+
+        RETURNED VALUE: (bool)success, (str)serializer1, (str)serializer2, (str:"all|cwc|ini")data
+    """
+    if res := re.match(REGEX_CMP, src_string):
+        serializer1 = res.group("serializer1")
+        if serializer1 is None or serializer1 == "others":
+            serializer1 = "all"
+        serializer2 = res.group("serializer2")
+        if serializer2 is None or serializer2 == "others":
+            serializer2 = "all"
+        data = res.group("data")
+        if data is None:
+            data = "all"
+
+        if not (serializer1 == "all" or serializer1 in SERIALIZERS):
+            print(f"Unknown serializer #1: what is '{serializer1}' ? " \
+                  f"Known serializers #1 are 'all' and {tuple(SERIALIZERS.keys())}.")
+            return False, None, None, None
+        if not (serializer2 == "all" or serializer2 == "others" or serializer2 in SERIALIZERS):
+            print(f"Unknown serializer #2: what is '{serializer2}' ? " \
+                  f"Known serializers #2 are 'all', 'others' and {tuple(SERIALIZERS.keys())}.")
+            return False, None, None, None
+        if serializer1==serializer2 and serializer1 != "all":
+            print(f"Both serializer-s (here, both set to '{serializer1}') can't have the same value, 'all' and 'all' excepted.")
+            return False, None, None, None
+
+        return True, serializer1, serializer2, data
+
+    print(f"ERROR: ill-formed cmp string '{src_string}'. Expected syntax is '{REGEX_CMP__HELP}'.")
+    return False, None, None, None
+
+
 def main():
-    CONFIG = read_inifile(ARGS.inifile)
+    success, serializer1, serializer2, data = read_cmpstring(ARGS.cmp)
 
-    if CONFIG is None:
-        return -1  # TODO returned value
+    if not success:
+        print(f"ERROR: an error occured while reading cmp string '{ARGS.cmp}'.")
+        return -2 # TODO
 
-    try:
-        if ARGS.verbosity>=VERBOSITY_DETAILS:
-            rprint(__projectname__, __version__)
+    print(success, serializer1, serializer2, data)
 
-        if ARGS.verbosity==VERBOSITY_DEBUG:
-            rprint("* known data:", list(DATA.keys()))
-        if ARGS.verbosity==VERBOSITY_DEBUG:
-            rprint("* known serializers:", SERIALIZERS)
+    if data=="ini":
+        CONFIG = read_cfgfile(ARGS.cfgfile)
 
-        for task in CONFIG["tasks"]["tasks"]:
-            if task == "data selection * serializers selection":
-                for data in get_data_selection(CONFIG):
-                    for serializer in get_serializers_selection(CONFIG):
-                        result = SERIALIZERS[serializer].func(action="serialize",
-                                                          obj=DATA[data])
+        if CONFIG is None:
+            return -1  # TODO returned value
 
-        if os.path.exists(TMPFILENAME):
-            os.remove(TMPFILENAME)
+    # try:
+    #     if ARGS.verbosity>=VERBOSITY_DETAILS:
+    #         rprint(__projectname__, __version__)
 
-    except LindenError as exception:
-        rprint(exception)
+    #     if ARGS.verbosity==VERBOSITY_DEBUG:
+    #         rprint("* known data:", list(DATA.keys()))
+    #     if ARGS.verbosity==VERBOSITY_DEBUG:
+    #         rprint("* known serializers:", SERIALIZERS)
+
+    #     for task in CONFIG["tasks"]["tasks"]:
+    #         if task == "data selection * serializers selection":
+    #             for data in get_data_selection(CONFIG):
+    #                 for serializer in get_serializers_selection(CONFIG):
+    #                     result = SERIALIZERS[serializer].func(action="serialize",
+    #                                                       obj=DATA[data])
+
+    # except LindenError as exception:
+    #     rprint(exception)
 
 if __name__ == '__main__':
     main()
