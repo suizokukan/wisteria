@@ -15,16 +15,16 @@ According to the tests conducted on all data...
 According to the tests conducted on the data of the "comparing what is comparable" type
 According to the tests conducted on the data read in the %%% file
 Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
-                 
-[CURRENT] task-11
-(1) [empty string] --cmp="" > all vs|versus|against all ""=(A)
-(2)                --cmp="jsonpickle vs|versus|against json(A)" / ""=(A) (CWC) (INI)
-(3)                --cmp="jsonpickle(A)" / "" (A) (CWC) (INI)
-(3')               --cmp="jsonpickle vs|versus|against others|all(A)" / ""=(A) (CWC) (INI)
+                                  
+[DONE] task-12
 
-    cmpsyntax = (None i.e all | "jsonpickle",
-                 None i.e all | "jsonpickle",
-                 "all"/"cwc"/"ini")
+--checkup option: show some informations and quit.
+
+    * --checkup option: show some informations and quit.
+    * checkup() function
+    * read_cfgfile() now prints an error message if an error occured while
+      reading the configuration file.
+    * no more calls to print(), replaced by calls to rprint().
 
 [DONE] task-11
 

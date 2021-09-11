@@ -76,6 +76,7 @@ import numbers
 import io
 import os
 import re
+import sys
 
 from rich import print as rprint
 
@@ -103,6 +104,11 @@ PARSER.add_argument('--cfgfile',
                     action='store',
                     default="linden.ini",
                     help="config file to be used.")
+
+PARSER.add_argument('--checkup',
+                    action='store_true',
+                    help="show installed serializers, current config file and exit")
+
 PARSER.add_argument('--verbosity',
                     type=int,
                     default=VERBOSITY_NORMAL,
@@ -111,6 +117,7 @@ PARSER.add_argument('--verbosity',
                              VERBOSITY_DETAILS,
                              VERBOSITY_DEBUG),
                     help="Verbosity level: 0(=mute), 1(=normal), 2(=normal+details), 3(=debug)")
+
 linden.globs.ARGS = PARSER.parse_args()
 
 # =============================================================================
@@ -132,13 +139,40 @@ atexit.register(exit_handler)
 
 from linden.serializers import SERIALIZERS
 
-# Such a file is required to create file descriptor objects.
-# The temp. file will be removed at the end of the program.
-if not os.path.exists(TMPFILENAME):
-    with open(TMPFILENAME, "w") as tmpfile:
-        pass
 
-from linden.data import DATA
+def read_cfgfile(filename):
+    """
+        None if problem
+    """
+    if not os.path.exists(filename):
+        if not ARGS.checkup:
+            rprint(f"ERROR: missing config file '{filename}' ({normpath(filename)}).")
+        return None
+
+    res = {"serializers": {},
+           "data sets": {},
+           "data": {},
+           }
+    try:
+        config = configparser.ConfigParser()
+        config.read(filename)
+    except (configparser.DuplicateOptionError,) as error:
+        rprint(f"ERROR while reading config file '{filename}': {error}.")
+        return None
+
+    for serializer in config['serializers']:
+        res['serializers'][serializer] = config['serializers'].getboolean(serializer)
+    for data in config['data']:
+        res['data'][data] = config['data'].getboolean(data)
+    for data_set in config['data sets']:
+        res['data sets'][data_set] = \
+            (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
+
+    if ARGS.verbosity>=VERBOSITY_DETAILS:
+        if not ARGS.checkup:
+            rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
+
+    return res
 
 
 def normpath(path):
@@ -158,45 +192,48 @@ def normpath(path):
         res = os.getcwd()
     return res
 
+def checkup():
+    """
+        checkup()
+
+        Show some informations :
+        - installed serializers;
+        - configuration file that would be used; does this file exist ?
+          can this file be read without errors ?
+    """
+    rprint("Serializers:")
+    for serializer in SERIALIZERS.values():
+        rprint("* ", serializer.checkup_repr())
+
+    rprint()
+    rprint("Config file:")
+    if not os.path.exists(ARGS.cfgfile):
+        diagnostic = "Such a file doesn't exist."
+    else:
+        if read_cfgfile(ARGS.cfgfile) is None:
+            diagnostic = "Such a file exists but can't be read correctly."
+        else:
+            diagnostic = "Such a file exists and can be read without errors."
+
+    rprint(f"With current arguments, configuration file would be '{ARGS.cfgfile}' "
+           f"({normpath(ARGS.cfgfile)}). "+diagnostic)
+
+
+if linden.globs.ARGS.checkup:
+    checkup()
+    sys.exit(1)  # TODO RETURNED VALUE
+
+# Such a file is required to create file descriptor objects.
+# The temp. file will be removed at the end of the program.
+if not os.path.exists(TMPFILENAME):
+    with open(TMPFILENAME, "w") as tmpfile:
+        pass
+from linden.data import DATA
+
 
 class LindenError(Exception):
     """
     """
-
-
-def read_cfgfile(filename):
-    """
-        None if problem
-    """
-    if not os.path.exists(filename):
-        print(f"ERROR: missing config file '{filename}' ({normpath(filename)}).")
-        return None
-
-    # TODO : quid si le .ini est mal formé ?
-    res = {"serializers": {},
-           "data sets": {},
-           "data": {},
-           }
-    try:
-        config = configparser.ConfigParser()
-        config.read(filename)
-    except configparser.DuplicateOptionError:
-        # TODO : quelles autres exceptions sont-elles à prévoir ?
-        pass
-
-    for serializer in config['serializers']:
-        res['serializers'][serializer] = config['serializers'].getboolean(serializer)
-    for data in config['data']:
-        res['data'][data] = config['data'].getboolean(data)
-    for data_set in config['data sets']:
-        res['data sets'][data_set] = \
-            (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
-
-    if ARGS.verbosity>=VERBOSITY_DETAILS:
-        rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
-
-    return res
-
 
 def get_data_selection(config):
     # TODO
@@ -294,20 +331,20 @@ def read_cmpstring(src_string):
             data = "all"
 
         if not (serializer1 == "all" or serializer1 in SERIALIZERS):
-            print(f"Unknown serializer #1: what is '{serializer1}' ? " \
-                  f"Known serializers #1 are 'all' and {tuple(SERIALIZERS.keys())}.")
+            rprint(f"Unknown serializer #1: what is '{serializer1}' ? " \
+                   f"Known serializers #1 are 'all' and {tuple(SERIALIZERS.keys())}.")
             return False, None, None, None
         if not (serializer2 == "all" or serializer2 == "others" or serializer2 in SERIALIZERS):
-            print(f"Unknown serializer #2: what is '{serializer2}' ? " \
-                  f"Known serializers #2 are 'all', 'others' and {tuple(SERIALIZERS.keys())}.")
+            rprint(f"Unknown serializer #2: what is '{serializer2}' ? " \
+                   f"Known serializers #2 are 'all', 'others' and {tuple(SERIALIZERS.keys())}.")
             return False, None, None, None
         if serializer1==serializer2 and serializer1 != "all":
-            print(f"Both serializer-s (here, both set to '{serializer1}') can't have the same value, 'all' and 'all' excepted.")
+            rprint(f"Both serializer-s (here, both set to '{serializer1}') can't have the same value, 'all' and 'all' excepted.")
             return False, None, None, None
 
         return True, serializer1, serializer2, data
 
-    print(f"ERROR: ill-formed cmp string '{src_string}'. Expected syntax is '{REGEX_CMP__HELP}'.")
+    rprint(f"ERROR: ill-formed cmp string '{src_string}'. Expected syntax is '{REGEX_CMP__HELP}'.")
     return False, None, None, None
 
 
@@ -315,10 +352,10 @@ def main():
     success, serializer1, serializer2, data = read_cmpstring(ARGS.cmp)
 
     if not success:
-        print(f"ERROR: an error occured while reading cmp string '{ARGS.cmp}'.")
+        rprint(f"ERROR: an error occured while reading cmp string '{ARGS.cmp}'.")
         return -2 # TODO
 
-    print(success, serializer1, serializer2, data)
+    rprint(success, serializer1, serializer2, data)
 
     if data=="ini":
         CONFIG = read_cfgfile(ARGS.cfgfile)

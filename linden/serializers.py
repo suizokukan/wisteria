@@ -100,13 +100,21 @@ class SerializationResult:
 
 class SerializerData:
     def __init__(self,
+                 human_name,
+                 internet,
                  available,
                  func):
+        self.human_name = human_name
+        self.internet = internet
         self.available = available
         self.version = None
         self.func = func
     def __repr__(self):
-        return f"{self.available=}; {self.version=}; {self.func=}"
+        return f"{human_name=}; {internet=}; {self.available=}; {self.version=}; {self.func=}"
+    def checkup_repr(self):
+        if self.available:
+            return f"(available)     '{self.human_name}' ({self.version}), see {self.internet}."
+        return f"(not available) '{self.human_name}' (see {self.internet})."
 
 
 def serializer_iaswn(action="serialize",
@@ -242,9 +250,13 @@ def serializer_jsonpickle(action="serialize",
 
 
 SERIALIZERS = {
-    "iaswn": SerializerData(available=trytoimport("iaswn"),
+    "iaswn": SerializerData(human_name="Iaswn",
+                            internet="https://github.com/suizokukan/iaswn",
+                            available=trytoimport("iaswn"),
                             func=serializer_iaswn),
-    "jsonpickle": SerializerData(available=trytoimport("jsonpickle"),
+    "jsonpickle": SerializerData(human_name="jsonpickle",
+                                 internet="https://jsonpickle.github.io/",
+                                 available=trytoimport("jsonpickle"),
                                  func=serializer_jsonpickle),
     }
 for serializer in SERIALIZERS:
