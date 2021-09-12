@@ -110,7 +110,7 @@ class SerializerData:
         self.version = None
         self.func = func
     def __repr__(self):
-        return f"{human_name=}; {internet=}; {self.available=}; {self.version=}; {self.func=}"
+        return f"{self.human_name=}; {self.internet=}; {self.available=}; {self.version=}; {self.func=}"
     def checkup_repr(self):
         if self.available:
             return f"(available)     '{self.human_name}' ({self.version}), see {self.internet}."

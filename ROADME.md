@@ -6,7 +6,6 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.1
 ------------------
 
---showserializers: show installed serializers and stop (arrêter avant que le .tmp ne soit créé)
 --downloaddfltini
 i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 
@@ -15,6 +14,16 @@ According to the tests conducted on all data...
 According to the tests conducted on the data of the "comparing what is comparable" type
 According to the tests conducted on the data read in the %%% file
 Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
+
+linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
+
+[DONE] task-13
+
+Call SERIALIZERS[].func() to do the tests.
+
+    * SERIALIZERS[].func() are now called
+    * improved documentation; error code for each error message.
+    * code pylinted.
                                   
 [DONE] task-12
 

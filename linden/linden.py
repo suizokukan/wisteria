@@ -72,8 +72,6 @@
 import argparse
 import atexit
 import configparser
-import numbers
-import io
 import os
 import re
 import sys
@@ -126,6 +124,7 @@ linden.globs.ARGS = PARSER.parse_args()
 # =============================================================================
 ARGS = linden.globs.ARGS
 
+
 # exit handler: let's remove the tmp file if it exists.
 def exit_handler():
     """
@@ -135,7 +134,10 @@ def exit_handler():
     """
     if os.path.exists(TMPFILENAME):
         os.remove(TMPFILENAME)
+
+
 atexit.register(exit_handler)
+
 
 from linden.serializers import SERIALIZERS
 
@@ -144,33 +146,84 @@ def read_cfgfile(filename):
     """
         None if problem
     """
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint(f"@ Trying to read '{filename}' ({normpath(filename)}) as a config file.")
+
     if not os.path.exists(filename):
         if not ARGS.checkup:
-            rprint(f"ERROR: missing config file '{filename}' ({normpath(filename)}).")
+            rprint(f"(ERR001) Missing config file '{filename}' ({normpath(filename)}).")
         return None
 
-    res = {"serializers": {},
+    res = {"data selection": {},
            "data sets": {},
-           "data": {},
+           "data objects": {},
            }
     try:
         config = configparser.ConfigParser()
         config.read(filename)
     except (configparser.DuplicateOptionError,) as error:
-        rprint(f"ERROR while reading config file '{filename}': {error}.")
+        rprint(f"(ERR002) While reading config file '{filename}': {error}.")
         return None
 
-    for serializer in config['serializers']:
-        res['serializers'][serializer] = config['serializers'].getboolean(serializer)
-    for data in config['data']:
-        res['data'][data] = config['data'].getboolean(data)
+    # -------------------------
+    # well formed config file ?
+    # -------------------------
+    if "data selection" not in config:
+        rprint(f"(ERR003) While reading config file '{filename}': "
+               "missing '\[data selection]' section.")
+        return None
+    if "data sets" not in config:
+        rprint(f"(ERR004) While reading config file '{filename}': "
+               f"missing '\[data sets]' section.")
+        return None
+    if "data objects" not in config:
+        rprint(f"(ERR005) While reading config file '{filename}': "
+               f"missing '\[data objects]' section.")
+        return None
+    if "data selection" not in config["data selection"]:
+        rprint(f"(ERR006) While reading config file '{filename}': "
+               f"missing '\[data selection]data selection=' entry.")
+        return None
+
+    if config["data selection"]["data selection"] in ("all", "only if yes"):
+        # ok, nothing to do.
+        pass
+    elif config["data selection"]["data selection"].startswith("data set/"):
+        setname = config["data selection"]["data selection"]
+        if setname not in config["data sets"]:
+            rprint(f"(ERR007) While reading config file '{filename}': "
+                   f"undefined data set '{setname}' "
+                   "used in \[data selection] section but not defined in \[data sets] section")
+            return None
+    else:
+        rprint(f"(ERR008) While reading config file '{filename}': "
+               "can't interpret the value of config['data selection']['data selection']: "
+               f"what is '{config['data selection']['data selection']}' ?")
+        return None
+
+    for data_set in config['data sets']:
+        for data_set__subitem in config['data sets'][data_set].split(";"):
+            if data_set__subitem.strip() != "" and \
+               data_set__subitem not in config['data objects']:
+                rprint("(ERROR014) Wrong definition in \[data sets]; unknown data object "
+                       f"'{data_set__subitem}', not defined in \[data objects].")
+                return None
+
+    # --------------------------------------------------
+    # if everything is in order, let's initialize <res>.
+    # --------------------------------------------------
+    res['data selection']['data selection'] = config['data selection']['data selection']
+    for data_object_name in config['data objects']:
+        res['data objects'][data_object_name] = config['data objects'].getboolean(data_object_name)
     for data_set in config['data sets']:
         res['data sets'][data_set] = \
             (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
 
-    if ARGS.verbosity>=VERBOSITY_DETAILS:
-        if not ARGS.checkup:
-            rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
+    if ARGS.verbosity >= VERBOSITY_DETAILS:
+        rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
+
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint(f"@ Successfully read '{filename}' ({normpath(filename)}) as a config file.")
 
     return res
 
@@ -192,6 +245,7 @@ def normpath(path):
         res = os.getcwd()
     return res
 
+
 def checkup():
     """
         checkup()
@@ -201,12 +255,12 @@ def checkup():
         - configuration file that would be used; does this file exist ?
           can this file be read without errors ?
     """
-    rprint("Serializers:")
+    rprint("* Serializers:")
     for serializer in SERIALIZERS.values():
-        rprint("* ", serializer.checkup_repr())
+        rprint("  - ", serializer.checkup_repr())
 
     rprint()
-    rprint("Config file:")
+    rprint("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
         diagnostic = "Such a file doesn't exist."
     else:
@@ -226,7 +280,7 @@ if linden.globs.ARGS.checkup:
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
 if not os.path.exists(TMPFILENAME):
-    with open(TMPFILENAME, "w") as tmpfile:
+    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
         pass
 from linden.data import DATA
 
@@ -235,61 +289,60 @@ class LindenError(Exception):
     """
     """
 
-def get_data_selection(config):
-    # TODO
-    # pourquoi ne pas remplacer <config> par la globale CONFIG ?
 
+def get_data_selection(data, config):
     res = []
 
-    if config["tasks"]["data selection"] == "all":
-        res = config["data"]
-    elif config["tasks"]["data selection"] == "only if yes":
-        res = (data for data in config["data"] if config["data"][data])
-    elif config["tasks"]["data selection"].startswith("data set/"):
-        res = config["data sets"][config["tasks"]["data selection"]]
+    if data == "all":
+        res = tuple(DATA.keys())
+    elif data == "ini":
+        if config["data selection"]["data selection"] == "all":
+            res = tuple(config["objects"].keys())
+        elif config["data selection"]["data selection"] == "only if yes":
+            res = (data_name for data_name in config["data objects"]
+                   if config["data objects"][data_name])
+        elif config["data selection"]["data selection"].startswith("data set/"):
+            res = tuple(config["data sets"][config["data selection"]["data selection"]])
+        else:
+            # TODO: error
+            raise LindenError("TODO")
     else:
         # TODO
-        # erreur: unknown order
-        pass
+        raise LindenError("TODO")
 
-    # TODO
-    # vérification: est-ce que le contenu de <res> est connu de DATA ?
-    _res = []
-    for data in res:
-        if data not in DATA:
-            raise LindenError(f"! ERROR: unknown data '{data}'.")
-        else:
-            _res.append(data)
-    return _res
+    return res
 
 
-def get_serializers_selection(config):
+def get_serializers_selection(serializer1,
+                              serializer2):
     """
-    None if error
+        get_serializers_selection()
+
+        Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer1>.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o    <serializer1> : value returned by read_cmpstring()
+        o    <serializer2> : value returned by read_cmpstring()
+
+        RETURNED VALUE: a tuple of str
     """
-    # TODO
-    # pourquoi ne pas remplacer <config> par la globale CONFIG ?
+    res = set()
 
-    res = []
-
-    if config["tasks"]["serializers selection"] == "all":
-        res = config["serializers"]
-    elif config["tasks"]["serializers selection"] == "only if yes":
-        res = (serializer for serializer in config["serializers"] if config["serializers"][serializer])
+    if serializer1 == "all":
+        for serializer in SERIALIZERS:
+            res.add(serializer)
     else:
-        raise LindenError(f"ERROR: unknown serializer selection keyword '{config['tasks']['serializers selection']}'")
-        return None
+        res.add(serializer1)
 
-    # TODO
-    # vérification: est-ce que le contenu de <res> est connu de SERIALIZERS ?
-    _res = []
-    for serializer in res:
-        if serializer not in SERIALIZERS:
-            raise LindenError(f"! ERROR: unknown serializer '{serializer}'.")
-        else:
-            _res.append(serializer)
+    if serializer2 == "all":
+        for serializer in SERIALIZERS:
+            res.add(serializer)
+    else:
+        res.add(serializer2)
 
-    return _res
+    return tuple(res)
 
 
 def read_cmpstring(src_string):
@@ -331,56 +384,84 @@ def read_cmpstring(src_string):
             data = "all"
 
         if not (serializer1 == "all" or serializer1 in SERIALIZERS):
-            rprint(f"Unknown serializer #1: what is '{serializer1}' ? " \
+            rprint(f"(ERR009) Unknown serializer #1: what is '{serializer1}' ? "
                    f"Known serializers #1 are 'all' and {tuple(SERIALIZERS.keys())}.")
             return False, None, None, None
         if not (serializer2 == "all" or serializer2 == "others" or serializer2 in SERIALIZERS):
-            rprint(f"Unknown serializer #2: what is '{serializer2}' ? " \
+            rprint(f"(ERR010) Unknown serializer #2: what is '{serializer2}' ? "
                    f"Known serializers #2 are 'all', 'others' and {tuple(SERIALIZERS.keys())}.")
             return False, None, None, None
-        if serializer1==serializer2 and serializer1 != "all":
-            rprint(f"Both serializer-s (here, both set to '{serializer1}') can't have the same value, 'all' and 'all' excepted.")
+        if serializer1 == serializer2 and serializer1 != "all":
+            rprint(f"(ERR011) Both serializer-s (here, both set to '{serializer1}') "
+                   "can't have the same value, 'all' and 'all' excepted.")
             return False, None, None, None
 
         return True, serializer1, serializer2, data
 
-    rprint(f"ERROR: ill-formed cmp string '{src_string}'. Expected syntax is '{REGEX_CMP__HELP}'.")
+    rprint(f"(ERR012) Ill-formed cmp string '{src_string}'. "
+           f"Expected syntax is '{REGEX_CMP__HELP}'.")
     return False, None, None, None
 
 
 def main():
+    """
+        main()
+
+        Main entrypoint in the project. This method is called when Linden is called from outside,
+        e.g. by the command line.
+
+        _______________________________________________________________________
+
+        RETURNED VALUE: TODO
+    """
+    if ARGS.verbosity >= VERBOSITY_DETAILS:
+        rprint(__projectname__, __version__)
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint("@ known data:", list(DATA.keys()))
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint("@ known serializers:", SERIALIZERS)
+
     success, serializer1, serializer2, data = read_cmpstring(ARGS.cmp)
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint(f"@ Result of the call to read_cmpstring('{ARGS.cmp}'):",
+               success, serializer1, serializer2, data)
 
     if not success:
-        rprint(f"ERROR: an error occured while reading cmp string '{ARGS.cmp}'.")
-        return -2 # TODO
+        rprint(f"(ERR013) an error occured while reading cmp string '{ARGS.cmp}'.")
+        return -2  # TODO
 
-    rprint(success, serializer1, serializer2, data)
+    config = None
+    if data == "ini":
+        config = read_cfgfile(ARGS.cfgfile)
 
-    if data=="ini":
-        CONFIG = read_cfgfile(ARGS.cfgfile)
-
-        if CONFIG is None:
+        if config is None:
             return -1  # TODO returned value
 
-    # try:
-    #     if ARGS.verbosity>=VERBOSITY_DETAILS:
-    #         rprint(__projectname__, __version__)
+    try:
+        # serializers and data to be used through the tests:
+        _serializers = get_serializers_selection(serializer1, serializer2)
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            rprint("@ serializers to be used are: ", _serializers)
+        _data_objs = get_data_selection(data, config)
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            rprint("@ data objs to be used are: ", _data_objs)
 
-    #     if ARGS.verbosity==VERBOSITY_DEBUG:
-    #         rprint("* known data:", list(DATA.keys()))
-    #     if ARGS.verbosity==VERBOSITY_DEBUG:
-    #         rprint("* known serializers:", SERIALIZERS)
+        for serializer in _serializers:
+            for data_name in _data_objs:
+                if ARGS.verbosity == VERBOSITY_DEBUG:
+                    rprint(f"@ about to call function for serializer='{serializer}' "
+                           f"and data name='{data_name}'")
+                result = SERIALIZERS[serializer].func(action="serialize",
+                                                      obj=DATA[data_name])
+                if ARGS.verbosity == VERBOSITY_DEBUG:
+                    rprint("@ result:", result)
 
-    #     for task in CONFIG["tasks"]["tasks"]:
-    #         if task == "data selection * serializers selection":
-    #             for data in get_data_selection(CONFIG):
-    #                 for serializer in get_serializers_selection(CONFIG):
-    #                     result = SERIALIZERS[serializer].func(action="serialize",
-    #                                                       obj=DATA[data])
+    except LindenError as exception:
+        rprint(exception)
 
-    # except LindenError as exception:
-    #     rprint(exception)
+    return 0  # TODO
 
+
+# =============================================================================
 if __name__ == '__main__':
     main()
