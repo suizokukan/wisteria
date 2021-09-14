@@ -15,9 +15,14 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 
 * --downloaddfltini
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-* remplacer () par de fausses [] dans pimydoc
-* identity ??? conformité ? ressemblance ?
 * linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
+
+[DONE] task-17
+
+'identity' > 'similarity'.
+
+    * 'identity' > 'similarity'
+    * improved doc.
 
 [DONE] task-16
 

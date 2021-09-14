@@ -183,14 +183,14 @@ def read_cfgfile(filename):
             ⋅----------------------------------------------------------------
             ⋅config file format                 read_cfgfile() returned value
             ⋅----------------------------------------------------------------
-            ⋅(data selection)                   "data selection" = {}
-            ⋅    data selection=all             "data selection""data selection" = str
+            ⋅(data selection)                   〖"data selection"〗 = {}
+            ⋅    data selection=all             〖"data selection"〗〖"data selection"〗 = str
             ⋅                   only if yes
             ⋅                   data set/xxx
-            ⋅data sets                          "data sets" = {}
-            ⋅    data set/xxx=                  "data sets""data set/xxx" = set1;set2;...
+            ⋅data sets                          〖"data sets"〗= {}
+            ⋅    data set/xxx=                  〖"data sets"〗〖"data set/xxx"〗 = set1;set2;...
             ⋅data objects
-            ⋅    set1 = yes or false
+            ⋅    set1 = yes or false             〖"data objects"〗〖"set1"〗 = (bool)True/False
             ⋅    set2 = yes or false
             ⋅    ...
     """
@@ -506,7 +506,7 @@ def report(results,
                               results.repr_attr(serializer, data_obj, "encoding_stringlength"),
                               results.repr_attr(serializer, data_obj, "decoding_success"),
                               results.repr_attr(serializer, data_obj, "decoding_time"),
-                              results.repr_attr(serializer, data_obj, "identity"))
+                              results.repr_attr(serializer, data_obj, "similarity"))
         rprint(table)
         rprint()
 
@@ -530,7 +530,7 @@ def report(results,
                           f"{results.total_encoding_stringlength(serializer=serializer)}",
                           f"{results.ratio_decoding_success(serializer=serializer)}",
                           f"{results.total_decoding_time(serializer=serializer)}",
-                          f"{results.ratio_identity(serializer=serializer)}",
+                          f"{results.ratio_similarity(serializer=serializer)}",
                           )
 
         rprint(table)
@@ -542,7 +542,7 @@ def report(results,
             rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <data_obj>[/bold white on blue]")
         for serializer in serializers:
             _list = tuple(data_obj for data_obj in results[serializer] \
-                          if not results[serializer][data_obj].identity)
+                          if not results[serializer][data_obj].similarity)
             if not _list:
                 rprint(f"* There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
             else:
@@ -573,7 +573,7 @@ def report(results,
                               results.repr_attr(serializer, data_obj, "encoding_stringlength"),
                               results.repr_attr(serializer, data_obj, "decoding_success"),
                               results.repr_attr(serializer, data_obj, "decoding_time"),
-                              results.repr_attr(serializer, data_obj, "identity"))
+                              results.repr_attr(serializer, data_obj, "similarity"))
         rprint(table)
         rprint()
 
@@ -597,7 +597,7 @@ def report(results,
                           f"{results.total_encoding_stringlength(data_obj=data_obj)}",
                           f"{results.ratio_decoding_success(data_obj=data_obj)}",
                           f"{results.total_decoding_time(data_obj=data_obj)}",
-                          f"{results.ratio_identity(data_obj=data_obj)}",
+                          f"{results.ratio_similarity(data_obj=data_obj)}",
                           )
 
         rprint(table)

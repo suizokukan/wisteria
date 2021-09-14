@@ -285,13 +285,13 @@ class SerializationResults(dict):
                     count += 1
             return self._format_ratio((count, count/self.serializers_number))
 
-    def ratio_identity(self,
+    def ratio_similarity(self,
                        serializer=None,
                        data_obj=None):
         """
             SerializationResults.
 
-            Compute and format the ratio of identity success for a <serializer>
+            Compute and format the ratio of similarity success for a <serializer>
             OR for a <data_obj>ect.
 
             _______________________________________________________________
@@ -313,7 +313,7 @@ class SerializationResults(dict):
                 return self._format_ratio((None, None))
 
             for data_obj in self[serializer]:
-                if self[serializer][data_obj].identity:
+                if self[serializer][data_obj].similarity:
                     count += 1
             return self._format_ratio((count, count/self.data_objs_number))
 
@@ -322,7 +322,7 @@ class SerializationResults(dict):
                 return self._format_ratio((None, None))
 
             for serializer in self:
-                if self[serializer][data_obj].identity:
+                if self[serializer][data_obj].similarity:
                     count += 1
             return self._format_ratio((count, count/self.data_objs_number))
 
@@ -352,8 +352,8 @@ class SerializationResults(dict):
             return self._format_time(self[serializer][data_obj].encoding_time)
         if attribute_name == "encoding_success":
             return self._format_success(self[serializer][data_obj].encoding_success)
-        if attribute_name == "identity":
-            return self._format_success(self[serializer][data_obj].identity)
+        if attribute_name == "similarity":
+            return self._format_success(self[serializer][data_obj].similarity)
 
     def total_decoding_time(self,
                             serializer=None,
@@ -488,7 +488,7 @@ class SerializationResult:
         _______________________________________________________________________
 
         o  __init__(self, encoding_success=False, encoding_time=None, encoding_stringlength=None,
-                    decoding_success=False, decoding_time=None, identity=False)
+                    decoding_success=False, decoding_time=None, similarity=False)
         o  __repr__(self)
     """
     def __init__(self,
@@ -497,7 +497,7 @@ class SerializationResult:
                  encoding_stringlength=None,
                  decoding_success=False,
                  decoding_time=None,
-                 identity=False):
+                 similarity=False):
         """
             SerializationResult.__init__()
         """
@@ -506,13 +506,13 @@ class SerializationResult:
         self.encoding_stringlength = encoding_stringlength
         self.decoding_success = decoding_success
         self.decoding_time = decoding_time
-        self.identity = identity
+        self.similarity = similarity
     def __repr__(self):
         """
             SerializationResult.__repr__()
         """
         return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_stringlength=}; " \
-            f"{self.decoding_success=}; {self.decoding_time=}; {self.identity=}"
+            f"{self.decoding_success=}; {self.decoding_time=}; {self.similarity=}"
 
 
 class SerializerData:
@@ -623,7 +623,7 @@ def serializer_iaswn(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.identity = True
+                res.similarity = True
         except module.IaswnError:
             pass
 
@@ -687,7 +687,7 @@ def serializer_jsonpickle(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.identity = True
+                res.similarity = True
         except (TypeError, AttributeError):
             pass
 
