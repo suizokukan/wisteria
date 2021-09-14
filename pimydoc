@@ -1,0 +1,38 @@
+### pimydoc : documentation source file
+###
+### Comment lines begin with ###
+### If you modify STARTSYMB_IN_DOC please update ./check_code_quality.sh
+
+[pimydoc]
+### key : value (NOT key = value)
+REGEX_SOURCE_FILTER : .+py$|.+sh$|.+md$|.+ini$
+
+### (?P<doctitle>) is mandatory
+REGEX_FIND_DOCTITLE : ^\[(?P<doctitle>.+)\]$
+
+STARTSYMB_IN_DOC :⋅
+
+PROFILE_PYTHON_SPACENBR_FOR_A_TAB : 4
+
+REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
+
+### ==========================================================================
+### ================================ SUMMARY =================================
+### ==========================================================================
+### (pimydoc)config file format
+
+### ==========================================================================
+[(pimydoc)config file format]
+
+----------------------------------------------------------------
+config file format                 read_cfgfile() returned value
+----------------------------------------------------------------
+data selection                     "data selection" = {}
+    data selection=all             (str)"data selection"|"data selection"
+                   only if yes
+                   data set/xxx 
+data sets
+    data set/xxx=
+data objects
+    ...
+### ==========================================================================

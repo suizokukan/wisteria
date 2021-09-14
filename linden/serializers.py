@@ -470,6 +470,17 @@ class SerializationResults(dict):
 
 
 class SerializationResult:
+    """
+        SerializationResult class
+
+        Class used to store tests results in a SerializationResults object.
+
+        _______________________________________________________________________
+
+        o  __init__(self, encoding_success=False, encoding_time=None, encoding_stringlength=None,
+                    decoding_success=False, decoding_time=None, identity=False)
+        o  __repr__(self)
+    """
     def __init__(self,
                  encoding_success=False,
                  encoding_time=None,
@@ -477,6 +488,9 @@ class SerializationResult:
                  decoding_success=False,
                  decoding_time=None,
                  identity=False):
+        """
+            SerializationResult.__init__()
+        """
         self.encoding_success = encoding_success
         self.encoding_time = encoding_time
         self.encoding_stringlength = encoding_stringlength
@@ -484,24 +498,54 @@ class SerializationResult:
         self.decoding_time = decoding_time
         self.identity = identity
     def __repr__(self):
+        """
+            SerializationResult.__repr__()
+        """
         return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_stringlength=}; " \
             f"{self.decoding_success=}; {self.decoding_time=}; {self.identity=}"
 
 
 class SerializerData:
+    """
+        SerializerData class
+
+        SerializerData are used to store infos. about serializers in the SERIALIZERS dict.
+
+        _______________________________________________________________________
+
+        o  __init__(self, human_name, internet, available, func)
+        o  __repr__(self)
+        o  checkup_repr(self)
+    """
     def __init__(self,
                  human_name,
                  internet,
                  available,
                  func):
+        """
+            SerializerData.__init__()
+        """
         self.human_name = human_name
         self.internet = internet
         self.available = available
         self.version = None
         self.func = func
+
     def __repr__(self):
-        return f"{self.human_name=}; {self.internet=}; {self.available=}; {self.version=}; {self.func=}"
+        """
+            SerializerData.__repr__()
+
+            For the check up output, see .checkup_repr().
+        """
+        return f"{self.human_name=}; {self.internet=}; " \
+            f"{self.available=}; {self.version=}; {self.func=}"
+
     def checkup_repr(self):
+        """
+            SerializerData.checkup_repr()
+
+            Does the same as .__repr__() but for the check up output.
+        """
         if self.available:
             return f"(available)     '{self.human_name}' ({self.version}), see {self.internet}."
         return f"(not available) '{self.human_name}' (see {self.internet})."
@@ -515,9 +559,10 @@ def serializer_iaswn(action="serialize",
         Serializer for the Iaswn module.
 
         Like every serializer_xxx() function:
-        * None is returned if an error occured.
-        * this function may return the version of the concerned module.
-        * this function may try to encode/decode an <obj>ect.
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a LindenError exception is raised.
 
         This function assumes that the concerned module has already be imported.
 
@@ -545,7 +590,6 @@ def serializer_iaswn(action="serialize",
     # ---------------------
     if action != "serialize":
         raise LindenError(f"Unknown 'action' keyword '{action}'.")
-        return None
 
     res = SerializationResult()
 
@@ -584,9 +628,10 @@ def serializer_jsonpickle(action="serialize",
         Serializer for the jsonpickle module.
 
         Like every serializer_xxx() function:
-        * None is returned if an error occured.
-        * this function may return the version of the concerned module.
-        * this function may try to encode/decode an <obj>ect.
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a LindenError exception is raised.
 
         This function assumes that the concerned module has already be imported.
 

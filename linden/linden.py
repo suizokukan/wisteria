@@ -169,7 +169,28 @@ from linden.serializers import SERIALIZERS, SerializationResults
 
 def read_cfgfile(filename):
     """
-        None if problem
+        read_cfgfile()
+
+        Read the configuration file <filename>, return the corresponding dict.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)filename, the file to be read.
+
+        RETURNED VALUE: (None if a problem occured or a dict)
+            (pimydoc)config file format
+            ⋅
+            ⋅----------------------------------------------------------------
+            ⋅config file format                 read_cfgfile() returned value
+            ⋅----------------------------------------------------------------
+            ⋅data selection                     "data selection" = {}
+            ⋅    data selection=all             (str)"data selection"|"data selection"
+            ⋅                   only if yes
+            ⋅                   data set/xxx
+            ⋅data sets
+            ⋅    data set/xxx=
+            ⋅data objects
+            ⋅    ...
     """
     if ARGS.verbosity == VERBOSITY_DEBUG:
         rprint(f"@ Trying to read '{filename}' ({normpath(filename)}) as a config file.")
@@ -183,6 +204,10 @@ def read_cfgfile(filename):
            "data sets": {},
            "data objects": {},
            }
+
+    # ------------------------------------------------------------------
+    # (1/3) let's read <filename> using configparser.ConfigParser.read()
+    # ------------------------------------------------------------------
     try:
         config = configparser.ConfigParser()
         config.read(filename)
@@ -190,9 +215,9 @@ def read_cfgfile(filename):
         rprint(f"(ERR002) While reading config file '{filename}': {error}.")
         return None
 
-    # -------------------------
-    # well formed config file ?
-    # -------------------------
+    # -------------------------------
+    # (2/3) well formed config file ?
+    # -------------------------------
     if "data selection" not in config:
         rprint(f"(ERR003) While reading config file '{filename}': "
                "missing '\[data selection]' section.")
@@ -234,9 +259,9 @@ def read_cfgfile(filename):
                        f"'{data_set__subitem}', not defined in \[data objects].")
                 return None
 
-    # --------------------------------------------------
-    # if everything is in order, let's initialize <res>.
-    # --------------------------------------------------
+    # --------------------------------------------------------
+    # (3/3) if everything is in order, let's initialize <res>.
+    # --------------------------------------------------------
     res['data selection']['data selection'] = config['data selection']['data selection']
     for data_object_name in config['data objects']:
         res['data objects'][data_object_name] = config['data objects'].getboolean(data_object_name)
@@ -244,6 +269,9 @@ def read_cfgfile(filename):
         res['data sets'][data_set] = \
             (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
 
+    # ----------------------
+    # details/debug messages
+    # ----------------------
     if ARGS.verbosity >= VERBOSITY_DETAILS:
         rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
 
@@ -312,6 +340,9 @@ from linden.data import DATA
 
 class LindenError(Exception):
     """
+        LindenError class
+
+        Unique exception raised by the program.
     """
 
 

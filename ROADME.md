@@ -22,6 +22,13 @@ si data_objs_number==0 ou si serializers_number==0, error
 
 linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
 
+[DONE] task-15
+
+Documentation & pimydoc.
+
+    * documentation.
+    * pimydoc file
+
 [DONE] task-14
 
 Report (A, B1a, B1b, B2a, B2b)
