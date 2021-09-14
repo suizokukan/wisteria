@@ -120,11 +120,21 @@ class SerializationResults(dict):
 
             Once the initialization of <self> is over, this method must be called to
             set self.serializers_number and self.data_objs_number.
-        """
+
+            ___________________________________________________________________
+
+            RETURNED VALUE: (bool)success
+        """ 
         self.serializers_number = len(self)
-        if self.serializers_number > 0:
-            first_serializer = tuple(self.keys())[0]
-            self.data_objs_number = len(self[first_serializer])
+
+        if self.serializers_number == 0:
+            rprint("ERR015: Incorrect data, there's no serializer.")
+            return False
+            
+        first_serializer = tuple(self.keys())[0]
+        self.data_objs_number = len(self[first_serializer])
+
+        return True
 
     def _format_ratio(self,
                       inttotal_and_floatratio):

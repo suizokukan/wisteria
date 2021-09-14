@@ -27,12 +27,14 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ----------------------------------------------------------------
 config file format                 read_cfgfile() returned value
 ----------------------------------------------------------------
-data selection                     "data selection" = {}
-    data selection=all             (str)"data selection"|"data selection"
+(data selection)                   "data selection" = {}
+    data selection=all             "data selection""data selection" = str
                    only if yes
                    data set/xxx 
-data sets
-    data set/xxx=
+data sets                          "data sets" = {}
+    data set/xxx=                  "data sets""data set/xxx" = set1;set2;...
 data objects
+    set1 = yes or false
+    set2 = yes or false
     ...
 ### ==========================================================================

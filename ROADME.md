@@ -6,8 +6,6 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.1
 ------------------
 
---downloaddfltini
-i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 
 Conclusion:
 According to the tests conducted on all data...
@@ -15,12 +13,19 @@ According to the tests conducted on the data of the "comparing what is comparabl
 According to the tests conducted on the data read in the %%% file
 Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 
+* --downloaddfltini
+* i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
+* remplacer () par de fausses [] dans pimydoc
+* identity ??? conformité ? ressemblance ?
+* linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
 
-doc de class SerializationResult & co.
-identity ??? conformité ? ressemblance ?
-si data_objs_number==0 ou si serializers_number==0, error
+[DONE] task-16
 
-linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
+Check that the input data are valid.
+
+    * _finish_initialization() now returns (bool)success
+    * main() checks the value of results._finish_initialization
+      and results.data_objs_number
 
 [DONE] task-15
 

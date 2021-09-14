@@ -183,13 +183,15 @@ def read_cfgfile(filename):
             ⋅----------------------------------------------------------------
             ⋅config file format                 read_cfgfile() returned value
             ⋅----------------------------------------------------------------
-            ⋅data selection                     "data selection" = {}
-            ⋅    data selection=all             (str)"data selection"|"data selection"
+            ⋅(data selection)                   "data selection" = {}
+            ⋅    data selection=all             "data selection""data selection" = str
             ⋅                   only if yes
             ⋅                   data set/xxx
-            ⋅data sets
-            ⋅    data set/xxx=
+            ⋅data sets                          "data sets" = {}
+            ⋅    data set/xxx=                  "data sets""data set/xxx" = set1;set2;...
             ⋅data objects
+            ⋅    set1 = yes or false
+            ⋅    set2 = yes or false
             ⋅    ...
     """
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -655,7 +657,12 @@ def main():
                                                                               obj=DATA[data_name])
                 if ARGS.verbosity == VERBOSITY_DEBUG:
                     rprint("@ result:", results[serializer][data_name])
-        results._finish_initialization()
+        if not results._finish_initialization():
+            rprint("ERR015: incorrect data, the program has to stop.")
+            return -3  # TODO
+        if results.data_objs_number == 0:
+            rprint("No data to handle, the program can stop.")
+            return 2  # TODO
 
         report(results,
                (_serializers, _data_objs),
