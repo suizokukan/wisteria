@@ -55,3 +55,6 @@ TMPFILENAME = "linden.tmp"
 
 REGEX_CMP = re.compile("^\s*(?P<serializer1>[^\s\(\)]+)((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?(\s*\((?P<data>all|cwc|ini)\))?\s*$")
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
+
+REPORT_MINIMAL_STRING = "C;"
+REPORT_FULL_STRING = "titles;A;B1a;B1b;B2a;B2b;"

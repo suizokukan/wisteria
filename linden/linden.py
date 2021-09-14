@@ -77,8 +77,10 @@ import re
 import sys
 
 from rich import print as rprint
+import rich.table
 
 import linden.globs
+from linden.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
 from linden.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
 from linden.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from linden.aboutproject import __projectname__, __version__
@@ -107,6 +109,14 @@ PARSER.add_argument('--checkup',
                     action='store_true',
                     help="show installed serializers, current config file and exit")
 
+PARSER.add_argument('--report',
+                    action='store',
+                    default="minimal",
+                    help=f"Report format: 'minimal' (interpreted as '{REPORT_MINIMAL_STRING}'), "
+                    f"'full' (interpreted as '{REPORT_FULL_STRING}'), "
+                    "or a subset from this very last string, e.g. 'A;B1a;'. "
+                    "Please notice that --verbosity has no effect upon --report.")
+
 PARSER.add_argument('--verbosity',
                     type=int,
                     default=VERBOSITY_NORMAL,
@@ -114,9 +124,24 @@ PARSER.add_argument('--verbosity',
                              VERBOSITY_NORMAL,
                              VERBOSITY_DETAILS,
                              VERBOSITY_DEBUG),
-                    help="Verbosity level: 0(=mute), 1(=normal), 2(=normal+details), 3(=debug)")
+                    help="Verbosity level: 0(=minimal), 1(=normal), 2(=normal+details), 3(=debug). "
+                    "Please notice that --verbosity has no effect upon --report.")
 
 linden.globs.ARGS = PARSER.parse_args()
+
+# ARGS.report interpretation:
+if linden.globs.ARGS.report == "minimal":
+    linden.globs.ARGS.report = REPORT_MINIMAL_STRING
+    if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+        rprint(f"--report 'minimal' interpreted as '{linden.globs.ARGS.report}'.")
+elif linden.globs.ARGS.report == "full":
+    linden.globs.ARGS.report = REPORT_FULL_STRING
+    if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+        rprint(f"--report 'full' interpreted as '{linden.globs.ARGS.report}'.")
+elif not linden.globs.ARGS.report.endswith(";"):
+    linden.globs.ARGS.report += ";"
+    if linden.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint(f"--report: semicolon added at the end; --report is now '{linden.globs.ARGS.report}'.")
 
 # =============================================================================
 # This point is only reached if there's no --version/--help argument
@@ -139,7 +164,7 @@ def exit_handler():
 atexit.register(exit_handler)
 
 
-from linden.serializers import SERIALIZERS
+from linden.serializers import SERIALIZERS, SerializationResults
 
 
 def read_cfgfile(filename):
@@ -403,6 +428,148 @@ def read_cmpstring(src_string):
     return False, None, None, None
 
 
+def report(results,
+           serializers__data_objs,
+           s1s2d):
+    """
+        report()
+
+        Print an analyze of <results>.
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of [(str)serializer][(str)data_name] = SerializationResult
+    """
+    serializers, data_objs = serializers__data_objs
+    serializers = sorted(serializers)
+    data_objs = sorted(data_objs)
+
+    serializer1, serializer2, data = s1s2d
+
+    # report (A)
+    if "A;" in ARGS.report:
+        rprint(f"[bold white on blue]REPORT for --cmp set to '[italic]{ARGS.cmp}[/italic]'[/bold white on blue]")
+        rprint()
+
+    # report (B1a)
+    if "B1a;" in ARGS.report:
+        if "titles;" in ARGS.report:
+            rprint("[bold white on blue](B1a) full details: serializer * data object[/bold white on blue]")
+        table = rich.table.Table(show_header=True, header_style="bold blue")
+        table.add_column("serializer/data object", width=25)
+        table.add_column("enc. ok ?", width=12)
+        table.add_column("enc. time", width=10)
+        table.add_column("jsonstr. len.", width=13)
+        table.add_column("dec. ok ?", width=12)
+        table.add_column("dec. time", width=10)
+        table.add_column("enc ⇆ dec ?", width=12)
+
+        for serializer in serializers:
+            table.add_row("[yellow]"+serializer+":"+"[/yellow]")
+            for data_obj in data_objs:
+                table.add_row("> "+ "[white]" + data_obj + "[/white]",
+                              results.repr_attr(serializer, data_obj, "encoding_success"),
+                              results.repr_attr(serializer, data_obj, "encoding_time"),
+                              results.repr_attr(serializer, data_obj, "encoding_stringlength"),
+                              results.repr_attr(serializer, data_obj, "decoding_success"),
+                              results.repr_attr(serializer, data_obj, "decoding_time"),
+                              results.repr_attr(serializer, data_obj, "identity"))
+        rprint(table)
+        rprint()
+
+    # report (B1b)
+    if "B1b;" in ARGS.report:
+        if "titles;" in ARGS.report:
+            rprint("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
+        table = rich.table.Table(show_header=True, header_style="bold blue")
+        table.add_column("serializer", width=25)
+        table.add_column(f"enc. ok ? (max={results.data_objs_number})", width=12)
+        table.add_column("Σ enc. time", width=10)
+        table.add_column("Σ jsonstr. len.", width=13)
+        table.add_column(f"dec. ok ? (max={results.data_objs_number})", width=12)
+        table.add_column("Σ dec. time", width=10)
+        table.add_column(f"enc ⇆ dec ? (max={results.data_objs_number})", width=12)
+
+        for serializer in serializers:
+            table.add_row(f"[yellow]{serializer}[/yellow]",
+                          f"{results.ratio_encoding_success(serializer=serializer)}",
+                          f"{results.total_encoding_time(serializer=serializer)}",
+                          f"{results.total_encoding_stringlength(serializer=serializer)}",
+                          f"{results.ratio_decoding_success(serializer=serializer)}",
+                          f"{results.total_decoding_time(serializer=serializer)}",
+                          f"{results.ratio_identity(serializer=serializer)}",
+                          )
+
+        rprint(table)
+        rprint()
+
+    # report (B1c)
+    if "B1c;" in ARGS.report:
+        if "titles;" in ARGS.report:
+            rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <data_obj>[/bold white on blue]")
+        for serializer in serializers:
+            _list = tuple(data_obj for data_obj in results[serializer] \
+                          if not results[serializer][data_obj].identity)
+            if not _list:
+                rprint(f"* There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
+            else:
+                rprint(f"* Serializer '[yellow]{serializer}[/yellow]' can't handle the following data objects:")
+                for data_obj in _list:
+                    rprint("  - ", "[white]" + data_obj + "[/white]")
+        rprint()
+
+    # report (B2a)
+    if "B2a;" in ARGS.report:
+        if "titles;" in ARGS.report:
+            rprint("[bold white on blue](B2a) full details: data object * serializer[/bold white on blue]")
+        table = rich.table.Table(show_header=True, header_style="bold blue")
+        table.add_column("data object/serializer", width=25)
+        table.add_column("enc. ok ?", width=12)
+        table.add_column("enc. time", width=10)
+        table.add_column("jsonstr. len.", width=13)
+        table.add_column("dec. ok ?", width=12)
+        table.add_column("dec. time", width=10)
+        table.add_column("enc ⇆ dec ?", width=12)
+
+        for data_obj in data_objs:
+            table.add_row("[white]"+data_obj+":"+"[/white]")
+            for serializer in serializers:
+                table.add_row("> "+ "[yellow]" + serializer + "[/yellow]",
+                              results.repr_attr(serializer, data_obj, "encoding_success"),
+                              results.repr_attr(serializer, data_obj, "encoding_time"),
+                              results.repr_attr(serializer, data_obj, "encoding_stringlength"),
+                              results.repr_attr(serializer, data_obj, "decoding_success"),
+                              results.repr_attr(serializer, data_obj, "decoding_time"),
+                              results.repr_attr(serializer, data_obj, "identity"))
+        rprint(table)
+        rprint()
+
+    # report (B2b)
+    if "B2b;" in ARGS.report:
+        if "titles;" in ARGS.report:
+            rprint("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
+        table = rich.table.Table(show_header=True, header_style="bold blue")
+        table.add_column("data object", width=25)
+        table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
+        table.add_column("Σ enc. time", width=10)
+        table.add_column("Σ jsonstr. len.", width=13)
+        table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
+        table.add_column("Σ dec. time", width=10)
+        table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
+
+        for data_obj in data_objs:
+            table.add_row(f"[white]{data_obj}[/white]",
+                          f"{results.ratio_encoding_success(data_obj=data_obj)}",
+                          f"{results.total_encoding_time(data_obj=data_obj)}",
+                          f"{results.total_encoding_stringlength(data_obj=data_obj)}",
+                          f"{results.ratio_decoding_success(data_obj=data_obj)}",
+                          f"{results.total_decoding_time(data_obj=data_obj)}",
+                          f"{results.ratio_identity(data_obj=data_obj)}",
+                          )
+
+        rprint(table)
+        rprint()
+
 def main():
     """
         main()
@@ -446,15 +613,22 @@ def main():
         if ARGS.verbosity == VERBOSITY_DEBUG:
             rprint("@ data objs to be used are: ", _data_objs)
 
+        results = SerializationResults()
         for serializer in _serializers:
+            results[serializer] = {}
             for data_name in _data_objs:
                 if ARGS.verbosity == VERBOSITY_DEBUG:
                     rprint(f"@ about to call function for serializer='{serializer}' "
                            f"and data name='{data_name}'")
-                result = SERIALIZERS[serializer].func(action="serialize",
-                                                      obj=DATA[data_name])
+                results[serializer][data_name] = SERIALIZERS[serializer].func(action="serialize",
+                                                                              obj=DATA[data_name])
                 if ARGS.verbosity == VERBOSITY_DEBUG:
-                    rprint("@ result:", result)
+                    rprint("@ result:", results[serializer][data_name])
+        results._finish_initialization()
+
+        report(results,
+               (_serializers, _data_objs),
+               (serializer1, serializer2, data))
 
     except LindenError as exception:
         rprint(exception)

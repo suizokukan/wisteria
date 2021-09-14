@@ -15,7 +15,20 @@ According to the tests conducted on the data of the "comparing what is comparabl
 According to the tests conducted on the data read in the %%% file
 Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 
+
+doc de class SerializationResult & co.
+identity ??? conformité ? ressemblance ?
+si data_objs_number==0 ou si serializers_number==0, error
+
 linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
+
+[DONE] task-14
+
+Report (A, B1a, B1b, B2a, B2b)
+
+    * --report option
+    * report()
+    * globs.py: REPORT_MINIMAL_STRING and REPORT_FULL_STRING 
 
 [DONE] task-13
 
