@@ -92,49 +92,72 @@ class SerializationResults(dict):
 
         _______________________________________________________________________
 
-        o  def __init__(self)
-        o  def _finish_initialization(self)
-        o  def _format_ratio(self, inttotal_and_floatratio)
-        o  def _format_stringlength(self, int_stringlength)
-        o  def _format_success(self, bool_success)
-        o  def _format_time(self, floattime)
-        o  def ratio_decoding_success(self, serializer=None, data_obj=None)
-        o  def ratio_encoding_success(self, serializer=None, data_obj=None)
-        o  def ratio_identify(self, serializer=None, data_obj=None)
-        o  def repr_attr(self, serializer, data_obj, attribute_name)
-        o  def total_decoding_time(self, serializer=None, data_obj=None)
-        o  def total_encoding_stringlength(self, serializer=None, data_obj=None)
-        o  def total_encoding_time(self, serializer=None, data_obj=None)
+TODO
+class attr ?
+
+        o  __init__(self)
+        o  _finish_initialization(self)
+        o  _format_ratio(self, inttotal_and_floatratio)
+        o  _format_stringlength(self, int_stringlength)
+        o  _format_success(self, bool_success)
+        o  _get_dataobjs_base(self)
+        o  _format_time(self, floattime)
+        o  ratio_decoding_success(self, serializer=None, data_obj=None)
+        o  ratio_encoding_success(self, serializer=None, data_obj=None)
+        o  ratio_identify(self, serializer=None, data_obj=None)
+        o  repr_attr(self, serializer, data_obj, attribute_name)
+        o  total_decoding_time(self, serializer=None, data_obj=None)
+        o  total_encoding_stringlength(self, serializer=None, data_obj=None)
+        o  total_encoding_time(self, serializer=None, data_obj=None)
     """
     def __init__(self):
         """
             SerializationResults.__init__()
         """
         dict.__init__(self)
+        self.serializers = []
+        self.dataobjs = []
         self.serializers_number = None
-        self.data_objs_number = None
+        self.dataobjs_number = None
 
     def _finish_initialization(self):
         """
             SerializationResults._finish_initialization()
 
             Once the initialization of <self> is over, this method must be called to
-            set self.serializers_number and self.data_objs_number.
+            set self.self.serializers, self.dataobjs, self.serializers_number 
+            and self.dataobjs_number.
 
             ___________________________________________________________________
 
             RETURNED VALUE: (bool)success
-        """ 
-        self.serializers_number = len(self)
+        """
+        self.serializers = sorted(self.keys())
+        self.serializers_number = len(self.serializers)
 
         if self.serializers_number == 0:
             rprint("ERR015: Incorrect data, there's no serializer.")
             return False
             
-        first_serializer = tuple(self.keys())[0]
-        self.data_objs_number = len(self[first_serializer])
+        first_serializer = tuple(self.serializers)[0]
+        self.dataobjs = sorted(self[first_serializer].keys())
+        self.dataobjs_number = len(self.dataobjs)
 
         return True
+
+    def _format_base100(self,
+                        bool_is_base100_value,
+                        float_base100):
+        """
+TODO
+        """
+        prefix = " "
+        suffix = ""
+        if bool_is_base100_value:
+            prefix = "[italic]*"
+            suffix = "[/italic]"
+            
+        return f"{prefix}{float_base100:.2f}{suffix}"
 
     def _format_ratio(self,
                       inttotal_and_floatratio):
@@ -158,7 +181,7 @@ class SerializationResults(dict):
     def _format_stringlength(self,
                              int_stringlength):
         """
-            SerializationResults.
+            SerializationResults._format_stringlength()
 
             Format the input argument into a string. The input argument is a (int)number
             of characters
@@ -175,7 +198,7 @@ class SerializationResults(dict):
     def _format_success(self,
                         bool_success):
         """
-            SerializationResults.
+            SerializationResults._format_success()
 
             Format the input argument into a string. The input argument is a (bool)success.
                 ex: False > "NOT OK"
@@ -191,7 +214,7 @@ class SerializationResults(dict):
     def _format_time(self,
                      floattime):
         """
-            SerializationResults.
+            SerializationResults._format_time()
 
             Format the input argument into a string. The input argument is a (float)time laps.
                 ex: 0.333345677 > "0.333345"
@@ -203,11 +226,41 @@ class SerializationResults(dict):
         """
         return f"{floattime:.6f}"
 
+    def _get_dataobjs_base(self,
+                           attribute):
+        """
+        TODO
+
+        Return base data object for attribute <attribute>.
+        """
+        res = None
+
+        if attribute == "encoding_time":
+            for dataobj in self.dataobjs:
+                if self[self.serializers[0]][dataobj].encoding_success:
+                    return dataobj
+            return None
+
+        if attribute == "encoding_stringlength":
+            for dataobj in self.dataobjs:
+                if self[self.serializers[0]][dataobj].encoding_stringlength:
+                    return dataobj
+            return None
+
+        if attribute == "decoding_time":
+            for dataobj in self.dataobjs:
+                if self[self.serializers[0]][dataobj].decoding_success:
+                    return dataobj
+            return None
+
+        raise NotImplementedError  # TODO à supprimer
+
+
     def ratio_decoding_success(self,
                                serializer=None,
                                data_obj=None):
         """
-            SerializationResults.
+            SerializationResults.ratio_decoding_success()
 
             Compute and format the ratio of decoding success for a <serializer>
             OR for a <data_obj>ect.
@@ -224,7 +277,7 @@ class SerializationResults(dict):
         """
         assert serializer is None or data_obj is None
 
-        count = 0  # number of serializers or data_objs that are taken in account.
+        count = 0  # number of serializers or dataobjs that are taken in account.
 
         if serializer is not None:
             if self.serializers_number == 0:
@@ -233,22 +286,22 @@ class SerializationResults(dict):
             for data_obj in self[serializer]:
                 if self[serializer][data_obj].decoding_success:
                     count += 1
-            return self._format_ratio((count, count/self.data_objs_number))
+            return self._format_ratio((count, count/self.dataobjs_number))
 
         if data_obj is not None:
-            if self.data_objs_number == 0:
+            if self.dataobjs_number == 0:
                 return self._format_ratio(None, None)
 
             for serializer in self:
                 if self[serializer][data_obj].decoding_success:
                     count += 1
-            return self._format_ratio((count, count/self.data_objs_number))
+            return self._format_ratio((count, count/self.serializers_number))
 
     def ratio_encoding_success(self,
                                serializer=None,
                                data_obj=None):
         """
-            SerializationResults.
+            SerializationResults.ratio_encoding_success()
 
             Compute and format the ratio of encoding success for a <serializer>
             OR for a <data_obj>ect.
@@ -265,7 +318,7 @@ class SerializationResults(dict):
         """
         assert serializer is None or data_obj is None
 
-        count = 0  # number of serializers or data_objs that are taken in account.
+        count = 0  # number of serializers or dataobjs that are taken in account.
 
         if serializer is not None:
             if self.serializers_number == 0:
@@ -277,7 +330,7 @@ class SerializationResults(dict):
             return self._format_ratio((count, count/self.serializers_number))
 
         if data_obj is not None:
-            if self.data_objs_number == 0:
+            if self.dataobjs_number == 0:
                 return self._format_ratio((None, None))
 
             for serializer in self:
@@ -289,7 +342,7 @@ class SerializationResults(dict):
                        serializer=None,
                        data_obj=None):
         """
-            SerializationResults.
+            SerializationResults.ratio_similarity()
 
             Compute and format the ratio of similarity success for a <serializer>
             OR for a <data_obj>ect.
@@ -306,7 +359,7 @@ class SerializationResults(dict):
         """
         assert serializer is None or data_obj is None
 
-        count = 0  # number of serializers or data_objs that are taken in account.
+        count = 0  # number of serializers or dataobjs that are taken in account.
 
         if serializer is not None:
             if self.serializers_number == 0:
@@ -315,23 +368,23 @@ class SerializationResults(dict):
             for data_obj in self[serializer]:
                 if self[serializer][data_obj].similarity:
                     count += 1
-            return self._format_ratio((count, count/self.data_objs_number))
+            return self._format_ratio((count, count/self.dataobjs_number))
 
         if data_obj is not None:
-            if self.data_objs_number == 0:
+            if self.dataobjs_number == 0:
                 return self._format_ratio((None, None))
 
             for serializer in self:
                 if self[serializer][data_obj].similarity:
                     count += 1
-            return self._format_ratio((count, count/self.data_objs_number))
+            return self._format_ratio((count, count/self.serializers_number))
 
     def repr_attr(self,
                   serializer,
                   data_obj,
                   attribute_name):
         """
-            SerializationResults.
+            SerializationResults.repr_attr()
 
             Format the value stored into self[serializer][data_obj].<attribute_name>.
 
@@ -357,9 +410,10 @@ class SerializationResults(dict):
 
     def total_decoding_time(self,
                             serializer=None,
-                            data_obj=None):
+                            data_obj=None,
+                            output="formattedstr"):
         """
-            SerializationResults.
+            SerializationResults.total_decoding_time()
 
             Compute and format the total decoding time used by a <serializer>
             OR by a <data_obj>ect.
@@ -371,7 +425,10 @@ class SerializationResults(dict):
             o  <None|str>data_obj: if not None, name of the data object to be used.
                 BEWARE ! One and pnly one argument among <serializer> and <data_obj> can be set to
                          None.
-
+            o  (str)output: output type and format
+                    - "value": raw value (float)
+                    - "formattedstr": formatted string (str)
+                    - "base100": formatted string based on a "base 100" value (str)
             RETURNED VALUE: a formatted string representing the input argument.
         """
         assert serializer is None or data_obj is None
@@ -385,22 +442,34 @@ class SerializationResults(dict):
             for data_obj in self[serializer]:
                 if self[serializer][data_obj].decoding_success:
                     total += self[serializer][data_obj].decoding_time
-            return self._format_time(total)
+            if output == "value":
+                return total
+            if output == "formattedstr":
+                return self._format_time(total)
 
         if data_obj is not None:
-            if self.data_objs_number == 0:
+            if self.dataobjs_number == 0:
                 return self._format_time(None)
 
             for serializer in self:
                 if self[serializer][data_obj].decoding_success:
                     total += self[serializer][data_obj].decoding_time
-            return self._format_time(total)
+            if output == "value":
+                return total
+            if output == "formattedstr":
+                return self._format_time(total)
+            if output == "base100":
+                return self._format_base100(
+                    data_obj==self._get_dataobjs_base('decoding_time'),
+                    100*total/self.total_decoding_time(
+                        data_obj=self._get_dataobjs_base('decoding_time'), output="value"))
 
     def total_encoding_stringlength(self,
                                     serializer=None,
-                                    data_obj=None):
+                                    data_obj=None,
+                                    output="formattedstr"):
         """
-            SerializationResults.
+            SerializationResults.total_encoding_stringlength()
 
             Compute and format the total encoding string length created by a <serializer>
             OR for a <data_obj>ect.
@@ -412,6 +481,10 @@ class SerializationResults(dict):
             o  <None|str>data_obj: if not None, name of the data object to be used.
                 BEWARE ! One and pnly one argument among <serializer> and <data_obj> can be set to
                          None.
+            o  (str)output: output type and format
+                    - "value": raw value (float)
+                    - "formattedstr": formatted string (str)
+                    - "base100": formatted string based on a "base 100" value (str)
 
             RETURNED VALUE: a formatted string representing the input argument.
         """
@@ -426,20 +499,32 @@ class SerializationResults(dict):
             for data_obj in self[serializer]:
                 if self[serializer][data_obj].encoding_stringlength:
                     total += self[serializer][data_obj].encoding_stringlength
-            return self._format_stringlength(total)
+            if output == "value":
+                return total
+            if output == "formattedstr":                
+                return self._format_stringlength(total)
 
         if data_obj is not None:
-            if self.data_objs_number == 0:
+            if self.dataobjs_number == 0:
                 return self._format_stringlength(None)
 
             for serializer in self:
                 if self[serializer][data_obj].encoding_stringlength:
                     total += self[serializer][data_obj].encoding_stringlength
-            return self._format_stringlength(total)
-
+            if output == "value":
+                return total
+            if output == "formattedstr":                
+                return self._format_stringlength(total)
+            if output == "base100":
+                return self._format_base100(
+                    data_obj==self._get_dataobjs_base('encoding_stringlength'),
+                    100*total/self.total_encoding_stringlength(
+                        data_obj=self._get_dataobjs_base('encoding_stringlength'), output="value"))
+            
     def total_encoding_time(self,
                             serializer=None,
-                            data_obj=None):
+                            data_obj=None,
+                            output="formattedstr"):
         """
             SerializationResults.
 
@@ -453,7 +538,10 @@ class SerializationResults(dict):
             o  <None|str>data_obj: if not None, name of the data object to be used.
                 BEWARE ! One and pnly one argument among <serializer> and <data_obj> can be set to
                          None.
-
+            o  (str)output: output type and format
+                    - "value": raw value (float)
+                    - "formattedstr": formatted string (str)
+                    - "base100": formatted string based on a "base 100" value (str)
             RETURNED VALUE: a formatted string representing the input argument.
         """
         assert serializer is None or data_obj is None
@@ -467,16 +555,27 @@ class SerializationResults(dict):
             for data_obj in self[serializer]:
                 if self[serializer][data_obj].encoding_success:
                     total += self[serializer][data_obj].encoding_time
-            return self._format_time(total)
+            if output == "value":
+                return total
+            if output == "formattedstr":
+                return self._format_time(total)
 
         if data_obj is not None:
-            if self.data_objs_number == 0:
+            if self.dataobjs_number == 0:
                 return self._format_time(None)
 
             for serializer in self:
                 if self[serializer][data_obj].encoding_success:
                     total += self[serializer][data_obj].encoding_time
-            return self._format_time(total)
+            if output == "value":
+                return total
+            if output == "formattedstr":
+                return self._format_time(total)
+            if output == "base100":
+                return self._format_base100(
+                    data_obj==self._get_dataobjs_base('encoding_time'),
+                    100*total/self.total_encoding_time(
+                        data_obj=self._get_dataobjs_base('encoding_time'), output="value"))
 
 
 class SerializationResult:

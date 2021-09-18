@@ -16,6 +16,18 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 * --downloaddfltini
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 * linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
+* progress bar : calcul
+  en profiter pour proposer plusieurs méthodes : 1.1, 1.2, ... 1.9, 2.1, 2.2 ... 2.9, ...
+                                                 1.1, 2.1, 3.1, ... 1.2, 2.2, 3.2, ...
+* --lenmethod + modifier les en-têtes des tableaux
+* --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+
+[DONE] task-18
+
+Report (A, B1a, B1b, B2a, B2b, C2b)
+
+    * Report (A, B1a, B1b, B2a, B2b, C2b)
+    * doc.
 
 [DONE] task-17
 

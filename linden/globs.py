@@ -49,7 +49,7 @@ VERBOSITY_DEBUG = 3
 
 ARGS = None
 
-TIMEITNUMBER = 10
+TIMEITNUMBER = 10  # TODO !
 
 TMPFILENAME = "linden.tmp"
 
@@ -57,4 +57,4 @@ REGEX_CMP = re.compile("^\s*(?P<serializer1>[^\s\(\)]+)((\svs\s|\sversus\s|\saga
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
 REPORT_MINIMAL_STRING = "C;"
-REPORT_FULL_STRING = "titles;A;B1a;B1b;B2a;B2b;"
+REPORT_FULL_STRING = "titles;A;B1a;B1b;B2a;B2b;C2b;"
