@@ -22,6 +22,12 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 * --lenmethod + modifier les en-têtes des tableaux
 * --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
 
+[DONE] task-19
+
+report (C1b)
+ 
+    * report (C1b)
+
 [DONE] task-18
 
 Report (A, B1a, B1b, B2a, B2b, C2b)
