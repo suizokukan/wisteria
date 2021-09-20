@@ -45,8 +45,9 @@ import timeit
 
 from rich import print as rprint
 
-from linden.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
+from linden.globs import VERBOSITY_DETAILS
 from linden.globs import ARGS, TIMEITNUMBER
+from linden.lindenerror import LindenError
 
 MODULES = {}
 
@@ -66,7 +67,7 @@ def trytoimport(module_name):
     res = True
     try:
         MODULES[module_name] = importlib.import_module(module_name)
-        if ARGS.verbosity>=VERBOSITY_DETAILS:
+        if ARGS.verbosity >= VERBOSITY_DETAILS:
             rprint(f"Module '{module_name}' successfully imported.")
     except ModuleNotFoundError:
         res = False
@@ -74,7 +75,7 @@ def trytoimport(module_name):
 
 
 def _len(obj):
-    if type(obj) is str:
+    if isinstance(obj, str):
         return len(bytes(obj, "utf-8"))
     return len(obj)
 
@@ -125,7 +126,7 @@ class attr ?
             SerializationResults._finish_initialization()
 
             Once the initialization of <self> is over, this method must be called to
-            set self.self.serializers, self.dataobjs, self.serializers_number 
+            set self.self.serializers, self.dataobjs, self.serializers_number
             and self.dataobjs_number.
 
             ___________________________________________________________________
@@ -138,15 +139,15 @@ class attr ?
         if self.serializers_number == 0:
             rprint("ERR015: Incorrect data, there's no serializer.")
             return False
-            
+
         first_serializer = tuple(self.serializers)[0]
         self.dataobjs = sorted(self[first_serializer].keys())
         self.dataobjs_number = len(self.dataobjs)
 
         return True
 
-    def _format_base100(self,
-                        bool_is_base100_value,
+    @staticmethod
+    def _format_base100(bool_is_base100_value,
                         float_base100):
         """
 TODO
@@ -156,11 +157,11 @@ TODO
         if bool_is_base100_value:
             prefix = "[italic]*"
             suffix = "[/italic]"
-            
+
         return f"{prefix}{float_base100:.2f}{suffix}"
 
-    def _format_ratio(self,
-                      inttotal_and_floatratio):
+    @staticmethod
+    def _format_ratio(inttotal_and_floatratio):
         """
             SerializationResults._format_ratio()
 
@@ -178,8 +179,8 @@ TODO
             return f"{inttotal_and_floatratio[0]} ({100*inttotal_and_floatratio[1]:.2f} %)"
         return "(no data)"
 
-    def _format_stringlength(self,
-                             int_stringlength):
+    @staticmethod
+    def _format_stringlength(int_stringlength):
         """
             SerializationResults._format_stringlength()
 
@@ -195,8 +196,8 @@ TODO
         """
         return f"{int_stringlength} chars"
 
-    def _format_success(self,
-                        bool_success):
+    @staticmethod
+    def _format_success(bool_success):
         """
             SerializationResults._format_success()
 
@@ -211,8 +212,8 @@ TODO
         """
         return "ok" if bool_success else "[red]NOT OK[/red]"
 
-    def _format_time(self,
-                     floattime):
+    @staticmethod
+    def _format_time(floattime):
         """
             SerializationResults._format_time()
 
@@ -233,8 +234,6 @@ TODO
 
         Return base data object for attribute <attribute>.
         """
-        res = None
-
         if attribute == "encoding_time":
             for dataobj in self.dataobjs:
                 if self[self.serializers[0]][dataobj].encoding_success:
@@ -253,7 +252,8 @@ TODO
                     return dataobj
             return None
 
-        raise NotImplementedError  # TODO à supprimer
+        raise LindenError("Internal error: the result could not be computed. "
+                          f"{attribute=};")
 
     def _get_serializers_base(self,
                               attribute):
@@ -262,8 +262,6 @@ TODO
 
         Return base serializer for attribute <attribute>.
         """
-        res = None
-
         if attribute == "encoding_time":
             for serializer in self.serializers:
                 if self[serializer][self.dataobjs[0]].encoding_success:
@@ -282,7 +280,8 @@ TODO
                     return serializer
             return None
 
-        raise NotImplementedError  # TODO à supprimer
+        raise LindenError("Internal error: the result could not be computed. "
+                          f"{attribute=};")
 
     def ratio_decoding_success(self,
                                serializer=None,
@@ -307,23 +306,24 @@ TODO
 
         count = 0  # number of serializers or dataobjs that are taken in account.
 
+        # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return self._format_ratio(None, None)
+                return SerializationResults._format_ratio(None, None)
 
-            for dataobj in self[serializer]:
-                if self[serializer][dataobj].decoding_success:
+            for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].decoding_success:
                     count += 1
-            return self._format_ratio((count, count/self.dataobjs_number))
+            return SerializationResults._format_ratio((count, count/self.dataobjs_number))
 
-        if dataobj is not None:
-            if self.dataobjs_number == 0:
-                return self._format_ratio(None, None)
+        # dataobj is not None:
+        if self.dataobjs_number == 0:
+            return SerializationResults._format_ratio(None, None)
 
-            for serializer in self:
-                if self[serializer][dataobj].decoding_success:
-                    count += 1
-            return self._format_ratio((count, count/self.serializers_number))
+        for _serializer in self:
+            if self[_serializer][dataobj].decoding_success:
+                count += 1
+        return SerializationResults._format_ratio((count, count/self.serializers_number))
 
     def ratio_encoding_success(self,
                                serializer=None,
@@ -348,27 +348,28 @@ TODO
 
         count = 0  # number of serializers or dataobjs that are taken in account.
 
+        # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return self._format_ratio((None, None))
+                return SerializationResults._format_ratio((None, None))
 
-            for dataobj in self[serializer]:
-                if self[serializer][dataobj].encoding_success:
+            for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].encoding_success:
                     count += 1
-            return self._format_ratio((count, count/self.dataobjs_number))
+            return SerializationResults._format_ratio((count, count/self.dataobjs_number))
 
-        if dataobj is not None:
-            if self.dataobjs_number == 0:
-                return self._format_ratio((None, None))
+        # dataobj is not None:
+        if self.dataobjs_number == 0:
+            return SerializationResults._format_ratio((None, None))
 
-            for serializer in self:
-                if self[serializer][dataobj].encoding_success:
-                    count += 1
-            return self._format_ratio((count, count/self.serializers_number))
+        for _serializer in self:
+            if self[_serializer][dataobj].encoding_success:
+                count += 1
+        return SerializationResults._format_ratio((count, count/self.serializers_number))
 
     def ratio_similarity(self,
-                       serializer=None,
-                       dataobj=None):
+                         serializer=None,
+                         dataobj=None):
         """
             SerializationResults.ratio_similarity()
 
@@ -389,23 +390,24 @@ TODO
 
         count = 0  # number of serializers or dataobjs that are taken in account.
 
+        # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return self._format_ratio((None, None))
+                return SerializationResults._format_ratio((None, None))
 
-            for dataobj in self[serializer]:
-                if self[serializer][dataobj].similarity:
+            for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].similarity:
                     count += 1
-            return self._format_ratio((count, count/self.dataobjs_number))
+            return SerializationResults._format_ratio((count, count/self.dataobjs_number))
 
-        if dataobj is not None:
-            if self.dataobjs_number == 0:
-                return self._format_ratio((None, None))
+        # dataobj is not None:
+        if self.dataobjs_number == 0:
+            return SerializationResults._format_ratio((None, None))
 
-            for serializer in self:
-                if self[serializer][dataobj].similarity:
-                    count += 1
-            return self._format_ratio((count, count/self.serializers_number))
+        for _serializer in self:
+            if self[_serializer][dataobj].similarity:
+                count += 1
+        return SerializationResults._format_ratio((count, count/self.serializers_number))
 
     def repr_attr(self,
                   serializer,
@@ -423,18 +425,31 @@ TODO
             RETURNED VALUE: a formatted string representing
                             self[serializer][dataobj].<attribute_name>
         """
+        res = None  # unexpected result !
+
         if attribute_name == "decoding_success":
-            return self._format_success(self[serializer][dataobj].decoding_success)
+            res = SerializationResults._format_success(
+                self[serializer][dataobj].decoding_success)
         if attribute_name == "decoding_time":
-            return self._format_time(self[serializer][dataobj].decoding_time)
+            res = SerializationResults._format_time(
+                self[serializer][dataobj].decoding_time)
         if attribute_name == "encoding_stringlength":
-            return self._format_stringlength(self[serializer][dataobj].encoding_stringlength)
+            res = SerializationResults._format_stringlength(
+                self[serializer][dataobj].encoding_stringlength)
         if attribute_name == "encoding_time":
-            return self._format_time(self[serializer][dataobj].encoding_time)
+            res = SerializationResults._format_time(
+                self[serializer][dataobj].encoding_time)
         if attribute_name == "encoding_success":
-            return self._format_success(self[serializer][dataobj].encoding_success)
+            res = SerializationResults._format_success(
+                self[serializer][dataobj].encoding_success)
         if attribute_name == "similarity":
-            return self._format_success(self[serializer][dataobj].similarity)
+            res = SerializationResults._format_success(
+                self[serializer][dataobj].similarity)
+
+        if res is None:
+            raise LindenError("Internal error: the result could not be computed. "
+                              f"{serializer=}; {dataobj=}; {attribute_name=};")
+        return res
 
     def total_decoding_time(self,
                             serializer=None,
@@ -461,41 +476,49 @@ TODO
         """
         assert serializer is None or dataobj is None
 
+        res = None  # unexpected result !
         total = 0  # total time
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return self._format_time(None)
+                return SerializationResults._format_time(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].decoding_success:
                     total += self[serializer][_dataobj].decoding_time
             if output == "value":
-                return total
+                res = total
             if output == "formattedstr":
-                return self._format_time(total)
+                res = SerializationResults._format_time(total)
             if output == "base100":
-                return self._format_base100(
-                    serializer==self._get_serializers_base('decoding_time'),
+                res = SerializationResults._format_base100(
+                    serializer == self._get_serializers_base('decoding_time'),
                     100*total/self.total_decoding_time(
-                        serializer=self._get_serializers_base('decoding_time'), output="value"))
+                        serializer=self._get_serializers_base('decoding_time'),
+                        output="value"))
 
-        if dataobj is not None:
+        else:
             if self.dataobjs_number == 0:
-                return self._format_time(None)
+                return SerializationResults._format_time(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj].decoding_success:
                     total += self[_serializer][dataobj].decoding_time
             if output == "value":
-                return total
+                res = total
             if output == "formattedstr":
-                return self._format_time(total)
+                res = SerializationResults._format_time(total)
             if output == "base100":
-                return self._format_base100(
-                    dataobj==self._get_dataobjs_base('decoding_time'),
+                res = SerializationResults._format_base100(
+                    dataobj == self._get_dataobjs_base('decoding_time'),
                     100*total/self.total_decoding_time(
-                        dataobj=self._get_dataobjs_base('decoding_time'), output="value"))
+                        dataobj=self._get_dataobjs_base('decoding_time'),
+                        output="value"))
+
+        if res is None:
+            raise LindenError("Internal error: the result could not be computed. "
+                              f"{serializer=}; {dataobj=}; {output=};")
+        return res
 
     def total_encoding_stringlength(self,
                                     serializer=None,
@@ -523,42 +546,50 @@ TODO
         """
         assert serializer is None or dataobj is None
 
+        res = None  # unexpected result !
         total = 0  # total time
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return self._format_stringlength(None)
+                return SerializationResults._format_stringlength(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].encoding_stringlength:
                     total += self[serializer][_dataobj].encoding_stringlength
             if output == "value":
-                return total
-            if output == "formattedstr":                
-                return self._format_stringlength(total)
+                res = total
+            if output == "formattedstr":
+                res = SerializationResults._format_stringlength(total)
             if output == "base100":
-                return self._format_base100(
-                    serializer==self._get_serializers_base('encoding_stringlength'),
+                res = SerializationResults._format_base100(
+                    serializer == self._get_serializers_base('encoding_stringlength'),
                     100*total/self.total_encoding_stringlength(
-                        serializer=self._get_serializers_base('encoding_stringlength'), output="value"))
+                        serializer=self._get_serializers_base('encoding_stringlength'),
+                        output="value"))
 
-        if dataobj is not None:
+        else:
             if self.dataobjs_number == 0:
-                return self._format_stringlength(None)
+                return SerializationResults._format_stringlength(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj].encoding_stringlength:
                     total += self[_serializer][dataobj].encoding_stringlength
             if output == "value":
-                return total
-            if output == "formattedstr":                
-                return self._format_stringlength(total)
+                res = total
+            if output == "formattedstr":
+                res = SerializationResults._format_stringlength(total)
             if output == "base100":
-                return self._format_base100(
-                    dataobj==self._get_dataobjs_base('encoding_stringlength'),
+                res = SerializationResults._format_base100(
+                    dataobj == self._get_dataobjs_base('encoding_stringlength'),
                     100*total/self.total_encoding_stringlength(
-                        dataobj=self._get_dataobjs_base('encoding_stringlength'), output="value"))
-            
+                        dataobj=self._get_dataobjs_base('encoding_stringlength'),
+                        output="value"))
+
+        if res is None:
+            raise LindenError("Internal error: the result could not be computed. "
+                              f"{serializer=}; {dataobj=}; {output=};")
+        return res
+
     def total_encoding_time(self,
                             serializer=None,
                             dataobj=None,
@@ -584,41 +615,49 @@ TODO
         """
         assert serializer is None or dataobj is None
 
+        res = None  # unexpected result !
         total = 0  # total time
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return self._format_time(None)
+                return SerializationResults._format_time(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].encoding_success:
                     total += self[serializer][_dataobj].encoding_time
             if output == "value":
-                return total
+                res = total
             if output == "formattedstr":
-                return self._format_time(total)
+                res = SerializationResults._format_time(total)
             if output == "base100":
-                return self._format_base100(
-                    serializer==self._get_serializers_base('encoding_time'),
+                res = SerializationResults._format_base100(
+                    serializer == self._get_serializers_base('encoding_time'),
                     100*total/self.total_encoding_time(
-                        serializer=self._get_serializers_base('encoding_time'), output="value"))
+                        serializer=self._get_serializers_base('encoding_time'),
+                        output="value"))
 
-        if dataobj is not None:
+        else:
             if self.dataobjs_number == 0:
-                return self._format_time(None)
+                res = SerializationResults._format_time(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj].encoding_success:
                     total += self[_serializer][dataobj].encoding_time
             if output == "value":
-                return total
+                res = total
             if output == "formattedstr":
-                return self._format_time(total)
+                res = SerializationResults._format_time(total)
             if output == "base100":
-                return self._format_base100(
-                    dataobj==self._get_dataobjs_base('encoding_time'),
+                res = SerializationResults._format_base100(
+                    dataobj == self._get_dataobjs_base('encoding_time'),
                     100*total/self.total_encoding_time(
-                        dataobj=self._get_dataobjs_base('encoding_time'), output="value"))
+                        dataobj=self._get_dataobjs_base('encoding_time'),
+                        output="value"))
+
+        if res is None:
+            raise LindenError("Internal error: the result could not be computed. "
+                              f"{serializer=}; {dataobj=}; {output=};")
+        return res
 
 
 class SerializationResult:
@@ -649,6 +688,7 @@ class SerializationResult:
         self.decoding_success = decoding_success
         self.decoding_time = decoding_time
         self.similarity = similarity
+
     def __repr__(self):
         """
             SerializationResult.__repr__()
@@ -805,7 +845,6 @@ def serializer_jsonpickle(action="serialize",
 
     if action != "serialize":
         raise LindenError(f"Unknown 'action' keyword '{action}'.")
-        return None
 
     res = SerializationResult()
 
@@ -846,6 +885,6 @@ SERIALIZERS = {
                                  available=trytoimport("jsonpickle"),
                                  func=serializer_jsonpickle),
     }
-for serializer in SERIALIZERS:
-    if SERIALIZERS[serializer].available:
-        SERIALIZERS[serializer].version = SERIALIZERS[serializer].func("version")
+for _serializer in SERIALIZERS:
+    if SERIALIZERS[_serializer].available:
+        SERIALIZERS[_serializer].version = SERIALIZERS[_serializer].func("version")

@@ -21,6 +21,14 @@
 """
     linden.py
 
+    (pimydoc)exit codes
+    ⋅*  0: normal exit code
+    ⋅*  1: normal exit code after --checkup
+    ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+    ⋅* -2: error, ill-formed --cmp string
+    ⋅* -3: internal error, data can't be loaded
+
+
 - données à ajouter:
         RegularClass
         IntheritedList
@@ -66,8 +74,6 @@
         ("Y30:contextlib.AbstractAsyncContextManager", contextlib.AbstractAsyncContextManager),
 
         ("Z01:decimal.localcontext", decimal.localcontext()),
-
-- transformer les print en logging.
 """
 import argparse
 import atexit
@@ -84,6 +90,7 @@ from linden.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
 from linden.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
 from linden.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from linden.aboutproject import __projectname__, __version__
+from linden.lindenerror import LindenError
 
 
 PARSER = \
@@ -141,7 +148,8 @@ elif linden.globs.ARGS.report == "full":
 elif not linden.globs.ARGS.report.endswith(";"):
     linden.globs.ARGS.report += ";"
     if linden.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        rprint(f"--report: semicolon added at the end; --report is now '{linden.globs.ARGS.report}'.")
+        rprint("--report: semicolon added at the end; "
+               f"--report is now '{linden.globs.ARGS.report}'.")
 
 # =============================================================================
 # This point is only reached if there's no --version/--help argument
@@ -222,19 +230,19 @@ def read_cfgfile(filename):
     # -------------------------------
     if "data selection" not in config:
         rprint(f"(ERR003) While reading config file '{filename}': "
-               "missing '\[data selection]' section.")
+               "missing '\\[data selection]' section.")
         return None
     if "data sets" not in config:
         rprint(f"(ERR004) While reading config file '{filename}': "
-               f"missing '\[data sets]' section.")
+               "missing '\\[data sets]' section.")
         return None
     if "data objects" not in config:
         rprint(f"(ERR005) While reading config file '{filename}': "
-               f"missing '\[data objects]' section.")
+               "missing '\\[data objects]' section.")
         return None
     if "data selection" not in config["data selection"]:
         rprint(f"(ERR006) While reading config file '{filename}': "
-               f"missing '\[data selection]data selection=' entry.")
+               "missing '\\[data selection]data selection=' entry.")
         return None
 
     if config["data selection"]["data selection"] in ("all", "only if yes"):
@@ -245,7 +253,7 @@ def read_cfgfile(filename):
         if setname not in config["data sets"]:
             rprint(f"(ERR007) While reading config file '{filename}': "
                    f"undefined data set '{setname}' "
-                   "used in \[data selection] section but not defined in \[data sets] section")
+                   "used in \\[data selection] section but not defined in \\[data sets] section")
             return None
     else:
         rprint(f"(ERR008) While reading config file '{filename}': "
@@ -257,8 +265,8 @@ def read_cfgfile(filename):
         for data_set__subitem in config['data sets'][data_set].split(";"):
             if data_set__subitem.strip() != "" and \
                data_set__subitem not in config['data objects']:
-                rprint("(ERROR014) Wrong definition in \[data sets]; unknown data object "
-                       f"'{data_set__subitem}', not defined in \[data objects].")
+                rprint("(ERROR014) Wrong definition in \\[data sets]; unknown data object "
+                       f"'{data_set__subitem}', not defined in \\[data objects].")
                 return None
 
     # --------------------------------------------------------
@@ -325,12 +333,18 @@ def checkup():
             diagnostic = "Such a file exists and can be read without errors."
 
     rprint(f"With current arguments, configuration file would be '{ARGS.cfgfile}' "
-           f"({normpath(ARGS.cfgfile)}). "+diagnostic)
+           f"({normpath(ARGS.cfgfile)}). " + diagnostic)
 
 
 if linden.globs.ARGS.checkup:
     checkup()
-    sys.exit(1)  # TODO RETURNED VALUE
+    # (pimydoc)exit codes
+    # ⋅*  0: normal exit code
+    # ⋅*  1: normal exit code after --checkup
+    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅* -2: error, ill-formed --cmp string
+    # ⋅* -3: internal error, data can't be loaded
+    sys.exit(1)
 
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
@@ -340,15 +354,21 @@ if not os.path.exists(TMPFILENAME):
 from linden.data import DATA
 
 
-class LindenError(Exception):
+def get_data_selection(data,
+                       config):
     """
-        LindenError class
+        get_data_selection()
 
-        Unique exception raised by the program.
+        Return a tuple of the data objects names selected by the <config>.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  data:   (str)"all" or "ini"
+        o  config: (dict) dict returned by read_cfgfile()
+
+        RETURNED VALUE: (tuple) a tuple of (str)data keys
     """
-
-
-def get_data_selection(data, config):
     res = []
 
     if data == "all":
@@ -362,11 +382,16 @@ def get_data_selection(data, config):
         elif config["data selection"]["data selection"].startswith("data set/"):
             res = tuple(config["data sets"][config["data selection"]["data selection"]])
         else:
-            # TODO: error
-            raise LindenError("TODO")
+            raise LindenError(
+                "Can't understand a value given to \\[data selection]'data selection': "
+                f"what is '{config['data selection']['data selection']}' ? "
+                "Known values are 'all', 'ini' and 'data set/xxx' "
+                "where xxx is a string.")
     else:
-        # TODO
-        raise LindenError("TODO")
+        raise LindenError(
+            "Can't understand a value given to the 'data' part in --cmp: "
+            f"what is '{data}' ? "
+            "Known values are 'all' and 'ini'. ")
 
     return res
 
@@ -494,15 +519,16 @@ TODO
         table.add_column("enc ⇆ dec ?", width=12)
 
         for serializer in results.serializers:
-            table.add_row("[yellow]"+serializer+":"+"[/yellow]")
+            table.add_row("[yellow]" + serializer + ":" + "[/yellow]")
             for dataobj in results.dataobjs:
-                table.add_row("> "+ "[white]" + dataobj + "[/white]",
-                              results.repr_attr(serializer, dataobj, "encoding_success"),
-                              results.repr_attr(serializer, dataobj, "encoding_time"),
-                              results.repr_attr(serializer, dataobj, "encoding_stringlength"),
-                              results.repr_attr(serializer, dataobj, "decoding_success"),
-                              results.repr_attr(serializer, dataobj, "decoding_time"),
-                              results.repr_attr(serializer, dataobj, "similarity"))
+                table.add_row(
+                    "> " + "[white]" + dataobj + "[/white]",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time"),
+                    results.repr_attr(serializer, dataobj, "encoding_stringlength"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time"),
+                    results.repr_attr(serializer, dataobj, "similarity"))
         rprint(table)
         rprint()
 
@@ -520,15 +546,15 @@ TODO
         table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
 
         for serializer in results.serializers:
-            table.add_row(f"[yellow]{serializer}[/yellow]",
-                          f"{results.ratio_encoding_success(serializer=serializer)}",
-                          f"{results.total_encoding_time(serializer=serializer)}",
-                          f"{results.total_encoding_stringlength(serializer=serializer)}",
-                          f"{results.ratio_decoding_success(serializer=serializer)}",
-                          f"{results.total_decoding_time(serializer=serializer)}",
-                          f"{results.ratio_similarity(serializer=serializer)}",
-                          )
-
+            table.add_row(
+                f"[yellow]{serializer}[/yellow]",
+                f"{results.ratio_encoding_success(serializer=serializer)}",
+                f"{results.total_encoding_time(serializer=serializer)}",
+                f"{results.total_encoding_stringlength(serializer=serializer)}",
+                f"{results.ratio_decoding_success(serializer=serializer)}",
+                f"{results.total_decoding_time(serializer=serializer)}",
+                f"{results.ratio_similarity(serializer=serializer)}",
+            )
         rprint(table)
         rprint()
 
@@ -537,7 +563,7 @@ TODO
         if "titles;" in ARGS.report:
             rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <dataobj>[/bold white on blue]")
         for serializer in results.serializers:
-            _list = tuple(dataobj for dataobj in results[serializer] \
+            _list = tuple(dataobj for dataobj in results[serializer]
                           if not results[serializer][dataobj].similarity)
             if not _list:
                 rprint(f"* There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
@@ -561,15 +587,17 @@ TODO
         table.add_column("enc ⇆ dec ?", width=12)
 
         for dataobj in results.dataobjs:
-            table.add_row("[white]"+dataobj+":"+"[/white]")
+            table.add_row("[white]" + dataobj + ":" + "[/white]")
             for serializer in results.serializers:
-                table.add_row("> "+ "[yellow]" + serializer + "[/yellow]",
-                              results.repr_attr(serializer, dataobj, "encoding_success"),
-                              results.repr_attr(serializer, dataobj, "encoding_time"),
-                              results.repr_attr(serializer, dataobj, "encoding_stringlength"),
-                              results.repr_attr(serializer, dataobj, "decoding_success"),
-                              results.repr_attr(serializer, dataobj, "decoding_time"),
-                              results.repr_attr(serializer, dataobj, "similarity"))
+                table.add_row(
+                    "> " + "[yellow]" + serializer + "[/yellow]",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time"),
+                    results.repr_attr(serializer, dataobj, "encoding_stringlength"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time"),
+                    results.repr_attr(serializer, dataobj, "similarity")
+                )
         rprint(table)
         rprint()
 
@@ -587,15 +615,15 @@ TODO
         table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
 
         for dataobj in results.dataobjs:
-            table.add_row(f"[white]{dataobj}[/white]",
-                          f"{results.ratio_encoding_success(dataobj=dataobj)}",
-                          f"{results.total_encoding_time(dataobj=dataobj)}",
-                          f"{results.total_encoding_stringlength(dataobj=dataobj)}",
-                          f"{results.ratio_decoding_success(dataobj=dataobj)}",
-                          f"{results.total_decoding_time(dataobj=dataobj)}",
-                          f"{results.ratio_similarity(dataobj=dataobj)}",
-                          )
-
+            table.add_row(
+                f"[white]{dataobj}[/white]",
+                f"{results.ratio_encoding_success(dataobj=dataobj)}",
+                f"{results.total_encoding_time(dataobj=dataobj)}",
+                f"{results.total_encoding_stringlength(dataobj=dataobj)}",
+                f"{results.ratio_decoding_success(dataobj=dataobj)}",
+                f"{results.total_decoding_time(dataobj=dataobj)}",
+                f"{results.ratio_similarity(dataobj=dataobj)}",
+            )
         rprint(table)
         rprint()
 
@@ -608,42 +636,42 @@ TODO
         table.add_column("serializer", width=25)
         table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
         if base100 := results._get_serializers_base('encoding_time'):
-            table.add_column(f"Σ enc. time " \
+            table.add_column("Σ enc. time "
                              f"(base 100 = {results.total_encoding_time(serializer=base100)})",
                              width=10)
         else:
-            table.add_column(f"Σ enc. time [red](NO BASE 100)[/red]",
+            table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
                              width=10)
 
         if base100 := results._get_serializers_base('encoding_stringlength'):
-            table.add_column("Σ jsonstr. len. " \
+            table.add_column("Σ jsonstr. len. "
                              f"(base 100 = {results.total_encoding_stringlength(serializer=base100)})",
                              width=13)
         else:
             table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
-            
+
         table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
 
         if base100 := results._get_serializers_base('decoding_time'):
-            table.add_column(f"Σ dec. time " \
+            table.add_column("Σ dec. time "
                              f"(base 100 = {results.total_decoding_time(serializer=base100)})",
                              width=10)
         else:
-            table.add_column(f"Σ dec. time [red](NO BASE 100)[/red]",
+            table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
                              width=10)
-        
+
         table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
 
         for serializer in results.serializers:
-            table.add_row(f"[yellow]{serializer}[/yellow]",
-                          f"{results.ratio_encoding_success(serializer=serializer)}",
-                          f"{results.total_encoding_time(serializer=serializer, output='base100')}",
-                          f"{results.total_encoding_stringlength(serializer=serializer, output='base100')}",
-                          f"{results.ratio_decoding_success(serializer=serializer)}",
-                          f"{results.total_decoding_time(serializer=serializer, output='base100')}",
-                          f"{results.ratio_similarity(serializer=serializer)}",
-                          )
-
+            table.add_row(
+                f"[yellow]{serializer}[/yellow]",
+                f"{results.ratio_encoding_success(serializer=serializer)}",
+                f"{results.total_encoding_time(serializer=serializer, output='base100')}",
+                f"{results.total_encoding_stringlength(serializer=serializer, output='base100')}",
+                f"{results.ratio_decoding_success(serializer=serializer)}",
+                f"{results.total_decoding_time(serializer=serializer, output='base100')}",
+                f"{results.ratio_similarity(serializer=serializer)}",
+            )
         rprint(table)
         rprint()
 
@@ -657,15 +685,15 @@ TODO
         table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
 
         if base100 := results._get_dataobjs_base('encoding_time'):
-            table.add_column(f"Σ enc. time " \
+            table.add_column("Σ enc. time "
                              f"(base 100 = {results.total_encoding_time(dataobj=base100)})",
                              width=10)
         else:
-            table.add_column(f"Σ enc. time [red](NO BASE 100)[/red]",
+            table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
                              width=10)
 
         if base100 := results._get_dataobjs_base('encoding_stringlength'):
-            table.add_column("Σ jsonstr. len. " \
+            table.add_column("Σ jsonstr. len. "
                              f"(base 100 = {results.total_encoding_stringlength(dataobj=base100)})",
                              width=13)
         else:
@@ -674,25 +702,25 @@ TODO
         table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
 
         if base100 := results._get_dataobjs_base('decoding_time'):
-            table.add_column(f"Σ dec. time " \
+            table.add_column("Σ dec. time "
                              f"(base 100 = {results.total_decoding_time(dataobj=base100)})",
                              width=10)
         else:
-            table.add_column(f"Σ dec. time [red](NO BASE 100)[/red]",
+            table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
                              width=10)
-        
+
         table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
 
         for dataobj in results.dataobjs:
-            table.add_row(f"[white]{dataobj}[/white]",
-                          f"{results.ratio_encoding_success(dataobj=dataobj)}",
-                          f"{results.total_encoding_time(dataobj=dataobj, output='base100')}",
-                          f"{results.total_encoding_stringlength(dataobj=dataobj, output='base100')}",
-                          f"{results.ratio_decoding_success(dataobj=dataobj)}",
-                          f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
-                          f"{results.ratio_similarity(dataobj=dataobj)}",
-                          )
-
+            table.add_row(
+                f"[white]{dataobj}[/white]",
+                f"{results.ratio_encoding_success(dataobj=dataobj)}",
+                f"{results.total_encoding_time(dataobj=dataobj, output='base100')}",
+                f"{results.total_encoding_stringlength(dataobj=dataobj, output='base100')}",
+                f"{results.ratio_decoding_success(dataobj=dataobj)}",
+                f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
+                f"{results.ratio_similarity(dataobj=dataobj)}",
+            )
         rprint(table)
         rprint()
 
@@ -706,7 +734,13 @@ def main():
 
         _______________________________________________________________________
 
-        RETURNED VALUE: TODO
+        RETURNED VALUE:
+                (pimydoc)exit codes
+                ⋅*  0: normal exit code
+                ⋅*  1: normal exit code after --checkup
+                ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+                ⋅* -2: error, ill-formed --cmp string
+                ⋅* -3: internal error, data can't be loaded
     """
     if ARGS.verbosity >= VERBOSITY_DETAILS:
         rprint(__projectname__, __version__)
@@ -722,14 +756,26 @@ def main():
 
     if not success:
         rprint(f"(ERR013) an error occured while reading cmp string '{ARGS.cmp}'.")
-        return -2  # TODO
+        # (pimydoc)exit codes
+        # ⋅*  0: normal exit code
+        # ⋅*  1: normal exit code after --checkup
+        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅* -2: error, ill-formed --cmp string
+        # ⋅* -3: internal error, data can't be loaded
+        return -2
 
     config = None
     if data == "ini":
         config = read_cfgfile(ARGS.cfgfile)
 
         if config is None:
-            return -1  # TODO returned value
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: internal error, data can't be loaded
+            return -1
 
     try:
         # serializers and data to be used through the tests:
@@ -753,10 +799,22 @@ def main():
                     rprint("@ result:", results[serializer][data_name])
         if not results._finish_initialization():
             rprint("ERR015: incorrect data, the program has to stop.")
-            return -3  # TODO
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: internal error, data can't be loaded
+            return -3
         if results.dataobjs_number == 0:
             rprint("No data to handle, the program can stop.")
-            return 2  # TODO
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: internal error, data can't be loaded
+            return 2
 
         report(results,
                (serializer1, serializer2, data))
@@ -764,7 +822,13 @@ def main():
     except LindenError as exception:
         rprint(exception)
 
-    return 0  # TODO
+    # (pimydoc)exit codes
+    # ⋅*  0: normal exit code
+    # ⋅*  1: normal exit code after --checkup
+    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅* -2: error, ill-formed --cmp string
+    # ⋅* -3: internal error, data can't be loaded
+    return 0
 
 
 # =============================================================================

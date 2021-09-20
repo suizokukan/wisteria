@@ -19,50 +19,20 @@
 #    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    linden/globs.py
+    lindenerror.py
 
-    Global variables.
+    Definition of the LindenError class, the unique error class that should be
+    raised by the project.
 
     ___________________________________________________________________________
 
-    o  VERBOSITY_MINIMAL
-    o  VERBOSITY_NORMAL
-    o  VERBOSITY_DETAILS
-    o  VERBOSITY_DEBUG
-
-    o  ARGS
-
-    o  TIMEITNUMBER
-
-    o  TMPFILENAME
-
-    o  REGEX_CMP
-    o  REGEX_CMP__HELP
-
-    o  REPORT_MINIMAL_STRING
-    o  REPORT_FULL_STRING
+    o  LindenError
 """
-import re
 
 
-# values defined for --verbosity:
-VERBOSITY_MINIMAL = 0
-VERBOSITY_NORMAL = 1
-VERBOSITY_DETAILS = 2
-VERBOSITY_DEBUG = 3
+class LindenError(Exception):
+    """
+        LindenError class
 
-# will be set to argparse.ArgumentParser(...).parse_args()
-ARGS = None
-
-# number of times
-TIMEITNUMBER = 10
-
-TMPFILENAME = "linden.tmp"
-
-REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
-                       r"((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?"
-                       r"(\s*\((?P<data>all|cwc|ini)\))?\s*$")
-REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
-
-REPORT_MINIMAL_STRING = "C;"
-REPORT_FULL_STRING = "titles;A;B1a;B1b;B2a;B2b;C1b;C2b;"
+        Unique exception raised by the program.
+    """

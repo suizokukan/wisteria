@@ -56,13 +56,13 @@ DATA = {
 
     "complex": 1+2j,
 
-    "dict(keys/bool)": {False:"False", True:"True"},
-    "dict(keys/float)": {1.1:"value1.1", 2.2:"value2.2"},
-    "dict(keys/int)": {0: "value0", 1:"value1", 2:"value2"},
-    "dict(keys/str)": {"key1":"value1", "key2":"value2"},
-    "dict(keys/str+subdicts)": {"key1":"value1", "key2":"value2", "key3": {"key4": "key4",}},
+    "dict(keys/bool)": {False: "False", True: "True"},
+    "dict(keys/float)": {1.1: "value1.1", 2.2: "value2.2"},
+    "dict(keys/int)": {0: "value0", 1: "value1", 2: "value2"},
+    "dict(keys/str)": {"key1": "value1", "key2": "value2"},
+    "dict(keys/str+subdicts)": {"key1": "value1", "key2": "value2", "key3": {"key4": "key4", }},
 
-    "file descriptor": open(TMPFILENAME),
+    "file descriptor": open(TMPFILENAME, encoding="utf-8"),  # pylint: disable=consider-using-with
 
     "float": 1.1,
 
@@ -81,9 +81,9 @@ DATA = {
     "io.string": io.StringIO(),
     "io.string(empty)": io.StringIO().write("string"),
 
-    "list": ["1", "2",],
+    "list": ["1", "2", ],
     "list(empty)": [],
-    "list(+sublists)": ["1", "2", ["3", ["4",]]],
+    "list(+sublists)": ["1", "2", ["3", ["4", ]]],
 
     "memoryview": memoryview(b"123"),
 
