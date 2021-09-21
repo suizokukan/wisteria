@@ -22,9 +22,16 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 * --lenmethod + modifier les en-têtes des tableaux
 * --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
 
-task-24: TIMEITNUMBER > --timeitnumber=
-task-23: * report (C1a+C2a)
-task-22: accepter "B1" et "B" dans report.
+task-25: TIMEITNUMBER > --timeitnumber=
+task-24: * report (C1a+C2a)
+task-23: accepter "B1" et "B" dans report.
+task-22: report.py
+
+[DONE] task-22
+
+Report code moved to new file linden.py/report.py .
+
+    * Report code moved to new file linden.py/report.py .
 
 [DONE] task-21
 
