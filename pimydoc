@@ -21,7 +21,9 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### ==========================================================================
 ### (pimydoc)config file format
 ### (pimydoc)exit codes
+### (pimydoc)report sections
 
+    
 ### ==========================================================================
 [(pimydoc)config file format]
 
@@ -45,4 +47,8 @@ data objects
 * -1: error, given config file can't be read (missing or ill-formed file)
 * -2: error, ill-formed --cmp string
 * -3: internal error, data can't be loaded
+### ==========================================================================
+[(pimydoc)report sections]
+* A     : main title
+* B1a
 ### ==========================================================================

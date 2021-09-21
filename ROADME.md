@@ -22,6 +22,18 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 * --lenmethod + modifier les en-têtes des tableaux
 * --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
 
+task-24: TIMEITNUMBER > --timeitnumber=
+task-23: * report (C1a+C2a)
+task-22: accepter "B1" et "B" dans report.
+
+[DONE] task-21
+
+Report sections defined in --report are now read in their right order.
+
+    * Report sections defined in --report are now read in their right order.
+    * fixed a minor bug in SerializationResults.ratio_similarity()
+    * fixed REPORT_FULL_STRING to "titles;A;B1a;B1b;B1c;B2a;B2b;C1b;C2b;"
+
 [DONE] task-20
 
 Code has been pylinted.

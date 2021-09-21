@@ -121,7 +121,9 @@ PARSER.add_argument('--report',
                     default="minimal",
                     help=f"Report format: 'minimal' (interpreted as '{REPORT_MINIMAL_STRING}'), "
                     f"'full' (interpreted as '{REPORT_FULL_STRING}'), "
-                    "or a subset from this very last string, e.g. 'A;B1a;'. "
+                    "or a subset from this last string, e.g. 'A;B1a;'. "
+                    "You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...) "
+                    "or like 'B1' (=B1a+B1b+B1c). "
                     "Please notice that --verbosity has no effect upon --report.")
 
 PARSER.add_argument('--verbosity',
@@ -486,243 +488,392 @@ def read_cmpstring(src_string):
     return False, None, None, None
 
 
+def report_section_a():
+    """
+        report_section_a()
+
+        Sub-function of report() for report section "A"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+    """
+    rprint(f"[bold white on blue]REPORT for --cmp set to '[italic]{ARGS.cmp}[/italic]'[/bold white on blue]")
+    rprint()
+
+
+def report_section_b1a(results):
+    """
+        report_section_b1a()
+
+        Sub-function of report() for report section "B1a"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](B1a) full details: serializer * data object[/bold white on blue]")
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("serializer/data object", width=25)
+    table.add_column("enc. ok ?", width=12)
+    table.add_column("enc. time", width=10)
+    table.add_column("jsonstr. len.", width=13)
+    table.add_column("dec. ok ?", width=12)
+    table.add_column("dec. time", width=10)
+    table.add_column("enc ⇆ dec ?", width=12)
+
+    for serializer in results.serializers:
+        table.add_row("[yellow]" + serializer + ":" + "[/yellow]")
+        for dataobj in results.dataobjs:
+            table.add_row(
+                "> " + "[white]" + dataobj + "[/white]",
+                results.repr_attr(serializer, dataobj, "encoding_success"),
+                results.repr_attr(serializer, dataobj, "encoding_time"),
+                results.repr_attr(serializer, dataobj, "encoding_stringlength"),
+                results.repr_attr(serializer, dataobj, "decoding_success"),
+                results.repr_attr(serializer, dataobj, "decoding_time"),
+                results.repr_attr(serializer, dataobj, "similarity"))
+    rprint(table)
+    rprint()
+
+
+def report_section_b1b(results):
+    """
+        report_section_b1b()
+
+        Sub-function of report() for report section "B1b"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("serializer", width=25)
+    table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
+    table.add_column("Σ enc. time", width=10)
+    table.add_column("Σ jsonstr. len.", width=13)
+    table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
+    table.add_column("Σ dec. time", width=10)
+    table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
+
+    for serializer in results.serializers:
+        table.add_row(
+            f"[yellow]{serializer}[/yellow]",
+            f"{results.ratio_encoding_success(serializer=serializer)}",
+            f"{results.total_encoding_time(serializer=serializer)}",
+            f"{results.total_encoding_stringlength(serializer=serializer)}",
+            f"{results.ratio_decoding_success(serializer=serializer)}",
+            f"{results.total_decoding_time(serializer=serializer)}",
+            f"{results.ratio_similarity(serializer=serializer)}",
+        )
+    rprint(table)
+    rprint()
+
+
+def report_section_b1c(results):
+    """
+        report_section_b1c()
+
+        Sub-function of report() for report section "B1c"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <dataobj>[/bold white on blue]")
+    for serializer in results.serializers:
+        _list = tuple(dataobj for dataobj in results[serializer]
+                      if not results[serializer][dataobj].similarity)
+        if not _list:
+            rprint(f"* There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
+        else:
+            rprint(f"* Serializer '[yellow]{serializer}[/yellow]' can't handle the following data objects:")
+            for dataobj in _list:
+                rprint("  - ", "[white]" + dataobj + "[/white]")
+    rprint()
+
+
+def report_section_b2a(results):
+    """
+        report_section_b2a()
+
+        Sub-function of report() for report section "B2a"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](B2a) full details: data object * serializer[/bold white on blue]")
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("data object/serializer", width=25)
+    table.add_column("enc. ok ?", width=12)
+    table.add_column("enc. time", width=10)
+    table.add_column("jsonstr. len.", width=13)
+    table.add_column("dec. ok ?", width=12)
+    table.add_column("dec. time", width=10)
+    table.add_column("enc ⇆ dec ?", width=12)
+
+    for dataobj in results.dataobjs:
+        table.add_row("[white]" + dataobj + ":" + "[/white]")
+        for serializer in results.serializers:
+            table.add_row(
+                "> " + "[yellow]" + serializer + "[/yellow]",
+                results.repr_attr(serializer, dataobj, "encoding_success"),
+                results.repr_attr(serializer, dataobj, "encoding_time"),
+                results.repr_attr(serializer, dataobj, "encoding_stringlength"),
+                results.repr_attr(serializer, dataobj, "decoding_success"),
+                results.repr_attr(serializer, dataobj, "decoding_time"),
+                results.repr_attr(serializer, dataobj, "similarity")
+            )
+    rprint(table)
+    rprint()
+
+
+def report_section_b2b(results):
+    """
+        report_section_b2b()
+
+        Sub-function of report() for report section "B2b"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("data object", width=25)
+    table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
+    table.add_column("Σ enc. time", width=10)
+    table.add_column("Σ jsonstr. len.", width=13)
+    table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
+    table.add_column("Σ dec. time", width=10)
+    table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
+
+    for dataobj in results.dataobjs:
+        table.add_row(
+            f"[white]{dataobj}[/white]",
+            f"{results.ratio_encoding_success(dataobj=dataobj)}",
+            f"{results.total_encoding_time(dataobj=dataobj)}",
+            f"{results.total_encoding_stringlength(dataobj=dataobj)}",
+            f"{results.ratio_decoding_success(dataobj=dataobj)}",
+            f"{results.total_decoding_time(dataobj=dataobj)}",
+            f"{results.ratio_similarity(dataobj=dataobj)}",
+        )
+    rprint(table)
+    rprint()
+
+
+def report_section_c1b(results):
+    """
+        report_section_c1b()
+
+        Sub-function of report() for report section "C1b"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](C1b) full details: serializers (base 100)[/bold white on blue]")
+
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("serializer", width=25)
+    table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
+    if base100 := results._get_serializers_base('encoding_time'):
+        table.add_column("Σ enc. time "
+                         f"(base 100 = {results.total_encoding_time(serializer=base100)})",
+                         width=10)
+    else:
+        table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    if base100 := results._get_serializers_base('encoding_stringlength'):
+        table.add_column("Σ jsonstr. len. "
+                         f"(base 100 = {results.total_encoding_stringlength(serializer=base100)})",
+                         width=13)
+    else:
+        table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
+
+    table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
+
+    if base100 := results._get_serializers_base('decoding_time'):
+        table.add_column("Σ dec. time "
+                         f"(base 100 = {results.total_decoding_time(serializer=base100)})",
+                         width=10)
+    else:
+        table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
+
+    for serializer in results.serializers:
+        table.add_row(
+            f"[yellow]{serializer}[/yellow]",
+            f"{results.ratio_encoding_success(serializer=serializer)}",
+            f"{results.total_encoding_time(serializer=serializer, output='base100')}",
+            f"{results.total_encoding_stringlength(serializer=serializer, output='base100')}",
+            f"{results.ratio_decoding_success(serializer=serializer)}",
+            f"{results.total_decoding_time(serializer=serializer, output='base100')}",
+            f"{results.ratio_similarity(serializer=serializer)}",
+        )
+    rprint(table)
+    rprint()
+
+
+def report_section_c2b(results):
+    """
+        report_section_c2b()
+
+        Sub-function of report() for report section "C2b"
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    if "titles;" in ARGS.report:
+        rprint("[bold white on blue](C2b) full details: data objects (base 100)[/bold white on blue]")
+
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("data object", width=25)
+    table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
+
+    if base100 := results._get_dataobjs_base('encoding_time'):
+        table.add_column("Σ enc. time "
+                         f"(base 100 = {results.total_encoding_time(dataobj=base100)})",
+                         width=10)
+    else:
+        table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    if base100 := results._get_dataobjs_base('encoding_stringlength'):
+        table.add_column("Σ jsonstr. len. "
+                         f"(base 100 = {results.total_encoding_stringlength(dataobj=base100)})",
+                         width=13)
+    else:
+        table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
+
+    table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
+
+    if base100 := results._get_dataobjs_base('decoding_time'):
+        table.add_column("Σ dec. time "
+                         f"(base 100 = {results.total_decoding_time(dataobj=base100)})",
+                         width=10)
+    else:
+        table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
+
+    for dataobj in results.dataobjs:
+        table.add_row(
+            f"[white]{dataobj}[/white]",
+            f"{results.ratio_encoding_success(dataobj=dataobj)}",
+            f"{results.total_encoding_time(dataobj=dataobj, output='base100')}",
+            f"{results.total_encoding_stringlength(dataobj=dataobj, output='base100')}",
+            f"{results.ratio_decoding_success(dataobj=dataobj)}",
+            f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
+            f"{results.ratio_similarity(dataobj=dataobj)}",
+        )
+    rprint(table)
+    rprint()
+
+
 def report(results,
            s1s2d):
     """
         report()
 
         Print an analyze of <results>.
+
+        (pimydoc)report sections
+        ⋅* A     : main title
+        ⋅* B1a
         _______________________________________________________________________
 
         ARGUMENTS:
 TODO
-        o  results: (SerializationResults)a dict of [(str)serializer][(str)data_name] = SerializationResult
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
     """
     serializer1, serializer2, data = s1s2d
 
-    # report (A)
-    if "A;" in ARGS.report:
-        rprint(f"[bold white on blue]REPORT for --cmp set to '[italic]{ARGS.cmp}[/italic]'[/bold white on blue]")
-        rprint()
-
-    # report (B1a)
-    if "B1a;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](B1a) full details: serializer * data object[/bold white on blue]")
-        table = rich.table.Table(show_header=True, header_style="bold blue")
-        table.add_column("serializer/data object", width=25)
-        table.add_column("enc. ok ?", width=12)
-        table.add_column("enc. time", width=10)
-        table.add_column("jsonstr. len.", width=13)
-        table.add_column("dec. ok ?", width=12)
-        table.add_column("dec. time", width=10)
-        table.add_column("enc ⇆ dec ?", width=12)
-
-        for serializer in results.serializers:
-            table.add_row("[yellow]" + serializer + ":" + "[/yellow]")
-            for dataobj in results.dataobjs:
-                table.add_row(
-                    "> " + "[white]" + dataobj + "[/white]",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time"),
-                    results.repr_attr(serializer, dataobj, "encoding_stringlength"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity"))
-        rprint(table)
-        rprint()
-
-    # report (B1b)
-    if "B1b;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
-        table = rich.table.Table(show_header=True, header_style="bold blue")
-        table.add_column("serializer", width=25)
-        table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
-        table.add_column("Σ enc. time", width=10)
-        table.add_column("Σ jsonstr. len.", width=13)
-        table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
-        table.add_column("Σ dec. time", width=10)
-        table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
-
-        for serializer in results.serializers:
-            table.add_row(
-                f"[yellow]{serializer}[/yellow]",
-                f"{results.ratio_encoding_success(serializer=serializer)}",
-                f"{results.total_encoding_time(serializer=serializer)}",
-                f"{results.total_encoding_stringlength(serializer=serializer)}",
-                f"{results.ratio_decoding_success(serializer=serializer)}",
-                f"{results.total_decoding_time(serializer=serializer)}",
-                f"{results.ratio_similarity(serializer=serializer)}",
-            )
-        rprint(table)
-        rprint()
-
-    # report (B1c)
-    if "B1c;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <dataobj>[/bold white on blue]")
-        for serializer in results.serializers:
-            _list = tuple(dataobj for dataobj in results[serializer]
-                          if not results[serializer][dataobj].similarity)
-            if not _list:
-                rprint(f"* There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
-            else:
-                rprint(f"* Serializer '[yellow]{serializer}[/yellow]' can't handle the following data objects:")
-                for dataobj in _list:
-                    rprint("  - ", "[white]" + dataobj + "[/white]")
-        rprint()
-
-    # report (B2a)
-    if "B2a;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](B2a) full details: data object * serializer[/bold white on blue]")
-        table = rich.table.Table(show_header=True, header_style="bold blue")
-        table.add_column("data object/serializer", width=25)
-        table.add_column("enc. ok ?", width=12)
-        table.add_column("enc. time", width=10)
-        table.add_column("jsonstr. len.", width=13)
-        table.add_column("dec. ok ?", width=12)
-        table.add_column("dec. time", width=10)
-        table.add_column("enc ⇆ dec ?", width=12)
-
-        for dataobj in results.dataobjs:
-            table.add_row("[white]" + dataobj + ":" + "[/white]")
-            for serializer in results.serializers:
-                table.add_row(
-                    "> " + "[yellow]" + serializer + "[/yellow]",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time"),
-                    results.repr_attr(serializer, dataobj, "encoding_stringlength"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity")
-                )
-        rprint(table)
-        rprint()
-
-    # report (B2b)
-    if "B2b;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
-        table = rich.table.Table(show_header=True, header_style="bold blue")
-        table.add_column("data object", width=25)
-        table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
-        table.add_column("Σ enc. time", width=10)
-        table.add_column("Σ jsonstr. len.", width=13)
-        table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
-        table.add_column("Σ dec. time", width=10)
-        table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
-
-        for dataobj in results.dataobjs:
-            table.add_row(
-                f"[white]{dataobj}[/white]",
-                f"{results.ratio_encoding_success(dataobj=dataobj)}",
-                f"{results.total_encoding_time(dataobj=dataobj)}",
-                f"{results.total_encoding_stringlength(dataobj=dataobj)}",
-                f"{results.ratio_decoding_success(dataobj=dataobj)}",
-                f"{results.total_decoding_time(dataobj=dataobj)}",
-                f"{results.ratio_similarity(dataobj=dataobj)}",
-            )
-        rprint(table)
-        rprint()
-
-    # report (C1b)
-    if "C1b;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](C1b) full details / base 100: serializers[/bold white on blue]")
-
-        table = rich.table.Table(show_header=True, header_style="bold blue")
-        table.add_column("serializer", width=25)
-        table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
-        if base100 := results._get_serializers_base('encoding_time'):
-            table.add_column("Σ enc. time "
-                             f"(base 100 = {results.total_encoding_time(serializer=base100)})",
-                             width=10)
-        else:
-            table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
-                             width=10)
-
-        if base100 := results._get_serializers_base('encoding_stringlength'):
-            table.add_column("Σ jsonstr. len. "
-                             f"(base 100 = {results.total_encoding_stringlength(serializer=base100)})",
-                             width=13)
-        else:
-            table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
-
-        table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
-
-        if base100 := results._get_serializers_base('decoding_time'):
-            table.add_column("Σ dec. time "
-                             f"(base 100 = {results.total_decoding_time(serializer=base100)})",
-                             width=10)
-        else:
-            table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
-                             width=10)
-
-        table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
-
-        for serializer in results.serializers:
-            table.add_row(
-                f"[yellow]{serializer}[/yellow]",
-                f"{results.ratio_encoding_success(serializer=serializer)}",
-                f"{results.total_encoding_time(serializer=serializer, output='base100')}",
-                f"{results.total_encoding_stringlength(serializer=serializer, output='base100')}",
-                f"{results.ratio_decoding_success(serializer=serializer)}",
-                f"{results.total_decoding_time(serializer=serializer, output='base100')}",
-                f"{results.ratio_similarity(serializer=serializer)}",
-            )
-        rprint(table)
-        rprint()
-
-    # report (C2b)
-    if "C2b;" in ARGS.report:
-        if "titles;" in ARGS.report:
-            rprint("[bold white on blue](C2b) full details: data objects / base 100[/bold white on blue]")
-
-        table = rich.table.Table(show_header=True, header_style="bold blue")
-        table.add_column("data object", width=25)
-        table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
-
-        if base100 := results._get_dataobjs_base('encoding_time'):
-            table.add_column("Σ enc. time "
-                             f"(base 100 = {results.total_encoding_time(dataobj=base100)})",
-                             width=10)
-        else:
-            table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
-                             width=10)
-
-        if base100 := results._get_dataobjs_base('encoding_stringlength'):
-            table.add_column("Σ jsonstr. len. "
-                             f"(base 100 = {results.total_encoding_stringlength(dataobj=base100)})",
-                             width=13)
-        else:
-            table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
-
-        table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
-
-        if base100 := results._get_dataobjs_base('decoding_time'):
-            table.add_column("Σ dec. time "
-                             f"(base 100 = {results.total_decoding_time(dataobj=base100)})",
-                             width=10)
-        else:
-            table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
-                             width=10)
-
-        table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
-
-        for dataobj in results.dataobjs:
-            table.add_row(
-                f"[white]{dataobj}[/white]",
-                f"{results.ratio_encoding_success(dataobj=dataobj)}",
-                f"{results.total_encoding_time(dataobj=dataobj, output='base100')}",
-                f"{results.total_encoding_stringlength(dataobj=dataobj, output='base100')}",
-                f"{results.ratio_decoding_success(dataobj=dataobj)}",
-                f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
-                f"{results.ratio_similarity(dataobj=dataobj)}",
-            )
-        rprint(table)
-        rprint()
+    for report_section in ARGS.report.split(";"):
+        if report_section == "A":
+            report_section_a()
+        elif report_section == "B":
+            report_section_b1a(results)
+            report_section_b1b(results)
+            report_section_b1c(results)
+            report_section_b2a(results)
+            report_section_b2b(results)
+        elif report_section == "B1":
+            report_section_b1a(results)
+            report_section_b1b(results)
+            report_section_b1c(results)
+        elif report_section == "B1a":
+            report_section_b1a(results)
+        elif report_section == "B1b":
+            report_section_b1b(results)
+        elif report_section == "B1c":
+            report_section_b1c(results)
+        elif report_section == "B2":
+            report_section_b2a(results)
+            report_section_b2b(results)
+        elif report_section == "B2a":
+            report_section_b2a(results)
+        elif report_section == "B2b":
+            report_section_b2b(results)
+        elif report_section == "C":
+            report_section_c1b(results)
+            report_section_c2b(results)
+        elif report_section == "C1":
+            report_section_c1b(results)
+        elif report_section == "C1b":
+            report_section_c1b(results)
+        elif report_section == "C2":
+            report_section_c2b(results)
+        elif report_section == "C2b":
+            report_section_c2b(results)
 
 
 def main():

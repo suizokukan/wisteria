@@ -309,7 +309,7 @@ TODO
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_ratio(None, None)
+                return SerializationResults._format_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].decoding_success:
@@ -318,7 +318,7 @@ TODO
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return SerializationResults._format_ratio(None, None)
+            return SerializationResults._format_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj].decoding_success:
