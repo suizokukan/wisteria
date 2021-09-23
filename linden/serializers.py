@@ -80,7 +80,12 @@ def trytoimport(module_name):
     try:
         MODULES[module_name] = importlib.import_module(module_name)
         if ARGS.verbosity >= VERBOSITY_DETAILS:
-            rprint(f"Module '{module_name}' successfully imported.")
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
+            rprint(f"> Module '{module_name}' successfully imported.")
     except ModuleNotFoundError:
         res = False
     return res
@@ -150,6 +155,11 @@ TODO il en manque !
         self.serializers_number = len(self.serializers)
 
         if self.serializers_number == 0:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint("ERR015: Incorrect data, there's no serializer.")
             return False
 
@@ -485,8 +495,8 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].decoding_success)
             else:
-                raise LindenError(f"Internal error. "
-                                  "Can't compute base 100 for attribute_name='{attribute_name}'.")
+                raise LindenError("Internal error. "
+                                  f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "decoding_time":
             if output == "formattedstr":
@@ -526,16 +536,16 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].encoding_success)
             else:
-                raise LindenError(f"Internal error. "
-                                  "Can't compute base 100 for attribute_name='{attribute_name}'.")
+                raise LindenError("Internal error. "
+                                  f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "similarity":
             if output == "formattedstr":
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].similarity)
             else:
-                raise LindenError(f"Internal error. "
-                                  "Can't compute base 100 for attribute_name='{attribute_name}'.")
+                raise LindenError("Internal error. "
+                                  f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if res is None:
             raise LindenError("Internal error: the result could not be computed. "

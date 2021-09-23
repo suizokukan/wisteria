@@ -141,15 +141,30 @@ linden.globs.ARGS = PARSER.parse_args()
 if linden.globs.ARGS.report == "minimal":
     linden.globs.ARGS.report = REPORT_MINIMAL_STRING
     if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-        rprint(f"--report 'minimal' interpreted as '{linden.globs.ARGS.report}'.")
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
+        rprint(f"> --report 'minimal' interpreted as '{linden.globs.ARGS.report}'.")
 elif linden.globs.ARGS.report == "full":
     linden.globs.ARGS.report = REPORT_FULL_STRING
     if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-        rprint(f"--report 'full' interpreted as '{linden.globs.ARGS.report}'.")
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
+        rprint(f"> --report 'full' interpreted as '{linden.globs.ARGS.report}'.")
 elif not linden.globs.ARGS.report.endswith(";"):
     linden.globs.ARGS.report += ";"
     if linden.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        rprint("--report: semicolon added at the end; "
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
+        rprint("> --report: semicolon added at the end; "
                f"--report is now '{linden.globs.ARGS.report}'.")
 
 # =============================================================================
@@ -204,10 +219,20 @@ def read_cfgfile(filename):
             ⋅    ...
     """
     if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"@ Trying to read '{filename}' ({normpath(filename)}) as a config file.")
 
     if not os.path.exists(filename):
         if not ARGS.checkup:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint(f"(ERR001) Missing config file '{filename}' ({normpath(filename)}).")
         return None
 
@@ -223,6 +248,11 @@ def read_cfgfile(filename):
         config = configparser.ConfigParser()
         config.read(filename)
     except (configparser.DuplicateOptionError,) as error:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR002) While reading config file '{filename}': {error}.")
         return None
 
@@ -230,18 +260,38 @@ def read_cfgfile(filename):
     # (2/3) well formed config file ?
     # -------------------------------
     if "data selection" not in config:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR003) While reading config file '{filename}': "
                "missing '\\[data selection]' section.")
         return None
     if "data sets" not in config:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR004) While reading config file '{filename}': "
                "missing '\\[data sets]' section.")
         return None
     if "data objects" not in config:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR005) While reading config file '{filename}': "
                "missing '\\[data objects]' section.")
         return None
     if "data selection" not in config["data selection"]:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR006) While reading config file '{filename}': "
                "missing '\\[data selection]data selection=' entry.")
         return None
@@ -252,11 +302,21 @@ def read_cfgfile(filename):
     elif config["data selection"]["data selection"].startswith("data set/"):
         setname = config["data selection"]["data selection"]
         if setname not in config["data sets"]:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint(f"(ERR007) While reading config file '{filename}': "
                    f"undefined data set '{setname}' "
                    "used in \\[data selection] section but not defined in \\[data sets] section")
             return None
     else:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR008) While reading config file '{filename}': "
                "can't interpret the value of config['data selection']['data selection']: "
                f"what is '{config['data selection']['data selection']}' ?")
@@ -266,6 +326,11 @@ def read_cfgfile(filename):
         for data_set__subitem in config['data sets'][data_set].split(";"):
             if data_set__subitem.strip() != "" and \
                data_set__subitem not in config['data objects']:
+                # (pimydoc)console messages
+                # ⋅- debug messages start with   @
+                # ⋅- info messages start with    >
+                # ⋅- error messages start with   ERRXXX
+                # ⋅- checkup messages start with *
                 rprint("(ERROR014) Wrong definition in \\[data sets]; unknown data object "
                        f"'{data_set__subitem}', not defined in \\[data objects].")
                 return None
@@ -284,9 +349,19 @@ def read_cfgfile(filename):
     # details/debug messages
     # ----------------------
     if ARGS.verbosity >= VERBOSITY_DETAILS:
-        rprint(f"Init file '{filename}' ({normpath(filename)}) has been read.")
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
+        rprint(f"> Init file '{filename}' ({normpath(filename)}) has been read.")
 
     if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"@ Successfully read '{filename}' ({normpath(filename)}) as a config file.")
 
     return res
@@ -319,11 +394,22 @@ def checkup():
         - configuration file that would be used; does this file exist ?
           can this file be read without errors ?
     """
+    # (pimydoc)console messages
+    # ⋅- debug messages start with   @
+    # ⋅- info messages start with    >
+    # ⋅- error messages start with   ERRXXX
+    # ⋅- checkup messages start with *
     rprint("* Serializers:")
     for serializer in SERIALIZERS.values():
         rprint("  - ", serializer.checkup_repr())
 
     rprint()
+
+    # (pimydoc)console messages
+    # ⋅- debug messages start with   @
+    # ⋅- info messages start with    >
+    # ⋅- error messages start with   ERRXXX
+    # ⋅- checkup messages start with *
     rprint("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
         diagnostic = "Such a file doesn't exist."
@@ -333,7 +419,12 @@ def checkup():
         else:
             diagnostic = "Such a file exists and can be read without errors."
 
-    rprint(f"With current arguments, configuration file would be '{ARGS.cfgfile}' "
+    # (pimydoc)console messages
+    # ⋅- debug messages start with   @
+    # ⋅- info messages start with    >
+    # ⋅- error messages start with   ERRXXX
+    # ⋅- checkup messages start with *
+    rprint(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
            f"({normpath(ARGS.cfgfile)}). " + diagnostic)
 
 
@@ -468,20 +559,40 @@ def read_cmpstring(src_string):
             data = "all"
 
         if not (serializer1 == "all" or serializer1 in SERIALIZERS):
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint(f"(ERR009) Unknown serializer #1: what is '{serializer1}' ? "
                    f"Known serializers #1 are 'all' and {tuple(SERIALIZERS.keys())}.")
             return False, None, None, None
         if not (serializer2 == "all" or serializer2 == "others" or serializer2 in SERIALIZERS):
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint(f"(ERR010) Unknown serializer #2: what is '{serializer2}' ? "
                    f"Known serializers #2 are 'all', 'others' and {tuple(SERIALIZERS.keys())}.")
             return False, None, None, None
         if serializer1 == serializer2 and serializer1 != "all":
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint(f"(ERR011) Both serializer-s (here, both set to '{serializer1}') "
                    "can't have the same value, 'all' and 'all' excepted.")
             return False, None, None, None
 
         return True, serializer1, serializer2, data
 
+    # (pimydoc)console messages
+    # ⋅- debug messages start with   @
+    # ⋅- info messages start with    >
+    # ⋅- error messages start with   ERRXXX
+    # ⋅- checkup messages start with *
     rprint(f"(ERR012) Ill-formed cmp string '{src_string}'. "
            f"Expected syntax is '{REGEX_CMP__HELP}'.")
     return False, None, None, None
@@ -505,19 +616,45 @@ def main():
                 ⋅* -3: internal error, data can't be loaded
     """
     if ARGS.verbosity >= VERBOSITY_DETAILS:
-        rprint(__projectname__, __version__)
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
+        rprint(f"> {__projectname__}, {__version__}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint("@ known data:", list(DATA.keys()))
     if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint("@ known serializers:", SERIALIZERS)
 
     success, serializer1, serializer2, data = read_cmpstring(ARGS.cmp)
     if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"@ Result of the call to read_cmpstring('{ARGS.cmp}'):",
                success, serializer1, serializer2, data)
 
     if not success:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
         rprint(f"(ERR013) an error occured while reading cmp string '{ARGS.cmp}'.")
+
         # (pimydoc)exit codes
         # ⋅*  0: normal exit code
         # ⋅*  1: normal exit code after --checkup
@@ -543,9 +680,19 @@ def main():
         # serializers and data to be used through the tests:
         _serializers = get_serializers_selection(serializer1, serializer2)
         if ARGS.verbosity == VERBOSITY_DEBUG:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint("@ serializers to be used are: ", _serializers)
         _dataobjs = get_data_selection(data, config)
         if ARGS.verbosity == VERBOSITY_DEBUG:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint("@ data objs to be used are: ", _dataobjs)
 
         results = SerializationResults()
@@ -553,14 +700,30 @@ def main():
             results[serializer] = {}
             for data_name in _dataobjs:
                 if ARGS.verbosity == VERBOSITY_DEBUG:
+                    # (pimydoc)console messages
+                    # ⋅- debug messages start with   @
+                    # ⋅- info messages start with    >
+                    # ⋅- error messages start with   ERRXXX
+                    # ⋅- checkup messages start with *
                     rprint(f"@ about to call function for serializer='{serializer}' "
                            f"and data name='{data_name}'")
                 results[serializer][data_name] = SERIALIZERS[serializer].func(action="serialize",
                                                                               obj=DATA[data_name])
                 if ARGS.verbosity == VERBOSITY_DEBUG:
+                    # (pimydoc)console messages
+                    # ⋅- debug messages start with   @
+                    # ⋅- info messages start with    >
+                    # ⋅- error messages start with   ERRXXX
+                    # ⋅- checkup messages start with *
                     rprint("@ result:", results[serializer][data_name])
         if not results._finish_initialization():
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
             rprint("ERR015: incorrect data, the program has to stop.")
+
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
@@ -569,7 +732,13 @@ def main():
             # ⋅* -3: internal error, data can't be loaded
             return -3
         if results.dataobjs_number == 0:
-            rprint("No data to handle, the program can stop.")
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
+            rprint("> No data to handle, the program can stop.")
+
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
@@ -582,7 +751,12 @@ def main():
                (serializer1, serializer2, data))
 
     except LindenError as exception:
-        rprint(exception)
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRXXX
+        # ⋅- checkup messages start with *
+        rprint(f"> An error occured: {exception}")
 
     # (pimydoc)exit codes
     # ⋅*  0: normal exit code

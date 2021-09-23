@@ -24,6 +24,14 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 
 task-24: TIMEITNUMBER > --timeitnumber=
 
+[DONE] task-24
+
+Doc.
+
+    * improved 'report sections' entry in pimydoc
+    * new entry in pimydoc: 'console messages'
+    * doc.
+
 [DONE] task-23
 
 report (C1a+C2a)

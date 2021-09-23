@@ -48,8 +48,22 @@ def report_section_a(results):
 
         Sub-function of report() for report section "A"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -58,8 +72,10 @@ def report_section_a(results):
     """
     args = linden.globs.ARGS
 
-    rprint(f"[bold white on blue]REPORT for --cmp set to '[italic]{args.cmp}[/italic]'[/bold white on blue]")
-    rprint()
+    if "titles;" in args.report:
+        rprint("[bold white on blue](A) REPORT with --cmp set to "
+               f"'[italic]{args.cmp}[/italic]'[/bold white on blue]")
+        rprint()
 
 
 def report_section_b1a(results):
@@ -68,8 +84,22 @@ def report_section_b1a(results):
 
         Sub-function of report() for report section "B1a"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -111,8 +141,22 @@ def report_section_b1b(results):
 
         Sub-function of report() for report section "B1b"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -153,8 +197,22 @@ def report_section_b1c(results):
 
         Sub-function of report() for report section "B1c"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -184,8 +242,22 @@ def report_section_b2a(results):
 
         Sub-function of report() for report section "B2a"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -228,8 +300,22 @@ def report_section_b2b(results):
 
         Sub-function of report() for report section "B2b"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -270,8 +356,22 @@ def report_section_c1a(results):
 
         Sub-function of report() for report section "C1a"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -339,8 +439,22 @@ def report_section_c1b(results):
 
         Sub-function of report() for report section "C1b"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -403,8 +517,22 @@ def report_section_c2a(results):
 
         Sub-function of report() for report section "C2a"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -474,8 +602,22 @@ def report_section_c2b(results):
 
         Sub-function of report() for report section "C2b"
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
 
         _______________________________________________________________________
 
@@ -541,8 +683,22 @@ def report(results,
         Print an analyze of <results>.
 
         (pimydoc)report sections
-        ⋅* A
-        ⋅* B1a
+        ⋅* A         : main title
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
         _______________________________________________________________________
 
         ARGUMENTS:
