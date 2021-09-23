@@ -40,6 +40,7 @@
 
     * SERIALIZERS dict
 """
+from dataclasses import dataclass
 import importlib
 import timeit
 
@@ -50,6 +51,17 @@ from linden.globs import ARGS, TIMEITNUMBER
 from linden.lindenerror import LindenError
 
 MODULES = {}
+
+
+@dataclass
+class SerializerDataObj:
+    """
+        SerializerDataObj class
+
+        Nothing but an easy way to set (serializer, dataobj)
+    """
+    serializer: str = None
+    dataobj: str = None
 
 
 def trytoimport(module_name):
@@ -96,6 +108,7 @@ class SerializationResults(dict):
 TODO
 class attr ?
 
+TODO il en manque !
         o  __init__(self)
         o  _finish_initialization(self)
         o  _format_ratio(self, inttotal_and_floatratio)
@@ -108,7 +121,7 @@ class attr ?
         o  ratio_identify(self, serializer=None, dataobj=None)
         o  repr_attr(self, serializer, dataobj, attribute_name)
         o  total_decoding_time(self, serializer=None, dataobj=None)
-        o  total_encoding_stringlength(self, serializer=None, dataobj=None)
+        o  total_encoding_strlen(self, serializer=None, dataobj=None)
         o  total_encoding_time(self, serializer=None, dataobj=None)
     """
     def __init__(self):
@@ -227,6 +240,37 @@ TODO
         """
         return f"{floattime:.6f}"
 
+    def _get_base(self,
+                  attribute):
+        """
+TODO
+        Return serializer+base data object for attribute <attribute>.
+
+attribute: seulement 3 possibilités et non pas 5
+        """
+        if attribute == "encoding_time":
+            for serializer in self.serializers:
+                for dataobj in self.dataobjs:
+                    if self[serializer][dataobj].encoding_time:
+                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
+            return SerializerDataObj()
+
+        if attribute == "decoding_time":
+            for serializer in self.serializers:
+                for dataobj in self.dataobjs:
+                    if self[serializer][dataobj].decoding_time:
+                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
+            return SerializerDataObj()
+
+        if attribute == "encoding_strlen":
+            for serializer in self.serializers:
+                for dataobj in self.dataobjs:
+                    if self[serializer][dataobj].encoding_strlen:
+                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
+            return SerializerDataObj()
+
+        raise LindenError(f"Internal error: can't compute base100 for attribute '{attribute}'.")
+
     def _get_dataobjs_base(self,
                            attribute):
         """
@@ -240,9 +284,9 @@ TODO
                     return dataobj
             return None
 
-        if attribute == "encoding_stringlength":
+        if attribute == "encoding_strlen":
             for dataobj in self.dataobjs:
-                if self[self.serializers[0]][dataobj].encoding_stringlength:
+                if self[self.serializers[0]][dataobj].encoding_strlen:
                     return dataobj
             return None
 
@@ -268,9 +312,9 @@ TODO
                     return serializer
             return None
 
-        if attribute == "encoding_stringlength":
+        if attribute == "encoding_strlen":
             for serializer in self.serializers:
-                if self[serializer][self.dataobjs[0]].encoding_stringlength:
+                if self[serializer][self.dataobjs[0]].encoding_strlen:
                     return serializer
             return None
 
@@ -412,39 +456,86 @@ TODO
     def repr_attr(self,
                   serializer,
                   dataobj,
-                  attribute_name):
+                  attribute_name,
+                  output="formattedstr"):
         """
             SerializationResults.repr_attr()
 
             Format the value stored into self[serializer][dataobj].<attribute_name>.
 
             _______________________________________________________________
-
+TODO
             ARGUMENT:
+output="formattedstr" | "base100"
 
             RETURNED VALUE: a formatted string representing
                             self[serializer][dataobj].<attribute_name>
         """
         res = None  # unexpected result !
 
+        # TODO
+        # base100 n'existe que dans certains cas, il est donc impossible et inutile
+        # de le calculer tout le temps.
+        if output == "base100":
+            base100_serializerdataobj = self._get_base(attribute=attribute_name)
+            base100 = self[base100_serializerdataobj.serializer][base100_serializerdataobj.dataobj]
+
         if attribute_name == "decoding_success":
-            res = SerializationResults._format_success(
-                self[serializer][dataobj].decoding_success)
+            if output == "formattedstr":
+                res = SerializationResults._format_success(
+                    self[serializer][dataobj].decoding_success)
+            else:
+                raise LindenError(f"Internal error. "
+                                  "Can't compute base 100 for attribute_name='{attribute_name}'.")
+
         if attribute_name == "decoding_time":
-            res = SerializationResults._format_time(
-                self[serializer][dataobj].decoding_time)
-        if attribute_name == "encoding_stringlength":
-            res = SerializationResults._format_stringlength(
-                self[serializer][dataobj].encoding_stringlength)
+            if output == "formattedstr":
+                res = SerializationResults._format_time(
+                    self[serializer][dataobj].decoding_time)
+            else:
+                # output == "base100"
+                res = SerializationResults._format_base100(
+                    serializer == base100_serializerdataobj.serializer and
+                    dataobj == base100_serializerdataobj.dataobj,
+                    100*self[serializer][dataobj].decoding_time/base100.decoding_time)
+
+        if attribute_name == "encoding_strlen":
+            if output == "formattedstr":
+                res = SerializationResults._format_stringlength(
+                    self[serializer][dataobj].encoding_strlen)
+            else:
+                # output == "base100"
+                res = SerializationResults._format_base100(
+                    serializer == base100_serializerdataobj.serializer and
+                    dataobj == base100_serializerdataobj.dataobj,
+                    100*self[serializer][dataobj].encoding_strlen/base100.encoding_strlen)
+
         if attribute_name == "encoding_time":
-            res = SerializationResults._format_time(
-                self[serializer][dataobj].encoding_time)
+            if output == "formattedstr":
+                res = SerializationResults._format_time(
+                    self[serializer][dataobj].encoding_time)
+            else:
+                # output == "base100"
+                res = SerializationResults._format_base100(
+                    serializer == base100_serializerdataobj.serializer and
+                    dataobj == base100_serializerdataobj.dataobj,
+                    100*self[serializer][dataobj].encoding_time/base100.encoding_time)
+
         if attribute_name == "encoding_success":
-            res = SerializationResults._format_success(
-                self[serializer][dataobj].encoding_success)
+            if output == "formattedstr":
+                res = SerializationResults._format_success(
+                    self[serializer][dataobj].encoding_success)
+            else:
+                raise LindenError(f"Internal error. "
+                                  "Can't compute base 100 for attribute_name='{attribute_name}'.")
+
         if attribute_name == "similarity":
-            res = SerializationResults._format_success(
-                self[serializer][dataobj].similarity)
+            if output == "formattedstr":
+                res = SerializationResults._format_success(
+                    self[serializer][dataobj].similarity)
+            else:
+                raise LindenError(f"Internal error. "
+                                  "Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if res is None:
             raise LindenError("Internal error: the result could not be computed. "
@@ -520,12 +611,12 @@ TODO
                               f"{serializer=}; {dataobj=}; {output=};")
         return res
 
-    def total_encoding_stringlength(self,
-                                    serializer=None,
-                                    dataobj=None,
-                                    output="formattedstr"):
+    def total_encoding_strlen(self,
+                              serializer=None,
+                              dataobj=None,
+                              output="formattedstr"):
         """
-            SerializationResults.total_encoding_stringlength()
+            SerializationResults.total_encoding_strlen()
 
             Compute and format the total encoding string length created by a <serializer>
             OR for a <dataobj>ect.
@@ -554,17 +645,17 @@ TODO
                 return SerializationResults._format_stringlength(None)
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].encoding_stringlength:
-                    total += self[serializer][_dataobj].encoding_stringlength
+                if self[serializer][_dataobj].encoding_strlen:
+                    total += self[serializer][_dataobj].encoding_strlen
             if output == "value":
                 res = total
             if output == "formattedstr":
                 res = SerializationResults._format_stringlength(total)
             if output == "base100":
                 res = SerializationResults._format_base100(
-                    serializer == self._get_serializers_base('encoding_stringlength'),
-                    100*total/self.total_encoding_stringlength(
-                        serializer=self._get_serializers_base('encoding_stringlength'),
+                    serializer == self._get_serializers_base('encoding_strlen'),
+                    100*total/self.total_encoding_strlen(
+                        serializer=self._get_serializers_base('encoding_strlen'),
                         output="value"))
 
         else:
@@ -572,17 +663,17 @@ TODO
                 return SerializationResults._format_stringlength(None)
 
             for _serializer in self:
-                if self[_serializer][dataobj].encoding_stringlength:
-                    total += self[_serializer][dataobj].encoding_stringlength
+                if self[_serializer][dataobj].encoding_strlen:
+                    total += self[_serializer][dataobj].encoding_strlen
             if output == "value":
                 res = total
             if output == "formattedstr":
                 res = SerializationResults._format_stringlength(total)
             if output == "base100":
                 res = SerializationResults._format_base100(
-                    dataobj == self._get_dataobjs_base('encoding_stringlength'),
-                    100*total/self.total_encoding_stringlength(
-                        dataobj=self._get_dataobjs_base('encoding_stringlength'),
+                    dataobj == self._get_dataobjs_base('encoding_strlen'),
+                    100*total/self.total_encoding_strlen(
+                        dataobj=self._get_dataobjs_base('encoding_strlen'),
                         output="value"))
 
         if res is None:
@@ -668,14 +759,14 @@ class SerializationResult:
 
         _______________________________________________________________________
 
-        o  __init__(self, encoding_success=False, encoding_time=None, encoding_stringlength=None,
+        o  __init__(self, encoding_success=False, encoding_time=None, encoding_strlen=None,
                     decoding_success=False, decoding_time=None, similarity=False)
         o  __repr__(self)
     """
     def __init__(self,
                  encoding_success=False,
                  encoding_time=None,
-                 encoding_stringlength=None,
+                 encoding_strlen=None,
                  decoding_success=False,
                  decoding_time=None,
                  similarity=False):
@@ -684,7 +775,7 @@ class SerializationResult:
         """
         self.encoding_success = encoding_success
         self.encoding_time = encoding_time
-        self.encoding_stringlength = encoding_stringlength
+        self.encoding_strlen = encoding_strlen
         self.decoding_success = decoding_success
         self.decoding_time = decoding_time
         self.similarity = similarity
@@ -693,7 +784,7 @@ class SerializationResult:
         """
             SerializationResult.__repr__()
         """
-        return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_stringlength=}; " \
+        return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_strlen=}; " \
             f"{self.decoding_success=}; {self.decoding_time=}; {self.similarity=}"
 
 
@@ -791,7 +882,7 @@ def serializer_iaswn(action="serialize",
         _timeit = timeit.Timer('module.encode(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_stringlength = _len(_res)
+        res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
     except module.IaswnError:
         _error = True
@@ -854,7 +945,7 @@ def serializer_jsonpickle(action="serialize",
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_stringlength = _len(_res)
+        res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
     except TypeError:
         _error = True

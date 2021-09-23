@@ -31,8 +31,9 @@
     o  report_section_b1c(results)
     o  report_section_b2a(results)
     o  report_section_b2b(results)
+    o  report_section_c1a(results)
     o  report_section_c1b(results)
-    o  report_section_c1c(results)
+    o  report_section_c2b(results)
     o  report(results, s1s2d)
 """
 import rich.table
@@ -96,7 +97,7 @@ def report_section_b1a(results):
                 "> " + "[white]" + dataobj + "[/white]",
                 results.repr_attr(serializer, dataobj, "encoding_success"),
                 results.repr_attr(serializer, dataobj, "encoding_time"),
-                results.repr_attr(serializer, dataobj, "encoding_stringlength"),
+                results.repr_attr(serializer, dataobj, "encoding_strlen"),
                 results.repr_attr(serializer, dataobj, "decoding_success"),
                 results.repr_attr(serializer, dataobj, "decoding_time"),
                 results.repr_attr(serializer, dataobj, "similarity"))
@@ -137,7 +138,7 @@ def report_section_b1b(results):
             f"[yellow]{serializer}[/yellow]",
             f"{results.ratio_encoding_success(serializer=serializer)}",
             f"{results.total_encoding_time(serializer=serializer)}",
-            f"{results.total_encoding_stringlength(serializer=serializer)}",
+            f"{results.total_encoding_strlen(serializer=serializer)}",
             f"{results.ratio_decoding_success(serializer=serializer)}",
             f"{results.total_decoding_time(serializer=serializer)}",
             f"{results.ratio_similarity(serializer=serializer)}",
@@ -212,7 +213,7 @@ def report_section_b2a(results):
                 "> " + "[yellow]" + serializer + "[/yellow]",
                 results.repr_attr(serializer, dataobj, "encoding_success"),
                 results.repr_attr(serializer, dataobj, "encoding_time"),
-                results.repr_attr(serializer, dataobj, "encoding_stringlength"),
+                results.repr_attr(serializer, dataobj, "encoding_strlen"),
                 results.repr_attr(serializer, dataobj, "decoding_success"),
                 results.repr_attr(serializer, dataobj, "decoding_time"),
                 results.repr_attr(serializer, dataobj, "similarity")
@@ -254,11 +255,80 @@ def report_section_b2b(results):
             f"[white]{dataobj}[/white]",
             f"{results.ratio_encoding_success(dataobj=dataobj)}",
             f"{results.total_encoding_time(dataobj=dataobj)}",
-            f"{results.total_encoding_stringlength(dataobj=dataobj)}",
+            f"{results.total_encoding_strlen(dataobj=dataobj)}",
             f"{results.ratio_decoding_success(dataobj=dataobj)}",
             f"{results.total_decoding_time(dataobj=dataobj)}",
             f"{results.ratio_similarity(dataobj=dataobj)}",
         )
+    rprint(table)
+    rprint()
+
+
+def report_section_c1a(results):
+    """
+        report_section_c1a()
+
+        Sub-function of report() for report section "C1a"
+        (pimydoc)report sections
+        ⋅* A
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    args = linden.globs.ARGS
+
+    if "titles;" in args.report:
+        rprint("[bold white on blue](C1a) full details: serializer * data object (base 100)[/bold white on blue]")
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("serializer/data object", width=25)
+    table.add_column("enc. ok ?", width=12)
+
+    if base100 := results._get_base('encoding_time'):
+        table.add_column(
+            "enc. time "
+            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_time')})",
+            width=10)
+    else:
+        table.add_column("enc. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    if base100 := results._get_base('decoding_time'):
+        table.add_column(
+            "jsonstr. len. "
+            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_strlen')})",
+            width=13)
+    else:
+        table.add_column("jsonstr. len. [red](NO BASE 100)[/red]",
+                         width=13)
+
+    table.add_column("dec. ok ?", width=12)
+
+    if base100 := results._get_base('decoding_time'):
+        table.add_column(
+            "dec. time "
+            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='decoding_time')})",
+            width=10)
+    else:
+        table.add_column("dec. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    table.add_column("enc ⇆ dec ?", width=12)
+
+    for serializer in results.serializers:
+        table.add_row("[yellow]" + serializer + ":" + "[/yellow]")
+        for dataobj in results.dataobjs:
+            table.add_row(
+                "> " + "[white]" + dataobj + "[/white]",
+                results.repr_attr(serializer, dataobj, "encoding_success"),
+                results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
+                results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),
+                results.repr_attr(serializer, dataobj, "decoding_success"),
+                results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
+                results.repr_attr(serializer, dataobj, "similarity"))
     rprint(table)
     rprint()
 
@@ -294,9 +364,9 @@ def report_section_c1b(results):
         table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_serializers_base('encoding_stringlength'):
+    if base100 := results._get_serializers_base('encoding_strlen'):
         table.add_column("Σ jsonstr. len. "
-                         f"(base 100 = {results.total_encoding_stringlength(serializer=base100)})",
+                         f"(base 100 = {results.total_encoding_strlen(serializer=base100)})",
                          width=13)
     else:
         table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
@@ -318,11 +388,82 @@ def report_section_c1b(results):
             f"[yellow]{serializer}[/yellow]",
             f"{results.ratio_encoding_success(serializer=serializer)}",
             f"{results.total_encoding_time(serializer=serializer, output='base100')}",
-            f"{results.total_encoding_stringlength(serializer=serializer, output='base100')}",
+            f"{results.total_encoding_strlen(serializer=serializer, output='base100')}",
             f"{results.ratio_decoding_success(serializer=serializer)}",
             f"{results.total_decoding_time(serializer=serializer, output='base100')}",
             f"{results.ratio_similarity(serializer=serializer)}",
         )
+    rprint(table)
+    rprint()
+
+
+def report_section_c2a(results):
+    """
+        report_section_c2a()
+
+        Sub-function of report() for report section "C2a"
+        (pimydoc)report sections
+        ⋅* A
+        ⋅* B1a
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    args = linden.globs.ARGS
+
+    if "titles;" in args.report:
+        rprint("[bold white on blue](C2a) full details: data object * serializer (base 100)[/bold white on blue]")
+    table = rich.table.Table(show_header=True, header_style="bold blue")
+    table.add_column("data object/serializer", width=25)
+
+    table.add_column("enc. ok ?", width=12)
+
+    if base100 := results._get_base('encoding_time'):
+        table.add_column(
+            "enc. time "
+            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_time')})",
+            width=10)
+    else:
+        table.add_column("enc. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    if base100 := results._get_base('encoding_strlen'):
+        table.add_column(
+            "jsonstr. len. "
+            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_strlen')})",
+            width=13)
+    else:
+        table.add_column("jsonstr. len. [red](NO BASE 100)[/red]",
+                         width=13)
+
+    table.add_column("dec. ok ?", width=12)
+
+    if base100 := results._get_base('decoding_time'):
+        table.add_column(
+            "dec. time "
+            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='decoding_time')})",
+            width=10)
+    else:
+        table.add_column("dec. time [red](NO BASE 100)[/red]",
+                         width=10)
+
+    table.add_column("enc ⇆ dec ?", width=12)
+
+    for dataobj in results.dataobjs:
+        table.add_row("[white]" + dataobj + ":" + "[/white]")
+        for serializer in results.serializers:
+            table.add_row(
+                "> " + "[yellow]" + serializer + "[/yellow]",
+                results.repr_attr(serializer, dataobj, "encoding_success"),
+                results.repr_attr(serializer, dataobj, "encoding_time", output='base100'),
+                results.repr_attr(serializer, dataobj, "encoding_strlen", output='base100'),
+                results.repr_attr(serializer, dataobj, "decoding_success"),
+                results.repr_attr(serializer, dataobj, "decoding_time", output='base100'),
+                results.repr_attr(serializer, dataobj, "similarity")
+            )
     rprint(table)
     rprint()
 
@@ -359,9 +500,9 @@ def report_section_c2b(results):
         table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_dataobjs_base('encoding_stringlength'):
+    if base100 := results._get_dataobjs_base('encoding_strlen'):
         table.add_column("Σ jsonstr. len. "
-                         f"(base 100 = {results.total_encoding_stringlength(dataobj=base100)})",
+                         f"(base 100 = {results.total_encoding_strlen(dataobj=base100)})",
                          width=13)
     else:
         table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
@@ -383,7 +524,7 @@ def report_section_c2b(results):
             f"[white]{dataobj}[/white]",
             f"{results.ratio_encoding_success(dataobj=dataobj)}",
             f"{results.total_encoding_time(dataobj=dataobj, output='base100')}",
-            f"{results.total_encoding_stringlength(dataobj=dataobj, output='base100')}",
+            f"{results.total_encoding_strlen(dataobj=dataobj, output='base100')}",
             f"{results.ratio_decoding_success(dataobj=dataobj)}",
             f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
             f"{results.ratio_similarity(dataobj=dataobj)}",
@@ -430,11 +571,16 @@ TODO
                report_section_b2b),
         "B2a": (report_section_b2a,),
         "B2b": (report_section_b2b,),
-        "C": (report_section_c1b,
+        "C": (report_section_c1a,
+              report_section_c1b,
+              report_section_c2a,
               report_section_c2b),
-        "C1": (report_section_c1b,),
+        "C1": (report_section_c1a,
+               report_section_c1b,),
+        "C1a": (report_section_c1a,),
         "C1b": (report_section_c1b,),
         "C2": (report_section_c2b,),
+        "C2a": (report_section_c2a,),
         "C2b": (report_section_c2b,),
         }
 
@@ -442,3 +588,6 @@ TODO
         if report_section in str2reportsection:
             for func in str2reportsection[report_section]:
                 func(results)
+        else:
+            # TODO : error
+            pass

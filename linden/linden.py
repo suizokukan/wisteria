@@ -83,7 +83,6 @@ import re
 import sys
 
 from rich import print as rprint
-import rich.table
 
 import linden.globs
 from linden.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
