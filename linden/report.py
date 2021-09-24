@@ -40,6 +40,7 @@ import rich.table
 from rich import print as rprint
 
 import linden.globs
+from linden.lindenerror import LindenError
 
 
 def report_section_a(results):
@@ -228,9 +229,9 @@ def report_section_b1c(results):
         _list = tuple(dataobj for dataobj in results[serializer]
                       if not results[serializer][dataobj].similarity)
         if not _list:
-            rprint(f"* There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
+            rprint(f"* [yellow]({serializer})[/yellow] There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
         else:
-            rprint(f"* Serializer '[yellow]{serializer}[/yellow]' can't handle the following data objects:")
+            rprint(f"* [yellow]({serializer})[/yellow] Serializer '[yellow]{serializer}[/yellow]' can't handle the following data objects:")
             for dataobj in _list:
                 rprint("  - ", "[white]" + dataobj + "[/white]")
     rprint()
@@ -745,5 +746,9 @@ TODO
             for func in str2reportsection[report_section]:
                 func(results)
         else:
-            # TODO : error
-            pass
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRXXX
+            # ⋅- checkup messages start with *
+            raise LindenError("(ERR017) Can't interpret report section; what is '{report_section}' ?")

@@ -6,7 +6,6 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.1
 ------------------
 
-
 Conclusion:
 According to the tests conducted on all data...
 According to the tests conducted on the data of the "comparing what is comparable" type
@@ -15,14 +14,27 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 
 * --downloaddfltini
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-* linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
 * progress bar : calcul
   en profiter pour proposer plusieurs méthodes : 1.1, 1.2, ... 1.9, 2.1, 2.2 ... 2.9, ...
                                                  1.1, 2.1, 3.1, ... 1.2, 2.2, 3.2, ...
+* TIMEITNUMBER > --timeitnumber=
 * --lenmethod + modifier les en-têtes des tableaux
 * --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+* numéroter les étapes dans main() (cf code structure)
+* data types
+* serializers
+* cwc
+* pylint
+* linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
+* README.md acceptable
+* report D
 
-task-24: TIMEITNUMBER > --timeitnumber=
+[DONE] task-25
+
+Improved documentation & output messages.
+
+    * move the output of project name & version to the very beginning of the code.
+    * new entry in pimydoc, namely 'code structure'
 
 [DONE] task-24
 

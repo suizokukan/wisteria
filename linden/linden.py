@@ -92,13 +92,14 @@ from linden.aboutproject import __projectname__, __version__
 from linden.lindenerror import LindenError
 from linden.report import report
 
+
 PARSER = \
     argparse.ArgumentParser(description="Comparisons of different Python serializers",
                             epilog=f"{__projectname__}: {__version__}",
                             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 PARSER.add_argument('--version', '-v',
                     action='version',
-                    version=f"{__projectname__}: {__version__}",
+                    version=f"{__projectname__} {__version__}",
                     help="Show the version and exit.")
 
 PARSER.add_argument('--cmp',
@@ -137,7 +138,36 @@ PARSER.add_argument('--verbosity',
 
 linden.globs.ARGS = PARSER.parse_args()
 
-# ARGS.report interpretation:
+
+# 01) project name & version
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
+if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+    # (pimydoc)console messages
+    # ⋅- debug messages start with   @
+    # ⋅- info messages start with    >
+    # ⋅- error messages start with   ERRXXX
+    # ⋅- checkup messages start with *
+    rprint(f"> {__projectname__}, {__version__}")
+
+
+# 02) ARGS.report interpretation
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 if linden.globs.ARGS.report == "minimal":
     linden.globs.ARGS.report = REPORT_MINIMAL_STRING
     if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
@@ -185,9 +215,28 @@ def exit_handler():
         os.remove(TMPFILENAME)
 
 
+# 03) exit handler
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 atexit.register(exit_handler)
 
-
+# 04) known serializers import
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 from linden.serializers import SERIALIZERS, SerializationResults
 
 
@@ -428,6 +477,16 @@ def checkup():
            f"({normpath(ARGS.cfgfile)}). " + diagnostic)
 
 
+# 05) checkup
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 if linden.globs.ARGS.checkup:
     checkup()
     # (pimydoc)exit codes
@@ -438,11 +497,33 @@ if linden.globs.ARGS.checkup:
     # ⋅* -3: internal error, data can't be loaded
     sys.exit(1)
 
+# 06) temp file opening
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
 if not os.path.exists(TMPFILENAME):
     with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
         pass
+
+
+# 07) known data import
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 from linden.data import DATA
 
 
@@ -615,13 +696,6 @@ def main():
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: internal error, data can't be loaded
     """
-    if ARGS.verbosity >= VERBOSITY_DETAILS:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRXXX
-        # ⋅- checkup messages start with *
-        rprint(f"> {__projectname__}, {__version__}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
@@ -769,4 +843,14 @@ def main():
 
 # =============================================================================
 if __name__ == '__main__':
+    # 08) call to main()
+    # (pimydoc)code structure
+    # ⋅- 01) project name & version
+    # ⋅- 02) ARGS.report interpretation
+    # ⋅- 03) exit handler
+    # ⋅- 04) known serializers import
+    # ⋅- 05) checkup
+    # ⋅- 06) temp file opening
+    # ⋅- 07) known data import
+    # ⋅- 08) call to main()
     main()

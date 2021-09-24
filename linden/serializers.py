@@ -160,7 +160,7 @@ TODO il en manque !
             # ⋅- info messages start with    >
             # ⋅- error messages start with   ERRXXX
             # ⋅- checkup messages start with *
-            rprint("ERR015: Incorrect data, there's no serializer.")
+            rprint("ERR016: Incorrect data, there's no serializer.")
             return False
 
         first_serializer = tuple(self.serializers)[0]
