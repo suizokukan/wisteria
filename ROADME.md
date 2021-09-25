@@ -28,6 +28,15 @@ See TODOs at the end of this file.
 * docdef : DOC001 > DOCDEF001
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 
+[CURRENT] v. 0.0.3
+------------------
+
+[DONE] task-29
+
+Resized image in README.md.
+
+    * resized image in README.md
+
 [DONE] v. 0.0.2
 ---------------
 
