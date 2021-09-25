@@ -1,22 +1,22 @@
 #!/usr/bin/env python3.9
 # -*- coding: utf-8 -*-
 ################################################################################
-#    Linden Copyright (C) 2021 suizokukan
+#    Wisteria Copyright (C) 2021 suizokukan
 #    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of Linden.
-#    Linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    Linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
     serializers.py
@@ -46,9 +46,9 @@ import timeit
 
 from rich import print as rprint
 
-from linden.globs import VERBOSITY_DETAILS
-from linden.globs import ARGS, TIMEITNUMBER
-from linden.lindenerror import LindenError
+from wisteria.globs import VERBOSITY_DETAILS
+from wisteria.globs import ARGS, TIMEITNUMBER
+from wisteria.wisteriaerror import WisteriaError
 
 MODULES = {}
 
@@ -279,7 +279,7 @@ attribute: seulement 3 possibilités et non pas 5
                         return SerializerDataObj(serializer=serializer, dataobj=dataobj)
             return SerializerDataObj()
 
-        raise LindenError(f"Internal error: can't compute base100 for attribute '{attribute}'.")
+        raise WisteriaError(f"Internal error: can't compute base100 for attribute '{attribute}'.")
 
     def _get_dataobjs_base(self,
                            attribute):
@@ -306,7 +306,7 @@ attribute: seulement 3 possibilités et non pas 5
                     return dataobj
             return None
 
-        raise LindenError("Internal error: the result could not be computed. "
+        raise WisteriaError("Internal error: the result could not be computed. "
                           f"{attribute=};")
 
     def _get_serializers_base(self,
@@ -334,7 +334,7 @@ attribute: seulement 3 possibilités et non pas 5
                     return serializer
             return None
 
-        raise LindenError("Internal error: the result could not be computed. "
+        raise WisteriaError("Internal error: the result could not be computed. "
                           f"{attribute=};")
 
     def ratio_decoding_success(self,
@@ -495,7 +495,7 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].decoding_success)
             else:
-                raise LindenError("Internal error. "
+                raise WisteriaError("Internal error. "
                                   f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "decoding_time":
@@ -536,7 +536,7 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].encoding_success)
             else:
-                raise LindenError("Internal error. "
+                raise WisteriaError("Internal error. "
                                   f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "similarity":
@@ -544,11 +544,11 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].similarity)
             else:
-                raise LindenError("Internal error. "
+                raise WisteriaError("Internal error. "
                                   f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if res is None:
-            raise LindenError("Internal error: the result could not be computed. "
+            raise WisteriaError("Internal error: the result could not be computed. "
                               f"{serializer=}; {dataobj=}; {attribute_name=};")
         return res
 
@@ -617,7 +617,7 @@ output="formattedstr" | "base100"
                         output="value"))
 
         if res is None:
-            raise LindenError("Internal error: the result could not be computed. "
+            raise WisteriaError("Internal error: the result could not be computed. "
                               f"{serializer=}; {dataobj=}; {output=};")
         return res
 
@@ -687,7 +687,7 @@ output="formattedstr" | "base100"
                         output="value"))
 
         if res is None:
-            raise LindenError("Internal error: the result could not be computed. "
+            raise WisteriaError("Internal error: the result could not be computed. "
                               f"{serializer=}; {dataobj=}; {output=};")
         return res
 
@@ -756,7 +756,7 @@ output="formattedstr" | "base100"
                         output="value"))
 
         if res is None:
-            raise LindenError("Internal error: the result could not be computed. "
+            raise WisteriaError("Internal error: the result could not be computed. "
                               f"{serializer=}; {dataobj=}; {output=};")
         return res
 
@@ -855,7 +855,7 @@ def serializer_iaswn(action="serialize",
         * this function may return (action='version') the version of the concerned module.
         * this function may try (action='serialize') to encode/decode an <obj>ect.
         * if the serializer raises an error, this error is silently converted and no exception
-          is raised. If an internal error happpens, a LindenError exception is raised.
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
 
@@ -882,7 +882,7 @@ def serializer_iaswn(action="serialize",
     # action == "serialize"
     # ---------------------
     if action != "serialize":
-        raise LindenError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 
@@ -924,7 +924,7 @@ def serializer_jsonpickle(action="serialize",
         * this function may return (action='version') the version of the concerned module.
         * this function may try (action='serialize') to encode/decode an <obj>ect.
         * if the serializer raises an error, this error is silently converted and no exception
-          is raised. If an internal error happpens, a LindenError exception is raised.
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
 
@@ -945,7 +945,7 @@ def serializer_jsonpickle(action="serialize",
         return module.__version__
 
     if action != "serialize":
-        raise LindenError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 

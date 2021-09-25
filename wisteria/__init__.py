@@ -1,7 +1,7 @@
 """
 Text automatically generated from 'README.md' .
 
-linden
+wisteria
 Comparisons of different Python serializer
 """
-from linden.aboutproject import __version__, __projectname__
+from wisteria.aboutproject import __version__, __projectname__

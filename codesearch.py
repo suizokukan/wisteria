@@ -1,22 +1,22 @@
 #!/usr/bin/env python3.9
 # -*- coding: utf-8 -*-
 ################################################################################
-#    Linden Copyright (C) 2021 suizokukan
+#    Wisteria Copyright (C) 2021 suizokukan
 #    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of Linden.
-#    Linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    Linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
     codesearch.py
@@ -29,7 +29,7 @@ import argparse
 import subprocess
 import sys
 
-VERSION = "codesearch.py v.3/2021-08-26"
+VERSION = "codesearch.py v.4/2021-08-26"
 
 
 def read_command_line_arguments():
@@ -77,7 +77,7 @@ def read_command_line_arguments():
              'Files in the root directory must preceded by the two characters ./ .'
              'Use quotation mark around the whole string.'
              'E.g. --exclude='
-             '"linden/pyside2/*;./check_code_quality.sh"'
+             '"wisteria/pyside2/*;./check_code_quality.sh"'
     )
     return parser.parse_args()
 
@@ -86,10 +86,10 @@ ARGS = read_command_line_arguments()
 
 # By example:
 #
-# subprocess.run(('find', 'linden', '-type', 'f',
+# subprocess.run(('find', 'wisteria', '-type', 'f',
 #                 '-name', '*.py',
-#                '!', '-path', 'linden/pyside2/*',
-#                '!', '-path', 'linden/error_messages.py',
+#                '!', '-path', 'wisteria/pyside2/*',
+#                '!', '-path', 'wisteria/error_messages.py',
 #                 '-exec', 'grep', '-rHn', '--color', ARGS.string, '{}', ';'))
 EXCLUDE_ARG = []
 for exclude_path in ARGS.exclude.split(";"):
@@ -98,8 +98,8 @@ for exclude_path in ARGS.exclude.split(";"):
     EXCLUDE_ARG.append(exclude_path)
 
 try:
-    # linden/ : .py files
-    subprocess.run(['find', 'linden', '-type', 'f', '-name', '*.py', ] +
+    # wisteria/ : .py files
+    subprocess.run(['find', 'wisteria', '-type', 'f', '-name', '*.py', ] +
                    EXCLUDE_ARG +
                    ['-exec', 'grep', '-rHn', '--color', ARGS.string, '{}', ';'],
                    check=True)

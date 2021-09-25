@@ -3,20 +3,12 @@ Linden's roadmap & todos
 
 See TODOs at the end of this file.
 
-[CURRENT] v. 0.0.1
-------------------
-
-Conclusion:
-According to the tests conducted on all data...
-According to the tests conducted on the data of the "comparing what is comparable" type
-According to the tests conducted on the data read in the %%% file
-Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
-
 * --downloaddfltini
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 * progress bar : calcul
   en profiter pour proposer plusieurs méthodes : 1.1, 1.2, ... 1.9, 2.1, 2.2 ... 2.9, ...
                                                  1.1, 2.1, 3.1, ... 1.2, 2.2, 3.2, ...
+  https://rich.readthedocs.io/en/stable/progress.html
 * TIMEITNUMBER > --timeitnumber=
 * --lenmethod + modifier les en-têtes des tableaux
 * --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
@@ -25,9 +17,22 @@ Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/deco
 * serializers
 * cwc
 * pylint
-* linden > wisteria (https://en.wikipedia.org/wiki/Wisteria : image!)
 * README.md acceptable
 * report D
+    Conclusion:
+    According to the tests conducted on all data...
+    According to the tests conducted on the data of the "comparing what is comparable" type
+    According to the tests conducted on the data read in the %%% file
+    Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter 
+    than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
+* docdef : DOC001 > DOCDEF001
+
+[CURRENT] v. 0.0.1
+------------------
+
+[DONE] task-26
+
+Project new name is 'wisteria', cf https://en.wikipedia.org/wiki/Wisteria
 
 [DONE] task-25
 

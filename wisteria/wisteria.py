@@ -1,25 +1,25 @@
 #!/usr/bin/env python3.9
 # -*- coding: utf-8 -*-
 ################################################################################
-#    Linden Copyright (C) 2021 suizokukan
+#    Wisteria Copyright (C) 2021 suizokukan
 #    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of Linden.
-#    Linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    Linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    linden.py
+    wisteria.py
 
     (pimydoc)exit codes
     ⋅*  0: normal exit code
@@ -84,13 +84,13 @@ import sys
 
 from rich import print as rprint
 
-import linden.globs
-from linden.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
-from linden.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
-from linden.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
-from linden.aboutproject import __projectname__, __version__
-from linden.lindenerror import LindenError
-from linden.report import report
+import wisteria.globs
+from wisteria.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
+from wisteria.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
+from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
+from wisteria.aboutproject import __projectname__, __version__
+from wisteria.wisteriaerror import WisteriaError
+from wisteria.report import report
 
 
 PARSER = \
@@ -109,7 +109,7 @@ PARSER.add_argument('--cmp',
 
 PARSER.add_argument('--cfgfile',
                     action='store',
-                    default="linden.ini",
+                    default="wisteria.ini",
                     help="config file to be used.")
 
 PARSER.add_argument('--checkup',
@@ -136,7 +136,7 @@ PARSER.add_argument('--verbosity',
                     help="Verbosity level: 0(=minimal), 1(=normal), 2(=normal+details), 3(=debug). "
                     "Please notice that --verbosity has no effect upon --report.")
 
-linden.globs.ARGS = PARSER.parse_args()
+wisteria.globs.ARGS = PARSER.parse_args()
 
 
 # 01) project name & version
@@ -149,7 +149,7 @@ linden.globs.ARGS = PARSER.parse_args()
 # ⋅- 06) temp file opening
 # ⋅- 07) known data import
 # ⋅- 08) call to main()
-if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     # (pimydoc)console messages
     # ⋅- debug messages start with   @
     # ⋅- info messages start with    >
@@ -168,40 +168,40 @@ if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- 06) temp file opening
 # ⋅- 07) known data import
 # ⋅- 08) call to main()
-if linden.globs.ARGS.report == "minimal":
-    linden.globs.ARGS.report = REPORT_MINIMAL_STRING
-    if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+if wisteria.globs.ARGS.report == "minimal":
+    wisteria.globs.ARGS.report = REPORT_MINIMAL_STRING
+    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRXXX
         # ⋅- checkup messages start with *
-        rprint(f"> --report 'minimal' interpreted as '{linden.globs.ARGS.report}'.")
-elif linden.globs.ARGS.report == "full":
-    linden.globs.ARGS.report = REPORT_FULL_STRING
-    if linden.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+        rprint(f"> --report 'minimal' interpreted as '{wisteria.globs.ARGS.report}'.")
+elif wisteria.globs.ARGS.report == "full":
+    wisteria.globs.ARGS.report = REPORT_FULL_STRING
+    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRXXX
         # ⋅- checkup messages start with *
-        rprint(f"> --report 'full' interpreted as '{linden.globs.ARGS.report}'.")
-elif not linden.globs.ARGS.report.endswith(";"):
-    linden.globs.ARGS.report += ";"
-    if linden.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        rprint(f"> --report 'full' interpreted as '{wisteria.globs.ARGS.report}'.")
+elif not wisteria.globs.ARGS.report.endswith(";"):
+    wisteria.globs.ARGS.report += ";"
+    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRXXX
         # ⋅- checkup messages start with *
         rprint("> --report: semicolon added at the end; "
-               f"--report is now '{linden.globs.ARGS.report}'.")
+               f"--report is now '{wisteria.globs.ARGS.report}'.")
 
 # =============================================================================
 # This point is only reached if there's no --version/--help argument
 # on the command line.
 # =============================================================================
-ARGS = linden.globs.ARGS
+ARGS = wisteria.globs.ARGS
 
 
 # exit handler: let's remove the tmp file if it exists.
@@ -237,7 +237,7 @@ atexit.register(exit_handler)
 # ⋅- 06) temp file opening
 # ⋅- 07) known data import
 # ⋅- 08) call to main()
-from linden.serializers import SERIALIZERS, SerializationResults
+from wisteria.serializers import SERIALIZERS, SerializationResults
 
 
 def read_cfgfile(filename):
@@ -487,7 +487,7 @@ def checkup():
 # ⋅- 06) temp file opening
 # ⋅- 07) known data import
 # ⋅- 08) call to main()
-if linden.globs.ARGS.checkup:
+if wisteria.globs.ARGS.checkup:
     checkup()
     # (pimydoc)exit codes
     # ⋅*  0: normal exit code
@@ -524,7 +524,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- 06) temp file opening
 # ⋅- 07) known data import
 # ⋅- 08) call to main()
-from linden.data import DATA
+from wisteria.data import DATA
 
 
 def get_data_selection(data,
@@ -555,13 +555,13 @@ def get_data_selection(data,
         elif config["data selection"]["data selection"].startswith("data set/"):
             res = tuple(config["data sets"][config["data selection"]["data selection"]])
         else:
-            raise LindenError(
+            raise WisteriaError(
                 "Can't understand a value given to \\[data selection]'data selection': "
                 f"what is '{config['data selection']['data selection']}' ? "
                 "Known values are 'all', 'ini' and 'data set/xxx' "
                 "where xxx is a string.")
     else:
-        raise LindenError(
+        raise WisteriaError(
             "Can't understand a value given to the 'data' part in --cmp: "
             f"what is '{data}' ? "
             "Known values are 'all' and 'ini'. ")
@@ -683,7 +683,7 @@ def main():
     """
         main()
 
-        Main entrypoint in the project. This method is called when Linden is called from outside,
+        Main entrypoint in the project. This method is called when Wisteria is called from outside,
         e.g. by the command line.
 
         _______________________________________________________________________
@@ -824,7 +824,7 @@ def main():
         report(results,
                (serializer1, serializer2, data))
 
-    except LindenError as exception:
+    except WisteriaError as exception:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >

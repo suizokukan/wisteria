@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ################################################################################
-#    Linden Copyright (C) 2021 suizokukan
+#    Wisteria Copyright (C) 2021 suizokukan
 #    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of Linden.
-#    Linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    Linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-   Linden project : propagate_versionumber.py
+   Wisteria project : propagate_versionumber.py
 
-   Inject linden.aboutproject.__version__ in various files.
+   Inject wisteria.aboutproject.__version__ in various files.
 
    ____________________________________________________________________________
 
@@ -32,12 +32,12 @@ import os
 import os.path
 import re
 
-from linden.aboutproject import __version__
+from wisteria.aboutproject import __version__
 
 
-VERSION = "propagate_versionumber.py v.2/2021-08-26"
+VERSION = "propagate_versionumber.py v.3/2021-08-26"
 PARSER = \
-    argparse.ArgumentParser(description="Inject linden.aboutproject.__version__ in various files.",
+    argparse.ArgumentParser(description="Inject wisteria.aboutproject.__version__ in various files.",
                             epilog=VERSION,
                             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 PARSER.add_argument('--version', '-v',
@@ -53,7 +53,7 @@ def pyproject_toml():
 
         Update the version number in the `pyproject.toml file.
 
-        Inject linden.aboutproject::__version__ into the
+        Inject wisteria.aboutproject::__version__ into the
         `pyproject.toml` file at line :
             version = "..."
     """

@@ -1,25 +1,25 @@
-#!/usr/bin/python
+#!/usr/bin/env python3.9
 # -*- coding: utf-8 -*-
 ################################################################################
-#    linden Copyright (C) 2012 Xavier Faure
-#    Contact: suizozukan arrobas orange dot fr
+#    Wisteria Copyright (C) 2021 suizokukan
+#    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of linden.
-#    linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-        ❏linden❏ bin/linden
+        ❏Wisteria❏ bin/wisteria
         ________________________________________________________________________
 
         Entry point of the project .
@@ -30,7 +30,7 @@
 
         BEWARE ! This file is only here to easily create an executable script
                  to be used by developpers. But this file isn't the entry
-                 point of the program, which is linden.main.py::main().
+                 point of the program, which is wisteria.main.py::main().
                  Pypi creates an entry point from this last file, not from
                  the current one !
 
@@ -38,13 +38,13 @@
 
         about exit codes, see documentation : 'exit codes'
 
-          This script stops and raises a -999 exit code if linden is already
+          This script stops and raises a -999 exit code if wisteria is already
         installed.
 """
 import os
 import sys
 
-sys.path.append(os.path.join("..", "linden"))
+sys.path.append(os.path.join("..", "wisteria"))
 
-from linden.linden import main
+from wisteria.wisteria import main
 main()

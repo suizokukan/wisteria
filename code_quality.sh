@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="poetry_show_tree.sh v.3/2021-08-25"
+VERSION="poetry_show_tree.sh v.4/2021-08-25"
 
 # ---- --help ----------------------------------------------------------------
 if [[ $1 = "--help" ]] || [[ $1 = "-h" ]]; then
@@ -30,9 +30,9 @@ echo "=== pycodestyle . --max-line-length=100 ==="
 pycodestyle . --max-line-length=100
 echo "=== pylint ./*.py ==="
 pylint ./*.py
-echo "=== pylint linden/*.py ==="
-pylint linden/*.py
-echo "=== linden/*.py ==="
+echo "=== pylint wisteria/*.py ==="
+pylint wisteria/*.py
+echo "=== wisteria/*.py ==="
 pylint tests/*.py
 echo "=== shellcheck ./*.sh ==="
 shellcheck ./*.sh

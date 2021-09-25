@@ -1,22 +1,22 @@
 #!/usr/bin/env python3.9
 # -*- coding: utf-8 -*-
 ################################################################################
-#    Linden Copyright (C) 2021 suizokukan
+#    Wisteria Copyright (C) 2021 suizokukan
 #    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of Linden.
-#    Linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    Linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
     report.py
@@ -39,8 +39,8 @@
 import rich.table
 from rich import print as rprint
 
-import linden.globs
-from linden.lindenerror import LindenError
+import wisteria.globs
+from wisteria.wisteriaerror import WisteriaError
 
 
 def report_section_a(results):
@@ -71,7 +71,7 @@ def report_section_a(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](A) REPORT with --cmp set to "
@@ -108,7 +108,7 @@ def report_section_b1a(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](B1a) full details: serializer * data object[/bold white on blue]")
@@ -165,7 +165,7 @@ def report_section_b1b(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
@@ -221,7 +221,7 @@ def report_section_b1c(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <dataobj>[/bold white on blue]")
@@ -266,7 +266,7 @@ def report_section_b2a(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](B2a) full details: data object * serializer[/bold white on blue]")
@@ -324,7 +324,7 @@ def report_section_b2b(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
@@ -380,7 +380,7 @@ def report_section_c1a(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](C1a) full details: serializer * data object (base 100)[/bold white on blue]")
@@ -463,7 +463,7 @@ def report_section_c1b(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](C1b) full details: serializers (base 100)[/bold white on blue]")
@@ -541,7 +541,7 @@ def report_section_c2a(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](C2a) full details: data object * serializer (base 100)[/bold white on blue]")
@@ -626,7 +626,7 @@ def report_section_c2b(results):
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
         rprint("[bold white on blue](C2b) full details: data objects (base 100)[/bold white on blue]")
@@ -707,7 +707,7 @@ TODO
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
     """
-    args = linden.globs.ARGS
+    args = wisteria.globs.ARGS
 
     serializer1, serializer2, data = s1s2d
 
@@ -751,4 +751,4 @@ TODO
             # ⋅- info messages start with    >
             # ⋅- error messages start with   ERRXXX
             # ⋅- checkup messages start with *
-            raise LindenError("(ERR017) Can't interpret report section; what is '{report_section}' ?")
+            raise WisteriaError("(ERR017) Can't interpret report section; what is '{report_section}' ?")

@@ -1,38 +1,38 @@
 #!/usr/bin/env python3.9
 # -*- coding: utf-8 -*-
 ################################################################################
-#    Linden Copyright (C) 2021 suizokukan
+#    Wisteria Copyright (C) 2021 suizokukan
 #    Contact: suizokukan _A.T._ orange dot fr
 #
-#    This file is part of Linden.
-#    Linden is free software: you can redistribute it and/or modify
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    Linden is distributed in the hope that it will be useful,
+#    Wisteria is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with Linden.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    lindenerror.py
+    wisteriaerror.py
 
-    Definition of the LindenError class, the unique error class that should be
+    Definition of the WisteriaError class, the unique error class that should be
     raised by the project.
 
     ___________________________________________________________________________
 
-    o  LindenError
+    o  WisteriaError
 """
 
 
-class LindenError(Exception):
+class WisteriaError(Exception):
     """
-        LindenError class
+        WisteriaError class
 
         Unique exception raised by the program.
     """
