@@ -74,9 +74,19 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.3
 ------------------
 
-[CURRENT] task-32
+[DONE] task-33
+
+bugfix in serializers.py: special cases are now correctly handled.
+
+    * bugfix in serializers.py: special cases are now correctly handled.
+      if some values can't be computed they now are displayed as "no data".
+
+[DONE] task-32
+
+Documentation.
 
     * improved doc.
+    * ROADME.md > ROADMAP.md
 
 [DONE] task-31
 

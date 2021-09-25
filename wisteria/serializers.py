@@ -196,6 +196,9 @@ class SerializationResults(dict):
         """
 TODO
         """
+        if float_base100 is None:
+            return "[red](no data)[/red]"
+
         prefix = " "
         suffix = ""
         if bool_is_base100_value:
@@ -215,13 +218,13 @@ TODO
 
             _______________________________________________________________
 
-            ARGUMENT: (int, float)inttotal_and_floatratio
+            ARGUMENT: (None|(int, float))inttotal_and_floatratio
 
             RETURNED VALUE: a formatted string representing the input argument.
         """
         if inttotal_and_floatratio != (None, None):
             return f"{inttotal_and_floatratio[0]} ({100*inttotal_and_floatratio[1]:.2f} %)"
-        return "(no data)"
+        return "[red](no data)[/red]"
 
     @staticmethod
     def _format_stringlength(int_stringlength):
@@ -234,10 +237,12 @@ TODO
 
             _______________________________________________________________
 
-            ARGUMENT: (int)int_stringlength, a string number.
+            ARGUMENT: (None|int)int_stringlength, a string number.
 
             RETURNED VALUE: a formatted string representing the input argument.
         """
+        if int_stringlength is None:
+            return "[red](no data)[/red]"
         return f"{int_stringlength} chars"
 
     @staticmethod
@@ -254,6 +259,8 @@ TODO
 
             RETURNED VALUE: a formatted string representing the input argument.
         """
+        if bool_success is None:
+            return "[red](no data)[/red]"
         return "ok" if bool_success else "[red]NOT OK[/red]"
 
     @staticmethod
@@ -265,10 +272,12 @@ TODO
                 ex: 0.333345677 > "0.333345"
             _______________________________________________________________
 
-            ARGUMENT: (float)floattime
+            ARGUMENT: (None|float)floattime
 
             RETURNED VALUE: a formatted string representing the input argument.
         """
+        if floattime is None:
+            return "[red](no data)[/red]"
         return f"{floattime:.6f}"
 
     def _get_base(self,
@@ -526,10 +535,13 @@ output="formattedstr" | "base100"
                     self[serializer][dataobj].decoding_time)
             else:
                 # output == "base100"
-                res = SerializationResults._format_base100(
-                    serializer == base100_serializerdataobj.serializer and
-                    dataobj == base100_serializerdataobj.dataobj,
-                    100*self[serializer][dataobj].decoding_time/base100.decoding_time)
+                if self[serializer][dataobj].decoding_time is None:
+                    res = "[red]no data[/red]"
+                else:
+                    res = SerializationResults._format_base100(
+                        serializer == base100_serializerdataobj.serializer and
+                        dataobj == base100_serializerdataobj.dataobj,
+                        100*self[serializer][dataobj].decoding_time/base100.decoding_time)
 
         if attribute_name == "encoding_strlen":
             if output == "formattedstr":
@@ -537,10 +549,13 @@ output="formattedstr" | "base100"
                     self[serializer][dataobj].encoding_strlen)
             else:
                 # output == "base100"
-                res = SerializationResults._format_base100(
-                    serializer == base100_serializerdataobj.serializer and
-                    dataobj == base100_serializerdataobj.dataobj,
-                    100*self[serializer][dataobj].encoding_strlen/base100.encoding_strlen)
+                if self[serializer][dataobj].encoding_strlen is None:
+                    res = "[red]no data[/red]"
+                else:
+                    res = SerializationResults._format_base100(
+                        serializer == base100_serializerdataobj.serializer and
+                        dataobj == base100_serializerdataobj.dataobj,
+                        100*self[serializer][dataobj].encoding_strlen/base100.encoding_strlen)
 
         if attribute_name == "encoding_time":
             if output == "formattedstr":
@@ -548,10 +563,13 @@ output="formattedstr" | "base100"
                     self[serializer][dataobj].encoding_time)
             else:
                 # output == "base100"
-                res = SerializationResults._format_base100(
-                    serializer == base100_serializerdataobj.serializer and
-                    dataobj == base100_serializerdataobj.dataobj,
-                    100*self[serializer][dataobj].encoding_time/base100.encoding_time)
+                if self[serializer][dataobj].encoding_time is None:
+                    res = "[red]no data[/red]"
+                else:
+                    res = SerializationResults._format_base100(
+                        serializer == base100_serializerdataobj.serializer and
+                        dataobj == base100_serializerdataobj.dataobj,
+                        100*self[serializer][dataobj].encoding_time/base100.encoding_time)
 
         if attribute_name == "encoding_success":
             if output == "formattedstr":
