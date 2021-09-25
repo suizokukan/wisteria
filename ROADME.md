@@ -3,7 +3,6 @@ Linden's roadmap & todos
 
 See TODOs at the end of this file.
 
-* --downloaddfltini
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 * progress bar : calcul
   en profiter pour proposer plusieurs méthodes : 1.1, 1.2, ... 1.9, 2.1, 2.2 ... 2.9, ...
@@ -25,11 +24,18 @@ See TODOs at the end of this file.
     According to the tests conducted on the data read in the %%% file
     Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter 
     than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
-* docdef : DOC001 > DOCDEF001
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-30
+
+--downloadconfigfile option.
+
+    * --downloadconfigfile option
+    * downloadconfigfile()
+    * new constants in globs.py: DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
 
 [DONE] task-29
 

@@ -66,3 +66,9 @@ REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
 REPORT_MINIMAL_STRING = "C;"
 REPORT_FULL_STRING = "titles;A;B1a;B1b;B1c;B2a;B2b;C1a;C1b;C2a;C2b;"
+
+# default name for the config file.
+DEFAULT_CONFIG_FILENAME = "wisteria.ini"
+
+# url of the default config file:
+DEFAULTCFGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"

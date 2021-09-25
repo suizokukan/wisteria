@@ -24,6 +24,7 @@
     (pimydoc)exit codes
     ⋅*  0: normal exit code
     ⋅*  1: normal exit code after --checkup
+    ⋅*  2: normal exit code after --downloadconfigfile
     ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     ⋅* -2: error, ill-formed --cmp string
     ⋅* -3: internal error, data can't be loaded
@@ -80,7 +81,10 @@ import atexit
 import configparser
 import os
 import re
+import shutil
 import sys
+import urllib.error
+import urllib.request
 
 from rich import print as rprint
 
@@ -88,6 +92,7 @@ import wisteria.globs
 from wisteria.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
 from wisteria.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
+from wisteria.globs import DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.report import report
@@ -109,12 +114,16 @@ PARSER.add_argument('--cmp',
 
 PARSER.add_argument('--cfgfile',
                     action='store',
-                    default="wisteria.ini",
+                    default=DEFAULT_CONFIG_FILENAME,
                     help="config file to be used.")
 
 PARSER.add_argument('--checkup',
                     action='store_true',
                     help="show installed serializers, current config file and exit")
+
+PARSER.add_argument('--downloadconfigfile',
+                    action='store_true',
+                    help="download default config file and exit")
 
 PARSER.add_argument('--report',
                     action='store',
@@ -148,9 +157,10 @@ wisteria.globs.ARGS = PARSER.parse_args()
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     # (pimydoc)console messages
     # ⋅- debug messages start with   @
@@ -169,9 +179,10 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 if wisteria.globs.ARGS.report == "minimal":
     wisteria.globs.ARGS.report = REPORT_MINIMAL_STRING
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
@@ -236,9 +247,10 @@ def exit_handler():
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 atexit.register(exit_handler)
 
 # =============================================================================
@@ -250,9 +262,10 @@ atexit.register(exit_handler)
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 from wisteria.serializers import SERIALIZERS, SerializationResults
 
 
@@ -502,22 +515,69 @@ def checkup():
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 if wisteria.globs.ARGS.checkup:
     checkup()
     # (pimydoc)exit codes
     # ⋅*  0: normal exit code
     # ⋅*  1: normal exit code after --checkup
+    # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
     sys.exit(1)
 
 
+def downloadconfigfile():
+    """
+        downloadconfigfile()
+
+        Download default config file.
+        _______________________________________________________________________
+
+        RETURNED VALUE: (bool)success
+    """
+    targetname = DEFAULT_CONFIG_FILENAME
+
+    if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRORIDXXX
+        # ⋅- checkup messages start with *
+        rprint(f"> Trying to download '{DEFAULTCFGFILE_URL}' "
+               f"which will be written as '{targetname}' ('{normpath(targetname)}').")
+
+    try:
+        with urllib.request.urlopen(DEFAULTCFGFILE_URL) as response, \
+             open(targetname, 'wb') as out_file:
+            shutil.copyfileobj(response, out_file)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+            rprint(f"> Successfully downloaded '{DEFAULTCFGFILE_URL}', "
+                   f"written as '{targetname}' ('{normpath(targetname)}')")
+        return True
+
+    except urllib.error.URLError as exception:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+        rprint(f"(ERRORID000) An error occured: {exception}")
+        return False
+
+
 # =============================================================================
-# 06) temp file opening
+# 06) download default config file
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
@@ -525,9 +585,36 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
+if wisteria.globs.ARGS.downloadconfigfile:
+    downloadconfigfile()
+    # (pimydoc)exit codes
+    # ⋅*  0: normal exit code
+    # ⋅*  1: normal exit code after --checkup
+    # ⋅*  2: normal exit code after --downloadconfigfile
+    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅* -2: error, ill-formed --cmp string
+    # ⋅* -3: internal error, data can't be loaded
+    sys.exit(2)
+
+
+
+# =============================================================================
+# 07) temp file opening
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
 if not os.path.exists(TMPFILENAME):
@@ -536,7 +623,7 @@ if not os.path.exists(TMPFILENAME):
 
 
 # =============================================================================
-# 07) known data import
+# 08) known data import
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
@@ -544,9 +631,10 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 from wisteria.data import DATA
 
 
@@ -715,6 +803,7 @@ def main():
                 (pimydoc)exit codes
                 ⋅*  0: normal exit code
                 ⋅*  1: normal exit code after --checkup
+                ⋅*  2: normal exit code after --downloadconfigfile
                 ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: internal error, data can't be loaded
@@ -755,6 +844,7 @@ def main():
         # (pimydoc)exit codes
         # ⋅*  0: normal exit code
         # ⋅*  1: normal exit code after --checkup
+        # ⋅*  2: normal exit code after --downloadconfigfile
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded
@@ -768,6 +858,7 @@ def main():
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
@@ -824,6 +915,7 @@ def main():
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
@@ -839,6 +931,7 @@ def main():
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
@@ -858,6 +951,7 @@ def main():
     # (pimydoc)exit codes
     # ⋅*  0: normal exit code
     # ⋅*  1: normal exit code after --checkup
+    # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
@@ -865,7 +959,7 @@ def main():
 
 
 # =============================================================================
-# 08) call to main()
+# 09) call to main()
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
@@ -873,8 +967,9 @@ def main():
 # ⋅- 03) exit handler
 # ⋅- 04) known serializers import
 # ⋅- 05) checkup
-# ⋅- 06) temp file opening
-# ⋅- 07) known data import
-# ⋅- 08) call to main()
+# ⋅- 06) download default config file
+# ⋅- 07) temp file opening
+# ⋅- 08) known data import
+# ⋅- 09) call to main()
 if __name__ == '__main__':
     main()

@@ -32,9 +32,10 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 - 03) exit handler
 - 04) known serializers import
 - 05) checkup
-- 06) temp file opening
-- 07) known data import
-- 08) call to main()          
+- 06) download default config file
+- 07) temp file opening
+- 08) known data import
+- 09) call to main()          
 ### ==========================================================================
 [(pimydoc)config file format]
 
@@ -61,6 +62,7 @@ data objects
 [(pimydoc)exit codes]
 *  0: normal exit code
 *  1: normal exit code after --checkup
+*  2: normal exit code after --downloadconfigfile
 * -1: error, given config file can't be read (missing or ill-formed file)
 * -2: error, ill-formed --cmp string
 * -3: internal error, data can't be loaded
