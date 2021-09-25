@@ -65,7 +65,7 @@ REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
 REPORT_MINIMAL_STRING = "C;"
-REPORT_FULL_STRING = "titles;A;B1a;B1b;B1c;B2a;B2b;C1a;C1b;C2a;C2b;"
+REPORT_FULL_STRING = "titles;A1;A2;A3;B1a;B1b;B1c;B2a;B2b;C1a;C1b;C2a;C2b;"
 
 # default name for the config file.
 DEFAULT_CONFIG_FILENAME = "wisteria.ini"

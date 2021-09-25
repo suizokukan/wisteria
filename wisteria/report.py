@@ -41,15 +41,19 @@ from rich import print as rprint
 
 import wisteria.globs
 from wisteria.wisteriaerror import WisteriaError
+from wisteria.utils import shortenedstr
 
 
-def report_section_a(results):
+def report_section_a1(results):
     """
-        report_section_a()
+        report_section_a1()
 
-        Sub-function of report() for report section "A"
+        Sub-function of report() for report section "A1"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -74,9 +78,99 @@ def report_section_a(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](A) REPORT with --cmp set to "
+        rprint("[bold white on blue](A1) REPORT with --cmp set to "
                f"'[italic]{args.cmp}[/italic]'[/bold white on blue]")
         rprint()
+
+
+def report_section_a2(results):
+    """
+        report_section_a2()
+
+        Sub-function of report() for report section "A2"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    from wisteria.serializers import SERIALIZERS
+
+    args = wisteria.globs.ARGS
+
+    if "titles;" in args.report:
+        rprint("[bold white on blue](A2) List of serializers to be used"
+               "[/bold white on blue]")
+        rprint()
+
+    for serializer in SERIALIZERS.values():
+        rprint("  - ", serializer.simple_repr())
+    rprint()
+
+
+def report_section_a3(results):
+    """
+        report_section_a3()
+
+        Sub-function of report() for report section "A3"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C     : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+    """
+    from wisteria.data import DATA
+
+    args = wisteria.globs.ARGS
+
+    if "titles;" in args.report:
+        rprint("[bold white on blue](A3) List of data objects to be used"
+               "[/bold white on blue]")
+        rprint()
+
+    for dataobj_name, dataobj_value in DATA.items():
+        rprint("  - ", dataobj_name, ":", shortenedstr(repr(dataobj_value)))
+    rprint()
 
 
 def report_section_b1a(results):
@@ -85,7 +179,10 @@ def report_section_b1a(results):
 
         Sub-function of report() for report section "B1a"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -143,7 +240,10 @@ def report_section_b1b(results):
 
         Sub-function of report() for report section "B1b"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -199,7 +299,10 @@ def report_section_b1c(results):
 
         Sub-function of report() for report section "B1c"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -249,7 +352,10 @@ def report_section_b2a(results):
 
         Sub-function of report() for report section "B2a"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -308,7 +414,10 @@ def report_section_b2b(results):
 
         Sub-function of report() for report section "B2b"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -364,7 +473,10 @@ def report_section_c1a(results):
 
         Sub-function of report() for report section "C1a"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -448,7 +560,10 @@ def report_section_c1b(results):
 
         Sub-function of report() for report section "C1b"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -527,7 +642,10 @@ def report_section_c2a(results):
 
         Sub-function of report() for report section "C2a"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -613,7 +731,10 @@ def report_section_c2b(results):
 
         Sub-function of report() for report section "C2b"
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -695,7 +816,10 @@ def report(results,
         Print an analyze of <results>.
 
         (pimydoc)report sections
-        ⋅* A         : main title
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -726,26 +850,31 @@ def report(results,
     serializer1, serializer2, data = s1s2d
 
     str2reportsection = {
-        "A": (report_section_a,),
+        "A": (report_section_a1,
+              report_section_a2,
+              report_section_a3,),
+        "A1": (report_section_a1,),
+        "A2": (report_section_a2,),
+        "A3": (report_section_a3,),
         "B": (report_section_b1a,
               report_section_b1b,
               report_section_b1c,
               report_section_b2a,
-              report_section_b2b),
+              report_section_b2b,),
         "B1": (report_section_b1a,
                report_section_b1b,
-               report_section_b1c),
+               report_section_b1c,),
         "B1a": (report_section_b1a,),
         "B1b": (report_section_b1b,),
         "B1c": (report_section_b1c,),
         "B2": (report_section_b2a,
-               report_section_b2b),
+               report_section_b2b,),
         "B2a": (report_section_b2a,),
         "B2b": (report_section_b2b,),
         "C": (report_section_c1a,
               report_section_c1b,
               report_section_c2a,
-              report_section_c2b),
+              report_section_c2b,),
         "C1": (report_section_c1a,
                report_section_c1b,),
         "C1a": (report_section_c1a,),

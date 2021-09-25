@@ -68,7 +68,10 @@ data objects
 * -3: internal error, data can't be loaded
 ### ==========================================================================
 [(pimydoc)report sections]
-* A         : main title
+* A         : main informations
+  - A1      : main title
+  - A2      : list of the serializers to be used
+  - A3      : list of the data objects to be used
 * B         : full details (raw results)
   - B1      : full details (serializers)
     . B1a   : full details: serializer * data object

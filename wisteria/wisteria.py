@@ -83,9 +83,10 @@ PARSER.add_argument('--report',
                     default="minimal",
                     help=f"Report format: 'minimal' (interpreted as '{REPORT_MINIMAL_STRING}'), "
                     f"'full' (interpreted as '{REPORT_FULL_STRING}'), "
-                    "or a subset from this last string, e.g. 'A;B1a;'. "
+                    "or a subset from this last string, e.g. 'A1;B1a;'. "
                     "You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...) "
                     "or like 'B1' (=B1a+B1b+B1c). "
+                    "Full informations in the documentation. "
                     "Please notice that --verbosity has no effect upon --report.")
 
 PARSER.add_argument('--verbosity',

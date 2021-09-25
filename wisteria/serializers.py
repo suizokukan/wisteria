@@ -855,6 +855,7 @@ class SerializerData:
         o  __init__(self, human_name, internet, available, func)
         o  __repr__(self)
         o  checkup_repr(self)
+        o  simple_repr(self)
     """
     def __init__(self,
                  human_name,
@@ -888,6 +889,16 @@ class SerializerData:
         if self.available:
             return f"(available)     '{self.human_name}' ({self.version}), see {self.internet}."
         return f"(not available) '{self.human_name}' (see {self.internet})."
+
+    def simple_repr(self):
+        """
+            SerializerData.simple_repr()
+
+            Does the same as .__repr__() but for a simple output.
+        """
+        if self.available:
+            return f"(available)     '{self.human_name}' ({self.version})"
+        return f"(not available) '{self.human_name}'"
 
 
 def serializer_iaswn(action="serialize",

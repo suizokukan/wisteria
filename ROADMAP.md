@@ -69,10 +69,19 @@ See TODOs at the end of this file.
     Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter 
     than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
-* A1, A2
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-35
+
+report: A1, A2, A3 sections
+
+    * new report sections: A1, A2, A3 sections
+    * added to report.py new functions: report_section_a1(),
+      report_section_a2(), report_section_a3()
+    * REPORT_FULL_STRING set to "titles;A1;A2;A3;B1a;B1b;B1c;B2a;B2b;C1a;C1b;C2a;C2b;"
+    * new file: utils.py
 
 [DONE] task-34
 
