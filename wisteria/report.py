@@ -745,10 +745,12 @@ TODO
         if report_section in str2reportsection:
             for func in str2reportsection[report_section]:
                 func(results)
-        else:
+        elif report_section.strip() != "":
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >
             # ⋅- error messages start with   ERRXXX
             # ⋅- checkup messages start with *
-            raise WisteriaError("(ERR017) Can't interpret report section; what is '{report_section}' ?")
+            raise WisteriaError(
+                f"(ERR017) Can't interpret report section; "
+                f"what is '{report_section}' ? args.report is '{args.report}' .")

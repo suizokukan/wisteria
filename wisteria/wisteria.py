@@ -139,7 +139,9 @@ PARSER.add_argument('--verbosity',
 wisteria.globs.ARGS = PARSER.parse_args()
 
 
+# =============================================================================
 # 01) project name & version
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -158,7 +160,9 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     rprint(f"> {__projectname__}, {__version__}")
 
 
+# =============================================================================
 # 02) ARGS.report interpretation
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -196,6 +200,14 @@ elif not wisteria.globs.ARGS.report.endswith(";"):
         # ⋅- checkup messages start with *
         rprint("> --report: semicolon added at the end; "
                f"--report is now '{wisteria.globs.ARGS.report}'.")
+if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+    # (pimydoc)console messages
+    # ⋅- debug messages start with   @
+    # ⋅- info messages start with    >
+    # ⋅- error messages start with   ERRXXX
+    # ⋅- checkup messages start with *
+    rprint("@ From now --report (wisteria.globs.ARGS.report) is set "
+           f"to '{wisteria.globs.ARGS.report}'.")
 
 # =============================================================================
 # This point is only reached if there's no --version/--help argument
@@ -215,7 +227,9 @@ def exit_handler():
         os.remove(TMPFILENAME)
 
 
+# =============================================================================
 # 03) exit handler
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -227,7 +241,9 @@ def exit_handler():
 # ⋅- 08) call to main()
 atexit.register(exit_handler)
 
+# =============================================================================
 # 04) known serializers import
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -477,7 +493,9 @@ def checkup():
            f"({normpath(ARGS.cfgfile)}). " + diagnostic)
 
 
+# =============================================================================
 # 05) checkup
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -497,7 +515,10 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -3: internal error, data can't be loaded
     sys.exit(1)
 
+
+# =============================================================================
 # 06) temp file opening
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -514,7 +535,9 @@ if not os.path.exists(TMPFILENAME):
         pass
 
 
+# =============================================================================
 # 07) known data import
+# =============================================================================
 # (pimydoc)code structure
 # ⋅- 01) project name & version
 # ⋅- 02) ARGS.report interpretation
@@ -842,15 +865,16 @@ def main():
 
 
 # =============================================================================
+# 08) call to main()
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- 01) project name & version
+# ⋅- 02) ARGS.report interpretation
+# ⋅- 03) exit handler
+# ⋅- 04) known serializers import
+# ⋅- 05) checkup
+# ⋅- 06) temp file opening
+# ⋅- 07) known data import
+# ⋅- 08) call to main()
 if __name__ == '__main__':
-    # 08) call to main()
-    # (pimydoc)code structure
-    # ⋅- 01) project name & version
-    # ⋅- 02) ARGS.report interpretation
-    # ⋅- 03) exit handler
-    # ⋅- 04) known serializers import
-    # ⋅- 05) checkup
-    # ⋅- 06) temp file opening
-    # ⋅- 07) known data import
-    # ⋅- 08) call to main()
     main()

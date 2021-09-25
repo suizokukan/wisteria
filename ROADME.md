@@ -30,6 +30,15 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.1
 ------------------
 
+[DONE] task-27
+
+Minor modifications to the doc. and minor bugfix.
+
+    * linden.ini > wisteria.ini
+    * fix a minor bug in report(): forgotten prefix 'f' in an f-string.
+    * fix a minor bug in report(): '' is somehow a valid report section when splitting args.report.
+    * improved doc. in wisteria.py
+
 [DONE] task-26
 
 Project new name is 'wisteria', cf https://en.wikipedia.org/wiki/Wisteria
