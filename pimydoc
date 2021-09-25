@@ -55,7 +55,7 @@ data objects
 [(pimydoc)console messages]
 - debug messages start with   @
 - info messages start with    >
-- error messages start with   ERRXXX
+- error messages start with   ERRORIDXXX
 - checkup messages start with *
 ### ==========================================================================    
 [(pimydoc)exit codes]

@@ -749,8 +749,8 @@ TODO
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRXXX
+            # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
             raise WisteriaError(
-                f"(ERR017) Can't interpret report section; "
+                f"(ERRORID017) Can't interpret report section; "
                 f"what is '{report_section}' ? args.report is '{args.report}' .")

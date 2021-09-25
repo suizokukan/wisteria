@@ -83,7 +83,7 @@ def trytoimport(module_name):
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRXXX
+            # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
             rprint(f"> Module '{module_name}' successfully imported.")
     except ModuleNotFoundError:
@@ -158,9 +158,9 @@ TODO il en manque !
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRXXX
+            # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
-            rprint("ERR016: Incorrect data, there's no serializer.")
+            rprint("ERRORID016: Incorrect data, there's no serializer.")
             return False
 
         first_serializer = tuple(self.serializers)[0]

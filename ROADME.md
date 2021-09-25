@@ -31,9 +31,12 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.2
 ------------------
 
-[CURRENT] task-28
+[DONE] task-28
 
+Minor improvements: ERRXXX > ERRORIDXXX, err_codes.sh, image in README.md
 
+   * ERRXXX > ERRORIDXXX
+   * README.md: first try to add an image in the markdown file.
 
 [DONE] v. 0.0.1
 ---------------
