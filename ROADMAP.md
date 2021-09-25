@@ -12,8 +12,7 @@ See TODOs at the end of this file.
 * --lenmethod + modifier les en-têtes des tableaux
 * --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
 * numéroter les étapes dans main() (cf code structure)
-* data types
-- données à ajouter:
+* data types à compléter
         RegularClass
         IntheritedList
         IntheritedDict
@@ -70,9 +69,18 @@ See TODOs at the end of this file.
     Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter 
     than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
+* A1, A2
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-34
+
+new serializers: json, pickle, marshal
+
+    * new serializers: json, pickle, marshal
+    * added to serializers.py 3 new functions: serializer_json(), serializer_marshal()
+      and serializer_pickle()
 
 [DONE] task-33
 

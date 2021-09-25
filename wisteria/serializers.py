@@ -38,13 +38,17 @@
     o  SerializationResult class
     o  SerializationData class
 
-    * serializer_iaswn(action="serialize", obj=None):
-    * serializer_jsonpickle(action="serialize", obj=None):
+    * serializer_iaswn(action="serialize", obj=None)
+    * serializer_json(action="serialize", obj=None)
+    * serializer_jsonpickle(action="serialize", obj=None)
+    * serializer_marshal(action="serialize", obj=None)
+    * serializer_pickle(action="serialize", obj=None)
 
     * SERIALIZERS dict
 """
 from dataclasses import dataclass
 import importlib
+import sys
 import timeit
 
 from rich import print as rprint
@@ -955,6 +959,69 @@ def serializer_iaswn(action="serialize",
     return res
 
 
+def serializer_json(action="serialize",
+                    obj=None):
+    """
+        serializer_json()
+
+        Serializer for the json module.
+
+        Like every serializer_xxx() function:
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
+
+        This function assumes that the concerned module has already be imported.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  action: (str) either "version" either "serialize"
+        o  obj:    the object to be serialized
+
+        RETURNED VALUE:
+           - None if an error occcured
+           - if <action> is (str)"version", return a string.
+           - if <action> is (str)"serialize", return a SerializationResult object.
+    """
+    module = MODULES["json"]
+
+    if action == "version":
+        return module.__version__
+
+    if action != "serialize":
+        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+
+    res = SerializationResult()
+
+    _error = False
+    try:
+        _res = module.dumps(obj)
+        _timeit = timeit.Timer('module.dumps(obj)',
+                               globals=locals())
+        res.encoding_success = True
+        res.encoding_strlen = _len(_res)
+        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+    except TypeError:
+        _error = True
+
+    if not _error:
+        try:
+            _res2 = module.loads(_res)
+            res.decoding_success = True
+            _timeit = timeit.Timer("module.loads(_res)",
+                                   globals=locals())
+            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+
+            if obj == _res2:
+                res.similarity = True
+        except (TypeError, AttributeError):
+            pass
+
+    return res
+
+
 def serializer_jsonpickle(action="serialize",
                           obj=None):
     """
@@ -1018,15 +1085,158 @@ def serializer_jsonpickle(action="serialize",
     return res
 
 
+def serializer_marshal(action="serialize",
+                       obj=None):
+    """
+        serializer_marshal()
+
+        Serializer for the marshal module.
+
+        Like every serializer_xxx() function:
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
+
+        This function assumes that the concerned module has already be imported.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  action: (str) either "version" either "serialize"
+        o  obj:    the object to be serialized
+
+        RETURNED VALUE:
+           - None if an error occcured
+           - if <action> is (str)"version", return a string.
+           - if <action> is (str)"serialize", return a SerializationResult object.
+    """
+    module = MODULES["marshal"]
+
+    if action == "version":
+        return f"version {module.version}; (Python version) {sys.version}"
+
+    if action != "serialize":
+        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+
+    res = SerializationResult()
+
+    _error = False
+    try:
+        _res = module.dumps(obj)
+        _timeit = timeit.Timer('module.dumps(obj)',
+                               globals=locals())
+        res.encoding_success = True
+        res.encoding_strlen = _len(_res)
+        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+    except (TypeError, ValueError):
+        _error = True
+
+    if not _error:
+        try:
+            _res2 = module.loads(_res)
+            res.decoding_success = True
+            _timeit = timeit.Timer("module.loads(_res)",
+                                   globals=locals())
+            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+
+            if obj == _res2:
+                res.similarity = True
+        except (TypeError, AttributeError):
+            pass
+
+    return res
+
+
+def serializer_pickle(action="serialize",
+                      obj=None):
+    """
+        serializer_pickle()
+
+        Serializer for the pickle module.
+
+        Like every serializer_xxx() function:
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
+
+        This function assumes that the concerned module has already be imported.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  action: (str) either "version" either "serialize"
+        o  obj:    the object to be serialized
+
+        RETURNED VALUE:
+           - None if an error occcured
+           - if <action> is (str)"version", return a string.
+           - if <action> is (str)"serialize", return a SerializationResult object.
+    """
+    module = MODULES["pickle"]
+
+    if action == "version":
+        return "(Python version) "+sys.version
+
+    if action != "serialize":
+        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+
+    res = SerializationResult()
+
+    _error = False
+    try:
+        _res = module.dumps(obj)
+        _timeit = timeit.Timer('module.dumps(obj)',
+                               globals=locals())
+        res.encoding_success = True
+        res.encoding_strlen = _len(_res)
+        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+    except TypeError:
+        _error = True
+
+    if not _error:
+        try:
+            _res2 = module.loads(_res)
+            res.decoding_success = True
+            _timeit = timeit.Timer("module.loads(_res)",
+                                   globals=locals())
+            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+
+            if obj == _res2:
+                res.similarity = True
+        except (TypeError, AttributeError):
+            pass
+
+    return res
+
+
 SERIALIZERS = {
-    "iaswn": SerializerData(human_name="Iaswn",
-                            internet="https://github.com/suizokukan/iaswn",
-                            available=trytoimport("iaswn"),
-                            func=serializer_iaswn),
-    "jsonpickle": SerializerData(human_name="jsonpickle",
-                                 internet="https://jsonpickle.github.io/",
-                                 available=trytoimport("jsonpickle"),
-                                 func=serializer_jsonpickle),
+    "iaswn": SerializerData(
+        human_name="Iaswn",
+        internet="https://github.com/suizokukan/iaswn",
+        available=trytoimport("iaswn"),
+        func=serializer_iaswn),
+    "json": SerializerData(
+        human_name="json",
+        internet="https://docs.python.org/3/library/json.html",
+        available=trytoimport("json"),
+        func=serializer_json),
+    "jsonpickle": SerializerData(
+        human_name="jsonpickle",
+        internet="https://jsonpickle.github.io/",
+        available=trytoimport("jsonpickle"),
+        func=serializer_jsonpickle),
+    "marshal": SerializerData(
+        human_name="marshal",
+        internet="https://docs.python.org/3/library/marshal.html#module-marshal",
+        available=trytoimport("marshal"),
+        func=serializer_marshal),
+    "pickle": SerializerData(
+        human_name="pickle",
+        internet="https://docs.python.org/3/library/pickle.html",
+        available=trytoimport("pickle"),
+        func=serializer_pickle),
     }
 for _serializer in SERIALIZERS:
     if SERIALIZERS[_serializer].available:

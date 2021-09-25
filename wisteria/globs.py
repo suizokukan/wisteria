@@ -55,7 +55,7 @@ VERBOSITY_DEBUG = 3
 ARGS = None
 
 # number of times
-TIMEITNUMBER = 10
+TIMEITNUMBER = 100
 
 TMPFILENAME = "wisteria.tmp"
 
