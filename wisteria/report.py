@@ -745,6 +745,9 @@ TODO
         if report_section in str2reportsection:
             for func in str2reportsection[report_section]:
                 func(results)
+        elif report_section in ("titles,"):
+            # special keywords that don't match any function in <str2reportsection>.
+            pass
         elif report_section.strip() != "":
             # (pimydoc)console messages
             # ⋅- debug messages start with   @

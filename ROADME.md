@@ -29,6 +29,12 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.3
 ------------------
 
+[DONE] task-31
+
+Bugfix: special keyword "titles" is now correctly handled by report()
+
+    * Bugfix: special keyword "titles" is now correctly handled by report()
+
 [DONE] task-30
 
 --downloadconfigfile option.
