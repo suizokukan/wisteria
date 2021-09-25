@@ -26,9 +26,52 @@ See TODOs at the end of this file.
     Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter 
     than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 * docdef : DOC001 > DOCDEF001
+* anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 
-[CURRENT] v. 0.0.1
-------------------
+[DONE] v. 0.0.1
+---------------
+
+First real version of the project. Somehow usable for a very limited amount
+of serializers and different data. Try by example:
+$ /bin/wisteria --help
+$ /bin/wisteria --checkup
+$ /bin/wisteria --cmp="jsonpickle against iaswn(ini)" --verbosity=2
+
+    * tasks: task-1, task-2, task-3, task-4, task-5, 
+             task-6, task-7, task-8, task-9, task-10, 
+             task-11, task-12, task-13, task-14, task-15, 
+             task-16, task-17, task-18, task-19, task-20, 
+             task-21, task-22, task-23, task-24, task-25, 
+             task-26, task-27
+
+```
+$ poetry show --tree
+```
+
+```
+$ ./check_tools.sh
+* about poetry:
+Poetry version 1.1.10
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+PYLINTHOME is now '/home/proguser/.cache/pylint' but obsolescent '/home/proguser/.pylint.d' is found; you can safely remove the latter
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-27
 

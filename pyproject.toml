@@ -1,12 +1,13 @@
 [tool.poetry]
-name = "linden"
+name = "wisteria"
 version = "0.0.1"
-description = "Comparisons of different Python serializers"
+description = "Python serializers comparisons"
 authors = ["suizokukan <suizokukan@orange.fr>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+rich = "^10.11.0"
 
 [tool.poetry.dev-dependencies]
 
