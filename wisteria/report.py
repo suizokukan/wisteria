@@ -111,7 +111,8 @@ def report_section_b1a(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](B1a) full details: serializer * data object[/bold white on blue]")
+        rprint("[bold white on blue](B1a) full details: "
+               "serializer * data object[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer/data object", width=25)
     table.add_column("enc. ok ?", width=12)
@@ -224,14 +225,19 @@ def report_section_b1c(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](B1c) full details: serializer <S> can't handle <dataobj>[/bold white on blue]")
+        rprint("[bold white on blue](B1c) full details: "
+               "serializer <S> can't handle <dataobj>[/bold white on blue]")
     for serializer in results.serializers:
         _list = tuple(dataobj for dataobj in results[serializer]
                       if not results[serializer][dataobj].similarity)
         if not _list:
-            rprint(f"* [yellow]({serializer})[/yellow] There's no data object that serializer '[yellow]{serializer}[/yellow]' can't handle.")
+            rprint(f"* [yellow]({serializer})[/yellow] "
+                   "There's no data object that serializer "
+                   f"'[yellow]{serializer}[/yellow]' can't handle.")
         else:
-            rprint(f"* [yellow]({serializer})[/yellow] Serializer '[yellow]{serializer}[/yellow]' can't handle the following data objects:")
+            rprint(f"* [yellow]({serializer})[/yellow] "
+                   f"Serializer '[yellow]{serializer}[/yellow]' "
+                   "can't handle the following data objects:")
             for dataobj in _list:
                 rprint("  - ", "[white]" + dataobj + "[/white]")
     rprint()
@@ -269,7 +275,8 @@ def report_section_b2a(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](B2a) full details: data object * serializer[/bold white on blue]")
+        rprint("[bold white on blue](B2a) full details: "
+               "data object * serializer[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object/serializer", width=25)
     table.add_column("enc. ok ?", width=12)
@@ -383,25 +390,26 @@ def report_section_c1a(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](C1a) full details: serializer * data object (base 100)[/bold white on blue]")
+        rprint("[bold white on blue](C1a) full details: "
+               "serializer * data object (base 100)[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer/data object", width=25)
     table.add_column("enc. ok ?", width=12)
 
     if base100 := results._get_base('encoding_time'):
-        table.add_column(
-            "enc. time "
-            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_time')})",
-            width=10)
+        result = results.repr_attr(serializer=base100.serializer,
+                                   dataobj=base100.dataobj,
+                                   attribute_name='encoding_time')
+        table.add_column(f"enc. time (base 100 = {result})", width=10)
     else:
         table.add_column("enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_base('decoding_time'):
-        table.add_column(
-            "jsonstr. len. "
-            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_strlen')})",
-            width=13)
+    if base100 := results._get_base('encoding_strlen'):
+        result = results.repr_attr(serializer=base100.serializer,
+                                   dataobj=base100.dataobj,
+                                   attribute_name='encoding_strlen')
+        table.add_column(f"jsonstr. len. (base 100 = {result})", width=13)
     else:
         table.add_column("jsonstr. len. [red](NO BASE 100)[/red]",
                          width=13)
@@ -409,10 +417,10 @@ def report_section_c1a(results):
     table.add_column("dec. ok ?", width=12)
 
     if base100 := results._get_base('decoding_time'):
-        table.add_column(
-            "dec. time "
-            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='decoding_time')})",
-            width=10)
+        result = results.repr_attr(serializer=base100.serializer,
+                                   dataobj=base100.dataobj,
+                                   attribute_name='decoding_time')
+        table.add_column(f"dec. time (base 100 = {result})", width=10)
     else:
         table.add_column("dec. time [red](NO BASE 100)[/red]",
                          width=10)
@@ -466,7 +474,8 @@ def report_section_c1b(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](C1b) full details: serializers (base 100)[/bold white on blue]")
+        rprint("[bold white on blue](C1b) full details: "
+               "serializers (base 100)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
@@ -544,26 +553,27 @@ def report_section_c2a(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](C2a) full details: data object * serializer (base 100)[/bold white on blue]")
+        rprint("[bold white on blue](C2a) full details: "
+               "data object * serializer (base 100)[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object/serializer", width=25)
 
     table.add_column("enc. ok ?", width=12)
 
     if base100 := results._get_base('encoding_time'):
-        table.add_column(
-            "enc. time "
-            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_time')})",
-            width=10)
+        result = results.repr_attr(serializer=base100.serializer,
+                                   dataobj=base100.dataobj,
+                                   attribute_name='encoding_time')
+        table.add_column(f"enc. time (base 100 = {result})", width=10)
     else:
         table.add_column("enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
     if base100 := results._get_base('encoding_strlen'):
-        table.add_column(
-            "jsonstr. len. "
-            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='encoding_strlen')})",
-            width=13)
+        result = results.repr_attr(serializer=base100.serializer,
+                                   dataobj=base100.dataobj,
+                                   attribute_name='encoding_strlen')
+        table.add_column(f"jsonstr. len. (base 100 = {result})", width=13)
     else:
         table.add_column("jsonstr. len. [red](NO BASE 100)[/red]",
                          width=13)
@@ -571,10 +581,10 @@ def report_section_c2a(results):
     table.add_column("dec. ok ?", width=12)
 
     if base100 := results._get_base('decoding_time'):
-        table.add_column(
-            "dec. time "
-            f"(base 100 = {results.repr_attr(serializer=base100.serializer, dataobj=base100.dataobj, attribute_name='decoding_time')})",
-            width=10)
+        result = results.repr_attr(serializer=base100.serializer,
+                                   dataobj=base100.dataobj,
+                                   attribute_name='decoding_time')
+        table.add_column(f"dec. time (base 100 = {result})", width=10)
     else:
         table.add_column("dec. time [red](NO BASE 100)[/red]",
                          width=10)
@@ -629,7 +639,8 @@ def report_section_c2b(results):
     args = wisteria.globs.ARGS
 
     if "titles;" in args.report:
-        rprint("[bold white on blue](C2b) full details: data objects (base 100)[/bold white on blue]")
+        rprint("[bold white on blue](C2b) full details: "
+               "data objects (base 100)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object", width=25)
@@ -703,9 +714,12 @@ def report(results,
         _______________________________________________________________________
 
         ARGUMENTS:
-TODO
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
     """
     args = wisteria.globs.ARGS
 

@@ -37,7 +37,8 @@ from wisteria.aboutproject import __version__
 
 VERSION = "propagate_versionumber.py v.3/2021-08-26"
 PARSER = \
-    argparse.ArgumentParser(description="Inject wisteria.aboutproject.__version__ in various files.",
+    argparse.ArgumentParser(description="Inject wisteria.aboutproject.__version__ "
+                            "in various files.",
                             epilog=VERSION,
                             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 PARSER.add_argument('--version', '-v',

@@ -74,12 +74,9 @@ See TODOs at the end of this file.
 [CURRENT] v. 0.0.3
 ------------------
 
-[DONE] task-32
-
-Documentation.
+[CURRENT] task-32
 
     * improved doc.
-    * ROADME.md > ROADMAP.md
 
 [DONE] task-31
 

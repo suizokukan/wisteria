@@ -27,13 +27,16 @@
 
     ___________________________________________________________________________
 
-    * MODULES dict
+    o  MODULES dict
 
-    *  trytoimport(module_name)
-    *  _len(obj)
+    o  SerializerDataObj class
 
-    * SerializationResult class
-    * SerializationData class
+    o  trytoimport(module_name)
+    o  _len(obj)
+
+    o  SerializationResults class
+    o  SerializationResult class
+    o  SerializationData class
 
     * serializer_iaswn(action="serialize", obj=None):
     * serializer_jsonpickle(action="serialize", obj=None):
@@ -50,6 +53,8 @@ from wisteria.globs import VERBOSITY_DETAILS
 from wisteria.globs import ARGS, TIMEITNUMBER
 from wisteria.wisteriaerror import WisteriaError
 
+
+# imported serializers modules
 MODULES = {}
 
 
@@ -92,6 +97,17 @@ def trytoimport(module_name):
 
 
 def _len(obj):
+    """
+        _len()
+
+        Return the length of <obj>
+
+        _______________________________________________________________________
+
+        ARGUMENT: (bytes|str)<obj>
+
+        RETURNED VALUE: the length of <obj>
+    """
     if isinstance(obj, str):
         return len(bytes(obj, "utf-8"))
     return len(obj)
@@ -110,24 +126,29 @@ class SerializationResults(dict):
 
         _______________________________________________________________________
 
-TODO
-class attr ?
+        o  (list)serializers        : list of str
+        o  (list)dataobjs           : list of str
+        o  (int) serializers_number : =len(self.serializers)
+        o  (int) dataobjs_number    : =len(self.dataobjs)
 
-TODO il en manque !
         o  __init__(self)
         o  _finish_initialization(self)
-        o  _format_ratio(self, inttotal_and_floatratio)
-        o  _format_stringlength(self, int_stringlength)
+        o  _format_base100(bool_is_base100_value, float_base100)
+        o  _format_ratio(inttotal_and_floatratio)
+        o  _format_stringlength(int_stringlength)
         o  _format_success(self, bool_success)
-        o  _get_dataobjs_base(self)
-        o  _format_time(self, floattime)
+        o  _format_time(floattime)
+        o  _get_base(self, attribute)
+        o  _get_dataobjs_base(self, attribute)
+        o  _get_serializers_base(self, attribute)
         o  ratio_decoding_success(self, serializer=None, dataobj=None)
         o  ratio_encoding_success(self, serializer=None, dataobj=None)
+        o  ratio_similarity(self, serializer=None, dataobj=None)
         o  ratio_identify(self, serializer=None, dataobj=None)
-        o  repr_attr(self, serializer, dataobj, attribute_name)
-        o  total_decoding_time(self, serializer=None, dataobj=None)
-        o  total_encoding_strlen(self, serializer=None, dataobj=None)
-        o  total_encoding_time(self, serializer=None, dataobj=None)
+        o  repr_attr(self, serializer, dataobj, attribute_name, output="formattedstr")
+        o  total_decoding_time(self, serializer=None, dataobj=None, output="formattedstr")
+        o  total_encoding_strlen(self, serializer=None, dataobj=None, output="formattedstr")
+        o  total_encoding_time(self, serializer=None, dataobj=None, output="formattedstr")
     """
     def __init__(self):
         """
@@ -307,7 +328,7 @@ attribute: seulement 3 possibilités et non pas 5
             return None
 
         raise WisteriaError("Internal error: the result could not be computed. "
-                          f"{attribute=};")
+                            f"{attribute=};")
 
     def _get_serializers_base(self,
                               attribute):
@@ -335,7 +356,7 @@ attribute: seulement 3 possibilités et non pas 5
             return None
 
         raise WisteriaError("Internal error: the result could not be computed. "
-                          f"{attribute=};")
+                            f"{attribute=};")
 
     def ratio_decoding_success(self,
                                serializer=None,
@@ -495,8 +516,9 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].decoding_success)
             else:
-                raise WisteriaError("Internal error. "
-                                  f"Can't compute base 100 for attribute_name='{attribute_name}'.")
+                raise WisteriaError(
+                    "Internal error. "
+                    f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "decoding_time":
             if output == "formattedstr":
@@ -536,20 +558,22 @@ output="formattedstr" | "base100"
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].encoding_success)
             else:
-                raise WisteriaError("Internal error. "
-                                  f"Can't compute base 100 for attribute_name='{attribute_name}'.")
+                raise WisteriaError(
+                    "Internal error. "
+                    f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "similarity":
             if output == "formattedstr":
                 res = SerializationResults._format_success(
                     self[serializer][dataobj].similarity)
             else:
-                raise WisteriaError("Internal error. "
-                                  f"Can't compute base 100 for attribute_name='{attribute_name}'.")
+                raise WisteriaError(
+                    "Internal error. "
+                    f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if res is None:
             raise WisteriaError("Internal error: the result could not be computed. "
-                              f"{serializer=}; {dataobj=}; {attribute_name=};")
+                                f"{serializer=}; {dataobj=}; {attribute_name=};")
         return res
 
     def total_decoding_time(self,
@@ -618,7 +642,7 @@ output="formattedstr" | "base100"
 
         if res is None:
             raise WisteriaError("Internal error: the result could not be computed. "
-                              f"{serializer=}; {dataobj=}; {output=};")
+                                f"{serializer=}; {dataobj=}; {output=};")
         return res
 
     def total_encoding_strlen(self,
@@ -688,7 +712,7 @@ output="formattedstr" | "base100"
 
         if res is None:
             raise WisteriaError("Internal error: the result could not be computed. "
-                              f"{serializer=}; {dataobj=}; {output=};")
+                                f"{serializer=}; {dataobj=}; {output=};")
         return res
 
     def total_encoding_time(self,
@@ -696,7 +720,7 @@ output="formattedstr" | "base100"
                             dataobj=None,
                             output="formattedstr"):
         """
-            SerializationResults.
+            SerializationResults.total_encoding_time()
 
             Compute and format the total decoding time used by a <serializer>
             OR by a <dataobj>ect.
@@ -757,7 +781,7 @@ output="formattedstr" | "base100"
 
         if res is None:
             raise WisteriaError("Internal error: the result could not be computed. "
-                              f"{serializer=}; {dataobj=}; {output=};")
+                                f"{serializer=}; {dataobj=}; {output=};")
         return res
 
 
