@@ -28,15 +28,52 @@ See TODOs at the end of this file.
 * docdef : DOC001 > DOCDEF001
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 
-[CURRENT] v. 0.0.2
-------------------
+[DONE] v. 0.0.2
+---------------
+
+Minor improvements: ERRXXX > ERRORIDXXX, err_codes.sh, image in README.md
+
+    * ERRXXX > ERRORIDXXX
+    * README.md: first try to add an image in the markdown file.
+    * version number set to 0.0.2
+  
+    * task(s): tasks-28
+
+```
+$ poetry show --tree
+```
+
+```
+$ ./check_tools.sh
+* about poetry:
+Poetry version 1.1.10
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+PYLINTHOME is now '/home/proguser/.cache/pylint' but obsolescent '/home/proguser/.pylint.d' is found; you can safely remove the latter
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-28
 
 Minor improvements: ERRXXX > ERRORIDXXX, err_codes.sh, image in README.md
 
-   * ERRXXX > ERRORIDXXX
-   * README.md: first try to add an image in the markdown file.
+    * ERRXXX > ERRORIDXXX
+    * README.md: first try to add an image in the markdown file.
 
 [DONE] v. 0.0.1
 ---------------
