@@ -40,6 +40,9 @@ import urllib.error
 import urllib.request
 
 from rich import print as rprint
+from rich.console import Console
+from rich.progress_bar import ProgressBar
+from rich.style import StyleType
 
 import wisteria.globs
 from wisteria.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
@@ -836,7 +839,25 @@ def main():
             # ⋅- checkup messages start with *
             rprint("@ data objs to be used are: ", _dataobjs)
 
+        if ARGS.verbosity >= VERBOSITY_DETAILS:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+            rprint("> Please wait until all required encodings/decodings have been computed.")
+
         results = SerializationResults()
+
+        # (progress bar)
+        # Please note that there can be NO progress bar if the debug mode is enabled:
+        # the output can't display both correctly.
+        if ARGS.verbosity != VERBOSITY_DEBUG:
+            console = Console()
+            progressbar = ProgressBar(width=40, total=len(_serializers)*len(_dataobjs))
+            console.show_cursor(False)
+            progressbar_index = 0
+
         for serializer in _serializers:
             results[serializer] = {}
             for data_name in _dataobjs:
@@ -848,8 +869,19 @@ def main():
                     # ⋅- checkup messages start with *
                     rprint(f"@ about to call function for serializer='{serializer}' "
                            f"and data name='{data_name}'")
+
                 results[serializer][data_name] = SERIALIZERS[serializer].func(action="serialize",
                                                                               obj=DATA[data_name])
+
+                # (progress bar)
+                # Please note that there can be NO progress bar if the debug mode is enabled:
+                # the output can't display both correctly.
+                if ARGS.verbosity != VERBOSITY_DEBUG:
+                    progressbar_index += 1
+                    progressbar.update(progressbar_index)
+                    console.print(progressbar)
+                    console.file.write("\r")
+
                 if ARGS.verbosity == VERBOSITY_DEBUG:
                     # (pimydoc)console messages
                     # ⋅- debug messages start with   @
@@ -857,6 +889,13 @@ def main():
                     # ⋅- error messages start with   ERRORIDXXX
                     # ⋅- checkup messages start with *
                     rprint("@ result:", results[serializer][data_name])
+
+        # (progress bar)
+        # Please note that there can be NO progress bar if the debug mode is enabled:
+        # the output can't display both correctly.
+        if ARGS.verbosity != VERBOSITY_DEBUG:
+            console.show_cursor(True)
+
         if not results.finish_initialization():
             # (pimydoc)console messages
             # ⋅- debug messages start with   @

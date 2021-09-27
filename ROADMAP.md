@@ -64,9 +64,17 @@ See TODOs at the end of this file.
 * beaucoup de raise Wisteria n'ont pas de ERRORID
 * [yellow] > _format_serializer + le nom du serializer qui apparaît n'est pas le human name (e.g. "Iaswn" plutôt que "iaswn")
   [bold white] > _format_dataobject  
+* TODOs & Pylint
+* par défaut, exporter vers report.txt (logging ? détourner rprint ?)
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-38
+
+Progress bar support. This progress bar cannot be displayed in debug mode.
+
+    * progress bar support.
 
 [DONE] task-37
 
