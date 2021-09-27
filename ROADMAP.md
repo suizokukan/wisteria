@@ -5,13 +5,12 @@ See TODOs at the end of this file.
 
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 * progress bar : calcul
-  en profiter pour proposer plusieurs méthodes : 1.1, 1.2, ... 1.9, 2.1, 2.2 ... 2.9, ...
-                                                 1.1, 2.1, 3.1, ... 1.2, 2.2, 3.2, ...
   https://rich.readthedocs.io/en/stable/progress.html
 * TIMEITNUMBER > --timeitnumber=
-* --lenmethod + modifier les en-têtes des tableaux
-* --meta: comparer avec les différentes versions de _len, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
 * numéroter les étapes dans main() (cf code structure)
+  chercher si une combinaison donne des résultats vraiment différents des autres
 * data types à compléter
         RegularClass
         IntheritedList
@@ -57,21 +56,33 @@ See TODOs at the end of this file.
         ("Y30:contextlib.AbstractAsyncContextManager", contextlib.AbstractAsyncContextManager),
 
         ("Z01:decimal.localcontext", decimal.localcontext()),
-* serializers
+* serializers à compléter
 * cwc
 * pylint
 * README.md acceptable
-* report D
-    Conclusion:
-    According to the tests conducted on all data...
-    According to the tests conducted on the data of the "comparing what is comparable" type
-    According to the tests conducted on the data read in the %%% file
-    Iaswn is much much faster than jsonpickle (Iaswn/jsonpicle: 23.3) to encode/decode; Iaswn's encoded strings are slightly shorter 
-    than jsonpickle one's (Iaswn/jsonpickle: 0.9); Iaswn's coverage rate is lower than jsonpickle's (Iaswn/jsonpicle: 0.5).
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
+* ponly > only
+* beaucoup de raise Wisteria n'ont pas de ERRORID
+* [yellow] > _format_serializer + le nom du serializer qui apparaît n'est pas le human name (e.g. "Iaswn" plutôt que "iaswn")
+  [bold white] > _format_dataobject  
+* dans --help, la description de --checkup est:
+  --checkup             show installed serializers, current config file and exit (default: False)
+  alors qu'elle devrait être:
+  --checkup             show installed serializers, try to read current config file and exit (default: False)
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-36
+
+report: B1d, D1a, D1b, D2a, D2b, D2c
+
+    * report: B1d, D1a, D1b, D2a, D2b, D2c
+    * REPORT_FULL_STRING = "titles;A;B;C;D;"
+    * new functions in report.py: humanratio(), cmpdata2phrase(), ratio2phrase()
+    * new functions in report.py: report_section_b1d(), report_section_d1a(),
+                                  report_section_d1b(), report_section_d2a(),
+                                  report_section_d2b(), report_section_d2c()
 
 [DONE] task-35
 
