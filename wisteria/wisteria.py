@@ -28,6 +28,8 @@
     ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     ⋅* -2: error, ill-formed --cmp string
     ⋅* -3: internal error, data can't be loaded
+
+TODO : functions ?
 """
 import argparse
 import atexit
@@ -42,7 +44,6 @@ import urllib.request
 from rich import print as rprint
 from rich.console import Console
 from rich.progress_bar import ProgressBar
-from rich.style import StyleType
 
 import wisteria.globs
 from wisteria.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
@@ -746,80 +747,22 @@ def read_cmpstring(src_string):
     return False, None, None, None
 
 
-def main():
+def compute_results(config,
+                    serializer1,
+                    serializer2,
+                    cmpdata):
     """
-        main()
+        compute_results()
 
-        Main entrypoint in the project. This method is called when Wisteria is called from outside,
-        e.g. by the command line.
+        Create a SerializationResults object and try to fill it with all
+        required encodings/decodings defined by <serializer1>,
+        <serializer2> and <cmpdata>.
 
-        _______________________________________________________________________
+        TODO : arguments
 
-        RETURNED VALUE:
-                (pimydoc)exit codes
-                ⋅*  0: normal exit code
-                ⋅*  1: normal exit code after --checkup
-                ⋅*  2: normal exit code after --downloadconfigfile
-                ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-                ⋅* -2: error, ill-formed --cmp string
-                ⋅* -3: internal error, data can't be loaded
+        RETURNED VALUE:    (SerializationResults, None) if no error occured
+                        or (None, (int)exit_code) if an error occured
     """
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint("@ known data:", list(DATA.keys()))
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint("@ known serializers:", SERIALIZERS)
-
-    success, serializer1, serializer2, data = read_cmpstring(ARGS.cmp)
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint(f"@ Result of the call to read_cmpstring('{ARGS.cmp}'):",
-               success, serializer1, serializer2, data)
-
-    if not success:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint(f"(ERRORID013) an error occured while reading cmp string '{ARGS.cmp}'.")
-
-        # (pimydoc)exit codes
-        # ⋅*  0: normal exit code
-        # ⋅*  1: normal exit code after --checkup
-        # ⋅*  2: normal exit code after --downloadconfigfile
-        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-        # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: internal error, data can't be loaded
-        return -2
-
-    config = None
-    if data == "ini":
-        config = read_cfgfile(ARGS.cfgfile)
-
-        if config is None:
-            # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            return -1
-
     try:
         # serializers and data to be used through the tests:
         _serializers = get_serializers_selection(serializer1, serializer2)
@@ -830,7 +773,7 @@ def main():
             # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
             rprint("@ serializers to be used are: ", _serializers)
-        _dataobjs = get_data_selection(data, config)
+        _dataobjs = get_data_selection(cmpdata, config)
         if ARGS.verbosity == VERBOSITY_DEBUG:
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
@@ -911,7 +854,7 @@ def main():
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
-            return -3
+            return None, -3
         if results.dataobjs_number == 0:
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
@@ -927,10 +870,9 @@ def main():
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
-            return 2
+            return None, 2
 
-        report(results,
-               (serializer1, serializer2, data))
+        return results, None
 
     except WisteriaError as exception:
         # (pimydoc)console messages
@@ -939,6 +881,106 @@ def main():
         # ⋅- error messages start with   ERRORIDXXX
         # ⋅- checkup messages start with *
         rprint(f"> An error occured: {exception}")
+
+        # (pimydoc)exit codes
+        # ⋅*  0: normal exit code
+        # ⋅*  1: normal exit code after --checkup
+        # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅* -2: error, ill-formed --cmp string
+        # ⋅* -3: internal error, data can't be loaded
+        return None, -4  # TODO -4 n'est pas dans les exit codes
+
+
+def main():
+    """
+        main()
+
+        Main entrypoint in the project. This method is called when Wisteria is called from outside,
+        e.g. by the command line.
+
+        _______________________________________________________________________
+
+        RETURNED VALUE:
+                (pimydoc)exit codes
+                ⋅*  0: normal exit code
+                ⋅*  1: normal exit code after --checkup
+                ⋅*  2: normal exit code after --downloadconfigfile
+                ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+                ⋅* -2: error, ill-formed --cmp string
+                ⋅* -3: internal error, data can't be loaded
+    """
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRORIDXXX
+        # ⋅- checkup messages start with *
+        rprint("@ known data:", list(DATA.keys()))
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRORIDXXX
+        # ⋅- checkup messages start with *
+        rprint("@ known serializers:", SERIALIZERS)
+
+    success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
+    if ARGS.verbosity == VERBOSITY_DEBUG:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRORIDXXX
+        # ⋅- checkup messages start with *
+        rprint(f"@ Result of the call to read_cmpstring('{ARGS.cmp}'):",
+               success, serializer1, serializer2, cmpdata)
+
+    if not success:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRORIDXXX
+        # ⋅- checkup messages start with *
+        rprint(f"(ERRORID013) an error occured while reading cmp string '{ARGS.cmp}'.")
+
+        # (pimydoc)exit codes
+        # ⋅*  0: normal exit code
+        # ⋅*  1: normal exit code after --checkup
+        # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅* -2: error, ill-formed --cmp string
+        # ⋅* -3: internal error, data can't be loaded
+        return -2
+
+    config = None
+    if cmpdata == "ini":
+        config = read_cfgfile(ARGS.cfgfile)
+
+        if config is None:
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: internal error, data can't be loaded
+            return -1
+
+    compute_results__res = compute_results(config,
+                                           serializer1,
+                                           serializer2,
+                                           cmpdata)
+    if compute_results__res[0] is None:
+        # (pimydoc)console messages
+        # ⋅- debug messages start with   @
+        # ⋅- info messages start with    >
+        # ⋅- error messages start with   ERRORIDXXX
+        # ⋅- checkup messages start with *
+        return compute_results__res[1]
+    results = compute_results__res[0]
+
+    report(results,
+           (serializer1, serializer2, cmpdata))
 
     # (pimydoc)exit codes
     # ⋅*  0: normal exit code

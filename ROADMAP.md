@@ -66,9 +66,17 @@ See TODOs at the end of this file.
   [bold white] > _format_dataobject  
 * TODOs & Pylint
 * par défaut, exporter vers report.txt (logging ? détourner rprint ?)
+* dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-39
+
+new function in wisteria.py: compute_results(). All computations have been
+moved from main() to compute_results()
+
+    * new function in wisteria.py: compute_results().
 
 [DONE] task-38
 
