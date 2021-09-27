@@ -61,17 +61,23 @@ See TODOs at the end of this file.
 * pylint
 * README.md acceptable
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
-* ponly > only
 * beaucoup de raise Wisteria n'ont pas de ERRORID
 * [yellow] > _format_serializer + le nom du serializer qui apparaît n'est pas le human name (e.g. "Iaswn" plutôt que "iaswn")
   [bold white] > _format_dataobject  
-* dans --help, la description de --checkup est:
-  --checkup             show installed serializers, current config file and exit (default: False)
-  alors qu'elle devrait être:
-  --checkup             show installed serializers, try to read current config file and exit (default: False)
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-37
+
+pylint & doc.
+
+    * improved message shown by --help for --checkup argument.
+    * in SerializationResults._format_base100(), 
+      bool_is_base100_value > bool_is_base100_reference
+    * SerializationResults._get_base() > SerializationResults.get_base()
+    * SerializationResults._get_serializers_base() > SerializationResults.get_serializers_base()
+    * SerializationResults._get_dataobjs_base() > SerializationResults.get_dataobjs_base()
 
 [DONE] task-36
 

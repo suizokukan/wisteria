@@ -72,7 +72,7 @@ PARSER.add_argument('--cfgfile',
 
 PARSER.add_argument('--checkup',
                     action='store_true',
-                    help="show installed serializers, current config file and exit")
+                    help="show installed serializers, try to read current config file and exit")
 
 PARSER.add_argument('--downloadconfigfile',
                     action='store_true',
@@ -857,7 +857,7 @@ def main():
                     # ⋅- error messages start with   ERRORIDXXX
                     # ⋅- checkup messages start with *
                     rprint("@ result:", results[serializer][data_name])
-        if not results._finish_initialization():
+        if not results.finish_initialization():
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >

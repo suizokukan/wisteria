@@ -50,6 +50,18 @@ from wisteria.utils import shortenedstr
 
 
 def humanratio(ratio):
+    """
+        humanratio()
+
+        Since ratio are difficult to understand when being smaller than 1, this function
+        computes, if necessary, the inverse of <ratio> and returns it.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (float)ratio, the ratio to be returned
+
+        RETURNED VALUE: (float)ratio or (float)1/ratio.
+    """
     if ratio < 1:
         return 1/ratio
     return ratio
@@ -147,6 +159,9 @@ def ratio2phrase(ratio,
     return expression
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_a1(results,
                       s1s2d):
     """
@@ -180,7 +195,7 @@ def report_section_a1(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -193,11 +208,9 @@ def report_section_a1(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](A1) REPORT with --cmp set to "
-               f"'[italic]{args.cmp}[/italic]'[/bold white on blue]")
+               f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'[/bold white on blue]")
         rprint()
 
 
@@ -234,7 +247,7 @@ def report_section_a2(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -249,9 +262,7 @@ def report_section_a2(results,
     """
     from wisteria.serializers import SERIALIZERS
 
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](A2) List of serializers to be used"
                "[/bold white on blue]")
         rprint()
@@ -261,6 +272,9 @@ def report_section_a2(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_a3(results,
                       s1s2d):
     """
@@ -294,7 +308,7 @@ def report_section_a3(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -309,9 +323,7 @@ def report_section_a3(results,
     """
     from wisteria.data import DATA
 
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](A3) List of data objects to be used"
                "[/bold white on blue]")
         rprint()
@@ -321,6 +333,9 @@ def report_section_a3(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_b1a(results,
                        s1s2d):
     """
@@ -354,7 +369,7 @@ def report_section_b1a(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -368,9 +383,7 @@ def report_section_b1a(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](B1a) full details: "
                "serializer * data object[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
@@ -397,6 +410,9 @@ def report_section_b1a(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_b1b(results,
                        s1s2d):
     """
@@ -430,7 +446,7 @@ def report_section_b1b(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -444,9 +460,7 @@ def report_section_b1b(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
@@ -471,6 +485,9 @@ def report_section_b1b(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_b1c(results,
                        s1s2d):
     """
@@ -504,7 +521,7 @@ def report_section_b1c(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -518,12 +535,9 @@ def report_section_b1c(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    from wisteria.serializers import SERIALIZERS, SerializationResults
-
-    if "titles;" in args.report:
-        rprint("[bold white on blue](B1c) full details: serializers, hall of fame[/bold white on blue]")
+    if "titles;" in wisteria.globs.ARGS.report:
+        rprint("[bold white on blue](B1c) full details: "
+               "serializers, hall of fame[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("#", width=2)
     table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=15)
@@ -548,6 +562,9 @@ def report_section_b1c(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_b1d(results,
                        s1s2d):
     """
@@ -581,7 +598,7 @@ def report_section_b1d(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -595,9 +612,7 @@ def report_section_b1d(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](B1d) full details: "
                "serializer <S> can't handle <dataobj>[/bold white on blue]")
     for serializer in results.serializers:
@@ -616,6 +631,9 @@ def report_section_b1d(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_b2a(results,
                        s1s2d):
     """
@@ -649,7 +667,7 @@ def report_section_b2a(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -663,9 +681,7 @@ def report_section_b2a(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](B2a) full details: "
                "data object * serializer[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
@@ -693,6 +709,9 @@ def report_section_b2a(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_b2b(results,
                        s1s2d):
     """
@@ -726,7 +745,7 @@ def report_section_b2b(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -740,9 +759,7 @@ def report_section_b2b(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object", width=25)
@@ -767,6 +784,9 @@ def report_section_b2b(results,
     rprint()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
 def report_section_c1a(results,
                        s1s2d):
     """
@@ -800,7 +820,7 @@ def report_section_c1a(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -814,16 +834,14 @@ def report_section_c1a(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](C1a) full details: "
                "serializer * data object (base 100)[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer/data object", width=25)
     table.add_column("enc. ok ?", width=12)
 
-    if base100 := results._get_base('encoding_time'):
+    if base100 := results.get_base('encoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_time')
@@ -832,7 +850,7 @@ def report_section_c1a(results,
         table.add_column("enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_base('encoding_strlen'):
+    if base100 := results.get_base('encoding_strlen'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_strlen')
@@ -843,7 +861,7 @@ def report_section_c1a(results,
 
     table.add_column("dec. ok ?", width=12)
 
-    if base100 := results._get_base('decoding_time'):
+    if base100 := results.get_base('decoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='decoding_time')
@@ -902,7 +920,7 @@ def report_section_c1b(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -916,16 +934,14 @@ def report_section_c1b(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](C1b) full details: "
                "serializers (base 100)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
     table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
-    if base100 := results._get_serializers_base('encoding_time'):
+    if base100 := results.get_serializers_base('encoding_time'):
         table.add_column("Σ enc. time "
                          f"(base 100 = {results.total_encoding_time(serializer=base100)})",
                          width=10)
@@ -933,7 +949,7 @@ def report_section_c1b(results,
         table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_serializers_base('encoding_strlen'):
+    if base100 := results.get_serializers_base('encoding_strlen'):
         table.add_column("Σ jsonstr. len. "
                          f"(base 100 = {results.total_encoding_strlen(serializer=base100)})",
                          width=13)
@@ -942,7 +958,7 @@ def report_section_c1b(results,
 
     table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
 
-    if base100 := results._get_serializers_base('decoding_time'):
+    if base100 := results.get_serializers_base('decoding_time'):
         table.add_column("Σ dec. time "
                          f"(base 100 = {results.total_decoding_time(serializer=base100)})",
                          width=10)
@@ -999,7 +1015,7 @@ def report_section_c2a(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -1013,9 +1029,7 @@ def report_section_c2a(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](C2a) full details: "
                "data object * serializer (base 100)[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
@@ -1023,7 +1037,7 @@ def report_section_c2a(results,
 
     table.add_column("enc. ok ?", width=12)
 
-    if base100 := results._get_base('encoding_time'):
+    if base100 := results.get_base('encoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_time')
@@ -1032,7 +1046,7 @@ def report_section_c2a(results,
         table.add_column("enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_base('encoding_strlen'):
+    if base100 := results.get_base('encoding_strlen'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_strlen')
@@ -1043,7 +1057,7 @@ def report_section_c2a(results,
 
     table.add_column("dec. ok ?", width=12)
 
-    if base100 := results._get_base('decoding_time'):
+    if base100 := results.get_base('decoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='decoding_time')
@@ -1103,7 +1117,7 @@ def report_section_c2b(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
 
         _______________________________________________________________________
@@ -1117,9 +1131,7 @@ def report_section_c2b(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](C2b) full details: "
                "data objects (base 100)[/bold white on blue]")
 
@@ -1127,7 +1139,7 @@ def report_section_c2b(results,
     table.add_column("data object", width=25)
     table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
 
-    if base100 := results._get_dataobjs_base('encoding_time'):
+    if base100 := results.get_dataobjs_base('encoding_time'):
         table.add_column("Σ enc. time "
                          f"(base 100 = {results.total_encoding_time(dataobj=base100)})",
                          width=10)
@@ -1135,7 +1147,7 @@ def report_section_c2b(results,
         table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
                          width=10)
 
-    if base100 := results._get_dataobjs_base('encoding_strlen'):
+    if base100 := results.get_dataobjs_base('encoding_strlen'):
         table.add_column("Σ jsonstr. len. "
                          f"(base 100 = {results.total_encoding_strlen(dataobj=base100)})",
                          width=13)
@@ -1144,7 +1156,7 @@ def report_section_c2b(results,
 
     table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
 
-    if base100 := results._get_dataobjs_base('decoding_time'):
+    if base100 := results.get_dataobjs_base('decoding_time'):
         table.add_column("Σ dec. time "
                          f"(base 100 = {results.total_decoding_time(dataobj=base100)})",
                          width=10)
@@ -1201,7 +1213,7 @@ def report_section_d1a(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -1243,7 +1255,7 @@ def report_section_d1a(results,
                    "there's no data object "
                    f"among the {len(DATA)} used data objects "
                    f"that serializer [yellow]'{serializer}'[/yellow] can handle (0%).")
-        elif len(_list)==1:
+        elif len(_list) == 1:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
                    f"{cmpdata2phrase(data)}"
                    f"[yellow]'{serializer}'[/yellow] can handle one data object "
@@ -1259,9 +1271,7 @@ def report_section_d1a(results,
     from wisteria.data import DATA
     from wisteria.serializers import SERIALIZERS
 
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](D1a) conclusion: data objects handled by the serializer(s)"
                "[/bold white on blue]")
         rprint()
@@ -1320,7 +1330,7 @@ def report_section_d1b(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -1362,7 +1372,7 @@ def report_section_d1b(results,
                    "there's no data object "
                    f"among the {len(DATA)} used data objects "
                    f"that serializer [yellow]'{serializer}'[/yellow] can't handle (0%).")
-        elif len(_list)==1:
+        elif len(_list) == 1:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
                    f"{cmpdata2phrase(data)}"
                    f"[yellow]'{serializer}'[/yellow] can't handle one data object "
@@ -1378,9 +1388,7 @@ def report_section_d1b(results,
     from wisteria.data import DATA
     from wisteria.serializers import SERIALIZERS
 
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint(
             "[bold white on blue](D1b) conclusion: data objects NOT handled by the serializer(s)"
             "[/bold white on blue]")
@@ -1440,7 +1448,7 @@ def report_section_d2a(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -1453,10 +1461,9 @@ def report_section_d2a(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
-        rprint("[bold white on blue](D2a) conclusion: serializers (not sorted)[/bold white on blue]")
+    if "titles;" in wisteria.globs.ARGS.report:
+        rprint("[bold white on blue](D2a) conclusion: "
+               "serializers (not sorted)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
@@ -1464,7 +1471,7 @@ def report_section_d2a(results,
     table.add_column("Σ enc.+dec. time", width=13)
     table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
 
-    serializer1, serializer2, data = s1s2d
+    serializer1, serializer2, _ = s1s2d
     _serializers = []
     if serializer1 != "all":
         _serializers.append(serializer1)
@@ -1488,10 +1495,10 @@ def report_section_d2a(results,
                 f"{results.ratio_similarity(serializer=serializer)}")
         else:
             table.add_row(
-                f"-",
-                f"-",
-                f"-",
-                f"-")
+                "-",
+                "-",
+                "-",
+                "-")
 
     rprint(table)
     rprint()
@@ -1530,7 +1537,7 @@ def report_section_d2b(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -1543,19 +1550,18 @@ def report_section_d2b(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue]"
                "(D2b) "
-               "conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)"
+               "conclusion: overall score based on 3 points "
+               "(Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)"
                "[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
     table.add_column("overall score", width=13)
 
-    serializer1, serializer2, data = s1s2d
+    serializer1, serializer2, _ = s1s2d
     _serializers = []
     if serializer1 != "all":
         _serializers.append(serializer1)
@@ -1577,8 +1583,8 @@ def report_section_d2b(results,
                 f"{results.overallscores[serializer]}")
         else:
             table.add_row(
-                f"-",
-                f"-")
+                "-",
+                "-")
 
     rprint(table)
     rprint()
@@ -1617,7 +1623,7 @@ def report_section_d2c(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -1630,14 +1636,12 @@ def report_section_d2c(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
-    if "titles;" in args.report:
+    if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](D2c) conclusion[/bold white on blue]")
 
     serializer1, serializer2, data = s1s2d
 
-    text = [cmpdata2phrase(data),]
+    text = [cmpdata2phrase(data), ]
 
     if serializer1 != "all" and serializer2 != "all":
         # ---- encoding/decoding time -----------------------------------------
@@ -1713,70 +1717,106 @@ def report_section_d2c(results,
 
             if attribute == "encoding_strlen":
                 if not _less:
-                    subtext.append(f"There's no serializer that produces longer strings that [yellow]{serializer}[/yellow] ")
-                elif len(_less)==1:
-                    subtext.append(f"Only [yellow]{_less[0]}[/yellow] produces longer string than [yellow]{serializer}[/yellow] ")
+                    subtext.append(
+                        "There's no serializer that produces longer strings than "
+                        f"[yellow]{serializer}[/yellow] ")
+                elif len(_less) == 1:
+                    subtext.append(
+                        f"Only [yellow]{_less[0]}[/yellow] produces longer string than "
+                        f"[yellow]{serializer}[/yellow] ")
                 else:
-                    subtext.append(f"There are {len(_less)} serializers "
-                                   f"(namely {'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _less)}) "
-                                   f"that produce longer strings than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        f"There are {len(_less)} serializers "
+                        "(namely "
+                        f"{'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _less)}) "
+                        f"that produce longer strings than [yellow]{serializer}[/yellow]")
 
                 subtext.append(" and ")
 
                 if not _more:
-                    subtext.append(f"there's no serializer that produces shorter strings that [yellow]{serializer}[/yellow]")
-                elif len(_more)==1:
-                    subtext.append(f"only [yellow]{_more[0]}[/yellow] produces shorter string than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        "there's no serializer that produces shorter strings than "
+                        f"[yellow]{serializer}[/yellow]")
+                elif len(_more) == 1:
+                    subtext.append(
+                        f"only [yellow]{_more[0]}[/yellow] produces shorter string than "
+                        f"[yellow]{serializer}[/yellow]")
                 else:
-                    subtext.append(f"there are {len(_more)} serializers "
-                                   f"(namely {'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _more)}) "
-                                   f"that produce shorter strings than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        f"there are {len(_more)} serializers "
+                        "(namely "
+                        f"{'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _more)}) "
+                        f"that produce shorter strings than [yellow]{serializer}[/yellow]")
 
                 subtext.append(". ")
 
             elif attribute == "encoding_plus_decoding_time":
                 if not _less:
-                    subtext.append(f"There's no serializer slower that [yellow]{serializer}[/yellow] ")
-                elif len(_less)==1:
-                    subtext.append(f"Only [yellow]{_less[0]}[/yellow] is slower than [yellow]{serializer}[/yellow] ")
+                    subtext.append(
+                        "There's no serializer slower than "
+                        f"[yellow]{serializer}[/yellow] ")
+                elif len(_less) == 1:
+                    subtext.append(
+                        f"Only [yellow]{_less[0]}[/yellow] is slower than "
+                        f"[yellow]{serializer}[/yellow] ")
                 else:
-                    subtext.append(f"There are {len(_less)} serializers "
-                                   f"(namely {'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _less)}) "
-                                   f"that are slower than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        f"There are {len(_less)} serializers "
+                        "(namely "
+                        f"{'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _less)}) "
+                        f"that are slower than [yellow]{serializer}[/yellow]")
 
                 subtext.append(" and ")
 
                 if not _more:
-                    subtext.append(f"there's no serializer that is faster that [yellow]{serializer}[/yellow]")
-                elif len(_more)==1:
-                    subtext.append(f"only [yellow]{_more[0]}[/yellow] is faster than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        "there's no serializer that is faster than "
+                        f"[yellow]{serializer}[/yellow]")
+                elif len(_more) == 1:
+                    subtext.append(
+                        f"only [yellow]{_more[0]}[/yellow] is faster than "
+                        f"[yellow]{serializer}[/yellow]")
                 else:
-                    subtext.append(f"there are {len(_more)} serializers "
-                                   f"(namely {'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _more)}) "
-                                   f"that are faster than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        f"there are {len(_more)} serializers "
+                        "(namely "
+                        f"{'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _more)}) "
+                        f"that are faster than [yellow]{serializer}[/yellow]")
 
                 subtext.append(". ")
 
             elif attribute == "similarity":
                 if not _less:
-                    subtext.append(f"There's no serializer that covers less that [yellow]{serializer}[/yellow] ")
-                elif len(_less)==1:
-                    subtext.append(f"Only [yellow]{_less[0]}[/yellow] that covers less than [yellow]{serializer}[/yellow] ")
+                    subtext.append(
+                        "There's no serializer that covers less than "
+                        f"[yellow]{serializer}[/yellow] ")
+                elif len(_less) == 1:
+                    subtext.append(
+                        f"Only [yellow]{_less[0]}[/yellow] covers less than "
+                        f"[yellow]{serializer}[/yellow] ")
                 else:
-                    subtext.append(f"There are {len(_less)} serializers "
-                                   f"(namely {'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _less)}) "
-                                   f"that covers less than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        f"There are {len(_less)} serializers "
+                        "(namely "
+                        f"{'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _less)}) "
+                        f"that covers less than [yellow]{serializer}[/yellow]")
 
                 subtext.append(" and ")
 
                 if not _more:
-                    subtext.append(f"there's no serializer that covers better that [yellow]{serializer}[/yellow]")
-                elif len(_more)==1:
-                    subtext.append(f"only [yellow]{_more[0]}[/yellow] covers better than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        "there's no serializer that covers better than "
+                        f"[yellow]{serializer}[/yellow]")
+                elif len(_more) == 1:
+                    subtext.append(
+                        f"only [yellow]{_more[0]}[/yellow] covers better than "
+                        f"[yellow]{serializer}[/yellow]")
                 else:
-                    subtext.append(f"there are {len(_more)} serializers "
-                                   f"(namely {'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _more)}) "
-                                   f"that covers better than [yellow]{serializer}[/yellow]")
+                    subtext.append(
+                        f"there are {len(_more)} serializers "
+                        "(namely "
+                        f"{'; '.join(f'[yellow]{_serializer}[/yellow]' for _serializer in _more)}) "
+                        f"that covers better than [yellow]{serializer}[/yellow]")
 
                 subtext.append(". ")
 
@@ -1787,6 +1827,7 @@ def report_section_d2c(results,
 
     rprint("".join(text))
     rprint()
+
 
 def report(results,
            s1s2d):
@@ -1822,7 +1863,7 @@ def report(results,
         ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
         ⋅  - D2      : conclusion: final text and data
         ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
         _______________________________________________________________________
 
@@ -1834,8 +1875,6 @@ def report(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    args = wisteria.globs.ARGS
-
     str2reportsection = {
         "A": (report_section_a1,
               report_section_a2,
@@ -1888,7 +1927,7 @@ def report(results,
         "D2c": (report_section_d2c,),
         }
 
-    for report_section in args.report.split(";"):
+    for report_section in wisteria.globs.ARGS.report.split(";"):
         if report_section in str2reportsection:
             for func in str2reportsection[report_section]:
                 func(results, s1s2d)
@@ -1903,4 +1942,4 @@ def report(results,
             # ⋅- checkup messages start with *
             raise WisteriaError(
                 f"(ERRORID017) Can't interpret report section; "
-                f"what is '{report_section}' ? args.report is '{args.report}' .")
+                f"what is '{report_section}' ? args.report is '{wisteria.globs.ARGS.report}' .")

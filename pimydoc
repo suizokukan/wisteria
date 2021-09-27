@@ -94,6 +94,6 @@ data objects
     . D1b   : conclusion: data objects NOT handled by the serializer(s)
   - D2      : conclusion: final text and data
     . D2a   : conclusion: serializers (not sorted)
-    . D2b   : conclusion: overall score based on 3 points (Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)
+    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
     . D2c   : conclusion
 ### ==========================================================================
