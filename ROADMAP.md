@@ -73,11 +73,17 @@ See TODOs at the end of this file.
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
 * fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
-* Linden 0.0.2 + timestamp 
 * fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
+* les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-45
+
+Added a timestamp to first info message (project name, version, timestamp)
+
+    * Added a timestamp to first info message (project name, version, timestamp)
 
 [DONE] task-44
 

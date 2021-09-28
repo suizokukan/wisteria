@@ -37,6 +37,7 @@ TODO : functions ?
 import argparse
 import atexit
 import configparser
+import datetime
 import os
 import os.path
 import re
@@ -234,7 +235,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=open(wisteria.globs.OUTPU
 # ⋅       - (12.4) main(): results computing
 # ⋅       - (12.5) main(): report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-    msginfo(f"{__projectname__}, {__version__}")
+    msginfo(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
 
 
 # =============================================================================
