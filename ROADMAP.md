@@ -4,12 +4,9 @@ Wisteria's roadmap & todos
 See TODOs at the end of this file.
 
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-* progress bar : calcul
-  https://rich.readthedocs.io/en/stable/progress.html
 * TIMEITNUMBER > --timeitnumber=
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
-* numéroter les étapes dans main() (cf code structure)
   chercher si une combinaison donne des résultats vraiment différents des autres
 * data types à compléter
         RegularClass
@@ -70,12 +67,18 @@ See TODOs at the end of this file.
 * english phraseology
 * (1), (2) et (3) pour humanratio
 * D2c : la note (¹) s'affiche bien pour "iaswn vs all" mais également, et à tort, pour "iaswn vs pickle"
-* ajouter à argparse.ArgumentParser(description=...) quelques exemples: --checkup, --cmp="pickle against marshal(all)"
 * full/bestof/laconic=D;minimal=D3/
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-41
+
+Improved help message.
+
+    * (--help) improved description in argparse.ArgumentParser:
+      some examples have been given helping the user to start with
 
 [DONE] task-40
 

@@ -104,7 +104,8 @@ if not os.path.exists(TMPFILENAME):
 # ⋅       - (10.4) main(): results computing
 # ⋅       - (10.5) main(): report
 PARSER = \
-    argparse.ArgumentParser(description="Comparisons of different Python serializers",
+    argparse.ArgumentParser(description='Comparisons of different Python serializers. '
+                            'Try $wisteria --checkup then $wisteria --cmp="pickle against marshal"',
                             epilog=f"{__projectname__}: {__version__}",
                             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 PARSER.add_argument('--version', '-v',
