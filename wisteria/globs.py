@@ -66,8 +66,15 @@ REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"(\s*\((?P<data>all|cwc|ini)\))?\s*$")
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
-REPORT_MINIMAL_STRING = "D;"
-REPORT_FULL_STRING = "titles;A;B;C;D;"
+# REPORT_SHORTCUTS has two goals:
+# (1) it translates a simple, human-readable string into a list of section parts
+# (2) it gives all the accepted keywords that --report may understand.
+REPORT_SHORTCUTS = {
+    "bestof": "B1c;D2b;",
+    "laconic": "D;",
+    "minimal": "D2c;",
+    "full": "titles;A;B;C;D;",
+    }
 
 # default name for the config file.
 DEFAULT_CONFIG_FILENAME = "wisteria.ini"

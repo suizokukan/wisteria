@@ -67,11 +67,18 @@ See TODOs at the end of this file.
 * english phraseology
 * (1), (2) et (3) pour humanratio
 * D2c : la note (¹) s'affiche bien pour "iaswn vs all" mais également, et à tort, pour "iaswn vs pickle"
-* full/bestof/laconic=D;minimal=D3/
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
+* en-tête des fichiers à reprendre entièrement
+* un appel à --help conserve le fichier .tmp; où placer la création de ce fichier ?
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-42
+
+    * 4 report shortcuts have been defined: "bestof", "laconic", "minimal", "full"
+    * no more REPORT_FULL_STRING and REPORT_MINIMAL_STRING in globs.py;
+      these constants have been replaced by the REPORT_SHORTCUTS dict.
 
 [DONE] task-41
 

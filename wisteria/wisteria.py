@@ -45,7 +45,7 @@ import urllib.request
 from rich import print as rprint
 
 import wisteria.globs
-from wisteria.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
+from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
@@ -134,12 +134,13 @@ PARSER.add_argument('--downloadconfigfile',
 PARSER.add_argument('--report',
                     action='store',
                     default="minimal",
-                    help=f"Report format: 'minimal' (interpreted as '{REPORT_MINIMAL_STRING}'), "
-                    f"'full' (interpreted as '{REPORT_FULL_STRING}'), "
-                    "or a subset from this last string, e.g. 'A1;B1a;'. "
+                    help=f"Report format: "
+                    f"you may use one of the special keywords {tuple(REPORT_SHORTCUTS.keys())} "
+                    "or a list of section parts, e.g. 'A1;B1a;'. "
                     "You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...) "
                     "or like 'B1' (=B1a+B1b+B1c). "
-                    f"Accepted keywords are {tuple(wisteria.report.STR2REPORTSECTION.keys())}. "
+                    "Accepted section parts are "
+                    f"{tuple(wisteria.report.STR2REPORTSECTION.keys())}. "
                     "More informations in the documentation. "
                     "Please notice that --verbosity has no effect upon --report.")
 
@@ -203,24 +204,16 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅       - (10.3) main(): config file reading
 # ⋅       - (10.4) main(): results computing
 # ⋅       - (10.5) main(): report
-if wisteria.globs.ARGS.report == "minimal":
-    wisteria.globs.ARGS.report = REPORT_MINIMAL_STRING
+if wisteria.globs.ARGS.report in REPORT_SHORTCUTS:
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRORIDXXX
         # ⋅- checkup messages start with *
-        rprint(f"> --report 'minimal' interpreted as '{wisteria.globs.ARGS.report}'.")
-elif wisteria.globs.ARGS.report == "full":
-    wisteria.globs.ARGS.report = REPORT_FULL_STRING
-    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint(f"> --report 'full' interpreted as '{wisteria.globs.ARGS.report}'.")
+        rprint(f"> --report '{wisteria.globs.ARGS.report}' "
+               f"interpreted as '{REPORT_SHORTCUTS[wisteria.globs.ARGS.report]}'.")
+    wisteria.globs.ARGS.report = REPORT_SHORTCUTS[wisteria.globs.ARGS.report]
 elif not wisteria.globs.ARGS.report.endswith(";"):
     wisteria.globs.ARGS.report += ";"
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
