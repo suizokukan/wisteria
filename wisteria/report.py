@@ -42,11 +42,11 @@ TODO : il en manque !
     o  report(results, s1s2d)
 """
 import rich.table
-from rich import print as rprint
 
 import wisteria.globs
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
+from wisteria.msg import msgreport
 
 
 def humanratio(ratio):
@@ -209,9 +209,9 @@ def report_section_a1(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](A1) REPORT with --cmp set to "
-               f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'[/bold white on blue]")
-        rprint()
+        msgreport("[bold white on blue](A1) REPORT with --cmp set to "
+                  f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'[/bold white on blue]")
+        msgreport()
 
 
 def report_section_a2(results,
@@ -261,13 +261,13 @@ def report_section_a2(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](A2) List of serializers to be used"
-               "[/bold white on blue]")
-        rprint()
+        msgreport("[bold white on blue](A2) List of serializers to be used"
+                  "[/bold white on blue]")
+        msgreport()
 
     for serializer in wisteria.globs.SERIALIZERS.values():
-        rprint("  - ", serializer.simple_repr())
-    rprint()
+        msgreport(f"  - {serializer.simple_repr()}")
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -322,13 +322,13 @@ def report_section_a3(results,
     data = wisteria.globs.DATA
 
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](A3) List of data objects to be used"
-               "[/bold white on blue]")
-        rprint()
+        msgreport("[bold white on blue](A3) List of data objects to be used"
+                  "[/bold white on blue]")
+        msgreport()
 
     for dataobj_name, dataobj_value in data.items():
-        rprint("  - ", dataobj_name, ":", shortenedstr(repr(dataobj_value)))
-    rprint()
+        msgreport(f"  - {dataobj_name} : {shortenedstr(repr(dataobj_value))}")
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -382,8 +382,8 @@ def report_section_b1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](B1a) full details: "
-               "serializer * data object[/bold white on blue]")
+        msgreport("[bold white on blue](B1a) full details: "
+                  "serializer * data object[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer/data object", width=25)
     table.add_column("enc. ok ?", width=12)
@@ -404,8 +404,8 @@ def report_section_b1a(results,
                 results.repr_attr(serializer, dataobj, "decoding_success"),
                 results.repr_attr(serializer, dataobj, "decoding_time"),
                 results.repr_attr(serializer, dataobj, "similarity"))
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -459,7 +459,7 @@ def report_section_b1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
+        msgreport("[bold white on blue](B1b) full details: serializers[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
     table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
@@ -479,8 +479,8 @@ def report_section_b1b(results,
             f"{results.total_decoding_time(serializer=serializer)}",
             f"{results.ratio_similarity(serializer=serializer)}",
         )
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -534,8 +534,8 @@ def report_section_b1c(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](B1c) full details: "
-               "serializers, hall of fame[/bold white on blue]")
+        msgreport("[bold white on blue](B1c) full details: "
+                  "serializers, hall of fame[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("#", width=2)
     table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=15)
@@ -556,8 +556,8 @@ def report_section_b1c(results,
             f"{results.get_halloffame('similarity', index)}",
         )
 
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -611,22 +611,22 @@ def report_section_b1d(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](B1d) full details: "
-               "serializer <S> can't handle <dataobj>[/bold white on blue]")
+        msgreport("[bold white on blue](B1d) full details: "
+                  "serializer <S> can't handle <dataobj>[/bold white on blue]")
     for serializer in results.serializers:
         _list = tuple(dataobj for dataobj in results[serializer]
                       if not results[serializer][dataobj].similarity)
         if not _list:
-            rprint(f"* [yellow]({serializer})[/yellow] "
-                   "There's no data object that serializer "
-                   f"'[yellow]{serializer}[/yellow]' can't handle.")
+            msgreport(f"* [yellow]({serializer})[/yellow] "
+                      "There's no data object that serializer "
+                      f"'[yellow]{serializer}[/yellow]' can't handle.")
         else:
-            rprint(f"* [yellow]({serializer})[/yellow] "
-                   f"Serializer '[yellow]{serializer}[/yellow]' "
-                   "can't handle the following data objects:")
+            msgreport(f"* [yellow]({serializer})[/yellow] "
+                      f"Serializer '[yellow]{serializer}[/yellow]' "
+                      "can't handle the following data objects:")
             for dataobj in _list:
-                rprint("  - ", "[bold white]" + dataobj + "[/bold white]")
-    rprint()
+                msgreport(f"  - [bold white]{dataobj}[/bold white]")
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -680,8 +680,8 @@ def report_section_b2a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](B2a) full details: "
-               "data object * serializer[/bold white on blue]")
+        msgreport("[bold white on blue](B2a) full details: "
+                  "data object * serializer[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object/serializer", width=25)
     table.add_column("enc. ok ?", width=12)
@@ -703,8 +703,8 @@ def report_section_b2a(results,
                 results.repr_attr(serializer, dataobj, "decoding_time"),
                 results.repr_attr(serializer, dataobj, "similarity")
             )
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -758,7 +758,7 @@ def report_section_b2b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
+        msgreport("[bold white on blue](B2b) full details: data objects[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object", width=25)
     table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
@@ -778,8 +778,8 @@ def report_section_b2b(results,
             f"{results.total_decoding_time(dataobj=dataobj)}",
             f"{results.ratio_similarity(dataobj=dataobj)}",
         )
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -833,8 +833,8 @@ def report_section_c1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](C1a) full details: "
-               "serializer * data object (base 100)[/bold white on blue]")
+        msgreport("[bold white on blue](C1a) full details: "
+                  "serializer * data object (base 100)[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer/data object", width=25)
     table.add_column("enc. ok ?", width=12)
@@ -881,8 +881,8 @@ def report_section_c1a(results,
                 results.repr_attr(serializer, dataobj, "decoding_success"),
                 results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
                 results.repr_attr(serializer, dataobj, "similarity"))
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 def report_section_c1b(results,
@@ -933,8 +933,8 @@ def report_section_c1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](C1b) full details: "
-               "serializers (base 100)[/bold white on blue]")
+        msgreport("[bold white on blue](C1b) full details: "
+                  "serializers (base 100)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
@@ -976,8 +976,8 @@ def report_section_c1b(results,
             f"{results.total_decoding_time(serializer=serializer, output='base100')}",
             f"{results.ratio_similarity(serializer=serializer)}",
         )
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 def report_section_c2a(results,
@@ -1028,8 +1028,8 @@ def report_section_c2a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](C2a) full details: "
-               "data object * serializer (base 100)[/bold white on blue]")
+        msgreport("[bold white on blue](C2a) full details: "
+                  "data object * serializer (base 100)[/bold white on blue]")
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object/serializer", width=25)
 
@@ -1078,8 +1078,8 @@ def report_section_c2a(results,
                 results.repr_attr(serializer, dataobj, "decoding_time", output='base100'),
                 results.repr_attr(serializer, dataobj, "similarity")
             )
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 def report_section_c2b(results,
@@ -1130,8 +1130,8 @@ def report_section_c2b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](C2b) full details: "
-               "data objects (base 100)[/bold white on blue]")
+        msgreport("[bold white on blue](C2b) full details: "
+                  "data objects (base 100)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("data object", width=25)
@@ -1174,8 +1174,8 @@ def report_section_c2b(results,
             f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
             f"{results.ratio_similarity(dataobj=dataobj)}",
         )
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 def report_section_d1a(results,
@@ -1245,41 +1245,42 @@ def report_section_d1a(results,
                 _list.append(dataobj_name)
 
         if not data:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   "no data objects may be used: therefore there's no conclusion about the objects "
-                   f"data serializer [yellow]'{serializer}'[/yellow] can handle.")
+            msgreport(
+                f"[yellow]'{serializer}'[/yellow]: "
+                f"{cmpdata2phrase(cmpdata)}"
+                "no data objects may be used: therefore there's no conclusion about the objects "
+                f"data serializer [yellow]'{serializer}'[/yellow] can handle.")
         elif not _list:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   "there's no data object "
-                   f"among the {len(data)} used data objects "
-                   f"that serializer [yellow]'{serializer}'[/yellow] can handle (0%).")
+            msgreport(f"[yellow]'{serializer}'[/yellow]: "
+                      f"{cmpdata2phrase(cmpdata)}"
+                      "there's no data object "
+                      f"among the {len(data)} used data objects "
+                      f"that serializer [yellow]'{serializer}'[/yellow] can handle (0%).")
         elif len(_list) == 1:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   f"[yellow]'{serializer}'[/yellow] can handle one data object "
-                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
-            rprint("; ".join("'"+dataobj+"'" for dataobj in _list))
+            msgreport(f"[yellow]'{serializer}'[/yellow]: "
+                      f"{cmpdata2phrase(cmpdata)}"
+                      f"[yellow]'{serializer}'[/yellow] can handle one data object "
+                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
         else:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   f"[yellow]'{serializer}'[/yellow] can handle {len(_list)} data objects "
-                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
-            rprint("; ".join("'"+dataobj+"'" for dataobj in _list))
+            msgreport(f"[yellow]'{serializer}'[/yellow]: "
+                      f"{cmpdata2phrase(cmpdata)}"
+                      f"[yellow]'{serializer}'[/yellow] can handle {len(_list)} data objects "
+                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](D1a) conclusion: data objects handled by the serializer(s)"
-               "[/bold white on blue]")
-        rprint()
+        msgreport("[bold white on blue](D1a) conclusion: data objects handled by the serializer(s)"
+                  "[/bold white on blue]")
+        msgreport()
 
     serializer1, serializer2, cmpdata = s1s2d
     if serializer1 != "all":
         show(serializer1, cmpdata)
-        rprint()
+        msgreport()
     if serializer2 != "all":
         show(serializer2, cmpdata)
-        rprint()
+        msgreport()
 
     # Other serializers, leaving apart <serializer1> and <serializer2> ?
     _serializers = list(wisteria.globs.SERIALIZERS.keys())
@@ -1288,10 +1289,10 @@ def report_section_d1a(results,
     if serializer2 != "all":
         _serializers.remove(serializer2)
     if _serializers and (serializer1 == "all" or serializer2 == "all"):
-        rprint("[bold]Other serializers:[/bold]")
+        msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
-        rprint()
+        msgreport()
 
 
 def report_section_d1b(results,
@@ -1361,42 +1362,43 @@ def report_section_d1b(results,
                 _list.append(dataobj_name)
 
         if not data:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   "no data objects may be used: therefore there's no conclusion about the objects "
-                   f"data serializer [yellow]'{serializer}'[/yellow] can't handle.")
+            msgreport(
+                f"[yellow]'{serializer}'[/yellow]: "
+                f"{cmpdata2phrase(cmpdata)}"
+                "no data objects may be used: therefore there's no conclusion about the objects "
+                f"data serializer [yellow]'{serializer}'[/yellow] can't handle.")
         elif not _list:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   "there's no data object "
-                   f"among the {len(data)} used data objects "
-                   f"that serializer [yellow]'{serializer}'[/yellow] can't handle (0%).")
+            msgreport(f"[yellow]'{serializer}'[/yellow]: "
+                      f"{cmpdata2phrase(cmpdata)}"
+                      "there's no data object "
+                      f"among the {len(data)} used data objects "
+                      f"that serializer [yellow]'{serializer}'[/yellow] can't handle (0%).")
         elif len(_list) == 1:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   f"[yellow]'{serializer}'[/yellow] can't handle one data object "
-                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
-            rprint("; ".join("'[bold white]"+dataobj+"/[bold white]'" for dataobj in _list))
+            msgreport(f"[yellow]'{serializer}'[/yellow]: "
+                      f"{cmpdata2phrase(cmpdata)}"
+                      f"[yellow]'{serializer}'[/yellow] can't handle one data object "
+                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport("; ".join("'[bold white]"+dataobj+"/[bold white]'" for dataobj in _list))
         else:
-            rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(cmpdata)}"
-                   f"[yellow]'{serializer}'[/yellow] can't handle {len(_list)} data objects "
-                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
-            rprint("; ".join("'[bold white]"+dataobj+"[/bold white]'" for dataobj in _list))
+            msgreport(f"[yellow]'{serializer}'[/yellow]: "
+                      f"{cmpdata2phrase(cmpdata)}"
+                      f"[yellow]'{serializer}'[/yellow] can't handle {len(_list)} data objects "
+                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport("; ".join("'[bold white]"+dataobj+"[/bold white]'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint(
+        msgreport(
             "[bold white on blue](D1b) conclusion: data objects NOT handled by the serializer(s)"
             "[/bold white on blue]")
-        rprint()
+        msgreport()
 
     serializer1, serializer2, cmpdata = s1s2d
     if serializer1 != "all":
         show(serializer1, cmpdata)
-        rprint()
+        msgreport()
     if serializer2 != "all":
         show(serializer2, cmpdata)
-        rprint()
+        msgreport()
 
     # Other serializers, leaving apart <serializer1> and <serializer2> ?
     _serializers = list(wisteria.globs.SERIALIZERS.keys())
@@ -1405,10 +1407,10 @@ def report_section_d1b(results,
     if serializer2 != "all":
         _serializers.remove(serializer2)
     if _serializers and (serializer1 == "all" or serializer2 == "all"):
-        rprint("[bold]Other serializers:[/bold]")
+        msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
-        rprint()
+        msgreport()
 
 
 def report_section_d2a(results,
@@ -1458,8 +1460,8 @@ def report_section_d2a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](D2a) conclusion: "
-               "serializers (not sorted)[/bold white on blue]")
+        msgreport("[bold white on blue](D2a) conclusion: "
+                  "serializers (not sorted)[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
@@ -1496,8 +1498,8 @@ def report_section_d2a(results,
                 "-",
                 "-")
 
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 def report_section_d2b(results,
@@ -1547,11 +1549,11 @@ def report_section_d2b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue]"
-               "(D2b) "
-               "conclusion: overall score based on 3 points "
-               "(Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)"
-               "[/bold white on blue]")
+        msgreport("[bold white on blue]"
+                  "(D2b) "
+                  "conclusion: overall score based on 3 points "
+                  "(Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)"
+                  "[/bold white on blue]")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("serializer", width=25)
@@ -1582,8 +1584,8 @@ def report_section_d2b(results,
                 "-",
                 "-")
 
-    rprint(table)
-    rprint()
+    msgreport(table)
+    msgreport()
 
 
 def report_section_d2c(results,
@@ -1633,7 +1635,7 @@ def report_section_d2c(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        rprint("[bold white on blue](D2c) conclusion[/bold white on blue]")
+        msgreport("[bold white on blue](D2c) conclusion[/bold white on blue]")
 
     serializer1, serializer2, cmpdata = s1s2d
 
@@ -1821,8 +1823,8 @@ def report_section_d2c(results,
     text.append("\n\n")
     text.append("(¹) a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec")
 
-    rprint("".join(text))
-    rprint()
+    msgreport("".join(text))
+    msgreport()
 
 
 # STR2REPORTSECTION has two goals:
@@ -1938,11 +1940,6 @@ def report(results,
             # special keywords (like 'titles') that don't match any function in <STR2REPORTSECTION>.
             pass
         elif report_section.strip() != "":
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
             raise WisteriaError(
                 f"(ERRORID017) Can't interpret report section; "
                 f"what is '{report_section}' ? args.report is '{wisteria.globs.ARGS.report}' . "

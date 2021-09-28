@@ -23,7 +23,6 @@
 """
 from dataclasses import dataclass
 
-from rich import print as rprint
 from rich.console import Console
 from rich.progress_bar import ProgressBar
 
@@ -31,6 +30,7 @@ import wisteria.data
 import wisteria.globs
 from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
+from wisteria.msg import msgdebug, msginfo, msgerror
 
 
 @dataclass
@@ -271,12 +271,7 @@ pas à sa place
         self.serializers_number = len(self.serializers)
 
         if self.serializers_number == 0:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("ERRORID016: Incorrect data, there's no serializer.")
+            msgerror("(ERRORID016) Incorrect data, there's no serializer.")
             return False
 
         first_serializer = tuple(self.serializers)[0]
@@ -1132,28 +1127,13 @@ def compute_results(config,
         # serializers and data to be used through the tests:
         _serializers = get_serializers_selection(serializer1, serializer2)
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("@ serializers to be used are: ", _serializers)
+            msgdebug(f"serializers to be used are: {_serializers}")
         _dataobjs = get_data_selection(cmpdata, config)
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("@ data objs to be used are: ", _dataobjs)
+            msgdebug(f"data objs to be used are: {_dataobjs}")
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("> Please wait until all required encodings/decodings have been computed.")
+            msginfo("Please wait until all required encodings/decodings have been computed.")
 
         results = SerializationResults()
 
@@ -1170,13 +1150,8 @@ def compute_results(config,
             results[serializer] = {}
             for data_name in _dataobjs:
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                    # (pimydoc)console messages
-                    # ⋅- debug messages start with   @
-                    # ⋅- info messages start with    >
-                    # ⋅- error messages start with   ERRORIDXXX
-                    # ⋅- checkup messages start with *
-                    rprint(f"@ about to call function for serializer='{serializer}' "
-                           f"and data name='{data_name}'")
+                    msgdebug(f"About to call function for serializer='{serializer}' "
+                             f"and data name='{data_name}'")
 
                 results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
                     action="serialize",
@@ -1192,12 +1167,7 @@ def compute_results(config,
                     console.file.write("\r")
 
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                    # (pimydoc)console messages
-                    # ⋅- debug messages start with   @
-                    # ⋅- info messages start with    >
-                    # ⋅- error messages start with   ERRORIDXXX
-                    # ⋅- checkup messages start with *
-                    rprint("@ result:", results[serializer][data_name])
+                    msgdebug(f"result: {results[serializer][data_name]}")
 
         # (progress bar)
         # Please note that there can be NO progress bar if the debug mode is enabled:
@@ -1206,12 +1176,7 @@ def compute_results(config,
             console.show_cursor(True)
 
         if not results.finish_initialization():
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("ERRORID015: incorrect data, the program has to stop.")
+            msgerror("(ERRORID015) Incorrect data, the program has to stop.")
 
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
@@ -1222,14 +1187,10 @@ def compute_results(config,
             # ⋅* -3: internal error, data can't be loaded
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
+            # ⋅* -6: error, ill-formed --output string
             return None, -3
         if results.dataobjs_number == 0:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("> No data to handle, the program can stop.")
+            msginfo("No data to handle, the program can stop.")
 
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
@@ -1240,17 +1201,13 @@ def compute_results(config,
             # ⋅* -3: internal error, data can't be loaded
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
+            # ⋅* -6: error, ill-formed --output string
             return None, 2
 
         return results, None
 
     except WisteriaError as exception:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint(f"> An error occured: {exception}")
+        msgerror(f"An error occured: {exception}")
 
         # (pimydoc)exit codes
         # ⋅*  0: normal exit code
@@ -1261,4 +1218,5 @@ def compute_results(config,
         # ⋅* -3: internal error, data can't be loaded
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
+        # ⋅* -6: error, ill-formed --output string
         return None, -4

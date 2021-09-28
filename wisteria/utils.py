@@ -30,10 +30,10 @@
 import importlib
 import os
 import os.path
-from rich import print as rprint
 
 import wisteria.globs
 from wisteria.globs import VERBOSITY_DETAILS
+from wisteria.msg import msginfo
 
 
 def normpath(path):
@@ -92,12 +92,7 @@ def trytoimport(module_name):
     try:
         wisteria.globs.MODULES[module_name] = importlib.import_module(module_name)
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint(f"> Module '{module_name}' successfully imported.")
+            msginfo(f"Module '{module_name}' successfully imported.")
     except ModuleNotFoundError:
         res = False
     return res

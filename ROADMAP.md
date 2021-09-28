@@ -62,7 +62,6 @@ See TODOs at the end of this file.
 * [yellow] > _format_serializer + le nom du serializer qui apparaît n'est pas le human name (e.g. "Iaswn" plutôt que "iaswn")
   [bold white] > _format_dataobject  
 * TODOs & Pylint
-* par défaut, exporter vers report.txt (logging ? détourner rprint ?)
 * dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
 * english phraseology
 * (1), (2) et (3) pour humanratio
@@ -73,9 +72,21 @@ See TODOs at the end of this file.
 * fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
+* fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
+* Linden 0.0.2 + timestamp 
+* fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-44
+
+Log messages to the console and to the log file.
+
+    * log messages to the console and to the log file.
+    * --output option
+    * new files: msg.py, output.py
+    * rprint() has been replaced by msgxxx() functions.
 
 [DONE] task-43
 

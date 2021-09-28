@@ -96,3 +96,10 @@ SERIALIZERS = {}
 # * format: DATA[(str)data name] = data object
 # * initialized by data.py::init_data()
 DATA = {}
+
+# TODO
+FILECONSOLE = None
+
+# TODO
+#  OUTPUT = parse_output_argument(--output string)
+OUTPUT = None
