@@ -59,8 +59,6 @@ See TODOs at the end of this file.
 * README.md acceptable
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 * beaucoup de raise Wisteria n'ont pas de ERRORID
-* [yellow] > _format_serializer + le nom du serializer qui apparaît n'est pas le human name (e.g. "Iaswn" plutôt que "iaswn")
-  [bold white] > _format_dataobject  
 * TODOs & Pylint
 * dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
 * english phraseology
@@ -75,9 +73,20 @@ See TODOs at the end of this file.
 * fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
 * fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
+* output.py > cmdline_output.py
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-46
+
+New file (reportaspect.py) to define some text attributes for some parts
+of the report.
+
+    * New file (reportaspect.py) to define some text attributes for some parts
+      of the report.
+    * in reportaspect.py, 3 functions: aspect_title(), aspect_serializer()
+      and aspect_data().
 
 [DONE] task-45
 

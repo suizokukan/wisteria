@@ -31,6 +31,7 @@ import wisteria.globs
 from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
+from wisteria.reportaspect import aspect_serializer
 
 
 @dataclass
@@ -185,30 +186,30 @@ méthode pas à sa place, à déplacer plus bas dans le fichier
         value = self.halloffame[attribute][index][0]
 
         if attribute == 'encoding_success':
-            return f"[yellow]{serializer}[/yellow] " \
+            return f"{aspect_serializer(serializer)} " \
                 f"[{self.ratio_encoding_success(serializer=serializer)}]"
 
         if attribute == 'encoding_time':
-            return f"[yellow]{serializer}[/yellow] " \
+            return f"{aspect_serializer(serializer)} " \
                 f"[{self._format_time(value)}]"
 
         if attribute == 'decoding_success':
-            return f"[yellow]{serializer}[/yellow] " \
+            return f"{aspect_serializer(serializer)} " \
                 f"[{self.ratio_decoding_success(serializer=serializer)}]"
 
         if attribute == 'decoding_time':
             serializer = self.halloffame[attribute][index][1]
-            return f"[yellow]{serializer}[/yellow] " \
+            return f"{aspect_serializer(serializer)} " \
                 f"[{self._format_time(value)}]"
 
         if attribute == 'similarity':
             serializer = self.halloffame[attribute][index][1]
-            return f"[yellow]{serializer}[/yellow] " \
+            return f"{aspect_serializer(serializer)} " \
                 f"[{self.ratio_similarity(serializer=serializer)}]"
 
         if attribute == 'encoding_strlen':
             serializer = self.halloffame[attribute][index][1]
-            return f"[yellow]{serializer}[/yellow] " \
+            return f"{aspect_serializer(serializer)} " \
                 f"[{self._format_stringlength(value)}]"
 
         return None  # this line should never be executed.

@@ -30,7 +30,7 @@ est gérée à chaque appel de msgxxx() par un test du type
      if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 """
 from rich import print as rprint
-
+from wisteria.reportaspect import aspect_title
 import wisteria.globs
 
 
@@ -113,6 +113,19 @@ def msgreport(obj=""):
         ARGUMENT: <obj>, the object to be displayed/written in the log file.
     """
     _message(obj)
+
+
+def msgreporttitle(obj=""):
+    """
+        msgreporttitle()
+
+        Display and/or write <obj> in the log file; to be used like log.info() .
+
+        _______________________________________________________________________
+
+        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+    """
+    _message(aspect_title(obj))
 
 
 def warning(obj=""):
