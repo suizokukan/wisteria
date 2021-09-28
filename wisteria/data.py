@@ -33,6 +33,7 @@ import io
 import numbers
 import re
 
+import wisteria.globs
 from wisteria.globs import TMPFILENAME
 
 
@@ -44,78 +45,85 @@ def anyfunc():
     """
 
 
-DATA = {
-    "bool/false": True,
-    "bool/true": True,
+def init_data():
+    """
+        init_data()
 
-    "bytearray": bytearray(b"123"),
-    "bytearray(empty)": bytearray(),
+        Initialize wisteria.globs.DATA.
+    """
+    wisteria.globs.DATA = {
+        "bool/false": True,
+        "bool/true": True,
 
-    "bytes": b"123",
-    "bytes(empty)": b"",
+        "bytearray": bytearray(b"123"),
+        "bytearray(empty)": bytearray(),
 
-    "complex": 1+2j,
+        "bytes": b"123",
+        "bytes(empty)": b"",
 
-    "dict(keys/bool)": {False: "False", True: "True"},
-    "dict(keys/float)": {1.1: "value1.1", 2.2: "value2.2"},
-    "dict(keys/int)": {0: "value0", 1: "value1", 2: "value2"},
-    "dict(keys/str)": {"key1": "value1", "key2": "value2"},
-    "dict(keys/str+subdicts)": {"key1": "value1", "key2": "value2", "key3": {"key4": "key4", }},
+        "complex": 1+2j,
 
-    "file descriptor": open(TMPFILENAME, encoding="utf-8"),  # pylint: disable=consider-using-with
+        "dict(keys/bool)": {False: "False", True: "True"},
+        "dict(keys/float)": {1.1: "value1.1", 2.2: "value2.2"},
+        "dict(keys/int)": {0: "value0", 1: "value1", 2: "value2"},
+        "dict(keys/str)": {"key1": "value1", "key2": "value2"},
+        "dict(keys/str+subdicts)": {"key1": "value1", "key2": "value2", "key3": {"key4": "key4", }},
 
-    "float": 1.1,
+        "file descriptor": open(TMPFILENAME,      # pylint: disable=consider-using-with
+                                encoding="utf-8"),
 
-    "frozenset": frozenset(("1", "2",)),
-    "frozenset(empty)": frozenset(),
+        "float": 1.1,
 
-    "function": anyfunc,
-    "function(python)": print,
+        "frozenset": frozenset(("1", "2",)),
+        "frozenset(empty)": frozenset(),
 
-    "imported module": re,
-    "imported module(class)": re.Pattern,
-    "imported module(function)": re.sub,
+        "function": anyfunc,
+        "function(python)": print,
 
-    "int": 1,
+        "imported module": re,
+        "imported module(class)": re.Pattern,
+        "imported module(function)": re.sub,
 
-    "io.string": io.StringIO(),
-    "io.string(empty)": io.StringIO().write("string"),
+        "int": 1,
 
-    "list": ["1", "2", ],
-    "list(empty)": [],
-    "list(+sublists)": ["1", "2", ["3", ["4", ]]],
+        "io.string": io.StringIO(),
+        "io.string(empty)": io.StringIO().write("string"),
 
-    "memoryview": memoryview(b"123"),
+        "list": ["1", "2", ],
+        "list(empty)": [],
+        "list(+sublists)": ["1", "2", ["3", ["4", ]]],
 
-    "none": None,
+        "memoryview": memoryview(b"123"),
 
-    "notimplemented": NotImplemented,
+        "none": None,
 
-    "numbers(complex)": numbers.Complex,
-    "numbers(integral)": numbers.Integral,
-    "numbers(numbers)": numbers.Number(),
-    "numbers(real)": numbers.Real,
+        "notimplemented": NotImplemented,
 
-    "pythonexception typeerror": TypeError,
+        "numbers(complex)": numbers.Complex,
+        "numbers(integral)": numbers.Integral,
+        "numbers(numbers)": numbers.Number(),
+        "numbers(real)": numbers.Real,
 
-    "range": range(1000),
-    "range(empty)": range(0),
+        "pythonexception typeerror": TypeError,
 
-    "re.match": re.match(".*", "abc"),
-    "re.match(+flags)": re.match(".*", "abc", re.M),
+        "range": range(1000),
+        "range(empty)": range(0),
 
-    "re.pattern(bytes)": re.compile(".*"),
-    "re.pattern(str)": re.compile(b".*"),
+        "re.match": re.match(".*", "abc"),
+        "re.match(+flags)": re.match(".*", "abc", re.M),
 
-    "set": set(("1", "2",)),
-    "set(empty)": set(),
+        "re.pattern(bytes)": re.compile(".*"),
+        "re.pattern(str)": re.compile(b".*"),
 
-    "str": "abc",
-    "str(empty)": "",
-    "str(long)": "abhg12234"*10000,
-    "str(non ascii characters)": "êł¹@"+chr(0x1234)+chr(0x12345),
+        "set": set(("1", "2",)),
+        "set(empty)": set(),
 
-    "tuple": ("1", "2",),
-    "tuple(empty)": (),
-    "tuple(+subtuples)": ("1", "2", ("3", ("4",))),
+        "str": "abc",
+        "str(empty)": "",
+        "str(long)": "abhg12234"*10000,
+        "str(non ascii characters)": "êł¹@"+chr(0x1234)+chr(0x12345),
+
+        "tuple": ("1", "2",),
+        "tuple(empty)": (),
+        "tuple(+subtuples)": ("1", "2", ("3", ("4",))),
     }

@@ -35,6 +35,7 @@ import argparse
 import atexit
 import configparser
 import os
+import os.path
 import re
 import shutil
 import sys
@@ -42,8 +43,6 @@ import urllib.error
 import urllib.request
 
 from rich import print as rprint
-from rich.console import Console
-from rich.progress_bar import ProgressBar
 
 import wisteria.globs
 from wisteria.globs import REPORT_MINIMAL_STRING, REPORT_FULL_STRING
@@ -51,10 +50,59 @@ from wisteria.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
 from wisteria.aboutproject import __projectname__, __version__
-from wisteria.wisteriaerror import WisteriaError
 from wisteria.report import report
+from wisteria.results import compute_results
+from wisteria.utils import normpath
+import wisteria.serializers
+import wisteria.data
+from wisteria.wisteriaerror import WisteriaError
+
+# =============================================================================
+# (01) temp file opening
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
+
+# Such a file is required to create file descriptor objects.
+# The temp. file will be removed at the end of the program.
+if not os.path.exists(TMPFILENAME):
+    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
+        pass
 
 
+# =============================================================================
+# (02) command line parsing
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
 PARSER = \
     argparse.ArgumentParser(description="Comparisons of different Python serializers",
                             epilog=f"{__projectname__}: {__version__}",
@@ -90,7 +138,8 @@ PARSER.add_argument('--report',
                     "or a subset from this last string, e.g. 'A1;B1a;'. "
                     "You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...) "
                     "or like 'B1' (=B1a+B1b+B1c). "
-                    "Full informations in the documentation. "
+                    f"Accepted keywords are {tuple(wisteria.report.STR2REPORTSECTION.keys())}. "
+                    "More informations in the documentation. "
                     "Please notice that --verbosity has no effect upon --report.")
 
 PARSER.add_argument('--verbosity',
@@ -107,18 +156,24 @@ wisteria.globs.ARGS = PARSER.parse_args()
 
 
 # =============================================================================
-# 01) project name & version
+# (03) project name & version
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     # (pimydoc)console messages
     # ⋅- debug messages start with   @
@@ -129,18 +184,24 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 
 
 # =============================================================================
-# 02) ARGS.report interpretation
+# (04) ARGS.report interpretation
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
 if wisteria.globs.ARGS.report == "minimal":
     wisteria.globs.ARGS.report = REPORT_MINIMAL_STRING
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
@@ -185,6 +246,26 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 ARGS = wisteria.globs.ARGS
 
 
+# =============================================================================
+# (05) exit handler
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
+
 # exit handler: let's remove the tmp file if it exists.
 def exit_handler():
     """
@@ -196,35 +277,29 @@ def exit_handler():
         os.remove(TMPFILENAME)
 
 
-# =============================================================================
-# 03) exit handler
-# =============================================================================
-# (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
 atexit.register(exit_handler)
 
+
 # =============================================================================
-# 04) known serializers import
+# (06) serializers import
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
-from wisteria.serializers import SERIALIZERS, SerializationResults
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
+wisteria.serializers.init_serializers()
 
 
 def read_cfgfile(filename):
@@ -403,24 +478,6 @@ def read_cfgfile(filename):
     return res
 
 
-def normpath(path):
-    """
-        normpath()
-
-        Return a human-readable (e.g. "~" -> "/home/myhome/") normalized
-        version of a file path.
-        ________________________________________________________________________
-
-        PARAMETER : (str)path
-
-        RETURNED VALUE : the normalized <path>
-    """
-    res = os.path.normpath(os.path.abspath(os.path.expanduser(path)))
-    if res == ".":
-        res = os.getcwd()
-    return res
-
-
 def checkup():
     """
         checkup()
@@ -430,13 +487,15 @@ def checkup():
         - configuration file that would be used; does this file exist ?
           can this file be read without errors ?
     """
+    serializers = wisteria.globs.SERIALIZERS
+
     # (pimydoc)console messages
     # ⋅- debug messages start with   @
     # ⋅- info messages start with    >
     # ⋅- error messages start with   ERRORIDXXX
     # ⋅- checkup messages start with *
     rprint("* Serializers:")
-    for serializer in SERIALIZERS.values():
+    for serializer in serializers.values():
         rprint("  - ", serializer.checkup_repr())
 
     rprint()
@@ -465,18 +524,24 @@ def checkup():
 
 
 # =============================================================================
-# 05) checkup
+# (07) checkup
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
 if wisteria.globs.ARGS.checkup:
     checkup()
     # (pimydoc)exit codes
@@ -535,18 +600,24 @@ def downloadconfigfile():
 
 
 # =============================================================================
-# 06) download default config file
+# (08) download default config file
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()
     # (pimydoc)exit codes
@@ -560,120 +631,32 @@ if wisteria.globs.ARGS.downloadconfigfile:
 
 
 # =============================================================================
-# 07) temp file opening
+# (09) known data init
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
-# Such a file is required to create file descriptor objects.
-# The temp. file will be removed at the end of the program.
-if not os.path.exists(TMPFILENAME):
-    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
-        pass
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
+wisteria.data.init_data()
 
 
-# =============================================================================
-# 08) known data import
-# =============================================================================
-# (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
-from wisteria.data import DATA
-
-
-def get_data_selection(data,
-                       config):
-    """
-        get_data_selection()
-
-        Return a tuple of the data objects names selected by the <config>.
-
-        _______________________________________________________________________
-
-        ARGUMENTS:
-        o  data:   (str)"all" or "ini"
-        o  config: (dict) dict returned by read_cfgfile()
-
-        RETURNED VALUE: (tuple) a tuple of (str)data keys
-    """
-    res = []
-
-    if data == "all":
-        res = tuple(DATA.keys())
-    elif data == "ini":
-        if config["data selection"]["data selection"] == "all":
-            res = tuple(config["objects"].keys())
-        elif config["data selection"]["data selection"] == "only if yes":
-            res = (data_name for data_name in config["data objects"]
-                   if config["data objects"][data_name])
-        elif config["data selection"]["data selection"].startswith("data set/"):
-            res = tuple(config["data sets"][config["data selection"]["data selection"]])
-        else:
-            raise WisteriaError(
-                "Can't understand a value given to \\[data selection]'data selection': "
-                f"what is '{config['data selection']['data selection']}' ? "
-                "Known values are 'all', 'ini' and 'data set/xxx' "
-                "where xxx is a string.")
-    else:
-        raise WisteriaError(
-            "Can't understand a value given to the 'data' part in --cmp: "
-            f"what is '{data}' ? "
-            "Known values are 'all' and 'ini'. ")
-
-    return res
-
-
-def get_serializers_selection(serializer1,
-                              serializer2):
-    """
-        get_serializers_selection()
-
-        Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer1>.
-
-        _______________________________________________________________________
-
-        ARGUMENTS:
-        o    <serializer1> : value returned by read_cmpstring()
-        o    <serializer2> : value returned by read_cmpstring()
-
-        RETURNED VALUE: a tuple of str
-    """
-    res = set()
-
-    if serializer1 == "all":
-        for serializer in SERIALIZERS:
-            res.add(serializer)
-    else:
-        res.add(serializer1)
-
-    if serializer2 == "all":
-        for serializer in SERIALIZERS:
-            res.add(serializer)
-    else:
-        res.add(serializer2)
-
-    return tuple(res)
-
-
-def read_cmpstring(src_string):
+def read_cmpstring(cmpstring):
     """
         read_cmpstring()
 
-        Return a simpler representation of (str)<src_string>.
+        Return a simpler representation of (str)<cmpstring>.
 
         Some valid examples, "..." being "(bool/success)True".
         --cmp="jsonpickle vs all (all)"
@@ -691,39 +674,46 @@ def read_cmpstring(src_string):
 
         _______________________________________________________________________
 
-        ARGUMENT: (str)src_string, the source string to be read.
+        ARGUMENT: (str)cmpstring, the source string to be read.
                 syntax: "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
-        RETURNED VALUE: (bool)success, (str)serializer1, (str)serializer2, (str:"all|cwc|ini")data
+        RETURNED VALUE: (bool)success,
+                        (str)serializer1,
+                        (str)serializer2,
+                        (str:"all|cwc|ini")cmpdata
     """
-    if res := re.match(REGEX_CMP, src_string):
+    serializers = wisteria.globs.SERIALIZERS
+
+    if res := re.match(REGEX_CMP, cmpstring):
         serializer1 = res.group("serializer1")
         if serializer1 is None or serializer1 == "others":
             serializer1 = "all"
         serializer2 = res.group("serializer2")
         if serializer2 is None or serializer2 == "others":
             serializer2 = "all"
-        data = res.group("data")
-        if data is None:
-            data = "all"
+        cmpdata = res.group("data")
+        if cmpdata is None:
+            cmpdata = "all"
 
-        if not (serializer1 == "all" or serializer1 in SERIALIZERS):
+        if not (serializer1 == "all" or serializer1 in serializers):
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >
             # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
-            rprint(f"(ERRORID009) Unknown serializer #1: what is '{serializer1}' ? "
-                   f"Known serializers #1 are 'all' and {tuple(SERIALIZERS.keys())}.")
+            rprint(f"(ERRORID009) Unknown serializer #1 from cmp string '{cmpstring}': "
+                   f"what is '{serializer1}' ? "
+                   f"Known serializers #1 are 'all' and {tuple(serializers.keys())}.")
             return False, None, None, None
-        if not (serializer2 == "all" or serializer2 == "others" or serializer2 in SERIALIZERS):
+        if not (serializer2 == "all" or serializer2 == "others" or serializer2 in serializers):
             # (pimydoc)console messages
             # ⋅- debug messages start with   @
             # ⋅- info messages start with    >
             # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
-            rprint(f"(ERRORID010) Unknown serializer #2: what is '{serializer2}' ? "
-                   f"Known serializers #2 are 'all', 'others' and {tuple(SERIALIZERS.keys())}.")
+            rprint(f"(ERRORID010) Unknown serializer #2 from cmp string '{cmpstring}': "
+                   f"what is '{serializer2}' ? "
+                   f"Known serializers #2 are 'all', 'others' and {tuple(serializers.keys())}.")
             return False, None, None, None
         if serializer1 == serializer2 and serializer1 != "all":
             # (pimydoc)console messages
@@ -731,165 +721,21 @@ def read_cmpstring(src_string):
             # ⋅- info messages start with    >
             # ⋅- error messages start with   ERRORIDXXX
             # ⋅- checkup messages start with *
-            rprint(f"(ERRORID011) Both serializer-s (here, both set to '{serializer1}') "
+            rprint(f"(ERRORID011) Both serializer-s from cmp string '{cmpstring}' "
+                   f"(here, both set to '{serializer1}') "
                    "can't have the same value, 'all' and 'all' excepted.")
             return False, None, None, None
 
-        return True, serializer1, serializer2, data
+        return True, serializer1, serializer2, cmpdata
 
     # (pimydoc)console messages
     # ⋅- debug messages start with   @
     # ⋅- info messages start with    >
     # ⋅- error messages start with   ERRORIDXXX
     # ⋅- checkup messages start with *
-    rprint(f"(ERRORID012) Ill-formed cmp string '{src_string}'. "
+    rprint(f"(ERRORID012) Ill-formed cmp string '{cmpstring}'. "
            f"Expected syntax is '{REGEX_CMP__HELP}'.")
     return False, None, None, None
-
-
-def compute_results(config,
-                    serializer1,
-                    serializer2,
-                    cmpdata):
-    """
-        compute_results()
-
-        Create a SerializationResults object and try to fill it with all
-        required encodings/decodings defined by <serializer1>,
-        <serializer2> and <cmpdata>.
-
-        TODO : arguments
-
-        RETURNED VALUE:    (SerializationResults, None) if no error occured
-                        or (None, (int)exit_code) if an error occured
-    """
-    try:
-        # serializers and data to be used through the tests:
-        _serializers = get_serializers_selection(serializer1, serializer2)
-        if ARGS.verbosity == VERBOSITY_DEBUG:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("@ serializers to be used are: ", _serializers)
-        _dataobjs = get_data_selection(cmpdata, config)
-        if ARGS.verbosity == VERBOSITY_DEBUG:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("@ data objs to be used are: ", _dataobjs)
-
-        if ARGS.verbosity >= VERBOSITY_DETAILS:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("> Please wait until all required encodings/decodings have been computed.")
-
-        results = SerializationResults()
-
-        # (progress bar)
-        # Please note that there can be NO progress bar if the debug mode is enabled:
-        # the output can't display both correctly.
-        if ARGS.verbosity != VERBOSITY_DEBUG:
-            console = Console()
-            progressbar = ProgressBar(width=40, total=len(_serializers)*len(_dataobjs))
-            console.show_cursor(False)
-            progressbar_index = 0
-
-        for serializer in _serializers:
-            results[serializer] = {}
-            for data_name in _dataobjs:
-                if ARGS.verbosity == VERBOSITY_DEBUG:
-                    # (pimydoc)console messages
-                    # ⋅- debug messages start with   @
-                    # ⋅- info messages start with    >
-                    # ⋅- error messages start with   ERRORIDXXX
-                    # ⋅- checkup messages start with *
-                    rprint(f"@ about to call function for serializer='{serializer}' "
-                           f"and data name='{data_name}'")
-
-                results[serializer][data_name] = SERIALIZERS[serializer].func(action="serialize",
-                                                                              obj=DATA[data_name])
-
-                # (progress bar)
-                # Please note that there can be NO progress bar if the debug mode is enabled:
-                # the output can't display both correctly.
-                if ARGS.verbosity != VERBOSITY_DEBUG:
-                    progressbar_index += 1
-                    progressbar.update(progressbar_index)
-                    console.print(progressbar)
-                    console.file.write("\r")
-
-                if ARGS.verbosity == VERBOSITY_DEBUG:
-                    # (pimydoc)console messages
-                    # ⋅- debug messages start with   @
-                    # ⋅- info messages start with    >
-                    # ⋅- error messages start with   ERRORIDXXX
-                    # ⋅- checkup messages start with *
-                    rprint("@ result:", results[serializer][data_name])
-
-        # (progress bar)
-        # Please note that there can be NO progress bar if the debug mode is enabled:
-        # the output can't display both correctly.
-        if ARGS.verbosity != VERBOSITY_DEBUG:
-            console.show_cursor(True)
-
-        if not results.finish_initialization():
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("ERRORID015: incorrect data, the program has to stop.")
-
-            # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            return None, -3
-        if results.dataobjs_number == 0:
-            # (pimydoc)console messages
-            # ⋅- debug messages start with   @
-            # ⋅- info messages start with    >
-            # ⋅- error messages start with   ERRORIDXXX
-            # ⋅- checkup messages start with *
-            rprint("> No data to handle, the program can stop.")
-
-            # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            return None, 2
-
-        return results, None
-
-    except WisteriaError as exception:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint(f"> An error occured: {exception}")
-
-        # (pimydoc)exit codes
-        # ⋅*  0: normal exit code
-        # ⋅*  1: normal exit code after --checkup
-        # ⋅*  2: normal exit code after --downloadconfigfile
-        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-        # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: internal error, data can't be loaded
-        return None, -4  # TODO -4 n'est pas dans les exit codes
 
 
 def main():
@@ -910,38 +756,176 @@ def main():
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: internal error, data can't be loaded
     """
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint("@ known data:", list(DATA.keys()))
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        # (pimydoc)console messages
-        # ⋅- debug messages start with   @
-        # ⋅- info messages start with    >
-        # ⋅- error messages start with   ERRORIDXXX
-        # ⋅- checkup messages start with *
-        rprint("@ known serializers:", SERIALIZERS)
+    data = wisteria.globs.DATA
+    serializers = wisteria.globs.SERIALIZERS
 
-    success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
+    # =========================================================================
+    # (10.1) main(): debug messages
+    # =========================================================================
+    # (pimydoc)code structure
+    # ⋅- (01) temp file opening
+    # ⋅- (02) command line parsing
+    # ⋅- (03) project name & version
+    # ⋅- (04) ARGS.report interpretation
+    # ⋅- (05) exit handler
+    # ⋅- (06) serializers import
+    # ⋅- (07) checkup
+    # ⋅- (08) download default config file
+    # ⋅- (09) known data init
+    # ⋅- (10) call to main()
+    # ⋅       - (10.1) main(): debug messages
+    # ⋅       - (10.2) main(): cmp string interpretation
+    # ⋅       - (10.3) main(): config file reading
+    # ⋅       - (10.4) main(): results computing
+    # ⋅       - (10.5) main(): report
     if ARGS.verbosity == VERBOSITY_DEBUG:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRORIDXXX
         # ⋅- checkup messages start with *
-        rprint(f"@ Result of the call to read_cmpstring('{ARGS.cmp}'):",
-               success, serializer1, serializer2, cmpdata)
-
-    if not success:
+        rprint("@ known data:", list(data.keys()))
+    if ARGS.verbosity == VERBOSITY_DEBUG:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRORIDXXX
         # ⋅- checkup messages start with *
-        rprint(f"(ERRORID013) an error occured while reading cmp string '{ARGS.cmp}'.")
+        rprint("@ known serializers:", serializers)
+
+    try:
+        # =========================================================================
+        # (10.2) main(): cmp string interpretation
+        # =========================================================================
+        # (pimydoc)code structure
+        # ⋅- (01) temp file opening
+        # ⋅- (02) command line parsing
+        # ⋅- (03) project name & version
+        # ⋅- (04) ARGS.report interpretation
+        # ⋅- (05) exit handler
+        # ⋅- (06) serializers import
+        # ⋅- (07) checkup
+        # ⋅- (08) download default config file
+        # ⋅- (09) known data init
+        # ⋅- (10) call to main()
+        # ⋅       - (10.1) main(): debug messages
+        # ⋅       - (10.2) main(): cmp string interpretation
+        # ⋅       - (10.3) main(): config file reading
+        # ⋅       - (10.4) main(): results computing
+        # ⋅       - (10.5) main(): report
+        success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+            rprint(f"@ Result of the call to read_cmpstring('{ARGS.cmp}'):",
+                   success, serializer1, serializer2, cmpdata)
+
+        if not success:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+            rprint(f"(ERRORID013) an error occured while reading cmp string '{ARGS.cmp}'.")
+
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: internal error, data can't be loaded
+            return -2
+
+        # =========================================================================
+        # (10.3) main(): config file reading
+        # =========================================================================
+        # (pimydoc)code structure
+        # ⋅- (01) temp file opening
+        # ⋅- (02) command line parsing
+        # ⋅- (03) project name & version
+        # ⋅- (04) ARGS.report interpretation
+        # ⋅- (05) exit handler
+        # ⋅- (06) serializers import
+        # ⋅- (07) checkup
+        # ⋅- (08) download default config file
+        # ⋅- (09) known data init
+        # ⋅- (10) call to main()
+        # ⋅       - (10.1) main(): debug messages
+        # ⋅       - (10.2) main(): cmp string interpretation
+        # ⋅       - (10.3) main(): config file reading
+        # ⋅       - (10.4) main(): results computing
+        # ⋅       - (10.5) main(): report
+        config = None
+        if cmpdata == "ini":
+            config = read_cfgfile(ARGS.cfgfile)
+
+            if config is None:
+                # (pimydoc)exit codes
+                # ⋅*  0: normal exit code
+                # ⋅*  1: normal exit code after --checkup
+                # ⋅*  2: normal exit code after --downloadconfigfile
+                # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+                # ⋅* -2: error, ill-formed --cmp string
+                # ⋅* -3: internal error, data can't be loaded
+                return -1
+
+        # =========================================================================
+        # (10.4) main(): results computing
+        # =========================================================================
+        # (pimydoc)code structure
+        # ⋅- (01) temp file opening
+        # ⋅- (02) command line parsing
+        # ⋅- (03) project name & version
+        # ⋅- (04) ARGS.report interpretation
+        # ⋅- (05) exit handler
+        # ⋅- (06) serializers import
+        # ⋅- (07) checkup
+        # ⋅- (08) download default config file
+        # ⋅- (09) known data init
+        # ⋅- (10) call to main()
+        # ⋅       - (10.1) main(): debug messages
+        # ⋅       - (10.2) main(): cmp string interpretation
+        # ⋅       - (10.3) main(): config file reading
+        # ⋅       - (10.4) main(): results computing
+        # ⋅       - (10.5) main(): report
+        compute_results__res = compute_results(config,
+                                               serializer1,
+                                               serializer2,
+                                               cmpdata)
+        if compute_results__res[0] is None:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+            return compute_results__res[1]
+        results = compute_results__res[0]
+
+        # =========================================================================
+        # (10.5) main(): report
+        # =========================================================================
+        # (pimydoc)code structure
+        # ⋅- (01) temp file opening
+        # ⋅- (02) command line parsing
+        # ⋅- (03) project name & version
+        # ⋅- (04) ARGS.report interpretation
+        # ⋅- (05) exit handler
+        # ⋅- (06) serializers import
+        # ⋅- (07) checkup
+        # ⋅- (08) download default config file
+        # ⋅- (09) known data init
+        # ⋅- (10) call to main()
+        # ⋅       - (10.1) main(): debug messages
+        # ⋅       - (10.2) main(): cmp string interpretation
+        # ⋅       - (10.3) main(): config file reading
+        # ⋅       - (10.4) main(): results computing
+        # ⋅       - (10.5) main(): report
+        report(results,
+               (serializer1, serializer2, cmpdata))
 
         # (pimydoc)exit codes
         # ⋅*  0: normal exit code
@@ -950,60 +934,45 @@ def main():
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded
-        return -2
+        return 0
 
-    config = None
-    if cmpdata == "ini":
-        config = read_cfgfile(ARGS.cfgfile)
-
-        if config is None:
-            # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            return -1
-
-    compute_results__res = compute_results(config,
-                                           serializer1,
-                                           serializer2,
-                                           cmpdata)
-    if compute_results__res[0] is None:
+    except WisteriaError as exception:
         # (pimydoc)console messages
         # ⋅- debug messages start with   @
         # ⋅- info messages start with    >
         # ⋅- error messages start with   ERRORIDXXX
         # ⋅- checkup messages start with *
-        return compute_results__res[1]
-    results = compute_results__res[0]
+        rprint(exception)
 
-    report(results,
-           (serializer1, serializer2, cmpdata))
-
-    # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    return 0
+        # (pimydoc)exit codes
+        # ⋅*  0: normal exit code
+        # ⋅*  1: normal exit code after --checkup
+        # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅* -2: error, ill-formed --cmp string
+        # ⋅* -3: internal error, data can't be loaded
+        # TODO
+        return -5
 
 
 # =============================================================================
-# 09) call to main()
+# (10) call to main()
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- 01) project name & version
-# ⋅- 02) ARGS.report interpretation
-# ⋅- 03) exit handler
-# ⋅- 04) known serializers import
-# ⋅- 05) checkup
-# ⋅- 06) download default config file
-# ⋅- 07) temp file opening
-# ⋅- 08) known data import
-# ⋅- 09) call to main()
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) project name & version
+# ⋅- (04) ARGS.report interpretation
+# ⋅- (05) exit handler
+# ⋅- (06) serializers import
+# ⋅- (07) checkup
+# ⋅- (08) download default config file
+# ⋅- (09) known data init
+# ⋅- (10) call to main()
+# ⋅       - (10.1) main(): debug messages
+# ⋅       - (10.2) main(): cmp string interpretation
+# ⋅       - (10.3) main(): config file reading
+# ⋅       - (10.4) main(): results computing
+# ⋅       - (10.5) main(): report
 if __name__ == '__main__':
     main()

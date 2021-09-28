@@ -260,14 +260,12 @@ def report_section_a2(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    from wisteria.serializers import SERIALIZERS
-
     if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](A2) List of serializers to be used"
                "[/bold white on blue]")
         rprint()
 
-    for serializer in SERIALIZERS.values():
+    for serializer in wisteria.globs.SERIALIZERS.values():
         rprint("  - ", serializer.simple_repr())
     rprint()
 
@@ -321,14 +319,14 @@ def report_section_a3(results,
                     (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    from wisteria.data import DATA
+    data = wisteria.globs.DATA
 
     if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](A3) List of data objects to be used"
                "[/bold white on blue]")
         rprint()
 
-    for dataobj_name, dataobj_value in DATA.items():
+    for dataobj_name, dataobj_value in data.items():
         rprint("  - ", dataobj_name, ":", shortenedstr(repr(dataobj_value)))
     rprint()
 
@@ -1227,7 +1225,7 @@ def report_section_d1a(results,
                   )
     """
     def show(serializer,
-             data):
+             cmpdata):
         """
             show()
 
@@ -1237,55 +1235,54 @@ def report_section_d1a(results,
 
             ARGUMENTS:
             o  (str)serializer
-            o  (str)data              -> "all" or "ini" or "cwc", cf read_cmpstring()
+            o  (str)cmpdata              -> "all" or "ini" or "cwc", cf read_cmpstring()
         """
+        data = wisteria.globs.DATA
+
         _list = []
-        for dataobj_name in DATA:
+        for dataobj_name in data:
             if results[serializer][dataobj_name].similarity:
                 _list.append(dataobj_name)
 
-        if not DATA:
+        if not data:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    "no data objects may be used: therefore there's no conclusion about the objects "
                    f"data serializer [yellow]'{serializer}'[/yellow] can handle.")
         elif not _list:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    "there's no data object "
-                   f"among the {len(DATA)} used data objects "
+                   f"among the {len(data)} used data objects "
                    f"that serializer [yellow]'{serializer}'[/yellow] can handle (0%).")
         elif len(_list) == 1:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    f"[yellow]'{serializer}'[/yellow] can handle one data object "
-                   f"among {len(DATA)} ({100*len(_list)/len(DATA)}%), namely:")
+                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
             rprint("; ".join("'"+dataobj+"'" for dataobj in _list))
         else:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    f"[yellow]'{serializer}'[/yellow] can handle {len(_list)} data objects "
-                   f"among {len(DATA)} ({100*len(_list)/len(DATA)}%), namely:")
+                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
             rprint("; ".join("'"+dataobj+"'" for dataobj in _list))
-
-    from wisteria.data import DATA
-    from wisteria.serializers import SERIALIZERS
 
     if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](D1a) conclusion: data objects handled by the serializer(s)"
                "[/bold white on blue]")
         rprint()
 
-    serializer1, serializer2, data = s1s2d
+    serializer1, serializer2, cmpdata = s1s2d
     if serializer1 != "all":
-        show(serializer1, data)
+        show(serializer1, cmpdata)
         rprint()
     if serializer2 != "all":
-        show(serializer2, data)
+        show(serializer2, cmpdata)
         rprint()
 
     # Other serializers, leaving apart <serializer1> and <serializer2> ?
-    _serializers = list(SERIALIZERS.keys())
+    _serializers = list(wisteria.globs.SERIALIZERS.keys())
     if serializer1 != "all":
         _serializers.remove(serializer1)
     if serializer2 != "all":
@@ -1293,7 +1290,7 @@ def report_section_d1a(results,
     if _serializers and (serializer1 == "all" or serializer2 == "all"):
         rprint("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
-            show(__serializer, data)
+            show(__serializer, cmpdata)
         rprint()
 
 
@@ -1344,7 +1341,7 @@ def report_section_d1b(results,
                   )
     """
     def show(serializer,
-             data):
+             cmpdata):
         """
             show()
 
@@ -1354,39 +1351,38 @@ def report_section_d1b(results,
 
             ARGUMENTS:
             o  (str)serializer
-            o  (str)data              -> "all" or "ini" or "cwc", cf read_cmpstring()
+            o  (str)cmpdata              -> "all" or "ini" or "cwc", cf read_cmpstring()
         """
+        data = wisteria.globs.DATA
+
         _list = []
-        for dataobj_name in DATA:
+        for dataobj_name in data:
             if not results[serializer][dataobj_name].similarity:
                 _list.append(dataobj_name)
 
-        if not DATA:
+        if not data:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    "no data objects may be used: therefore there's no conclusion about the objects "
                    f"data serializer [yellow]'{serializer}'[/yellow] can't handle.")
         elif not _list:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    "there's no data object "
-                   f"among the {len(DATA)} used data objects "
+                   f"among the {len(data)} used data objects "
                    f"that serializer [yellow]'{serializer}'[/yellow] can't handle (0%).")
         elif len(_list) == 1:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    f"[yellow]'{serializer}'[/yellow] can't handle one data object "
-                   f"among {len(DATA)} ({100*len(_list)/len(DATA)}%), namely:")
+                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
             rprint("; ".join("'[bold white]"+dataobj+"/[bold white]'" for dataobj in _list))
         else:
             rprint(f"[yellow]'{serializer}'[/yellow]: "
-                   f"{cmpdata2phrase(data)}"
+                   f"{cmpdata2phrase(cmpdata)}"
                    f"[yellow]'{serializer}'[/yellow] can't handle {len(_list)} data objects "
-                   f"among {len(DATA)} ({100*len(_list)/len(DATA)}%), namely:")
+                   f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
             rprint("; ".join("'[bold white]"+dataobj+"[/bold white]'" for dataobj in _list))
-
-    from wisteria.data import DATA
-    from wisteria.serializers import SERIALIZERS
 
     if "titles;" in wisteria.globs.ARGS.report:
         rprint(
@@ -1394,16 +1390,16 @@ def report_section_d1b(results,
             "[/bold white on blue]")
         rprint()
 
-    serializer1, serializer2, data = s1s2d
+    serializer1, serializer2, cmpdata = s1s2d
     if serializer1 != "all":
-        show(serializer1, data)
+        show(serializer1, cmpdata)
         rprint()
     if serializer2 != "all":
-        show(serializer2, data)
+        show(serializer2, cmpdata)
         rprint()
 
     # Other serializers, leaving apart <serializer1> and <serializer2> ?
-    _serializers = list(SERIALIZERS.keys())
+    _serializers = list(wisteria.globs.SERIALIZERS.keys())
     if serializer1 != "all":
         _serializers.remove(serializer1)
     if serializer2 != "all":
@@ -1411,7 +1407,7 @@ def report_section_d1b(results,
     if _serializers and (serializer1 == "all" or serializer2 == "all"):
         rprint("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
-            show(__serializer, data)
+            show(__serializer, cmpdata)
         rprint()
 
 
@@ -1639,9 +1635,9 @@ def report_section_d2c(results,
     if "titles;" in wisteria.globs.ARGS.report:
         rprint("[bold white on blue](D2c) conclusion[/bold white on blue]")
 
-    serializer1, serializer2, data = s1s2d
+    serializer1, serializer2, cmpdata = s1s2d
 
-    text = [cmpdata2phrase(data), ]
+    text = [cmpdata2phrase(cmpdata), ]
 
     if serializer1 != "all" and serializer2 != "all":
         # ---- encoding/decoding time -----------------------------------------
@@ -1829,53 +1825,11 @@ def report_section_d2c(results,
     rprint()
 
 
-def report(results,
-           s1s2d):
-    """
-        report()
-
-        Print an analyze of <results>.
-
-        (pimydoc)report sections
-        ⋅* A         : main informations
-        ⋅  - A1      : main title
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
-        ⋅* B         : full details (raw results)
-        ⋅  - B1      : full details (serializers)
-        ⋅    . B1a   : full details: serializer * data object
-        ⋅    . B1b   : full details: serializers
-        ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
-        ⋅  - B2      : full details (data objects)
-        ⋅    . B2a   : full details: data object * serializer
-        ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        _______________________________________________________________________
-
-        ARGUMENTS:
-        o  results: (SerializationResults)a dict of
-                    [(str)serializer][(str)data_name] = SerializationResult
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
-                    (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
-                  )
-    """
-    str2reportsection = {
+# STR2REPORTSECTION has two goals:
+# (1) translate a (str)report section name > list of corresponding functions
+# (2) store all known keys accepted in --report.
+STR2REPORTSECTION = {
+        "titles": None,
         "A": (report_section_a1,
               report_section_a2,
               report_section_a3,),
@@ -1927,12 +1881,61 @@ def report(results,
         "D2c": (report_section_d2c,),
         }
 
+
+def report(results,
+           s1s2d):
+    """
+        report()
+
+        Print an analyze of <results>.
+
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C         : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
+        ⋅* D         : conclusions
+        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - D2      : conclusion: final text and data
+        ⋅    . D2a   : conclusion: serializers (not sorted)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . D2c   : conclusion
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)data            -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
     for report_section in wisteria.globs.ARGS.report.split(";"):
-        if report_section in str2reportsection:
-            for func in str2reportsection[report_section]:
+        if report_section == "":
+            pass
+        elif report_section in STR2REPORTSECTION and STR2REPORTSECTION[report_section] is not None:
+            for func in STR2REPORTSECTION[report_section]:
                 func(results, s1s2d)
-        elif report_section in ("titles,"):
-            # special keywords that don't match any function in <str2reportsection>.
+        elif STR2REPORTSECTION[report_section] is None:
+            # special keywords (like 'titles') that don't match any function in <STR2REPORTSECTION>.
             pass
         elif report_section.strip() != "":
             # (pimydoc)console messages
@@ -1942,4 +1945,5 @@ def report(results,
             # ⋅- checkup messages start with *
             raise WisteriaError(
                 f"(ERRORID017) Can't interpret report section; "
-                f"what is '{report_section}' ? args.report is '{wisteria.globs.ARGS.report}' .")
+                f"what is '{report_section}' ? args.report is '{wisteria.globs.ARGS.report}' . "
+                f"Accepted keywords are {tuple(STR2REPORTSECTION.keys())}.")

@@ -67,9 +67,30 @@ See TODOs at the end of this file.
 * TODOs & Pylint
 * par défaut, exporter vers report.txt (logging ? détourner rprint ?)
 * dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
+* english phraseology
+* (1), (2) et (3) pour humanratio
+* D2c : la note (¹) s'affiche bien pour "iaswn vs all" mais également, et à tort, pour "iaswn vs pickle"
+* ajouter à argparse.ArgumentParser(description=...) quelques exemples: --checkup, --cmp="pickle against marshal(all)"
+* full/bestof/laconic=D;minimal=D3/
+* all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-40
+
+New file: results.py
+
+    * new file: results.py
+    * DATA, SERIALIZERS moved to globs.py
+    * improved messages in read_cmpstring()
+    * normpath() moved from wisteria.py to utils.py
+    * in report.py, STR2REPORTSECTION stores all accepted keywords for --report 
+      string
+    * improved ERRORID017 message
+    * improved argparse message for --report
+    * in report.py, report() handles now correctly the case where
+      wisteria.globs.ARGS.report.split(";") returns an empty string.
 
 [DONE] task-39
 

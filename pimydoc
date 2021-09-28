@@ -27,15 +27,21 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 
 ### ==========================================================================
 [(pimydoc)code structure]
-- 01) project name & version
-- 02) ARGS.report interpretation
-- 03) exit handler
-- 04) known serializers import
-- 05) checkup
-- 06) download default config file
-- 07) temp file opening
-- 08) known data import
-- 09) call to main()          
+- (01) temp file opening
+- (02) command line parsing
+- (03) project name & version
+- (04) ARGS.report interpretation
+- (05) exit handler
+- (06) serializers import
+- (07) checkup
+- (08) download default config file
+- (09) known data init
+- (10) call to main()
+       - (10.1) main(): debug messages
+       - (10.2) main(): cmp string interpretation
+       - (10.3) main(): config file reading
+       - (10.4) main(): results computing
+       - (10.5) main(): report
 ### ==========================================================================
 [(pimydoc)config file format]
 

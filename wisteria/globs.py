@@ -41,6 +41,8 @@
 
     o  REPORT_MINIMAL_STRING
     o  REPORT_FULL_STRING
+
+    TODO
 """
 import re
 
@@ -72,3 +74,18 @@ DEFAULT_CONFIG_FILENAME = "wisteria.ini"
 
 # url of the default config file:
 DEFAULTCFGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
+
+# imported serializers modules
+MODULES = {}
+
+# dict storing all serializers used by the program.
+#
+# * format: SERIALIZERS[(str)serializer name] = SerializerData object
+# * initialized by serializers.py::init_serializers()
+SERIALIZERS = {}
+
+# dict storing all data used by the program.
+#
+# * format: DATA[(str)data name] = data object
+# * initialized by data.py::init_data()
+DATA = {}

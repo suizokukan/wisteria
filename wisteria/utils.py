@@ -23,8 +23,35 @@
 
     ___________________________________________________________________________
 
+    o  normpath(path)
     o  shortenedstr(string, maximallength)
+    o  trytoimport(module_name)
 """
+import importlib
+import os
+import os.path
+from rich import print as rprint
+
+import wisteria.globs
+from wisteria.globs import VERBOSITY_DETAILS
+
+
+def normpath(path):
+    """
+        normpath()
+
+        Return a human-readable (e.g. "~" -> "/home/myhome/") normalized
+        version of a file path.
+        ________________________________________________________________________
+
+        PARAMETER : (str)path
+
+        RETURNED VALUE : the normalized <path>
+    """
+    res = os.path.normpath(os.path.abspath(os.path.expanduser(path)))
+    if res == ".":
+        res = os.getcwd()
+    return res
 
 
 def shortenedstr(string,
@@ -47,3 +74,30 @@ def shortenedstr(string,
     # e.g. if maximallength==10, if string="01234567890"(len=11)  > "0123456[…]" (len=10)
     # e.g. if maximallength==10, if string="012345678901"(len=12) > "0123456[…]" (len=10)
     return string[:maximallength-len(suffix)] + suffix
+
+
+def trytoimport(module_name):
+    """
+        trytoimport()
+
+        Try to import <module_name> module.
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  (str)module_name: the module to be imported
+
+        RETURNED VALUE: (bool)success
+    """
+    res = True
+    try:
+        wisteria.globs.MODULES[module_name] = importlib.import_module(module_name)
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            # (pimydoc)console messages
+            # ⋅- debug messages start with   @
+            # ⋅- info messages start with    >
+            # ⋅- error messages start with   ERRORIDXXX
+            # ⋅- checkup messages start with *
+            rprint(f"> Module '{module_name}' successfully imported.")
+    except ModuleNotFoundError:
+        res = False
+    return res
