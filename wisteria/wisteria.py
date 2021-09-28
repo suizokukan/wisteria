@@ -28,6 +28,8 @@
     ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     ⋅* -2: error, ill-formed --cmp string
     ⋅* -3: internal error, data can't be loaded
+    ⋅* -4: internal error, an error occured while computing the results
+    ⋅* -5: internal error, an error in main()
 
 TODO : functions ?
 """
@@ -545,6 +547,8 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
+    # ⋅* -4: internal error, an error occured while computing the results
+    # ⋅* -5: internal error, an error in main()
     sys.exit(1)
 
 
@@ -621,6 +625,8 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
+    # ⋅* -4: internal error, an error occured while computing the results
+    # ⋅* -5: internal error, an error in main()
     sys.exit(2)
 
 
@@ -749,6 +755,8 @@ def main():
                 ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: internal error, data can't be loaded
+                ⋅* -4: internal error, an error occured while computing the results
+                ⋅* -5: internal error, an error in main()
     """
     data = wisteria.globs.DATA
     serializers = wisteria.globs.SERIALIZERS
@@ -832,6 +840,8 @@ def main():
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
+            # ⋅* -4: internal error, an error occured while computing the results
+            # ⋅* -5: internal error, an error in main()
             return -2
 
         # =========================================================================
@@ -865,6 +875,8 @@ def main():
                 # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 # ⋅* -2: error, ill-formed --cmp string
                 # ⋅* -3: internal error, data can't be loaded
+                # ⋅* -4: internal error, an error occured while computing the results
+                # ⋅* -5: internal error, an error in main()
                 return -1
 
         # =========================================================================
@@ -928,6 +940,8 @@ def main():
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded
+        # ⋅* -4: internal error, an error occured while computing the results
+        # ⋅* -5: internal error, an error in main()
         return 0
 
     except WisteriaError as exception:
@@ -945,6 +959,8 @@ def main():
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded
+        # ⋅* -4: internal error, an error occured while computing the results
+        # ⋅* -5: internal error, an error in main()
         # TODO
         return -5
 

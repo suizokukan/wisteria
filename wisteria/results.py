@@ -1220,6 +1220,8 @@ def compute_results(config,
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
+            # ⋅* -4: internal error, an error occured while computing the results
+            # ⋅* -5: internal error, an error in main()
             return None, -3
         if results.dataobjs_number == 0:
             # (pimydoc)console messages
@@ -1236,6 +1238,8 @@ def compute_results(config,
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
+            # ⋅* -4: internal error, an error occured while computing the results
+            # ⋅* -5: internal error, an error in main()
             return None, 2
 
         return results, None
@@ -1255,4 +1259,6 @@ def compute_results(config,
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded
-        return None, -4  # TODO -4 n'est pas dans les exit codes
+        # ⋅* -4: internal error, an error occured while computing the results
+        # ⋅* -5: internal error, an error in main()
+        return None, -4

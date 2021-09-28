@@ -70,11 +70,24 @@ See TODOs at the end of this file.
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 * en-tête des fichiers à reprendre entièrement
 * un appel à --help conserve le fichier .tmp; où placer la création de ce fichier ?
+* fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
+* j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
+  de configuration donné en ligne de commande n'existe pas.
 
 [CURRENT] v. 0.0.3
 ------------------
 
+[DONE] task-43
+
+Documentation.
+
+    * pimydoc: improved exit codes section
+    * fixed a minor glitch in ROADMAP.md
+    * removed one TODO.
+
 [DONE] task-42
+
+--report has now 4 shortcuts ("bestof", "laconic", "minimal", "full")
 
     * 4 report shortcuts have been defined: "bestof", "laconic", "minimal", "full"
     * no more REPORT_FULL_STRING and REPORT_MINIMAL_STRING in globs.py;

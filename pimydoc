@@ -72,6 +72,8 @@ data objects
 * -1: error, given config file can't be read (missing or ill-formed file)
 * -2: error, ill-formed --cmp string
 * -3: internal error, data can't be loaded
+* -4: internal error, an error occured while computing the results
+* -5: internal error, an error in main()
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations
