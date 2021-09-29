@@ -73,11 +73,17 @@ See TODOs at the end of this file.
 * donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
 0.0.3
-(task-48) output.py > cmdline_output.py
 (task-49) les (01) dans wisteria.py sont pour certains mal placés
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-48
+
+'output.py' > 'cmdline_output.py'
+
+    * 'output.py' > 'cmdline_output.py'
+    * updated in wisteria.py the import of cmdline_output.py:parse_output_argument()
 
 [DONE] task-47
 

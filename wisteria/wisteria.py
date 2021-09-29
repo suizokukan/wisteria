@@ -62,7 +62,7 @@ import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msginfo, msgerror, msgdebug, msgreport
-from wisteria.output import parse_output_argument
+from wisteria.cmdline_output import parse_output_argument
 
 # =============================================================================
 # (01) temp file opening

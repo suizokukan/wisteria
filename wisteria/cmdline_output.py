@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    output.py
+    cmdline_output.py
 
     Just the parsing of --output. No msgxxx() method here.
 
