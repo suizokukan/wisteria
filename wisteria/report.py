@@ -1813,8 +1813,8 @@ def report_section_d2c(results,
 
             text.append("".join(subtext))
 
-    text.append("\n\n")
-    text.append("(¹) a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec")
+        text.append("\n\n")
+        text.append("(¹) a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec")
 
     msgreport("".join(text))
     msgreport()

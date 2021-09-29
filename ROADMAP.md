@@ -1,8 +1,6 @@
 Wisteria's roadmap & todos
 ==========================
 
-See TODOs at the end of this file.
-
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
@@ -55,22 +53,34 @@ See TODOs at the end of this file.
 * serializers à compléter
 * cwc
 * README.md acceptable
-* anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
-* beaucoup de raise Wisteria n'ont pas de ERRORID
 * TODOs & Pylint
 * dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
 * english phraseology
 * (1), (2) et (3) pour humanratio
-* D2c : la note (¹) s'affiche bien pour "iaswn vs all" mais également, et à tort, pour "iaswn vs pickle"
-* all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 * en-tête des fichiers à reprendre entièrement
-* un appel à --help conserve le fichier .tmp; où placer la création de ce fichier ?
+* donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
+
+[CURRENT] v. 0.0.4
+
+Bugfix.
+
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
+* un appel à --help conserve le fichier .tmp; où placer la création de ce fichier ?
+* anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
+* beaucoup de raise Wisteria n'ont pas de ERRORID
+* all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 * fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
 * fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
-* donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
+
+[DONE] task-50
+
+Bugfix: in report D2c, note (¹) now only apppears for "serializer1 vs all"; this
+note appeared previously and erroneously for "serializer1 vs serializer2"
+
+    * bugfix: in report D2c, note (¹) now only apppears for "serializer1 vs all"; this
+      note appeared previously and erroneously for "serializer1 vs serializer2"
 
 [DONE] v. 0.0.3
 ---------------
