@@ -1292,7 +1292,8 @@ def report_section_d1a(results,
     if serializer2 != "all":
         _serializers.remove(serializer2)
     if _serializers and (serializer1 == "all" or serializer2 == "all"):
-        msgreport("[bold]Other serializers:[/bold]")
+        if serializer1 != "all" or serializer2 != "all":
+            msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
         msgreport()
@@ -1412,7 +1413,8 @@ def report_section_d1b(results,
     if serializer2 != "all":
         _serializers.remove(serializer2)
     if _serializers and (serializer1 == "all" or serializer2 == "all"):
-        msgreport("[bold]Other serializers:[/bold]")
+        if serializer1 != "all" or serializer2 != "all":
+            msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
         msgreport()
@@ -1643,7 +1645,56 @@ def report_section_d2c(results,
 
     text = [cmpdata2phrase(cmpdata), ]
 
-    if serializer1 != "all" and serializer2 != "all":
+    if serializer1 == "all" and serializer2 == "all":
+        # ========================================================
+        # (CASE 1/3) serializer1 and serializer2 are both == "all"
+        # ========================================================
+        text.append(f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][0][1])} "
+                    "is the quickest to encode/decode, ")
+        text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][0][1])} "
+                    "produces the shortest strings, ")
+        text.append(f"and {aspect_serializer(results.halloffame['similarity'][0][1])} "
+                    "has the best coverage. ")
+
+        bests = results.get_overallscore_bestrank()
+        if len(bests) == 1:
+            text.append(f"{aspect_serializer(bests[0])} is ranked #1 "
+                        f"among {results.serializers_number} serializers, "
+                        "according to the overall scores (¹).")
+        else:
+            text.append(f"{' and '.join(aspect_serializer(serializer) for serializer in bests)} "
+                        f"are ranked #1 among {results.serializers_number} serializers, "
+                        "according to the overall scores (¹).")
+
+        text.append("\nConversely, ")
+        text.append(
+            f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][-1][1])} "
+            "is the slowest to encode/decode, ")
+        text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][-1][1])} "
+                    "produces the longest strings, ")
+        text.append(f"and {aspect_serializer(results.halloffame['similarity'][-1][1])} "
+                    "has the worst coverage. ")
+
+        worsts = results.get_overallscore_worstrank()
+        if len(worsts) == 1:
+            text.append(f"{aspect_serializer(worsts[0])} is ranked #{results.serializers_number} "
+                        f"among {results.serializers_number} serializers, "
+                        "according to the overall scores (¹).")
+        else:
+            text.append(
+                f"{' and '.join(aspect_serializer(serializer) for serializer in worsts)} "
+                f"are ranked #{results.serializers_number} among "
+                f"{results.serializers_number} serializers, "
+                "according to the overall scores (¹).")
+
+        text.append("\n\n")
+        text.append("(¹) a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec")
+
+    elif serializer1 != "all" and serializer2 != "all":
+        # ========================================================
+        # (CASE 2/3) serializer1 and serializer2 are both != "all"
+        # ========================================================
+
         # ---- encoding/decoding time -----------------------------------------
         total_encoding_time_ratio = \
             results.total_encoding_plus_decoding_time(serializer=serializer1, output='value') \
@@ -1698,6 +1749,10 @@ def report_section_d2c(results,
                         f"{aspect_serializer(serializer2)}'s coverage.")
 
     else:
+        # =====================================================================
+        # (CASE 3/3) One of the two {serializer1|serializer2} is equal to "all"
+        # =====================================================================
+
         # TODO serializer servant de référence ?
         if serializer1 != "all":
             serializer = serializer1

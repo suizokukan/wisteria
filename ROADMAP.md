@@ -63,14 +63,25 @@ Wisteria's roadmap & todos
 [CURRENT] v. 0.0.4
 
 Bugfix.
-
+* si un seul serializer est défini...
 * problème d'affichage: ./bin/wisteria --cmp="iaswn against json(all)" --verbosity=2 --report="titles;A2"
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
-* beaucoup de raise Wisteria n'ont pas de ERRORID
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
+* D1a) > (D1a), vérifier que les tous les titres se présent de la même façon.
+* bestof: B1c;D2b;D2c
 
+[DONE] task-58
+
+Improved report_section_d2c(): the messages displayed are now correct 
+if serializer1==serializer2=="all".
+
+    * improved report_section_d2c(): the messages displayed are correct 
+      if serializer1==serializer2=="all".
+    * new method: SerializationResults.get_overallscore_bestrank()
+    * new method: SerializationResults.get_overallscore_worstrank()
+    
 [DONE] task-57
 
 New file (serializers_classes.py) to store all classes used to handle serializers.

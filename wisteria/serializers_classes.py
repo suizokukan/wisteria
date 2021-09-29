@@ -181,6 +181,7 @@ class SerializationResults(dict):
         self.dataobjs = []
         self.serializers_number = None
         self.dataobjs_number = None
+        # TODO: 7 attributs dont encoding_plus_decoding_time
         self.halloffame = None  # TODO {'encoding_success' = [(0.24, 'marshal'), (0.22, 'pickle')]}
         self.overallscores = None
 
@@ -246,6 +247,34 @@ pas à sa place
                 _rank = rank
 
         return _rank
+
+    def get_overallscore_bestrank(self):
+        """
+        TODO
+        renvoie le(s) serializer(s) le(s) mieux placé(s) selon les self.overallscores
+        """
+        highestscore = sorted(
+            ((self.overallscores[serializer],
+              serializer) for serializer in self.serializers))[-1][0]
+        res = []
+        for serializer in self.serializers:
+            if self.overallscores[serializer] == highestscore:
+                res.append(serializer)
+        return res
+
+    def get_overallscore_worstrank(self):
+        """
+        TODO
+        renvoie le(s) serializer(s) le(s) moins bien placé(s) selon les self.overallscores
+        """
+        worstscore = sorted(
+            ((self.overallscores[serializer],
+              serializer) for serializer in self.serializers))[0][0]
+        res = []
+        for serializer in self.serializers:
+            if self.overallscores[serializer] == worstscore:
+                res.append(serializer)
+        return res
 
     def comparison_inside_halloffame(self,
                                      serializer,
