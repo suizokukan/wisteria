@@ -1760,7 +1760,7 @@ def report_section_d2c(results,
             serializer = serializer2
         rank = results.get_overallscore_rank(serializer)
         text.append(f"{aspect_serializer(serializer)}"
-                    f" is ranked #{rank} among {len(results.serializers)} serializers(¹)")
+                    f" is ranked #{rank} among {len(results.serializers)} serializers (¹)")
         text.append(". ")
 
         for attribute in ("encoding_strlen",

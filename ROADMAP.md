@@ -63,11 +63,18 @@ Wisteria's roadmap & todos
 [CURRENT] v. 0.0.4
 
 Bugfix.
-* si un seul serializer est défini...
 * problème d'affichage: ./bin/wisteria --cmp="iaswn against json(all)" --verbosity=2 --report="titles;A2"
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
+
+[DONE] task-61
+
+Fixed a minor glitch in the messages: string(¹) > string (¹) with a space.
+
+    * fixed a minor glitch in the messages: string(¹) > string (¹) 
+      with a space that prevents rich to colorize the string before
+      (¹)
 
 [DONE] task-60
 
