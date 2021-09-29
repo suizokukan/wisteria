@@ -36,7 +36,6 @@ import urllib.request
 
 from wisteria.globs import DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
 from wisteria.globs import VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
-from wisteria.globs import ARGS
 from wisteria.utils import normpath
 from wisteria.msg import msginfo, msgerror, msgdebug
 import wisteria.globs
@@ -103,7 +102,7 @@ def read_cfgfile(filename):
         msgdebug(f"Trying to read '{filename}' ({normpath(filename)}) as a config file.")
 
     if not os.path.exists(filename):
-        if not ARGS.checkup:
+        if not wisteria.globs.ARGS.checkup:
             msgerror(f"(ERRORID001) Missing config file '{filename}' ({normpath(filename)}).")
         return None
 
