@@ -106,13 +106,14 @@ def get_data_selection(data,
             res = tuple(config["data sets"][config["data selection"]["data selection"]])
         else:
             raise WisteriaError(
+                "(ERRORID020) "
                 "Can't understand a value given to \\[data selection]'data selection': "
                 f"what is '{config['data selection']['data selection']}' ? "
                 "Known values are 'all', 'ini' and 'data set/xxx' "
                 "where xxx is a string.")
     else:
         raise WisteriaError(
-            "Can't understand a value given to the 'data' part in --cmp: "
+            "(ERRORID021) Can't understand a value given to the 'data' part in --cmp: "
             f"what is '{data}' ? "
             "Known values are 'all' and 'ini'. ")
 
@@ -710,7 +711,7 @@ output="fmtstr" | "base100"
                     self[serializer][dataobj].decoding_success)
             else:
                 raise WisteriaError(
-                    "Internal error. "
+                    "(ERRORID022) Internal error. "
                     f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "decoding_time":
@@ -761,7 +762,7 @@ output="fmtstr" | "base100"
                     self[serializer][dataobj].encoding_success)
             else:
                 raise WisteriaError(
-                    "Internal error. "
+                    "(ERRORID023) Internal error. "
                     f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "similarity":
@@ -770,11 +771,12 @@ output="fmtstr" | "base100"
                     self[serializer][dataobj].similarity)
             else:
                 raise WisteriaError(
-                    "Internal error. "
+                    "(ERRORID024) Internal error. "
                     f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if res is None:
-            raise WisteriaError("Internal error: the result could not be computed. "
+            raise WisteriaError("(ERRORID025) "
+                                "Internal error: the result could not be computed. "
                                 f"{serializer=}; {dataobj=}; {attribute_name=};")
         return res
 
@@ -843,7 +845,7 @@ output="fmtstr" | "base100"
                         output="value"))
 
         if res is None:
-            raise WisteriaError("Internal error: the result could not be computed. "
+            raise WisteriaError("(ERRORID026) Internal error: the result could not be computed. "
                                 f"{serializer=}; {dataobj=}; {output=};")
         return res
 
@@ -879,7 +881,7 @@ output="fmtstr" | "base100"
                 self.total_encoding_time(serializer, dataobj, output='value') +
                 self.total_decoding_time(serializer, dataobj, output='value'))
 
-        raise WisteriaError("Internal error: the result could not be computed. "
+        raise WisteriaError("(ERRORID027) Internal error: the result could not be computed. "
                             f"{serializer=}; {dataobj=}; {output=};")
 
     def total_encoding_strlen(self,
@@ -948,7 +950,7 @@ output="fmtstr" | "base100"
                         output="value"))
 
         if res is None:
-            raise WisteriaError("Internal error: the result could not be computed. "
+            raise WisteriaError("(ERRORID028) Internal error: the result could not be computed. "
                                 f"{serializer=}; {dataobj=}; {output=};")
         return res
 
@@ -1017,7 +1019,7 @@ output="fmtstr" | "base100"
                         output="value"))
 
         if res is None:
-            raise WisteriaError("Internal error: the result could not be computed. "
+            raise WisteriaError("(ERRORID029) Internal error: the result could not be computed. "
                                 f"{serializer=}; {dataobj=}; {output=};")
         return res
 

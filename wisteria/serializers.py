@@ -110,7 +110,7 @@ def serializer_iaswn(action="serialize",
     # action == "serialize"
     # ---------------------
     if action != "serialize":
-        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID030) Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 
@@ -173,7 +173,7 @@ def serializer_json(action="serialize",
         return module.__version__
 
     if action != "serialize":
-        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID031) Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 
@@ -236,7 +236,7 @@ def serializer_jsonpickle(action="serialize",
         return module.__version__
 
     if action != "serialize":
-        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID032) Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 
@@ -299,7 +299,7 @@ def serializer_marshal(action="serialize",
         return f"version {module.version}; (Python version) {sys.version}"
 
     if action != "serialize":
-        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID033) Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 
@@ -362,7 +362,7 @@ def serializer_pickle(action="serialize",
         return "(Python version) "+sys.version
 
     if action != "serialize":
-        raise WisteriaError(f"Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID034) Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 

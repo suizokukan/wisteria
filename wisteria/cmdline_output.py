@@ -81,7 +81,7 @@ def parse_output_argument(output_string):
             output_string = output_string.replace("=", "")
             output_string = output_string.replace(logfile_name, "")
             if not logfile_name:
-                rprint("(ERRORID018) Ill-formed --output string: empty logfile name.")
+                rprint("(ERRORID014) Ill-formed --output string: empty logfile name.")
                 return False, None, None, None, None
 
     # ---- what else ? --------------------------------------------------------

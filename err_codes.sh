@@ -6,7 +6,7 @@ VERSION="err_codes.sh v.1/2021-09-25"
 
 # ---- minimal/maximal indexes searched in WARNINGID$integer/ERRORID$integer strings
 min_index=0
-max_index=20
+max_index=35
 
 # ---- --help ----------------------------------------------------------------
 if [[ $# -eq 0 ]] || [[ $1 = "--help" ]] || [[ $1 = "-h" ]]; then
