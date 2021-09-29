@@ -30,6 +30,7 @@
     o  aspect_serializer(serializer)
     o  aspect_title(title)
 """
+import wisteria.globs
 
 
 def aspect_data(data):
@@ -74,7 +75,7 @@ def aspect_serializer(serializer):
 
         RETURNED VALUE: (str)serializer + some text attributes.
     """
-    return f"[yellow]{serializer}[/yellow]"
+    return f"[yellow]{wisteria.globs.SERIALIZERS[serializer].human_name}[/yellow]"
 
 
 def aspect_title(title):

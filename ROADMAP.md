@@ -71,7 +71,15 @@ Bugfix.
 * beaucoup de raise Wisteria n'ont pas de ERRORID
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
-* problème d'affichage: iaswn > Iaswn
+* pourquoi la classe SerializerData n'est-elle pas définie dans serializers.py ?
+
+[DONE] task-55
+
+Fixed a display problem: when a serializer name is displayed, its 'human_name'
+is now displayed.
+
+    * aspect_serializer() now uses serializers' human name insted of the
+      simple name.
 
 [DONE] task-54
 
