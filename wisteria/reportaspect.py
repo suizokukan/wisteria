@@ -26,6 +26,7 @@
     ___________________________________________________________________________
 
     o  aspect_data(data)
+    o  aspect_percentage(percentage)
     o  aspect_serializer(serializer)
     o  aspect_title(title)
 """
@@ -44,6 +45,21 @@ def aspect_data(data):
         RETURNED VALUE: (str)data + some text attributes.
     """
     return f"[bold white]{data}[/bold white]"
+
+
+def aspect_percentage(percentage):
+    """
+        aspect_percentage()
+
+        Modify the aspect of (float)percentage.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (float)percentage
+
+        RETURNED VALUE: (str)percentage + some text attributes.
+    """
+    return f"{percentage:.2f}%"
 
 
 def aspect_serializer(serializer):

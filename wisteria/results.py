@@ -31,7 +31,7 @@ import wisteria.globs
 from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
-from wisteria.reportaspect import aspect_serializer
+from wisteria.reportaspect import aspect_serializer, aspect_percentage
 
 
 @dataclass
@@ -366,7 +366,8 @@ TODO
             RETURNED VALUE: a formatted string representing the input argument.
         """
         if inttotal_and_floatratio != (None, None):
-            return f"{inttotal_and_floatratio[0]} ({100*inttotal_and_floatratio[1]:.2f} %)"
+            return f"{inttotal_and_floatratio[0]} " \
+                f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
         return "[red](no data)[/red]"
 
     @staticmethod

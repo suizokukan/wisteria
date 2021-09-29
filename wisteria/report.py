@@ -48,7 +48,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
 from wisteria.msg import msgreport, msgreporttitle
-from wisteria.reportaspect import aspect_serializer, aspect_data
+from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage
 
 
 def humanratio(ratio):
@@ -1261,14 +1261,16 @@ def report_section_d1a(results,
                 f"'{aspect_serializer(serializer)}': "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"'{aspect_serializer(serializer)}' can handle one data object "
-                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
+                f"among {len(results.dataobjs)} "
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
             msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
         else:
             msgreport(
                 f"'{aspect_serializer(serializer)}': "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"'{aspect_serializer(serializer)}' can handle {len(_list)} data objects "
-                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
+                f"among {len(results.dataobjs)} "
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
             msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1379,14 +1381,16 @@ def report_section_d1b(results,
                 f"'{aspect_serializer(serializer)}': "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"'{aspect_serializer(serializer)}' can't handle one data object "
-                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
+                f"among {len(results.dataobjs)} "
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
             msgreport("; ".join(f"'{aspect_data(dataobj)}'" for dataobj in _list))
         else:
             msgreport(
                 f"'{aspect_serializer(serializer)}': "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"'{aspect_serializer(serializer)}' can't handle {len(_list)} data objects "
-                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
+                f"among {len(results.dataobjs)} "
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
             msgreport("; ".join(f"'{aspect_data(dataobj)}'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:
