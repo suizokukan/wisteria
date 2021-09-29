@@ -1240,7 +1240,7 @@ def report_section_d1a(results,
         data = wisteria.globs.DATA
 
         _list = []
-        for dataobj_name in data:
+        for dataobj_name in results.dataobjs:
             if results[serializer][dataobj_name].similarity:
                 _list.append(dataobj_name)
 
@@ -1254,19 +1254,21 @@ def report_section_d1a(results,
             msgreport(f"'{aspect_serializer(serializer)}': "
                       f"{cmpdata2phrase(cmpdata)}"
                       "there's no data object "
-                      f"among the {len(data)} used data objects "
+                      f"among the {len(results.dataobjs)} used data objects "
                       f"that serializer '{aspect_serializer(serializer)}' can handle (0%).")
         elif len(_list) == 1:
-            msgreport(f"'{aspect_serializer(serializer)}': "
-                      f"{cmpdata2phrase(cmpdata)}"
-                      f"'{aspect_serializer(serializer)}' can handle one data object "
-                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport(
+                f"'{aspect_serializer(serializer)}': "
+                f"{cmpdata2phrase(cmpdata)}"
+                f"'{aspect_serializer(serializer)}' can handle one data object "
+                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
             msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
         else:
-            msgreport(f"'{aspect_serializer(serializer)}': "
-                      f"{cmpdata2phrase(cmpdata)}"
-                      f"'{aspect_serializer(serializer)}' can handle {len(_list)} data objects "
-                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport(
+                f"'{aspect_serializer(serializer)}': "
+                f"{cmpdata2phrase(cmpdata)}"
+                f"'{aspect_serializer(serializer)}' can handle {len(_list)} data objects "
+                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
             msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1356,7 +1358,7 @@ def report_section_d1b(results,
         data = wisteria.globs.DATA
 
         _list = []
-        for dataobj_name in data:
+        for dataobj_name in results.dataobjs:
             if not results[serializer][dataobj_name].similarity:
                 _list.append(dataobj_name)
 
@@ -1370,19 +1372,21 @@ def report_section_d1b(results,
             msgreport(f"'{aspect_serializer(serializer)}': "
                       f"{cmpdata2phrase(cmpdata)}"
                       "there's no data object "
-                      f"among the {len(data)} used data objects "
+                      f"among the {len(results.dataobjs)} used data objects "
                       f"that serializer '{aspect_serializer(serializer)}' can't handle (0%).")
         elif len(_list) == 1:
-            msgreport(f"'{aspect_serializer(serializer)}': "
-                      f"{cmpdata2phrase(cmpdata)}"
-                      f"'{aspect_serializer(serializer)}' can't handle one data object "
-                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport(
+                f"'{aspect_serializer(serializer)}': "
+                f"{cmpdata2phrase(cmpdata)}"
+                f"'{aspect_serializer(serializer)}' can't handle one data object "
+                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
             msgreport("; ".join(f"'{aspect_data(dataobj)}'" for dataobj in _list))
         else:
-            msgreport(f"'{aspect_serializer(serializer)}': "
-                      f"{cmpdata2phrase(cmpdata)}"
-                      f"'{aspect_serializer(serializer)}' can't handle {len(_list)} data objects "
-                      f"among {len(data)} ({100*len(_list)/len(data)}%), namely:")
+            msgreport(
+                f"'{aspect_serializer(serializer)}': "
+                f"{cmpdata2phrase(cmpdata)}"
+                f"'{aspect_serializer(serializer)}' can't handle {len(_list)} data objects "
+                f"among {len(results.dataobjs)} ({100*len(_list)/len(results.dataobjs)}%), namely:")
             msgreport("; ".join(f"'{aspect_data(dataobj)}'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:

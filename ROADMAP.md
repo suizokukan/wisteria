@@ -70,8 +70,19 @@ Bugfix.
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 * beaucoup de raise Wisteria n'ont pas de ERRORID
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
-* fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
+* D1a, D1b: problème d'affichage des %
+* problème d'affichage: iaswn > Iaswn
+
+[DONE] task-53
+
+Bugfix: D1a and D1b report sections use now <results.dataobjs> and not <data>,
+        which was incorrect.
+
+    * Bugfix: D1a and D1b report sections use now <results.dataobjs> and not <data>,
+              which was incorrect.
+    * report_section_d1a(), report_section_d1b() use now <results.dataobjs> and not <data>
+      anymore.
 
 [DONE] task-52
 
