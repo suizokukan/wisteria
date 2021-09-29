@@ -64,15 +64,22 @@ Wisteria's roadmap & todos
 
 Bugfix.
 
+* problème d'affichage: ./bin/wisteria --cmp="iaswn against json(all)" --verbosity=2 --report="titles;A2"
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
-* un appel à --help conserve le fichier .tmp; où placer la création de ce fichier ?
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 * beaucoup de raise Wisteria n'ont pas de ERRORID
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 * fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
-* fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
+
+[DONE] task-52
+
+Bugfix: report() handles now correctly ill-formed report string like "" or "minimalZ"
+
+    * bugfix: report() handles now correctly ill-formed report string like "" 
+      or "minimalZ"
+    * improved error messages in report()
 
 [DONE] task-51
 
