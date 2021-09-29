@@ -69,8 +69,13 @@ Bugfix.
   de configuration donné en ligne de commande n'existe pas.
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
-* D1a) > (D1a), vérifier que les tous les titres se présent de la même façon.
 * bestof: B1c;D2b;D2c
+
+[DONE] task-59
+
+Fixed a minor glitch: title D1a) should be written (D1a).
+
+    * fixed a minor glitch: title D1a) should be written (D1a)
 
 [DONE] task-58
 

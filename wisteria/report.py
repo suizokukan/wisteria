@@ -1274,7 +1274,7 @@ def report_section_d1a(results,
             msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
 
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("D1a) conclusion: data objects handled by the serializer(s)")
+        msgreporttitle("(D1a) conclusion: data objects handled by the serializer(s)")
         msgreport()
 
     serializer1, serializer2, cmpdata = s1s2d
