@@ -70,8 +70,14 @@ Bugfix.
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 * beaucoup de raise Wisteria n'ont pas de ERRORID
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
-* pourquoi la classe SerializerData n'est-elle pas définie dans serializers.py ?
 
+[DONE] task-57
+
+New file (serializers_classes.py) to store all classes used to handle serializers.
+
+    * New file (serializers_classes.py) to store all classes used to handle 
+      serializers.
+      
 [DONE] task-56
 
 Fixed error codes.

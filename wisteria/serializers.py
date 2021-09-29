@@ -52,7 +52,7 @@ import wisteria.globs
 from wisteria.globs import TIMEITNUMBER, MODULES
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import trytoimport
-from wisteria.results import SerializationResult, SerializerData
+from wisteria.serializers_classes import SerializerData, SerializationResult
 
 
 def _len(obj):
