@@ -4,7 +4,6 @@ Wisteria's roadmap & todos
 See TODOs at the end of this file.
 
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-* TIMEITNUMBER > --timeitnumber=
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
   chercher si une combinaison donne des résultats vraiment différents des autres
@@ -55,7 +54,6 @@ See TODOs at the end of this file.
         ("Z01:decimal.localcontext", decimal.localcontext()),
 * serializers à compléter
 * cwc
-* pylint
 * README.md acceptable
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
 * beaucoup de raise Wisteria n'ont pas de ERRORID
@@ -67,13 +65,16 @@ See TODOs at the end of this file.
 * all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
 * en-tête des fichiers à reprendre entièrement
 * un appel à --help conserve le fichier .tmp; où placer la création de ce fichier ?
-* fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
 * fait planter le programme: ./bin/wisteria --cmp="iaswn against all(ini)" --verbosity=1 --report="full"
 * fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
-* output.py > cmdline_output.py
+* donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
+
+0.0.3
+(task-47) * l'output pour --checkup devrait utiliser la fonction msgreport() et non msginfo()
+(task-48) * output.py > cmdline_output.py
 
 [CURRENT] v. 0.0.3
 ------------------
