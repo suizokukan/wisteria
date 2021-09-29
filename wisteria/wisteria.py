@@ -61,7 +61,7 @@ from wisteria.utils import normpath
 import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.msg import msginfo, msgerror, msgdebug
+from wisteria.msg import msginfo, msgerror, msgdebug, msgreport
 from wisteria.output import parse_output_argument
 
 # =============================================================================
@@ -467,13 +467,13 @@ def checkup():
     """
     serializers = wisteria.globs.SERIALIZERS
 
-    msginfo("* Serializers:")
+    msgreport("* Serializers:")
     for serializer in serializers.values():
-        msginfo(f"  - {serializer.checkup_repr()}")
+        msgreport(f"  - {serializer.checkup_repr()}")
 
-    msginfo("")
+    msgreport("")
 
-    msginfo("* Config file:")
+    msgreport("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
         diagnostic = "Such a file doesn't exist."
     else:
@@ -482,8 +482,8 @@ def checkup():
         else:
             diagnostic = "Such a file exists and can be read without errors."
 
-    msginfo(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
-            f"({normpath(ARGS.cfgfile)}). " + diagnostic)
+    msgreport(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
+              f"({normpath(ARGS.cfgfile)}). " + diagnostic)
 
 
 # =============================================================================

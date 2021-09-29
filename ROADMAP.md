@@ -73,11 +73,19 @@ See TODOs at the end of this file.
 * donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
 0.0.3
-(task-47) * l'output pour --checkup devrait utiliser la fonction msgreport() et non msginfo()
-(task-48) * output.py > cmdline_output.py
+(task-48) output.py > cmdline_output.py
+(task-49) les (01) dans wisteria.py sont pour certains mal placés
 
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-47
+
+Messages displayed by checkup() are now displayed with msgreport(), not
+with msginfo() anymore.
+
+    * Messages displayed by checkup() are now displayed with msgreport(), not
+      with msginfo() anymore.
 
 [DONE] task-46
 
