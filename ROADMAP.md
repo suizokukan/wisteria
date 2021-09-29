@@ -68,8 +68,12 @@ Bugfix.
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
 * anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
-* all vs all fait dérailler le programme; 'all' ne devrait être accepté comme serializer#1 que si serializer#2 est aussi 'all'.
-* bestof: B1c;D2b;D2c
+
+[DONE] task-60
+
+"bestof" is now defined as "B1c;D2b;D2c".
+
+    * "bestof" is now defined as "B1c;D2b;D2c"
 
 [DONE] task-59
 

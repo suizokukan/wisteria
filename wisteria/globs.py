@@ -70,7 +70,7 @@ REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 # (1) it translates a simple, human-readable string into a list of section parts
 # (2) it gives all the accepted keywords that --report may understand.
 REPORT_SHORTCUTS = {
-    "bestof": "B1c;D2b;",
+    "bestof": "B1c;D2b;D2c;",
     "laconic": "D;",
     "minimal": "D2c;",
     "full": "titles;A;B;C;D;",
