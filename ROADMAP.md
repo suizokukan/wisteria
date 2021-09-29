@@ -72,9 +72,67 @@ See TODOs at the end of this file.
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
 * donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
-[CURRENT] v. 0.0.3
-------------------
+[DONE] v. 0.0.3
+---------------
 
+    * report sections: A1, A2, A3, B1a, B1b, B1c, B1d, B2a, B2b,
+                       C1a, C1b, C2a, C2b, D1a, D1b, D2a, D2b, D2c
+    * log messages to the console and to the log file. (task-44)
+    * --output option (task-44)
+    * documentation & pylint (task-32, task-37, task-40, task-41, task-43, task-49)
+    * progress bar support. (task-38)
+    * new files: utils.py (task-35), results.py (task-40), msg.py, 'cmdline_output.py' 
+      (task-44 + task-48), reportaspect.py (task-46), cfgfile.py and cmdline_cmp.py (task-49)
+    * DATA, SERIALIZERS moved to globs.py
+    * 4 report shortcuts have been defined: "bestof", "laconic", "minimal", "full" (task-42)
+    * several bugs have been fixed (task-31, task-33, task-40)
+    * Messages displayed by checkup() are now displayed with msgreport(), not
+      with msginfo() anymore. (task-47)
+    * no more REPORT_FULL_STRING and REPORT_MINIMAL_STRING in globs.py;
+      these constants have been replaced by the REPORT_SHORTCUTS dict. (task-42)
+    * Added a timestamp to first info message (project name, version, timestamp) (task-45)
+    * new serializers: json, pickle, marshal
+    * new function in wisteria.py: compute_results(). (task-39)
+    * resized image in README.md
+    * --downloadconfigfile option
+    * new constants in globs.py: DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
+
+    * set version to '0.0.3'
+    
+    * task(s): task-29, task-30, task-31, task-32, task-33, task-34
+               task-35, task-36, task-37, task-38, task-39, task-40, 
+               task-41, task-42, task-43, task-44, task-45, task-46,
+               task-47, task-48, task-49
+               
+```
+$ poetry show --tree
+```
+
+```
+$ ./check_tools.sh
+* about poetry:
+Poetry version 1.1.10
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+PYLINTHOME is now '/home/proguser/.cache/pylint' but obsolescent '/home/proguser/.pylint.d' is found; you can safely remove the latter
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+               
 [DONE] task-49
 
 new files: cfgfile.py and cmdline_cmp.py; documentation.
