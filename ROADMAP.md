@@ -66,7 +66,15 @@ Bugfix.
 * problème d'affichage: ./bin/wisteria --cmp="iaswn against json(all)" --verbosity=2 --report="titles;A2"
 * j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
   de configuration donné en ligne de commande n'existe pas.
-* anomalie: wisteria dépend de rich mais cela n'apparaît pas dans poetry_show_tree.md
+
+[DONE] task-62
+
+New version of poetry_show_tree.sh (poetry_show_tree.sh v.6/2021-09-29)
+fixing a minor glitch.
+
+    * New version of poetry_show_tree.sh (poetry_show_tree.sh v.6/2021-09-29)
+      With this version, even a package like 'rich' will appear in 
+      poetry_show_tree.md
 
 [DONE] task-61
 
