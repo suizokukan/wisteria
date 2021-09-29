@@ -64,9 +64,15 @@ Wisteria's roadmap & todos
 
 Bugfix.
 * problème d'affichage: ./bin/wisteria --cmp="iaswn against json(all)" --verbosity=2 --report="titles;A2"
-* j'aimerais vérifier quel numéro d'erreur est renvoyé par le programme, par exemple quand le fichier
-  de configuration donné en ligne de commande n'existe pas.
   
+[DONE] task-64
+
+Improved the content of main() and of bin/wisteria so that the
+returned value of main() is sys.exit-ed() .
+
+     * Improved the content of main() and of bin/wisteria so that the
+       returned value of main() is sys.exit-ed() .
+
 [DONE] task-63
 
 Fixed a bug in read_cfgfile(): ARGS.checkup > wisteria.globs.ARGS.checkup.

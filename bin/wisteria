@@ -47,4 +47,4 @@ import sys
 sys.path.append(os.path.join("..", "wisteria"))
 
 from wisteria.wisteria import main
-main()
+sys.exit(main())

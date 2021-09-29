@@ -699,4 +699,4 @@ def main():
 # ⋅       - (12.4) main(): results computing
 # ⋅       - (12.5) main(): report
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
