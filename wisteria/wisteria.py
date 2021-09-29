@@ -63,48 +63,19 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile
 
 
 # =============================================================================
-# (01) temp file opening
+# (01) command line parsing
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
-
-# Such a file is required to create file descriptor objects.
-# The temp. file will be removed at the end of the program.
-if not os.path.exists(TMPFILENAME):
-    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
-        pass
-
-
-# =============================================================================
-# (02) command line parsing
-# =============================================================================
-# (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -183,7 +154,7 @@ wisteria.globs.ARGS = PARSER.parse_args()
 
 
 # =============================================================================
-# (03) --output string
+# (02) --output string
 # =============================================================================
 wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
 if not wisteria.globs.OUTPUT[0]:
@@ -203,7 +174,7 @@ if not wisteria.globs.OUTPUT[0]:
 wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
 # =============================================================================
-# (04) logfile opening
+# (03) logfile opening
 # =============================================================================
 # TODO refermer ce fichier (dans exit handler ?)
 # TODO vérifier que le fichier est bien fermé à la fin du programme.
@@ -212,19 +183,19 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=open(wisteria.globs.OUTPU
                                                             encoding="utf-8"))
 
 # =============================================================================
-# (05) project name & version
+# (04) project name & version
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -237,19 +208,19 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 
 
 # =============================================================================
-# (06) ARGS.report interpretation
+# (05) ARGS.report interpretation
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -279,19 +250,19 @@ ARGS = wisteria.globs.ARGS
 
 
 # =============================================================================
-# (07) exit handler
+# (06) exit handler
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -315,19 +286,19 @@ atexit.register(exit_handler)
 
 
 # =============================================================================
-# (08) serializers import
+# (07) serializers import
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -339,19 +310,19 @@ wisteria.serializers.init_serializers()
 
 
 # =============================================================================
-# (09) checkup
+# (08) checkup
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -405,19 +376,19 @@ if wisteria.globs.ARGS.checkup:
 
 
 # =============================================================================
-# (10) download default config file
+# (09) download default config file
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -441,19 +412,48 @@ if wisteria.globs.ARGS.downloadconfigfile:
 
 
 # =============================================================================
+# (10) temp file opening
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
+# ⋅- (11) known data init
+# ⋅- (12) call to main()
+# ⋅       - (12.1) main(): debug messages
+# ⋅       - (12.2) main(): cmp string interpretation
+# ⋅       - (12.3) main(): config file reading
+# ⋅       - (12.4) main(): results computing
+# ⋅       - (12.5) main(): report
+
+# Such a file is required to create file descriptor objects.
+# The temp. file will be removed at the end of the program.
+if not os.path.exists(TMPFILENAME):
+    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
+        pass
+
+
+# =============================================================================
 # (11) known data init
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages
@@ -492,16 +492,16 @@ def main():
     # (12.1) main(): debug messages
     # =========================================================================
     # (pimydoc)code structure
-    # ⋅- (01) temp file opening
-    # ⋅- (02) command line parsing
-    # ⋅- (03) --output string
-    # ⋅- (04) logfile opening
-    # ⋅- (05) project name & version
-    # ⋅- (06) ARGS.report interpretation
-    # ⋅- (07) exit handler
-    # ⋅- (08) serializers import
-    # ⋅- (09) checkup
-    # ⋅- (10) download default config file
+    # ⋅- (01) command line parsing
+    # ⋅- (02) --output string
+    # ⋅- (03) logfile opening
+    # ⋅- (04) project name & version
+    # ⋅- (05) ARGS.report interpretation
+    # ⋅- (06) exit handler
+    # ⋅- (07) serializers import
+    # ⋅- (08) checkup
+    # ⋅- (09) download default config file
+    # ⋅- (10) temp file opening
     # ⋅- (11) known data init
     # ⋅- (12) call to main()
     # ⋅       - (12.1) main(): debug messages
@@ -519,16 +519,16 @@ def main():
         # (12.2) main(): cmp string interpretation
         # =========================================================================
         # (pimydoc)code structure
-        # ⋅- (01) temp file opening
-        # ⋅- (02) command line parsing
-        # ⋅- (03) --output string
-        # ⋅- (04) logfile opening
-        # ⋅- (05) project name & version
-        # ⋅- (06) ARGS.report interpretation
-        # ⋅- (07) exit handler
-        # ⋅- (08) serializers import
-        # ⋅- (09) checkup
-        # ⋅- (10) download default config file
+        # ⋅- (01) command line parsing
+        # ⋅- (02) --output string
+        # ⋅- (03) logfile opening
+        # ⋅- (04) project name & version
+        # ⋅- (05) ARGS.report interpretation
+        # ⋅- (06) exit handler
+        # ⋅- (07) serializers import
+        # ⋅- (08) checkup
+        # ⋅- (09) download default config file
+        # ⋅- (10) temp file opening
         # ⋅- (11) known data init
         # ⋅- (12) call to main()
         # ⋅       - (12.1) main(): debug messages
@@ -561,16 +561,16 @@ def main():
         # (12.3) main(): config file reading
         # =========================================================================
         # (pimydoc)code structure
-        # ⋅- (01) temp file opening
-        # ⋅- (02) command line parsing
-        # ⋅- (03) --output string
-        # ⋅- (04) logfile opening
-        # ⋅- (05) project name & version
-        # ⋅- (06) ARGS.report interpretation
-        # ⋅- (07) exit handler
-        # ⋅- (08) serializers import
-        # ⋅- (09) checkup
-        # ⋅- (10) download default config file
+        # ⋅- (01) command line parsing
+        # ⋅- (02) --output string
+        # ⋅- (03) logfile opening
+        # ⋅- (04) project name & version
+        # ⋅- (05) ARGS.report interpretation
+        # ⋅- (06) exit handler
+        # ⋅- (07) serializers import
+        # ⋅- (08) checkup
+        # ⋅- (09) download default config file
+        # ⋅- (10) temp file opening
         # ⋅- (11) known data init
         # ⋅- (12) call to main()
         # ⋅       - (12.1) main(): debug messages
@@ -599,16 +599,16 @@ def main():
         # (12.4) main(): results computing
         # =========================================================================
         # (pimydoc)code structure
-        # ⋅- (01) temp file opening
-        # ⋅- (02) command line parsing
-        # ⋅- (03) --output string
-        # ⋅- (04) logfile opening
-        # ⋅- (05) project name & version
-        # ⋅- (06) ARGS.report interpretation
-        # ⋅- (07) exit handler
-        # ⋅- (08) serializers import
-        # ⋅- (09) checkup
-        # ⋅- (10) download default config file
+        # ⋅- (01) command line parsing
+        # ⋅- (02) --output string
+        # ⋅- (03) logfile opening
+        # ⋅- (04) project name & version
+        # ⋅- (05) ARGS.report interpretation
+        # ⋅- (06) exit handler
+        # ⋅- (07) serializers import
+        # ⋅- (08) checkup
+        # ⋅- (09) download default config file
+        # ⋅- (10) temp file opening
         # ⋅- (11) known data init
         # ⋅- (12) call to main()
         # ⋅       - (12.1) main(): debug messages
@@ -628,16 +628,16 @@ def main():
         # (12.5) main(): report
         # =========================================================================
         # (pimydoc)code structure
-        # ⋅- (01) temp file opening
-        # ⋅- (02) command line parsing
-        # ⋅- (03) --output string
-        # ⋅- (04) logfile opening
-        # ⋅- (05) project name & version
-        # ⋅- (06) ARGS.report interpretation
-        # ⋅- (07) exit handler
-        # ⋅- (08) serializers import
-        # ⋅- (09) checkup
-        # ⋅- (10) download default config file
+        # ⋅- (01) command line parsing
+        # ⋅- (02) --output string
+        # ⋅- (03) logfile opening
+        # ⋅- (04) project name & version
+        # ⋅- (05) ARGS.report interpretation
+        # ⋅- (06) exit handler
+        # ⋅- (07) serializers import
+        # ⋅- (08) checkup
+        # ⋅- (09) download default config file
+        # ⋅- (10) temp file opening
         # ⋅- (11) known data init
         # ⋅- (12) call to main()
         # ⋅       - (12.1) main(): debug messages
@@ -681,16 +681,16 @@ def main():
 # (12) call to main()
 # =============================================================================
 # (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
 # ⋅- (11) known data init
 # ⋅- (12) call to main()
 # ⋅       - (12.1) main(): debug messages

@@ -74,6 +74,14 @@ Bugfix.
 * fait planter le programme: ./bin/wisteria --cmp="marshal against pickle" --report="bestofa"
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
 
+[DONE] task-51
+
+Bugfix: no more temp file on disk after a call with --help.
+
+    * no more temp file on disk after a call with --help.
+    * wisteria.py: "temp file opening" step has been moved just
+      before "known data init" step.
+
 [DONE] task-50
 
 Bugfix: in report D2c, note (¹) now only apppears for "serializer1 vs all"; this
