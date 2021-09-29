@@ -72,11 +72,16 @@ See TODOs at the end of this file.
 * les numéros d'erreurs ne sont pas bons. (cf err_codes.sh --list)
 * donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
-0.0.3
-(task-49) les (01) dans wisteria.py sont pour certains mal placés
-
 [CURRENT] v. 0.0.3
 ------------------
+
+[DONE] task-49
+
+new files: cfgfile.py and cmdline_cmp.py; documentation.
+
+    * new files: cfgfile.py and cmdline_cmp.py
+    * moved some functions from wisteria.py to cfgfile.py and cmdline_cmp.py
+    * improved comments in wisteria.py
 
 [DONE] task-48
 

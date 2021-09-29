@@ -36,24 +36,19 @@ TODO : functions ?
 """
 import argparse
 import atexit
-import configparser
 import datetime
 import os
 import os.path
-import re
-import shutil
 import sys
-import urllib.error
-import urllib.request
 
 import rich.console
 from rich import print as rprint
 
 import wisteria.globs
 from wisteria.globs import REPORT_SHORTCUTS
-from wisteria.globs import TMPFILENAME, REGEX_CMP, REGEX_CMP__HELP
+from wisteria.globs import TMPFILENAME, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
-from wisteria.globs import DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
+from wisteria.globs import DEFAULT_CONFIG_FILENAME
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report
 from wisteria.results import compute_results
@@ -63,6 +58,9 @@ import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msginfo, msgerror, msgdebug, msgreport
 from wisteria.cmdline_output import parse_output_argument
+from wisteria.cmdline_cmp import read_cmpstring
+from wisteria.cfgfile import read_cfgfile, downloadconfigfile
+
 
 # =============================================================================
 # (01) temp file opening
@@ -340,122 +338,27 @@ atexit.register(exit_handler)
 wisteria.serializers.init_serializers()
 
 
-def read_cfgfile(filename):
-    """
-        read_cfgfile()
-
-        Read the configuration file <filename>, return the corresponding dict.
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)filename, the file to be read.
-
-        RETURNED VALUE: (None if a problem occured or a dict)
-            (pimydoc)config file format
-            ⋅
-            ⋅----------------------------------------------------------------
-            ⋅config file format                 read_cfgfile() returned value
-            ⋅----------------------------------------------------------------
-            ⋅(data selection)                   〖"data selection"〗 = {}
-            ⋅    data selection=all             〖"data selection"〗〖"data selection"〗 = str
-            ⋅                   only if yes
-            ⋅                   data set/xxx
-            ⋅data sets                          〖"data sets"〗= {}
-            ⋅    data set/xxx=                  〖"data sets"〗〖"data set/xxx"〗 = set1;set2;...
-            ⋅data objects
-            ⋅    set1 = yes or false             〖"data objects"〗〖"set1"〗 = (bool)True/False
-            ⋅    set2 = yes or false
-            ⋅    ...
-    """
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        msgdebug(f"Trying to read '{filename}' ({normpath(filename)}) as a config file.")
-
-    if not os.path.exists(filename):
-        if not ARGS.checkup:
-            msgerror(f"(ERRORID001) Missing config file '{filename}' ({normpath(filename)}).")
-        return None
-
-    res = {"data selection": {},
-           "data sets": {},
-           "data objects": {},
-           }
-
-    # ------------------------------------------------------------------
-    # (1/3) let's read <filename> using configparser.ConfigParser.read()
-    # ------------------------------------------------------------------
-    try:
-        config = configparser.ConfigParser()
-        config.read(filename)
-    except (configparser.DuplicateOptionError,) as error:
-        msgerror(f"(ERRORID002) While reading config file '{filename}': {error}.")
-        return None
-
-    # -------------------------------
-    # (2/3) well formed config file ?
-    # -------------------------------
-    if "data selection" not in config:
-        msgerror(f"(ERRORID003) While reading config file '{filename}': "
-                 "missing '\\[data selection]' section.")
-        return None
-    if "data sets" not in config:
-        msgerror(f"(ERRORID004) While reading config file '{filename}': "
-                 "missing '\\[data sets]' section.")
-        return None
-    if "data objects" not in config:
-        msgerror(f"(ERRORID005) While reading config file '{filename}': "
-                 "missing '\\[data objects]' section.")
-        return None
-    if "data selection" not in config["data selection"]:
-        msgerror(f"(ERRORID006) While reading config file '{filename}': "
-                 "missing '\\[data selection]data selection=' entry.")
-        return None
-
-    if config["data selection"]["data selection"] in ("all", "only if yes"):
-        # ok, nothing to do.
-        pass
-    elif config["data selection"]["data selection"].startswith("data set/"):
-        setname = config["data selection"]["data selection"]
-        if setname not in config["data sets"]:
-            msgerror(f"(ERRORID007) While reading config file '{filename}': "
-                     f"undefined data set '{setname}' "
-                     "used in \\[data selection] section but not defined in \\[data sets] section")
-            return None
-    else:
-        msgerror(f"(ERRORID008) While reading config file '{filename}': "
-                 "can't interpret the value of config['data selection']['data selection']: "
-                 f"what is '{config['data selection']['data selection']}' ?")
-        return None
-
-    for data_set in config['data sets']:
-        for data_set__subitem in config['data sets'][data_set].split(";"):
-            if data_set__subitem.strip() != "" and \
-               data_set__subitem not in config['data objects']:
-                msgerror("(ERROR014) Wrong definition in \\[data sets]; unknown data object "
-                         f"'{data_set__subitem}', not defined in \\[data objects].")
-                return None
-
-    # --------------------------------------------------------
-    # (3/3) if everything is in order, let's initialize <res>.
-    # --------------------------------------------------------
-    res['data selection']['data selection'] = config['data selection']['data selection']
-    for dataobject_name in config['data objects']:
-        res['data objects'][dataobject_name] = config['data objects'].getboolean(dataobject_name)
-    for data_set in config['data sets']:
-        res['data sets'][data_set] = \
-            (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
-
-    # ----------------------
-    # details/debug messages
-    # ----------------------
-    if ARGS.verbosity >= VERBOSITY_DETAILS:
-        msginfo(f"Init file '{filename}' ({normpath(filename)}) has been read.")
-
-    if ARGS.verbosity == VERBOSITY_DEBUG:
-        msgdebug(f"Successfully read '{filename}' ({normpath(filename)}) as a config file.")
-
-    return res
-
-
+# =============================================================================
+# (09) checkup
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) temp file opening
+# ⋅- (02) command line parsing
+# ⋅- (03) --output string
+# ⋅- (04) logfile opening
+# ⋅- (05) project name & version
+# ⋅- (06) ARGS.report interpretation
+# ⋅- (07) exit handler
+# ⋅- (08) serializers import
+# ⋅- (09) checkup
+# ⋅- (10) download default config file
+# ⋅- (11) known data init
+# ⋅- (12) call to main()
+# ⋅       - (12.1) main(): debug messages
+# ⋅       - (12.2) main(): cmp string interpretation
+# ⋅       - (12.3) main(): config file reading
+# ⋅       - (12.4) main(): results computing
+# ⋅       - (12.5) main(): report
 def checkup():
     """
         checkup()
@@ -486,27 +389,6 @@ def checkup():
               f"({normpath(ARGS.cfgfile)}). " + diagnostic)
 
 
-# =============================================================================
-# (09) checkup
-# =============================================================================
-# (pimydoc)code structure
-# ⋅- (01) temp file opening
-# ⋅- (02) command line parsing
-# ⋅- (03) --output string
-# ⋅- (04) logfile opening
-# ⋅- (05) project name & version
-# ⋅- (06) ARGS.report interpretation
-# ⋅- (07) exit handler
-# ⋅- (08) serializers import
-# ⋅- (09) checkup
-# ⋅- (10) download default config file
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
 if wisteria.globs.ARGS.checkup:
     checkup()
     # (pimydoc)exit codes
@@ -520,36 +402,6 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
     sys.exit(1)
-
-
-def downloadconfigfile():
-    """
-        downloadconfigfile()
-
-        Download default config file.
-        _______________________________________________________________________
-
-        RETURNED VALUE: (bool)success
-    """
-    targetname = DEFAULT_CONFIG_FILENAME
-
-    if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
-        msginfo(f"Trying to download '{DEFAULTCFGFILE_URL}' "
-                f"which will be written as '{targetname}' ('{normpath(targetname)}').")
-
-    try:
-        with urllib.request.urlopen(DEFAULTCFGFILE_URL) as response, \
-             open(targetname, 'wb') as out_file:
-            shutil.copyfileobj(response, out_file)
-
-        if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
-            msginfo(f"Successfully downloaded '{DEFAULTCFGFILE_URL}', "
-                    f"written as '{targetname}' ('{normpath(targetname)}')")
-        return True
-
-    except urllib.error.URLError as exception:
-        msgerror(f"(ERRORID000) An error occured: {exception}")
-        return False
 
 
 # =============================================================================
@@ -610,73 +462,6 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅       - (12.4) main(): results computing
 # ⋅       - (12.5) main(): report
 wisteria.data.init_data()
-
-
-def read_cmpstring(cmpstring):
-    """
-        read_cmpstring()
-
-        Return a simpler representation of (str)<cmpstring>.
-
-        Some valid examples, "..." being "(bool/success)True".
-        --cmp="jsonpickle vs all (all)"
-        --cmp="jsonpickle vs all"
-        --cmp="jsonpickle"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (data/str)"all"
-
-        --cmp="jsonpickle (ini)"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (data/str)"ini"
-
-        --cmp="jsonpickle vs json"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"json", (data/str)"all"
-
-        "vs" may be used as well as "versus" or "against".
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)cmpstring, the source string to be read.
-                syntax: "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
-
-        RETURNED VALUE: (bool)success,
-                        (str)serializer1,
-                        (str)serializer2,
-                        (str:"all|cwc|ini")cmpdata
-    """
-    serializers = wisteria.globs.SERIALIZERS
-
-    if res := re.match(REGEX_CMP, cmpstring):
-        serializer1 = res.group("serializer1")
-        if serializer1 is None or serializer1 == "others":
-            serializer1 = "all"
-        serializer2 = res.group("serializer2")
-        if serializer2 is None or serializer2 == "others":
-            serializer2 = "all"
-        cmpdata = res.group("data")
-        if cmpdata is None:
-            cmpdata = "all"
-
-        if not (serializer1 == "all" or serializer1 in serializers):
-            msgerror(f"(ERRORID009) Unknown serializer #1 from cmp string '{cmpstring}': "
-                     f"what is '{serializer1}' ? "
-                     f"Known serializers #1 are 'all' and {tuple(serializers.keys())}.")
-            return False, None, None, None
-        if not (serializer2 == "all" or serializer2 == "others" or serializer2 in serializers):
-            msgerror(f"(ERRORID010) Unknown serializer #2 from cmp string '{cmpstring}': "
-                     f"what is '{serializer2}' ? "
-                     "Known serializers #2 are 'all', 'others' and "
-                     f"{tuple(serializers.keys())}.")
-            return False, None, None, None
-        if serializer1 == serializer2 and serializer1 != "all":
-            msgerror(f"(ERRORID011) Both serializer-s from cmp string '{cmpstring}' "
-                     f"(here, both set to '{serializer1}') "
-                     "can't have the same value, 'all' and 'all' excepted.")
-            return False, None, None, None
-
-        return True, serializer1, serializer2, cmpdata
-
-    msgerror(f"(ERRORID012) Ill-formed cmp string '{cmpstring}'. "
-             f"Expected syntax is '{REGEX_CMP__HELP}'.")
-    return False, None, None, None
 
 
 def main():
