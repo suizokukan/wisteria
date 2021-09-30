@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wisteria"
-version = "0.0.3"
+version = "0.0.4"
 description = "Python serializers comparisons"
 authors = ["suizokukan <suizokukan@orange.fr>"]
 license = "GPLv3"

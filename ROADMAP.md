@@ -1,10 +1,6 @@
 Wisteria's roadmap & todos
 ==========================
 
-* i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
-  chercher si une combinaison donne des résultats vraiment différents des autres
 * data types à compléter
         RegularClass
         IntheritedList
@@ -50,17 +46,130 @@ Wisteria's roadmap & todos
         ("Y30:contextlib.AbstractAsyncContextManager", contextlib.AbstractAsyncContextManager),
 
         ("Z01:decimal.localcontext", decimal.localcontext()),
-* serializers à compléter
-* cwc
+
+0.1.2:
 * README.md acceptable
-* TODOs & Pylint
-* dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
+
+0.1.1:
+* i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
+
+0.1:
+* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+  chercher si une combinaison donne des résultats vraiment différents des autres
+
+0.0.9: 
+cwc
+
+0.0.8:
+* serializers à compléter
+
+0.0.7:
+* data types à compléter
+
+0.0.6: human talking
 * english phraseology
 * (1), (2) et (3) pour humanratio
-* en-tête des fichiers à reprendre entièrement
-* donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
+* report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
-[CURRENT] v. 0.0.4
+0.0.5: TODOs, doc, en-tête, pylint
+* en-tête des fichiers à reprendre entièrement
+* description des classes
+* TODOs & Pylint
+* dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
+
+[DONE] v. 0.0.4
+---------------
+
+Various bugfixes, minor improvements.
+
+bugfixes:
+
+    * new constant in globs.py, PROGRESSBAR_LENGTH, to define progress bar's 
+      length. None is an accepted value which extends the length of the bar
+      to the entire width of the terminal. ((task-66)
+    * Bugfix: progress_bar displayed by compute_results() is now erased
+      after it has been displayed. The text written over with the 
+      next call to rprint() is now perfectly readable. (task-65)
+    * Improved the content of main() and of bin/wisteria so that the
+      returned value of main() is sys.exit-ed() . (task-64)
+    * Fixed a bug in read_cfgfile(): ARGS.checkup > 
+      wisteria.globs.ARGS.checkup (task-63)
+    * New version of poetry_show_tree.sh (poetry_show_tree.sh v.6/2021-09-29)
+      With this version, even a package like 'rich' will appear in 
+      poetry_show_tree.md (task-62)
+    * fixed a minor glitch in the messages: string(¹) > string (¹) 
+      with a space that prevents rich to colorize the string before
+      (¹) (task-61)
+    * fixed a minor glitch: title D1a) should be written (D1a) ((task-60)
+    * improved report_section_d2c(): the messages displayed are correct 
+      if serializer1==serializer2=="all". (task-59)
+    * fixed error codes: no more error code used twice (task-56)
+    * every call to raise WisteriaError() is numbered (task-56)
+    * aspect_serializer() now uses serializers' human name instead of the
+      simple name. (task-55)
+    * Bugfix: all percentages in the code are now displayed through aspect_percentage()
+      (task-54)
+    * Bugfix: D1a and D1b report sections use now <results.dataobjs> and not <data>,
+              which was incorrect. (task-53)
+    * report_section_d1a(), report_section_d1b() use now <results.dataobjs> and not <data>
+      anymore. (task-53)
+    * bugfix: report() handles now correctly ill-formed report string like "" 
+      or "minimalZ" (task-52)
+    * no more temp file on disk after a call with --help. (task-51)
+    * wisteria.py: "temp file opening" step has been moved just
+      before "known data init" step. (task-51)
+    * bugfix: in report D2c, note (¹) now only apppears for "serializer1 vs all"; this
+      note appeared previously and erroneously for "serializer1 vs serializer2" (task-50)
+
+various improvements:
+
+    * "bestof" is now defined as "B1c;D2b;D2c" (task-60)
+    * improved error messages in report() (task-52)
+    * new function in reportaspect.py: aspect_percentage() (task-54)
+    * New file (serializers_classes.py) to store all classes used to handle 
+      serializers. (task-57)
+    * new method: SerializationResults.get_overallscore_bestrank() (task-58)
+    * new method: SerializationResults.get_overallscore_worstrank() (task-58)
+    
+    * set version to '0.0.4'
+
+    * task(s): task-50, task-51, task-52, task-53, task-54, task-55, 
+               task-56, task-57, task-58, task-59, task-60, task-61,
+               task-62, task-63, task-64, task-65, task-66
+
+```
+$ poetry show --tree
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ ./check_tools.sh
+* about poetry:
+Poetry version 1.1.10
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+PYLINTHOME is now '/home/proguser/.cache/pylint' but obsolescent '/home/proguser/.pylint.d' is found; you can safely remove the latter
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-66
 
@@ -154,7 +263,7 @@ Fixed error codes.
 Fixed a display problem: when a serializer name is displayed, its 'human_name'
 is now displayed.
 
-    * aspect_serializer() now uses serializers' human name insted of the
+    * aspect_serializer() now uses serializers' human name instead of the
       simple name.
 
 [DONE] task-54
