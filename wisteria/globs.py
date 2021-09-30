@@ -103,3 +103,8 @@ FILECONSOLE = None
 # TODO
 #  OUTPUT = parse_output_argument(--output string)
 OUTPUT = None
+
+# progress bar length (in characters)
+# 'None' is an accepted value and extends the length of the bar
+# to the entire width of the terminal.
+PROGRESSBAR_LENGTH = None

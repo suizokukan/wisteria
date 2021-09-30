@@ -27,6 +27,7 @@ from rich.progress_bar import ProgressBar
 import wisteria.data
 import wisteria.globs
 from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
+from wisteria.globs import PROGRESSBAR_LENGTH
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
 from wisteria.serializers_classes import SerializationResults
@@ -142,7 +143,8 @@ def compute_results(config,
         # the output can't display both correctly.
         if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
             console = Console()
-            progressbar = ProgressBar(width=50, total=len(_serializers)*len(_dataobjs))
+            progressbar = ProgressBar(width=PROGRESSBAR_LENGTH,
+                                      total=len(_serializers)*len(_dataobjs))
             console.show_cursor(False)
             progressbar_index = 0
 
@@ -173,11 +175,15 @@ def compute_results(config,
         # Please note that there can be NO progress bar if the debug mode is enabled:
         # the output can't display both correctly.
         if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
-            # the two following lines make disappear the progresse bar.
+            # the following lines make disappear the progresse bar.
             # the next rprint() will overwrite the spaces that are about
             # to be added:
-            console.file.write(" "*50)
+            if PROGRESSBAR_LENGTH is None:
+                console.file.write(" "*console.width)
+            else:
+                console.file.write(" "*PROGRESSBAR_LENGTH)
             console.file.write("\r")
+
             console.show_cursor(True)
 
         if not results.finish_initialization():

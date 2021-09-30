@@ -62,6 +62,14 @@ Wisteria's roadmap & todos
 
 [CURRENT] v. 0.0.4
 
+[DONE] task-66
+
+New constant in globs.py, PROGRESSBAR_LENGTH, to define progress bar's length.
+
+    * new constant in globs.py, PROGRESSBAR_LENGTH, to define progress bar's 
+      length. None is an accepted value which extends the length of the bar
+      to the entire width of the terminal.
+
 [DONE] task-65
 
 Bugfix: progress_bar displayed by compute_results() is now erased
