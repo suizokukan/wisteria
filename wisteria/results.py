@@ -142,7 +142,7 @@ def compute_results(config,
         # the output can't display both correctly.
         if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
             console = Console()
-            progressbar = ProgressBar(width=40, total=len(_serializers)*len(_dataobjs))
+            progressbar = ProgressBar(width=50, total=len(_serializers)*len(_dataobjs))
             console.show_cursor(False)
             progressbar_index = 0
 
@@ -173,6 +173,11 @@ def compute_results(config,
         # Please note that there can be NO progress bar if the debug mode is enabled:
         # the output can't display both correctly.
         if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+            # the two following lines make disappear the progresse bar.
+            # the next rprint() will overwrite the spaces that are about
+            # to be added:
+            console.file.write(" "*50)
+            console.file.write("\r")
             console.show_cursor(True)
 
         if not results.finish_initialization():

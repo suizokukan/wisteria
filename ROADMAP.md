@@ -62,9 +62,17 @@ Wisteria's roadmap & todos
 
 [CURRENT] v. 0.0.4
 
-Bugfix.
-* problème d'affichage: ./bin/wisteria --cmp="iaswn against json(all)" --verbosity=2 --report="titles;A2"
-  
+[DONE] task-65
+
+Bugfix: progress_bar displayed by compute_results() is now erased
+        after it has been displayed.
+        The problem occured with something like:
+        ./bin/wisteria --cmp="iaswn against json(all)" --report="titles;A2"
+
+    * Bugfix: progress_bar displayed by compute_results() is now erased
+      after it has been displayed. The text written over with the 
+      next call to rprint() is now perfectly readable.
+
 [DONE] task-64
 
 Improved the content of main() and of bin/wisteria so that the
