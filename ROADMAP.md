@@ -79,6 +79,14 @@ cwc
 * je ne comprends pas le pourquoi de SerializationResults.get_dataobjs_base()
   & get_serializers_base()
   
+[DONE] task-73
+
+Code pylinted; pylintrc has been updated; first version to get 10/10.
+
+    * Code pylinted; pylintrc has been updated; first version to get 10/10.
+    
+    * pylint: 10/10
+
 [DONE] task-72
 
 Removed all TODOs, improved exit_handler and added DEFAULT_CONFIG_FILENAME

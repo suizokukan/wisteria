@@ -201,6 +201,11 @@ wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 # =============================================================================
 # (03) logfile opening
 # =============================================================================
+# It would be great to use something like:
+#   with open(...) as wisteria.globs.FILECONSOLE_FILEOBJECT:
+# but it's not possible here. Please notice that we check the closing of this
+# file in exit handler.
+# pylint: disable=consider-using-with
 wisteria.globs.FILECONSOLE_FILEOBJECT = open(wisteria.globs.OUTPUT[3],
                                              wisteria.globs.OUTPUT[2],
                                              encoding="utf-8")

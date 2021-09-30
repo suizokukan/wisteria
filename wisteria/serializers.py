@@ -417,6 +417,10 @@ def init_serializers():
             available=trytoimport("pickle"),
             func=serializer_pickle),
     }
+    # In spite of Pylint I don't see why I should write:
+    #   for _serializer in wisteria.globs.SERIALIZERS.keys()
+    #
+    # pylint: disable=consider-using-dict-items
     for _serializer in wisteria.globs.SERIALIZERS:
         if wisteria.globs.SERIALIZERS[_serializer].available:
             wisteria.globs.SERIALIZERS[_serializer].version = \

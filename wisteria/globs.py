@@ -123,7 +123,14 @@ FILECONSOLE = None
 
 # value of the --output argument
 #  initialized by parse_output_argument(--output string)
-OUTPUT = None
+# format:
+#        ((bool)success, True if the --output string had been successfully parsed
+#         (bool)output to the console ?,
+#         (bool)output to the logfile ?,
+#         (str)logfile open mode = 'a' or 'w',
+#         (str)logfile name,
+#        )
+OUTPUT = []
 
 # progress bar length (in characters)
 # 'None' is an accepted value and extends the length of the bar

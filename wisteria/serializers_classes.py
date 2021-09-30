@@ -148,6 +148,8 @@ class SerializerDataObj:
     dataobj: str = None
 
 
+# No useless public methods to add, indeed!
+# pylint: disable=too-few-public-methods
 class SerializationResult:
     """
         SerializationResult class
