@@ -47,36 +47,46 @@ Wisteria's roadmap & todos
 
         ("Z01:decimal.localcontext", decimal.localcontext()),
 
-0.1.2:
+0.1.3:
 * README.md acceptable
 
-0.1.1:
+0.1.2:
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 
-0.1:
+0.1.1:
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
   chercher si une combinaison donne des résultats vraiment différents des autres
 
-0.0.9: 
+0.1.0: 
 cwc
 
-0.0.8:
+0.0.9:
 * serializers à compléter
 
-0.0.7:
+0.0.8:
 * data types à compléter
 
-0.0.6: human talking
+0.0.7: human talking
 * english phraseology
 * (1), (2) et (3) pour humanratio
 * report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
-0.0.5: TODOs, doc, en-tête, pylint
+0.0.6: TODOs, doc, en-tête, pylint
 * en-tête des fichiers à reprendre entièrement
 * description des classes
 * TODOs & Pylint
 * dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
+
+[CURRENT] v. 0.0.5
+------------------
+
+[DONE] task-67
+
+Fixed pyproject.toml so that wisteria can be an executable command.
+
+    * fixed pyproject.toml so that wisteria can be an executable command. 
+      (task-67)
 
 [DONE] v. 0.0.4
 ---------------
