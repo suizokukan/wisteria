@@ -19,13 +19,13 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    reportaspect.py
+    Wisteria project : wisteria/reportaspect.py
 
     Define some 'aspects' (=some text attributes) for some excepts in report.
 
     ___________________________________________________________________________
 
-    o  aspect_data(data)
+    o  aspect_data(data_objectname)
     o  aspect_percentage(percentage)
     o  aspect_serializer(serializer)
     o  aspect_title(title)

@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    serializers.py
+    Wisteria project : wisteria/serializers.py
 
     All known serializers are defined here, in the SERIALIZERS dict. Each serializer
     has its own serializer_xxx function.
@@ -27,23 +27,14 @@
 
     ___________________________________________________________________________
 
-    o  MODULES dict
-
-    o  SerializerDataObj class
-
     o  _len(obj)
+    o  serializer_iaswn(action="serialize", obj=None)
+    o  serializer_json(action="serialize", obj=None)
+    o  serializer_jsonpickle(action="serialize", obj=None)
+    o  serializer_marshal(action="serialize", obj=None)
+    o  serializer_pickle(action="serialize", obj=None)
 
-    o  SerializationResults class
-    o  SerializationResult class
-    o  SerializationData class
-
-    * serializer_iaswn(action="serialize", obj=None)
-    * serializer_json(action="serialize", obj=None)
-    * serializer_jsonpickle(action="serialize", obj=None)
-    * serializer_marshal(action="serialize", obj=None)
-    * serializer_pickle(action="serialize", obj=None)
-
-    * SERIALIZERS dict
+    o  init_serializers()
 """
 import sys
 import timeit

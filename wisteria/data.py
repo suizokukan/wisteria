@@ -19,15 +19,15 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    wisteria/data.py
+    Wisteria project : wisteria/data.py
 
     All objects used as data by serializers are stored in the DATA dict.
+
 
     ___________________________________________________________________________
 
     * anyfunc()
-
-    * DATA dict
+    * init_data()
 """
 import io
 import numbers

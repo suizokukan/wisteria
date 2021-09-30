@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    utils.py
+    Wisteria project : wisteria/utils.py
 
     ___________________________________________________________________________
 

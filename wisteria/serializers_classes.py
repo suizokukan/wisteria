@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    serializers_classes.py
+    Wisteria project : wisteria/serializers_classes.py
 
     All classes required to handle serializers.
 

@@ -19,9 +19,11 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    cmdline_output.py
+    Wisteria project : wisteria/cmdline_output.py
 
-    Just the parsing of --output. No msgxxx() method here.
+    Just the parsing of the --output argument. No msgxxx() method here since
+    at this stage of the program no msgxxx() methods have not yet be
+    initialized.
 
     ___________________________________________________________________________
 

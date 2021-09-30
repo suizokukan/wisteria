@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    wisteriaerror.py
+    Wisteria project : wisteria/wisteriaerror.py
 
     Definition of the WisteriaError class, the unique error class that should be
     raised by the project.

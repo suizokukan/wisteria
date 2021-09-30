@@ -19,26 +19,35 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    report.py
+    Wisteria project : wisteria/report.py
 
-    report() function which prints the report.
+    Functions that print the report, especially report().
 
     ___________________________________________________________________________
 
-    o  cmpdata2prefix()
-    o  ratio2phrase()
+    o  humanratio(ratio)
+    o  cmpdata2phrase(cmpdata)
+    o  ratio2phrase(ratio, base_string)
 
-    o  report_section_a()
-    o  report_section_b1a(results)
-    o  report_section_b1b(results)
-    o  report_section_b1c(results)
-    o  report_section_b1d(results)
-    o  report_section_b2a(results)
-    o  report_section_b2b(results)
-    o  report_section_c1a(results)
-    o  report_section_c1b(results)
-    o  report_section_c2b(results)
-TODO : il en manque !
+    o  report_section_a1(results, s1s2d)
+    o  report_section_a2(results, s1s2d)
+    o  report_section_a3(results, s1s2d)
+    o  report_section_b1a(results, s1s2d)
+    o  report_section_b1b(results, s1s2d)
+    o  report_section_b1c(results, s1s2d)
+    o  report_section_b1d(results, s1s2d)
+    o  report_section_b2a(results, s1s2d)
+    o  report_section_b2b(results, s1s2d)
+    o  report_section_c1a(results, s1s2d)
+    o  report_section_c1b(results, s1s2d)
+    o  report_section_c2a(results, s1s2d)
+    o  report_section_c2b(results, s1s2d)
+    o  report_section_d1a(results, s1s2d)
+    o  report_section_d1b(results, s1s2d)
+    o  report_section_d2a(results, s1s2d)
+    o  report_section_d2b(results, s1s2d)
+    o  report_section_d2c(results, s1s2d)
+
     o  report(results, s1s2d)
 """
 import rich.table
@@ -1898,6 +1907,7 @@ STR2REPORTSECTION = {
         "B": (report_section_b1a,
               report_section_b1b,
               report_section_b1c,
+              report_section_b1d,
               report_section_b2a,
               report_section_b2b,),
         "B1": (report_section_b1a,

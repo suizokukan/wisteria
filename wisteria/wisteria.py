@@ -19,7 +19,28 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    wisteria.py
+    Wisteria project : wisteria/wisteria.py
+
+    Main file and main entry point into the project.
+
+    (pimydoc)code structure
+    ⋅- (01) command line parsing
+    ⋅- (02) --output string
+    ⋅- (03) logfile opening
+    ⋅- (04) project name & version
+    ⋅- (05) ARGS.report interpretation
+    ⋅- (06) exit handler
+    ⋅- (07) serializers import
+    ⋅- (08) checkup
+    ⋅- (09) download default config file
+    ⋅- (10) temp file opening
+    ⋅- (11) known data init
+    ⋅- (12) call to main()
+    ⋅       - (12.1) main(): debug messages
+    ⋅       - (12.2) main(): cmp string interpretation
+    ⋅       - (12.3) main(): config file reading
+    ⋅       - (12.4) main(): results computing
+    ⋅       - (12.5) main(): report
 
     (pimydoc)exit codes
     ⋅*  0: normal exit code
@@ -32,7 +53,11 @@
     ⋅* -5: internal error, an error in main()
     ⋅* -6: error, ill-formed --output string
 
-TODO : functions ?
+    ___________________________________________________________________________
+
+    o  exit_handler()
+    o  checkup()
+    o  main()
 """
 import argparse
 import atexit

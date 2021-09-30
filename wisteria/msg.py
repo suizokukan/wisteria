@@ -19,15 +19,30 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    msg.py
+    Wisteria project : wisteria/msg.py
 
-TODO
-    msgreport() is reserved to report messages.
+    Fonctions used to print & log all projects' messages.
 
-Dans ce projet, choisir une fonction msgxxx() n'est pas une question de priorité :
-c'est d'abord un problème d'apparence (voir les préfixes @, >, !); la priorité
-est gérée à chaque appel de msgxxx() par un test du type
-     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+    msgreport() is reserved to checkup and report messages.
+    msgreporttitle() is reserved to title's report messages.
+
+    Caveat!
+    In this project, the choice of a msgxxx() method has nothing to do with
+    priority (cf DEBUG, INFO, ERROR) but with message appearance (confer
+    special symbols like '@', '>' or '!'). Priority is managed at each call
+    of msgxxx() by a test of type
+         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+             msgdebug(...)
+    ___________________________________________________________________________
+
+    o  _message(obj)
+    o  msgcritical(obj="")
+    o  msgdebug(obj="")
+    o  msgerror(obj="")
+    o  msginfo(obj="")
+    o  msgreport(obj="")
+    o  msgreporttitle(obj="")
+    o  msgwarning(obj="")
 """
 from rich import print as rprint
 from wisteria.reportaspect import aspect_title

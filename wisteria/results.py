@@ -19,7 +19,15 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    results.py
+    Wisteria project : wisteria/results.py
+
+    Fonctions to compute results, especially compute_results().
+
+    ___________________________________________________________________________
+
+    o  get_serializers_selection(serializer1, serializer2)
+    o  get_data_selection(cmpdata, config)
+    o  compute_results(config, serializer1, serializer2, cmpdata)
 """
 from rich.console import Console
 from rich.progress_bar import ProgressBar

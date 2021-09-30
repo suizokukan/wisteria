@@ -19,9 +19,9 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    cmdline_cmp.py
+    Wisteria project : wisteria/cmdline_cmp.py
 
-    Just the parsing of --cmp.
+    Just the parsing of the --cmp argument.
 
     ___________________________________________________________________________
 

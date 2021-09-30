@@ -72,14 +72,20 @@ cwc
 * (1), (2) et (3) pour humanratio
 * report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 
-0.0.6: TODOs, doc, en-tête, pylint
-* en-tête des fichiers à reprendre entièrement
-* description des classes
-* TODOs & Pylint
-* dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
 
 [CURRENT] v. 0.0.6
 ------------------
+* description des classes
+* description des méthodes/fonctions
+* TODOs & Pylint
+
+[DONE] task-69
+
+Updated documentation in Python files headers.
+
+    * Updated documentation in Python files headers. (task-69)
+    * fixed a minor error in STR2REPORTSECTION: "B1d" belongs to "B", too. 
+      (task-69)
 
 [DONE] task-68
 

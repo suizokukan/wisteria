@@ -19,9 +19,9 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    wisteria/globs.py
+    Wisteria project : wisteria/globs.py
 
-    Global variables.
+    Global definitions.
 
     ___________________________________________________________________________
 
@@ -39,10 +39,22 @@
     o  REGEX_CMP
     o  REGEX_CMP__HELP
 
-    o  REPORT_MINIMAL_STRING
-    o  REPORT_FULL_STRING
+    o  REPORT_SHORTCUTS
 
-    TODO
+    o  DEFAULT_CONFIG_FILENAME
+    o  DEFAULTCFGFILE_URL
+
+    o  MODULES
+
+    o  SERIALIZERS
+
+    o  DATA
+
+    o  FILECONSOLE
+
+    o  OUTPUT
+
+    o  PROGRESSBAR_LENGTH
 """
 import re
 
@@ -53,17 +65,21 @@ VERBOSITY_NORMAL = 1
 VERBOSITY_DETAILS = 2
 VERBOSITY_DEBUG = 3
 
+# command line arguments
 # will be set to argparse.ArgumentParser(...).parse_args()
 ARGS = None
 
-# number of times
+# number of times each serializer is called
 TIMEITNUMBER = 100
 
+# temp file default name
 TMPFILENAME = "wisteria.tmp"
 
+# regex used to parse the --cmp argument string
 REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?"
                        r"(\s*\((?P<cmpdata>all|cwc|ini)\))?\s*$")
+# string used by --help
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
 # REPORT_SHORTCUTS has two goals:
@@ -78,7 +94,6 @@ REPORT_SHORTCUTS = {
 
 # default name for the config file.
 DEFAULT_CONFIG_FILENAME = "wisteria.ini"
-
 # url of the default config file:
 DEFAULTCFGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
 
@@ -97,11 +112,14 @@ SERIALIZERS = {}
 # * initialized by data.py::init_data()
 DATA = {}
 
-# TODO
+# log file.
+#
+# initialized by main.py()
+#   value: rich.console.Console(file=...)
 FILECONSOLE = None
 
-# TODO
-#  OUTPUT = parse_output_argument(--output string)
+# value of the --output argument
+#  initialized by parse_output_argument(--output string)
 OUTPUT = None
 
 # progress bar length (in characters)

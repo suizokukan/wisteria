@@ -19,11 +19,11 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-   Wisteria project : wisteria/aboutproject.py
+    Wisteria project : wisteria/aboutproject.py
 
-   Global constants defining the project : version number, author, ...
+    Global constants defining the project : version number, author, license, etc.
 
-   ____________________________________________________________________________
+    ___________________________________________________________________________
 
 
    o __author__      : (str) project's initial author

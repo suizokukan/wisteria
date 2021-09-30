@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    cfgfile.py
+    Wisteria project : wisteria/cfgfile.py
 
     Config file reading & downloading.
 
