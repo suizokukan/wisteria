@@ -50,6 +50,7 @@
 
     o  DATA
 
+    o  FILECONSOLE_FILEOBJECT
     o  FILECONSOLE
 
     o  OUTPUT
@@ -114,7 +115,9 @@ DATA = {}
 
 # log file.
 #
-# initialized by main.py()
+
+# Both variables are initialized by main.py()
+FILECONSOLE_FILEOBJECT = None
 #   value: rich.console.Console(file=...)
 FILECONSOLE = None
 

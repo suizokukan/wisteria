@@ -78,7 +78,7 @@ def shortenedstr(string,
 
     # a special case: <maximallength> is really too short !
     if len(suffix) > maximallength:
-        return string  # TODO couper correctement ici
+        return string[:maximallength]
 
     # e.g. if maximallength==10, if string="01234567890"(len=11)  > "0123456[…]" (len=10)
     # e.g. if maximallength==10, if string="012345678901"(len=12) > "0123456[…]" (len=10)

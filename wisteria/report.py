@@ -1503,8 +1503,7 @@ def report_section_d2a(results,
         if serializer not in _serializers:
             _serializers.append(serializer)
     if _serializers[-1] == "-":
-        # TODO
-        # nous supprimons ce "-" inutile: il n'y aura pas de serializers placé après.
+        # let's remove this useless '-' since there's no more serializer(s) after.
         _serializers.pop()
 
     for serializer in _serializers:
@@ -1591,8 +1590,7 @@ def report_section_d2b(results,
         if serializer not in _serializers:
             _serializers.append(serializer)
     if _serializers[-1] == "-":
-        # TODO
-        # nous supprimons ce "-" inutile: il n'y aura pas de serializers placé après.
+        # let's remove this useless '-' since there's no more serializer(s) after.
         _serializers.pop()
 
     for serializer in _serializers:
@@ -1770,7 +1768,7 @@ def report_section_d2c(results,
         # (CASE 3/3) One of the two {serializer1|serializer2} is equal to "all"
         # =====================================================================
 
-        # TODO serializer servant de référence ?
+        # <serializer> is the reference serializer againt all others.
         if serializer1 != "all":
             serializer = serializer1
         else:

@@ -79,6 +79,19 @@ cwc
 * je ne comprends pas le pourquoi de SerializationResults.get_dataobjs_base()
   & get_serializers_base()
   
+[DONE] task-72
+
+Removed all TODOs, improved exit_handler and added DEFAULT_CONFIG_FILENAME
+to globs.py
+
+    * removed almost all TODOs (task-72)
+    * improved shortenedstr() in the very special case when
+      len(suffix) > maximallength . (task-72)
+    * new variable defined in DEFAULT_CONFIG_FILENAME and
+      initialized in wisteria.py (task-72)
+    * improved exit_handler(): added two debug messages (task-72)
+    * improved exit_handler(): forced FILECONSOLE_FILEOBJECT closing (task-72)
+    
 [DONE] task-71
 
 Docstring of all methods & functions; fixed a bug in read_cmpstring().

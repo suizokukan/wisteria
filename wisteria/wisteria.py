@@ -201,11 +201,10 @@ wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 # =============================================================================
 # (03) logfile opening
 # =============================================================================
-# TODO refermer ce fichier (dans exit handler ?)
-# TODO vérifier que le fichier est bien fermé à la fin du programme.
-wisteria.globs.FILECONSOLE = rich.console.Console(file=open(wisteria.globs.OUTPUT[3],
-                                                            wisteria.globs.OUTPUT[2],
-                                                            encoding="utf-8"))
+wisteria.globs.FILECONSOLE_FILEOBJECT = open(wisteria.globs.OUTPUT[3],
+                                             wisteria.globs.OUTPUT[2],
+                                             encoding="utf-8")
+wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOLE_FILEOBJECT)
 
 # =============================================================================
 # (04) project name & version
@@ -296,15 +295,25 @@ ARGS = wisteria.globs.ARGS
 # ⋅       - (12.4) main(): results computing
 # ⋅       - (12.5) main(): report
 
-# exit handler: let's remove the tmp file if it exists.
 def exit_handler():
     """
         exit_handler()
 
-        Remove the tmp file if it exists
+        Remove the tmp file if it exists and close the file console file object.
     """
-    if os.path.exists(TMPFILENAME):
-        os.remove(TMPFILENAME)
+    if os.path.exists(wisteria.globs.TMPFILENAME):
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) Let's remove the temp file "
+                     f"'{wisteria.globs.TMPFILENAME}' "
+                     f"('{normpath(wisteria.globs.TMPFILENAME)}')")
+        os.remove(wisteria.globs.TMPFILENAME)
+
+    if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) Let's close the filenconsole file "
+                     f"'{wisteria.globs.FILECONSOLE_FILEOBJECT.name}' "
+                     f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}')")
+        wisteria.globs.FILECONSOLE_FILEOBJECT.close()
 
 
 atexit.register(exit_handler)
@@ -698,7 +707,6 @@ def main():
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
-        # TODO
         return -5
 
 

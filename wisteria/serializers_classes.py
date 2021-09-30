@@ -305,7 +305,7 @@ class SerializationResults(dict):
         _less = []
         _more = []
 
-        before_serializer = False  # TODO deviendra True quand on sera tombé sur <serializer>
+        before_serializer = False  # will be True when <serializer> will be read in the loop.
         for index in range(self.serializers_number):
             if self.halloffame[attribute][index][1] == serializer:
                 before_serializer = True
@@ -372,12 +372,12 @@ class SerializationResults(dict):
                                                   reverse=False),
             }
 
-        # TODO
-        # calcul du overall score:
-        #  si un serializer arrive #0 (première place) pour tel attribut,
-        #     son score augmente de results.serializers_number-0.
-        #  si un serializer arrive #1 (deuxième place) pour tel attribut,
-        #     son score augmente de results.serializers_number-1.
+        # overall score computing:
+        # * if a serializer is #0 (first rank) for a certain attribute,
+        #   its score increases by results.serializers_number-0.
+        # * if a serializer is #1 (first rank) for a certain attribute,
+        #   its score increases by results.serializers_number-1.
+        # * ...
         self.overallscores = {}
         for serializer in self.serializers:
             self.overallscores[serializer] = 0
@@ -835,9 +835,6 @@ class SerializationResults(dict):
 
         res = None  # unexpected result !
 
-        # TODO
-        # base100 n'existe que dans certains cas, il est donc impossible et inutile
-        # de le calculer tout le temps.
         if output == "base100":
             base100_serializerdataobj = self.get_base(attribute=attribute_name)
             base100 = self[base100_serializerdataobj.serializer][base100_serializerdataobj.dataobj]
