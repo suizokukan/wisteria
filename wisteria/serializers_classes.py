@@ -45,6 +45,17 @@ class SerializerData:
 
         _______________________________________________________________________
 
+        instance attributes:
+
+        o  (str)human_name
+        o  (str)internet
+        o  (bool)available  : is this serializer available ?
+        o  (str)version
+        o  (callable)func   : function to be called to use this serializer
+
+
+        methods:
+
         o  __init__(self, human_name, internet, available, func)
         o  __repr__(self)
         o  checkup_repr(self)
@@ -99,7 +110,14 @@ class SerializerDataObj:
     """
         SerializerDataObj class
 
-        Nothing but an easy way to set (serializer, dataobj)
+        Nothing but an easy way to store (serializer, dataobj)
+
+        _______________________________________________________________________
+
+        methods:
+
+        o  serializer: (str)
+        o  dataobj:    (str)
     """
     serializer: str = None
     dataobj: str = None
@@ -112,6 +130,17 @@ class SerializationResult:
         Class used to store tests results in a SerializationResults object.
 
         _______________________________________________________________________
+
+        instance attributes:
+        o  (bool)encoding_success
+        o  (bool)encoding_time
+        o  (bool)encoding_strlen
+        o  (bool)decoding_success
+        o  (bool)decoding_time
+        o  (bool)similarity
+
+
+        methods:
 
         o  __init__(self)
         o  __repr__(self)
@@ -148,24 +177,44 @@ class SerializationResults(dict):
 
         _______________________________________________________________________
 
+        instance attributes:
+
         o  (list)serializers        : list of str
         o  (list)dataobjs           : list of str
         o  (int) serializers_number : =len(self.serializers)
         o  (int) dataobjs_number    : =len(self.dataobjs)
+        o  (dict)halloffame         : e.g. {'encoding_success' = [(0.24, 'marshal'),
+                                                                  (0.22, 'pickle')],
+                                            ...
+
+                                      keys are: 'encoding_success', 'encoding_time',
+                                                'encoding_strlen',
+                                                'decoding_success', 'decoding_time',
+                                                'similarity',
+                                                'encoding_plus_decoding_time'
+        o  (dict)overallscores      : overallscores[serializer] = (int)overallscore
+
+
+        methods:
 
         o  __init__(self)
-        o  finish_initialization(self)
         o  _format_base100(bool_is_base100_reference, float_base100)
         o  _format_ratio(inttotal_and_floatratio)
         o  _format_stringlength(int_stringlength)
-        o  _format_success(self, bool_success)
+        o  _format_success(bool_success)
         o  _format_time(floattime)
+        o  comparison_inside_halloffame(self, serializer, attribute)
+        o  finish_initialization(self)
         o  get_base(self, attribute)
         o  get_dataobjs_base(self, attribute)
+        o  get_halloffame(self, attribute, index)
+        o  get_overallscore_rank(self, serializer)
+        o  get_overallscore_bestrank(self)
+        o  get_overallscore_worstrank(self)
         o  get_serializers_base(self, attribute)
-        o  ratio_decoding_success(self, serializer=None, dataobj=None)
-        o  ratio_encoding_success(self, serializer=None, dataobj=None)
-        o  ratio_similarity(self, serializer=None, dataobj=None)
+        o  ratio_decoding_success(self, serializer=None, dataobj=None, output="fmtstr")
+        o  ratio_encoding_success(self, serializer=None, dataobj=None, output="fmtstr")
+        o  ratio_similarity(self, serializer=None, dataobj=None, output="fmtstr")
         o  repr_attr(self, serializer, dataobj, attribute_name, output="fmtstr")
         o  total_decoding_time(self, serializer=None, dataobj=None, output="fmtstr")
         o  total_encoding_plus_decoding_time(self, serializer=None, dataobj=None, output="fmtstr")
@@ -181,100 +230,100 @@ class SerializationResults(dict):
         self.dataobjs = []
         self.serializers_number = None
         self.dataobjs_number = None
-        # TODO: 7 attributs dont encoding_plus_decoding_time
-        self.halloffame = None  # TODO {'encoding_success' = [(0.24, 'marshal'), (0.22, 'pickle')]}
+        self.halloffame = None
         self.overallscores = None
 
-    def get_halloffame(self,
-                       attribute,
-                       index):
+    @staticmethod
+    def _format_base100(bool_is_base100_reference,
+                        float_base100):
         """
-        TODO
-méthode pas à sa place, à déplacer plus bas dans le fichier
+            SerializationResults._format_base100()
+TODO
         """
-        assert attribute in ('encoding_success',
-                             'encoding_time',
-                             'decoding_success',
-                             'decoding_time',
-                             'encoding_strlen',
-                             'similarity')
+        if float_base100 is None:
+            return "[red](no data)[/red]"
 
-        serializer = self.halloffame[attribute][index][1]
-        value = self.halloffame[attribute][index][0]
+        prefix = " "
+        suffix = ""
+        if bool_is_base100_reference:
+            prefix = "[italic]*"
+            suffix = "[/italic]"
 
-        if attribute == 'encoding_success':
-            return f"{aspect_serializer(serializer)} " \
-                f"[{self.ratio_encoding_success(serializer=serializer)}]"
+        return f"{prefix}{float_base100:.2f}{suffix}"
 
-        if attribute == 'encoding_time':
-            return f"{aspect_serializer(serializer)} " \
-                f"[{self._format_time(value)}]"
-
-        if attribute == 'decoding_success':
-            return f"{aspect_serializer(serializer)} " \
-                f"[{self.ratio_decoding_success(serializer=serializer)}]"
-
-        if attribute == 'decoding_time':
-            serializer = self.halloffame[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
-                f"[{self._format_time(value)}]"
-
-        if attribute == 'similarity':
-            serializer = self.halloffame[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
-                f"[{self.ratio_similarity(serializer=serializer)}]"
-
-        if attribute == 'encoding_strlen':
-            serializer = self.halloffame[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
-                f"[{self._format_stringlength(value)}]"
-
-        return None  # this line should never be executed.
-
-    def get_overallscore_rank(self,
-                              serializer):
+    @staticmethod
+    def _format_ratio(inttotal_and_floatratio):
         """
-        TODO
-pas à sa place
-        """
-        _rank = None
+            SerializationResults._format_ratio()
 
-        # for rank, (score, _serializer) ...
-        for rank, (_, _serializer) in enumerate(sorted(
-                ((self.overallscores[serializer],
-                  serializer) for serializer in self.serializers), reverse=True)):
-            if serializer == _serializer:
-                _rank = rank
+            Format the input argument into a string. The input argument is an absolute
+            (int)number and a (float)fraction, its ratio.
+                ex: (3, 0.5) > "3 (50 %)"
 
-        return _rank
+            _______________________________________________________________
 
-    def get_overallscore_bestrank(self):
-        """
-        TODO
-        renvoie le(s) serializer(s) le(s) mieux placé(s) selon les self.overallscores
-        """
-        highestscore = sorted(
-            ((self.overallscores[serializer],
-              serializer) for serializer in self.serializers))[-1][0]
-        res = []
-        for serializer in self.serializers:
-            if self.overallscores[serializer] == highestscore:
-                res.append(serializer)
-        return res
+            ARGUMENT: (None|(int, float))inttotal_and_floatratio
 
-    def get_overallscore_worstrank(self):
+            RETURNED VALUE: a formatted string representing the input argument.
         """
-        TODO
-        renvoie le(s) serializer(s) le(s) moins bien placé(s) selon les self.overallscores
+        if inttotal_and_floatratio != (None, None):
+            return f"{inttotal_and_floatratio[0]} " \
+                f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
+        return "[red](no data)[/red]"
+
+    @staticmethod
+    def _format_stringlength(int_stringlength):
         """
-        worstscore = sorted(
-            ((self.overallscores[serializer],
-              serializer) for serializer in self.serializers))[0][0]
-        res = []
-        for serializer in self.serializers:
-            if self.overallscores[serializer] == worstscore:
-                res.append(serializer)
-        return res
+            SerializationResults._format_stringlength()
+
+            Format the input argument into a string. The input argument is a (int)number
+            of characters
+                ex: 3 > "3 chars"
+
+            _______________________________________________________________
+
+            ARGUMENT: (None|int)int_stringlength, a string number.
+
+            RETURNED VALUE: a formatted string representing the input argument.
+        """
+        if int_stringlength is None:
+            return "[red](no data)[/red]"
+        return f"{int_stringlength} chars"
+
+    @staticmethod
+    def _format_success(bool_success):
+        """
+            SerializationResults._format_success()
+
+            Format the input argument into a string. The input argument is a (bool)success.
+                ex: False > "NOT OK"
+
+            _______________________________________________________________
+
+            ARGUMENT: (bool)bool_success
+
+            RETURNED VALUE: a formatted string representing the input argument.
+        """
+        if bool_success is None:
+            return "[red](no data)[/red]"
+        return "ok" if bool_success else "[red]NOT OK[/red]"
+
+    @staticmethod
+    def _format_time(floattime):
+        """
+            SerializationResults._format_time()
+
+            Format the input argument into a string. The input argument is a (float)time laps.
+                ex: 0.333345677 > "0.333345"
+            _______________________________________________________________
+
+            ARGUMENT: (None|float)floattime
+
+            RETURNED VALUE: a formatted string representing the input argument.
+        """
+        if floattime is None:
+            return "[red](no data)[/red]"
+        return f"{floattime:.6f}"
 
     def comparison_inside_halloffame(self,
                                      serializer,
@@ -377,98 +426,6 @@ pas à sa place
 
         return True
 
-    @staticmethod
-    def _format_base100(bool_is_base100_reference,
-                        float_base100):
-        """
-            SerializationResults._format_base100()
-TODO
-        """
-        if float_base100 is None:
-            return "[red](no data)[/red]"
-
-        prefix = " "
-        suffix = ""
-        if bool_is_base100_reference:
-            prefix = "[italic]*"
-            suffix = "[/italic]"
-
-        return f"{prefix}{float_base100:.2f}{suffix}"
-
-    @staticmethod
-    def _format_ratio(inttotal_and_floatratio):
-        """
-            SerializationResults._format_ratio()
-
-            Format the input argument into a string. The input argument is an absolute
-            (int)number and a (float)fraction, its ratio.
-                ex: (3, 0.5) > "3 (50 %)"
-
-            _______________________________________________________________
-
-            ARGUMENT: (None|(int, float))inttotal_and_floatratio
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if inttotal_and_floatratio != (None, None):
-            return f"{inttotal_and_floatratio[0]} " \
-                f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
-        return "[red](no data)[/red]"
-
-    @staticmethod
-    def _format_stringlength(int_stringlength):
-        """
-            SerializationResults._format_stringlength()
-
-            Format the input argument into a string. The input argument is a (int)number
-            of characters
-                ex: 3 > "3 chars"
-
-            _______________________________________________________________
-
-            ARGUMENT: (None|int)int_stringlength, a string number.
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if int_stringlength is None:
-            return "[red](no data)[/red]"
-        return f"{int_stringlength} chars"
-
-    @staticmethod
-    def _format_success(bool_success):
-        """
-            SerializationResults._format_success()
-
-            Format the input argument into a string. The input argument is a (bool)success.
-                ex: False > "NOT OK"
-
-            _______________________________________________________________
-
-            ARGUMENT: (bool)bool_success
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if bool_success is None:
-            return "[red](no data)[/red]"
-        return "ok" if bool_success else "[red]NOT OK[/red]"
-
-    @staticmethod
-    def _format_time(floattime):
-        """
-            SerializationResults._format_time()
-
-            Format the input argument into a string. The input argument is a (float)time laps.
-                ex: 0.333345677 > "0.333345"
-            _______________________________________________________________
-
-            ARGUMENT: (None|float)floattime
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if floattime is None:
-            return "[red](no data)[/red]"
-        return f"{floattime:.6f}"
-
     def get_base(self,
                  attribute):
         """
@@ -531,6 +488,96 @@ attribute: seulement 3 possibilités et non pas 5
             return None
 
         return None  # this line should never be executed.
+
+    def get_halloffame(self,
+                       attribute,
+                       index):
+        """
+        TODO
+        """
+        assert attribute in ('encoding_success',
+                             'encoding_time',
+                             'decoding_success',
+                             'decoding_time',
+                             'encoding_strlen',
+                             'similarity')
+
+        serializer = self.halloffame[attribute][index][1]
+        value = self.halloffame[attribute][index][0]
+
+        if attribute == 'encoding_success':
+            return f"{aspect_serializer(serializer)} " \
+                f"[{self.ratio_encoding_success(serializer=serializer)}]"
+
+        if attribute == 'encoding_time':
+            return f"{aspect_serializer(serializer)} " \
+                f"[{self._format_time(value)}]"
+
+        if attribute == 'decoding_success':
+            return f"{aspect_serializer(serializer)} " \
+                f"[{self.ratio_decoding_success(serializer=serializer)}]"
+
+        if attribute == 'decoding_time':
+            serializer = self.halloffame[attribute][index][1]
+            return f"{aspect_serializer(serializer)} " \
+                f"[{self._format_time(value)}]"
+
+        if attribute == 'similarity':
+            serializer = self.halloffame[attribute][index][1]
+            return f"{aspect_serializer(serializer)} " \
+                f"[{self.ratio_similarity(serializer=serializer)}]"
+
+        if attribute == 'encoding_strlen':
+            serializer = self.halloffame[attribute][index][1]
+            return f"{aspect_serializer(serializer)} " \
+                f"[{self._format_stringlength(value)}]"
+
+        return None  # this line should never be executed.
+
+    def get_overallscore_rank(self,
+                              serializer):
+        """
+        TODO
+pas à sa place
+        """
+        _rank = None
+
+        # for rank, (score, _serializer) ...
+        for rank, (_, _serializer) in enumerate(sorted(
+                ((self.overallscores[serializer],
+                  serializer) for serializer in self.serializers), reverse=True)):
+            if serializer == _serializer:
+                _rank = rank
+
+        return _rank
+
+    def get_overallscore_bestrank(self):
+        """
+        TODO
+        renvoie le(s) serializer(s) le(s) mieux placé(s) selon les self.overallscores
+        """
+        highestscore = sorted(
+            ((self.overallscores[serializer],
+              serializer) for serializer in self.serializers))[-1][0]
+        res = []
+        for serializer in self.serializers:
+            if self.overallscores[serializer] == highestscore:
+                res.append(serializer)
+        return res
+
+    def get_overallscore_worstrank(self):
+        """
+        TODO
+        renvoie le(s) serializer(s) le(s) moins bien placé(s) selon les self.overallscores
+        """
+        worstscore = sorted(
+            ((self.overallscores[serializer],
+              serializer) for serializer in self.serializers))[0][0]
+        res = []
+        for serializer in self.serializers:
+            if self.overallscores[serializer] == worstscore:
+                res.append(serializer)
+        return res
 
     def get_serializers_base(self,
                              attribute):

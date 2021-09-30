@@ -75,9 +75,14 @@ cwc
 
 [CURRENT] v. 0.0.6
 ------------------
-* description des classes
 * description des méthodes/fonctions
 * TODOs & Pylint
+
+[DONE] task-70
+
+Updated documentation in classes' headers.
+
+    * updated documentation in classes' headers (task-70)
 
 [DONE] task-69
 
