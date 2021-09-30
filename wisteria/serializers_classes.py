@@ -33,7 +33,8 @@
 from dataclasses import dataclass
 
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.reportaspect import aspect_serializer, aspect_percentage
+from wisteria.reportaspect import aspect_serializer, aspect_ratio, aspect_time
+from wisteria.reportaspect import aspect_base100, aspect_stringlength, aspect_boolsuccess
 from wisteria.msg import msgerror
 
 
@@ -68,6 +69,15 @@ class SerializerData:
                  func):
         """
             SerializerData.__init__()
+
+            ___________________________________________________________________
+
+            ARGUMENTS:
+            o  (str)human_name
+            o  (str)internet
+            o  (bool)available  : is this serializer available ?
+            o  (str)version
+            o  (callable)func   : function to be called to use this serializer
         """
         self.human_name = human_name
         self.internet = internet
@@ -80,6 +90,11 @@ class SerializerData:
             SerializerData.__repr__()
 
             For the check up output, see .checkup_repr().
+
+            ___________________________________________________________________
+
+            RETURNED VALUE: (str)a basic representation of <self>.
+                            See also .checkup_repr() and .simple_repr()
         """
         return f"{self.human_name=}; {self.internet=}; " \
             f"{self.available=}; {self.version=}; {self.func=}"
@@ -89,6 +104,11 @@ class SerializerData:
             SerializerData.checkup_repr()
 
             Does the same as .__repr__() but for the check up output.
+
+            ___________________________________________________________________
+
+            RETURNED VALUE: (str)a basic representation of <self>.
+                            See also .__repr__() and .simple_repr()
         """
         if self.available:
             return f"(available)     '{self.human_name}' ({self.version}), see {self.internet}."
@@ -99,6 +119,11 @@ class SerializerData:
             SerializerData.simple_repr()
 
             Does the same as .__repr__() but for a simple output.
+
+            ___________________________________________________________________
+
+            RETURNED VALUE: (str)a basic representation of <self>.
+                            See also .checkup_repr() and .__repr__()
         """
         if self.available:
             return f"(available)     '{self.human_name}' ({self.version})"
@@ -148,6 +173,17 @@ class SerializationResult:
     def __init__(self):
         """
             SerializationResult.__init__()
+
+            ___________________________________________________________________
+
+            ARGUMENTS:
+
+            o  (bool)encoding_success
+            o  (bool)encoding_time
+            o  (bool)encoding_strlen
+            o  (bool)decoding_success
+            o  (bool)decoding_time
+            o  (bool)similarity
         """
         self.encoding_success = False
         self.encoding_time = None
@@ -198,11 +234,6 @@ class SerializationResults(dict):
         methods:
 
         o  __init__(self)
-        o  _format_base100(bool_is_base100_reference, float_base100)
-        o  _format_ratio(inttotal_and_floatratio)
-        o  _format_stringlength(int_stringlength)
-        o  _format_success(bool_success)
-        o  _format_time(floattime)
         o  comparison_inside_halloffame(self, serializer, attribute)
         o  finish_initialization(self)
         o  get_base(self, attribute)
@@ -224,6 +255,24 @@ class SerializationResults(dict):
     def __init__(self):
         """
             SerializationResults.__init__()
+
+            ___________________________________________________________________
+
+            ARGUMENTS:
+            o  (list)serializers        : list of str
+            o  (list)dataobjs           : list of str
+            o  (int) serializers_number : =len(self.serializers)
+            o  (int) dataobjs_number    : =len(self.dataobjs)
+            o  (dict)halloffame         : e.g. {'encoding_success' = [(0.24, 'marshal'),
+                                                                      (0.22, 'pickle')],
+                                                ...
+
+                                          keys are: 'encoding_success', 'encoding_time',
+                                                    'encoding_strlen',
+                                                    'decoding_success', 'decoding_time',
+                                                    'similarity',
+                                                    'encoding_plus_decoding_time'
+            o  (dict)overallscores      : overallscores[serializer] = (int)overallscore
         """
         dict.__init__(self)
         self.serializers = []
@@ -233,108 +282,25 @@ class SerializationResults(dict):
         self.halloffame = None
         self.overallscores = None
 
-    @staticmethod
-    def _format_base100(bool_is_base100_reference,
-                        float_base100):
-        """
-            SerializationResults._format_base100()
-TODO
-        """
-        if float_base100 is None:
-            return "[red](no data)[/red]"
-
-        prefix = " "
-        suffix = ""
-        if bool_is_base100_reference:
-            prefix = "[italic]*"
-            suffix = "[/italic]"
-
-        return f"{prefix}{float_base100:.2f}{suffix}"
-
-    @staticmethod
-    def _format_ratio(inttotal_and_floatratio):
-        """
-            SerializationResults._format_ratio()
-
-            Format the input argument into a string. The input argument is an absolute
-            (int)number and a (float)fraction, its ratio.
-                ex: (3, 0.5) > "3 (50 %)"
-
-            _______________________________________________________________
-
-            ARGUMENT: (None|(int, float))inttotal_and_floatratio
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if inttotal_and_floatratio != (None, None):
-            return f"{inttotal_and_floatratio[0]} " \
-                f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
-        return "[red](no data)[/red]"
-
-    @staticmethod
-    def _format_stringlength(int_stringlength):
-        """
-            SerializationResults._format_stringlength()
-
-            Format the input argument into a string. The input argument is a (int)number
-            of characters
-                ex: 3 > "3 chars"
-
-            _______________________________________________________________
-
-            ARGUMENT: (None|int)int_stringlength, a string number.
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if int_stringlength is None:
-            return "[red](no data)[/red]"
-        return f"{int_stringlength} chars"
-
-    @staticmethod
-    def _format_success(bool_success):
-        """
-            SerializationResults._format_success()
-
-            Format the input argument into a string. The input argument is a (bool)success.
-                ex: False > "NOT OK"
-
-            _______________________________________________________________
-
-            ARGUMENT: (bool)bool_success
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if bool_success is None:
-            return "[red](no data)[/red]"
-        return "ok" if bool_success else "[red]NOT OK[/red]"
-
-    @staticmethod
-    def _format_time(floattime):
-        """
-            SerializationResults._format_time()
-
-            Format the input argument into a string. The input argument is a (float)time laps.
-                ex: 0.333345677 > "0.333345"
-            _______________________________________________________________
-
-            ARGUMENT: (None|float)floattime
-
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
-        if floattime is None:
-            return "[red](no data)[/red]"
-        return f"{floattime:.6f}"
-
     def comparison_inside_halloffame(self,
                                      serializer,
                                      attribute):
         """
-        TODO
-        pas à sa place
-                par rapport à l'<attribute>, comment serializer est-il placé dans self.halloffame ?
+            SerializationResults.comparison_inside_halloffame()
 
-        Renvoie les serializers mieux placés (=placés avant), les serializers moins bien placés
-(=placés après)
+            Returns the serializers better placed than <serializer>
+            (=placed before <serializer>) and the less well placed
+            serializers than <serializer> (=placed after <serializer>)
+            in relation to <attribute>.
+
+            ___________________________________________________________________
+
+            ARGUMENTS:
+            o  (str)serializer
+            o  (str)attribute
+
+            RETURNED VALUE: (list of better placed serializers than <serializer>,
+                             list of less well placed serializers than <serializer>)
         """
         _less = []
         _more = []
@@ -430,10 +396,20 @@ TODO
                  attribute):
         """
             SerializationResults.get_base()
-TODO
-        Return serializer+base data object for attribute <attribute>.
 
-attribute: seulement 3 possibilités et non pas 5
+            Return <serializer, base data object> for attribute <attribute>.
+
+            In other words, get_base() searches the first available couple
+            of <serializer, base data object> which is initialized so that
+            this couple could be a base for the <attribute>.
+
+            ___________________________________________________________________
+
+            ARGUMENT:
+            o  (str)attribute, with only 3 values, namely "encoding_time",
+               "decoding_time" and "encoding_strlen".
+
+            RETURNED VALUE: (SerializerDataObj), i.e. serializer + dataobj
         """
         assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
 
@@ -463,9 +439,21 @@ attribute: seulement 3 possibilités et non pas 5
     def get_dataobjs_base(self,
                           attribute):
         """
-        TODO
+            SerializationResults.get_dataobjs_base()
 
-        Return base data object for attribute <attribute>.
+            Return base data object for attribute <attribute>.
+
+            In other words, get_dataobjs_base() searches the first available couple
+            of <self.serializers[0], dataobj> which is initialized so that
+            this couple could be a base for the <attribute>.
+
+            ___________________________________________________________________
+
+            ARGUMENT:
+            o  (str)attribute, with only 3 values, namely "encoding_time",
+               "decoding_time" and "encoding_strlen".
+
+            RETURNED VALUE: (str)dataobject name
         """
         assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
 
@@ -493,7 +481,25 @@ attribute: seulement 3 possibilités et non pas 5
                        attribute,
                        index):
         """
-        TODO
+            SerializationResults.get_halloffame()
+
+            Return the formatted string result of the 'hall of fame'
+            for a given <attribute> and an <index>.
+            In other words, answer the question: which serializer is number
+            #<index> for a given <attribute> ?
+
+            ___________________________________________________________________
+
+            ARGUMENT:
+            o  (str)attribute: 'encoding_success' or
+                               'encoding_time' or
+                               'decoding_success' or
+                               'decoding_time' or
+                               'encoding_strlen' or
+                               'similarity'
+            o  (int)index: 0 <= index < len(self.serializers_numbers-1)
+
+            RETURNED VALUE: (str)a formatted string describing the result.
         """
         assert attribute in ('encoding_success',
                              'encoding_time',
@@ -511,7 +517,7 @@ attribute: seulement 3 possibilités et non pas 5
 
         if attribute == 'encoding_time':
             return f"{aspect_serializer(serializer)} " \
-                f"[{self._format_time(value)}]"
+                f"[{aspect_time(value)}]"
 
         if attribute == 'decoding_success':
             return f"{aspect_serializer(serializer)} " \
@@ -520,7 +526,7 @@ attribute: seulement 3 possibilités et non pas 5
         if attribute == 'decoding_time':
             serializer = self.halloffame[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
-                f"[{self._format_time(value)}]"
+                f"[{aspect_time(value)}]"
 
         if attribute == 'similarity':
             serializer = self.halloffame[attribute][index][1]
@@ -530,15 +536,23 @@ attribute: seulement 3 possibilités et non pas 5
         if attribute == 'encoding_strlen':
             serializer = self.halloffame[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
-                f"[{self._format_stringlength(value)}]"
+                f"[{aspect_stringlength(value)}]"
 
         return None  # this line should never be executed.
 
     def get_overallscore_rank(self,
                               serializer):
         """
-        TODO
-pas à sa place
+            SerializationResults.get_overallscore_rank()
+
+            Return the (int)rank of <serializer> among 'overall scores'.
+
+            ___________________________________________________________________
+
+            ARGUMENT:
+            o  (str)serializer
+
+            RETURNED VALUE: (int)rank, 0 <= rank < len(self.serializers_numbers)
         """
         _rank = None
 
@@ -553,8 +567,15 @@ pas à sa place
 
     def get_overallscore_bestrank(self):
         """
-        TODO
-        renvoie le(s) serializer(s) le(s) mieux placé(s) selon les self.overallscores
+            SerializationResults.get_overallscore_bestrank()
+
+            Return the list of the serializers with the best score
+            among "overall scores". There's maybe more than one serializer
+            having the highest score, hence the returned list.
+
+            ___________________________________________________________________
+
+            RETURNED VALUE: (list)list of (str)serializers
         """
         highestscore = sorted(
             ((self.overallscores[serializer],
@@ -567,8 +588,15 @@ pas à sa place
 
     def get_overallscore_worstrank(self):
         """
-        TODO
-        renvoie le(s) serializer(s) le(s) moins bien placé(s) selon les self.overallscores
+            SerializationResults.get_overallscore_worstrank()
+
+            Return the list of the serializers with the worst score
+            among "overall scores". There's maybe more than one serializer
+            having the worst score, hence the returned list.
+
+            ___________________________________________________________________
+
+            RETURNED VALUE: (list)list of (str)serializers
         """
         worstscore = sorted(
             ((self.overallscores[serializer],
@@ -625,8 +653,12 @@ pas à sa place
             o  <None|str>dataobj: if not None, name of the data object to be used.
                 BEWARE ! One and only one argument among <serializer> and <dataobj> can be set to
                          None.
-TODO : output
-            RETURNED VALUE: a formatted string representing the input argument.
+            o  <output>(str): "fmtstr" for a formatted returned string or "value"
+               for the (float)raw value
+
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value')
@@ -636,25 +668,25 @@ TODO : output
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_ratio((None, None))
+                return aspect_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].decoding_success:
                     count += 1
             if output == "fmtstr":
-                return SerializationResults._format_ratio((count, count/self.dataobjs_number))
+                return aspect_ratio((count, count/self.dataobjs_number))
             if output == "value":
                 return count/self.dataobjs_number
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return SerializationResults._format_ratio((None, None))
+            return aspect_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj].decoding_success:
                 count += 1
         if output == "fmtstr":
-            return SerializationResults._format_ratio((count, count/self.serializers_number))
+            return aspect_ratio((count, count/self.serializers_number))
         if output == "value":
             return count/self.serializers_number
 
@@ -677,9 +709,12 @@ TODO : output
             o  <None|str>dataobj: if not None, name of the data object to be used.
                 BEWARE ! One and only one argument among <serializer> and <dataobj> can be set to
                          None.
-        TODO output
+            o  <output>(str): "fmtstr" for a formatted returned string or "value"
+               for the (float)raw value
 
-            RETURNED VALUE: a formatted string representing the input argument.
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float
         """
         assert serializer is None or dataobj is None
         assert output in ("fmtstr", "value")
@@ -689,25 +724,25 @@ TODO : output
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_ratio((None, None))
+                return aspect_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].encoding_success:
                     count += 1
             if output == "fmtstr":
-                return SerializationResults._format_ratio((count, count/self.dataobjs_number))
+                return aspect_ratio((count, count/self.dataobjs_number))
             if output == "value":
                 return count/self.dataobjs_number
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return SerializationResults._format_ratio((None, None))
+            return aspect_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj].encoding_success:
                 count += 1
         if output == "fmtstr":
-            return SerializationResults._format_ratio((count, count/self.serializers_number))
+            return aspect_ratio((count, count/self.serializers_number))
         if output == "value":
             return count/self.serializers_number
 
@@ -730,11 +765,12 @@ TODO : output
             o  <None|str>dataobj: if not None, name of the data object to be used.
                 BEWARE ! One and only one argument among <serializer> and <dataobj> can be set to
                          None.
-            o  (str)output: output type and format
-                    - "value": raw value (float)
-                    - "fmtstr": formatted string (str)
+            o  <output>(str): "fmtstr" for a formatted returned string or "value"
+               for the (float)raw value
 
-            RETURNED VALUE: a formatted string representing the input argument.
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value')
@@ -744,26 +780,26 @@ TODO : output
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_ratio((None, None))
+                return aspect_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].similarity:
                     count += 1
             if output == "fmtstr":
-                return SerializationResults._format_ratio((count, count/self.dataobjs_number))
+                return aspect_ratio((count, count/self.dataobjs_number))
             if output == "value":
                 return count/self.dataobjs_number
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return SerializationResults._format_ratio((None, None))
+            return aspect_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj].similarity:
                 count += 1
 
         if output == "fmtstr":
-            return SerializationResults._format_ratio((count, count/self.serializers_number))
+            return aspect_ratio((count, count/self.serializers_number))
         if output == "value":
             return count/self.serializers_number
 
@@ -780,13 +816,23 @@ TODO : output
             Format the value stored into self[serializer][dataobj].<attribute_name>.
 
             _______________________________________________________________
-TODO
-            ARGUMENT:
-output="fmtstr" | "base100"
+
+            o  <str>serializer: name of the serializer to be used.
+            o  <str>dataobj: name of the data object to be used.
+            o  <output>(str): "fmtstr" for a formatted returned string, "base100"
+               for a special formatted string
 
             RETURNED VALUE: a formatted string representing
                             self[serializer][dataobj].<attribute_name>
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='base100')a special string considering
+                                   self[serializer][dataobj].<attribute_name>
+                                   as a base100 reference.
         """
+        assert serializer is not None
+        assert dataobj is not None
+        assert output in ('fmtstr', 'base100')
+
         res = None  # unexpected result !
 
         # TODO
@@ -798,7 +844,7 @@ output="fmtstr" | "base100"
 
         if attribute_name == "decoding_success":
             if output == "fmtstr":
-                res = SerializationResults._format_success(
+                res = aspect_boolsuccess(
                     self[serializer][dataobj].decoding_success)
             else:
                 raise WisteriaError(
@@ -807,49 +853,49 @@ output="fmtstr" | "base100"
 
         if attribute_name == "decoding_time":
             if output == "fmtstr":
-                res = SerializationResults._format_time(
+                res = aspect_time(
                     self[serializer][dataobj].decoding_time)
             else:
                 # output == "base100"
                 if self[serializer][dataobj].decoding_time is None:
                     res = "[red]no data[/red]"
                 else:
-                    res = SerializationResults._format_base100(
+                    res = aspect_base100(
                         serializer == base100_serializerdataobj.serializer and
                         dataobj == base100_serializerdataobj.dataobj,
                         100*self[serializer][dataobj].decoding_time/base100.decoding_time)
 
         if attribute_name == "encoding_strlen":
             if output == "fmtstr":
-                res = SerializationResults._format_stringlength(
+                res = aspect_stringlength(
                     self[serializer][dataobj].encoding_strlen)
             else:
                 # output == "base100"
                 if self[serializer][dataobj].encoding_strlen is None:
                     res = "[red]no data[/red]"
                 else:
-                    res = SerializationResults._format_base100(
+                    res = aspect_base100(
                         serializer == base100_serializerdataobj.serializer and
                         dataobj == base100_serializerdataobj.dataobj,
                         100*self[serializer][dataobj].encoding_strlen/base100.encoding_strlen)
 
         if attribute_name == "encoding_time":
             if output == "fmtstr":
-                res = SerializationResults._format_time(
+                res = aspect_time(
                     self[serializer][dataobj].encoding_time)
             else:
                 # output == "base100"
                 if self[serializer][dataobj].encoding_time is None:
                     res = "[red]no data[/red]"
                 else:
-                    res = SerializationResults._format_base100(
+                    res = aspect_base100(
                         serializer == base100_serializerdataobj.serializer and
                         dataobj == base100_serializerdataobj.dataobj,
                         100*self[serializer][dataobj].encoding_time/base100.encoding_time)
 
         if attribute_name == "encoding_success":
             if output == "fmtstr":
-                res = SerializationResults._format_success(
+                res = aspect_boolsuccess(
                     self[serializer][dataobj].encoding_success)
             else:
                 raise WisteriaError(
@@ -858,7 +904,7 @@ output="fmtstr" | "base100"
 
         if attribute_name == "similarity":
             if output == "fmtstr":
-                res = SerializationResults._format_success(
+                res = aspect_boolsuccess(
                     self[serializer][dataobj].similarity)
             else:
                 raise WisteriaError(
@@ -892,16 +938,18 @@ output="fmtstr" | "base100"
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
                     - "base100": formatted string based on a "base 100" value (str)
-            RETURNED VALUE: a formatted string representing the input argument.
+
+            RETURNED VALUE: a formatted string representing the input arguments.
         """
         assert serializer is None or dataobj is None
+        assert output in ('fmtstr', 'value', 'base100')
 
         res = None  # unexpected result !
         total = 0  # total time
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_time(None)
+                return aspect_time(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].decoding_success:
@@ -909,9 +957,9 @@ output="fmtstr" | "base100"
             if output == "value":
                 res = total
             if output == "fmtstr":
-                res = SerializationResults._format_time(total)
+                res = aspect_time(total)
             if output == "base100":
-                res = SerializationResults._format_base100(
+                res = aspect_base100(
                     serializer == self.get_serializers_base('decoding_time'),
                     100*total/self.total_decoding_time(
                         serializer=self.get_serializers_base('decoding_time'),
@@ -919,7 +967,7 @@ output="fmtstr" | "base100"
 
         else:
             if self.dataobjs_number == 0:
-                return SerializationResults._format_time(None)
+                return aspect_time(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj].decoding_success:
@@ -927,9 +975,9 @@ output="fmtstr" | "base100"
             if output == "value":
                 res = total
             if output == "fmtstr":
-                res = SerializationResults._format_time(total)
+                res = aspect_time(total)
             if output == "base100":
-                res = SerializationResults._format_base100(
+                res = aspect_base100(
                     dataobj == self.get_dataobjs_base('decoding_time'),
                     100*total/self.total_decoding_time(
                         dataobj=self.get_dataobjs_base('decoding_time'),
@@ -947,8 +995,8 @@ output="fmtstr" | "base100"
         """
             SerializationResults.total_encoding_plus_decoding_time()
 
-            Compute and format the total encoding + decoding time used by a <serializer>
-            OR by a <dataobj>ect.
+            Compute and format the total encoding + decoding time used by a
+            <serializer> OR by a <dataobj>ect.
 
             _______________________________________________________________
 
@@ -960,15 +1008,18 @@ output="fmtstr" | "base100"
             o  (str)output: output type and format
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
-                    NOT "base100": formatted string based on a "base 100" value (str)
+                    NOT "base100": no formatted string based on a "base 100" value (str)
 
-            RETURNED VALUE: a formatted string representing the input argument.
+            RETURNED VALUE: a formatted string representing the input arguments.
         """
+        assert serializer is None or dataobj is None
+        assert output in ('fmtstr', 'value',)
+
         if output == "value":
             return self.total_encoding_time(serializer, dataobj, output) + \
                 self.total_decoding_time(serializer, dataobj, output)
         if output == "fmtstr":
-            return SerializationResults._format_time(
+            return aspect_time(
                 self.total_encoding_time(serializer, dataobj, output='value') +
                 self.total_decoding_time(serializer, dataobj, output='value'))
 
@@ -997,16 +1048,17 @@ output="fmtstr" | "base100"
                     - "fmtstr": formatted string (str)
                     - "base100": formatted string based on a "base 100" value (str)
 
-            RETURNED VALUE: a formatted string representing the input argument.
+            RETURNED VALUE: a formatted string representing the input arguments.
         """
         assert serializer is None or dataobj is None
+        assert output in ('fmtstr', 'value', 'base100')
 
         res = None  # unexpected result !
         total = 0  # total time
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_stringlength(None)
+                return aspect_stringlength(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].encoding_strlen:
@@ -1014,9 +1066,9 @@ output="fmtstr" | "base100"
             if output == "value":
                 res = total
             if output == "fmtstr":
-                res = SerializationResults._format_stringlength(total)
+                res = aspect_stringlength(total)
             if output == "base100":
-                res = SerializationResults._format_base100(
+                res = aspect_base100(
                     serializer == self.get_serializers_base('encoding_strlen'),
                     100*total/self.total_encoding_strlen(
                         serializer=self.get_serializers_base('encoding_strlen'),
@@ -1024,7 +1076,7 @@ output="fmtstr" | "base100"
 
         else:
             if self.dataobjs_number == 0:
-                return SerializationResults._format_stringlength(None)
+                return aspect_stringlength(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj].encoding_strlen:
@@ -1032,9 +1084,9 @@ output="fmtstr" | "base100"
             if output == "value":
                 res = total
             if output == "fmtstr":
-                res = SerializationResults._format_stringlength(total)
+                res = aspect_stringlength(total)
             if output == "base100":
-                res = SerializationResults._format_base100(
+                res = aspect_base100(
                     dataobj == self.get_dataobjs_base('encoding_strlen'),
                     100*total/self.total_encoding_strlen(
                         dataobj=self.get_dataobjs_base('encoding_strlen'),
@@ -1066,16 +1118,18 @@ output="fmtstr" | "base100"
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
                     - "base100": formatted string based on a "base 100" value (str)
+
             RETURNED VALUE: a formatted string representing the input argument.
         """
         assert serializer is None or dataobj is None
+        assert output in ('fmtstr', 'value', 'base100')
 
         res = None  # unexpected result !
         total = 0  # total time
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return SerializationResults._format_time(None)
+                return aspect_time(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].encoding_success:
@@ -1083,9 +1137,9 @@ output="fmtstr" | "base100"
             if output == "value":
                 res = total
             if output == "fmtstr":
-                res = SerializationResults._format_time(total)
+                res = aspect_time(total)
             if output == "base100":
-                res = SerializationResults._format_base100(
+                res = aspect_base100(
                     serializer == self.get_serializers_base('encoding_time'),
                     100*total/self.total_encoding_time(
                         serializer=self.get_serializers_base('encoding_time'),
@@ -1093,7 +1147,7 @@ output="fmtstr" | "base100"
 
         else:
             if self.dataobjs_number == 0:
-                res = SerializationResults._format_time(None)
+                res = aspect_time(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj].encoding_success:
@@ -1101,9 +1155,9 @@ output="fmtstr" | "base100"
             if output == "value":
                 res = total
             if output == "fmtstr":
-                res = SerializationResults._format_time(total)
+                res = aspect_time(total)
             if output == "base100":
-                res = SerializationResults._format_base100(
+                res = aspect_base100(
                     dataobj == self.get_dataobjs_base('encoding_time'),
                     100*total/self.total_encoding_time(
                         dataobj=self.get_dataobjs_base('encoding_time'),

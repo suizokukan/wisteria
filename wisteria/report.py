@@ -80,7 +80,15 @@ def humanratio(ratio):
 
 def cmpdata2phrase(cmpdata):
     """
-    TODO
+        cmpdata2phrase()
+
+        Convert <cmpdata> to a phrase describing <cmpdata>.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)<cmpdata>: 'all', 'ini', 'cwc'
+
+        RETURNED VALUE: (str)a string describing <cmpdata>
     """
     assert cmpdata in ('all', 'ini', 'cwc')
 

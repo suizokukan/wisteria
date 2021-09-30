@@ -46,7 +46,7 @@ def get_serializers_selection(serializer1,
     """
         get_serializers_selection()
 
-        Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer1>.
+        Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer2>.
 
         _______________________________________________________________________
 
@@ -54,7 +54,8 @@ def get_serializers_selection(serializer1,
         o    <serializer1> : value returned by read_cmpstring()
         o    <serializer2> : value returned by read_cmpstring()
 
-        RETURNED VALUE: a tuple of str
+        RETURNED VALUE: a tuple of str, i.e. all serializers defined by (str)<serializer1>,
+                        (str)<serializer2>
     """
     res = set()
 
@@ -83,8 +84,8 @@ def get_data_selection(cmpdata,
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  cmpdata:   (str)"all" or "ini"
-        o  config: (dict) dict returned by read_cfgfile()
+        o  cmpdata: (str)"all" or "ini"
+        o  config:  (dict) dict returned by read_cfgfile()
 
         RETURNED VALUE: (tuple) a tuple of (str)data keys
     """
@@ -127,7 +128,14 @@ def compute_results(config,
         required encodings/decodings defined by <serializer1>,
         <serializer2> and <cmpdata>.
 
-        TODO : arguments
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  config               : None if no config file, otherwise the dict
+                                  returned by read_cfgfile().
+        o  (str)serializer1
+        o  (str)serializer2
+        o  (str)cmpdata         : 'all', 'ini' or 'cwc'
 
         RETURNED VALUE:    (SerializationResults, None) if no error occured
                         or (None, (int)exit_code) if an error occured

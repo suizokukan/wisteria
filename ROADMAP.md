@@ -75,8 +75,19 @@ cwc
 
 [CURRENT] v. 0.0.6
 ------------------
-* description des méthodes/fonctions
 * TODOs & Pylint
+* je ne comprends pas le pourquoi de SerializationResults.get_dataobjs_base()
+  & get_serializers_base()
+  
+[DONE] task-71
+
+Docstring of all methods & functions; fixed a bug in read_cmpstring().
+
+    * docstring of all methods & functions (task-71)
+    * fixed a bug in read_cmpstring():
+      Since cmpdata is the real name of cmp (cf task-68), group('data') becomes
+      group('cmpdata') (task-71)
+    * added some assert() to explicit arguments specificities
 
 [DONE] task-70
 

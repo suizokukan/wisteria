@@ -25,12 +25,63 @@
 
     ___________________________________________________________________________
 
+    o  aspect_base100(bool_is_base100_reference, float_base100)
+    o  aspect_boolsuccess(bool_success)
     o  aspect_data(data_objectname)
     o  aspect_percentage(percentage)
+    o  aspect_ratio(inttotal_and_floatratio)
     o  aspect_serializer(serializer)
+    o  aspect_stringlength(int_stringlength)
+    o  aspect_time(floattime)
     o  aspect_title(title)
 """
 import wisteria.globs
+
+
+def aspect_base100(bool_is_base100_reference,
+                   float_base100):
+    """
+        SerializationResults.aspect_base100()
+
+        Format (float)<float_base100> and return this value as a string.
+        If <bool_is_base100_reference> is True, it means that <float_base100>
+        is the base100 reference value: its representation will therefore be
+         slightly different.
+        ___________________________________________________________________
+
+        ARGUMENTS:
+        o  (bool)bool_is_base100_reference : is <float_base100> a base100
+                                             reference value ?
+        o  (float)float_base100
+    """
+    if float_base100 is None:
+        return "[red](no data)[/red]"
+
+    prefix = " "
+    suffix = ""
+    if bool_is_base100_reference:
+        prefix = "[italic]*"
+        suffix = "[/italic]"
+
+    return f"{prefix}{float_base100:.2f}{suffix}"
+
+
+def aspect_boolsuccess(bool_success):
+    """
+        SerializationResults.aspect_boolsuccess()
+
+        Format the input argument into a string. The input argument is a (bool)success.
+            ex: False > "NOT OK"
+
+        _______________________________________________________________
+
+        ARGUMENT: (bool)bool_success
+
+        RETURNED VALUE: a formatted string representing the input argument.
+    """
+    if bool_success is None:
+        return "[red](no data)[/red]"
+    return "ok" if bool_success else "[red]NOT OK[/red]"
 
 
 def aspect_data(data_objectname):
@@ -63,6 +114,26 @@ def aspect_percentage(percentage):
     return f"{percentage:.2f}%"
 
 
+def aspect_ratio(inttotal_and_floatratio):
+    """
+        SerializationResults.aspect_ratio()
+
+        Format the input argument into a string. The input argument is an absolute
+        (int)number and a (float)fraction, its ratio.
+            ex: (3, 0.5) > "3 (50 %)"
+
+        _______________________________________________________________
+
+        ARGUMENT: (None|(int, float))inttotal_and_floatratio
+
+        RETURNED VALUE: a formatted string representing the input argument.
+    """
+    if inttotal_and_floatratio != (None, None):
+        return f"{inttotal_and_floatratio[0]} " \
+            f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
+    return "[red](no data)[/red]"
+
+
 def aspect_serializer(serializer):
     """
         aspect_serializer()
@@ -76,6 +147,42 @@ def aspect_serializer(serializer):
         RETURNED VALUE: (str)serializer + some text attributes.
     """
     return f"[yellow]{wisteria.globs.SERIALIZERS[serializer].human_name}[/yellow]"
+
+
+def aspect_stringlength(int_stringlength):
+    """
+        SerializationResults.aspect_stringlength()
+
+        Format the input argument into a string. The input argument is a (int)number
+        of characters
+            ex: 3 > "3 chars"
+
+        _______________________________________________________________
+
+        ARGUMENT: (None|int)int_stringlength, a string number.
+
+        RETURNED VALUE: a formatted string representing the input argument.
+    """
+    if int_stringlength is None:
+        return "[red](no data)[/red]"
+    return f"{int_stringlength} chars"
+
+
+def aspect_time(floattime):
+    """
+        SerializationResults.aspect_time()
+
+        Format the input argument into a string. The input argument is a (float)time laps.
+            ex: 0.333345677 > "0.333345"
+        _______________________________________________________________
+
+        ARGUMENT: (None|float)floattime
+
+        RETURNED VALUE: a formatted string representing the input argument.
+    """
+    if floattime is None:
+        return "[red](no data)[/red]"
+    return f"{floattime:.6f}"
 
 
 def aspect_title(title):

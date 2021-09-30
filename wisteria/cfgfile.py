@@ -81,7 +81,7 @@ def read_cfgfile(filename):
 
         ARGUMENT: (str)filename, the file to be read.
 
-        RETURNED VALUE: (None if a problem occured or a dict)
+        RETURNED VALUE: (None if a problem occured or a dict is success)
             (pimydoc)config file format
             ⋅
             ⋅----------------------------------------------------------------

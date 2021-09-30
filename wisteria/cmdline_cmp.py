@@ -73,7 +73,7 @@ def read_cmpstring(cmpstring):
         serializer2 = res.group("serializer2")
         if serializer2 is None or serializer2 == "others":
             serializer2 = "all"
-        cmpdata = res.group("data")
+        cmpdata = res.group("cmpdata")
         if cmpdata is None:
             cmpdata = "all"
 

@@ -42,6 +42,7 @@ def normpath(path):
 
         Return a human-readable (e.g. "~" -> "/home/myhome/") normalized
         version of a file path.
+
         ________________________________________________________________________
 
         PARAMETER : (str)path
@@ -59,6 +60,14 @@ def shortenedstr(string,
     """
         This function reduces a <string> so that the maximum length of the returned
         string is equal to <maximallength>.
+
+        ________________________________________________________________________
+
+        PARAMETERS:
+        o  (str)string       : to be string to be shortened
+        o  (int)maximallength: the maximal length of <string>
+
+        RETURNED VALUE: (str)<string> or a shortened version of <string>
     """
     # ---- nothing to do, <string> isn't too long. ----------------------------
     if len(string) <= maximallength:
@@ -69,7 +78,7 @@ def shortenedstr(string,
 
     # a special case: <maximallength> is really too short !
     if len(suffix) > maximallength:
-        return string
+        return string  # TODO couper correctement ici
 
     # e.g. if maximallength==10, if string="01234567890"(len=11)  > "0123456[…]" (len=10)
     # e.g. if maximallength==10, if string="012345678901"(len=12) > "0123456[…]" (len=10)
