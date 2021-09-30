@@ -893,7 +893,7 @@ def report_section_c1a(results,
         table.add_row(f"{aspect_serializer(serializer)} :")
         for dataobj in results.dataobjs:
             table.add_row(
-                "> " + "{aspect_data(dataobj)}",
+                "> " + f"{aspect_data(dataobj)}",
                 results.repr_attr(serializer, dataobj, "encoding_success"),
                 results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
                 results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),

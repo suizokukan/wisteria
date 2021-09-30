@@ -75,9 +75,18 @@ cwc
 
 [CURRENT] v. 0.0.6
 ------------------
-* TODOs & Pylint
 * je ne comprends pas le pourquoi de SerializationResults.get_dataobjs_base()
   & get_serializers_base()
+  
+[DONE] task-74
+
+Fixed a minor error in report_section_c1a(): forgotten f- prefix
+for a f-string.
+
+    * Fixed a minor error in report_section_c1a(): forgotten f- prefix
+      for a f-string.
+
+    * pylint: 10/10
   
 [DONE] task-73
 
