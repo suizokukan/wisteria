@@ -33,19 +33,19 @@
 import wisteria.globs
 
 
-def aspect_data(data):
+def aspect_data(data_objectname):
     """
         aspect_data()
 
-        Modify the aspect of (str)data.
+        Modify the aspect of (str)data_objectname.
 
         _______________________________________________________________________
 
-        ARGUMENT: (str)data
+        ARGUMENT: (str)data_objectname
 
-        RETURNED VALUE: (str)data + some text attributes.
+        RETURNED VALUE: (str)_objectname + some text attributes.
     """
-    return f"[bold white]{data}[/bold white]"
+    return f"[bold white]{data_objectname}[/bold white]"
 
 
 def aspect_percentage(percentage):

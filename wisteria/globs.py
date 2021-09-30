@@ -63,7 +63,7 @@ TMPFILENAME = "wisteria.tmp"
 
 REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?"
-                       r"(\s*\((?P<data>all|cwc|ini)\))?\s*$")
+                       r"(\s*\((?P<cmpdata>all|cwc|ini)\))?\s*$")
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 
 # REPORT_SHORTCUTS has two goals:

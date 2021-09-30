@@ -65,7 +65,7 @@ def get_serializers_selection(serializer1,
     return tuple(res)
 
 
-def get_data_selection(data,
+def get_data_selection(cmpdata,
                        config):
     """
         get_data_selection()
@@ -75,16 +75,16 @@ def get_data_selection(data,
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  data:   (str)"all" or "ini"
+        o  cmpdata:   (str)"all" or "ini"
         o  config: (dict) dict returned by read_cfgfile()
 
         RETURNED VALUE: (tuple) a tuple of (str)data keys
     """
     res = []
 
-    if data == "all":
+    if cmpdata == "all":
         res = tuple(wisteria.globs.DATA.keys())
-    elif data == "ini":
+    elif cmpdata == "ini":
         if config["data selection"]["data selection"] == "all":
             res = tuple(config["objects"].keys())
         elif config["data selection"]["data selection"] == "only if yes":
@@ -102,7 +102,7 @@ def get_data_selection(data,
     else:
         raise WisteriaError(
             "(ERRORID021) Can't understand a value given to the 'data' part in --cmp: "
-            f"what is '{data}' ? "
+            f"what is '{cmpdata}' ? "
             "Known values are 'all' and 'ini'. ")
 
     return res

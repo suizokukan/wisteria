@@ -44,13 +44,13 @@ def read_cmpstring(cmpstring):
         --cmp="jsonpickle vs all (all)"
         --cmp="jsonpickle vs all"
         --cmp="jsonpickle"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (data/str)"all"
+          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (cmpdata/str)"all"
 
         --cmp="jsonpickle (ini)"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (data/str)"ini"
+          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (cmpdata/str)"ini"
 
         --cmp="jsonpickle vs json"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"json", (data/str)"all"
+          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"json", (cmpdata/str)"all"
 
         "vs" may be used as well as "versus" or "against".
 

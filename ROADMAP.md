@@ -78,6 +78,17 @@ cwc
 * TODOs & Pylint
 * dans wisteria.py::get_data_selection, data > cmpdata (et peut-être ailleurs, vérifier l'emploi de data comme argument)
 
+[CURRENT] v. 0.0.6
+------------------
+
+[DONE] task-68
+
+Improved code readibility: replaced 'data' by 'cmpdata' everywhere it made sense.
+
+    * improved code readibility: replaced 'data' by 'cmpdata' everywhere it 
+      made sense. (task-68)
+    * improved comments (task-68)
+
 [DONE] v. 0.0.5
 ---------------
 
