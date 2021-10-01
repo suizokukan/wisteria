@@ -67,17 +67,16 @@ cwc
 0.0.8:
 * data types à compléter
 
-0.0.7: human talking
-* english phraseology
-* (1), (2) et (3) pour humanratio
-* report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
-* tests
-* full/fulldebug
 
 [CURRENT] v. 0.0.7
 ------------------
+0.0.7: human talking
+
 * add tasks to 0.0.6
 * pylint: 10/10 (in ROADMAP.md)
+* english phraseology
+* (1), (2) et (3) pour humanratio
+* tests
 
 [DONE] task-78
 
