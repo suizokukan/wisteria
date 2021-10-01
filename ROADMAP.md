@@ -71,13 +71,28 @@ cwc
 * english phraseology
 * (1), (2) et (3) pour humanratio
 * report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
-
+* tests
 
 [CURRENT] v. 0.0.6
 ------------------
-* je ne comprends pas le pourquoi de SerializationResults.get_dataobjs_base()
-  & get_serializers_base()
+* (0.0.6) task-74: améliorer ROADMAP.md
+* (task-76) ajouter une précision pour --checkup; si pas de fichier de conf', vous pouvez
+  le télécharger avec --downloadd...
   
+[DONE] task-75
+
+Improved SerializationResults.get_dataobjs_base() and 
+SerializationResults.get_serializers_base(): doc. and code redefinition.
+  
+    * improved SerializationResults.get_dataobjs_base() and 
+      SerializationResults.get_serializers_base():
+      In both methods the reference is obtained only after all possible 
+      serializers/data objects have been browsed. (task-75)
+    * improved SerializationResults.get_dataobjs_base() and 
+      SerializationResults.get_serializers_base() documentation (task-75)
+
+    * pylint: 10/10
+
 [DONE] task-74
 
 Fixed a minor error in report_section_c1a(): forgotten f- prefix

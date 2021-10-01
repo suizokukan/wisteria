@@ -443,11 +443,16 @@ class SerializationResults(dict):
         """
             SerializationResults.get_dataobjs_base()
 
-            Return base data object for attribute <attribute>.
+            Return a data object that may be a reference data object, for
+            the attribute <attribute>.
 
-            In other words, get_dataobjs_base() searches the first available couple
-            of <self.serializers[0], dataobj> which is initialized so that
-            this couple could be a base for the <attribute>.
+            In other words, get_dataobjs_base() answers the question:
+                Among all data objects, what's the first that could be a
+            reference data object ? The serializers have no importance here,
+            we just have to look at the data objects, the first one being
+            often the right one.
+            The selected data object must have its .encoding_success set
+            to True for all serializers.
 
             ___________________________________________________________________
 
@@ -455,25 +460,41 @@ class SerializationResults(dict):
             o  (str)attribute, with only 3 values, namely "encoding_time",
                "decoding_time" and "encoding_strlen".
 
-            RETURNED VALUE: (str)dataobject name
+            RETURNED VALUE: (str)dataobject name or None if no data object
+                            is adequate.
         """
         assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
 
         if attribute == "encoding_time":
             for dataobj in self.dataobjs:
-                if self[self.serializers[0]][dataobj].encoding_success:
+                found = True
+                for serializer in self.serializers:
+                    if not self[serializer][dataobj].encoding_success:
+                        found = False
+                        break
+                if found:
                     return dataobj
             return None
 
         if attribute == "encoding_strlen":
             for dataobj in self.dataobjs:
-                if self[self.serializers[0]][dataobj].encoding_strlen:
+                found = True
+                for serializer in self.serializers:
+                    if not self[serializer][dataobj].encoding_strlen:
+                        found = False
+                        break
+                if found:
                     return dataobj
             return None
 
         if attribute == "decoding_time":
             for dataobj in self.dataobjs:
-                if self[self.serializers[0]][dataobj].decoding_success:
+                found = True
+                for serializer in self.serializers:
+                    if not self[serializer][dataobj].decoding_time:
+                        found = False
+                        break
+                if found:
                     return dataobj
             return None
 
@@ -612,27 +633,60 @@ class SerializationResults(dict):
     def get_serializers_base(self,
                              attribute):
         """
-        TODO
+            SerializationResults.get_serializers_base()
 
-        Return base serializer for attribute <attribute>.
+            Return a serializer that may be a reference serializer, for
+            the attribute <attribute>.
+
+            In other words, get_serializers_base() answers the question:
+                Among all serializers, what's the first that could be a
+            reference serializer ? The data objects have no importance here,
+            we just have to look at the serializers, the first one being
+            often the right one.
+            The selected serializer must have its .encoding_success set
+            to True for all data objects.
+
+            ___________________________________________________________________
+
+            ARGUMENT:
+            o  (str)attribute, with only 3 values, namely "encoding_time",
+               "decoding_time" and "encoding_strlen".
+
+            RETURNED VALUE: (str)serializer or None if no serializer
+                            is adequate.
         """
         assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
 
         if attribute == "encoding_time":
             for serializer in self.serializers:
-                if self[serializer][self.dataobjs[0]].encoding_success:
+                found = True
+                for dataobj in self.dataobjs:
+                    if not self[serializer][dataobj].encoding_success:
+                        found = False
+                        break
+                if found:
                     return serializer
             return None
 
         if attribute == "encoding_strlen":
             for serializer in self.serializers:
-                if self[serializer][self.dataobjs[0]].encoding_strlen:
+                found = True
+                for dataobj in self.dataobjs:
+                    if not self[serializer][dataobj].encoding_strlen:
+                        found = False
+                        break
+                if found:
                     return serializer
             return None
 
         if attribute == "decoding_time":
             for serializer in self.serializers:
-                if self[serializer][self.dataobjs[0]].decoding_success:
+                found = True
+                for dataobj in self.dataobjs:
+                    if not self[serializer][dataobj].decoding_time:
+                        found = False
+                        break
+                if found:
                     return serializer
             return None
 
