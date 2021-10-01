@@ -76,9 +76,14 @@ cwc
 [CURRENT] v. 0.0.6
 ------------------
 * (0.0.6) task-74: améliorer ROADMAP.md
-* (task-76) ajouter une précision pour --checkup; si pas de fichier de conf', vous pouvez
-  le télécharger avec --downloadd...
   
+[DONE] task-76
+
+Improved messages relative to config file.
+
+    * very slightly improved message displayed by downloadconfigfile() (task-76)
+    * improved messages in checkup() about config file download (task-76)
+
 [DONE] task-75
 
 Improved SerializationResults.get_dataobjs_base() and 

@@ -63,7 +63,7 @@ def downloadconfigfile():
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
             msginfo(f"Successfully downloaded '{DEFAULTCFGFILE_URL}', "
-                    f"written as '{targetname}' ('{normpath(targetname)}')")
+                    f"written as '{targetname}' ('{normpath(targetname)}').")
         return True
 
     except urllib.error.URLError as exception:
