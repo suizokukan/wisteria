@@ -46,6 +46,7 @@
     ⋅*  0: normal exit code
     ⋅*  1: normal exit code after --checkup
     ⋅*  2: normal exit code after --downloadconfigfile
+    ⋅*  3: normal exit code after --mymachine
     ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     ⋅* -2: error, ill-formed --cmp string
     ⋅* -3: internal error, data can't be loaded
@@ -84,6 +85,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msginfo, msgerror, msgdebug, msgreport
 from wisteria.cmdline_output import parse_output_argument
 from wisteria.cmdline_cmp import read_cmpstring
+from wisteria.cmdline_mymachine import mymachine
 from wisteria.cfgfile import read_cfgfile, downloadconfigfile
 
 
@@ -142,6 +144,12 @@ PARSER.add_argument(
     help="download default config file and exit")
 
 PARSER.add_argument(
+    '--mymachine',
+    action='store_true',
+    help="display informations about the current machine and exit. "
+    "Use --verbosity to change the quantity of displayed informations.")
+
+PARSER.add_argument(
     '--output',
     action='store',
     default='console;logfile/w=report.txt',
@@ -189,6 +197,7 @@ if not wisteria.globs.OUTPUT[0]:
     # ⋅*  0: normal exit code
     # ⋅*  1: normal exit code after --checkup
     # ⋅*  2: normal exit code after --downloadconfigfile
+    # ⋅*  3: normal exit code after --mymachine
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
@@ -407,6 +416,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅*  0: normal exit code
     # ⋅*  1: normal exit code after --checkup
     # ⋅*  2: normal exit code after --downloadconfigfile
+    # ⋅*  3: normal exit code after --mymachine
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
@@ -443,6 +453,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅*  0: normal exit code
     # ⋅*  1: normal exit code after --checkup
     # ⋅*  2: normal exit code after --downloadconfigfile
+    # ⋅*  3: normal exit code after --mymachine
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: internal error, data can't be loaded
@@ -450,6 +461,48 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
     sys.exit(2)
+
+
+# =============================================================================
+# (09bis) informations about the current machine
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) checkup
+# ⋅- (09) download default config file
+# ⋅- (10) temp file opening
+# ⋅- (11) known data init
+# ⋅- (12) call to main()
+# ⋅       - (12.1) main(): debug messages
+# ⋅       - (12.2) main(): cmp string interpretation
+# ⋅       - (12.3) main(): config file reading
+# ⋅       - (12.4) main(): results computing
+# ⋅       - (12.5) main(): report
+if wisteria.globs.ARGS.mymachine:
+    msgreport("Informations about the current machine:")
+    if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
+        mymachine(fulldetails=False)
+        msgreport("\nMore informations are available using --verbosity=2.")
+    else:
+        mymachine(fulldetails=True)
+    # (pimydoc)exit codes
+    # ⋅*  0: normal exit code
+    # ⋅*  1: normal exit code after --checkup
+    # ⋅*  2: normal exit code after --downloadconfigfile
+    # ⋅*  3: normal exit code after --mymachine
+    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅* -2: error, ill-formed --cmp string
+    # ⋅* -3: internal error, data can't be loaded
+    # ⋅* -4: internal error, an error occured while computing the results
+    # ⋅* -5: internal error, an error in main()
+    # ⋅* -6: error, ill-formed --output string
+    sys.exit(3)
 
 
 # =============================================================================
@@ -519,6 +572,7 @@ def main():
                 ⋅*  0: normal exit code
                 ⋅*  1: normal exit code after --checkup
                 ⋅*  2: normal exit code after --downloadconfigfile
+                ⋅*  3: normal exit code after --mymachine
                 ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: internal error, data can't be loaded
@@ -590,6 +644,7 @@ def main():
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
             # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅*  3: normal exit code after --mymachine
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
@@ -628,6 +683,7 @@ def main():
                 # ⋅*  0: normal exit code
                 # ⋅*  1: normal exit code after --checkup
                 # ⋅*  2: normal exit code after --downloadconfigfile
+                # ⋅*  3: normal exit code after --mymachine
                 # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 # ⋅* -2: error, ill-formed --cmp string
                 # ⋅* -3: internal error, data can't be loaded
@@ -693,6 +749,7 @@ def main():
         # ⋅*  0: normal exit code
         # ⋅*  1: normal exit code after --checkup
         # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅*  3: normal exit code after --mymachine
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded
@@ -708,6 +765,7 @@ def main():
         # ⋅*  0: normal exit code
         # ⋅*  1: normal exit code after --checkup
         # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅*  3: normal exit code after --mymachine
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded

@@ -58,6 +58,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
 from wisteria.msg import msgreport, msgreporttitle
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage
+from wisteria.cmdline_mymachine import mymachine
 
 
 def humanratio(ratio):
@@ -216,6 +217,10 @@ def report_section_a1(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -268,6 +273,10 @@ def report_section_a2(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -326,6 +335,10 @@ def report_section_a3(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -386,6 +399,10 @@ def report_section_b1a(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -463,6 +480,10 @@ def report_section_b1b(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -539,6 +560,10 @@ def report_section_b1c(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -616,6 +641,10 @@ def report_section_b1d(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -685,6 +714,10 @@ def report_section_b2a(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -763,6 +796,10 @@ def report_section_b2b(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -839,6 +876,10 @@ def report_section_c1a(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -939,6 +980,10 @@ def report_section_c1b(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -1033,6 +1078,10 @@ def report_section_c2a(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -1135,6 +1184,10 @@ def report_section_c2b(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -1230,6 +1283,10 @@ def report_section_d1a(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1351,6 +1408,10 @@ def report_section_d1b(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1472,6 +1533,10 @@ def report_section_d2a(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1559,6 +1624,10 @@ def report_section_d2b(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1642,6 +1711,10 @@ def report_section_d2c(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1899,6 +1972,124 @@ def report_section_d2c(results,
     msgreport()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
+def report_section_e1a(results,
+                       s1s2d):
+    """
+        report_section_e1a()
+
+        Sub-function of report() for report section "A3"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C         : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
+        ⋅* D         : conclusions
+        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - D2      : conclusion: final text and data
+        ⋅    . D2a   : conclusion: serializers (not sorted)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
+    if "titles;" in wisteria.globs.ARGS.report:
+        msgreporttitle("(E1a) informations about the machine (no details)")
+
+    mymachine(fulldetails=False)
+
+
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
+def report_section_e1b(results,
+                       s1s2d):
+    """
+        report_section_e1b()
+
+        Sub-function of report() for report section "A3"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : main title
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C         : full details (base 100)
+        ⋅  - C1      : full details (serializers, base 100)
+        ⋅    . C1a   : full details: serializer * data object (base 100)
+        ⋅    . C1b   : full details: serializers (base 100)
+        ⋅  - C2      : full details (data objects, base 100)
+        ⋅    . C2a   : full details: data object * serializer (base 100)
+        ⋅    . C2b   : full details: data objects (base 100)
+        ⋅* D         : conclusions
+        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - D2      : conclusion: final text and data
+        ⋅    . D2a   : conclusion: serializers (not sorted)
+        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
+    if "titles;" in wisteria.globs.ARGS.report:
+        msgreporttitle("(E1b) informations about the machine (full details)")
+
+    mymachine(fulldetails=True)
+
+
 # STR2REPORTSECTION has two goals:
 # (1) translate a (str)report section name > list of corresponding functions
 # (2) store all known keys accepted in --report.
@@ -1954,6 +2145,10 @@ STR2REPORTSECTION = {
         "D2a": (report_section_d2a,),
         "D2b": (report_section_d2b,),
         "D2c": (report_section_d2c,),
+        "E": (report_section_e1a,
+              report_section_e1b,),
+        "E1": (report_section_e1a,
+               report_section_e1b),
         }
 
 
@@ -1993,6 +2188,10 @@ def report(results,
         ⋅    . D2a   : conclusion: serializers (not sorted)
         ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
         ⋅    . D2c   : conclusion
+        ⋅* E         : various informations
+        ⋅  - E1      : informations about the machine
+        ⋅    . E1a   : informations about the machine (no details)
+        ⋅    . E1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENTS:

@@ -90,7 +90,7 @@ REPORT_SHORTCUTS = {
     "bestof": "B1c;D2b;D2c;",
     "laconic": "D;",
     "minimal": "D2c;",
-    "full": "titles;A;B;C;D;",
+    "full": "titles;A;B;C;D;E1a;",
     }
 
 # default name for the config file.

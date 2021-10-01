@@ -209,6 +209,7 @@ def compute_results(config,
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
             # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅*  3: normal exit code after --mymachine
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
@@ -223,6 +224,7 @@ def compute_results(config,
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
             # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅*  3: normal exit code after --mymachine
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: internal error, data can't be loaded
@@ -240,6 +242,7 @@ def compute_results(config,
         # ⋅*  0: normal exit code
         # ⋅*  1: normal exit code after --checkup
         # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅*  3: normal exit code after --mymachine
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: internal error, data can't be loaded

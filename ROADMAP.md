@@ -72,6 +72,29 @@ cwc
 * (1), (2) et (3) pour humanratio
 * report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 * tests
+* full/fulldebug
+
+[CURRENT] v. 0.0.7
+------------------
+* add tasks to 0.0.6
+* pylint: 10/10 (in ROADMAP.md)
+
+[DONE] task-77
+
+--mymachine option, report sections E1a and E1b
+
+    * new option: --mymachine (task-77)
+    * new file: wisteria/cmdline_mymachine.py --mymachine (task-77)
+    * updated documentations to take in account --mymachine and report sections 
+      E1a and E1b --mymachine (task-77)
+    * updated REPORT_SHORTCUTS["full"], now set to "titles;A;B;C;D;E1a;" (task-77)
+    * new functions in reports.py: report_section_e1a() and report_section_e1b() 
+      (task-77)
+    * new exit value (3: normal exit code after --mymachine) (task-77)
+    * updated pimydoc to take in account the new "3" exit value (task-77)
+    * updated --help message to take in account --mymachine (task-77)
+
+    * pylint: 10/10
 
 [DONE] v. 0.0.6
 ---------------

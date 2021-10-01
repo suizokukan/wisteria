@@ -23,7 +23,7 @@
 
     Fonctions used to print & log all projects' messages.
 
-    msgreport() is reserved to checkup and report messages.
+    msgreport() is reserved to checkup, report messages and mymachine().
     msgreporttitle() is reserved to title's report messages.
 
     Caveat!
