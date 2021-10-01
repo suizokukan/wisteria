@@ -79,6 +79,21 @@ cwc
 * add tasks to 0.0.6
 * pylint: 10/10 (in ROADMAP.md)
 
+[DONE] task-78
+
+new report shortcuts: 'full+' and 'full_debug'.
+
+    * globs.py::REPORT_SHORTCUTS['full+'] is a new shortcut; its value is set
+      to "titles;A;B;C;D;E1b;" (task-78)
+    * globs.py::REPORT_SHORTCUTS['full_debug'] is a new shortcut; its value is set
+      to "titles;A;B;C;D;E;" (task-78)
+    * keys in globs.py::REPORT_SHORTCUTS are now alphabetically sorted (task-78)
+    * fixed a very minor glitch (useless space) in cmdline_mymachine.py (task-78)
+    * (bugfix) added to 'report_section_e1a' and 'report_section_e1b' to 
+      STR2REPORTSECTION. (task-78)
+
+    * pylint: 10/10
+
 [DONE] task-77
 
 --mymachine option, report sections E1a and E1b

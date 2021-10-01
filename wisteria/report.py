@@ -2149,7 +2149,9 @@ STR2REPORTSECTION = {
               report_section_e1b,),
         "E1": (report_section_e1a,
                report_section_e1b),
-        }
+        "E1a": (report_section_e1a,),
+        "E1b": (report_section_e1b,),
+}
 
 
 def report(results,

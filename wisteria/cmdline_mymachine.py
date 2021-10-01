@@ -48,12 +48,12 @@ def mymachine(fulldetails=False):
                                      are displayed
     """
     # ---- platform package ---------------------------------------------------
-    infos =  {'platform': platform.system(),
-              'platform-release': platform.release(),
-              'platform-version': platform.version(),
-              'architecture': platform.machine(),
-              'processor': platform.processor(),
-              }
+    infos = {'platform': platform.system(),
+             'platform-release': platform.release(),
+             'platform-version': platform.version(),
+             'architecture': platform.machine(),
+             'processor': platform.processor(),
+             }
 
     # ---- psutil package -----------------------------------------------------
     try:
