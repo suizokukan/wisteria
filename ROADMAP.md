@@ -73,9 +73,86 @@ cwc
 * report(E) donner les caractéristiques de la machine sur laquelle ont eu lieu les tests.
 * tests
 
-[CURRENT] v. 0.0.6
-------------------
-* (0.0.6) task-74: améliorer ROADMAP.md
+[DONE] v. 0.0.6
+---------------
+
+Various improvements: code, doc., messages. Pylint note is now 10/10.
+
+bugfixes
+
+    * fixed a bug in read_cmpstring():
+      Since cmpdata is the real name of cmp (cf task-68), group('data') becomes
+      group('cmpdata') (task-71)
+    * Fixed a minor error in report_section_c1a(): forgotten f- prefix
+      for a f-string. (task-74)
+
+code improvements
+
+    * improved SerializationResults.get_dataobjs_base() and 
+      SerializationResults.get_serializers_base():
+      In both methods the reference is obtained only after all possible 
+      serializers/data objects have been browsed. (task-75)
+    * improved shortenedstr() in the very special case when
+      len(suffix) > maximallength . (task-72)
+    * new variable defined in DEFAULT_CONFIG_FILENAME and
+      initialized in wisteria.py (task-72)
+    * improved exit_handler(): added two debug messages (task-72)
+    * improved exit_handler(): forced FILECONSOLE_FILEOBJECT closing (task-72)
+
+documentation
+
+    * very slightly improved message displayed by downloadconfigfile() (task-76)
+    * improved messages in checkup() about config file download (task-76)
+    * improved SerializationResults.get_dataobjs_base() and 
+      SerializationResults.get_serializers_base() documentation (task-75)
+    * docstring of all methods & functions (task-71)
+    * improved comments (task-68)
+    * slightly improved ROADMAP.md (cf task-74, task-76, task-73)
+    
+pylint & code readibility
+
+    * Code pylinted; pylintrc has been updated; first version to get 10/10.
+    * removed almost all TODOs (task-72)
+    * improved code readibility: replaced 'data' by 'cmpdata' everywhere it 
+      made sense. (task-68)
+    * added some assert() to explicit arguments specificities
+
+version
+
+    * set version to '0.0.6'
+    
+```
+$ poetry show --tree
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ ./check_tools.sh
+* about poetry:
+Poetry version 1.1.10
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+PYLINTHOME is now '/home/proguser/.cache/pylint' but obsolescent '/home/proguser/.pylint.d' is found; you can safely remove the latter
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
   
 [DONE] task-76
 
@@ -83,6 +160,8 @@ Improved messages relative to config file.
 
     * very slightly improved message displayed by downloadconfigfile() (task-76)
     * improved messages in checkup() about config file download (task-76)
+
+    * pylint: 10/10
 
 [DONE] task-75
 
@@ -95,6 +174,7 @@ SerializationResults.get_serializers_base(): doc. and code redefinition.
       serializers/data objects have been browsed. (task-75)
     * improved SerializationResults.get_dataobjs_base() and 
       SerializationResults.get_serializers_base() documentation (task-75)
+    * updated documentation in classes' headers (task-70)
 
     * pylint: 10/10
 
@@ -104,7 +184,7 @@ Fixed a minor error in report_section_c1a(): forgotten f- prefix
 for a f-string.
 
     * Fixed a minor error in report_section_c1a(): forgotten f- prefix
-      for a f-string.
+      for a f-string. (task-74)
 
     * pylint: 10/10
   
@@ -112,7 +192,8 @@ for a f-string.
 
 Code pylinted; pylintrc has been updated; first version to get 10/10.
 
-    * Code pylinted; pylintrc has been updated; first version to get 10/10.
+    * Code pylinted; pylintrc has been updated; first version to get 10/10. 
+      (task-73)
     
     * pylint: 10/10
 
