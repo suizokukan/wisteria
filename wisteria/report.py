@@ -59,24 +59,52 @@ from wisteria.utils import shortenedstr
 from wisteria.msg import msgreport, msgreporttitle
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage
 from wisteria.cmdline_mymachine import mymachine
+from wisteria.textandnotes import TextAndNotes
 
 
-def humanratio(ratio):
+def humanratio(ratio,
+               explanations=None):
     """
         humanratio()
 
         Since ratio are difficult to understand when being smaller than 1, this function
         computes, if necessary, the inverse of <ratio> and returns it.
 
+        - if <explanations> is None, return the (float)ratio value;
+        - if <explanations> is not None, return an (str)explanation describing the
+        (float)ratio value.
+
         _______________________________________________________________________
 
-        ARGUMENT: (float)ratio, the ratio to be returned
+        ARGUMENTS:
+        o  (float)ratio, the ratio to be returned
+        o  (None|list of str)explanations:
+                (str)ratio1_str, (float)ratio1, (str)ratio2_str, (float)ratio2
 
         RETURNED VALUE: (float)ratio or (float)1/ratio.
     """
+    # ---- explanations is None > let's return a (float)value -----------------
+    if explanations is None:
+        if ratio < 1:
+            return 1/ratio
+        return ratio
+
+    # ---- explanations is not None > let's return a (str)explanation ---------
+    ratio1_str, ratio1, ratio2_str, ratio2 = explanations
     if ratio < 1:
-        return 1/ratio
-    return ratio
+        ratio = 1/ratio
+        res = f"factor {ratio:.3f} = {ratio2_str} / {ratio1_str} " \
+            f"= {ratio2:.3f} / {ratio1:.3f}" \
+            "\n" \
+            f"{ratio1_str} * {ratio:.3f} = {ratio1:.3f} * {ratio:.3f} = " \
+            f"{ratio2_str} = {ratio2:.3f}"
+    else:
+        res = f"factor {ratio:.3f} = {ratio1_str} / {ratio2_str} " \
+            f"= {ratio1:.3f} / {ratio2:.3f}" \
+            "\n" \
+            f"{ratio2_str} * {ratio:.3f} = {ratio2:.3f} * {ratio:.3f} " \
+            f"= {ratio1_str} = {ratio1:.3f}"
+    return res
 
 
 def cmpdata2phrase(cmpdata):
@@ -1731,7 +1759,8 @@ def report_section_d2c(results,
 
     serializer1, serializer2, cmpdata = s1s2d
 
-    text = [cmpdata2phrase(cmpdata), ]
+    text = TextAndNotes()
+    text.append(cmpdata2phrase(cmpdata))
 
     if serializer1 == "all" and serializer2 == "all":
         # ========================================================
@@ -1748,11 +1777,11 @@ def report_section_d2c(results,
         if len(bests) == 1:
             text.append(f"{aspect_serializer(bests[0])} is ranked #1 "
                         f"among {results.serializers_number} serializers, "
-                        "according to the overall scores (¹).")
+                        "according to the overall scores (__note:overallscore__).")
         else:
             text.append(f"{' and '.join(aspect_serializer(serializer) for serializer in bests)} "
                         f"are ranked #1 among {results.serializers_number} serializers, "
-                        "according to the overall scores (¹).")
+                        "according to the overall scores (__note:overallscore__).")
 
         text.append("\nConversely, ")
         text.append(
@@ -1767,16 +1796,16 @@ def report_section_d2c(results,
         if len(worsts) == 1:
             text.append(f"{aspect_serializer(worsts[0])} is ranked #{results.serializers_number} "
                         f"among {results.serializers_number} serializers, "
-                        "according to the overall scores (¹).")
+                        "according to the overall scores (__note:overallscore__).")
         else:
             text.append(
                 f"{' and '.join(aspect_serializer(serializer) for serializer in worsts)} "
                 f"are ranked #{results.serializers_number} among "
                 f"{results.serializers_number} serializers, "
-                "according to the overall scores (¹).")
+                "according to the overall scores (__note:overallscore__).")
 
-        text.append("\n\n")
-        text.append("(¹) a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec")
+        text.notes.append(("overallscore"
+                           "a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec"))
 
     elif serializer1 != "all" and serializer2 != "all":
         # ========================================================
@@ -1790,16 +1819,32 @@ def report_section_d2c(results,
                                                         output='value')
 
         if total_encoding_time_ratio == 1:
-            text.append(f"{aspect_serializer(serializer1)} "
-                        f"and {aspect_serializer(serializer2)} "
-                        "seem to require exactly the same time to encode and decode; ")
+            text.append(
+                f"{aspect_serializer(serializer1)} "
+                f"and {aspect_serializer(serializer2)} "
+                "seem to require exactly the same time to encode and decode; ")
         else:
-            text.append(f"{aspect_serializer(serializer1)} "
-                        f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
-                        f"(by a factor of {humanratio(total_encoding_time_ratio):.3f})"
-                        " than "
-                        f"{aspect_serializer(serializer2)} "
-                        "to encode and decode; ")
+            text.append(
+                f"{aspect_serializer(serializer1)} "
+                f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
+                f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
+                "(__note:total_encoding_time_ratio__) -"
+                " than "
+                f"{aspect_serializer(serializer2)} "
+                "to encode and decode; ")
+
+            text.notes.append(
+                ("total_encoding_time_ratio",
+                 humanratio(
+                     total_encoding_time_ratio,
+                     explanations=(
+                         f"{aspect_serializer(serializer1)}'s Σ enc.+dec. time",
+                         results.total_encoding_plus_decoding_time(serializer=serializer1,
+                                                                   output='value'),
+                         f"{aspect_serializer(serializer2)}'s Σ enc.+dec. time",
+                         results.total_encoding_plus_decoding_time(serializer=serializer2,
+                                                                   output='value'),
+                     ))))
 
         # ---- total_encoding_strlen -----------------------------------------
         total_encoding_strlen_ratio = \
@@ -1815,26 +1860,54 @@ def report_section_d2c(results,
             text.append("strings produced by "
                         f"{aspect_serializer(serializer1)} "
                         f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
-                        f"(by a factor of {humanratio(total_encoding_strlen_ratio):.3f})"
+                        f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
+                        f"(__note:total_encoding_strlen_ratio__) -"
                         " than "
                         f"strings produced by {aspect_serializer(serializer2)}; ")
 
+            text.notes.append(
+                ("total_encoding_strlen_ratio",
+                 humanratio(
+                     total_encoding_strlen_ratio,
+                     explanations=(
+                         f"{aspect_serializer(serializer1)}'s jsonstring strlen",
+                         results.total_encoding_strlen(serializer=serializer1,
+                                                       output='value'),
+                         f"{aspect_serializer(serializer2)}'s jsonstring strlen",
+                         results.total_encoding_strlen(serializer=serializer2,
+                                                       output='value')
+                     ))))
+
         # ---- ratio_similarity -----------------------------------------------
-        similarity_ratio = \
+        ratio_similarity = \
             results.ratio_similarity(serializer=serializer1, output='value') \
             / results.ratio_similarity(serializer=serializer2,
                                        output='value')
 
-        if similarity_ratio == 1:
+        if ratio_similarity == 1:
             text.append(f"{aspect_serializer(serializer1)} "
                         f"and {aspect_serializer(serializer2)} "
                         "seem to have exactly the same data coverage.")
         else:
             text.append(f"{aspect_serializer(serializer1)}'s coverage "
-                        f"is {ratio2phrase(similarity_ratio, 'large/small')} "
-                        f"(by a factor of {humanratio(similarity_ratio):.3f})"
+                        f"is {ratio2phrase(ratio_similarity, 'large/small')} "
+                        f"- by a factor of {humanratio(ratio_similarity):.3f} "
+                        f"(__note:ratio_similarity__) -"
                         " than "
                         f"{aspect_serializer(serializer2)}'s coverage.")
+
+            text.notes.append(
+                ("ratio_similarity",
+                 humanratio(
+                     ratio_similarity,
+                     explanations=(
+                         f"{aspect_serializer(serializer1)}'s similarity ratio",
+                         results.ratio_similarity(serializer=serializer1,
+                                                  output='value'),
+                         f"{aspect_serializer(serializer2)}'s similarity ratio",
+                         results.ratio_similarity(serializer=serializer2,
+                                                  output='value'),
+                     ))))
 
     else:
         # =====================================================================
@@ -1848,8 +1921,12 @@ def report_section_d2c(results,
             serializer = serializer2
         rank = results.get_overallscore_rank(serializer)
         text.append(f"{aspect_serializer(serializer)}"
-                    f" is ranked #{rank} among {len(results.serializers)} serializers (¹)")
+                    f" is ranked #{rank} among {len(results.serializers)} serializers "
+                    f"(__note:overallscore__)")
         text.append(". ")
+
+        text.notes.append(("overallscore",
+                           "a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec"))
 
         for attribute in ("encoding_strlen",
                           "encoding_plus_decoding_time",
@@ -1965,10 +2042,7 @@ def report_section_d2c(results,
 
             text.append("".join(subtext))
 
-        text.append("\n\n")
-        text.append("(¹) a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec")
-
-    msgreport("".join(text))
+    msgreport(text.output())
     msgreport()
 
 

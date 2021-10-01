@@ -47,16 +47,19 @@ Wisteria's roadmap & todos
 
         ("Z01:decimal.localcontext", decimal.localcontext()),
 
-0.1.3:
+0.1.4:
 * README.md acceptable
 
-0.1.2:
+0.1.3:
 * i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
 
-0.1.1:
+0.1.2:
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
   chercher si une combinaison donne des résultats vraiment différents des autres
+
+0.1.1:
+tests
 
 0.1.0: 
 cwc
@@ -75,9 +78,36 @@ cwc
 * add tasks to 0.0.6
 * pylint: 10/10 (in ROADMAP.md)
 * english phraseology
-* (1), (2) et (3) pour humanratio
-* tests
+* unités, partout, dans le texte comme dans les tableaux
 
+[DONE] task-79
+
+TextAndNotes class, humanratio() can now return an explanation about the
+value it computes.
+
+    * rewrote humanratio(): if the new argument is not None, this function
+      returns an explanation of the value by humanratio(ratio, explanations=None)
+      (task-79)
+    * new file: wisteria/textandnotes.py (task-79)
+    * in wisteria/textandnotes.py, new class TextAndNote.
+      With the TextAndNotes class, add bunch of text that may contains notes;
+      these notes are added with a special syntax (__note:XXXXX__) and are
+      automatically numbered and added at the end of the final text. (task-79)
+      By example:
+              txt = TextAndNotes()
+              txt.append("First line with a note (__note:myfirstnote__)")
+              txt.notes.append(("__note:myfirstnote__",
+                                "This is a footnote about first line."))
+
+              txt.output() will produce:
+                      "First line with a note(¹)"
+                      ""
+                      "(¹) This is a footnote about first line."
+    * modified report_section_d2c() so that this function uses a TextAndNotes
+      object (task-79)
+
+    * pylint: 10/10
+    
 [DONE] task-78
 
 new report shortcuts: 'full+' and 'full_debug'.
