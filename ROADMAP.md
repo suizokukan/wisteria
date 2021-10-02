@@ -75,10 +75,14 @@ cwc
 ------------------
 0.0.7: human talking
 
-* add tasks to 0.0.6
-* pylint: 10/10 (in ROADMAP.md)
 * english phraseology
 * unités, partout, dans le texte comme dans les tableaux
+
+[DONE] task-80
+
+doc. : improved ROADMAP.md
+
+    * doc. : improved ROADMAP.md (task-80)
 
 [DONE] task-79
 
@@ -187,6 +191,15 @@ pylint & code readibility
 version
 
     * set version to '0.0.6'
+
+pylint
+
+    * pylint: 10/10
+    
+tasks
+
+    * task(s): task-68, task-69, task-70, task-71, task-72, 
+      task-73, task-74, task-75, task-76 
     
 ```
 $ poetry show --tree
