@@ -28,9 +28,10 @@
     o  aspect_base100(bool_is_base100_reference, float_base100)
     o  aspect_boolsuccess(bool_success)
     o  aspect_data(data_objectname)
+    o  aspect_list(listitems)
     o  aspect_percentage(percentage)
     o  aspect_ratio(inttotal_and_floatratio)
-    o  aspect_serializer(serializer)
+    o  aspect_serializer(serializer_name)
     o  aspect_stringlength(int_stringlength)
     o  aspect_time(floattime)
     o  aspect_title(title)
@@ -99,6 +100,29 @@ def aspect_data(data_objectname):
     return f"[bold white]{data_objectname}[/bold white]"
 
 
+def aspect_list(listitems):
+    """
+        aspect_list()
+
+        Returns a list of (str)words written in good English, something
+        like "a, b, and c" (no Oxford Comma here, confer
+        https://www.grammar-monster.com/lessons/commas_the_Oxford_comma.htm)
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)data_objectname
+
+        RETURNED VALUE: (str)_objectname + some text attributes.
+    """
+    if len(listitems) == 0:
+        return ""
+    if len(listitems) == 1:
+        return listitems[0]
+    if len(listitems) == 2:
+        return f"{listitems[0]} and {listitems[1]}"
+    return f"{', '.join(listitem for listitem in listitems[:-1])} and {listitems[-1]}"
+
+
 def aspect_percentage(percentage):
     """
         aspect_percentage()
@@ -134,19 +158,22 @@ def aspect_ratio(inttotal_and_floatratio):
     return "[red](no data)[/red]"
 
 
-def aspect_serializer(serializer):
+def aspect_serializer(serializer_name):
     """
         aspect_serializer()
 
-        Modify the aspect of (str)serializer.
+        Modify the aspect of (str)serializer_name, replace it by its
+        .human_name.
 
         _______________________________________________________________________
 
-        ARGUMENT: (str)serializer
+        ARGUMENT: (str)serializer_name
 
-        RETURNED VALUE: (str)serializer + some text attributes.
+        RETURNED VALUE: (str)serializer_name + some text attributes.
     """
-    return f"[yellow]{wisteria.globs.SERIALIZERS[serializer].human_name}[/yellow]"
+    return "[yellow]" \
+        f"{wisteria.globs.SERIALIZERS[serializer_name].human_name}" \
+        "[/yellow]"
 
 
 def aspect_stringlength(int_stringlength):

@@ -75,9 +75,25 @@ cwc
 ------------------
 0.0.7: human talking
 
-* english phraseology
+* --help: préciser que le rapport est dans wisteria.ini
+* bug: ./bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
+* distinguer serializer( et serializer0( ne sert à rien.
 * unités, partout, dans le texte comme dans les tableaux
+* cpu_infos+shutil à intégrer aux dépendences + placer en haut du fichier.
+* 'glance': 
+* pylintrc à modifier (ne pas oublier de mettre à jour README.md)
 
+[DONE] task-81
+
+Improved English phraseology.
+
+    * improved english phraseology (task-81)
+    * SerializerData class has a new instance attribute, 'name'. (task-81)
+    * in init_serializers(), updated wisteria.globs.SERIALIZERS initialization
+      to take in account SerializerData new instance attribute (task-81)
+
+    * pylint: 9.99/10
+    
 [DONE] task-80
 
 doc. : improved ROADMAP.md

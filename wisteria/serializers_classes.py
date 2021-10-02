@@ -48,6 +48,7 @@ class SerializerData:
 
         instance attributes:
 
+        o  (str)name
         o  (str)human_name
         o  (str)internet
         o  (bool)available  : is this serializer available ?
@@ -57,12 +58,13 @@ class SerializerData:
 
         methods:
 
-        o  __init__(self, human_name, internet, available, func)
+        o  __init__(self, name, human_name, internet, available, func)
         o  __repr__(self)
         o  checkup_repr(self)
         o  simple_repr(self)
     """
     def __init__(self,
+                 name,
                  human_name,
                  internet,
                  available,
@@ -73,12 +75,14 @@ class SerializerData:
             ___________________________________________________________________
 
             ARGUMENTS:
+            o  (str)name
             o  (str)human_name
             o  (str)internet
             o  (bool)available  : is this serializer available ?
             o  (str)version
             o  (callable)func   : function to be called to use this serializer
         """
+        self.name = name
         self.human_name = human_name
         self.internet = internet
         self.available = available
@@ -111,8 +115,9 @@ class SerializerData:
                             See also .__repr__() and .simple_repr()
         """
         if self.available:
-            return f"(available)     '{self.human_name}' ({self.version}), see {self.internet}."
-        return f"(not available) '{self.human_name}' (see {self.internet})."
+            return f"(available)     {aspect_serializer(self.name)} ({self.version}), " \
+                f"see {self.internet}."
+        return f"(not available) {aspect_serializer(self.name)} (see {self.internet})."
 
     def simple_repr(self):
         """
@@ -126,8 +131,8 @@ class SerializerData:
                             See also .checkup_repr() and .__repr__()
         """
         if self.available:
-            return f"(available)     '{self.human_name}' ({self.version})"
-        return f"(not available) '{self.human_name}'"
+            return f"(available)     {aspect_serializer(self.name)} ({self.version})"
+        return f"(not available) {aspect_serializer(self.name)}"
 
 
 @dataclass

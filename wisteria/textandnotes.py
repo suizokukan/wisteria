@@ -142,7 +142,7 @@ class TextAndNotes(list):
             res.append(line)
 
         if self.notes:
-            res.append("\n")
+            res.append("\n\n")
             for fullnotename, note in self.notes:
                 if fullnotename not in notes2notessymbols:
                     raise WisteriaError(
@@ -150,6 +150,6 @@ class TextAndNotes(list):
                         f"unknown note name '{fullnotename}' read in note '{note}'; "
                         f"defined notes are {tuple(notes2notessymbols.keys())}.")
                 note_symbol = notes2notessymbols[fullnotename]
-                res.append(f"\n({note_symbol}) {note}")
+                res.append(f"\n[{note_symbol}] {note}")
 
         return "".join(res)

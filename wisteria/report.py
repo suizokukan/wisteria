@@ -57,7 +57,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
 from wisteria.msg import msgreport, msgreporttitle
-from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage
+from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -123,13 +123,13 @@ def cmpdata2phrase(cmpdata):
 
     if cmpdata == "all":
         return "According to the tests " \
-            "conducted on all data, "
+            "carried out on all data, "
     if cmpdata == "ini":
         return "According to the tests " \
-            "conducted on the data defined in the configuration file "
+            "carried out on the data defined in the configuration file, "
     # cmpdata == "cwc"
     return "According to the tests " \
-        "conducted on data of the 'comparing what is comparable' type "
+        "conducted on data of the 'comparing what is comparable' type, "
 
 
 def ratio2phrase(ratio,
@@ -261,8 +261,9 @@ def report_section_a1(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A1) REPORT with --cmp set to "
-                       f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'")
+        msgreporttitle(
+            "(A1) Report (--cmp = "
+            f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]')")
         msgreport()
 
 
@@ -317,7 +318,7 @@ def report_section_a2(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A2) List of serializers to be used")
+        msgreporttitle("(A2) List of Serializers to Be Used")
         msgreport()
 
     for serializer in wisteria.globs.SERIALIZERS.values():
@@ -381,11 +382,11 @@ def report_section_a3(results,
     data = wisteria.globs.DATA
 
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A3) List of data objects to be used")
+        msgreporttitle("(A3) List of Data Objects to Be Used")
         msgreport()
 
     for dataobj_name, dataobj_value in data.items():
-        msgreport(f"  - {dataobj_name} : {shortenedstr(repr(dataobj_value))}")
+        msgreport(f"  - {dataobj_name:>30} : {shortenedstr(repr(dataobj_value))}")
     msgreport()
 
 
@@ -444,16 +445,16 @@ def report_section_b1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(B1a) full details: serializer * data object")
+        msgreporttitle("(B1a) Full Details: Serializer * Data Object")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("serializer/data object", width=25)
-    table.add_column("enc. ok ?", width=12)
-    table.add_column("enc. time", width=10)
-    table.add_column("jsonstr. len.", width=13)
-    table.add_column("dec. ok ?", width=12)
-    table.add_column("dec. time", width=10)
-    table.add_column("enc ⇆ dec ?", width=12)
+    table.add_column("Serializer > Data Object", width=24)
+    table.add_column("Encod. Ok ?", width=11)
+    table.add_column("Encod. Time", width=11)
+    table.add_column("Encoded Str. Length", width=13)
+    table.add_column("Decod. Ok ?", width=11)
+    table.add_column("Decod. Time", width=11)
+    table.add_column("Encod.<>Decod. ?", width=16)
 
     for serializer in results.serializers:
         table.add_row(f"{aspect_serializer(serializer)} :")
@@ -525,16 +526,16 @@ def report_section_b1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(B1b) full details: serializers")
+        msgreporttitle("(B1b) Full Details: Serializers")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("serializer", width=25)
-    table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
-    table.add_column("Σ enc. time", width=10)
-    table.add_column("Σ jsonstr. len.", width=13)
-    table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
-    table.add_column("Σ dec. time", width=10)
-    table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
+    table.add_column("Serializer", width=24)
+    table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
+    table.add_column("Σ Encoded Time", width=11)
+    table.add_column("Σ Encoded Str. Length", width=13)
+    table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
+    table.add_column("Σ Decoded Time", width=11)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     for serializer in results.serializers:
         table.add_row(
@@ -605,16 +606,16 @@ def report_section_b1c(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(B1c) full details: serializers, hall of fame")
+        msgreporttitle("(B1c) Full Details: Serializers, Hall of Fame")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("#", width=2)
-    table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=15)
-    table.add_column("Σ enc. time", width=10)
-    table.add_column("Σ jsonstr. len.", width=13)
-    table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=15)
-    table.add_column("Σ dec. time", width=10)
-    table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
+    table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
+    table.add_column("Σ Encoded Time", width=11)
+    table.add_column("Σ Encoded Str. Length", width=13)
+    table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
+    table.add_column("Σ Decoded Time", width=11)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     for index in range(results.serializers_number):
         table.add_row(
@@ -686,7 +687,7 @@ def report_section_b1d(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(B1d) full details: serializer <S> can't handle <dataobj>")
+        msgreporttitle("(B1d) Full Details: Which Serializer(s) Can't Handle Data Objects ?")
 
     for serializer in results.serializers:
         _list = tuple(dataobj for dataobj in results[serializer]
@@ -694,10 +695,10 @@ def report_section_b1d(results,
         if not _list:
             msgreport(f"* ({aspect_serializer(serializer)}) "
                       "There's no data object that serializer "
-                      f"'{aspect_serializer(serializer)}' can't handle.")
+                      f"{aspect_serializer(serializer)} can't handle.")
         else:
             msgreport(f"* ({aspect_serializer(serializer)}) "
-                      f"Serializer '{aspect_serializer(serializer)}' "
+                      f"Serializer {aspect_serializer(serializer)} "
                       "can't handle the following data objects:")
             for dataobj in _list:
                 msgreport(f"  - {aspect_data(dataobj)}")
@@ -723,7 +724,7 @@ def report_section_b2a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -762,13 +763,13 @@ def report_section_b2a(results,
         msgreporttitle("(B2a) full details: data object * serializer")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("data object/serializer", width=25)
-    table.add_column("enc. ok ?", width=12)
-    table.add_column("enc. time", width=10)
-    table.add_column("jsonstr. len.", width=13)
-    table.add_column("dec. ok ?", width=12)
-    table.add_column("dec. time", width=10)
-    table.add_column("enc ⇆ dec ?", width=12)
+    table.add_column("Data Object > Serializer", width=24)
+    table.add_column("Encod. Ok ?", width=11)
+    table.add_column("Encod. Time", width=11)
+    table.add_column("Encoded Str. Length", width=13)
+    table.add_column("Decod. Ok ?", width=11)
+    table.add_column("Decod. Time", width=11)
+    table.add_column("Encod.<>Decod. ?", width=16)
 
     for dataobj in results.dataobjs:
         table.add_row(f"{aspect_data(dataobj)} :")
@@ -805,7 +806,7 @@ def report_section_b2b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -841,16 +842,16 @@ def report_section_b2b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(B2b) full details: data objects")
+        msgreporttitle("(B2b) Full Details: Data Objects")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("data object", width=25)
-    table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
-    table.add_column("Σ enc. time", width=10)
-    table.add_column("Σ jsonstr. len.", width=13)
-    table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
-    table.add_column("Σ dec. time", width=10)
-    table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
+    table.add_column("Data Object", width=24)
+    table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
+    table.add_column("Σ Encoded Time", width=11)
+    table.add_column("Σ Encoded Str. Length", width=13)
+    table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
+    table.add_column("Σ Decoded Time", width=11)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)
 
     for dataobj in results.dataobjs:
         table.add_row(
@@ -885,7 +886,7 @@ def report_section_c1a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -921,42 +922,42 @@ def report_section_c1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C1a) full details: serializer * data object (base 100)")
+        msgreporttitle("(C1a) Full Details: Serializer * Data Object (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("serializer/data object", width=25)
-    table.add_column("enc. ok ?", width=12)
+    table.add_column("Serializer > Data Object", width=24)
+    table.add_column("Encod. Ok ?", width=11)
 
     if base100 := results.get_base('encoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_time')
-        table.add_column(f"enc. time (base 100 = {result})", width=10)
+        table.add_column(f"Encod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("enc. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Encod. Time [red](NO BASE 100)[/red]",
+                         width=11)
 
     if base100 := results.get_base('encoding_strlen'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_strlen')
-        table.add_column(f"jsonstr. len. (base 100 = {result})", width=13)
+        table.add_column(f"Encoded Str. Length (Base 100 = {result})", width=13)
     else:
-        table.add_column("jsonstr. len. [red](NO BASE 100)[/red]",
+        table.add_column("Encoded Str. [red](NO BASE 100)[/red]",
                          width=13)
 
-    table.add_column("dec. ok ?", width=12)
+    table.add_column("Decod. Ok ?", width=11)
 
     if base100 := results.get_base('decoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='decoding_time')
-        table.add_column(f"dec. time (base 100 = {result})", width=10)
+        table.add_column(f"Decod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("dec. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Decod. Time [red](NO BASE 100)[/red]",
+                         width=11)
 
-    table.add_column("enc ⇆ dec ?", width=12)
+    table.add_column("Encod.<>Decod. ?", width=16)
 
     for serializer in results.serializers:
         table.add_row(f"{aspect_serializer(serializer)} :")
@@ -989,7 +990,7 @@ def report_section_c1b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1025,37 +1026,37 @@ def report_section_c1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C1b) full details: serializers (base 100)")
+        msgreporttitle("(C1b) Full Details: Serializers (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("serializer", width=25)
-    table.add_column(f"enc. ok ? (max={results.dataobjs_number})", width=12)
+    table.add_column("Serializer", width=24)
+    table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
     if base100 := results.get_serializers_base('encoding_time'):
-        table.add_column("Σ enc. time "
-                         f"(base 100 = {results.total_encoding_time(serializer=base100)})",
-                         width=10)
+        table.add_column("Σ Encoded Time "
+                         f"(Base 100 = {results.total_encoding_time(serializer=base100)})",
+                         width=11)
     else:
-        table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Σ Encoded Time [red](NO BASE 100)[/red]",
+                         width=11)
 
     if base100 := results.get_serializers_base('encoding_strlen'):
-        table.add_column("Σ jsonstr. len. "
-                         f"(base 100 = {results.total_encoding_strlen(serializer=base100)})",
+        table.add_column("Σ Encoded Str. Length "
+                         f"(Base 100 = {results.total_encoding_strlen(serializer=base100)})",
                          width=13)
     else:
-        table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
+        table.add_column("Σ Encoded Str. [red](NO BASE 100)[/red]", width=11)
 
-    table.add_column(f"dec. ok ? (max={results.dataobjs_number})", width=12)
+    table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
 
     if base100 := results.get_serializers_base('decoding_time'):
-        table.add_column("Σ dec. time "
-                         f"(base 100 = {results.total_decoding_time(serializer=base100)})",
-                         width=10)
+        table.add_column("Σ Decoded Time "
+                         f"(Base 100 = {results.total_decoding_time(serializer=base100)})",
+                         width=11)
     else:
-        table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Σ Decoded Time [red](NO BASE 100)[/red]",
+                         width=11)
 
-    table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     for serializer in results.serializers:
         table.add_row(
@@ -1087,7 +1088,7 @@ def report_section_c2a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1123,46 +1124,46 @@ def report_section_c2a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C2a) full details: data object * serializer (base 100)")
+        msgreporttitle("(C2a) Full Details: Data Object * Serializer (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("data object/serializer", width=25)
+    table.add_column("Data Object > Serializer", width=24)
 
-    table.add_column("enc. ok ?", width=12)
+    table.add_column("Encod. Ok ?", width=11)
 
     if base100 := results.get_base('encoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_time')
-        table.add_column(f"enc. time (base 100 = {result})", width=10)
+        table.add_column(f"Encod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("enc. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Encod. Time [red](NO BASE 100)[/red]",
+                         width=11)
 
     if base100 := results.get_base('encoding_strlen'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_strlen')
-        table.add_column(f"jsonstr. len. (base 100 = {result})", width=13)
+        table.add_column(f"Encoded Str. Length (Base 100 = {result})", width=13)
     else:
-        table.add_column("jsonstr. len. [red](NO BASE 100)[/red]",
+        table.add_column("Encoded Str. Length [red](NO BASE 100)[/red]",
                          width=13)
 
-    table.add_column("dec. ok ?", width=12)
+    table.add_column("Decod. Ok ?", width=11)
 
     if base100 := results.get_base('decoding_time'):
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='decoding_time')
-        table.add_column(f"dec. time (base 100 = {result})", width=10)
+        table.add_column(f"Decod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("dec. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Decod. Time [red](NO BASE 100)[/red]",
+                         width=11)
 
-    table.add_column("enc ⇆ dec ?", width=12)
+    table.add_column("Encod.<>Decod. ?", width=16)
 
     for dataobj in results.dataobjs:
-        table.add_row("{aspect_data(dataobj)} :")
+        table.add_row(f"{aspect_data(dataobj)} :")
         for serializer in results.serializers:
             table.add_row(
                 "> " + f"{aspect_serializer(serializer)}",
@@ -1193,7 +1194,7 @@ def report_section_c2b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1229,38 +1230,38 @@ def report_section_c2b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C2b) full details: data objects (base 100)")
+        msgreporttitle("(C2b) Full Details: Data Objects (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("data object", width=25)
-    table.add_column(f"enc. ok ? (max={results.serializers_number})", width=12)
+    table.add_column("Data Object", width=24)
+    table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
 
     if base100 := results.get_dataobjs_base('encoding_time'):
-        table.add_column("Σ enc. time "
-                         f"(base 100 = {results.total_encoding_time(dataobj=base100)})",
-                         width=10)
+        table.add_column("Σ Encoded Time "
+                         f"(Base 100 = {results.total_encoding_time(dataobj=base100)})",
+                         width=11)
     else:
-        table.add_column("Σ enc. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Σ Encoded Time [red](NO BASE 100)[/red]",
+                         width=11)
 
     if base100 := results.get_dataobjs_base('encoding_strlen'):
-        table.add_column("Σ jsonstr. len. "
-                         f"(base 100 = {results.total_encoding_strlen(dataobj=base100)})",
+        table.add_column("Σ Encoded Str. Length "
+                         f"(Base 100 = {results.total_encoding_strlen(dataobj=base100)})",
                          width=13)
     else:
-        table.add_column("Σ jsonstr. len. [red](NO BASE 100)[/red]", width=13)
+        table.add_column("Σ Encoded Str. Length [red](NO BASE 100)[/red]", width=13)
 
-    table.add_column(f"dec. ok ? (max={results.serializers_number})", width=12)
+    table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
 
     if base100 := results.get_dataobjs_base('decoding_time'):
-        table.add_column("Σ dec. time "
-                         f"(base 100 = {results.total_decoding_time(dataobj=base100)})",
-                         width=10)
+        table.add_column("Σ Decoded Time "
+                         f"(Base 100 = {results.total_decoding_time(dataobj=base100)})",
+                         width=11)
     else:
-        table.add_column("Σ dec. time [red](NO BASE 100)[/red]",
-                         width=10)
+        table.add_column("Σ Decoded Time [red](NO BASE 100)[/red]",
+                         width=11)
 
-    table.add_column(f"enc ⇆ dec ? (max={results.serializers_number})", width=12)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)
 
     for dataobj in results.dataobjs:
         table.add_row(
@@ -1292,7 +1293,7 @@ def report_section_d1a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1348,35 +1349,36 @@ def report_section_d1a(results,
 
         if not data:
             msgreport(
-                f"'{aspect_serializer(serializer)}': "
+                f"{aspect_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 "no data objects may be used: therefore there's no conclusion about the objects "
-                f"data serializer '{aspect_serializer(serializer)}' can handle.")
+                f"data serializer {aspect_serializer(serializer)} can handle.")
         elif not _list:
-            msgreport(f"'{aspect_serializer(serializer)}': "
-                      f"{cmpdata2phrase(cmpdata)}"
-                      "there's no data object "
-                      f"among the {len(results.dataobjs)} used data objects "
-                      f"that serializer '{aspect_serializer(serializer)}' can handle (0%).")
+            msgreport(
+                f"{aspect_serializer(serializer)}: "
+                f"{cmpdata2phrase(cmpdata)}"
+                "there's no data object "
+                f"among the {len(results.dataobjs)} used data objects "
+                f"that serializer {aspect_serializer(serializer)} can handle (0%).")
         elif len(_list) == 1:
             msgreport(
-                f"'{aspect_serializer(serializer)}': "
+                f"{aspect_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
-                f"'{aspect_serializer(serializer)}' can handle one data object "
+                f"{aspect_serializer(serializer)} can handle one data object "
                 f"among {len(results.dataobjs)} "
-                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
-            msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
         else:
             msgreport(
-                f"'{aspect_serializer(serializer)}': "
+                f"{aspect_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
-                f"'{aspect_serializer(serializer)}' can handle {len(_list)} data objects "
+                f"{aspect_serializer(serializer)} can handle {len(_list)} data objects "
                 f"among {len(results.dataobjs)} "
-                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
-            msgreport("; ".join("'"+dataobj+"'" for dataobj in _list))
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D1a) conclusion: data objects handled by the serializer(s)")
+        msgreporttitle("(D1a) Conclusion: Data Objects Handled by the Serializer(s)")
         msgreport()
 
     serializer1, serializer2, cmpdata = s1s2d
@@ -1417,7 +1419,7 @@ def report_section_d1b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1473,35 +1475,36 @@ def report_section_d1b(results,
 
         if not data:
             msgreport(
-                f"'{aspect_serializer(serializer)}': "
+                f"{aspect_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 "no data objects may be used: therefore there's no conclusion about the objects "
-                f"data serializer '{aspect_serializer(serializer)}' can't handle.")
+                f"data serializer {aspect_serializer(serializer)} can't handle.")
         elif not _list:
-            msgreport(f"'{aspect_serializer(serializer)}': "
+            msgreport(f"{aspect_serializer(serializer)}: "
                       f"{cmpdata2phrase(cmpdata)}"
                       "there's no data object "
                       f"among the {len(results.dataobjs)} used data objects "
-                      f"that serializer '{aspect_serializer(serializer)}' can't handle (0%).")
+                      f"that serializer {aspect_serializer(serializer)} can't handle (0%).")
         elif len(_list) == 1:
             msgreport(
-                f"'{aspect_serializer(serializer)}': "
+                f"{aspect_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
-                f"'{aspect_serializer(serializer)}' can't handle one data object "
+                f"{aspect_serializer(serializer)} can't handle one data object "
                 f"among {len(results.dataobjs)} "
-                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
-            msgreport("; ".join(f"'{aspect_data(dataobj)}'" for dataobj in _list))
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
         else:
             msgreport(
-                f"'{aspect_serializer(serializer)}': "
+                f"{aspect_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
-                f"'{aspect_serializer(serializer)}' can't handle {len(_list)} data objects "
+                f"{aspect_serializer(serializer)} can't handle {len(_list)} data objects "
                 f"among {len(results.dataobjs)} "
-                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely:")
-            msgreport("; ".join(f"'{aspect_data(dataobj)}'" for dataobj in _list))
+                f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D1b) conclusion: data objects NOT handled by the serializer(s)")
+        msgreporttitle("(D1b) Conclusion: "
+                       "Data Objects [italic]NOT[/italic] Handled by the Serializer(s)")
         msgreport()
 
     serializer1, serializer2, cmpdata = s1s2d
@@ -1542,7 +1545,7 @@ def report_section_d2a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1577,13 +1580,13 @@ def report_section_d2a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D2a) conclusion: serializers (not sorted)")
+        msgreporttitle("(D2a) Conclusion: Serializers ([italic]Not Sorted[/italic])")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("serializer", width=25)
-    table.add_column("Σ jsonstr. len.", width=13)
-    table.add_column("Σ enc.+dec. time", width=13)
-    table.add_column(f"enc ⇆ dec ? (max={results.dataobjs_number})", width=12)
+    table.add_column("Serializer", width=25)
+    table.add_column("Σ Encoded Str. Length", width=16)
+    table.add_column("Σ Encod.+Decod. Time", width=16)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     serializer1, serializer2, _ = s1s2d
     _serializers = []
@@ -1633,7 +1636,7 @@ def report_section_d2b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1669,12 +1672,12 @@ def report_section_d2b(results,
     """
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(D2b) "
-                       "conclusion: overall score based on 3 points "
-                       "(Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec)")
+                       "Conclusion: Overall Score Based on 3 Points "
+                       "(Σ Encoded Str./Σ Encod.+Decod. Time/Encod.<>Decod.)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("serializer", width=25)
-    table.add_column("overall score", width=13)
+    table.add_column("Serializer", width=25)
+    table.add_column("Overall Score", width=13)
 
     serializer1, serializer2, _ = s1s2d
     _serializers = []
@@ -1720,7 +1723,7 @@ def report_section_d2c(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1755,7 +1758,7 @@ def report_section_d2c(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D2c) conclusion")
+        msgreporttitle("(D2c) Conclusion")
 
     serializer1, serializer2, cmpdata = s1s2d
 
@@ -1775,11 +1778,11 @@ def report_section_d2c(results,
 
         bests = results.get_overallscore_bestrank()
         if len(bests) == 1:
-            text.append(f"{aspect_serializer(bests[0])} is ranked #1 "
+            text.append(f"{aspect_list(bests)} is ranked #1 "
                         f"among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
         else:
-            text.append(f"{' and '.join(aspect_serializer(serializer) for serializer in bests)} "
+            text.append(f"{aspect_list(bests)} "
                         f"are ranked #1 among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
 
@@ -1799,13 +1802,14 @@ def report_section_d2c(results,
                         "according to the overall scores (__note:overallscore__).")
         else:
             text.append(
-                f"{' and '.join(aspect_serializer(serializer) for serializer in worsts)} "
+                f"{aspect_list(worsts)} "
                 f"are ranked #{results.serializers_number} among "
                 f"{results.serializers_number} serializers, "
                 "according to the overall scores (__note:overallscore__).")
 
-        text.notes.append(("overallscore"
-                           "a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec"))
+        text.notes.append(
+            ("overallscore"
+             "a rank based on 3 points: Σ encoded str./Σ encod.+decod. time/encod.<>decod."))
 
     elif serializer1 != "all" and serializer2 != "all":
         # ========================================================
@@ -1828,8 +1832,8 @@ def report_section_d2c(results,
                 f"{aspect_serializer(serializer1)} "
                 f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
                 f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
-                "(__note:total_encoding_time_ratio__) -"
-                " than "
+                "(__note:total_encoding_time_ratio__) - "
+                "than "
                 f"{aspect_serializer(serializer2)} "
                 "to encode and decode; ")
 
@@ -1838,10 +1842,10 @@ def report_section_d2c(results,
                  humanratio(
                      total_encoding_time_ratio,
                      explanations=(
-                         f"{aspect_serializer(serializer1)}'s Σ enc.+dec. time",
+                         f"{aspect_serializer(serializer1)}'s Σ encod.+decod. time",
                          results.total_encoding_plus_decoding_time(serializer=serializer1,
                                                                    output='value'),
-                         f"{aspect_serializer(serializer2)}'s Σ enc.+dec. time",
+                         f"{aspect_serializer(serializer2)}'s Σ encod.+decod. time",
                          results.total_encoding_plus_decoding_time(serializer=serializer2,
                                                                    output='value'),
                      ))))
@@ -1861,8 +1865,8 @@ def report_section_d2c(results,
                         f"{aspect_serializer(serializer1)} "
                         f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
                         f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
-                        f"(__note:total_encoding_strlen_ratio__) -"
-                        " than "
+                        f"(__note:total_encoding_strlen_ratio__) - "
+                        "than "
                         f"strings produced by {aspect_serializer(serializer2)}; ")
 
             text.notes.append(
@@ -1892,8 +1896,8 @@ def report_section_d2c(results,
             text.append(f"{aspect_serializer(serializer1)}'s coverage "
                         f"is {ratio2phrase(ratio_similarity, 'large/small')} "
                         f"- by a factor of {humanratio(ratio_similarity):.3f} "
-                        f"(__note:ratio_similarity__) -"
-                        " than "
+                        f"(__note:ratio_similarity__) - "
+                        "than "
                         f"{aspect_serializer(serializer2)}'s coverage.")
 
             text.notes.append(
@@ -1920,13 +1924,14 @@ def report_section_d2c(results,
         else:
             serializer = serializer2
         rank = results.get_overallscore_rank(serializer)
-        text.append(f"{aspect_serializer(serializer)}"
-                    f" is ranked #{rank} among {len(results.serializers)} serializers "
+        text.append(f"{aspect_serializer(serializer)} "
+                    f"is ranked #{rank} among {len(results.serializers)} serializers "
                     f"(__note:overallscore__)")
         text.append(". ")
 
-        text.notes.append(("overallscore",
-                           "a rank based on 3 points: Σ jsonstr.len./Σ enc.+dec. time/enc ⇆ dec"))
+        text.notes.append(
+            ("overallscore",
+             "a rank based on 3 points: Σ jsonstr.len./Σ encod.+decod. time/encod.<>decod."))
 
         for attribute in ("encoding_strlen",
                           "encoding_plus_decoding_time",
@@ -1946,12 +1951,12 @@ def report_section_d2c(results,
                         f"{aspect_serializer(serializer)} ")
                 else:
                     subtext.append(
-                        f"There are {len(_less)} serializers "
-                        "(namely "
-                        f"{'; '.join(f'{aspect_serializer(_serial)}' for _serial in _less)}) "
-                        f"that produce longer strings than {aspect_serializer(serializer)}")
+                        f"There are {len(_less)} serializers"
+                        ", namely "
+                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _less))} "
+                        f"that produce longer strings than {aspect_serializer(serializer)} ")
 
-                subtext.append(" and ")
+                subtext.append("and ")
 
                 if not _more:
                     subtext.append(
@@ -1963,9 +1968,9 @@ def report_section_d2c(results,
                         f"{aspect_serializer(serializer)}")
                 else:
                     subtext.append(
-                        f"there are {len(_more)} serializers "
-                        "(namely "
-                        f"{'; '.join(f'{aspect_serializer(_serial)}' for _serial in _more)}) "
+                        f"there are {len(_more)} serializers"
+                        ", namely "
+                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _more))} "
                         f"that produce shorter strings than {aspect_serializer(serializer)}")
 
                 subtext.append(". ")
@@ -1981,12 +1986,12 @@ def report_section_d2c(results,
                         f"{aspect_serializer(serializer)} ")
                 else:
                     subtext.append(
-                        f"There are {len(_less)} serializers "
-                        "(namely "
-                        f"{'; '.join(f'{aspect_serializer(_serial)}' for _serial in _less)}) "
-                        f"that are slower than {aspect_serializer(serializer)}")
+                        f"There are {len(_less)} serializers"
+                        ", namely "
+                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _less))}"
+                        f"that are slower than {aspect_serializer(serializer)} ")
 
-                subtext.append(" and ")
+                subtext.append("and ")
 
                 if not _more:
                     subtext.append(
@@ -1998,9 +2003,9 @@ def report_section_d2c(results,
                         f"{aspect_serializer(serializer)}")
                 else:
                     subtext.append(
-                        f"there are {len(_more)} serializers "
-                        "(namely "
-                        f"{'; '.join(f'{aspect_serializer(_serial)}' for _serial in _more)}) "
+                        f"there are {len(_more)} serializers"
+                        ", namely "
+                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _more))} "
                         f"that are faster than {aspect_serializer(serializer)}")
 
                 subtext.append(". ")
@@ -2008,35 +2013,41 @@ def report_section_d2c(results,
             elif attribute == "similarity":
                 if not _less:
                     subtext.append(
-                        "There's no serializer that covers less than "
-                        f"{aspect_serializer(serializer)} ")
+                        "There's no serializer is worse than "
+                        f"{aspect_serializer(serializer)} "
+                        "when it comes to data coverage ")
                 elif len(_less) == 1:
                     subtext.append(
-                        f"Only {aspect_serializer(_less[0])} covers less than "
-                        f"{aspect_serializer(serializer)} ")
+                        f"Only {aspect_serializer(_less[0])} is worse than "
+                        f"{aspect_serializer(serializer)} "
+                        "when it comes to data coverage ")
                 else:
                     subtext.append(
-                        f"There are {len(_less)} serializers "
-                        "(namely "
-                        f"{'; '.join(f'{aspect_serializer(_serial)}' for _serial in _less)}) "
-                        f"that covers less than {aspect_serializer(serializer)}")
+                        f"There are {len(_less)} serializers"
+                        ", namely "
+                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _less))} "
+                        f"that are worse than {aspect_serializer(serializer)} "
+                        "when it comes to data coverage ")
 
-                subtext.append(" and ")
+                subtext.append("and ")
 
                 if not _more:
                     subtext.append(
-                        "there's no serializer that covers better than "
-                        f"{aspect_serializer(serializer)}")
+                        "there's no serializer is better than "
+                        f"{aspect_serializer(serializer)} "
+                        "when it comes to data coverage")
                 elif len(_more) == 1:
                     subtext.append(
-                        f"only {aspect_serializer(_more[0])} covers better than "
-                        f"{aspect_serializer(serializer)}")
+                        f"only {aspect_serializer(_more[0])} is better than "
+                        f"{aspect_serializer(serializer)} "
+                        "when it comes to data coverage")
                 else:
                     subtext.append(
-                        f"there are {len(_more)} serializers "
-                        "(namely "
-                        f"{'; '.join(f'{aspect_serializer(_serial)}' for _serial in _more)}) "
-                        f"that covers better than {aspect_serializer(serializer)}")
+                        f"there are {len(_more)} serializers"
+                        ", namely "
+                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _more))} "
+                        f"that are better than {aspect_serializer(serializer)} "
+                        "when it comes to data coverage")
 
                 subtext.append(". ")
 
@@ -2065,7 +2076,7 @@ def report_section_e1a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -2100,7 +2111,7 @@ def report_section_e1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(E1a) informations about the machine (no details)")
+        msgreporttitle("(E1a) Informations About The Machine ([italic]No Details[/italic])")
 
     mymachine(fulldetails=False)
 
@@ -2124,7 +2135,7 @@ def report_section_e1b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -2159,7 +2170,7 @@ def report_section_e1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(E1b) informations about the machine (full details)")
+        msgreporttitle("(E1b) Informations About The Machine ([italic]Full Details[/italic])")
 
     mymachine(fulldetails=True)
 
@@ -2245,7 +2256,7 @@ def report(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects

@@ -74,10 +74,10 @@ def mymachine(fulldetails=False):
         infos["(psutil) virtual memory/free"] = f"{vmemory.free/1000000000:.2f}Go"
 
     except ImportError:
-        msgreport("Please notice that all informations are not available "
+        msgreport("Please note that not all informaton could be displayed "
                   "since package 'psutil' is not installed. "
-                  "You may install it with: `$pip install psutil` ."
-                  "Confer: https://psutil.readthedocs.io/en/latest/ ")
+                  "You can install it with: `$ pip install psutil` ."
+                  "Confer https://psutil.readthedocs.io/en/latest/ ")
 
     # ---- cpuinfo package ----------------------------------------------------
     try:
@@ -89,10 +89,10 @@ def mymachine(fulldetails=False):
                 infos["(cpuinfo) "+str(key)] = value
 
     except ImportError:
-        msgreport("Please notice that all informations are not available "
+        msgreport("Please note that not all informaton could be displayed "
                   "since package 'cpuinfo' is not installed. "
-                  "You may install it with: `$pip install py-cpuinfo` ."
-                  "Confer: https://pypi.org/project/py-cpuinfo/ ")
+                  "You can install it with: `$ pip install py-cpuinfo` ."
+                  "Confer https://pypi.org/project/py-cpuinfo/ ")
 
     # -------------------------------------------------------------------------
     # final output

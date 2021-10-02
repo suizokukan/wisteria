@@ -392,26 +392,31 @@ def init_serializers():
     """
     wisteria.globs.SERIALIZERS = {
         "iaswn": SerializerData(
+            name="iaswn",
             human_name="Iaswn",
             internet="https://github.com/suizokukan/iaswn",
             available=trytoimport("iaswn"),
             func=serializer_iaswn),
         "json": SerializerData(
+            name="json",
             human_name="json",
             internet="https://docs.python.org/3/library/json.html",
             available=trytoimport("json"),
             func=serializer_json),
         "jsonpickle": SerializerData(
+            name="jsonpickle",
             human_name="jsonpickle",
             internet="https://jsonpickle.github.io/",
             available=trytoimport("jsonpickle"),
             func=serializer_jsonpickle),
         "marshal": SerializerData(
+            name="marshal",
             human_name="marshal",
             internet="https://docs.python.org/3/library/marshal.html#module-marshal",
             available=trytoimport("marshal"),
             func=serializer_marshal),
         "pickle": SerializerData(
+            name="pickle",
             human_name="pickle",
             internet="https://docs.python.org/3/library/pickle.html",
             available=trytoimport("pickle"),
