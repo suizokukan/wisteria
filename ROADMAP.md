@@ -75,13 +75,18 @@ cwc
 ------------------
 0.0.7: human talking
 
-* --help: préciser que le rapport est dans wisteria.ini
 * bug: ./bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
-* distinguer serializer( et serializer0( ne sert à rien.
 * unités, partout, dans le texte comme dans les tableaux
 * cpu_infos+shutil à intégrer aux dépendences + placer en haut du fichier.
 * 'glance': 
-* pylintrc à modifier (ne pas oublier de mettre à jour README.md)
+
+[DONE] task-83
+
+Improved --help message.
+
+    * improved --help message (task-83)
+
+    * pylint: 10/10
 
 [DONE] task-82
 

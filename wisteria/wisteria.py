@@ -111,10 +111,13 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile
 # ⋅       - (12.4) main(): results computing
 # ⋅       - (12.5) main(): report
 PARSER = \
-    argparse.ArgumentParser(description='Comparisons of different Python serializers. '
-                            'Try $wisteria --checkup then $wisteria --cmp="pickle against marshal"',
-                            epilog=f"{__projectname__}: {__version__}",
-                            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    argparse.ArgumentParser(
+        description='Comparisons of different Python serializers. '
+        'Try $ wisteria --checkup then $ wisteria --cmp="pickle against marshal". '
+        'The result appears in the console and is also written in a file, \'report.txt\' .',
+        epilog=f"{__projectname__}: {__version__}",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
 PARSER.add_argument(
     '--version', '-v',
     action='version',
