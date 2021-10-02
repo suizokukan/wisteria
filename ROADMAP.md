@@ -83,6 +83,15 @@ cwc
 * 'glance': 
 * pylintrc à modifier (ne pas oublier de mettre à jour README.md)
 
+[DONE] task-82
+
+In pylintrc, max-args=5 > max-args=6.
+
+    * in pylintrc, max-args=5 > max-args=6 (task-82)
+    * updated README.md (task-82)
+
+    * pylint: 10/10
+
 [DONE] task-81
 
 Improved English phraseology.

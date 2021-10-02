@@ -9,4 +9,5 @@ max-returns=6 > max-returns=10
 max-statements=50 > max-statements=120
 max-locals=15 > max-locals=20
 max-branches=12 > max-branches=40
+max-args=5 > max-args=6
 ```
