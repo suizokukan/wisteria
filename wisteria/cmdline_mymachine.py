@@ -28,6 +28,10 @@
     o  mymachine(fulldetails=False)
 """
 import platform
+
+import psutil
+import cpuinfo
+
 from wisteria.msg import msgreport
 
 
@@ -57,9 +61,6 @@ def mymachine(fulldetails=False):
 
     # ---- psutil package -----------------------------------------------------
     try:
-        # No way to import this third-party package at the beginning of the file!
-        # pylint: disable=import-outside-toplevel
-        import psutil
         cpufreq = psutil.cpu_freq()
         vmemory = psutil.virtual_memory()
 
@@ -81,9 +82,6 @@ def mymachine(fulldetails=False):
 
     # ---- cpuinfo package ----------------------------------------------------
     try:
-        # No way to import this third-party package at the beginning of the file!
-        # pylint: disable=import-outside-toplevel
-        import cpuinfo
         for key, value in cpuinfo.get_cpu_info().items():
             if key == "brand_raw" or fulldetails:
                 infos["(cpuinfo) "+str(key)] = value

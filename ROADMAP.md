@@ -76,13 +76,21 @@ cwc
 0.0.7: human talking
 
 (not done) unités, partout, dans le texte comme dans les tableaux
-(not done) cpu_infos+shutil à intégrer aux dépendences + placer en haut du fichier.
 (not done) 'glance': 
 (not done) /bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
                Iaswn's coverage is slightly smaller  > Iaswn's coverage is slightly better (?)
 
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84,
+               
+[DONE] task-85
+
+Added py-cpuinfo and psutil to project's dependencies.
+
+    * added py-cpuinfo and psutil to project's dependencies. (task-85)
+    * removed some now useless `pylint: disable` in mymachine.py::mymachine() (task-85)
+
+    * pylint: 10/10
                
 [DONE] task-84
 
