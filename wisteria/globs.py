@@ -56,6 +56,8 @@
     o  OUTPUT
 
     o  PROGRESSBAR_LENGTH
+
+    o  UNITS
 """
 import re
 
@@ -139,3 +141,8 @@ OUTPUT = []
 # 'None' is an accepted value and extends the length of the bar
 # to the entire width of the terminal.
 PROGRESSBAR_LENGTH = None
+
+# units used in this project
+UNITS = {'time': 'seconds',
+         'string length': 'characters',
+         }

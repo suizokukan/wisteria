@@ -201,6 +201,7 @@ def aspect_stringlength(int_stringlength):
         of characters
             ex: 3 > "3 chars"
 
+        Please note that the unit has deliberately not been added to the end of the string.
         _______________________________________________________________
 
         ARGUMENT: (None|int)int_stringlength, a string number.
@@ -209,7 +210,7 @@ def aspect_stringlength(int_stringlength):
     """
     if int_stringlength is None:
         return aspect_nodata()
-    return f"{int_stringlength} chars"
+    return f"{int_stringlength}"
 
 
 def aspect_time(floattime):
@@ -218,6 +219,8 @@ def aspect_time(floattime):
 
         Format the input argument into a string. The input argument is a (float)time laps.
             ex: 0.333345677 > "0.333345"
+
+        Please note that the unit has deliberately not been added to the end of the string.
         _______________________________________________________________
 
         ARGUMENT: (None|float)floattime

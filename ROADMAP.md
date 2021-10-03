@@ -75,12 +75,23 @@ cwc
 ------------------
 0.0.7: human talking
 
-(not done) unités, partout, dans le texte comme dans les tableaux
-
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85, task-86,
-               task-87
+               task-87, task-88
                
+[DONE] task-89
+
+Added units everywhere it was possible to add them, in tables and in texts.
+
+    * added units everywhere it was possible to add them, in tables and in texts.
+      (task-89)
+    * unit is not added in aspect_xxx() method and therefore aspect_stringlength()
+      has been modified to remove the 'chars' string that was added to the result
+      (task-89)
+    * improved doc. (task-89)
+    
+    * pylint: 10/10
+
 [DONE] task-88
 
 Improved grammar in ratio2phrase() and in D2c report section.

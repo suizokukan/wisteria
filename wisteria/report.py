@@ -53,6 +53,7 @@
 import rich.table
 
 import wisteria.globs
+from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
@@ -80,7 +81,8 @@ def humanratio(ratio,
         ARGUMENTS:
         o  (float)ratio, the ratio to be returned
         o  (None|list of str)explanations:
-                (str)ratio1_str, (float)ratio1, (str)ratio2_str, (float)ratio2
+                (str)ratio1_str, (float)ratio1, (str)ratio2_str, (float)ratio2,
+                (None if no unit or str)unit_name
 
         RETURNED VALUE: (float)ratio or (float)1/ratio.
     """
@@ -91,20 +93,21 @@ def humanratio(ratio,
         return ratio
 
     # ---- explanations is not None > let's return a (str)explanation ---------
-    ratio1_str, ratio1, ratio2_str, ratio2 = explanations
+    ratio1_str, ratio1, ratio2_str, ratio2, unit_name = explanations
+    unit_str = "" if unit_name is None else UNITS[unit_name]
     if ratio < 1:
         ratio = 1/ratio
         res = f"factor {ratio:.3f} = {ratio2_str} / {ratio1_str} " \
-            f"= {ratio2:.3f} / {ratio1:.3f}" \
+            f"= {ratio2:.3f} {unit_str} / {ratio1:.3f} {unit_str}" \
             "\n" \
-            f"{ratio1_str} * {ratio:.3f} = {ratio1:.3f} * {ratio:.3f} = " \
-            f"{ratio2_str} = {ratio2:.3f}"
+            f"{ratio1_str} * {ratio:.3f} = {ratio1:.3f} {unit_str} * {ratio:.3f} = " \
+            f"{ratio2_str} = {ratio2:.3f} {unit_str}"
     else:
         res = f"factor {ratio:.3f} = {ratio1_str} / {ratio2_str} " \
-            f"= {ratio1:.3f} / {ratio2:.3f}" \
+            f"= {ratio1:.3f} {unit_str} / {ratio2:.3f} {unit_str}" \
             "\n" \
-            f"{ratio2_str} * {ratio:.3f} = {ratio2:.3f} * {ratio:.3f} " \
-            f"= {ratio1_str} = {ratio1:.3f}"
+            f"{ratio2_str} * {ratio:.3f} = {ratio2:.3f} {unit_str} * {ratio:.3f} " \
+            f"= {ratio1_str} = {ratio1:.3f} {unit_str}"
     return res
 
 
@@ -451,10 +454,10 @@ def report_section_b1a(results,
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer > Data Object", width=24)
     table.add_column("Encod. Ok ?", width=11)
-    table.add_column("Encod. Time", width=11)
-    table.add_column("Encoded Str. Length", width=13)
+    table.add_column(f"Encod. Time ({UNITS['time']})", width=11)
+    table.add_column(f"Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column("Decod. Ok ?", width=11)
-    table.add_column("Decod. Time", width=11)
+    table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Encod.<>Decod. ?", width=16)
 
     for serializer in results.serializers:
@@ -532,10 +535,10 @@ def report_section_b1b(results,
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer", width=24)
     table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
-    table.add_column("Σ Encoded Time", width=11)
-    table.add_column("Σ Encoded Str. Length", width=13)
+    table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
+    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
-    table.add_column("Σ Decoded Time", width=11)
+    table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     for serializer in results.serializers:
@@ -612,10 +615,10 @@ def report_section_b1c(results,
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("#", width=2)
     table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
-    table.add_column("Σ Encoded Time", width=11)
-    table.add_column("Σ Encoded Str. Length", width=13)
+    table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
+    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
-    table.add_column("Σ Decoded Time", width=11)
+    table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     for index in range(results.serializers_number):
@@ -766,10 +769,10 @@ def report_section_b2a(results,
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Data Object > Serializer", width=24)
     table.add_column("Encod. Ok ?", width=11)
-    table.add_column("Encod. Time", width=11)
-    table.add_column("Encoded Str. Length", width=13)
+    table.add_column(f"Encod. Time ({UNITS['time']})", width=11)
+    table.add_column(f"Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column("Decod. Ok ?", width=11)
-    table.add_column("Decod. Time", width=11)
+    table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Encod.<>Decod. ?", width=16)
 
     for dataobj in results.dataobjs:
@@ -848,10 +851,10 @@ def report_section_b2b(results,
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Data Object", width=24)
     table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
-    table.add_column("Σ Encoded Time", width=11)
-    table.add_column("Σ Encoded Str. Length", width=13)
+    table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
+    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
-    table.add_column("Σ Decoded Time", width=11)
+    table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)
 
     for dataobj in results.dataobjs:
@@ -933,7 +936,7 @@ def report_section_c1a(results,
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_time')
-        table.add_column(f"Encod. Time (Base 100 = {result})", width=11)
+        table.add_column(f"Encod. Time (Base 100 = {result} {UNITS['time']})", width=11)
     else:
         table.add_column(f"Encod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
@@ -942,7 +945,8 @@ def report_section_c1a(results,
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_strlen')
-        table.add_column(f"Encoded Str. Length (Base 100 = {result})", width=13)
+        table.add_column(
+            f"Encoded Str. Length (Base 100 = {result} {UNITS['string length']})", width=13)
     else:
         table.add_column(f"Encoded Str. {aspect_nodata('(NO BASE 100)')}",
                          width=13)
@@ -953,7 +957,7 @@ def report_section_c1a(results,
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='decoding_time')
-        table.add_column(f"Decod. Time (Base 100 = {result})", width=11)
+        table.add_column(f"Decod. Time (Base 100 = {result} {UNITS['time']})", width=11)
     else:
         table.add_column(f"Decod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
@@ -1033,26 +1037,30 @@ def report_section_c1b(results,
     table.add_column("Serializer", width=24)
     table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
     if base100 := results.get_serializers_base('encoding_time'):
-        table.add_column("Σ Encoded Time "
-                         f"(Base 100 = {results.total_encoding_time(serializer=base100)})",
-                         width=11)
+        table.add_column(
+            "Σ Encoded Time "
+            f"(Base 100 = {results.total_encoding_time(serializer=base100)} {UNITS['time']})",
+            width=11)
     else:
         table.add_column(f"Σ Encoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     if base100 := results.get_serializers_base('encoding_strlen'):
-        table.add_column("Σ Encoded Str. Length "
-                         f"(Base 100 = {results.total_encoding_strlen(serializer=base100)})",
-                         width=13)
+        table.add_column(
+            "Σ Encoded Str. Length "
+            f"(Base 100 = {results.total_encoding_strlen(serializer=base100)} "
+            f"{UNITS['string length']})",
+            width=13)
     else:
         table.add_column(f"Σ Encoded Str. {aspect_nodata('(NO BASE 100)')}", width=11)
 
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
 
     if base100 := results.get_serializers_base('decoding_time'):
-        table.add_column("Σ Decoded Time "
-                         f"(Base 100 = {results.total_decoding_time(serializer=base100)})",
-                         width=11)
+        table.add_column(
+            "Σ Decoded Time "
+            f"(Base 100 = {results.total_decoding_time(serializer=base100)} {UNITS['time']})",
+            width=11)
     else:
         table.add_column(f"Σ Decoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
@@ -1136,7 +1144,7 @@ def report_section_c2a(results,
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_time')
-        table.add_column(f"Encod. Time (Base 100 = {result})", width=11)
+        table.add_column(f"Encod. Time (Base 100 = {result} {UNITS['time']})", width=11)
     else:
         table.add_column(f"Encod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
@@ -1145,7 +1153,8 @@ def report_section_c2a(results,
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='encoding_strlen')
-        table.add_column(f"Encoded Str. Length (Base 100 = {result})", width=13)
+        table.add_column(
+            f"Encoded Str. Length (Base 100 = {result} {UNITS['string length']})", width=13)
     else:
         table.add_column(f"Encoded Str. Length {aspect_nodata('(NO BASE 100)')}",
                          width=13)
@@ -1156,7 +1165,7 @@ def report_section_c2a(results,
         result = results.repr_attr(serializer=base100.serializer,
                                    dataobj=base100.dataobj,
                                    attribute_name='decoding_time')
-        table.add_column(f"Decod. Time (Base 100 = {result})", width=11)
+        table.add_column(f"Decod. Time (Base 100 = {result} {UNITS['time']})", width=11)
     else:
         table.add_column(f"Decod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
@@ -1238,26 +1247,31 @@ def report_section_c2b(results,
     table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
 
     if base100 := results.get_dataobjs_base('encoding_time'):
-        table.add_column("Σ Encoded Time "
-                         f"(Base 100 = {results.total_encoding_time(dataobj=base100)})",
-                         width=11)
+        table.add_column(
+            "Σ Encoded Time "
+            f"(Base 100 = {results.total_encoding_time(dataobj=base100)} {UNITS['time']})",
+            width=11)
     else:
         table.add_column(f"Σ Encoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     if base100 := results.get_dataobjs_base('encoding_strlen'):
-        table.add_column("Σ Encoded Str. Length "
-                         f"(Base 100 = {results.total_encoding_strlen(dataobj=base100)})",
-                         width=13)
+        table.add_column(
+            "Σ Encoded Str. Length "
+            f"(Base 100 = {results.total_encoding_strlen(dataobj=base100)} "
+            f"{UNITS['string length']})",
+            width=13)
     else:
         table.add_column(f"Σ Encoded Str. Length {aspect_nodata('(NO BASE 100)')}", width=13)
 
     table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
 
     if base100 := results.get_dataobjs_base('decoding_time'):
-        table.add_column("Σ Decoded Time "
-                         f"(Base 100 = {results.total_decoding_time(dataobj=base100)})",
-                         width=11)
+        table.add_column(
+            "Σ Decoded Time "
+            f"(Base 100 = {results.total_decoding_time(dataobj=base100)} "
+            f"{UNITS['time']})",
+            width=11)
     else:
         table.add_column(f"Σ Decoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
@@ -1585,8 +1599,8 @@ def report_section_d2a(results,
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer", width=25)
-    table.add_column("Σ Encoded Str. Length", width=16)
-    table.add_column("Σ Encod.+Decod. Time", width=16)
+    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=16)
+    table.add_column(f"Σ Encod.+Decod. Time ({UNITS['time']})", width=16)
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
 
     serializer1, serializer2, _ = s1s2d
@@ -1849,6 +1863,7 @@ def report_section_d2c(results,
                          f"{aspect_serializer(serializer2)}'s Σ encod.+decod. time",
                          results.total_encoding_plus_decoding_time(serializer=serializer2,
                                                                    output='value'),
+                         'time',
                      ))))
 
         # ---- total_encoding_strlen -----------------------------------------
@@ -1880,7 +1895,8 @@ def report_section_d2c(results,
                                                        output='value'),
                          f"{aspect_serializer(serializer2)}'s jsonstring strlen",
                          results.total_encoding_strlen(serializer=serializer2,
-                                                       output='value')
+                                                       output='value'),
+                         'string length',
                      ))))
 
         # ---- ratio_similarity -----------------------------------------------
@@ -1912,6 +1928,7 @@ def report_section_d2c(results,
                          f"{aspect_serializer(serializer2)}'s similarity ratio",
                          results.ratio_similarity(serializer=serializer2,
                                                   output='value'),
+                         None,
                      ))))
 
     else:
