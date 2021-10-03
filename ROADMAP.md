@@ -75,10 +75,27 @@ cwc
 ------------------
 0.0.7: human talking
 
-* bug: ./bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
-* unités, partout, dans le texte comme dans les tableaux
-* cpu_infos+shutil à intégrer aux dépendences + placer en haut du fichier.
-* 'glance': 
+(not done) unités, partout, dans le texte comme dans les tableaux
+(not done) cpu_infos+shutil à intégrer aux dépendences + placer en haut du fichier.
+(not done) 'glance': 
+(not done) /bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
+               Iaswn's coverage is slightly smaller  > Iaswn's coverage is slightly better (?)
+
+    * task(s): task-77, task-78, task-79, task-80, task-81,
+               task-82, task-83, task-84,
+               
+[DONE] task-84
+
+Bugfix: serializers_classes.py::total_xxx() functions handle correctly the case
+        where there is no base100 reference available.
+
+    * Bugfix: serializers_classes.py::total_xxx() functions handle correctly the 
+              case where there is no base100 reference available. (task-84)
+    * report.py: improved code readibility by adding a call to aspect_nodata()
+      instead of using a string like '[red]no data[/red]' (task-84)
+    * new aspect method: reportaspect.py::aspect_nodata() (task-84)
+
+    * pylint: 10/10
 
 [DONE] task-83
 

@@ -58,6 +58,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
 from wisteria.msg import msgreport, msgreporttitle
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
+from wisteria.reportaspect import aspect_nodata
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -934,7 +935,7 @@ def report_section_c1a(results,
                                    attribute_name='encoding_time')
         table.add_column(f"Encod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("Encod. Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Encod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     if base100 := results.get_base('encoding_strlen'):
@@ -943,7 +944,7 @@ def report_section_c1a(results,
                                    attribute_name='encoding_strlen')
         table.add_column(f"Encoded Str. Length (Base 100 = {result})", width=13)
     else:
-        table.add_column("Encoded Str. [red](NO BASE 100)[/red]",
+        table.add_column(f"Encoded Str. {aspect_nodata('(NO BASE 100)')}",
                          width=13)
 
     table.add_column("Decod. Ok ?", width=11)
@@ -954,7 +955,7 @@ def report_section_c1a(results,
                                    attribute_name='decoding_time')
         table.add_column(f"Decod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("Decod. Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Decod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     table.add_column("Encod.<>Decod. ?", width=16)
@@ -1036,7 +1037,7 @@ def report_section_c1b(results,
                          f"(Base 100 = {results.total_encoding_time(serializer=base100)})",
                          width=11)
     else:
-        table.add_column("Σ Encoded Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Σ Encoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     if base100 := results.get_serializers_base('encoding_strlen'):
@@ -1044,7 +1045,7 @@ def report_section_c1b(results,
                          f"(Base 100 = {results.total_encoding_strlen(serializer=base100)})",
                          width=13)
     else:
-        table.add_column("Σ Encoded Str. [red](NO BASE 100)[/red]", width=11)
+        table.add_column(f"Σ Encoded Str. {aspect_nodata('(NO BASE 100)')}", width=11)
 
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
 
@@ -1053,7 +1054,7 @@ def report_section_c1b(results,
                          f"(Base 100 = {results.total_decoding_time(serializer=base100)})",
                          width=11)
     else:
-        table.add_column("Σ Decoded Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Σ Decoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
@@ -1137,7 +1138,7 @@ def report_section_c2a(results,
                                    attribute_name='encoding_time')
         table.add_column(f"Encod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("Encod. Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Encod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     if base100 := results.get_base('encoding_strlen'):
@@ -1146,7 +1147,7 @@ def report_section_c2a(results,
                                    attribute_name='encoding_strlen')
         table.add_column(f"Encoded Str. Length (Base 100 = {result})", width=13)
     else:
-        table.add_column("Encoded Str. Length [red](NO BASE 100)[/red]",
+        table.add_column(f"Encoded Str. Length {aspect_nodata('(NO BASE 100)')}",
                          width=13)
 
     table.add_column("Decod. Ok ?", width=11)
@@ -1157,7 +1158,7 @@ def report_section_c2a(results,
                                    attribute_name='decoding_time')
         table.add_column(f"Decod. Time (Base 100 = {result})", width=11)
     else:
-        table.add_column("Decod. Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Decod. Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     table.add_column("Encod.<>Decod. ?", width=16)
@@ -1241,7 +1242,7 @@ def report_section_c2b(results,
                          f"(Base 100 = {results.total_encoding_time(dataobj=base100)})",
                          width=11)
     else:
-        table.add_column("Σ Encoded Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Σ Encoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     if base100 := results.get_dataobjs_base('encoding_strlen'):
@@ -1249,7 +1250,7 @@ def report_section_c2b(results,
                          f"(Base 100 = {results.total_encoding_strlen(dataobj=base100)})",
                          width=13)
     else:
-        table.add_column("Σ Encoded Str. Length [red](NO BASE 100)[/red]", width=13)
+        table.add_column(f"Σ Encoded Str. Length {aspect_nodata('(NO BASE 100)')}", width=13)
 
     table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
 
@@ -1258,7 +1259,7 @@ def report_section_c2b(results,
                          f"(Base 100 = {results.total_decoding_time(dataobj=base100)})",
                          width=11)
     else:
-        table.add_column("Σ Decoded Time [red](NO BASE 100)[/red]",
+        table.add_column(f"Σ Decoded Time {aspect_nodata('(NO BASE 100)')}",
                          width=11)
 
     table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)

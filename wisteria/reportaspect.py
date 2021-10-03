@@ -29,6 +29,7 @@
     o  aspect_boolsuccess(bool_success)
     o  aspect_data(data_objectname)
     o  aspect_list(listitems)
+    o  aspect_nodata(string)
     o  aspect_percentage(percentage)
     o  aspect_ratio(inttotal_and_floatratio)
     o  aspect_serializer(serializer_name)
@@ -56,7 +57,7 @@ def aspect_base100(bool_is_base100_reference,
         o  (float)float_base100
     """
     if float_base100 is None:
-        return "[red](no data)[/red]"
+        return aspect_nodata()
 
     prefix = " "
     suffix = ""
@@ -81,7 +82,7 @@ def aspect_boolsuccess(bool_success):
         RETURNED VALUE: a formatted string representing the input argument.
     """
     if bool_success is None:
-        return "[red](no data)[/red]"
+        return aspect_nodata()
     return "ok" if bool_success else "[red]NOT OK[/red]"
 
 
@@ -123,6 +124,22 @@ def aspect_list(listitems):
     return f"{', '.join(listitem for listitem in listitems[:-1])} and {listitems[-1]}"
 
 
+def aspect_nodata(string=None):
+    """
+        aspect_percentage()
+
+        Return a string with rich text attribute saying that no data is available.
+
+        _______________________________________________________________________
+
+        RETURNED VALUE: (str)"no data" string + some text attributes.
+    """
+    if not string:
+        string = "(no data)"
+
+    return f"[red]{string}[/red]"
+
+
 def aspect_percentage(percentage):
     """
         aspect_percentage()
@@ -155,7 +172,7 @@ def aspect_ratio(inttotal_and_floatratio):
     if inttotal_and_floatratio != (None, None):
         return f"{inttotal_and_floatratio[0]} " \
             f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
-    return "[red](no data)[/red]"
+    return aspect_nodata()
 
 
 def aspect_serializer(serializer_name):
@@ -191,7 +208,7 @@ def aspect_stringlength(int_stringlength):
         RETURNED VALUE: a formatted string representing the input argument.
     """
     if int_stringlength is None:
-        return "[red](no data)[/red]"
+        return aspect_nodata()
     return f"{int_stringlength} chars"
 
 
@@ -208,7 +225,7 @@ def aspect_time(floattime):
         RETURNED VALUE: a formatted string representing the input argument.
     """
     if floattime is None:
-        return "[red](no data)[/red]"
+        return aspect_nodata()
     return f"{floattime:.6f}"
 
 

@@ -33,7 +33,7 @@
 from dataclasses import dataclass
 
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.reportaspect import aspect_serializer, aspect_ratio, aspect_time
+from wisteria.reportaspect import aspect_serializer, aspect_ratio, aspect_time, aspect_nodata
 from wisteria.reportaspect import aspect_base100, aspect_stringlength, aspect_boolsuccess
 from wisteria.msg import msgerror
 
@@ -916,7 +916,7 @@ class SerializationResults(dict):
             else:
                 # output == "base100"
                 if self[serializer][dataobj].decoding_time is None:
-                    res = "[red]no data[/red]"
+                    res = aspect_nodata()
                 else:
                     res = aspect_base100(
                         serializer == base100_serializerdataobj.serializer and
@@ -930,7 +930,7 @@ class SerializationResults(dict):
             else:
                 # output == "base100"
                 if self[serializer][dataobj].encoding_strlen is None:
-                    res = "[red]no data[/red]"
+                    res = aspect_nodata()
                 else:
                     res = aspect_base100(
                         serializer == base100_serializerdataobj.serializer and
@@ -944,7 +944,7 @@ class SerializationResults(dict):
             else:
                 # output == "base100"
                 if self[serializer][dataobj].encoding_time is None:
-                    res = "[red]no data[/red]"
+                    res = aspect_nodata()
                 else:
                     res = aspect_base100(
                         serializer == base100_serializerdataobj.serializer and
@@ -1001,6 +1001,10 @@ class SerializationResults(dict):
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value', 'base100')
+
+        if output == "base100" and self.get_serializers_base('encoding_time') is None:
+            # no base 100 reference available:
+            return aspect_nodata()
 
         res = None  # unexpected result !
         total = 0  # total time
@@ -1111,6 +1115,10 @@ class SerializationResults(dict):
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value', 'base100')
 
+        if output == "base100" and self.get_serializers_base('encoding_time') is None:
+            # no base 100 reference available:
+            return aspect_nodata()
+
         res = None  # unexpected result !
         total = 0  # total time
 
@@ -1181,6 +1189,10 @@ class SerializationResults(dict):
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value', 'base100')
+
+        if output == "base100" and self.get_serializers_base('encoding_time') is None:
+            # no base 100 reference available:
+            return aspect_nodata()
 
         res = None  # unexpected result !
         total = 0  # total time
