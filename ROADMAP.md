@@ -71,15 +71,145 @@ cwc
 * data types à compléter
 
 
-[CURRENT] v. 0.0.7
-------------------
-0.0.7: human talking
+[DONE] v. 0.0.7
+---------------
 
+--mymachine option
+report sections E1a and E1b
+new report shortcuts: 'full+', 'full_debug' and 'glance' which is the default report shortcut.
+Improved English phraseology.
+Added py-cpuinfo and psutil to project's dependencies.
+
+
+command line arguments
+
+    * new option: --mymachine (task-77)
+    * updated REPORT_SHORTCUTS["full"], now set to "titles;A;B;C;D;E1a;" (task-77)
+    * globs.py::REPORT_SHORTCUTS['full+'] is a new shortcut; its value is set
+      to "titles;A;B;C;D;E1b;" (task-78)
+    * globs.py::REPORT_SHORTCUTS['full_debug'] is a new shortcut; its value is set
+      to "titles;A;B;C;D;E;" (task-78)
+    * new report shortcut 'glance' which is the default report shortcut. 
+      (task-86)
+    
+code organization
+
+    * new file: wisteria/cmdline_mymachine.py --mymachine (task-77)
+    * new functions in reports.py: report_section_e1a() and report_section_e1b() 
+      (task-77)
+    * new exit value (3: normal exit code after --mymachine) (task-77)
+    * keys in globs.py::REPORT_SHORTCUTS are now alphabetically sorted (task-78)
+    * rewrote humanratio(): if the new argument is not None, this function
+      returns an explanation of the value by humanratio(ratio, explanations=None)
+      (task-79)
+    * new file: wisteria/textandnotes.py (task-79)
+    * in wisteria/textandnotes.py, new class TextAndNote.
+      With the TextAndNotes class, add bunch of text that may contains notes;
+      these notes are added with a special syntax (__note:XXXXX__) and are
+      automatically numbered and added at the end of the final text. (task-79)
+      By example:
+              txt = TextAndNotes()
+              txt.append("First line with a note (__note:myfirstnote__)")
+              txt.notes.append(("__note:myfirstnote__",
+                                "This is a footnote about first line."))
+
+              txt.output() will produce:
+                      "First line with a note(¹)"
+                      ""
+                      "(¹) This is a footnote about first line."
+    * modified report_section_d2c() so that this function uses a TextAndNotes
+      object (task-79)
+    * SerializerData class has a new instance attribute, 'name'. (task-81)
+    * in init_serializers(), updated wisteria.globs.SERIALIZERS initialization
+      to take in account SerializerData new instance attribute (task-81)
+    * report.py: improved code readibility by adding a call to aspect_nodata()
+      instead of using a string like '[red]no data[/red]' (task-84)
+    * new aspect method: reportaspect.py::aspect_nodata() (task-84)
+    * added py-cpuinfo and psutil to project's dependencies. (task-85)
+    
+bugfixes
+
+    * (bugfix) added 'report_section_e1a' and 'report_section_e1b' to 
+      STR2REPORTSECTION. (task-78)
+    * fixed a very minor glitch (useless space) in cmdline_mymachine.py (task-78)
+    * in pylintrc, max-args=5 > max-args=6 (task-82)
+    * bugfix: serializers_classes.py::total_xxx() functions handle correctly the 
+              case where there is no base100 reference available. (task-84)
+    * removed some now useless `pylint: disable` in mymachine.py::mymachine() (task-85)
+    * bugfix: improved report.py::report() to avoid that " B1b" report section
+      raises an error. Therefore all report sections strings are stripped. (task-87)
+
+documentation:
+
+    * updated documentations to take in account --mymachine and report sections 
+      E1a and E1b --mymachine (task-77)
+    * updated pimydoc to take in account the new "3" exit value (task-77)
+    * updated --help message to take in account --mymachine (task-77, task-83)
+    * slightly improved message from report_section_b1d() (task-90)
+    * doc. : improved ROADMAP.md (task-80)
+    * updated README.md (task-82)
+    * improved doc. (task-89)
+    
+messages
+
+    * improved english phraseology (task-81)
+    * added units everywhere it was possible to add them, in tables and in texts.
+      (task-89)
+    * unit is not added in aspect_xxx() method and therefore aspect_stringlength()
+      has been modified to remove the 'chars' string that was added to the result
+      (task-89)
+    * improved grammar in ratio2phrase(): worst > worse (task-88)
+    * improved D2c by using the new 'good/bad' option defined
+      for ratio2phrase() (task-88)
+    * slightly improved message from report_section_b1d() (task-90)
+    
+version
+
+    * set version to 0.0.7
+
+tasks
 
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85, task-86,
-               task-87, task-88, task-89
+               task-87, task-88, task-89, task-90
+
+    * pylint: 10/10
                
+```
+$ poetry show --tree
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ ./check_tools.sh
+* about poetry:
+Poetry version 1.1.10
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+PYLINTHOME is now '/home/proguser/.cache/pylint' but obsolescent '/home/proguser/.pylint.d' is found; you can safely remove the latter
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+
 [DONE] task-90
 
 Slightly improved message from report_section_b1d().
@@ -224,7 +354,7 @@ new report shortcuts: 'full+' and 'full_debug'.
       to "titles;A;B;C;D;E;" (task-78)
     * keys in globs.py::REPORT_SHORTCUTS are now alphabetically sorted (task-78)
     * fixed a very minor glitch (useless space) in cmdline_mymachine.py (task-78)
-    * (bugfix) added to 'report_section_e1a' and 'report_section_e1b' to 
+    * (bugfix) added 'report_section_e1a' and 'report_section_e1b' to 
       STR2REPORTSECTION. (task-78)
 
     * pylint: 10/10
