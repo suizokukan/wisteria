@@ -77,12 +77,11 @@ cwc
 
 (not done) " B1b" > "B1b" (bugfix)
 (not done) unités, partout, dans le texte comme dans les tableaux
-(not done) 'glance': 
 (not done) /bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
                Iaswn's coverage is slightly smaller  > Iaswn's coverage is slightly better (?)
 
     * task(s): task-77, task-78, task-79, task-80, task-81,
-               task-82, task-83, task-84, task-85
+               task-82, task-83, task-84, task-85, task-86
 
 [DONE] task-86
 
