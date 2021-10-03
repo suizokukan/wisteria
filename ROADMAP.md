@@ -76,12 +76,20 @@ cwc
 0.0.7: human talking
 
 (not done) unités, partout, dans le texte comme dans les tableaux
-(not done) /bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
-               Iaswn's coverage is slightly smaller  > Iaswn's coverage is slightly better (?)
 
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85, task-86,
                task-87
+               
+[DONE] task-88
+
+Improved grammar in ratio2phrase() and in D2c report section.
+
+    * improved grammar in ratio2phrase(): worst > worse (task-88)
+    * improved D2c by using the new 'good/bad' option defined
+      for ratio2phrase() (task-88)
+
+    * pylint: 10/10
 
 [DONE] task-87
 

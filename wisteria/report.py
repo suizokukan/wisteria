@@ -149,7 +149,7 @@ def ratio2phrase(ratio,
 
         RETURNED VALUE: (str)an adverbial phrase
     """
-    assert base_string in ('slow/fast', 'long/short', 'large/small')
+    assert base_string in ('slow/fast', 'long/short', 'good/bad')
 
     if base_string == "slow/fast":
         if ratio > 10:
@@ -187,23 +187,23 @@ def ratio2phrase(ratio,
         else:
             expression = "extremly shorter"
 
-    elif base_string == "large/small":
+    elif base_string == "good/bad":
         if ratio > 10:
-            expression = "extremly larger"
+            expression = "much, much better"
         elif ratio > 2:
-            expression = "much larger"
+            expression = "much better"
         elif ratio > 1.4:
-            expression = "larger"
+            expression = "better"
         elif ratio > 1.1:
-            expression = "slightly larger"
+            expression = "slightly better"
         elif ratio > 0.9:
-            expression = "slightly smaller"
+            expression = "slightly worse"
         elif ratio > 0.5:
-            expression = "smaller"
+            expression = "worse"
         elif ratio > 0.1:
-            expression = "much smaller"
+            expression = "much worse"
         else:
-            expression = "extremly smaller"
+            expression = "much, much worse"
 
     return expression
 
@@ -1895,7 +1895,7 @@ def report_section_d2c(results,
                         "seem to have exactly the same data coverage.")
         else:
             text.append(f"{aspect_serializer(serializer1)}'s coverage "
-                        f"is {ratio2phrase(ratio_similarity, 'large/small')} "
+                        f"is {ratio2phrase(ratio_similarity, 'good/bad')} "
                         f"- by a factor of {humanratio(ratio_similarity):.3f} "
                         f"(__note:ratio_similarity__) - "
                         "than "
