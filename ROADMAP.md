@@ -83,6 +83,17 @@ cwc
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85, task-86
 
+
+[DONE] task-87
+
+Bugfix: improved report.py::report() to avoid that " B1b" report section 
+        raises an error. Therefore all report sections strings are stripped.
+
+    * Bugfix: improved report.py::report() to avoid that " B1b" report section
+      raises an error. Therefore all report sections strings are stripped. (task-87)
+
+    * pylint: 10/10
+
 [DONE] task-86
 
 New report shortcut 'glance' which is the default report shortcut.

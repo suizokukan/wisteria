@@ -2299,6 +2299,8 @@ def report(results,
             "More informations in the documentation.")
 
     for report_section in wisteria.globs.ARGS.report.split(";"):
+        report_section = report_section.strip()
+
         if report_section == "":
             pass
         elif report_section in STR2REPORTSECTION and STR2REPORTSECTION[report_section] is not None:
