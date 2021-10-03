@@ -75,9 +75,11 @@ cwc
 ------------------
 0.0.7: human talking
 
+(not done, task-90): B1d can't handle the following data objects: > can't handle following data objects:
+
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85, task-86,
-               task-87, task-88
+               task-87, task-88, task-89
                
 [DONE] task-89
 
