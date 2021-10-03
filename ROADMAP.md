@@ -75,12 +75,19 @@ cwc
 ------------------
 0.0.7: human talking
 
-(not done, task-90): B1d can't handle the following data objects: > can't handle following data objects:
 
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85, task-86,
                task-87, task-88, task-89
                
+[DONE] task-90
+
+Slightly improved message from report_section_b1d().
+
+    * slightly improved message from report_section_b1d() (task-90)
+
+    * pylint: 10/10
+
 [DONE] task-89
 
 Added units everywhere it was possible to add them, in tables and in texts.

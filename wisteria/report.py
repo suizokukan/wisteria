@@ -703,7 +703,7 @@ def report_section_b1d(results,
         else:
             msgreport(f"* ({aspect_serializer(serializer)}) "
                       f"Serializer {aspect_serializer(serializer)} "
-                      "can't handle the following data objects:")
+                      "can't handle following data objects:")
             for dataobj in _list:
                 msgreport(f"  - {aspect_data(dataobj)}")
     msgreport()
