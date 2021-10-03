@@ -91,6 +91,7 @@ REPORT_SHORTCUTS = {
     "full": "titles;A;B;C;D;E1a;",
     "full+": "titles;A;B;C;D;E1b;",
     "full_debug": "titles;A;B;C;D;E;",
+    "glance": "titles;B1b;D1a;D1b;D2a;D2b;D2c;",
     "laconic": "D;",
     "minimal": "D2c;",
     }

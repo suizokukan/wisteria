@@ -75,6 +75,7 @@ cwc
 ------------------
 0.0.7: human talking
 
+(not done) " B1b" > "B1b" (bugfix)
 (not done) unités, partout, dans le texte comme dans les tableaux
 (not done) 'glance': 
 (not done) /bin/wisteria --cmp="iaswn against jsonpickle(all)" --report="full"
@@ -83,7 +84,15 @@ cwc
     * task(s): task-77, task-78, task-79, task-80, task-81,
                task-82, task-83, task-84, task-85
 
-               
+[DONE] task-86
+
+New report shortcut 'glance' which is the default report shortcut.
+
+    * new report shortcut 'glance' which is the default report shortcut. 
+      (task-86)
+
+    * pylint: 10/10
+
 [DONE] task-85
 
 Added py-cpuinfo and psutil to project's dependencies.

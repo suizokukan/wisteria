@@ -164,7 +164,7 @@ PARSER.add_argument(
 PARSER.add_argument(
     '--report',
     action='store',
-    default="minimal",
+    default="glance",
     help=f"Report format: "
     f"you may use one of the special keywords {tuple(REPORT_SHORTCUTS.keys())} "
     "or a list of section parts, e.g. 'A1;B1a;'. "
