@@ -81,7 +81,8 @@ cwc
                Iaswn's coverage is slightly smaller  > Iaswn's coverage is slightly better (?)
 
     * task(s): task-77, task-78, task-79, task-80, task-81,
-               task-82, task-83, task-84,
+               task-82, task-83, task-84, task-85
+
                
 [DONE] task-85
 
