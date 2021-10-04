@@ -80,7 +80,7 @@ qu'est-ce qui est disponible ?
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
-* aspect_nodata: doc à relire
+
 * aspect_list > aspect_list(, map)
 
 [DONE] task-100
