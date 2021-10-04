@@ -1823,7 +1823,7 @@ def report_section_d2c(results,
                 "according to the overall scores (__note:overallscore__).")
 
         text.notes.append(
-            ("overallscore"
+            ("overallscore",
              "a rank based on 3 points: Σ encoded str./Σ encod.+decod. time/encod.<>decod."))
 
     elif serializer1 != "all" and serializer2 != "all":

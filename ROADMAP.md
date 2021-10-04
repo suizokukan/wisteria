@@ -87,6 +87,16 @@ qu'est-ce qui est disponible ?
 * pbm de couleurs dans checkup(): (see https://jsonpickle.github.io/). quand jsonpickle n'est pas installé.
 * pluriel dans checkup(), peut-être dans A2+A3
 
+[DONE] task-94
+
+If no argument has been given on the command line, we modify the output
+to help the user (verbosity and report).
+
+    * If no argument has been given on the command line, we modify the output
+      to help the user (verbosity and report). (task-94)
+
+    * pylint: 10/10
+
 [DONE] task-93
 
 UNAVAILABLE_SERIALIZERS now contains serializers that can't be used.

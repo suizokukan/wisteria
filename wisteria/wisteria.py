@@ -191,6 +191,11 @@ PARSER.add_argument(
 
 wisteria.globs.ARGS = PARSER.parse_args()
 
+# a special case: if no argument has been given, we modify the output
+# to help the user:
+if len(sys.argv) == 1:
+    wisteria.globs.ARGS.verbosity = 2
+    wisteria.globs.ARGS.report = "titles;A1;B1b;D1a;D1b;D2a;D2b;D2c;"
 
 # =============================================================================
 # (02) --output string
