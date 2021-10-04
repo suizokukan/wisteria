@@ -83,6 +83,14 @@ qu'est-ce qui est disponible ?
 * aspect_nodata: doc à relire
 * aspect_list > aspect_list(, map)
 
+[DONE] task-100
+
+Documentation in reportaspect.py.
+
+    * documentation in reportaspect.py  (task-100)
+
+    * pylint: 10/10
+
 [DONE] task-99
 
 Replaced some doubloons in code by two fonctions, partial_report__data()

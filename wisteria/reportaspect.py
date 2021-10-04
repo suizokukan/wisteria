@@ -57,6 +57,8 @@ def aspect_base100(bool_is_base100_reference,
         o  (bool)bool_is_base100_reference : is <float_base100> a base100
                                              reference value ?
         o  (float)float_base100
+
+        RETURNED VALUE: a formatted string representing <float_base100>.
     """
     if float_base100 is None:
         return aspect_nodata()
@@ -81,7 +83,7 @@ def aspect_boolsuccess(bool_success):
 
         ARGUMENT: (bool)bool_success
 
-        RETURNED VALUE: a formatted string representing the input argument.
+        RETURNED VALUE: a formatted string representing the (bool)bool_success.
     """
     if bool_success is None:
         return aspect_nodata()
@@ -107,15 +109,15 @@ def aspect_list(listitems):
     """
         aspect_list()
 
-        Returns a list of (str)words written in good English, something
+        Return a (str)list of words written in good English, something
         like "a, b, and c" (no Oxford Comma here, confer
         https://www.grammar-monster.com/lessons/commas_the_Oxford_comma.htm)
 
         _______________________________________________________________________
 
-        ARGUMENT: (str)data_objectname
+        ARGUMENT: (list of str)listitems
 
-        RETURNED VALUE: (str)_objectname + some text attributes.
+        RETURNED VALUE: (str)a formatted string with all items in <listitems>.
     """
     if len(listitems) == 0:
         return ""
@@ -128,11 +130,14 @@ def aspect_list(listitems):
 
 def aspect_nodata(string=None):
     """
-        aspect_percentage()
+        aspect_nodata()
 
         Return a string with rich text attribute saying that no data is available.
 
         _______________________________________________________________________
+
+        ARGUMENT:(None or str)if string is None, a default string ("no data")
+                 will be used; if string is a str, this string will be used.
 
         RETURNED VALUE: (str)"no data" string + some text attributes.
     """
