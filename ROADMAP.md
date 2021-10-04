@@ -73,6 +73,7 @@ cwc
 ===============================================================================
 
 [CURRENT] v. 0.0.8
+* (git message for 0.0.8) doubloon > duplicate
 
 * data types à compléter
 qu'est-ce qui est disponible ?
@@ -80,8 +81,6 @@ qu'est-ce qui est disponible ?
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
-* checkup: ajouter numversion
-* doubloon > duplicate
 
 [DONE] task-102
 
