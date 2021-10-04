@@ -84,7 +84,6 @@ qu'est-ce qui est disponible ?
 * ça plante: ./bin/wisteria --cmp="iaswn against jsonpickle(ini)" --report="full"
    quand jsonpickle n'est pas installé
 * A3/A2 à revoir: afficher les serializers+data comme dans checkup()
-* pbm de couleurs dans checkup(): (see https://jsonpickle.github.io/). quand jsonpickle n'est pas installé.
 * pluriel dans checkup(), peut-être dans A2+A3
 
 [DONE] task-96
