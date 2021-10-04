@@ -80,10 +80,8 @@ qu'est-ce qui est disponible ?
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
-
-* A3/A2 à revoir: afficher les serializers+data comme dans checkup()
-* pluriel dans checkup(), peut-être dans A2+A3
-* is/are + plural > (s)
+* aspect_nodata: doc à relire
+* aspect_list > aspect_list(, map)
 
 [DONE] task-99
 
