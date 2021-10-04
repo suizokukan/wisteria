@@ -1793,11 +1793,11 @@ def report_section_d2c(results,
 
         bests = results.get_overallscore_bestrank()
         if len(bests) == 1:
-            text.append(f"{aspect_list(bests)} is ranked #1 "
+            text.append(f"{aspect_serializer(bests[0])} is ranked #1 "
                         f"among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
         else:
-            text.append(f"{aspect_list(bests)} "
+            text.append(f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in bests))} "
                         f"are ranked #1 among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
 
@@ -1817,7 +1817,7 @@ def report_section_d2c(results,
                         "according to the overall scores (__note:overallscore__).")
         else:
             text.append(
-                f"{aspect_list(worsts)} "
+                f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in worsts))} "
                 f"are ranked #{results.serializers_number} among "
                 f"{results.serializers_number} serializers, "
                 "according to the overall scores (__note:overallscore__).")
