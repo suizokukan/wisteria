@@ -127,3 +127,13 @@ def init_data():
         "tuple(empty)": (),
         "tuple(+subtuples)": ("1", "2", ("3", ("4",))),
     }
+
+    try:
+        # The following 'import' statement has deliberately placed here and
+        # not at the beginning of the file.
+        # pylint: disable=import-outside-toplevel
+        # pylint: disable=import-error
+        import dateutil.parser
+        wisteria.globs.DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
+    except ImportError:
+        wisteria.globs.UNAVAILABLE_DATA["dateutil(parser.parse)"] = "missing package: dateutil"

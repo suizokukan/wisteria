@@ -67,9 +67,36 @@ cwc
 0.0.9:
 * serializers à compléter
 
-0.0.8:
-* data types à compléter
 
+
+
+===============================================================================
+
+[CURRENT] v. 0.0.8
+
+* $ wisteria fait planter le programme
+* data types à compléter
+qu'est-ce qui est disponible ?
+- Python-dateutil
+- rich console/table/
+- float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
+- bool/false(True); > bool/false(False) dans checkup()
+* ça plante: ./bin/wisteria --cmp="iaswn against jsonpickle(ini)" --report="full"
+   quand jsonpickle n'est pas installé
+* extremly > extremely (à vérifier)
+* A3/A2 à revoir: afficher les serializers+data comme dans checkup()
+
+[DONE] task-91
+
+globs.py:UNAVAILABLE_DATA; improved init_data() messages.
+
+    * modified data.py:init_data() so that this functions stores in
+      UNAVAILABLE_DATA the data objects that can't be used (task-91)
+    * globs.py:UNAVAILABLE_DATA stores the data objects that can't be used (task-91)
+    * rewrote the sections' numbers of wisteria.py: no more '09bis' (task-91)
+    * rewrote how checkup() displays the serializers and the data objects (task-91)
+
+    * pylint: 10/10
 
 [DONE] v. 0.0.7
 ---------------

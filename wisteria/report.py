@@ -728,7 +728,7 @@ def report_section_b2a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -810,7 +810,7 @@ def report_section_b2b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -890,7 +890,7 @@ def report_section_c1a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -995,7 +995,7 @@ def report_section_c1b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1097,7 +1097,7 @@ def report_section_c2a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1204,7 +1204,7 @@ def report_section_c2b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1308,7 +1308,7 @@ def report_section_d1a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1434,7 +1434,7 @@ def report_section_d1b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1560,7 +1560,7 @@ def report_section_d2a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1651,7 +1651,7 @@ def report_section_d2b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -1738,7 +1738,7 @@ def report_section_d2c(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -2094,7 +2094,7 @@ def report_section_e1a(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -2153,7 +2153,7 @@ def report_section_e1b(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
@@ -2274,7 +2274,7 @@ def report(results,
         ⋅    . B1a   : full details: serializer * data object
         ⋅    . B1b   : full details: serializers
         ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: <S> serializer can't handle <dataobj>
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects

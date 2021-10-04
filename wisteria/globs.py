@@ -49,6 +49,7 @@
     o  SERIALIZERS
 
     o  DATA
+    o  UNAVAILABLE_DATA
 
     o  FILECONSOLE_FILEOBJECT
     o  FILECONSOLE
@@ -117,6 +118,11 @@ SERIALIZERS = {}
 # * format: DATA[(str)data name] = data object
 # * initialized by data.py::init_data()
 DATA = {}
+# dict storing all data that the program can't use.
+#
+# * format: UNAVAILABLE_DATA[(str)data name] = string explaining why it's unavailable
+# * initialized by data.py::init_data()
+UNAVAILABLE_DATA = {}
 
 # log file.
 #

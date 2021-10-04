@@ -31,16 +31,17 @@
     ⋅- (05) ARGS.report interpretation
     ⋅- (06) exit handler
     ⋅- (07) serializers import
-    ⋅- (08) checkup
-    ⋅- (09) download default config file
-    ⋅- (10) temp file opening
-    ⋅- (11) known data init
-    ⋅- (12) call to main()
-    ⋅       - (12.1) main(): debug messages
-    ⋅       - (12.2) main(): cmp string interpretation
-    ⋅       - (12.3) main(): config file reading
-    ⋅       - (12.4) main(): results computing
-    ⋅       - (12.5) main(): report
+    ⋅- (08) temp file opening
+    ⋅- (09) known data init > à besoin du précédent
+    ⋅- (10) checkup
+    ⋅- (11) informations about the current machine
+    ⋅- (12) download default config file
+    ⋅- (13) call to main()
+    ⋅       - (13.1) main(): debug messages
+    ⋅       - (14.2) main(): cmp string interpretation
+    ⋅       - (13.3) main(): config file reading
+    ⋅       - (13.4) main(): results computing
+    ⋅       - (13.5) main(): report
 
     (pimydoc)exit codes
     ⋅*  0: normal exit code
@@ -78,7 +79,8 @@ from wisteria.globs import DEFAULT_CONFIG_FILENAME
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report
 from wisteria.results import compute_results
-from wisteria.utils import normpath
+from wisteria.utils import normpath, shortenedstr
+from wisteria.reportaspect import aspect_data
 import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
@@ -100,16 +102,17 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 PARSER = \
     argparse.ArgumentParser(
         description='Comparisons of different Python serializers. '
@@ -234,16 +237,17 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
 
@@ -259,16 +263,17 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 if wisteria.globs.ARGS.report in REPORT_SHORTCUTS:
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
         msginfo(f"--report '{wisteria.globs.ARGS.report}' "
@@ -301,17 +306,17 @@ ARGS = wisteria.globs.ARGS
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
-
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 def exit_handler():
     """
         exit_handler()
@@ -347,21 +352,22 @@ atexit.register(exit_handler)
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 wisteria.serializers.init_serializers()
 
 
 # =============================================================================
-# (08) checkup
+# (08) temp file opening
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- (01) command line parsing
@@ -371,16 +377,72 @@ wisteria.serializers.init_serializers()
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
+
+# Such a file is required to create file descriptor objects.
+# The temp. file will be removed at the end of the program.
+if not os.path.exists(TMPFILENAME):
+    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
+        pass
+
+
+# =============================================================================
+# (09) known data init
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
+wisteria.data.init_data()
+
+
+# =============================================================================
+# (10) checkup
+# =============================================================================
+# (pimydoc)code structure
+# ⋅- (01) command line parsing
+# ⋅- (02) --output string
+# ⋅- (03) logfile opening
+# ⋅- (04) project name & version
+# ⋅- (05) ARGS.report interpretation
+# ⋅- (06) exit handler
+# ⋅- (07) serializers import
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 def checkup():
     """
         checkup()
@@ -390,14 +452,12 @@ def checkup():
         - configuration file that would be used; does this file exist ?
           can this file be read without errors ?
     """
+    # Pylint gets mixed up when reading how we iterate over <serializers>:
+    # pylint: disable=consider-using-dict-items
+
     serializers = wisteria.globs.SERIALIZERS
 
-    msgreport("* Serializers:")
-    for serializer in serializers.values():
-        msgreport(f"  - {serializer.checkup_repr()}")
-
-    msgreport("")
-
+    # ---- configuration file -------------------------------------------------
     msgreport("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
         diagnostic = "  Such a file doesn't exist. " \
@@ -411,6 +471,37 @@ def checkup():
     msgreport(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
               f"({normpath(ARGS.cfgfile)}), because of the value of --cfgfile. ")
     msgreport(diagnostic)
+
+    # ---- serializers --------------------------------------------------------
+    msgreport()
+
+    _serializers = tuple(serializer for serializer in serializers
+                         if serializers[serializer].available)
+    msgreport(f"* {len(_serializers)} Available Serializer(s):")
+    for serializer in _serializers:
+        msgreport(f"  - {serializers[serializer].checkup_repr()}")
+
+    _serializers = tuple(serializer for serializer in serializers
+                         if not serializers[serializer].available)
+    if _serializers:
+        msgreport()
+        msgreport(f"* {len(_serializers)} Unavailable Serializer(s):")
+        for serializer in _serializers:
+            msgreport(f"  - {serializers[serializer].checkup_repr()}")
+
+    msgreport()
+
+    # ---- data object --------------------------------------------------------
+    msgreport(f"* {len(wisteria.globs.DATA)} Available Data Object(s):")
+    msgreport("; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+                        for dataobject_name, dataobject in wisteria.globs.DATA.items()))
+
+    if wisteria.globs.UNAVAILABLE_DATA:
+        msgreport()
+        msgreport(f"* {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data Object(s)")
+        msgreport(
+            "; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+                      for dataobject_name, dataobject in wisteria.globs.UNAVAILABLE_DATA.items()))
 
 
 if wisteria.globs.ARGS.checkup:
@@ -430,7 +521,7 @@ if wisteria.globs.ARGS.checkup:
 
 
 # =============================================================================
-# (09) download default config file
+# (11) informations about the current machine
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- (01) command line parsing
@@ -440,53 +531,17 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
-if wisteria.globs.ARGS.downloadconfigfile:
-    downloadconfigfile()
-    # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    sys.exit(2)
-
-
-# =============================================================================
-# (09bis) informations about the current machine
-# =============================================================================
-# (pimydoc)code structure
-# ⋅- (01) command line parsing
-# ⋅- (02) --output string
-# ⋅- (03) logfile opening
-# ⋅- (04) project name & version
-# ⋅- (05) ARGS.report interpretation
-# ⋅- (06) exit handler
-# ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
     if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
@@ -509,7 +564,7 @@ if wisteria.globs.ARGS.mymachine:
 
 
 # =============================================================================
-# (10) temp file opening
+# (12) download default config file
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- (01) command line parsing
@@ -519,26 +574,35 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
-
-# Such a file is required to create file descriptor objects.
-# The temp. file will be removed at the end of the program.
-if not os.path.exists(TMPFILENAME):
-    with open(TMPFILENAME, "w", encoding="utf-8") as tmpfile:
-        pass
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
+if wisteria.globs.ARGS.downloadconfigfile:
+    downloadconfigfile()
+    # (pimydoc)exit codes
+    # ⋅*  0: normal exit code
+    # ⋅*  1: normal exit code after --checkup
+    # ⋅*  2: normal exit code after --downloadconfigfile
+    # ⋅*  3: normal exit code after --mymachine
+    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅* -2: error, ill-formed --cmp string
+    # ⋅* -3: internal error, data can't be loaded
+    # ⋅* -4: internal error, an error occured while computing the results
+    # ⋅* -5: internal error, an error in main()
+    # ⋅* -6: error, ill-formed --output string
+    sys.exit(2)
 
 
 # =============================================================================
-# (11) known data init
+# (13) call to main()
 # =============================================================================
 # (pimydoc)code structure
 # ⋅- (01) command line parsing
@@ -548,19 +612,17 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (05) ARGS.report interpretation
 # ⋅- (06) exit handler
 # ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
-wisteria.data.init_data()
-
-
+# ⋅- (08) temp file opening
+# ⋅- (09) known data init > à besoin du précédent
+# ⋅- (10) checkup
+# ⋅- (11) informations about the current machine
+# ⋅- (12) download default config file
+# ⋅- (13) call to main()
+# ⋅       - (13.1) main(): debug messages
+# ⋅       - (14.2) main(): cmp string interpretation
+# ⋅       - (13.3) main(): config file reading
+# ⋅       - (13.4) main(): results computing
+# ⋅       - (13.5) main(): report
 def main():
     """
         main()
@@ -587,7 +649,7 @@ def main():
     serializers = wisteria.globs.SERIALIZERS
 
     # =========================================================================
-    # (12.1) main(): debug messages
+    # (13.1) main(): debug messages
     # =========================================================================
     # (pimydoc)code structure
     # ⋅- (01) command line parsing
@@ -597,16 +659,17 @@ def main():
     # ⋅- (05) ARGS.report interpretation
     # ⋅- (06) exit handler
     # ⋅- (07) serializers import
-    # ⋅- (08) checkup
-    # ⋅- (09) download default config file
-    # ⋅- (10) temp file opening
-    # ⋅- (11) known data init
-    # ⋅- (12) call to main()
-    # ⋅       - (12.1) main(): debug messages
-    # ⋅       - (12.2) main(): cmp string interpretation
-    # ⋅       - (12.3) main(): config file reading
-    # ⋅       - (12.4) main(): results computing
-    # ⋅       - (12.5) main(): report
+    # ⋅- (08) temp file opening
+    # ⋅- (09) known data init > à besoin du précédent
+    # ⋅- (10) checkup
+    # ⋅- (11) informations about the current machine
+    # ⋅- (12) download default config file
+    # ⋅- (13) call to main()
+    # ⋅       - (13.1) main(): debug messages
+    # ⋅       - (14.2) main(): cmp string interpretation
+    # ⋅       - (13.3) main(): config file reading
+    # ⋅       - (13.4) main(): results computing
+    # ⋅       - (13.5) main(): report
     if ARGS.verbosity == VERBOSITY_DEBUG:
         msgdebug(f"known data: {list(data.keys())}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -614,7 +677,7 @@ def main():
 
     try:
         # =========================================================================
-        # (12.2) main(): cmp string interpretation
+        # (13.2) main(): cmp string interpretation
         # =========================================================================
         # (pimydoc)code structure
         # ⋅- (01) command line parsing
@@ -624,16 +687,17 @@ def main():
         # ⋅- (05) ARGS.report interpretation
         # ⋅- (06) exit handler
         # ⋅- (07) serializers import
-        # ⋅- (08) checkup
-        # ⋅- (09) download default config file
-        # ⋅- (10) temp file opening
-        # ⋅- (11) known data init
-        # ⋅- (12) call to main()
-        # ⋅       - (12.1) main(): debug messages
-        # ⋅       - (12.2) main(): cmp string interpretation
-        # ⋅       - (12.3) main(): config file reading
-        # ⋅       - (12.4) main(): results computing
-        # ⋅       - (12.5) main(): report
+        # ⋅- (08) temp file opening
+        # ⋅- (09) known data init > à besoin du précédent
+        # ⋅- (10) checkup
+        # ⋅- (11) informations about the current machine
+        # ⋅- (12) download default config file
+        # ⋅- (13) call to main()
+        # ⋅       - (13.1) main(): debug messages
+        # ⋅       - (14.2) main(): cmp string interpretation
+        # ⋅       - (13.3) main(): config file reading
+        # ⋅       - (13.4) main(): results computing
+        # ⋅       - (13.5) main(): report
         success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"Result of the call to read_cmpstring('{ARGS.cmp}'): "
@@ -657,7 +721,7 @@ def main():
             return -2
 
         # =========================================================================
-        # (12.3) main(): config file reading
+        # (13.3) main(): config file reading
         # =========================================================================
         # (pimydoc)code structure
         # ⋅- (01) command line parsing
@@ -667,16 +731,17 @@ def main():
         # ⋅- (05) ARGS.report interpretation
         # ⋅- (06) exit handler
         # ⋅- (07) serializers import
-        # ⋅- (08) checkup
-        # ⋅- (09) download default config file
-        # ⋅- (10) temp file opening
-        # ⋅- (11) known data init
-        # ⋅- (12) call to main()
-        # ⋅       - (12.1) main(): debug messages
-        # ⋅       - (12.2) main(): cmp string interpretation
-        # ⋅       - (12.3) main(): config file reading
-        # ⋅       - (12.4) main(): results computing
-        # ⋅       - (12.5) main(): report
+        # ⋅- (08) temp file opening
+        # ⋅- (09) known data init > à besoin du précédent
+        # ⋅- (10) checkup
+        # ⋅- (11) informations about the current machine
+        # ⋅- (12) download default config file
+        # ⋅- (13) call to main()
+        # ⋅       - (13.1) main(): debug messages
+        # ⋅       - (14.2) main(): cmp string interpretation
+        # ⋅       - (13.3) main(): config file reading
+        # ⋅       - (13.4) main(): results computing
+        # ⋅       - (13.5) main(): report
         config = None
         if cmpdata == "ini":
             config = read_cfgfile(ARGS.cfgfile)
@@ -696,7 +761,7 @@ def main():
                 return -1
 
         # =========================================================================
-        # (12.4) main(): results computing
+        # (13.4) main(): results computing
         # =========================================================================
         # (pimydoc)code structure
         # ⋅- (01) command line parsing
@@ -706,16 +771,17 @@ def main():
         # ⋅- (05) ARGS.report interpretation
         # ⋅- (06) exit handler
         # ⋅- (07) serializers import
-        # ⋅- (08) checkup
-        # ⋅- (09) download default config file
-        # ⋅- (10) temp file opening
-        # ⋅- (11) known data init
-        # ⋅- (12) call to main()
-        # ⋅       - (12.1) main(): debug messages
-        # ⋅       - (12.2) main(): cmp string interpretation
-        # ⋅       - (12.3) main(): config file reading
-        # ⋅       - (12.4) main(): results computing
-        # ⋅       - (12.5) main(): report
+        # ⋅- (08) temp file opening
+        # ⋅- (09) known data init > à besoin du précédent
+        # ⋅- (10) checkup
+        # ⋅- (11) informations about the current machine
+        # ⋅- (12) download default config file
+        # ⋅- (13) call to main()
+        # ⋅       - (13.1) main(): debug messages
+        # ⋅       - (14.2) main(): cmp string interpretation
+        # ⋅       - (13.3) main(): config file reading
+        # ⋅       - (13.4) main(): results computing
+        # ⋅       - (13.5) main(): report
         compute_results__res = compute_results(config,
                                                serializer1,
                                                serializer2,
@@ -725,7 +791,7 @@ def main():
         results = compute_results__res[0]
 
         # =========================================================================
-        # (12.5) main(): report
+        # (13.5) main(): report
         # =========================================================================
         # (pimydoc)code structure
         # ⋅- (01) command line parsing
@@ -735,16 +801,17 @@ def main():
         # ⋅- (05) ARGS.report interpretation
         # ⋅- (06) exit handler
         # ⋅- (07) serializers import
-        # ⋅- (08) checkup
-        # ⋅- (09) download default config file
-        # ⋅- (10) temp file opening
-        # ⋅- (11) known data init
-        # ⋅- (12) call to main()
-        # ⋅       - (12.1) main(): debug messages
-        # ⋅       - (12.2) main(): cmp string interpretation
-        # ⋅       - (12.3) main(): config file reading
-        # ⋅       - (12.4) main(): results computing
-        # ⋅       - (12.5) main(): report
+        # ⋅- (08) temp file opening
+        # ⋅- (09) known data init > à besoin du précédent
+        # ⋅- (10) checkup
+        # ⋅- (11) informations about the current machine
+        # ⋅- (12) download default config file
+        # ⋅- (13) call to main()
+        # ⋅       - (13.1) main(): debug messages
+        # ⋅       - (14.2) main(): cmp string interpretation
+        # ⋅       - (13.3) main(): config file reading
+        # ⋅       - (13.4) main(): results computing
+        # ⋅       - (13.5) main(): report
         report(results,
                (serializer1, serializer2, cmpdata))
 
@@ -778,26 +845,5 @@ def main():
         return -5
 
 
-# =============================================================================
-# (12) call to main()
-# =============================================================================
-# (pimydoc)code structure
-# ⋅- (01) command line parsing
-# ⋅- (02) --output string
-# ⋅- (03) logfile opening
-# ⋅- (04) project name & version
-# ⋅- (05) ARGS.report interpretation
-# ⋅- (06) exit handler
-# ⋅- (07) serializers import
-# ⋅- (08) checkup
-# ⋅- (09) download default config file
-# ⋅- (10) temp file opening
-# ⋅- (11) known data init
-# ⋅- (12) call to main()
-# ⋅       - (12.1) main(): debug messages
-# ⋅       - (12.2) main(): cmp string interpretation
-# ⋅       - (12.3) main(): config file reading
-# ⋅       - (12.4) main(): results computing
-# ⋅       - (12.5) main(): report
 if __name__ == '__main__':
     sys.exit(main())
