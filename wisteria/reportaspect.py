@@ -105,7 +105,7 @@ def aspect_data(data_objectname):
     return f"[bold white]{data_objectname}[/bold white]"
 
 
-def aspect_list(listitems):
+def aspect_list(listitems, func=None):
     """
         aspect_list()
 
@@ -113,19 +113,24 @@ def aspect_list(listitems):
         like "a, b, and c" (no Oxford Comma here, confer
         https://www.grammar-monster.com/lessons/commas_the_Oxford_comma.htm)
 
+        If <func> is not None, apply <func> to each item in <listitems>.
+
         _______________________________________________________________________
 
-        ARGUMENT: (list of str)listitems
+        ARGUMENTS:
+        o  (list of str)listitems
+        o  (callable)   func, the function to be applied to each item in
+                        the result.
 
         RETURNED VALUE: (str)a formatted string with all items in <listitems>.
     """
     if len(listitems) == 0:
         return ""
     if len(listitems) == 1:
-        return listitems[0]
+        return listitems[0] if not func else func(listitems[0])
     if len(listitems) == 2:
-        return f"{listitems[0]} and {listitems[1]}"
-    return f"{', '.join(listitem for listitem in listitems[:-1])} and {listitems[-1]}"
+        return f"{func(listitems[0])} and {func(listitems[1])}"
+    return f"{', '.join(func(listitem) for listitem in listitems[:-1])} and {func(listitems[-1])}"
 
 
 def aspect_nodata(string=None):

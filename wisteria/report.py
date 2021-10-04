@@ -1430,7 +1430,7 @@ def report_section_d1a(results,
                 f"{aspect_serializer(serializer)} can handle one data object "
                 f"among {len(results.dataobjs)} "
                 f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
-                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
+                f"{aspect_list(_list, aspect_data)} .")
         else:
             msgreport(
                 f"{aspect_serializer(serializer)}: "
@@ -1438,7 +1438,7 @@ def report_section_d1a(results,
                 f"{aspect_serializer(serializer)} can handle {len(_list)} data objects "
                 f"among {len(results.dataobjs)} "
                 f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
-                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
+                f"{aspect_list(_list, aspect_data)} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(D1a) Conclusion: Data Objects Handled by the Serializer(s)")
@@ -1555,7 +1555,7 @@ def report_section_d1b(results,
                 f"{aspect_serializer(serializer)} can't handle one data object "
                 f"among {len(results.dataobjs)} "
                 f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
-                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
+                f"{aspect_list(_list, aspect_data)} .")
         else:
             msgreport(
                 f"{aspect_serializer(serializer)}: "
@@ -1563,7 +1563,7 @@ def report_section_d1b(results,
                 f"{aspect_serializer(serializer)} can't handle {len(_list)} data objects "
                 f"among {len(results.dataobjs)} "
                 f"({aspect_percentage(100*len(_list)/len(results.dataobjs))}), namely "
-                f"{aspect_list(tuple(f'{aspect_data(dataobj)}' for dataobj in _list))} .")
+                f"{aspect_list(_list, aspect_data)} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(D1b) Conclusion: "
@@ -1845,7 +1845,7 @@ def report_section_d2c(results,
                         f"among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
         else:
-            text.append(f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in bests))} "
+            text.append(f"{aspect_list(bests, aspect_serializer)} "
                         f"are ranked #1 among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
 
@@ -1865,10 +1865,10 @@ def report_section_d2c(results,
                         "according to the overall scores (__note:overallscore__).")
         else:
             text.append(
-                f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in worsts))} "
-                f"are ranked #{results.serializers_number} among "
-                f"{results.serializers_number} serializers, "
-                "according to the overall scores (__note:overallscore__).")
+                text.append(f"{aspect_list(worsts, aspect_serializer)} "
+                            f"are ranked #{results.serializers_number} among "
+                            f"{results.serializers_number} serializers, "
+                            "according to the overall scores (__note:overallscore__)."))
 
         text.notes.append(
             ("overallscore",
@@ -2019,7 +2019,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"There are {len(_less)} serializers"
                         ", namely "
-                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _less))} "
+                        f"{aspect_list(_less, aspect_serializer)} "
                         f"that produce longer strings than {aspect_serializer(serializer)} ")
 
                 subtext.append("and ")
@@ -2036,7 +2036,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"there are {len(_more)} serializers"
                         ", namely "
-                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _more))} "
+                        f"{aspect_list(_more, aspect_serializer)} "
                         f"that produce shorter strings than {aspect_serializer(serializer)}")
 
                 subtext.append(". ")
@@ -2054,7 +2054,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"There are {len(_less)} serializers"
                         ", namely "
-                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _less))}"
+                        f"{aspect_list(_less, aspect_serializer)}"
                         f"that are slower than {aspect_serializer(serializer)} ")
 
                 subtext.append("and ")
@@ -2071,7 +2071,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"there are {len(_more)} serializers"
                         ", namely "
-                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _more))} "
+                        f"{aspect_list(_more, aspect_serializer)} "
                         f"that are faster than {aspect_serializer(serializer)}")
 
                 subtext.append(". ")
@@ -2091,7 +2091,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"There are {len(_less)} serializers"
                         ", namely "
-                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _less))} "
+                        f"{aspect_list(_less, aspect_serializer)} "
                         f"that are worse than {aspect_serializer(serializer)} "
                         "when it comes to data coverage ")
 
@@ -2111,7 +2111,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"there are {len(_more)} serializers"
                         ", namely "
-                        f"{aspect_list(tuple(f'{aspect_serializer(_seria)}' for _seria in _more))} "
+                        f"{aspect_list(_more, aspect_serializer)} "
                         f"that are better than {aspect_serializer(serializer)} "
                         "when it comes to data coverage")
 

@@ -81,7 +81,15 @@ qu'est-ce qui est disponible ?
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
 
-* aspect_list > aspect_list(, map)
+[DONE] task-101
+
+Improved code readibility by adding a parameter to aspect_list(, func),
+func() being called on each item inserted in the result string.
+
+    * Improved code readibility by adding a parameter to aspect_list(, func),
+      func() being called on each item inserted in the result string. (task-101)
+
+    * pylint: 10/10
 
 [DONE] task-100
 
