@@ -83,6 +83,16 @@ qu'est-ce qui est disponible ?
 * checkup: ajouter numversion
 * doubloon > duplicate
 
+[DONE] task-102
+
+Improved checkup() display by adding project's name & version and the current
+timestamp. (task-102)
+
+    * Improved checkup() display by adding project's name & version and the current
+      timestamp. (task-102)
+
+    * pylint: 10/10
+
 [DONE] task-101
 
 Improved code readibility by adding a parameter to aspect_list(, func),

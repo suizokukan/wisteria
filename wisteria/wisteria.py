@@ -459,6 +459,10 @@ def checkup():
     # Pylint gets mixed up when reading how we iterate over <serializers>:
     # pylint: disable=consider-using-dict-items
 
+    # ---- Project name & version, time stamp ---------------------------------
+    msgreport(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+    msgreport()
+
     # ---- configuration file -------------------------------------------------
     msgreport("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
