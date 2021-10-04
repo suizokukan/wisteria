@@ -112,6 +112,11 @@ MODULES = {}
 # * format: SERIALIZERS[(str)serializer name] = SerializerData object
 # * initialized by serializers.py::init_serializers()
 SERIALIZERS = {}
+# dict storing all serializers that the program can't use.
+#
+# * format: UNAVAILABLE_SERIALIZERS[(str)serializer name] = SerializerData object
+# * initialized by serializers.py::init_serializers()
+UNAVAILABLE_SERIALIZERS = {}
 
 # dict storing all data used by the program.
 #

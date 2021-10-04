@@ -80,7 +80,7 @@ from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report
 from wisteria.results import compute_results
 from wisteria.utils import normpath, shortenedstr
-from wisteria.reportaspect import aspect_data
+from wisteria.reportaspect import aspect_data, aspect_serializer0
 import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
@@ -455,8 +455,6 @@ def checkup():
     # Pylint gets mixed up when reading how we iterate over <serializers>:
     # pylint: disable=consider-using-dict-items
 
-    serializers = wisteria.globs.SERIALIZERS
-
     # ---- configuration file -------------------------------------------------
     msgreport("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
@@ -475,25 +473,23 @@ def checkup():
     # ---- serializers --------------------------------------------------------
     msgreport()
 
-    _serializers = tuple(serializer for serializer in serializers
-                         if serializers[serializer].available)
-    msgreport(f"* {len(_serializers)} Available Serializer(s):")
-    for serializer in _serializers:
-        msgreport(f"  - {serializers[serializer].checkup_repr()}")
+    msgreport(f"* {len(wisteria.globs.SERIALIZERS)} Available Serializer(s):")
+    msgreport("- " +
+              "\n- ".join(f"{serializer.checkup_repr()}"
+                          for serializer in wisteria.globs.SERIALIZERS.values()))
 
-    _serializers = tuple(serializer for serializer in serializers
-                         if not serializers[serializer].available)
-    if _serializers:
+    if wisteria.globs.UNAVAILABLE_SERIALIZERS:
         msgreport()
-        msgreport(f"* {len(_serializers)} Unavailable Serializer(s):")
-        for serializer in _serializers:
-            msgreport(f"  - {serializers[serializer].checkup_repr()}")
-
-    msgreport()
+        msgreport(f"* {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable Serializer(s)")
+        msgreport("- " +
+                  "\n- ".join(f"{aspect_serializer0(serializer.name)}"
+                              for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
 
     # ---- data object --------------------------------------------------------
+    msgreport()
+
     msgreport(f"* {len(wisteria.globs.DATA)} Available Data Object(s):")
-    msgreport("; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+    msgreport("; ".join(f"{aspect_data(dataobject_name)}"
                         for dataobject_name, dataobject in wisteria.globs.DATA.items()))
 
     if wisteria.globs.UNAVAILABLE_DATA:

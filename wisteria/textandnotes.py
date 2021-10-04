@@ -143,6 +143,7 @@ class TextAndNotes(list):
 
         if self.notes:
             res.append("\n\n")
+
             for fullnotename, note in self.notes:
                 if fullnotename not in notes2notessymbols:
                     raise WisteriaError(

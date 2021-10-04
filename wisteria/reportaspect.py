@@ -32,6 +32,7 @@
     o  aspect_nodata(string)
     o  aspect_percentage(percentage)
     o  aspect_ratio(inttotal_and_floatratio)
+    o  aspect_serializer0(serializer_name)
     o  aspect_serializer(serializer_name)
     o  aspect_stringlength(int_stringlength)
     o  aspect_time(floattime)
@@ -175,6 +176,23 @@ def aspect_ratio(inttotal_and_floatratio):
     return aspect_nodata()
 
 
+def aspect_serializer0(serializer_name):
+    """
+        aspect_serializer0()
+
+        Modify the aspect of (str)serializer_name.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)serializer_name
+
+        RETURNED VALUE: (str)serializer_name + some text attributes.
+    """
+    return "[yellow]" \
+        f"{serializer_name}" \
+        "[/yellow]"
+
+
 def aspect_serializer(serializer_name):
     """
         aspect_serializer()
@@ -188,9 +206,7 @@ def aspect_serializer(serializer_name):
 
         RETURNED VALUE: (str)serializer_name + some text attributes.
     """
-    return "[yellow]" \
-        f"{wisteria.globs.SERIALIZERS[serializer_name].human_name}" \
-        "[/yellow]"
+    return f"{aspect_serializer0(wisteria.globs.SERIALIZERS[serializer_name].human_name)}"
 
 
 def aspect_stringlength(int_stringlength):

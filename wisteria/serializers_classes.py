@@ -51,23 +51,22 @@ class SerializerData:
         o  (str)name
         o  (str)human_name
         o  (str)internet
-        o  (bool)available  : is this serializer available ?
         o  (str)version
         o  (callable)func   : function to be called to use this serializer
 
 
         methods:
 
-        o  __init__(self, name, human_name, internet, available, func)
+        o  __init__(self, name, module_name, human_name, internet, func)
         o  __repr__(self)
         o  checkup_repr(self)
         o  simple_repr(self)
     """
     def __init__(self,
                  name,
+                 module_name,
                  human_name,
                  internet,
-                 available,
                  func):
         """
             SerializerData.__init__()
@@ -76,16 +75,16 @@ class SerializerData:
 
             ARGUMENTS:
             o  (str)name
+            o  (str)module_name
             o  (str)human_name
             o  (str)internet
-            o  (bool)available  : is this serializer available ?
             o  (str)version
             o  (callable)func   : function to be called to use this serializer
         """
         self.name = name
+        self.module_name = module_name
         self.human_name = human_name
         self.internet = internet
-        self.available = available
         self.version = None
         self.func = func
 
@@ -100,8 +99,8 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .checkup_repr() and .simple_repr()
         """
-        return f"{self.human_name=}; {self.internet=}; " \
-            f"{self.available=}; {self.version=}; {self.func=}"
+        return f"{self.name=}; {self.module_name=}; {self.human_name=}; {self.internet=}; " \
+            f"{self.version=}; {self.func=}"
 
     def checkup_repr(self):
         """
@@ -114,10 +113,7 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .__repr__() and .simple_repr()
         """
-        if self.available:
-            return f"(available)     {aspect_serializer(self.name)} ({self.version}), " \
-                f"see {self.internet}."
-        return f"(not available) {aspect_serializer(self.name)} (see {self.internet})."
+        return f"{aspect_serializer(self.name)} ({self.version}), see {self.internet}."
 
     def simple_repr(self):
         """
@@ -130,9 +126,7 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .checkup_repr() and .__repr__()
         """
-        if self.available:
-            return f"(available)     {aspect_serializer(self.name)} ({self.version})"
-        return f"(not available) {aspect_serializer(self.name)}"
+        return f"{aspect_serializer(self.name)} ({self.version})"
 
 
 @dataclass

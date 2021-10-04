@@ -84,6 +84,23 @@ qu'est-ce qui est disponible ?
 * ça plante: ./bin/wisteria --cmp="iaswn against jsonpickle(ini)" --report="full"
    quand jsonpickle n'est pas installé
 * A3/A2 à revoir: afficher les serializers+data comme dans checkup()
+* pbm de couleurs dans checkup(): (see https://jsonpickle.github.io/). quand jsonpickle n'est pas installé.
+* pluriel dans checkup(), peut-être dans A2+A3
+
+[DONE] task-93
+
+UNAVAILABLE_SERIALIZERS now contains serializers that can't be used.
+
+    * globs.py:UNAVAILABLE_SERIALIZERS now contains serializers that can't be 
+      used. (task-93)
+    * .available is not an attribute of SerializerData anymore (task-93)
+    * SerializerData has now a new attribute, .modulename (task-93)
+    * modified init_serializers() so that serializers that can't be used
+      are stored in globs.py:UNAVAILABLE_SERIALIZERS (task-93)
+    * new aspect_xxx() method: aspect_serializer0(); aspect_serializer()
+      is now based on it. (task-93)
+
+    * pylint: 10/10
 
 [DONE] task-92
 

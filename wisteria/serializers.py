@@ -390,43 +390,40 @@ def init_serializers():
 
         Initialize wisteria.globs.SERIALIZERS
     """
-    wisteria.globs.SERIALIZERS = {
-        "iaswn": SerializerData(
-            name="iaswn",
-            human_name="Iaswn",
-            internet="https://github.com/suizokukan/iaswn",
-            available=trytoimport("iaswn"),
-            func=serializer_iaswn),
-        "json": SerializerData(
-            name="json",
-            human_name="json",
-            internet="https://docs.python.org/3/library/json.html",
-            available=trytoimport("json"),
-            func=serializer_json),
-        "jsonpickle": SerializerData(
-            name="jsonpickle",
-            human_name="jsonpickle",
-            internet="https://jsonpickle.github.io/",
-            available=trytoimport("jsonpickle"),
-            func=serializer_jsonpickle),
-        "marshal": SerializerData(
-            name="marshal",
-            human_name="marshal",
-            internet="https://docs.python.org/3/library/marshal.html#module-marshal",
-            available=trytoimport("marshal"),
-            func=serializer_marshal),
-        "pickle": SerializerData(
-            name="pickle",
-            human_name="pickle",
-            internet="https://docs.python.org/3/library/pickle.html",
-            available=trytoimport("pickle"),
-            func=serializer_pickle),
-    }
-    # In spite of Pylint I don't see why I should write:
-    #   for _serializer in wisteria.globs.SERIALIZERS.keys()
-    #
-    # pylint: disable=consider-using-dict-items
-    for _serializer in wisteria.globs.SERIALIZERS:
-        if wisteria.globs.SERIALIZERS[_serializer].available:
-            wisteria.globs.SERIALIZERS[_serializer].version = \
-                wisteria.globs.SERIALIZERS[_serializer].func("version")
+    for serializerdata in (
+            SerializerData(
+                name="iaswn",
+                module_name="iaswn",
+                human_name="Iaswn",
+                internet="https://github.com/suizokukan/iaswn",
+                func=serializer_iaswn),
+            SerializerData(
+                name="json",
+                module_name="json",
+                human_name="json",
+                internet="https://docs.python.org/3/library/json.html",
+                func=serializer_json),
+            SerializerData(
+                name="jsonpickle",
+                module_name="jsonpickle",
+                human_name="jsonpickle",
+                internet="https://jsonpickle.github.io/",
+                func=serializer_jsonpickle),
+            SerializerData(
+                name="marshal",
+                module_name="marshal",
+                human_name="marshal",
+                internet="https://docs.python.org/3/library/marshal.html#module-marshal",
+                func=serializer_marshal),
+            SerializerData(
+                name="pickle",
+                module_name="pickle",
+                human_name="pickle",
+                internet="https://docs.python.org/3/library/pickle.html",
+                func=serializer_pickle),
+            ):
+        if trytoimport(serializerdata.module_name):
+            wisteria.globs.SERIALIZERS[serializerdata.name] = serializerdata
+            wisteria.globs.SERIALIZERS[serializerdata.name].version = serializerdata.func("version")
+        else:
+            wisteria.globs.UNAVAILABLE_SERIALIZERS[serializerdata.name] = serializerdata
