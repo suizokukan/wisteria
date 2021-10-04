@@ -74,17 +74,16 @@ cwc
 
 [CURRENT] v. 0.0.8
 
-* $ wisteria fait planter le programme
 * data types à compléter
 qu'est-ce qui est disponible ?
 - Python-dateutil
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
-* ça plante: ./bin/wisteria --cmp="iaswn against jsonpickle(ini)" --report="full"
-   quand jsonpickle n'est pas installé
+
 * A3/A2 à revoir: afficher les serializers+data comme dans checkup()
 * pluriel dans checkup(), peut-être dans A2+A3
+* is/are + plural > (s)
 
 [DONE] task-97
 
