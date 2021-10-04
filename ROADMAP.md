@@ -85,6 +85,16 @@ qu'est-ce qui est disponible ?
 * pluriel dans checkup(), peut-être dans A2+A3
 * is/are + plural > (s)
 
+[DONE] task-99
+
+Replaced some doubloons in code by two fonctions, partial_report__data()
+and partial_report__serializers().
+
+    * replaced some doubloons in code by two fonctions, partial_report__data()
+      and partial_report__serializers() (task-99)
+
+    * pylint: 10/10
+
 [DONE] task-98
 
 Improved messages in read_cmpstring() and in checkup().

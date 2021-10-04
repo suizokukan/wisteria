@@ -29,6 +29,9 @@
     o  cmpdata2phrase(cmpdata)
     o  ratio2phrase(ratio, base_string)
 
+    o  partial_report__data()
+    o  partial_report__serializers()
+
     o  report_section_a1(results, s1s2d)
     o  report_section_a2(results, s1s2d)
     o  report_section_a3(results, s1s2d)
@@ -59,7 +62,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
 from wisteria.msg import msgreport, msgreporttitle
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
-from wisteria.reportaspect import aspect_nodata
+from wisteria.reportaspect import aspect_nodata, aspect_nounplural
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -211,6 +214,56 @@ def ratio2phrase(ratio,
     return expression
 
 
+def partial_report__data():
+    """
+        partial_report__data()
+
+        Display a mini report abouter data.
+    """
+    msgreport(
+        f"* {len(wisteria.globs.DATA)} Available Data "
+        f"{aspect_nounplural('Object', len(wisteria.globs.DATA))}:")
+    msgreport(
+        "; ".join(f"{aspect_data(dataobject_name)}"
+                  for dataobject_name, dataobject in wisteria.globs.DATA.items()))
+
+    if wisteria.globs.UNAVAILABLE_DATA:
+        msgreport()
+        msgreport(
+            f"* {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
+            f"{aspect_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
+        msgreport(
+            "; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+                      for dataobject_name, dataobject in wisteria.globs.UNAVAILABLE_DATA.items()))
+
+
+def partial_report__serializers():
+    """
+        partial_report__serializers()
+
+        Display a mini report abouter serializers.
+    """
+    msgreport(
+        f"* {len(wisteria.globs.SERIALIZERS)} Available "
+        f"{aspect_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
+    msgreport(
+        "- " +
+        "\n- ".join(f"{serializer.checkup_repr()}"
+                    for serializer in wisteria.globs.SERIALIZERS.values()))
+
+    msgreport()
+
+    if wisteria.globs.UNAVAILABLE_SERIALIZERS:
+        msgreport(
+            f"! {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
+            f"{aspect_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}:")
+        msgreport(
+            "- " +
+            "\n- ".join(f"{aspect_serializer(serializer.name)}, "
+                        f"see {aspect_serializer(serializer.internet)}"
+                        for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
+
+
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
 # pylint: disable=unused-argument
@@ -324,9 +377,7 @@ def report_section_a2(results,
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(A2) List of Serializers to Be Used")
         msgreport()
-
-    for serializer in wisteria.globs.SERIALIZERS.values():
-        msgreport(f"  - {serializer.simple_repr()}")
+    partial_report__serializers()
     msgreport()
 
 
@@ -383,14 +434,11 @@ def report_section_a3(results,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    data = wisteria.globs.DATA
-
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(A3) List of Data Objects to Be Used")
         msgreport()
 
-    for dataobj_name, dataobj_value in data.items():
-        msgreport(f"  - {dataobj_name:>30} : {shortenedstr(repr(dataobj_value))}")
+    partial_report__data()
     msgreport()
 
 

@@ -77,10 +77,9 @@ from wisteria.globs import TMPFILENAME, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEFAULT_CONFIG_FILENAME
 from wisteria.aboutproject import __projectname__, __version__
-from wisteria.report import report
+from wisteria.report import report, partial_report__data, partial_report__serializers
 from wisteria.results import compute_results
-from wisteria.utils import normpath, shortenedstr
-from wisteria.reportaspect import aspect_data, aspect_serializer, aspect_nounplural
+from wisteria.utils import normpath
 import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
@@ -477,44 +476,11 @@ def checkup():
 
     # ---- serializers --------------------------------------------------------
     msgreport()
-
-    msgreport(
-        f"* {len(wisteria.globs.SERIALIZERS)} Available "
-        f"{aspect_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
-    msgreport(
-        "- " +
-        "\n- ".join(f"{serializer.checkup_repr()}"
-                    for serializer in wisteria.globs.SERIALIZERS.values()))
-
-    if wisteria.globs.UNAVAILABLE_SERIALIZERS:
-        msgreport()
-        msgreport(
-            f"* {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
-            f"{aspect_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}:")
-        msgreport(
-            "- " +
-            "\n- ".join(f"{aspect_serializer(serializer.name)}, "
-                        f"see {aspect_serializer(serializer.internet)}"
-                        for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
+    partial_report__serializers()
 
     # ---- data object --------------------------------------------------------
     msgreport()
-
-    msgreport(
-        f"* {len(wisteria.globs.DATA)} Available Data "
-        f"{aspect_nounplural('Object', len(wisteria.globs.DATA))}:")
-    msgreport(
-        "; ".join(f"{aspect_data(dataobject_name)}"
-                  for dataobject_name, dataobject in wisteria.globs.DATA.items()))
-
-    if wisteria.globs.UNAVAILABLE_DATA:
-        msgreport()
-        msgreport(
-            f"* {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
-            f"{aspect_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
-        msgreport(
-            "; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
-                      for dataobject_name, dataobject in wisteria.globs.UNAVAILABLE_DATA.items()))
+    partial_report__data()
 
 
 if wisteria.globs.ARGS.checkup:
