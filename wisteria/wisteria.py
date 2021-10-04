@@ -80,7 +80,7 @@ from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report
 from wisteria.results import compute_results
 from wisteria.utils import normpath, shortenedstr
-from wisteria.reportaspect import aspect_data, aspect_serializer0
+from wisteria.reportaspect import aspect_data, aspect_serializer
 import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
@@ -487,8 +487,8 @@ def checkup():
         msgreport()
         msgreport(f"* {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable Serializer(s)")
         msgreport("- " +
-                  "\n- ".join(f"{aspect_serializer0(serializer.name)}, "
-                              f"see {aspect_serializer0(serializer.internet)}"
+                  "\n- ".join(f"{aspect_serializer(serializer.name)}, "
+                              f"see {aspect_serializer(serializer.internet)}"
                               for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
 
     # ---- data object --------------------------------------------------------
@@ -706,8 +706,8 @@ def main():
                      f"{success}, {serializer1}, {serializer2}, {cmpdata}")
 
         if not success:
-            msgerror("(ERRORID013) an error occured "
-                     f"while reading cmp string '{ARGS.cmp}'.")
+            msgerror("(ERRORID013) An error occured "
+                     f"while reading --cmp string '{ARGS.cmp}'.")
 
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code

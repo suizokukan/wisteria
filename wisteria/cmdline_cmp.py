@@ -31,6 +31,7 @@ import re
 
 from wisteria.msg import msgerror
 from wisteria.globs import REGEX_CMP, REGEX_CMP__HELP
+from wisteria.reportaspect import aspect_serializer0, aspect_serializer
 import wisteria.globs
 
 
@@ -65,6 +66,7 @@ def read_cmpstring(cmpstring):
                         (str:"all|cwc|ini")cmpdata
     """
     serializers = wisteria.globs.SERIALIZERS
+    u_serializers = wisteria.globs.UNAVAILABLE_SERIALIZERS
 
     if res := re.match(REGEX_CMP, cmpstring):
         serializer1 = res.group("serializer1")
@@ -78,20 +80,42 @@ def read_cmpstring(cmpstring):
             cmpdata = "all"
 
         if not (serializer1 == "all" or serializer1 in serializers):
-            msgerror(f"(ERRORID009) Unknown serializer #1 from cmp string '{cmpstring}': "
-                     f"what is '{serializer1}' ? "
-                     f"Known serializers #1 are 'all' and {tuple(serializers.keys())}.")
+            # BEWARE !
+            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # to display acceptable serializers name
+            # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
+            msgerror(
+                "(ERRORID009) Unknown serializer (for --cmp position 1) "
+                f"read in the --cmp string '{cmpstring}': "
+                f"what is '{serializer1}' ? "
+                "Known serializers for position 1 are "
+                f"{aspect_serializer('all')} and "
+                f"{', '.join(aspect_serializer0(serial) for serial in serializers)} . "
+                "Unavailable serializer(s) is(are) "
+                f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
+                "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
         if not (serializer2 == "all" or serializer2 == "others" or serializer2 in serializers):
-            msgerror(f"(ERRORID010) Unknown serializer #2 from cmp string '{cmpstring}': "
-                     f"what is '{serializer2}' ? "
-                     "Known serializers #2 are 'all', 'others' and "
-                     f"{tuple(serializers.keys())}.")
+            # BEWARE !
+            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # to display acceptable serializers name
+            # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
+            msgerror(
+                "(ERRORID010) Unknown serializer (for --cmp position 2) "
+                f"read in the --cmp string '{cmpstring}': "
+                f"what is '{serializer2}' ? "
+                f"Known serializers for position 2 are "
+                f"{aspect_serializer('all')}, {aspect_serializer('others')} and "
+                f"{', '.join(aspect_serializer0(serial) for serial in serializers)} . "
+                "Unavailable serializer(s) is(are) "
+                f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
+                "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
         if serializer1 == serializer2 and serializer1 != "all":
-            msgerror(f"(ERRORID011) Both serializer-s from cmp string '{cmpstring}' "
-                     f"(here, both set to '{serializer1}') "
-                     "can't have the same value, 'all' and 'all' excepted.")
+            msgerror(
+                f"(ERRORID011) Both serializer-s from cmp string '{cmpstring}' "
+                f"(here, both set to '{serializer1}') "
+                "can't have the same value, 'all' and 'all' excepted.")
             return False, None, None, None
 
         return True, serializer1, serializer2, cmpdata

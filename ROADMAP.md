@@ -86,6 +86,15 @@ qu'est-ce qui est disponible ?
 * A3/A2 à revoir: afficher les serializers+data comme dans checkup()
 * pluriel dans checkup(), peut-être dans A2+A3
 
+[DONE] task-97
+
+Improved error messages in read_cmpstring(); improved message in checkup().
+
+    * improved error messages in read_cmpstring(); improved message in checkup()
+      (task-97)
+
+    * pylint: 10/10
+
 [DONE] task-96
 
 Improved the message displayed by checkup().

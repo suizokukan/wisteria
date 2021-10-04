@@ -197,7 +197,7 @@ def aspect_serializer(serializer_name):
     """
         aspect_serializer()
 
-        Modify the aspect of (str)serializer_name, replace it by its
+        Modify the aspect of (str)serializer_name; if possible, replace it by its
         .human_name.
 
         _______________________________________________________________________
@@ -206,7 +206,9 @@ def aspect_serializer(serializer_name):
 
         RETURNED VALUE: (str)serializer_name + some text attributes.
     """
-    return f"{aspect_serializer0(wisteria.globs.SERIALIZERS[serializer_name].human_name)}"
+    if serializer_name in wisteria.globs.SERIALIZERS:
+        return f"{aspect_serializer0(wisteria.globs.SERIALIZERS[serializer_name].human_name)}"
+    return f"{aspect_serializer0(serializer_name)}"
 
 
 def aspect_stringlength(int_stringlength):
