@@ -31,7 +31,7 @@ import re
 
 from wisteria.msg import msgerror
 from wisteria.globs import REGEX_CMP, REGEX_CMP__HELP
-from wisteria.reportaspect import aspect_serializer0, aspect_serializer
+from wisteria.reportaspect import aspect_serializer0, aspect_serializer, aspect_nounplural
 import wisteria.globs
 
 
@@ -91,7 +91,9 @@ def read_cmpstring(cmpstring):
                 "Known serializers for position 1 are "
                 f"{aspect_serializer('all')} and "
                 f"{', '.join(aspect_serializer0(serial) for serial in serializers)} . "
-                "Unavailable serializer(s) is(are) "
+                "Unavailable "
+                f"{aspect_nounplural('serializer', len(u_serializers))} "
+                ": "
                 f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
@@ -107,7 +109,9 @@ def read_cmpstring(cmpstring):
                 f"Known serializers for position 2 are "
                 f"{aspect_serializer('all')}, {aspect_serializer('others')} and "
                 f"{', '.join(aspect_serializer0(serial) for serial in serializers)} . "
-                "Unavailable serializer(s) is(are) "
+                "Unavailable "
+                f"{aspect_nounplural('serializer', len(u_serializers))} "
+                ": "
                 f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None

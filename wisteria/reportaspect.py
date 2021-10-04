@@ -30,6 +30,7 @@
     o  aspect_data(data_objectname)
     o  aspect_list(listitems)
     o  aspect_nodata(string)
+    o  aspect_nounplural(string, number)
     o  aspect_percentage(percentage)
     o  aspect_ratio(inttotal_and_floatratio)
     o  aspect_serializer0(serializer_name)
@@ -139,6 +140,25 @@ def aspect_nodata(string=None):
         string = "(no data)"
 
     return f"[red]{string}[/red]"
+
+
+def aspect_nounplural(string,
+                      number):
+    """
+        aspect_nounplural()
+
+        Return string with a final -s if <number> is greater than one.
+
+        _______________________________________________________________________
+
+        o  (str)string, a string ending with a word to which a final s may be added
+        o  (int)number, 0 <= number
+
+        RETURNED VALUE: (str)string + -s if <number> is greater than one.
+    """
+    if number <= 1:
+        return string
+    return string+"s"
 
 
 def aspect_percentage(percentage):

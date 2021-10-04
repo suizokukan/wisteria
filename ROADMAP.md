@@ -85,6 +85,15 @@ qu'est-ce qui est disponible ?
 * pluriel dans checkup(), peut-être dans A2+A3
 * is/are + plural > (s)
 
+[DONE] task-98
+
+Improved messages in read_cmpstring() and in checkup().
+
+    * improved messages in read_cmpstring() and in checkup() (task-98)
+    * new aspect method: aspect_nounplural() (task-98)
+
+    * pylint: 10/10
+
 [DONE] task-97
 
 Improved error messages in read_cmpstring(); improved message in checkup().
