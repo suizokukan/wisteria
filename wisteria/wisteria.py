@@ -487,7 +487,8 @@ def checkup():
         msgreport()
         msgreport(f"* {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable Serializer(s)")
         msgreport("- " +
-                  "\n- ".join(f"{aspect_serializer0(serializer.name)}"
+                  "\n- ".join(f"{aspect_serializer0(serializer.name)}, "
+                              f"see {aspect_serializer0(serializer.internet)}"
                               for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
 
     # ---- data object --------------------------------------------------------

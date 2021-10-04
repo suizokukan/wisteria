@@ -87,6 +87,15 @@ qu'est-ce qui est disponible ?
 * pbm de couleurs dans checkup(): (see https://jsonpickle.github.io/). quand jsonpickle n'est pas installé.
 * pluriel dans checkup(), peut-être dans A2+A3
 
+[DONE] task-96
+
+Improved the message displayed by checkup().
+
+    * improved the message displayed by checkup() : .internet string
+      displayed for unavailable serializer (task-96)
+
+    * pylint: 10/10
+
 [DONE] task-95
 
 Fixed a color problem in report_section_d2c().
