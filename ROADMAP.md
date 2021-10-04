@@ -83,8 +83,15 @@ qu'est-ce qui est disponible ?
 - bool/false(True); > bool/false(False) dans checkup()
 * ça plante: ./bin/wisteria --cmp="iaswn against jsonpickle(ini)" --report="full"
    quand jsonpickle n'est pas installé
-* extremly > extremely (à vérifier)
 * A3/A2 à revoir: afficher les serializers+data comme dans checkup()
+
+[DONE] task-92
+
+Fixed a typo: 'extremly' > 'extremely'.
+
+    * fixed a typo: 'extremly' > 'extremely' (task-92)
+    
+    * pylint: 10/10
 
 [DONE] task-91
 

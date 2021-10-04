@@ -156,7 +156,7 @@ def ratio2phrase(ratio,
 
     if base_string == "slow/fast":
         if ratio > 10:
-            expression = "extremly slower"
+            expression = "extremely slower"
         elif ratio > 2:
             expression = "much slower"
         elif ratio > 1.4:
@@ -170,11 +170,11 @@ def ratio2phrase(ratio,
         elif ratio > 0.1:
             expression = "much faster"
         else:
-            expression = "extremly faster"
+            expression = "extremely faster"
 
     elif base_string == "long/short":
         if ratio > 10:
-            expression = "extremly longer"
+            expression = "extremely longer"
         elif ratio > 2:
             expression = "much longer"
         elif ratio > 1.4:
@@ -188,7 +188,7 @@ def ratio2phrase(ratio,
         elif ratio > 0.1:
             expression = "much shorter"
         else:
-            expression = "extremly shorter"
+            expression = "extremely shorter"
 
     elif base_string == "good/bad":
         if ratio > 10:
