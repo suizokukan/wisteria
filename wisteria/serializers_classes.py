@@ -113,7 +113,7 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .__repr__() and .simple_repr()
         """
-        return f"{aspect_serializer(self.name)} ({self.version}), see {self.internet}."
+        return f"{aspect_serializer(self.name)} ({self.version}), see {self.internet} ."
 
     def simple_repr(self):
         """

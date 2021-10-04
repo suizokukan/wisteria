@@ -82,6 +82,15 @@ qu'est-ce qui est disponible ?
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
 
+[DONE] task-103
+
+Slightly improved messages displayed by the program.
+
+    * slightly improved messages displayed by the program: '}.' > '} .'
+      (task-103)
+
+    * pylint: 10/10
+
 [DONE] task-102
 
 Improved checkup() display by adding project's name & version and the current

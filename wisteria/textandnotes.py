@@ -149,7 +149,7 @@ class TextAndNotes(list):
                     raise WisteriaError(
                         "Ill-formed TextAndNotes object: "
                         f"unknown note name '{fullnotename}' read in note '{note}'; "
-                        f"defined notes are {tuple(notes2notessymbols.keys())}.")
+                        f"defined notes are {tuple(notes2notessymbols.keys())} .")
                 note_symbol = notes2notessymbols[fullnotename]
                 res.append(f"\n[{note_symbol}] {note}")
 

@@ -173,7 +173,7 @@ PARSER.add_argument(
     "You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...) "
     "or like 'B1' (=B1a+B1b+B1c). "
     "Accepted section parts are "
-    f"{tuple(wisteria.report.STR2REPORTSECTION.keys())}. "
+    f"{tuple(wisteria.report.STR2REPORTSECTION.keys())} . "
     "More informations in the documentation. "
     "Please notice that --verbosity has no effect upon --report.")
 

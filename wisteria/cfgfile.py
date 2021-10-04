@@ -118,7 +118,7 @@ def read_cfgfile(filename):
         config = configparser.ConfigParser()
         config.read(filename)
     except (configparser.DuplicateOptionError,) as error:
-        msgerror(f"(ERRORID002) While reading config file '{filename}': {error}.")
+        msgerror(f"(ERRORID002) While reading config file '{filename}': {error} .")
         return None
 
     # -------------------------------
