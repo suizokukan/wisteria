@@ -126,6 +126,12 @@ def init_data():
         "function": anyfunc,
         "function(python)": print,
 
+        "hashlib(hashlib.sha1)": hashlib.sha1(b"some string"),
+        "hashlib(hashlib.sha224)": hashlib.sha224(b"some string"),
+        "hashlib(hashlib.sha256)": hashlib.sha256(b"some string"),
+        "hashlib(hashlib.sha384)": hashlib.sha384(b"some string"),
+        "hashlib(hashlib.sha512)": hashlib.sha512(b"some string"),
+
         "imported module": re,
         "imported module(class)": re.Pattern,
         "imported module(function)": re.sub,
@@ -163,12 +169,6 @@ def init_data():
 
         "set": set(("1", "2",)),
         "set(empty)": set(),
-
-        "hashlib(hashlib.sha1)": hashlib.sha1(b"some string"),
-        "hashlib(hashlib.sha224)": hashlib.sha224(b"some string"),
-        "hashlib(hashlib.sha256)": hashlib.sha256(b"some string"),
-        "hashlib(hashlib.sha384)": hashlib.sha384(b"some string"),
-        "hashlib(hashlib.sha512)": hashlib.sha512(b"some string"),
 
         "str": "abc",
         "str(empty)": "",

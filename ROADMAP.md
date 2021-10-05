@@ -87,6 +87,16 @@ entre [data objects] et init_data().
 
 * README.md & https://docs.python.org/3/py-modindex.html
 
+[DONE] task-107
+
+Documentation in README.md.
+
+    * documentation in README.md (task-107)
+    * added a blank line in report.py (task-107)
+    * improved data objects order in DATA (task-107)
+
+    * pylint: 10/10
+
 [DONE] task-106
 
 Modified checkup() so that, if verbosity==3 (debug), all serializers and all

@@ -257,6 +257,7 @@ def partial_report__data():
 
         console.print('; '.join(serializer_name for serializer_name in all_serializers))
 
+
 def partial_report__serializers():
     """
         partial_report__serializers()
