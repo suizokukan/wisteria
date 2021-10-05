@@ -29,9 +29,15 @@
     * anyfunc()
     * init_data()
 """
+import array
+import calendar
+import datetime
+import decimal
+import hashlib
 import io
 import numbers
 import re
+import time
 
 import wisteria.globs
 from wisteria.globs import TMPFILENAME
@@ -52,6 +58,33 @@ def init_data():
         Initialize wisteria.globs.DATA.
     """
     wisteria.globs.DATA = {
+        "array(b)":  array.array('b', (-1, 2)),
+        "array(b/empty)": array.array('b'),
+        "array(b_unsigned)": array.array('b', (1, 2)),
+        "array(b_unsigned/empty)": array.array('B'),
+        "array(u)": array.array('u', 'hello \u2641'),
+        "array(u/empty)": array.array('u'),
+        "array(h)": array.array('h', (-1, 2)),
+        "array(h/empty)": array.array('h'),
+        "array(h_unsigned)": array.array('H', (1, 2)),
+        "array(u_unsigned/empty)": array.array('H'),
+        "array(i)": array.array('i', (-1, 2)),
+        "array(i/empty)": array.array('i'),
+        "array(i_unsigned)": array.array('I', (1, 2)),
+        "array(i_unsigned/empty)": array.array('I'),
+        "array(l)": array.array('l', [-1, 2, 3, 4, 5]),
+        "array(l/empty)": array.array('l'),
+        "array(l_unsigned)": array.array('L', (1, 2)),
+        "array(l_unsigned/empty)": array.array('L'),
+        "array(q)": array.array('q', (-1, 2)),
+        "array(q/empty)": array.array('q'),
+        "array(q_unsigned)": array.array('Q', (1, 2)),
+        "array(q_unsigned/empty)": array.array('Q'),
+        "array(f)": array.array('f', (1.3, float('nan'))),
+        "array(f/empty)": array.array('f'),
+        "array(d)": array.array('d', [1.0, 2.0, 3.14]),
+        "array(d/empty)": array.array('d'),
+
         "bool/false": True,
         "bool/true": True,
 
@@ -61,7 +94,19 @@ def init_data():
         "bytes": b"123",
         "bytes(empty)": b"",
 
+        "calendar(Calendar(3))": calendar.Calendar(3),
+
         "complex": 1+2j,
+
+        "datetime(datetime.datetime)": datetime.datetime(2001, 12, 1),
+        "datetime(datetime.timedelta)":
+        datetime.datetime(2001, 12, 1) - datetime.datetime(2000, 12, 1),
+
+        "decimal(0.5)": decimal.Decimal(0.5),
+        "decimal(1/7)": decimal.Decimal(1) / decimal.Decimal(7),
+        "decimal(NaN)": decimal.Decimal('Nan'),
+        "decimal(-Infinity)": decimal.Decimal("-Infinity"),
+        "decimal(+Infinity)": decimal.Decimal("+Infinity"),
 
         "dict(keys/bool)": {False: "False", True: "True"},
         "dict(keys/float)": {1.1: "value1.1", 2.2: "value2.2"},
@@ -73,6 +118,7 @@ def init_data():
                                 encoding="utf-8"),
 
         "float": 1.1,
+        "float(nan)": float('nan'),
 
         "frozenset": frozenset(("1", "2",)),
         "frozenset(empty)": frozenset(),
@@ -118,10 +164,18 @@ def init_data():
         "set": set(("1", "2",)),
         "set(empty)": set(),
 
+        "hashlib(hashlib.sha1)": hashlib.sha1(b"some string"),
+        "hashlib(hashlib.sha224)": hashlib.sha224(b"some string"),
+        "hashlib(hashlib.sha256)": hashlib.sha256(b"some string"),
+        "hashlib(hashlib.sha384)": hashlib.sha384(b"some string"),
+        "hashlib(hashlib.sha512)": hashlib.sha512(b"some string"),
+
         "str": "abc",
         "str(empty)": "",
         "str(long)": "abhg12234"*10000,
         "str(non ascii characters)": "êł¹@"+chr(0x1234)+chr(0x12345),
+
+        "time(time.time)": time.time(),
 
         "tuple": ("1", "2",),
         "tuple(empty)": (),

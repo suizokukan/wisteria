@@ -82,6 +82,14 @@ qu'est-ce qui est disponible ?
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
 
+[DONE] task-104
+
+Added new data.
+
+    * added new data. (task-104)
+
+    * pylint: 10/10
+
 [DONE] task-103
 
 Slightly improved messages displayed by the program.
