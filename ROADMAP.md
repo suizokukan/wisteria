@@ -83,9 +83,10 @@ qu'est-ce qui est disponible ?
 
 * data objects > data types
 
-* les keys de DATA ne doivent pas contenir de majuscule
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
+
+* correct letter case keys in DATA
 
 [DONE] task-113
 
