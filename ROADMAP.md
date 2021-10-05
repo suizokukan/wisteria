@@ -87,7 +87,8 @@ qu'est-ce qui est disponible ?
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
 
-* - bool/false(True); > bool/false(False) dans checkup()
+* 1 Unavailable Data Object:  > ! 1 Unavailable Data Object:
+
 
 [DONE] task-110
 
