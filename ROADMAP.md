@@ -86,7 +86,6 @@ qu'est-ce qui est disponible ?
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
 
-* correct letter case keys in DATA
 
 [DONE] task-114
 
