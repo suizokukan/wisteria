@@ -82,6 +82,19 @@ qu'est-ce qui est disponible ?
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 - bool/false(True); > bool/false(False) dans checkup()
 
+* à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
+entre [data objects] et init_data().
+
+* afficher les ERRORIDXXX en rouge: attention, [red](ERRODID000)[/red] et non pas ([red]ERRORID000[/red])
+    pour faciliter les recherches par grep
+    
+* README.md & https://docs.python.org/3/py-modindex.html
+
+* --checkup avec --verbosity=3 devrait donner tous les datas (qu'ils soient ou non disponibles),
+de même pour les serializers, en ne dépassant pas 60 caractères (pour les entrer facilement
+dans ROADMAP.md / git message)
+
+
 [DONE] task-104
 
 Added new data.
