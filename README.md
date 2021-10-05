@@ -21,7 +21,7 @@ list taken from https://docs.python.org/3/library/stdtypes.html (last update: 20
 Truth Value Testing/Boolean Operations — and, or, not/Comparisons
 
 * bool
-        > "bool/false": True,
+        > "bool/false": False,
         > "bool/true": True,
 
 Numeric Types — int, float, complex

@@ -85,7 +85,7 @@ def init_data():
         "array(d)": array.array('d', [1.0, 2.0, 3.14]),
         "array(d/empty)": array.array('d'),
 
-        "bool/false": True,
+        "bool/false": False,
         "bool/true": True,
 
         "bytearray": bytearray(b"123"),

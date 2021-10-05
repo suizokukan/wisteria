@@ -89,6 +89,13 @@ entre [data objects] et init_data().
 
 * - bool/false(True); > bool/false(False) dans checkup()
 
+[DONE] task-110
+
+Bugfix: fixed data object "bool/false" definition in data.py .
+
+    * bugfix: fixed data object "bool/false" definition in data.py (task-110)
+
+    * pylint: 10/10
 
 [DONE] task-109
 
