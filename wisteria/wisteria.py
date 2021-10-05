@@ -452,9 +452,10 @@ def checkup():
         checkup()
 
         Show some informations :
-        - installed serializers;
         - configuration file that would be used; does this file exist ?
           can this file be read without errors ?
+        - serializers
+        - data objects
     """
     # Pylint gets mixed up when reading how we iterate over <serializers>:
     # pylint: disable=consider-using-dict-items

@@ -54,13 +54,15 @@
     o  report(results, s1s2d)
 """
 import rich.table
+from rich.console import Console
 
 import wisteria.globs
 from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
+from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr
-from wisteria.msg import msgreport, msgreporttitle
+from wisteria.msg import msgreport, msgreporttitle, msgdebug
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
 from wisteria.reportaspect import aspect_nodata, aspect_nounplural
 from wisteria.cmdline_mymachine import mymachine
@@ -236,6 +238,24 @@ def partial_report__data():
             "; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
                       for dataobject_name, dataobject in wisteria.globs.UNAVAILABLE_DATA.items()))
 
+    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        console = Console(width=70)
+
+        # ---- data objects ---------------------------------------------------
+        msgdebug("All data objects (unvailable+available/width=70)")
+
+        all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
+                                 tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
+
+        console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
+
+        # ---- serializers ----------------------------------------------------
+        msgdebug("All serializers (unvailable+available/width=70)")
+
+        all_serializers = sorted(tuple(wisteria.globs.SERIALIZERS.keys()) +
+                                 tuple(wisteria.globs.UNAVAILABLE_SERIALIZERS.keys()))
+
+        console.print('; '.join(serializer_name for serializer_name in all_serializers))
 
 def partial_report__serializers():
     """

@@ -91,6 +91,17 @@ entre [data objects] et init_data().
 de même pour les serializers, en ne dépassant pas 60 caractères (pour les entrer facilement
 dans ROADMAP.md / git message)
 
+[DONE] task-106
+
+Modified checkup() so that, if verbosity==3 (debug), all serializers and all
+data objects (unavailable+available) are displayed.
+
+    * modified checkup() so that, if verbosity==3, it displays all serializers and all
+      data objects (unavailable+available). (data-106)
+    * improved checkup doc. (data-106)
+
+    * pylint: 10/10
+
 [DONE] task-105
 
 Improved msgerror(): error id is now displayed in red.
