@@ -85,9 +85,6 @@ qu'est-ce qui est disponible ?
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
 
-* afficher les ERRORIDXXX en rouge: attention, [red](ERRODID000)[/red] et non pas ([red]ERRORID000[/red])
-    pour faciliter les recherches par grep
-    
 * README.md & https://docs.python.org/3/py-modindex.html
 
 * --checkup avec --verbosity=3 devrait donner tous les datas (qu'ils soient ou non disponibles),
