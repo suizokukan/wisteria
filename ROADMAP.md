@@ -88,6 +88,15 @@ entre [data objects] et init_data().
 
 * correct letter case keys in DATA
 
+[DONE] task-114
+
+Fixed data objects names using upper letter case in DATA.
+
+    * fixed data objects names using upper letter case in DATA (task-114)
+    * improved documentation (task-114)
+
+    * Pylint 10/10
+
 [DONE] task-113
 
 Check that DATA and UNAVAILABLE_DATA keys are written in lower case.

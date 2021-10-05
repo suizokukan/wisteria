@@ -56,6 +56,9 @@ def init_data():
         init_data()
 
         Initialize wisteria.globs.DATA.
+
+        PLEASE SYNCHRONIZE THIS LIST OF DATA WITH THE LIST IN THE
+        CONFIG FILE(S) AND THE LIST IN README.MD.
     """
     wisteria.globs.DATA = {
         "array(b)":  array.array('b', (-1, 2)),
@@ -94,7 +97,7 @@ def init_data():
         "bytes": b"123",
         "bytes(empty)": b"",
 
-        "calendar(Calendar(3))": calendar.Calendar(3),
+        "calendar(calendar(3))": calendar.Calendar(3),
 
         "complex": 1+2j,
 
@@ -104,9 +107,9 @@ def init_data():
 
         "decimal(0.5)": decimal.Decimal(0.5),
         "decimal(1/7)": decimal.Decimal(1) / decimal.Decimal(7),
-        "decimal(NaN)": decimal.Decimal('Nan'),
-        "decimal(-Infinity)": decimal.Decimal("-Infinity"),
-        "decimal(+Infinity)": decimal.Decimal("+Infinity"),
+        "decimal(nan)": decimal.Decimal('NaN'),
+        "decimal(-infinity)": decimal.Decimal("-Infinity"),
+        "decimal(+infinity)": decimal.Decimal("+Infinity"),
 
         "dict(keys/bool)": {False: "False", True: "True"},
         "dict(keys/float)": {1.1: "value1.1", 2.2: "value2.2"},

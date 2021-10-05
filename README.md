@@ -92,7 +92,7 @@ Set Types — set, frozenset
 
         > "frozenset": frozenset(("1", "2",))
         > "frozenset(empty)": frozenset()
-        
+
 Mapping Types — dict
 
 * dict
@@ -102,13 +102,13 @@ Mapping Types — dict
         > "dict(keys/int)": {0: "value0", 1: "value1", 2: "value2"}
         > "dict(keys/str)": {"key1": "value1", "key2": "value2"}
         > "dict(keys/str+subdicts)": {"key1": "value1", "key2": "value2", "key3": {"key4": "key4", }}
-        
+
 Modules
 
         > "imported module": re
         > "imported module(class)": re.Pattern
         > "imported module(function)": re.sub
-        
+
 Classes and Class Instances
 (NOTHING)
 
@@ -151,7 +151,7 @@ Special Attributes
 file descriptor
 
         > "file descriptor": open(TMPFILENAME, encoding="utf-8")
-        
+
 Python exceptions
 
         > "pythonexception typeerror": TypeError
@@ -215,8 +215,8 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10
 
 	(c)
 	* calendar
-        > "calendar(Calendar(3))": calendar.Calendar(3)
-   
+        > "calendar(calendar(3))": calendar.Calendar(3)
+
 	* cgi
 	* cgitb
 	* chunk
@@ -258,9 +258,9 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10
 	* decimal
         > "decimal(0.5)": decimal.Decimal(0.5)
         > "decimal(1/7)": decimal.Decimal(1) / decimal.Decimal(7)
-        > "decimal(NaN)": decimal.Decimal('Nan')
-        > "decimal(-Infinity)": decimal.Decimal("-Infinity")
-        > "decimal(+Infinity)": decimal.Decimal("+Infinity")
+        > "decimal(nan)": decimal.Decimal('NaN')
+        > "decimal(-infinity)": decimal.Decimal("-Infinity")
+        > "decimal(+infinity)": decimal.Decimal("+Infinity")
 	* difflib
 	* dis
  	* distutils
