@@ -94,6 +94,13 @@ entre [data objects] et init_data().
 de même pour les serializers, en ne dépassant pas 60 caractères (pour les entrer facilement
 dans ROADMAP.md / git message)
 
+[DONE] task-105
+
+Improved msgerror(): error id is now displayed in red.
+
+    * improved msgerror(): error id is now displayed in red. (task-105)
+    
+    * pylint: 10/10
 
 [DONE] task-104
 
