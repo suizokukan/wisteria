@@ -232,7 +232,7 @@ def partial_report__data():
     if wisteria.globs.UNAVAILABLE_DATA:
         msgreport()
         msgreport(
-            f"* {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
+            f"! {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
             f"{aspect_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
         msgreport(
             "; ".join(f"{aspect_data(dataobject_name)}({shortenedstr(repr(dataobject))})"

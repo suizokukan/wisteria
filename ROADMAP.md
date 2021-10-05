@@ -90,6 +90,14 @@ entre [data objects] et init_data().
 * 1 Unavailable Data Object:  > ! 1 Unavailable Data Object:
 
 
+[DONE] task-111
+
+Improved message display in partial_report__data(): we use '!'
+as prefix for unavailable serializers and data.
+
+    * improved message display in partial_report__data(): we use '!'
+      as prefix for unavailable serializers and data. (task-111)
+
 [DONE] task-110
 
 Bugfix: fixed data object "bool/false" definition in data.py .
