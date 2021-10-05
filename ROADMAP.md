@@ -87,6 +87,16 @@ qu'est-ce qui est disponible ?
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
 
+[DONE] task-113
+
+Check that DATA and UNAVAILABLE_DATA keys are written in lower case.
+
+    * check that DATA keys are written in lower case (task-113)
+    * check that UNAVAILABLE_DATA keys are written in lower case (task-113)
+    * new errors: ERRORID035, ERRORID036 (task-113)
+
+    * pylint: 10/10
+
 [DONE] task-112
 
 Improved messages in checkup() by adding colors and improving text.

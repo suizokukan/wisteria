@@ -489,6 +489,34 @@ def checkup():
     msgreport()
     partial_report__data()
 
+    # let's add some checks about DATA:
+    errors = []
+    for object_data_name in wisteria.globs.DATA:
+        if object_data_name.lower() != object_data_name:
+            errors.append(f"(ERRORID035) '{object_data_name}' is the name of "
+                          "a DATA object but "
+                          "contains upper case letters, which is forbidden")
+    if errors:
+        msgreport()
+        msgerror("(ERRORID035) At least one error appeared "
+                 "when checking the letter case in DATA keys:")
+        for error in errors:
+            msgerror(error)
+
+    # let's add some checks about UNAVAILABLE_DATA:
+    errors = []
+    for object_data_name in wisteria.globs.UNAVAILABLE_DATA:
+        if object_data_name.lower() != object_data_name:
+            errors.append(f"(ERRORID036) '{object_data_name}' is the name of "
+                          "an UNAVAILABLE_ object but "
+                          "contains upper case letters, which is forbidden")
+    if errors:
+        msgreport()
+        msgerror("(ERRORID036) At least one error appeared "
+                 "when checking the letter case in UNAVAILABLE_DATA keys:")
+        for error in errors:
+            msgerror(error)
+
 
 if wisteria.globs.ARGS.checkup:
     checkup()
