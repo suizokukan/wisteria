@@ -80,16 +80,15 @@ qu'est-ce qui est disponible ?
 - Python-dateutil
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
-- bool/false(True); > bool/false(False) dans checkup()
-
-* à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
-entre [data objects] et init_data().
 
 * data objects > data types
 
-* running on Python X.Y
-
 * les keys de DATA ne doivent pas contenir de majuscule
+* à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
+entre [data objects] et init_data().
+
+* - bool/false(True); > bool/false(False) dans checkup()
+
 
 [DONE] task-109
 
