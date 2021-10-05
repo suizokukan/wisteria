@@ -87,6 +87,14 @@ qu'est-ce qui est disponible ?
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
 
+[DONE] task-112
+
+Improved messages in checkup() by adding colors and improving text.
+
+    * improved messages in checkup() by adding colors and improving text
+      (task-112)
+      
+    * pylint: 10/10
 
 [DONE] task-111
 

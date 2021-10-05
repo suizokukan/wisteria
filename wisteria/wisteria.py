@@ -468,13 +468,14 @@ def checkup():
     # ---- configuration file -------------------------------------------------
     msgreport("* Config file:")
     if not os.path.exists(ARGS.cfgfile):
-        diagnostic = "  Such a file doesn't exist. " \
-            "You may download it using the --downloadconfigfile option."
+        diagnostic = "  [red]Such a file doesn't exist[/red] but " \
+            "you may run this program without it. " \
+            "You may download this file using the --downloadconfigfile option."
     else:
         if read_cfgfile(ARGS.cfgfile) is None:
-            diagnostic = "  Such a file exists but can't be read correctly."
+            diagnostic = "  Such a file exists [bold red]but can't be read correctly[/bold red]."
         else:
-            diagnostic = "  Such a file exists and can be read without errors."
+            diagnostic = "  Such a file exists [bold]and can be read without errors[/bold]."
 
     msgreport(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
               f"({normpath(ARGS.cfgfile)}), because of the value of --cfgfile. ")
