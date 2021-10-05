@@ -85,7 +85,11 @@ qu'est-ce qui est disponible ?
 * à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
 entre [data objects] et init_data().
 
-* README.md & https://docs.python.org/3/py-modindex.html
+* data objects > data types
+
+* running on Python X.Y
+
+* les keys de DATA ne doivent pas contenir de majuscule
 
 [DONE] task-107
 
