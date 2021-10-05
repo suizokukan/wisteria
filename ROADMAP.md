@@ -87,10 +87,6 @@ entre [data objects] et init_data().
 
 * README.md & https://docs.python.org/3/py-modindex.html
 
-* --checkup avec --verbosity=3 devrait donner tous les datas (qu'ils soient ou non disponibles),
-de même pour les serializers, en ne dépassant pas 60 caractères (pour les entrer facilement
-dans ROADMAP.md / git message)
-
 [DONE] task-106
 
 Modified checkup() so that, if verbosity==3 (debug), all serializers and all
