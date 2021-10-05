@@ -254,7 +254,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (13.5) main(): report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
-
+    msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
 
 # =============================================================================
 # (05) ARGS.report interpretation

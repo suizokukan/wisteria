@@ -91,6 +91,16 @@ entre [data objects] et init_data().
 
 * les keys de DATA ne doivent pas contenir de majuscule
 
+[DONE] task-109
+
+Improved debug message displayed by wisteria.py at the beginning of
+the program by adding Python version.
+
+    * improved debug message displayed by wisteria.py at the beginning of
+      the program by adding Python version (task-109)
+
+    * pylint: 10/10
+
 [DONE] task-108
 
 Improved checkup() message by adding Python version.
