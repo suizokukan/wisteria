@@ -462,6 +462,7 @@ def checkup():
 
     # ---- Project name & version, time stamp ---------------------------------
     msgreport(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+    msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
     msgreport()
 
     # ---- configuration file -------------------------------------------------

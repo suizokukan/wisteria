@@ -91,6 +91,14 @@ entre [data objects] et init_data().
 
 * les keys de DATA ne doivent pas contenir de majuscule
 
+[DONE] task-108
+
+Improved checkup() message by adding Python version.
+
+    * improved checkup() message by adding Python version (task-108)
+
+    * pylint: 10/10
+
 [DONE] task-107
 
 Documentation in README.md.
