@@ -83,9 +83,9 @@ qu'est-ce qui est disponible ?
 
 * data objects > data types
 
-* à chaque fois que wisteria.ini, vérifier qu'il y a stricte correspondance
-entre [data objects] et init_data().
-
+* error35/36
+* -errlist jusqu'à 40.
+* conversely > On the contrary
 
 [DONE] task-115
 
