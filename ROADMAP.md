@@ -2,6 +2,7 @@ Wisteria's roadmap & todos
 ==========================
 
 * data types à compléter
+
         RegularClass
         IntheritedList
         IntheritedDict
@@ -13,39 +14,6 @@ Wisteria's roadmap & todos
         ("R05:class::reg. class::method", RegularClass.method),
         ("R06:class::reg. class::class method", RegularClass.class_method),
         ("R07:class::reg. class::static method", RegularClass.static_method),
-
-        ("Y01:collections.deque(empty)", collections.deque()),
-        ("Y02:collections.deque", collections.deque((1, 2))),
-        ("Y03:collections.defaultdict(empty)", collections.defaultdict()),
-        ("Y04:collections.defaultdict", collections.defaultdict(None, {1: 2})),
-        ("Y05:collections.OrderedDict(empty)", collections.OrderedDict()),
-        ("Y06:collections.OrderedDict", collections.OrderedDict({1: 2})),
-        ("Y07:collections.Counter(empty)", collections.Counter()),
-        ("Y08:collections.Counter", collections.Counter((1, 2))),
-        ("Y09:collections.ChainMap", collections.ChainMap()),
-        ("Y10:collections.ChainMap", collections.ChainMap({1: 2}, {2: 3})),
-        ("Y11:collections.abc.Awaitable", collections.abc.Awaitable),
-        ("Y12:collections.abc.Coroutine", collections.abc.Coroutine),
-        ("Y13:collections.abc.AsyncIterable", collections.abc.AsyncIterable),
-        ("Y14:collections.abc.AsyncIterator", collections.abc.AsyncIterator),
-        ("Y15:collections.abc.AsyncGenerator", collections.abc.AsyncGenerator),
-        ("Y16:collections.abc.Reversible", collections.abc.Reversible),
-        ("Y17:collections.abc.Container", collections.abc.Container),
-        ("Y18:collections.abc.Collection", collections.abc.Collection),
-        ("Y19:collections.abc.Callable", collections.abc.Callable),
-        ("Y20:collections.abc.Set", collections.abc.Set),
-        ("Y21:collections.abc.MutableSet", collections.abc.MutableSet),
-        ("Y22:collections.abc.Sequence", collections.abc.Sequence),
-        ("Y23:collections.abc.MutableSequence", collections.abc.MutableSequence),
-        ("Y24:collections.abc.ByteString", collections.abc.ByteString),
-        ("Y25:collections.abc.MappingView", collections.abc.MappingView),
-        ("Y26:collections.abc.KeysView", collections.abc.KeysView),
-        ("Y27:collections.abc.ItemsView", collections.abc.ItemsView),
-        ("Y28:collections.abc.ValuesView", collections.abc.ValuesView),
-        ("Y29:contextlib.AbstractContextManager", contextlib.AbstractContextManager),
-        ("Y30:contextlib.AbstractAsyncContextManager", contextlib.AbstractAsyncContextManager),
-
-        ("Z01:decimal.localcontext", decimal.localcontext()),
 
 0.1.4:
 * README.md acceptable
@@ -74,12 +42,12 @@ cwc
 
 [CURRENT] v. 0.0.8
 * (git message for 0.0.8) doubloon > duplicate
+* (git message for 0.0.8) aérer la présentation du task-120
 
 * data types à compléter
-qu'est-ce qui est disponible ?
 - Python-dateutil
 - rich console/table/
-- float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
+- csv, random, 
 
 [DONE] task-120
 
