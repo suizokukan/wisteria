@@ -1,6 +1,9 @@
 Wisteria's roadmap & todos
 ==========================
 
+TODOs: - complete serializers
+       - complete data objects (see README.md + look at third-party packagages)
+       
 0.1.4:
 * README.md acceptable
 
@@ -18,10 +21,12 @@ tests
 0.1.0: 
 cwc
 
-0.0.9:
-* serializers à compléter
-
 ===============================================================================
+
+[CURRENT 0.0.9]
+
+Complete serializers.
+
 
 [DONE] v. 0.0.8
 
