@@ -242,18 +242,20 @@ def partial_report__data():
         console = Console(width=70)
 
         # ---- data objects ---------------------------------------------------
-        msgdebug("All data objects (unvailable+available/width=70)")
-
         all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
                                  tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
+
+        msgdebug(
+            f"All data objects ({len(all_dataobjects)} data obj., unvailable+available/width=70):")
 
         console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
 
         # ---- serializers ----------------------------------------------------
-        msgdebug("All serializers (unvailable+available/width=70)")
-
         all_serializers = sorted(tuple(wisteria.globs.SERIALIZERS.keys()) +
                                  tuple(wisteria.globs.UNAVAILABLE_SERIALIZERS.keys()))
+
+        msgdebug(
+            f"All serializers ({len(all_serializers)} seria., unvailable+available/width=70):")
 
         console.print('; '.join(serializer_name for serializer_name in all_serializers))
 

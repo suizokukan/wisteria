@@ -27,6 +27,15 @@ cwc
 
 (TODO: task-122) show in checkup() how many data objects are defined
 
+[DONE] task-122
+
+Improved message in checkup().
+
+    * improved message in checkup(): total of serialiers/data objects
+      is now displayed for debug message. (task-122)
+
+    * Pylint 10/10
+
 [DONE task-121]
 
 Added numerous data objects.
