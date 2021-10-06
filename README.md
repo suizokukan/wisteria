@@ -113,7 +113,6 @@ Classes and Class Instances
 (NOTHING)
 
 Functions
-(NOTHING)
 
         > "function": anyfunc
         > "function(python)": print
@@ -125,7 +124,9 @@ Code Objects
 (NOTHING)
 
 Type Objects
-(NOTHING)
+
+        > "type(str)": str
+        > "type(type(str))": type(str)
 
 The Ellipsis Object
 (NOTHING)
@@ -180,7 +181,7 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10
         > "array(h)": array.array('h', (-1, 2)),
         > "array(h/empty)": array.array('h'),
         > "array(h_unsigned)": array.array('H', (1, 2)),
-        > "array(u_unsigned/empty)": array.array('H'),
+        > "array(h_unsigned/empty)": array.array('H'),
         > "array(i)": array.array('i', (-1, 2)),
         > "array(i/empty)": array.array('i'),
         > "array(i_unsigned)": array.array('I', (1, 2)),
@@ -226,6 +227,16 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10
 	* codecs
 	* codeop
  	* collections
+        > "collections.chainmap(empty)": collections.ChainMap()
+        > "collections.chainmap": collections.ChainMap({1: 2}, {2: 3})
+        > "collections.counter(empty)": collections.Counter()
+        > "collections.counter": collections.Counter((1, 2))
+        > "collections.defaultdict(empty)": collections.defaultdict()
+        > "collections.defaultdict": collections.defaultdict(None, {1: 2})
+        > "collections.deque(empty)": collections.deque()
+        > "collections.deque": collections.deque((1, 2))
+        > "collections.ordereddict(empty)": collections.OrderedDict()
+        > "collections.ordereddict": collections.OrderedDict({1: 2})
       * collections.abc
 	* colorsys
 	* compileall

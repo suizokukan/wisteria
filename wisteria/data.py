@@ -31,6 +31,7 @@
 """
 import array
 import calendar
+import collections
 import datetime
 import decimal
 import hashlib
@@ -98,6 +99,17 @@ def init_data():
         "bytes(empty)": b"",
 
         "calendar(calendar(3))": calendar.Calendar(3),
+
+        "collections.chainmap(empty)": collections.ChainMap(),
+        "collections.chainmap": collections.ChainMap({1: 2}, {2: 3}),
+        "collections.counter(empty)": collections.Counter(),
+        "collections.counter": collections.Counter((1, 2)),
+        "collections.defaultdict(empty)": collections.defaultdict(),
+        "collections.defaultdict": collections.defaultdict(None, {1: 2}),
+        "collections.deque(empty)": collections.deque(),
+        "collections.deque": collections.deque((1, 2)),
+        "collections.ordereddict(empty)": collections.OrderedDict(),
+        "collections.ordereddict": collections.OrderedDict({1: 2}),
 
         "complex": 1+2j,
 
@@ -183,6 +195,9 @@ def init_data():
         "tuple": ("1", "2",),
         "tuple(empty)": (),
         "tuple(+subtuples)": ("1", "2", ("3", ("4",))),
+
+        "type(str)": str,
+        "type(type(str))": type(str),
     }
 
     try:
