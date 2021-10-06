@@ -1,20 +1,6 @@
 Wisteria's roadmap & todos
 ==========================
 
-* data types à compléter
-
-        RegularClass
-        IntheritedList
-        IntheritedDict
-        ("R01:class::meta class", MetaClass),
-
-        ("R02:class::reg. class::RegularClass()", RegularClass()),
-        ("R03:class::reg. class::async method", RegularClass.async_method),
-        ("R04:class::reg. class::generator", RegularClass.generator),
-        ("R05:class::reg. class::method", RegularClass.method),
-        ("R06:class::reg. class::class method", RegularClass.class_method),
-        ("R07:class::reg. class::static method", RegularClass.static_method),
-
 0.1.4:
 * README.md acceptable
 
@@ -35,19 +21,11 @@ cwc
 0.0.9:
 * serializers à compléter
 
-
-
-
 ===============================================================================
 
 [CURRENT] v. 0.0.8
-* (git message for 0.0.8) doubloon > duplicate
-* (git message for 0.0.8) aérer la présentation du task-120
 
-* data types à compléter
-- Python-dateutil
-- rich console/table/
-- csv, random, 
+(TODO: task-122) show in checkup() how many data objects are defined
 
 [DONE task-121]
 
@@ -95,6 +73,7 @@ tuple(+subtuples); tuple(empty); type(str); type(type(str))
 [DONE] task-120
 
 Added numerous data objects.
+
 104 data objects are now defined, namely:
 array(b); array(b/empty); array(b_unsigned); array(b_unsigned/empty); 
 array(d); array(d/empty); array(f); array(f/empty); array(h); 
@@ -314,7 +293,7 @@ Documentation in reportaspect.py.
 
 [DONE] task-99
 
-Replaced some doubloons in code by two fonctions, partial_report__data()
+Replaced some duplicates in code by two fonctions, partial_report__data()
 and partial_report__serializers().
 
     * replaced some doubloons in code by two fonctions, partial_report__data()
