@@ -84,7 +84,6 @@ qu'est-ce qui est disponible ?
 * data objects > data types
 
 * error35/36
-* -errlist jusqu'à 40.
 
 [DONE] task-117
 
