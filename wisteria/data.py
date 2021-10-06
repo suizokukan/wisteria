@@ -70,7 +70,7 @@ def init_data():
         "array(h)": array.array('h', (-1, 2)),
         "array(h/empty)": array.array('h'),
         "array(h_unsigned)": array.array('H', (1, 2)),
-        "array(u_unsigned/empty)": array.array('H'),
+        "array(h_unsigned/empty)": array.array('H'),
         "array(i)": array.array('i', (-1, 2)),
         "array(i/empty)": array.array('i'),
         "array(i_unsigned)": array.array('I', (1, 2)),

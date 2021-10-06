@@ -81,6 +81,15 @@ qu'est-ce qui est disponible ?
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 
+[DONE] task-119
+
+Fixed inconsistencies among data object names in data.py and in config file.
+
+    * fixed inconsistencies among data object names in data.py and in config 
+      file (task-119)
+
+    * Pylint 10/10
+
 [DONE] task-118
 
 Removed useless duplicate ERRORID string in checkup() messages.
