@@ -85,7 +85,6 @@ qu'est-ce qui est disponible ?
 
 * error35/36
 * -errlist jusqu'à 40.
-* conversely > On the contrary
 
 [DONE] task-116
 
