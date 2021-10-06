@@ -498,7 +498,7 @@ def checkup():
                           "contains upper case letters, which is forbidden")
     if errors:
         msgreport()
-        msgerror("(ERRORID035) At least one error appeared "
+        msgerror("At least one error appeared "
                  "when checking the letter case in DATA keys:")
         for error in errors:
             msgerror(error)
@@ -512,7 +512,7 @@ def checkup():
                           "contains upper case letters, which is forbidden")
     if errors:
         msgreport()
-        msgerror("(ERRORID036) At least one error appeared "
+        msgerror("At least one error appeared "
                  "when checking the letter case in UNAVAILABLE_DATA keys:")
         for error in errors:
             msgerror(error)

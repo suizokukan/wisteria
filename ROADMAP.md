@@ -85,6 +85,15 @@ qu'est-ce qui est disponible ?
 
 * error35/36
 
+[DONE] task-118
+
+Removed useless duplicate ERRORID string in checkup() messages.
+
+    * removed useless duplicate ERRORID string in checkup() messages
+      (task-118)
+      
+    * Pylint 10/10
+
 [DONE] task-117
 
 err_codes.sh: max_index set to 45.
