@@ -489,7 +489,7 @@ def checkup():
     msgreport()
     partial_report__data()
 
-    # let's add some checks about DATA:
+    # checks: are DATA keys written in lower case ?
     errors = []
     for object_data_name in wisteria.globs.DATA:
         if object_data_name.lower() != object_data_name:
@@ -503,7 +503,7 @@ def checkup():
         for error in errors:
             msgerror(error)
 
-    # let's add some checks about UNAVAILABLE_DATA:
+    # checks: are UNAVAILABLE_DATA keys written in lower case ?
     errors = []
     for object_data_name in wisteria.globs.UNAVAILABLE_DATA:
         if object_data_name.lower() != object_data_name:

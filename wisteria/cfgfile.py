@@ -112,7 +112,7 @@ def read_cfgfile(filename):
            }
 
     # ------------------------------------------------------------------
-    # (1/3) let's read <filename> using configparser.ConfigParser.read()
+    # (1/4) let's read <filename> using configparser.ConfigParser.read()
     # ------------------------------------------------------------------
     try:
         config = configparser.ConfigParser()
@@ -122,23 +122,26 @@ def read_cfgfile(filename):
         return None
 
     # -------------------------------
-    # (2/3) well formed config file ?
+    # (2/4) well formed config file ?
     # -------------------------------
+    success = True
     if "data selection" not in config:
         msgerror(f"(ERRORID003) While reading config file '{filename}': "
                  "missing '\\[data selection]' section.")
-        return None
+        success = False
     if "data sets" not in config:
         msgerror(f"(ERRORID004) While reading config file '{filename}': "
                  "missing '\\[data sets]' section.")
-        return None
+        success = False
     if "data objects" not in config:
         msgerror(f"(ERRORID005) While reading config file '{filename}': "
                  "missing '\\[data objects]' section.")
-        return None
+        success = False
     if "data selection" not in config["data selection"]:
         msgerror(f"(ERRORID006) While reading config file '{filename}': "
                  "missing '\\[data selection]data selection=' entry.")
+        success = False
+    if not success:
         return None
 
     if config["data selection"]["data selection"] in ("all", "only if yes"):
@@ -166,7 +169,7 @@ def read_cfgfile(filename):
                 return None
 
     # --------------------------------------------------------
-    # (3/3) if everything is in order, let's initialize <res>.
+    # (3/4) if everything is in order, let's initialize <res>.
     # --------------------------------------------------------
     res['data selection']['data selection'] = config['data selection']['data selection']
     for dataobject_name in config['data objects']:
@@ -174,6 +177,31 @@ def read_cfgfile(filename):
     for data_set in config['data sets']:
         res['data sets'][data_set] = \
             (data for data in config['data sets'][data_set].split(";") if data.strip() != "")
+
+    # --------------------------------------------------------------
+    # (4/4) check: are all DATA/UNAVAILABLE_DATA keys defined in the
+    #              configuration file, and vice-versa ?
+    # --------------------------------------------------------------
+    errors = []
+    for dataobject_name in wisteria.globs.DATA:
+        if dataobject_name not in config['data objects']:
+            errors.append(f"(ERRORID037) '{dataobject_name}' is defined as a DATA key "
+                          "but is not defined in the configuration file.")
+    for dataobject_name in wisteria.globs.UNAVAILABLE_DATA:
+        if dataobject_name not in config['data objects']:
+            errors.append(f"(ERRORID038) '{dataobject_name}' is defined as an UNAVAILABLE_DATA key "
+                          "but is not defined in the configuration file.")
+    for dataobject_name in config['data objects']:
+        if dataobject_name not in tuple(wisteria.globs.DATA.keys()) + \
+           tuple(wisteria.globs.UNAVAILABLE_DATA.keys()):
+            errors.append(f"(ERRORID039) '{dataobject_name}' is defined as a data key "
+                          "in the configuration file but is not defined as a DATA key "
+                          "or as an UNAVAILABLE_DATA key.")
+
+    if errors:
+        for error in errors:
+            msgerror(error)
+        return None
 
     # ----------------------
     # details/debug messages

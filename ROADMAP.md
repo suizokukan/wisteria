@@ -87,6 +87,18 @@ qu'est-ce qui est disponible ?
 entre [data objects] et init_data().
 
 
+[DONE] task-115
+
+Added checks to read_cfgfile(): are all DATA/UNAVAILABLE_DATA keys defined
+in the configuration file, and vice-versa ?
+
+    * added checks to read_cfgfile(): are all DATA/UNAVAILABLE_DATA keys defined
+      in the configuration file, and vice-versa ? (task-115) 
+    * improved comments in checkup() (task-115)
+    * improved comments in read_cfgfile() (task-115)
+
+    * Pylint 10/10
+    
 [DONE] task-114
 
 Fixed data objects names using upper letter case in DATA.
