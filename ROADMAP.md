@@ -86,6 +86,14 @@ qu'est-ce qui est disponible ?
 * error35/36
 * -errlist jusqu'à 40.
 
+[DONE] task-117
+
+err_codes.sh: max_index set to 45.
+
+    * err_codes.sh: max_index set to 45 (task-117)
+
+    * Pylint 10/10
+
 [DONE] task-116
 
 Improved message in report_section_d2c().
