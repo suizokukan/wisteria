@@ -25,7 +25,8 @@ cwc
 
 [CURRENT] v. 0.0.8
 
-(TODO: task-122) show in checkup() how many data objects are defined
+(TODO: task-123) check that there's no key defined DATA that is also defined in
+                 UNAVAILABLE_DATA, and vice-versa.
 
 [DONE] task-122
 
