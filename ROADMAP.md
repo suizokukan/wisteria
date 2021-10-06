@@ -49,6 +49,49 @@ cwc
 - rich console/table/
 - csv, random, 
 
+[DONE task-121]
+
+Added numerous data objects.
+
+113 data objects are now defined:
+array(b); array(b/empty); array(b_unsigned); array(b_unsigned/empty); 
+array(d); array(d/empty); array(f); array(f/empty); array(h); 
+array(h/empty); array(h_unsigned); array(h_unsigned/empty); array(i); 
+array(i/empty); array(i_unsigned); array(i_unsigned/empty); array(l); 
+array(l/empty); array(l_unsigned); array(l_unsigned/empty); array(q); 
+array(q/empty); array(q_unsigned); array(q_unsigned/empty); array(u); 
+array(u/empty); bool/false; bool/true; bytearray; bytearray(empty); 
+bytes; bytes(empty); calendar(calendar(3)); collections.chainmap; 
+collections.chainmap(empty); collections.counter; 
+collections.counter(empty); collections.defaultdict; 
+collections.defaultdict(empty); collections.deque; 
+collections.deque(empty); collections.ordereddict; 
+collections.ordereddict(empty); complex; datetime(datetime.datetime); 
+datetime(datetime.timedelta); dateutil(parser.parse); 
+decimal(+infinity); decimal(-infinity); decimal(0.5); decimal(1/7); 
+decimal(nan); dict(keys/bool); dict(keys/float); dict(keys/int); 
+dict(keys/str); dict(keys/str+subdicts); file descriptor; float; 
+float(nan); frozenset; frozenset(empty); function; function(python); 
+hashlib(hashlib.sha1); hashlib(hashlib.sha224); 
+hashlib(hashlib.sha256); hashlib(hashlib.sha384); 
+hashlib(hashlib.sha512); imported module; imported module(class); 
+imported module(function); int; io.string; io.string(empty); list; 
+list(+sublists); list(empty); memoryview; metaclass; none; 
+notimplemented; numbers(complex); numbers(integral); numbers(numbers);
+numbers(real); pythonexception typeerror; range; range(empty); 
+re.match; re.match(+flags); re.pattern(bytes); re.pattern(str); 
+regularclass; regularclass(async_method); regularclass(class_method); 
+regularclass(generator); regularclass(method); 
+regularclass(static_method); regularclassinheriteddict; 
+regularclassinheritedlist; set; set(empty); str; str(empty); 
+str(long); str(non ascii characters); time(time.time); tuple; 
+tuple(+subtuples); tuple(empty); type(str); type(type(str))
+
+    * added numerous data objects (task-121)
+    * new file: classesexamples/simpleclasses.py (task-121)
+
+    * Pylint 10/10
+
 [DONE] task-120
 
 Added numerous data objects.

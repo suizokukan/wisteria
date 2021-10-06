@@ -42,6 +42,9 @@ import time
 
 import wisteria.globs
 from wisteria.globs import TMPFILENAME
+from wisteria.classesexamples.simpleclasses import MetaClass, RegularClass
+from wisteria.classesexamples.simpleclasses import RegularClassInheritedDict
+from wisteria.classesexamples.simpleclasses import RegularClassInheritedList
 
 
 def anyfunc():
@@ -160,6 +163,8 @@ def init_data():
         "list(empty)": [],
         "list(+sublists)": ["1", "2", ["3", ["4", ]]],
 
+        "metaclass": MetaClass(),
+
         "memoryview": memoryview(b"123"),
 
         "none": None,
@@ -175,6 +180,15 @@ def init_data():
 
         "range": range(1000),
         "range(empty)": range(0),
+
+        "regularclass": RegularClass(),
+        "regularclass(async_method)": RegularClass.async_method,
+        "regularclass(class_method)": RegularClass.class_method,
+        "regularclass(generator)": RegularClass.generator,
+        "regularclass(method)": RegularClass.method,
+        "regularclass(static_method)": RegularClass.static_method,
+        "regularclassinheriteddict": RegularClassInheritedDict(),
+        "regularclassinheritedlist": RegularClassInheritedList(),
 
         "re.match": re.match(".*", "abc"),
         "re.match(+flags)": re.match(".*", "abc", re.M),

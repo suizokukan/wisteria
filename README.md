@@ -110,7 +110,16 @@ Modules
         > "imported module(function)": re.sub
 
 Classes and Class Instances
-(NOTHING)
+
+        > "metaclass": MetaClass()
+        > "regularclass": RegularClass()
+        > "regularclass(async_method)": RegularClass.async_method
+        > "regularclass(class_method)": RegularClass.class_method
+        > "regularclass(generator)": RegularClass.generator
+        > "regularclass(method)": RegularClass.method
+        > "regularclass(static_method)": RegularClass.static_method
+        > "regularclassinheriteddict": RegularClassInheritedDict()
+        > "regularclassinheritedlist": RegularClassInheritedList()
 
 Functions
 
