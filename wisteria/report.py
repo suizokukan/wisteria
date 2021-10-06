@@ -1870,7 +1870,7 @@ def report_section_d2c(results,
                         f"are ranked #1 among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
 
-        text.append("\nConversely, ")
+        text.append("\nOn the contrary, ")
         text.append(
             f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][-1][1])} "
             "is the slowest to encode/decode, ")

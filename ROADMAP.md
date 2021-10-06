@@ -87,6 +87,14 @@ qu'est-ce qui est disponible ?
 * -errlist jusqu'à 40.
 * conversely > On the contrary
 
+[DONE] task-116
+
+Improved message in report_section_d2c().
+
+    * improved message in report_section_d2c() (task-116)
+
+    * Pylint 10/10
+
 [DONE] task-115
 
 Added checks to read_cfgfile(): are all DATA/UNAVAILABLE_DATA keys defined
