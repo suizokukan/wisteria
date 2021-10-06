@@ -81,10 +81,6 @@ qu'est-ce qui est disponible ?
 - rich console/table/
 - float('nan') & math.isnan(x), re, time, collections, hashlib, csv, random, 
 
-* data objects > data types
-
-* error35/36
-
 [DONE] task-118
 
 Removed useless duplicate ERRORID string in checkup() messages.
