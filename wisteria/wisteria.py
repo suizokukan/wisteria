@@ -517,6 +517,24 @@ def checkup():
         for error in errors:
             msgerror(error)
 
+    # checks: is a key defined in DATA also defined in UNAVAILABLE_DATA ?
+    errors = []
+    for object_data_name in wisteria.globs.UNAVAILABLE_DATA:
+        if object_data_name in wisteria.globs.DATA:
+            errors.append(f"(ERRORID040) '{object_data_name}' is defined "
+                          "as a DATA key but also as an UNAVAILABLE_DATA key.")
+    for object_data_name in wisteria.globs.DATA:
+        if object_data_name in wisteria.globs.UNAVAILABLE_DATA:
+            errors.append(f"(ERRORID041) '{object_data_name}' is defined "
+                          "as a DATA key but also as an UNAVAILABLE_DATA key.")
+
+    if errors:
+        msgreport()
+        msgerror("At least one error appeared "
+                 "when checking if a key is defined in DATA and also in UNAVAILABLE_DATA:")
+        for error in errors:
+            msgerror(error)
+
 
 if wisteria.globs.ARGS.checkup:
     checkup()

@@ -27,6 +27,16 @@ cwc
 
 (TODO: task-123) check that there's no key defined DATA that is also defined in
                  UNAVAILABLE_DATA, and vice-versa.
+                 
+[DONE] task-123
+
+Check that there's no key defined DATA that is also defined in
+UNAVAILABLE_DATA, and vice-versa.
+  
+    * check that there's no key defined DATA that is also defined in
+      UNAVAILABLE_DATA, and vice-versa (task-123)
+
+    * Pylint 10/10
 
 [DONE] task-122
 
