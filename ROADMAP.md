@@ -23,11 +23,184 @@ cwc
 
 ===============================================================================
 
-[CURRENT] v. 0.0.8
+[DONE] v. 0.0.8
 
-(TODO: task-123) check that there's no key defined DATA that is also defined in
-                 UNAVAILABLE_DATA, and vice-versa.
-                 
+Improved data object support (113 data objects are now defined, see infra).
+Unavailable data are now stored in globs.py:UNAVAILABLE_DATA variable.
+Improved messages and documentation.
+
+113 data objects are now defined:
+```
+array(b); array(b/empty); array(b_unsigned); array(b_unsigned/empty); 
+array(d); array(d/empty); array(f); array(f/empty); array(h); 
+array(h/empty); array(h_unsigned); array(h_unsigned/empty); array(i); 
+array(i/empty); array(i_unsigned); array(i_unsigned/empty); array(l); 
+array(l/empty); array(l_unsigned); array(l_unsigned/empty); array(q); 
+array(q/empty); array(q_unsigned); array(q_unsigned/empty); array(u); 
+array(u/empty); bool/false; bool/true; bytearray; bytearray(empty); 
+bytes; bytes(empty); calendar(calendar(3)); collections.chainmap; 
+collections.chainmap(empty); collections.counter; 
+collections.counter(empty); collections.defaultdict; 
+collections.defaultdict(empty); collections.deque; 
+collections.deque(empty); collections.ordereddict; 
+collections.ordereddict(empty); complex; datetime(datetime.datetime); 
+datetime(datetime.timedelta); dateutil(parser.parse); 
+decimal(+infinity); decimal(-infinity); decimal(0.5); decimal(1/7); 
+decimal(nan); dict(keys/bool); dict(keys/float); dict(keys/int); 
+dict(keys/str); dict(keys/str+subdicts); file descriptor; float; 
+float(nan); frozenset; frozenset(empty); function; function(python); 
+hashlib(hashlib.sha1); hashlib(hashlib.sha224); 
+hashlib(hashlib.sha256); hashlib(hashlib.sha384); 
+hashlib(hashlib.sha512); imported module; imported module(class); 
+imported module(function); int; io.string; io.string(empty); list; 
+list(+sublists); list(empty); memoryview; metaclass; none; 
+notimplemented; numbers(complex); numbers(integral); numbers(numbers);
+numbers(real); pythonexception typeerror; range; range(empty); 
+re.match; re.match(+flags); re.pattern(bytes); re.pattern(str); 
+regularclass; regularclass(async_method); regularclass(class_method); 
+regularclass(generator); regularclass(method); 
+regularclass(static_method); regularclassinheriteddict; 
+regularclassinheritedlist; set; set(empty); str; str(empty); 
+str(long); str(non ascii characters); time(time.time); tuple; 
+tuple(+subtuples); tuple(empty); type(str); type(type(str))
+```
+
+
+data
+
+    * added new data. (task-104)
+    * improved data objects order in DATA (task-107)
+    * bugfix: fixed data object "bool/false" definition in data.py (task-110)
+    * check that DATA keys are written in lower case (task-113)
+    * check that UNAVAILABLE_DATA keys are written in lower case (task-113)
+    * new errors: ERRORID035, ERRORID036 (task-113)
+    * fixed data objects names using upper letter case in DATA (task-114)
+    * added checks to read_cfgfile(): are all DATA/UNAVAILABLE_DATA keys defined
+      in the configuration file, and vice-versa ? (task-115) 
+    * fixed inconsistencies among data object names in data.py and in config 
+      file (task-119)
+    * added numerous data objects. (task-120)
+    * added numerous data objects (task-121)
+    * check that there's no key defined DATA that is also defined in
+      UNAVAILABLE_DATA, and vice-versa (task-123)
+
+code structure
+
+    * rewrote how checkup() displays the serializers and the data objects (task-91)
+    * modified data.py:init_data() so that this functions stores in
+      UNAVAILABLE_DATA the data objects that can't be used (task-91)
+    * globs.py:UNAVAILABLE_DATA stores the data objects that can't be used (task-91)
+    * .available is not an attribute of SerializerData anymore (task-93)
+    * SerializerData has now a new attribute, .modulename (task-93)
+    * modified init_serializers() so that serializers that can't be used
+      are stored in globs.py:UNAVAILABLE_SERIALIZERS (task-93)
+    * new aspect_xxx() method: aspect_serializer0(); aspect_serializer()
+      is now based on it. (task-93)
+    * globs.py:UNAVAILABLE_SERIALIZERS now contains serializers that can't be 
+      used. (task-93)
+    * new aspect method: aspect_nounplural() (task-98)
+    * replaced some doubloons in code by two fonctions, partial_report__data()
+      and partial_report__serializers() (task-99)
+    * err_codes.sh: max_index set to 45 (task-117)
+    * new file: classesexamples/simpleclasses.py (task-121)
+
+messages, interface
+
+    * fixed a typo: 'extremly' > 'extremely' (task-92)
+    * If no argument has been given on the command line, we modify the output
+      to help the user (verbosity and report). (task-94)
+    * fixed a color problem in report_section_d2c() (task-95)
+    * improved the message displayed by checkup() : .internet string
+      displayed for unavailable serializer (task-96)
+    * improved error messages in read_cmpstring(); improved message in checkup()
+      (task-97)
+    * improved messages in read_cmpstring() and in checkup() (task-98)
+    * improved checkup() display by adding project's name & version and the current
+      timestamp. (task-102)
+    * slightly improved messages displayed by the program: '}.' > '} .'
+      (task-103)
+    * improved msgerror(): error id is now displayed in red. (task-105)
+    * modified checkup() so that, if verbosity==3, it displays all serializers and all
+      data objects (unavailable+available). (data-106)
+    * improved checkup() message by adding Python version (task-108)
+    * improved debug message displayed by wisteria.py at the beginning of
+      the program by adding Python version (task-109)
+    * improved message display in partial_report__data(): we use '!'
+      as prefix for unavailable serializers and data. (task-111)
+    * improved messages in checkup() by adding colors and improving text
+      (task-112)
+    * improved message in report_section_d2c() (task-116)
+    * removed useless duplicate ERRORID string in checkup() messages
+      (task-118)
+    * improved message in checkup(): total of serialiers/data objects
+      is now displayed for debug message. (task-122)
+    
+documentation & code readibility
+
+    * rewrote the sections' numbers of wisteria.py: no more '09bis' (task-91)
+    * documentation in reportaspect.py  (task-100)
+    * improved code readibility by adding a parameter to aspect_list(, func),
+      func() being called on each item inserted in the result string. (task-101)
+    * fix some glitches in ROADMAP.md
+    * improved checkup doc. (data-106)
+    * documentation in README.md (task-107)
+    * added a blank line in report.py (task-107)
+    * improved documentation (task-114)
+    * improved comments in checkup() (task-115)
+    * improved comments in read_cfgfile() (task-115)
+    
+Pylint
+
+    * Pylint 10/10
+    
+tasks
+
+    * task(s): task-91, task-92, task-93, task-94, task-95
+               task-96, task-97, task-98, task-99, task-100, 
+               task-101, task-102, task-103, task-104, task-105,
+               task-106, task-107, task-108, task-109, task-110
+
+version
+
+    * set version to 0.0.8
+
+```
+$ poetry show --tree
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+
+
 [DONE] task-123
 
 Check that there's no key defined DATA that is also defined in
@@ -47,7 +220,7 @@ Improved message in checkup().
 
     * Pylint 10/10
 
-[DONE task-121]
+[task-121]
 
 Added numerous data objects.
 
@@ -288,7 +461,7 @@ Slightly improved messages displayed by the program.
 Improved checkup() display by adding project's name & version and the current
 timestamp. (task-102)
 
-    * Improved checkup() display by adding project's name & version and the current
+    * improved checkup() display by adding project's name & version and the current
       timestamp. (task-102)
 
     * pylint: 10/10
@@ -298,7 +471,7 @@ timestamp. (task-102)
 Improved code readibility by adding a parameter to aspect_list(, func),
 func() being called on each item inserted in the result string.
 
-    * Improved code readibility by adding a parameter to aspect_list(, func),
+    * improved code readibility by adding a parameter to aspect_list(, func),
       func() being called on each item inserted in the result string. (task-101)
 
     * pylint: 10/10
@@ -949,7 +1122,7 @@ bugfixes:
     * Bugfix: progress_bar displayed by compute_results() is now erased
       after it has been displayed. The text written over with the 
       next call to rprint() is now perfectly readable. (task-65)
-    * Improved the content of main() and of bin/wisteria so that the
+    * improved the content of main() and of bin/wisteria so that the
       returned value of main() is sys.exit-ed() . (task-64)
     * Fixed a bug in read_cfgfile(): ARGS.checkup > 
       wisteria.globs.ARGS.checkup (task-63)
@@ -1053,7 +1226,7 @@ Bugfix: progress_bar displayed by compute_results() is now erased
 Improved the content of main() and of bin/wisteria so that the
 returned value of main() is sys.exit-ed() .
 
-     * Improved the content of main() and of bin/wisteria so that the
+     * improved the content of main() and of bin/wisteria so that the
        returned value of main() is sys.exit-ed() .
 
 [DONE] task-63
@@ -1621,7 +1794,7 @@ Call SERIALIZERS[].func() to do the tests.
 Fixed a minor bug: tmp file is now created only if there's no 
 --help/--version argument on the command line.
 
-    * Improved help message..
+    * improved help message..
     * Fixed a minor bug: tmp file is now created only if there's no 
       --help/--version argument on the command line.
 
