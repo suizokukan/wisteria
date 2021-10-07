@@ -31,8 +31,6 @@ Complete serializers.
 
 * anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne (?)
 
-* problème pour lire le tableau: colonnes pas assez larges
-
 * vérifier que le programme est utilisable depuis une console tty
 
 [DONE] task-132
