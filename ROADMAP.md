@@ -1,33 +1,57 @@
 Wisteria's roadmap & todos
 ==========================
-
-TODOs: - complete serializers
-       - complete data objects (see README.md + look at third-party packagages)
        
-0.1.4:
-* README.md acceptable
+===============================================================================
+What's next ?
 
-0.1.3:
-* i18n() + --i18n=en|fr|de|it|es|ru (ou plutôt FR_fr ???, important pour le mandarin)
-
-0.1.2:
-* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
-  chercher si une combinaison donne des résultats vraiment différents des autres
-
-0.1.1:
-tests
-
-0.1.0: 
-cwc
-
+0.2.2 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+      comment signaler cette anomalie ?
+0.2.1 ajouter un max de serializers
+        https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
+        ion (https://github.com/amzn/ion-python)
+        xdrlib (https://docs.python.org/3/library/xdrlib.html)
+        Django (https://www.django-rest-framework.org/api-guide/serializers/)
+        serpy (https://serpy.readthedocs.io/en/latest/performance.html)
+        messagegpack (https://msgpack.org/)
+        python-cjson (https://pypi.org/project/python-cjson/)
+        python-rapidjson (https://pypi.org/project/python-rapidjson/)
+        yajl (https://pypi.org/project/yajl/)
+        ujson (https://pypi.org/project/ujson/)
+        
+0.2.0 ajouter un max de données 
+      jouer avec des données d'au moins 50 Mo de json string.
+      numpy data
+      panda data
+0.1.9 README.md acceptable
+0.1.8 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+      chercher si une combinaison donne des résultats vraiment différents des autres
+0.1.7 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+0.1.6 cwc
+0.1.5 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
+0.1.4 tests
+0.1.3 supprimer base100
+0.1.2 graphs (https://serpy.readthedocs.io/en/latest/performance.html,
+              https://konstantin.blog/2010/pickle-vs-json-which-is-faster/)
+      report000.jpg, report000.jpg, 
+      --graph=yes (default=yes)
+      --removeoldgraphs (default=yes)
+      si graphviz n'est pas installé et que --graph, arrêter le programme
+      si graphviz n'est pas installé et que --graph=no, laisser le programme avancer
+0.1.1 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
+      syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
+0.1   speed/size/memory usage/similarity/
+        https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 ===============================================================================
 
 [CURRENT 0.0.9]
 
-Complete serializers.
+[DONE] task-134
 
-* anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne (?)
+Documentation.
+
+    * documentation (task-134)
+    
+    * Pylint: 10/10
 
 [DONE] task-133
 
