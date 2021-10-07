@@ -26,13 +26,11 @@ cwc
 [CURRENT 0.0.9]
 
 Complete serializers.
+
 * Quand jsonpickle n'est pas installé et qu'on lance un --cmp="iaswn vs jsonpickle", le message n'est pas clair
     Dire directement que jsonpickle n'est pas installé mais qu'il est reconnu comme étant un serializer.
 
 * ajouter une colonne finger print pour verbosity=debug
-
-* dans checkup(), améliorer la présentation des "* 7 Available Serializers:" de
-  manière à ce que les infos soient sur une seule ligne.
 
 * bug:
     ./bin/wisteria --cmp="all against all(all)" --verbosity=1 --report="bestof"
