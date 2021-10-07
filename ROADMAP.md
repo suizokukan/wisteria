@@ -43,7 +43,116 @@ What's next ?
         https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 ===============================================================================
 
-[CURRENT 0.0.9]
+[DONE] v. 0.0.9
+
+* --tolerateabsurdvalues
+* 7 serializers: iaswn; json; jsonpickle; jsonpickle_keystrue; marshal; pickle; pyyaml
+* documentation, bugfixes
+
+
+command line
+
+    * new command line argument: --tolerateabsurdvalues (task-124)
+
+serializers
+
+    * new serializers: jsonpickle_keystrue and pyyaml (task-124)
+
+documentation
+
+    * documentation (task-134)
+
+interface
+
+    * improved messages in compute_results() by adding a fingerprint of
+      each (serializer, data object) computed (task-124)
+    * in debug mode, serializer_xxx() displays a message saying if
+      encoding/decoding has failed. (task-124)
+    * in compute_results(), serializers and data objects are sorted so that
+      every time the program is launched, the output is exactly the same
+      (task-124)
+    * Improved text displayed in checkup() and otherwise: serializers' version
+      doesn't contain character \n anymore. (task-126)
+    * improved messages readibility in report_section_d2c() by adding a missing 
+      space (task-127)
+    * improved info message displayed if no argument is passed to the program. 
+      (task-128)
+    * improved error messages in read_cmpstring(): check that serializer1 and 
+      serializer2 belong to UNAVAILABLE_SERIALIZERS (task-130)
+    * improved tables in report.py (task-132)
+    * added a column to some tables (B1a B2a C1a) to show fingerprint in debug 
+      mode (task-133)
+    
+bugs
+
+    * fixed a bug in report_section_d2c(): a message couldn't be displayed
+      (task-124)
+    * bugfix: ERRORID032 was duplicated; in serializer_pyyaml() 
+      ERRORID032 > ERRORID044 (task-125)
+    * fixed a bug in TextAndNotes.output(): notes number are now correct,
+      even if the same note is used several times in the text. (task-127)
+    * bugfix: report_section_d1a() and report_section_d1b() now strictly check
+              that results[serializer][dataobj_name] is not None (task-129)
+    * Bugfix: report_xxx() functions now strictly check
+      that results[serializer][dataobj_name] is not None (task-131)
+      
+code structure
+
+    * improved code structure in compute_results() by adding a subfunction
+      named erase_progress_bar() (task-124)
+    * in compute_results(), check if an absurd value is computed;
+      the function stops if --tolerateabsurdvalues is False (task-124)
+    * new exit code: -7 (error, an absurd value has been computed) (task-124)
+    * serializer_xxx() functions have a third argument, fingerprint, to help 
+      debugging. (task-124)
+    * new method: TextAndNotes.delete_duplicated_notes() (task-127)
+    * new errors: ERRORID045 and ERRORID046 (task-130)
+    * err_codes.sh: err_max set to 50 (task-130)
+
+version
+
+    * set version to '0.0.9'
+
+Pylint
+
+    * Pylint: 10/10
+
+```
+$ poetry show --tree
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+
 
 [DONE] task-134
 
@@ -88,7 +197,7 @@ serializer2 belong to UNAVAILABLE_SERIALIZERS.
     * improved error messages in read_cmpstring(): check that serializer1 and 
       serializer2 belong to UNAVAILABLE_SERIALIZERS (task-130)
     * new errors: ERRORID045 and ERRORID046 (task-130)
-    * err_codes.sh: err_max set to 50
+    * err_codes.sh: err_max set to 50 (task-130)
 
     * Pylint 10/10
 
@@ -117,7 +226,7 @@ Fixed a bug in TextAndNotes.output(): notes' numbers are now correct,
 even if the same note is used several times in the text.
 
     * fixed a bug in TextAndNotes.output(): notes number are now correct,
-      even if the same note is used several times in the text.
+      even if the same note is used several times in the text. (task-127)
     * new method: TextAndNotes.delete_duplicated_notes() (task-127)
     * improved messages readibility in report_section_d2c() by adding a missing 
       space (task-127)
