@@ -79,6 +79,19 @@ def read_cmpstring(cmpstring):
         if cmpdata is None:
             cmpdata = "all"
 
+        # error: serializer1 is not in SERIALIZERS among UNAVAILABLE_SERIALIZES.
+        if serializer1 in u_serializers:
+            # BEWARE !
+            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # to display acceptable serializers name
+            # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
+            msgerror(
+                f"(ERRORID045) {aspect_serializer0(serializer1)} is a known serializer "
+                f"but the corresponding package has not been installed. "
+                "Try $ wisteria --checkup for more informations.")
+            return False, None, None, None
+
+        # error: serializer1 is an unknown serializer.
         if not (serializer1 == "all" or serializer1 in serializers):
             # BEWARE !
             # DO NOT USE aspect_serializer() instead of aspect_serializer0()
@@ -97,6 +110,20 @@ def read_cmpstring(cmpstring):
                 f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
+
+        # error: serializer2 is not in SERIALIZERS among UNAVAILABLE_SERIALIZES.
+        if serializer2 in u_serializers:
+            # BEWARE !
+            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # to display acceptable serializers name
+            # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
+            msgerror(
+                f"(ERRORID046) {aspect_serializer0(serializer2)} is a known serializer "
+                f"but the corresponding package has not been installed. "
+                "Try $ wisteria --checkup for more informations.")
+            return False, None, None, None
+
+        # error: serializer2 is an unknown serializer.
         if not (serializer2 == "all" or serializer2 == "others" or serializer2 in serializers):
             # BEWARE !
             # DO NOT USE aspect_serializer() instead of aspect_serializer0()

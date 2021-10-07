@@ -42,6 +42,18 @@ Complete serializers.
 
 * vérifier que le programme est utilisable depuis une console tty
 
+[DONE] task-130
+
+Improved error messages in read_cmpstring(): check that serializer1 and 
+serializer2 belong to UNAVAILABLE_SERIALIZERS.
+
+    * improved error messages in read_cmpstring(): check that serializer1 and 
+      serializer2 belong to UNAVAILABLE_SERIALIZERS (task-130)
+    * new errors: ERRORID045 and ERRORID046 (task-130)
+    * err_codes.sh: err_max set to 50
+
+    * Pylint 10/10
+
 [DONE] task-129
 
 bugfix: report_section_d1a() and report_section_d1b() now strictly check
