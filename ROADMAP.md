@@ -38,11 +38,19 @@ Complete serializers.
     ./bin/wisteria --cmp="all against all(all)" --verbosity=1 --report="bestof"
   conduit à un problème dans l'affichage des notes (¹, ², ...) finales
 
-* ERRORID032 duplicata
-
 * anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne (?)
 
 * problème pour lire le tableau: colonnes pas assez larges
+
+[DONE] task-126
+
+Improved text displayed in checkup() and otherwise: serializers' version
+doesn't contain character \n anymore.
+
+    * Improved text displayed in checkup() and otherwise: serializers' version
+      doesn't contain character \n anymore. (task-126)
+
+    * Pylint 10/10
 
 [TODO] task-125
 

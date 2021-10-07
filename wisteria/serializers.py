@@ -380,7 +380,7 @@ def serializer_marshal(action="serialize",
     module = MODULES["marshal"]
 
     if action == "version":
-        return f"version {module.version}; (Python version) {sys.version}"
+        return f"version {module.version}; (Python version) {sys.version.replace(chr(0x0A), '- ')}"
 
     if action != "serialize":
         raise WisteriaError(f"(ERRORID033) Unknown 'action' keyword '{action}'.")
@@ -449,7 +449,7 @@ def serializer_pickle(action="serialize",
     module = MODULES["pickle"]
 
     if action == "version":
-        return "(Python version) "+sys.version
+        return f"(Python version) {sys.version.replace(chr(0x0A), '- ')}"
 
     if action != "serialize":
         raise WisteriaError(f"(ERRORID034) Unknown 'action' keyword '{action}'.")
