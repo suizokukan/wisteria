@@ -54,6 +54,7 @@
     ⋅* -4: internal error, an error occured while computing the results
     ⋅* -5: internal error, an error in main()
     ⋅* -6: error, ill-formed --output string
+    ⋅* -7: error, an absurd value has been computed
 
     ___________________________________________________________________________
 
@@ -178,6 +179,13 @@ PARSER.add_argument(
     "Please notice that --verbosity has no effect upon --report.")
 
 PARSER.add_argument(
+    '--tolerateabsurdvalues',
+    default=False,
+    type=bool,
+    action='store',
+    help="If False, stop the program in an absurd value is computed.")
+
+PARSER.add_argument(
     '--verbosity',
     type=int,
     default=VERBOSITY_NORMAL,
@@ -214,6 +222,7 @@ if not wisteria.globs.OUTPUT[0]:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
+    # ⋅* -7: error, an absurd value has been computed
     sys.exit(-6)
 wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
@@ -549,6 +558,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
+    # ⋅* -7: error, an absurd value has been computed
     sys.exit(1)
 
 
@@ -592,6 +602,7 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
+    # ⋅* -7: error, an absurd value has been computed
     sys.exit(3)
 
 
@@ -630,6 +641,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
+    # ⋅* -7: error, an absurd value has been computed
     sys.exit(2)
 
 
@@ -676,6 +688,7 @@ def main():
                 ⋅* -4: internal error, an error occured while computing the results
                 ⋅* -5: internal error, an error in main()
                 ⋅* -6: error, ill-formed --output string
+                ⋅* -7: error, an absurd value has been computed
     """
     data = wisteria.globs.DATA
     serializers = wisteria.globs.SERIALIZERS
@@ -750,6 +763,7 @@ def main():
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
+            # ⋅* -7: error, an absurd value has been computed
             return -2
 
         # =========================================================================
@@ -790,6 +804,7 @@ def main():
                 # ⋅* -4: internal error, an error occured while computing the results
                 # ⋅* -5: internal error, an error in main()
                 # ⋅* -6: error, ill-formed --output string
+                # ⋅* -7: error, an absurd value has been computed
                 return -1
 
         # =========================================================================
@@ -858,6 +873,7 @@ def main():
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
+        # ⋅* -7: error, an absurd value has been computed
         return 0
 
     except WisteriaError as exception:
@@ -874,6 +890,7 @@ def main():
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
+        # ⋅* -7: error, an absurd value has been computed
         return -5
 
 

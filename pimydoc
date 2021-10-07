@@ -72,6 +72,7 @@ data objects
 * -4: internal error, an error occured while computing the results
 * -5: internal error, an error in main()
 * -6: error, ill-formed --output string
+* -7: error, an absurd value has been computed
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations

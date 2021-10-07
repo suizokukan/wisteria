@@ -39,6 +39,8 @@ from wisteria.globs import PROGRESSBAR_LENGTH
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
 from wisteria.serializers_classes import SerializationResults
+from wisteria.utils import strdigest
+from wisteria.reportaspect import aspect_serializer
 
 
 def get_serializers_selection(serializer1,
@@ -140,6 +142,27 @@ def compute_results(config,
         RETURNED VALUE:    (SerializationResults, None) if no error occured
                         or (None, (int)exit_code) if an error occured
     """
+    def erase_progress_bar():
+        """
+            erase_progress_bar()
+
+            Erase the progress bar so that it is possible to write text over
+            the ancient progress bar.
+
+            Show the cursor.
+        """
+        if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+            # the following lines make disappear the progresse bar.
+            # the next rprint() will overwrite the spaces that are about
+            # to be added:
+            if PROGRESSBAR_LENGTH is None:
+                console.file.write(" "*console.width)
+            else:
+                console.file.write(" "*PROGRESSBAR_LENGTH)
+            console.file.write("\r")
+
+            console.show_cursor(True)
+
     try:
         # serializers and data to be used through the tests:
         _serializers = get_serializers_selection(serializer1, serializer2)
@@ -164,16 +187,20 @@ def compute_results(config,
             console.show_cursor(False)
             progressbar_index = 0
 
-        for serializer in _serializers:
+        for serializer in sorted(_serializers):
             results[serializer] = {}
-            for data_name in _dataobjs:
+            for data_name in sorted(_dataobjs):
+                fingerprint = strdigest(serializer+data_name)
+
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"About to call function for serializer='{serializer}' "
-                             f"and data name='{data_name}'")
+                             f"and data name='{data_name}' "
+                             f"[{fingerprint}]")
 
                 results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
                     action="serialize",
-                    obj=wisteria.globs.DATA[data_name])
+                    obj=wisteria.globs.DATA[data_name],
+                    fingerprint=fingerprint)
 
                 # (progress bar)
                 # Please note that there can be NO progress bar if the debug mode is enabled:
@@ -185,22 +212,38 @@ def compute_results(config,
                     console.file.write("\r")
 
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                    msgdebug(f"result: {results[serializer][data_name]}")
+                    msgdebug(f"result: {results[serializer][data_name]} "
+                             f"[{fingerprint}]")
+
+            # we can't yet use results.total_encoding_strlen() since .finish_initialization()
+            # has not be called:
+            if sum(results[serializer][dataobj].encoding_strlen
+                   for dataobj in results[serializer]
+                   if results[serializer][dataobj] is not None and
+                   results[serializer][dataobj].encoding_strlen is not None) == 0 and \
+               not wisteria.globs.ARGS.tolerateabsurdvalues:
+                erase_progress_bar()
+                msgerror("(ERRORID043) Absurd value computed "
+                         f"for serializer {aspect_serializer(serializer)} : "
+                         "Σ sum(results[serializer][dataobj].encoding_strlen) is 0.")
+                # (pimydoc)exit codes
+                # ⋅*  0: normal exit code
+                # ⋅*  1: normal exit code after --checkup
+                # ⋅*  2: normal exit code after --downloadconfigfile
+                # ⋅*  3: normal exit code after --mymachine
+                # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+                # ⋅* -2: error, ill-formed --cmp string
+                # ⋅* -3: internal error, data can't be loaded
+                # ⋅* -4: internal error, an error occured while computing the results
+                # ⋅* -5: internal error, an error in main()
+                # ⋅* -6: error, ill-formed --output string
+                # ⋅* -7: error, an absurd value has been computed
+                return None, -7
 
         # (progress bar)
         # Please note that there can be NO progress bar if the debug mode is enabled:
         # the output can't display both correctly.
-        if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
-            # the following lines make disappear the progresse bar.
-            # the next rprint() will overwrite the spaces that are about
-            # to be added:
-            if PROGRESSBAR_LENGTH is None:
-                console.file.write(" "*console.width)
-            else:
-                console.file.write(" "*PROGRESSBAR_LENGTH)
-            console.file.write("\r")
-
-            console.show_cursor(True)
+        erase_progress_bar()
 
         if not results.finish_initialization():
             msgerror("(ERRORID015) Incorrect data, the program has to stop.")
@@ -216,6 +259,7 @@ def compute_results(config,
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
+            # ⋅* -7: error, an absurd value has been computed
             return None, -3
         if results.dataobjs_number == 0:
             msginfo("No data to handle, the program can stop.")
@@ -231,6 +275,7 @@ def compute_results(config,
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
+            # ⋅* -7: error, an absurd value has been computed
             return None, 2
 
         return results, None
@@ -249,4 +294,5 @@ def compute_results(config,
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
+        # ⋅* -7: error, an absurd value has been computed
         return None, -4

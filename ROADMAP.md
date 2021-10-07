@@ -28,6 +28,31 @@ cwc
 Complete serializers.
 
 
+[DONE] task-124
+
+new serializers: jsonpickle_keystrue and pyyaml; --tolerateabsurdvalues
+
+    * new serializers: jsonpickle_keystrue and pyyaml (task-124)
+    * in compute_results(), serializers and data objects are sorted so that
+      every time the program is launched, the output is exactly the same
+      (task-124)
+    * fixed a bug in report_section_d2c(): a message couldn't be displayed
+      (task-124)
+    * improved messages in compute_results() by adding a fingerprint of
+      each (serializer, data object) computed (task-124)
+    * improved code structure in compute_results() by adding a subfunction
+      named erase_progress_bar() (task-124)
+    * in compute_results(), check if an absurd value is computed;
+      the function stops if --tolerateabsurdvalues is False (task-124)
+    * new command line argument: --tolerateabsurdvalues (task-124)
+    * new exit code: -7 (error, an absurd value has been computed) (task-124)
+    * serializer_xxx() functions have a third argument, fingerprint, to help 
+      debugging. (task-124)
+    * in debug mode, serializer_xxx() displays a message saying if
+      encoding/decoding has failed. (task-124)
+
+    * Pylint 10/10
+
 [DONE] v. 0.0.8
 
 Improved data object support (113 data objects are now defined, see infra).

@@ -28,11 +28,13 @@
     ___________________________________________________________________________
 
     o  _len(obj)
-    o  serializer_iaswn(action="serialize", obj=None)
-    o  serializer_json(action="serialize", obj=None)
-    o  serializer_jsonpickle(action="serialize", obj=None)
-    o  serializer_marshal(action="serialize", obj=None)
-    o  serializer_pickle(action="serialize", obj=None)
+    o  serializer_iaswn(action="serialize", obj=None, fingerprint="")
+    o  serializer_json(action="serialize", obj=None, fingerprint="")
+    o  serializer_jsonpickle(action="serialize", obj=None, fingerprint="")
+    o  serializer_jsonpickle_keystrue(action="serialize", obj=None, fingerprint="")
+    o  serializer_marshal(action="serialize", obj=None, fingerprint="")
+    o  serializer_pickle(action="serialize", obj=None, fingerprint="")
+    o  serializer_pyyaml(action="serialize", obj=None, fingerprint="")
 
     o  init_serializers()
 """
@@ -41,9 +43,11 @@ import timeit
 
 import wisteria.globs
 from wisteria.globs import TIMEITNUMBER, MODULES
+from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import trytoimport
 from wisteria.serializers_classes import SerializerData, SerializationResult
+from wisteria.msg import msgdebug
 
 
 def _len(obj):
@@ -64,7 +68,8 @@ def _len(obj):
 
 
 def serializer_iaswn(action="serialize",
-                     obj=None):
+                     obj=None,
+                     fingerprint=""):
     """
         serializer_iaswn()
 
@@ -81,8 +86,9 @@ def serializer_iaswn(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
+        o  action:      (str) either "version" either "serialize"
+        o  obj:         the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
 
         RETURNED VALUE:
            - None if an error occcured
@@ -113,7 +119,9 @@ def serializer_iaswn(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
-    except module.IaswnError:
+    except module.IaswnError as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
     if not _error:
@@ -126,14 +134,17 @@ def serializer_iaswn(action="serialize",
 
             if obj == _res2:
                 res.similarity = True
-        except module.IaswnError:
-            pass
+        except module.IaswnError as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
 
     return res
 
 
 def serializer_json(action="serialize",
-                    obj=None):
+                    obj=None,
+                    fingerprint=""):
     """
         serializer_json()
 
@@ -152,6 +163,7 @@ def serializer_json(action="serialize",
         ARGUMENTS:
         o  action: (str) either "version" either "serialize"
         o  obj:    the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
 
         RETURNED VALUE:
            - None if an error occcured
@@ -176,7 +188,9 @@ def serializer_json(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
-    except TypeError:
+    except TypeError as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
     if not _error:
@@ -189,14 +203,17 @@ def serializer_json(action="serialize",
 
             if obj == _res2:
                 res.similarity = True
-        except (TypeError, AttributeError):
-            pass
+        except (TypeError, AttributeError) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
 
     return res
 
 
 def serializer_jsonpickle(action="serialize",
-                          obj=None):
+                          obj=None,
+                          fingerprint=""):
     """
         serializer_jsonpickle()
 
@@ -215,6 +232,7 @@ def serializer_jsonpickle(action="serialize",
         ARGUMENTS:
         o  action: (str) either "version" either "serialize"
         o  obj:    the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
 
         RETURNED VALUE:
            - None if an error occcured
@@ -239,7 +257,9 @@ def serializer_jsonpickle(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
-    except TypeError:
+    except TypeError as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
     if not _error:
@@ -252,14 +272,86 @@ def serializer_jsonpickle(action="serialize",
 
             if obj == _res2:
                 res.similarity = True
-        except (TypeError, AttributeError):
-            pass
+        except (TypeError, AttributeError) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
+
+    return res
+
+
+def serializer_jsonpickle_keystrue(action="serialize",
+                                   obj=None,
+                                   fingerprint=""):
+    """
+        serializer_jsonpickle_keystrue()
+
+        Serializer for the jsonpickle module (keys=True).
+
+        Like every serializer_xxx() function:
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
+
+        This function assumes that the concerned module has already be imported.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  action: (str) either "version" either "serialize"
+        o  obj:    the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
+
+        RETURNED VALUE:
+           - None if an error occcured
+           - if <action> is (str)"version", return a string.
+           - if <action> is (str)"serialize", return a SerializationResult object.
+    """
+    module = MODULES["jsonpickle"]
+
+    if action == "version":
+        return module.__version__
+
+    if action != "serialize":
+        raise WisteriaError(f"(ERRORID042) Unknown 'action' keyword '{action}'.")
+
+    res = SerializationResult()
+
+    _error = False
+    try:
+        _res = module.dumps(obj, keys=True)
+        _timeit = timeit.Timer('module.dumps(obj, keys=True)',
+                               globals=locals())
+        res.encoding_success = True
+        res.encoding_strlen = _len(_res)
+        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+    except TypeError as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
+        _error = True
+
+    if not _error:
+        try:
+            _res2 = module.loads(_res, keys=True)
+            res.decoding_success = True
+            _timeit = timeit.Timer("module.loads(_res, keys=True)",
+                                   globals=locals())
+            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+
+            if obj == _res2:
+                res.similarity = True
+        except (TypeError, AttributeError) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
 
     return res
 
 
 def serializer_marshal(action="serialize",
-                       obj=None):
+                       obj=None,
+                       fingerprint=""):
     """
         serializer_marshal()
 
@@ -278,6 +370,7 @@ def serializer_marshal(action="serialize",
         ARGUMENTS:
         o  action: (str) either "version" either "serialize"
         o  obj:    the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
 
         RETURNED VALUE:
            - None if an error occcured
@@ -302,7 +395,9 @@ def serializer_marshal(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError) as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
     if not _error:
@@ -315,14 +410,17 @@ def serializer_marshal(action="serialize",
 
             if obj == _res2:
                 res.similarity = True
-        except (TypeError, AttributeError):
-            pass
+        except (TypeError, AttributeError) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
 
     return res
 
 
 def serializer_pickle(action="serialize",
-                      obj=None):
+                      obj=None,
+                      fingerprint=""):
     """
         serializer_pickle()
 
@@ -341,6 +439,7 @@ def serializer_pickle(action="serialize",
         ARGUMENTS:
         o  action: (str) either "version" either "serialize"
         o  obj:    the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
 
         RETURNED VALUE:
            - None if an error occcured
@@ -365,7 +464,9 @@ def serializer_pickle(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
-    except TypeError:
+    except TypeError as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
     if not _error:
@@ -378,8 +479,79 @@ def serializer_pickle(action="serialize",
 
             if obj == _res2:
                 res.similarity = True
-        except (TypeError, AttributeError):
-            pass
+        except (TypeError, AttributeError) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
+
+    return res
+
+
+def serializer_pyyaml(action="serialize",
+                      obj=None,
+                      fingerprint=""):
+    """
+        serializer_pyyaml()
+
+        Serializer for the pyyaml module.
+
+        Like every serializer_xxx() function:
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
+
+        This function assumes that the concerned module has already be imported.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  action: (str) either "version" either "serialize"
+        o  obj:    the object to be serialized
+        o  fingerprint: a string describing the operation (usefull to debug)
+
+        RETURNED VALUE:
+           - None if an error occcured
+           - if <action> is (str)"version", return a string.
+           - if <action> is (str)"serialize", return a SerializationResult object.
+    """
+    module = MODULES["yaml"]
+
+    if action == "version":
+        return module.__version__
+
+    if action != "serialize":
+        raise WisteriaError(f"(ERRORID032) Unknown 'action' keyword '{action}'.")
+
+    res = SerializationResult()
+
+    _error = False
+    try:
+        _res = module.dump(obj, Dumper=module.Dumper)
+        _timeit = timeit.Timer('module.dump(obj, Dumper=module.Dumper)',
+                               globals=locals())
+        res.encoding_success = True
+        res.encoding_strlen = _len(_res)
+        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+    except (ValueError, TypeError) as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
+        _error = True
+
+    if not _error:
+        try:
+            _res2 = module.load(_res, Loader=module.Loader)
+            res.decoding_success = True
+            _timeit = timeit.Timer("module.load(_res, Loader=module.Loader)",
+                                   globals=locals())
+            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+
+            if obj == _res2:
+                res.similarity = True
+        except (module.constructor.ConstructorError, ValueError) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
 
     return res
 
@@ -410,6 +582,12 @@ def init_serializers():
                 internet="https://jsonpickle.github.io/",
                 func=serializer_jsonpickle),
             SerializerData(
+                name="jsonpickle_keystrue",
+                module_name="jsonpickle",
+                human_name="jsonpickle(keys=True)",
+                internet="https://jsonpickle.github.io/",
+                func=serializer_jsonpickle_keystrue),
+            SerializerData(
                 name="marshal",
                 module_name="marshal",
                 human_name="marshal",
@@ -421,6 +599,12 @@ def init_serializers():
                 human_name="pickle",
                 internet="https://docs.python.org/3/library/pickle.html",
                 func=serializer_pickle),
+            SerializerData(
+                name="pyyaml",
+                module_name="yaml",
+                human_name="pyyaml",
+                internet="https://pyyaml.org/",
+                func=serializer_pyyaml),
             ):
         if trytoimport(serializerdata.module_name):
             wisteria.globs.SERIALIZERS[serializerdata.name] = serializerdata

@@ -417,21 +417,24 @@ class SerializationResults(dict):
         if attribute == "encoding_time":
             for serializer in self.serializers:
                 for dataobj in self.dataobjs:
-                    if self[serializer][dataobj].encoding_time:
+                    if self[serializer][dataobj] is not None and \
+                       self[serializer][dataobj].encoding_time:
                         return SerializerDataObj(serializer=serializer, dataobj=dataobj)
             return SerializerDataObj()
 
         if attribute == "decoding_time":
             for serializer in self.serializers:
                 for dataobj in self.dataobjs:
-                    if self[serializer][dataobj].decoding_time:
+                    if self[serializer][dataobj] is not None and \
+                       self[serializer][dataobj].decoding_time:
                         return SerializerDataObj(serializer=serializer, dataobj=dataobj)
             return SerializerDataObj()
 
         if attribute == "encoding_strlen":
             for serializer in self.serializers:
                 for dataobj in self.dataobjs:
-                    if self[serializer][dataobj].encoding_strlen:
+                    if self[serializer][dataobj] is not None and \
+                       self[serializer][dataobj].encoding_strlen:
                         return SerializerDataObj(serializer=serializer, dataobj=dataobj)
             return SerializerDataObj()
 
@@ -726,7 +729,8 @@ class SerializationResults(dict):
                 return aspect_ratio((None, None))
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].decoding_success:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].decoding_success:
                     count += 1
             if output == "fmtstr":
                 return aspect_ratio((count, count/self.dataobjs_number))
@@ -738,7 +742,8 @@ class SerializationResults(dict):
             return aspect_ratio((None, None))
 
         for _serializer in self:
-            if self[_serializer][dataobj].decoding_success:
+            if self[_serializer][dataobj] is not None and \
+               self[_serializer][dataobj].decoding_success:
                 count += 1
         if output == "fmtstr":
             return aspect_ratio((count, count/self.serializers_number))
@@ -782,7 +787,8 @@ class SerializationResults(dict):
                 return aspect_ratio((None, None))
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].encoding_success:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].encoding_success:
                     count += 1
             if output == "fmtstr":
                 return aspect_ratio((count, count/self.dataobjs_number))
@@ -794,7 +800,8 @@ class SerializationResults(dict):
             return aspect_ratio((None, None))
 
         for _serializer in self:
-            if self[_serializer][dataobj].encoding_success:
+            if self[_serializer][dataobj] is not None and \
+               self[_serializer][dataobj].encoding_success:
                 count += 1
         if output == "fmtstr":
             return aspect_ratio((count, count/self.serializers_number))
@@ -838,7 +845,8 @@ class SerializationResults(dict):
                 return aspect_ratio((None, None))
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].similarity:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].similarity:
                     count += 1
             if output == "fmtstr":
                 return aspect_ratio((count, count/self.dataobjs_number))
@@ -850,7 +858,8 @@ class SerializationResults(dict):
             return aspect_ratio((None, None))
 
         for _serializer in self:
-            if self[_serializer][dataobj].similarity:
+            if self[_serializer][dataobj] is not None and \
+               self[_serializer][dataobj].similarity:
                 count += 1
 
         if output == "fmtstr":
@@ -909,7 +918,8 @@ class SerializationResults(dict):
                     self[serializer][dataobj].decoding_time)
             else:
                 # output == "base100"
-                if self[serializer][dataobj].decoding_time is None:
+                if self[serializer][dataobj] is not None and \
+                   self[serializer][dataobj].decoding_time is None:
                     res = aspect_nodata()
                 else:
                     res = aspect_base100(
@@ -923,7 +933,8 @@ class SerializationResults(dict):
                     self[serializer][dataobj].encoding_strlen)
             else:
                 # output == "base100"
-                if self[serializer][dataobj].encoding_strlen is None:
+                if self[serializer][dataobj] is not None and \
+                   self[serializer][dataobj].encoding_strlen is None:
                     res = aspect_nodata()
                 else:
                     res = aspect_base100(
@@ -937,7 +948,8 @@ class SerializationResults(dict):
                     self[serializer][dataobj].encoding_time)
             else:
                 # output == "base100"
-                if self[serializer][dataobj].encoding_time is None:
+                if self[serializer][dataobj] is not None and \
+                   self[serializer][dataobj].encoding_time is None:
                     res = aspect_nodata()
                 else:
                     res = aspect_base100(
@@ -1008,7 +1020,8 @@ class SerializationResults(dict):
                 return aspect_time(None)
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].decoding_success:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].decoding_success:
                     total += self[serializer][_dataobj].decoding_time
             if output == "value":
                 res = total
@@ -1026,7 +1039,8 @@ class SerializationResults(dict):
                 return aspect_time(None)
 
             for _serializer in self:
-                if self[_serializer][dataobj].decoding_success:
+                if self[_serializer][dataobj] is not None and \
+                   self[_serializer][dataobj].decoding_success:
                     total += self[_serializer][dataobj].decoding_time
             if output == "value":
                 res = total
@@ -1121,7 +1135,8 @@ class SerializationResults(dict):
                 return aspect_stringlength(None)
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].encoding_strlen:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].encoding_strlen:
                     total += self[serializer][_dataobj].encoding_strlen
             if output == "value":
                 res = total
@@ -1139,7 +1154,8 @@ class SerializationResults(dict):
                 return aspect_stringlength(None)
 
             for _serializer in self:
-                if self[_serializer][dataobj].encoding_strlen:
+                if self[_serializer][dataobj] is not None and \
+                   self[_serializer][dataobj].encoding_strlen:
                     total += self[_serializer][dataobj].encoding_strlen
             if output == "value":
                 res = total
@@ -1196,7 +1212,8 @@ class SerializationResults(dict):
                 return aspect_time(None)
 
             for _dataobj in self[serializer]:
-                if self[serializer][_dataobj].encoding_success:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].encoding_success:
                     total += self[serializer][_dataobj].encoding_time
             if output == "value":
                 res = total
@@ -1214,7 +1231,8 @@ class SerializationResults(dict):
                 res = aspect_time(None)
 
             for _serializer in self:
-                if self[_serializer][dataobj].encoding_success:
+                if self[_serializer][dataobj] is not None and \
+                   self[_serializer][dataobj].encoding_success:
                     total += self[_serializer][dataobj].encoding_time
             if output == "value":
                 res = total

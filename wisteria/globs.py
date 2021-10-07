@@ -74,7 +74,7 @@ VERBOSITY_DEBUG = 3
 ARGS = None
 
 # number of times each serializer is called
-TIMEITNUMBER = 100
+TIMEITNUMBER = 1
 
 # temp file default name
 TMPFILENAME = "wisteria.tmp"

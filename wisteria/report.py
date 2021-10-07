@@ -1887,11 +1887,10 @@ def report_section_d2c(results,
                         f"among {results.serializers_number} serializers, "
                         "according to the overall scores (__note:overallscore__).")
         else:
-            text.append(
-                text.append(f"{aspect_list(worsts, aspect_serializer)} "
-                            f"are ranked #{results.serializers_number} among "
-                            f"{results.serializers_number} serializers, "
-                            "according to the overall scores (__note:overallscore__)."))
+            text.append(f"{aspect_list(worsts, aspect_serializer)} "
+                        f"are ranked #{results.serializers_number} among "
+                        f"{results.serializers_number} serializers, "
+                        "according to the overall scores (__note:overallscore__).")
 
         text.notes.append(
             ("overallscore",
@@ -2021,7 +2020,6 @@ def report_section_d2c(results,
         text.notes.append(
             ("overallscore",
              "a rank based on 3 points: Σ jsonstr.len./Σ encod.+decod. time/encod.<>decod."))
-
         for attribute in ("encoding_strlen",
                           "encoding_plus_decoding_time",
                           "similarity",

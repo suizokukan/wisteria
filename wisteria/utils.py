@@ -27,6 +27,7 @@
     o  shortenedstr(string, maximallength)
     o  trytoimport(module_name)
 """
+import hashlib
 import importlib
 import os
 import os.path
@@ -83,6 +84,22 @@ def shortenedstr(string,
     # e.g. if maximallength==10, if string="01234567890"(len=11)  > "0123456[…]" (len=10)
     # e.g. if maximallength==10, if string="012345678901"(len=12) > "0123456[…]" (len=10)
     return string[:maximallength-len(suffix)] + suffix
+
+
+def strdigest(string):
+    """
+        strdigest()
+
+        Return the formatted fingerprint of <string>.
+
+        _______________________________________________________________________
+
+        ARGUMENT:
+        o  (str)string: the string to be hashed
+
+        RETURNED VALUE: (str)
+    """
+    return "0x"+hashlib.sha256(string.encode()).hexdigest()[:5]
 
 
 def trytoimport(module_name):
