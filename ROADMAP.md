@@ -40,6 +40,19 @@ Complete serializers.
 
 * problème pour lire le tableau: colonnes pas assez larges
 
+[TODO] task-127
+
+Fixed a bug in TextAndNotes.output(): notes' numbers are now correct,
+even if the same note is used several times in the text.
+
+    * fixed a bug in TextAndNotes.output(): notes number are now correct,
+      even if the same note is used several times in the text.
+    * new method: TextAndNotes.delete_duplicated_notes() (task-127)
+    * improved messages readibility in report_section_d2c() by adding a missing 
+      space (task-127)
+
+    * Pylint 10/10
+
 [DONE] task-126
 
 Improved text displayed in checkup() and otherwise: serializers' version

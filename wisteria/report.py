@@ -2075,7 +2075,7 @@ def report_section_d2c(results,
                     subtext.append(
                         f"There are {len(_less)} serializers"
                         ", namely "
-                        f"{aspect_list(_less, aspect_serializer)}"
+                        f"{aspect_list(_less, aspect_serializer)} "
                         f"that are slower than {aspect_serializer(serializer)} ")
 
                 subtext.append("and ")

@@ -67,6 +67,7 @@ class TextAndNotes(list):
         methods:
 
         o  __init__(self)
+        o  delete_duplicated_notes(self)
         o  next_notessymbol(self)
         o  output(self)
     """
@@ -79,6 +80,14 @@ class TextAndNotes(list):
         list.__init__(self)
         self.next_notessymbols = 1  # what will be the next notes symbols index ?
         self.notes = []
+
+    def delete_duplicated_notes(self):
+        """
+            TextAndNotes.delete_duplicated_notes()
+
+            Modify .notes in place and remove from it duplicate items.
+        """
+        self.notes = list(dict.fromkeys(self.notes))
 
     def next_notessymbol(self):
         """
@@ -132,13 +141,15 @@ class TextAndNotes(list):
         res = []
         notes2notessymbols = {}
 
+        self.delete_duplicated_notes()
+
         for line in self:
             for match in re.finditer(TextAndNotes.notesregex, line):
-                if match.groups('notename') not in notes2notessymbols:
+                if match.group('notename') not in notes2notessymbols:
                     notes2notessymbols[match.group('notename')] = self.next_notessymbol()
-                    line = re.sub(TextAndNotes.notesregex,
-                                  fullnotename2symbol,
-                                  line)
+                line = re.sub(TextAndNotes.notesregex,
+                              fullnotename2symbol,
+                              line)
             res.append(line)
 
         if self.notes:
