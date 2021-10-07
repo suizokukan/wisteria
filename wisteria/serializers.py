@@ -521,7 +521,7 @@ def serializer_pyyaml(action="serialize",
         return module.__version__
 
     if action != "serialize":
-        raise WisteriaError(f"(ERRORID032) Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID044) Unknown 'action' keyword '{action}'.")
 
     res = SerializationResult()
 

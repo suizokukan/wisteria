@@ -44,6 +44,14 @@ Complete serializers.
 
 * problème pour lire le tableau: colonnes pas assez larges
 
+[TODO] task-125
+
+bugfix: ERRORID032 was duplicated; in serializer_pyyaml() ERRORID032 > ERRORID044
+
+    * bugfix: ERRORID032 was duplicated; in serializer_pyyaml() 
+      ERRORID032 > ERRORID044 (task-125)
+
+    * Pylint 10/10
 
 [DONE] task-124
 
