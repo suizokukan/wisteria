@@ -29,8 +29,6 @@ Complete serializers.
 
 * anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne (?)
 
-* vérifier que le programme est utilisable depuis une console tty
-
 [DONE] task-132
 
 Improved tables in report.py.
