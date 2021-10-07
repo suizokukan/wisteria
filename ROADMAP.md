@@ -35,6 +35,14 @@ Complete serializers.
 
 * vérifier que le programme est utilisable depuis une console tty
 
+[DONE] task-132
+
+Improved tables in report.py.
+
+    * improved tables in report.py (task-132)
+    
+    * Pylint: 10/10
+
 [DONE] task-131
 
 Bugfix: report_xxx() functions now strictly check

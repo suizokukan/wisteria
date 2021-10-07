@@ -523,7 +523,7 @@ def report_section_b1a(results,
         msgreporttitle("(B1a) Full Details: Serializer * Data Object")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Serializer > Data Object", width=24)
+    table.add_column("Serializer > Data Object", width=28)
     table.add_column("Encod. Ok ?", width=11)
     table.add_column(f"Encod. Time ({UNITS['time']})", width=11)
     table.add_column(f"Encoded Str. Length ({UNITS['string length']})", width=13)
@@ -604,7 +604,7 @@ def report_section_b1b(results,
         msgreporttitle("(B1b) Full Details: Serializers")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Serializer", width=24)
+    table.add_column("Serializer", width=28)
     table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
     table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
@@ -685,12 +685,12 @@ def report_section_b1c(results,
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("#", width=2)
-    table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
-    table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
-    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
-    table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
-    table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
-    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
+    table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=17)
+    table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=17)
+    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=17)
+    table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=17)
+    table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=17)
+    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=17)
 
     for index in range(results.serializers_number):
         table.add_row(
@@ -840,7 +840,7 @@ def report_section_b2a(results,
         msgreporttitle("(B2a) full details: data object * serializer")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object > Serializer", width=24)
+    table.add_column("Data Object > Serializer", width=28)
     table.add_column("Encod. Ok ?", width=11)
     table.add_column(f"Encod. Time ({UNITS['time']})", width=11)
     table.add_column(f"Encoded Str. Length ({UNITS['string length']})", width=13)
@@ -922,7 +922,7 @@ def report_section_b2b(results,
         msgreporttitle("(B2b) Full Details: Data Objects")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object", width=24)
+    table.add_column("Data Object", width=28)
     table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
     table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
@@ -1002,7 +1002,7 @@ def report_section_c1a(results,
         msgreporttitle("(C1a) Full Details: Serializer * Data Object (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Serializer > Data Object", width=24)
+    table.add_column("Serializer > Data Object", width=28)
     table.add_column("Encod. Ok ?", width=11)
 
     if base100 := results.get_base('encoding_time'):
@@ -1107,7 +1107,7 @@ def report_section_c1b(results,
         msgreporttitle("(C1b) Full Details: Serializers (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Serializer", width=24)
+    table.add_column("Serializer", width=28)
     table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
     if base100 := results.get_serializers_base('encoding_time'):
         table.add_column(
@@ -1209,7 +1209,7 @@ def report_section_c2a(results,
         msgreporttitle("(C2a) Full Details: Data Object * Serializer (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object > Serializer", width=24)
+    table.add_column("Data Object > Serializer", width=28)
 
     table.add_column("Encod. Ok ?", width=11)
 
@@ -1316,7 +1316,7 @@ def report_section_c2b(results,
         msgreporttitle("(C2b) Full Details: Data Objects (base 100)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object", width=24)
+    table.add_column("Data Object", width=28)
     table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
 
     if base100 := results.get_dataobjs_base('encoding_time'):
