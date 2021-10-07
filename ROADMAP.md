@@ -44,6 +44,8 @@ Complete serializers.
 
 * bug avec $ ./bin/wisteria
 
+* vérifier que le programme est utilisable depuis une console tty
+
 [DONE] task-128
 
 Improved info message displayed if no argument is passed to the program.
