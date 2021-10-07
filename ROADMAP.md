@@ -46,6 +46,16 @@ Complete serializers.
 
 * vérifier que le programme est utilisable depuis une console tty
 
+[DONE] task-129
+
+bugfix: report_section_d1a() and report_section_d1b() now strictly check
+        that results[serializer][dataobj_name] is not None.
+
+    * bugfix: report_section_d1a() and report_section_d1b() now strictly check
+              that results[serializer][dataobj_name] is not None (task-129)
+
+    * Pylint 10/10
+
 [DONE] task-128
 
 Improved info message displayed if no argument is passed to the program.
