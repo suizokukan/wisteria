@@ -40,6 +40,19 @@ Complete serializers.
 
 * problème pour lire le tableau: colonnes pas assez larges
 
+* Since no argument has been given...
+
+* bug avec $ ./bin/wisteria
+
+[DONE] task-128
+
+Improved info message displayed if no argument is passed to the program.
+
+    * improved info message displayed if no argument is passed to the program. 
+      (task-128)
+
+    * Pylint 10/10
+
 [TODO] task-127
 
 Fixed a bug in TextAndNotes.output(): notes' numbers are now correct,

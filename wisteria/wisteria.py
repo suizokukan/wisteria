@@ -203,6 +203,10 @@ wisteria.globs.ARGS = PARSER.parse_args()
 if len(sys.argv) == 1:
     wisteria.globs.ARGS.verbosity = 2
     wisteria.globs.ARGS.report = "titles;A1;B1b;D1a;D1b;D2a;D2b;D2c;"
+    rprint(
+        f"[bold]Since no argument was passed to {__projectname__}, "
+        "--verbosity is now set to '{wisteria.globs.ARGS.verbosity}' "
+        f"and --report to '{wisteria.globs.ARGS.report}' .[/bold]")
 
 # =============================================================================
 # (02) --output string
