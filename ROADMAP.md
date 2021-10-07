@@ -29,6 +29,15 @@ Complete serializers.
 
 * anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne (?)
 
+[DONE] task-133
+
+Added a column to some tables (B1a B2a C1a) to show fingerprint in debug mode.
+
+    * added a column to some tables (B1a B2a C1a) to show fingerprint in debug 
+      mode (task-133)
+
+    * Pylint: 10/10
+
 [DONE] task-132
 
 Improved tables in report.py.

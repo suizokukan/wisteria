@@ -61,7 +61,7 @@ from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.utils import shortenedstr
+from wisteria.utils import shortenedstr, strdigest
 from wisteria.msg import msgreport, msgreporttitle, msgdebug
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
 from wisteria.reportaspect import aspect_nodata, aspect_nounplural
@@ -530,18 +530,34 @@ def report_section_b1a(results,
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Encod.<>Decod. ?", width=16)
+    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        table.add_column("finger print ( serial. + dataobj)", width=9)
 
     for serializer in results.serializers:
         table.add_row(f"{aspect_serializer(serializer)} :")
         for dataobj in results.dataobjs:
-            table.add_row(
-                "> " + f"{aspect_data(dataobj)}",
-                results.repr_attr(serializer, dataobj, "encoding_success"),
-                results.repr_attr(serializer, dataobj, "encoding_time"),
-                results.repr_attr(serializer, dataobj, "encoding_strlen"),
-                results.repr_attr(serializer, dataobj, "decoding_success"),
-                results.repr_attr(serializer, dataobj, "decoding_time"),
-                results.repr_attr(serializer, dataobj, "similarity"))
+            if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+                # everything but debug mode:
+                table.add_row(
+                    "> " + f"{aspect_data(dataobj)}",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time"),
+                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time"),
+                    results.repr_attr(serializer, dataobj, "similarity"),)
+            else:
+                # debug mode:
+                table.add_row(
+                    "> " + f"{aspect_data(dataobj)}",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time"),
+                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time"),
+                    results.repr_attr(serializer, dataobj, "similarity"),
+                    "["+strdigest(serializer+dataobj)+"]")
+
     msgreport(table)
     msgreport()
 
@@ -847,19 +863,34 @@ def report_section_b2a(results,
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Encod.<>Decod. ?", width=16)
+    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        table.add_column("finger print ( serial. + dataobj)", width=9)
 
     for dataobj in results.dataobjs:
         table.add_row(f"{aspect_data(dataobj)} :")
         for serializer in results.serializers:
-            table.add_row(
-                "> " + f"{aspect_serializer(serializer)}",
-                results.repr_attr(serializer, dataobj, "encoding_success"),
-                results.repr_attr(serializer, dataobj, "encoding_time"),
-                results.repr_attr(serializer, dataobj, "encoding_strlen"),
-                results.repr_attr(serializer, dataobj, "decoding_success"),
-                results.repr_attr(serializer, dataobj, "decoding_time"),
-                results.repr_attr(serializer, dataobj, "similarity")
-            )
+            if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+                # everything but debug mode:
+                table.add_row(
+                    "> " + f"{aspect_serializer(serializer)}",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time"),
+                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time"),
+                    results.repr_attr(serializer, dataobj, "similarity")
+                )
+            else:
+                # debug mode:
+                table.add_row(
+                    "> " + f"{aspect_serializer(serializer)}",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time"),
+                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time"),
+                    results.repr_attr(serializer, dataobj, "similarity"),
+                    "["+strdigest(serializer+dataobj)+"]")
     msgreport(table)
     msgreport()
 
@@ -1037,17 +1068,33 @@ def report_section_c1a(results,
 
     table.add_column("Encod.<>Decod. ?", width=16)
 
+    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        table.add_column("finger print ( serial. + dataobj)", width=9)
+
     for serializer in results.serializers:
         table.add_row(f"{aspect_serializer(serializer)} :")
         for dataobj in results.dataobjs:
-            table.add_row(
-                "> " + f"{aspect_data(dataobj)}",
-                results.repr_attr(serializer, dataobj, "encoding_success"),
-                results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
-                results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),
-                results.repr_attr(serializer, dataobj, "decoding_success"),
-                results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
-                results.repr_attr(serializer, dataobj, "similarity"))
+            if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+                # everything but debug mode:
+                table.add_row(
+                    "> " + f"{aspect_data(dataobj)}",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
+                    results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
+                    results.repr_attr(serializer, dataobj, "similarity"))
+            else:
+                # debug mode:
+                table.add_row(
+                    "> " + f"{aspect_data(dataobj)}",
+                    results.repr_attr(serializer, dataobj, "encoding_success"),
+                    results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
+                    results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),
+                    results.repr_attr(serializer, dataobj, "decoding_success"),
+                    results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
+                    results.repr_attr(serializer, dataobj, "similarity"),
+                    "["+strdigest(serializer+dataobj)+"]")
     msgreport(table)
     msgreport()
 
