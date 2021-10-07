@@ -27,8 +27,6 @@ cwc
 
 Complete serializers.
 
-* ajouter une colonne finger print pour verbosity=debug
-
 * anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne (?)
 
 * vérifier que le programme est utilisable depuis une console tty
