@@ -40,10 +40,6 @@ Complete serializers.
 
 * problème pour lire le tableau: colonnes pas assez larges
 
-* Since no argument has been given...
-
-* bug avec $ ./bin/wisteria
-
 * vérifier que le programme est utilisable depuis une console tty
 
 [DONE] task-129
