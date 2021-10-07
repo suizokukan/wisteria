@@ -766,7 +766,9 @@ def report_section_b1d(results,
 
     for serializer in results.serializers:
         _list = tuple(dataobj for dataobj in results[serializer]
-                      if not results[serializer][dataobj].similarity)
+                      if results[serializer][dataobj] is None or
+                      results[serializer][dataobj].similarity is None or
+                      not results[serializer][dataobj].similarity)
         if not _list:
             msgreport(f"* ({aspect_serializer(serializer)}) "
                       "There's no data object that serializer "

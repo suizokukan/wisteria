@@ -35,6 +35,16 @@ Complete serializers.
 
 * vérifier que le programme est utilisable depuis une console tty
 
+[DONE] task-131
+
+Bugfix: report_xxx() functions now strictly check
+        that results[serializer][dataobj_name] is not None
+
+    * Bugfix: report_xxx() functions now strictly check
+      that results[serializer][dataobj_name] is not None (task-131)
+      
+    * Pylint: 10/10
+
 [DONE] task-130
 
 Improved error messages in read_cmpstring(): check that serializer1 and 

@@ -471,7 +471,8 @@ class SerializationResults(dict):
             for dataobj in self.dataobjs:
                 found = True
                 for serializer in self.serializers:
-                    if not self[serializer][dataobj].encoding_success:
+                    if self[serializer][dataobj] is not None and \
+                       not self[serializer][dataobj].encoding_success:
                         found = False
                         break
                 if found:
@@ -482,7 +483,8 @@ class SerializationResults(dict):
             for dataobj in self.dataobjs:
                 found = True
                 for serializer in self.serializers:
-                    if not self[serializer][dataobj].encoding_strlen:
+                    if self[serializer][dataobj] is not None and \
+                       not self[serializer][dataobj].encoding_strlen:
                         found = False
                         break
                 if found:
@@ -493,7 +495,8 @@ class SerializationResults(dict):
             for dataobj in self.dataobjs:
                 found = True
                 for serializer in self.serializers:
-                    if not self[serializer][dataobj].decoding_time:
+                    if self[serializer][dataobj] is not None and \
+                       not self[serializer][dataobj].decoding_time:
                         found = False
                         break
                 if found:
@@ -663,7 +666,8 @@ class SerializationResults(dict):
             for serializer in self.serializers:
                 found = True
                 for dataobj in self.dataobjs:
-                    if not self[serializer][dataobj].encoding_success:
+                    if self[serializer][dataobj] is not None and \
+                       not self[serializer][dataobj].encoding_success:
                         found = False
                         break
                 if found:
@@ -674,7 +678,8 @@ class SerializationResults(dict):
             for serializer in self.serializers:
                 found = True
                 for dataobj in self.dataobjs:
-                    if not self[serializer][dataobj].encoding_strlen:
+                    if self[serializer][dataobj] is not None and \
+                       not self[serializer][dataobj].encoding_strlen:
                         found = False
                         break
                 if found:
@@ -685,7 +690,8 @@ class SerializationResults(dict):
             for serializer in self.serializers:
                 found = True
                 for dataobj in self.dataobjs:
-                    if not self[serializer][dataobj].decoding_time:
+                    if self[serializer][dataobj] is not None and \
+                       not self[serializer][dataobj].decoding_time:
                         found = False
                         break
                 if found:
@@ -905,8 +911,11 @@ class SerializationResults(dict):
 
         if attribute_name == "decoding_success":
             if output == "fmtstr":
-                res = aspect_boolsuccess(
-                    self[serializer][dataobj].decoding_success)
+                if self[serializer][dataobj] is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_boolsuccess(
+                        self[serializer][dataobj].decoding_success)
             else:
                 raise WisteriaError(
                     "(ERRORID022) Internal error. "
@@ -914,11 +923,14 @@ class SerializationResults(dict):
 
         if attribute_name == "decoding_time":
             if output == "fmtstr":
-                res = aspect_time(
-                    self[serializer][dataobj].decoding_time)
+                if self[serializer][dataobj] is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_time(
+                        self[serializer][dataobj].decoding_time)
             else:
                 # output == "base100"
-                if self[serializer][dataobj] is not None and \
+                if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].decoding_time is None:
                     res = aspect_nodata()
                 else:
@@ -929,11 +941,15 @@ class SerializationResults(dict):
 
         if attribute_name == "encoding_strlen":
             if output == "fmtstr":
-                res = aspect_stringlength(
-                    self[serializer][dataobj].encoding_strlen)
+                if self[serializer][dataobj] is None or \
+                   self[serializer][dataobj].encoding_strlen is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_stringlength(
+                        self[serializer][dataobj].encoding_strlen)
             else:
                 # output == "base100"
-                if self[serializer][dataobj] is not None and \
+                if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].encoding_strlen is None:
                     res = aspect_nodata()
                 else:
@@ -944,12 +960,17 @@ class SerializationResults(dict):
 
         if attribute_name == "encoding_time":
             if output == "fmtstr":
-                res = aspect_time(
-                    self[serializer][dataobj].encoding_time)
+                if self[serializer][dataobj] is None or \
+                   self[serializer][dataobj].encoding_time is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_time(
+                        self[serializer][dataobj].encoding_time)
             else:
                 # output == "base100"
-                if self[serializer][dataobj] is not None and \
-                   self[serializer][dataobj].encoding_time is None:
+                if self[serializer][dataobj] is None:
+                    res = aspect_nodata()
+                elif self[serializer][dataobj].encoding_time is None:
                     res = aspect_nodata()
                 else:
                     res = aspect_base100(
@@ -959,8 +980,12 @@ class SerializationResults(dict):
 
         if attribute_name == "encoding_success":
             if output == "fmtstr":
-                res = aspect_boolsuccess(
-                    self[serializer][dataobj].encoding_success)
+                if self[serializer][dataobj] is None or \
+                   self[serializer][dataobj].encoding_success is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_boolsuccess(
+                        self[serializer][dataobj].encoding_success)
             else:
                 raise WisteriaError(
                     "(ERRORID023) Internal error. "
@@ -968,8 +993,12 @@ class SerializationResults(dict):
 
         if attribute_name == "similarity":
             if output == "fmtstr":
-                res = aspect_boolsuccess(
-                    self[serializer][dataobj].similarity)
+                if self[serializer][dataobj] is None or \
+                   self[serializer][dataobj].similarity is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_boolsuccess(
+                        self[serializer][dataobj].similarity)
             else:
                 raise WisteriaError(
                     "(ERRORID024) Internal error. "
