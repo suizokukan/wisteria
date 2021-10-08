@@ -43,6 +43,18 @@ What's next ?
         https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 ===============================================================================
 
+[CURRENT] v. 0.1
+
+[DONE] task-135
+
+If verbosity is set to minimal, no progress bar. It's important for scripts
+calling this project from the outside.
+
+    * if verbosity is set to minimal, no progress bar. It's important for scripts
+      calling this project from the outside (task-135)
+      
+    * Pylint: 10/10
+
 [DONE] v. 0.0.9
 
 * --tolerateabsurdvalues

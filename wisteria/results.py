@@ -34,7 +34,7 @@ from rich.progress_bar import ProgressBar
 
 import wisteria.data
 import wisteria.globs
-from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
+from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import PROGRESSBAR_LENGTH
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
@@ -151,8 +151,8 @@ def compute_results(config,
 
             Show the cursor.
         """
-        if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
-            # the following lines make disappear the progresse bar.
+        if wisteria.globs.ARGS.verbosity not in (VERBOSITY_MINIMAL, VERBOSITY_DEBUG):
+            # the following lines make the progress bar disappear.
             # the next rprint() will overwrite the spaces that are about
             # to be added:
             if PROGRESSBAR_LENGTH is None:
@@ -180,7 +180,9 @@ def compute_results(config,
         # (progress bar)
         # Please note that there can be NO progress bar if the debug mode is enabled:
         # the output can't display both correctly.
-        if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+        # Please note that there can be NO progress bar if verbosity is set to minimal:
+        # it's important for scripts calling this project from the outside.
+        if wisteria.globs.ARGS.verbosity not in (VERBOSITY_MINIMAL, VERBOSITY_DEBUG):
             console = Console()
             progressbar = ProgressBar(width=PROGRESSBAR_LENGTH,
                                       total=len(_serializers)*len(_dataobjs))
@@ -205,7 +207,9 @@ def compute_results(config,
                 # (progress bar)
                 # Please note that there can be NO progress bar if the debug mode is enabled:
                 # the output can't display both correctly.
-                if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+                # Please note that there can be NO progress bar if verbosity is set to minimal:
+                # it's important for scripts calling this project from the outside.
+                if wisteria.globs.ARGS.verbosity not in (VERBOSITY_MINIMAL, VERBOSITY_DEBUG):
                     progressbar_index += 1
                     progressbar.update(progressbar_index)
                     console.print(progressbar)
@@ -243,6 +247,8 @@ def compute_results(config,
         # (progress bar)
         # Please note that there can be NO progress bar if the debug mode is enabled:
         # the output can't display both correctly.
+        # Please note that there can be NO progress bar if verbosity is set to minimal:
+        # it's important for scripts calling this project from the outside.
         erase_progress_bar()
 
         if not results.finish_initialization():
