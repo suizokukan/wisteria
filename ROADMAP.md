@@ -45,6 +45,14 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-139
+
+Improved help message for --memoveruse.
+
+    * improved help message for --memoveruse (task-139)
+
+    * Pylint (10/10)
+
 [DONE] task-138
 
 --mute command line argument; 'none' is a new --report shortcut;

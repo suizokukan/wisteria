@@ -158,7 +158,8 @@ PARSER.add_argument(
     help="(debug/profile, not normally to be used) Alloc extra memory objects, "
     "either from Python (='Python') "
     "either from C++ (='C++') "
-    "either from Python and C++ (='Python+C++')")
+    "either from Python and C++ (='Python+C++') "
+    "Why ? Just to see if memory profilers detect these allocations.")
 
 PARSER.add_argument(
     '--mymachine',
