@@ -45,6 +45,18 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-138
+
+--mute command line argument; 'none' is a new --report shortcut;
+
+    * --mute command line argumet; 'none' is a new --report shortcut;
+      (task-138)
+    * added default value to --checkup and --mymachine command line
+      argument definitions (task-138)
+    * improved documentation (task-138)
+      
+    * Pylint (10/10)
+
 [DONE] task-137
 
 (--memoveruse); results' func() know how to alloc extra memory 

@@ -97,6 +97,7 @@ REPORT_SHORTCUTS = {
     "glance": "titles;B1b;D1a;D1b;D2a;D2b;D2c;",
     "laconic": "D;",
     "minimal": "D2c;",
+    "none": "",
     }
 
 # default name for the config file.

@@ -142,6 +142,7 @@ PARSER.add_argument(
 PARSER.add_argument(
     '--checkup',
     action='store_true',
+    default=False,
     help="show installed serializers, try to read current config file and exit")
 
 PARSER.add_argument(
@@ -154,13 +155,15 @@ PARSER.add_argument(
     action='store',
     default='none',
     choices=('none', 'Python', 'C++', 'Python/C++'),
-    help="(debug/profile) Alloc extra memory objects, either from Python (='Python') "
+    help="(debug/profile, not normally to be used) Alloc extra memory objects, "
+    "either from Python (='Python') "
     "either from C++ (='C++') "
     "either from Python and C++ (='Python+C++')")
 
 PARSER.add_argument(
     '--mymachine',
     action='store_true',
+    default=False,
     help="display informations about the current machine and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
@@ -172,6 +175,15 @@ PARSER.add_argument(
     "Instead of 'logfile' you may specify 'logfile/a' (append mode) or 'logfile/w' (write mode). "
     "Instead of 'logfile' you may specify 'logfile=myfile.log'. "
     "Combinations like 'logfile/w=report.txt' are accepted. See by example the default value.")
+
+PARSER.add_argument(
+    '--mute',
+    action='store_true',
+    default=False,
+    help="(debug/profile only, not normally to be used) "
+    "Prevent any console or file output. "
+    "If set, set the value of --verbosity to 'minimal', "
+    "--report to 'none' and --console to ''.")
 
 PARSER.add_argument(
     '--report',
@@ -220,24 +232,27 @@ if len(sys.argv) == 1:
 # =============================================================================
 # (02) --output string
 # =============================================================================
-wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
-if not wisteria.globs.OUTPUT[0]:
-    # no log available, hence the use of rprint():
-    rprint("[bold red]Ill-formed --output string. The program has to stop.[/bold red]")
-    # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, an absurd value has been computed
-    sys.exit(-6)
-wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
+if wisteria.globs.ARGS.mute:
+    wisteria.globs.OUTPUT = False, False, "a", "report.txt"
+else:
+    wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
+    if not wisteria.globs.OUTPUT[0]:
+        # no log available, hence the use of rprint():
+        rprint("[bold red]Ill-formed --output string. The program has to stop.[/bold red]")
+        # (pimydoc)exit codes
+        # ⋅*  0: normal exit code
+        # ⋅*  1: normal exit code after --checkup
+        # ⋅*  2: normal exit code after --downloadconfigfile
+        # ⋅*  3: normal exit code after --mymachine
+        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅* -2: error, ill-formed --cmp string
+        # ⋅* -3: internal error, data can't be loaded
+        # ⋅* -4: internal error, an error occured while computing the results
+        # ⋅* -5: internal error, an error in main()
+        # ⋅* -6: error, ill-formed --output string
+        # ⋅* -7: error, an absurd value has been computed
+        sys.exit(-6)
+    wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
 # =============================================================================
 # (03) logfile opening
@@ -300,7 +315,11 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅       - (13.3) main(): config file reading
 # ⋅       - (13.4) main(): results computing
 # ⋅       - (13.5) main(): report
-if wisteria.globs.ARGS.report in REPORT_SHORTCUTS:
+if wisteria.globs.ARGS.mute:
+    wisteria.globs.ARGS.report = ""
+    wisteria.globs.ARGS.verbosity = VERBOSITY_MINIMAL
+    wisteria.globs.ARGS.output = ""
+elif wisteria.globs.ARGS.report in REPORT_SHORTCUTS:
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
         msginfo(f"--report '{wisteria.globs.ARGS.report}' "
                 f"interpreted as '{REPORT_SHORTCUTS[wisteria.globs.ARGS.report]}'.")
@@ -310,6 +329,7 @@ elif not wisteria.globs.ARGS.report.endswith(";"):
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         msginfo("--report: semicolon added at the end; "
                 f"--report is now '{wisteria.globs.ARGS.report}'.")
+
 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
     msgdebug("From now --report (wisteria.globs.ARGS.report) is set "
              f"to '{wisteria.globs.ARGS.report}'.")
