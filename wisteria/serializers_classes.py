@@ -34,7 +34,7 @@ from dataclasses import dataclass
 
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.reportaspect import aspect_serializer, aspect_ratio, aspect_time, aspect_nodata
-from wisteria.reportaspect import aspect_base100, aspect_stringlength, aspect_boolsuccess
+from wisteria.reportaspect import aspect_stringlength, aspect_boolsuccess
 from wisteria.msg import msgerror
 
 
@@ -889,25 +889,17 @@ class SerializationResults(dict):
 
             o  <str>serializer: name of the serializer to be used.
             o  <str>dataobj: name of the data object to be used.
-            o  <output>(str): "fmtstr" for a formatted returned string, "base100"
-               for a special formatted string
+            o  <output>(str): "fmtstr" for a formatted returned string
 
             RETURNED VALUE: a formatted string representing
                             self[serializer][dataobj].<attribute_name>
                 (output=='fmtstr')a formatted string representing the input argument.
-                (output=='base100')a special string considering
-                                   self[serializer][dataobj].<attribute_name>
-                                   as a base100 reference.
         """
         assert serializer is not None
         assert dataobj is not None
-        assert output in ('fmtstr', 'base100')
+        assert output in ('fmtstr',)
 
         res = None  # unexpected result !
-
-        if output == "base100":
-            base100_serializerdataobj = self.get_base(attribute=attribute_name)
-            base100 = self[base100_serializerdataobj.serializer][base100_serializerdataobj.dataobj]
 
         if attribute_name == "decoding_success":
             if output == "fmtstr":
@@ -916,10 +908,6 @@ class SerializationResults(dict):
                 else:
                     res = aspect_boolsuccess(
                         self[serializer][dataobj].decoding_success)
-            else:
-                raise WisteriaError(
-                    "(ERRORID022) Internal error. "
-                    f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "decoding_time":
             if output == "fmtstr":
@@ -928,16 +916,6 @@ class SerializationResults(dict):
                 else:
                     res = aspect_time(
                         self[serializer][dataobj].decoding_time)
-            else:
-                # output == "base100"
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].decoding_time is None:
-                    res = aspect_nodata()
-                else:
-                    res = aspect_base100(
-                        serializer == base100_serializerdataobj.serializer and
-                        dataobj == base100_serializerdataobj.dataobj,
-                        100*self[serializer][dataobj].decoding_time/base100.decoding_time)
 
         if attribute_name == "encoding_strlen":
             if output == "fmtstr":
@@ -947,16 +925,6 @@ class SerializationResults(dict):
                 else:
                     res = aspect_stringlength(
                         self[serializer][dataobj].encoding_strlen)
-            else:
-                # output == "base100"
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].encoding_strlen is None:
-                    res = aspect_nodata()
-                else:
-                    res = aspect_base100(
-                        serializer == base100_serializerdataobj.serializer and
-                        dataobj == base100_serializerdataobj.dataobj,
-                        100*self[serializer][dataobj].encoding_strlen/base100.encoding_strlen)
 
         if attribute_name == "encoding_time":
             if output == "fmtstr":
@@ -966,17 +934,6 @@ class SerializationResults(dict):
                 else:
                     res = aspect_time(
                         self[serializer][dataobj].encoding_time)
-            else:
-                # output == "base100"
-                if self[serializer][dataobj] is None:
-                    res = aspect_nodata()
-                elif self[serializer][dataobj].encoding_time is None:
-                    res = aspect_nodata()
-                else:
-                    res = aspect_base100(
-                        serializer == base100_serializerdataobj.serializer and
-                        dataobj == base100_serializerdataobj.dataobj,
-                        100*self[serializer][dataobj].encoding_time/base100.encoding_time)
 
         if attribute_name == "encoding_success":
             if output == "fmtstr":
@@ -986,10 +943,6 @@ class SerializationResults(dict):
                 else:
                     res = aspect_boolsuccess(
                         self[serializer][dataobj].encoding_success)
-            else:
-                raise WisteriaError(
-                    "(ERRORID023) Internal error. "
-                    f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if attribute_name == "similarity":
             if output == "fmtstr":
@@ -999,10 +952,6 @@ class SerializationResults(dict):
                 else:
                     res = aspect_boolsuccess(
                         self[serializer][dataobj].similarity)
-            else:
-                raise WisteriaError(
-                    "(ERRORID024) Internal error. "
-                    f"Can't compute base 100 for attribute_name='{attribute_name}'.")
 
         if res is None:
             raise WisteriaError("(ERRORID025) "
@@ -1030,16 +979,11 @@ class SerializationResults(dict):
             o  (str)output: output type and format
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
-                    - "base100": formatted string based on a "base 100" value (str)
 
             RETURNED VALUE: a formatted string representing the input arguments.
         """
         assert serializer is None or dataobj is None
-        assert output in ('fmtstr', 'value', 'base100')
-
-        if output == "base100" and self.get_serializers_base('encoding_time') is None:
-            # no base 100 reference available:
-            return aspect_nodata()
+        assert output in ('fmtstr', 'value',)
 
         res = None  # unexpected result !
         total = 0  # total time
@@ -1054,14 +998,8 @@ class SerializationResults(dict):
                     total += self[serializer][_dataobj].decoding_time
             if output == "value":
                 res = total
-            if output == "fmtstr":
+            elif output == "fmtstr":
                 res = aspect_time(total)
-            if output == "base100":
-                res = aspect_base100(
-                    serializer == self.get_serializers_base('decoding_time'),
-                    100*total/self.total_decoding_time(
-                        serializer=self.get_serializers_base('decoding_time'),
-                        output="value"))
 
         else:
             if self.dataobjs_number == 0:
@@ -1073,14 +1011,8 @@ class SerializationResults(dict):
                     total += self[_serializer][dataobj].decoding_time
             if output == "value":
                 res = total
-            if output == "fmtstr":
+            elif output == "fmtstr":
                 res = aspect_time(total)
-            if output == "base100":
-                res = aspect_base100(
-                    dataobj == self.get_dataobjs_base('decoding_time'),
-                    100*total/self.total_decoding_time(
-                        dataobj=self.get_dataobjs_base('decoding_time'),
-                        output="value"))
 
         if res is None:
             raise WisteriaError("(ERRORID026) Internal error: the result could not be computed. "
@@ -1107,7 +1039,6 @@ class SerializationResults(dict):
             o  (str)output: output type and format
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
-                    NOT "base100": no formatted string based on a "base 100" value (str)
 
             RETURNED VALUE: a formatted string representing the input arguments.
         """
@@ -1145,16 +1076,11 @@ class SerializationResults(dict):
             o  (str)output: output type and format
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
-                    - "base100": formatted string based on a "base 100" value (str)
 
             RETURNED VALUE: a formatted string representing the input arguments.
         """
         assert serializer is None or dataobj is None
-        assert output in ('fmtstr', 'value', 'base100')
-
-        if output == "base100" and self.get_serializers_base('encoding_time') is None:
-            # no base 100 reference available:
-            return aspect_nodata()
+        assert output in ('fmtstr', 'value',)
 
         res = None  # unexpected result !
         total = 0  # total time
@@ -1169,14 +1095,8 @@ class SerializationResults(dict):
                     total += self[serializer][_dataobj].encoding_strlen
             if output == "value":
                 res = total
-            if output == "fmtstr":
+            elif output == "fmtstr":
                 res = aspect_stringlength(total)
-            if output == "base100":
-                res = aspect_base100(
-                    serializer == self.get_serializers_base('encoding_strlen'),
-                    100*total/self.total_encoding_strlen(
-                        serializer=self.get_serializers_base('encoding_strlen'),
-                        output="value"))
 
         else:
             if self.dataobjs_number == 0:
@@ -1188,14 +1108,8 @@ class SerializationResults(dict):
                     total += self[_serializer][dataobj].encoding_strlen
             if output == "value":
                 res = total
-            if output == "fmtstr":
+            elif output == "fmtstr":
                 res = aspect_stringlength(total)
-            if output == "base100":
-                res = aspect_base100(
-                    dataobj == self.get_dataobjs_base('encoding_strlen'),
-                    100*total/self.total_encoding_strlen(
-                        dataobj=self.get_dataobjs_base('encoding_strlen'),
-                        output="value"))
 
         if res is None:
             raise WisteriaError("(ERRORID028) Internal error: the result could not be computed. "
@@ -1222,16 +1136,11 @@ class SerializationResults(dict):
             o  (str)output: output type and format
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
-                    - "base100": formatted string based on a "base 100" value (str)
 
             RETURNED VALUE: a formatted string representing the input argument.
         """
         assert serializer is None or dataobj is None
-        assert output in ('fmtstr', 'value', 'base100')
-
-        if output == "base100" and self.get_serializers_base('encoding_time') is None:
-            # no base 100 reference available:
-            return aspect_nodata()
+        assert output in ('fmtstr', 'value',)
 
         res = None  # unexpected result !
         total = 0  # total time
@@ -1246,14 +1155,8 @@ class SerializationResults(dict):
                     total += self[serializer][_dataobj].encoding_time
             if output == "value":
                 res = total
-            if output == "fmtstr":
+            elif output == "fmtstr":
                 res = aspect_time(total)
-            if output == "base100":
-                res = aspect_base100(
-                    serializer == self.get_serializers_base('encoding_time'),
-                    100*total/self.total_encoding_time(
-                        serializer=self.get_serializers_base('encoding_time'),
-                        output="value"))
 
         else:
             if self.dataobjs_number == 0:
@@ -1265,14 +1168,8 @@ class SerializationResults(dict):
                     total += self[_serializer][dataobj].encoding_time
             if output == "value":
                 res = total
-            if output == "fmtstr":
+            elif output == "fmtstr":
                 res = aspect_time(total)
-            if output == "base100":
-                res = aspect_base100(
-                    dataobj == self.get_dataobjs_base('encoding_time'),
-                    100*total/self.total_encoding_time(
-                        dataobj=self.get_dataobjs_base('encoding_time'),
-                        output="value"))
 
         if res is None:
             raise WisteriaError("(ERRORID029) Internal error: the result could not be computed. "

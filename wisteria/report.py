@@ -41,10 +41,6 @@
     o  report_section_b1d(results, s1s2d)
     o  report_section_b2a(results, s1s2d)
     o  report_section_b2b(results, s1s2d)
-    o  report_section_c1a(results, s1s2d)
-    o  report_section_c1b(results, s1s2d)
-    o  report_section_c2a(results, s1s2d)
-    o  report_section_c2b(results, s1s2d)
     o  report_section_d1a(results, s1s2d)
     o  report_section_d1b(results, s1s2d)
     o  report_section_d2a(results, s1s2d)
@@ -64,7 +60,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest
 from wisteria.msg import msgreport, msgreporttitle, msgdebug
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
-from wisteria.reportaspect import aspect_nodata, aspect_nounplural
+from wisteria.reportaspect import aspect_nounplural
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -310,13 +306,6 @@ def report_section_a1(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -367,13 +356,6 @@ def report_section_a2(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -427,13 +409,6 @@ def report_section_a3(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -488,13 +463,6 @@ def report_section_b1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -585,13 +553,6 @@ def report_section_b1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -665,13 +626,6 @@ def report_section_b1c(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -746,13 +700,6 @@ def report_section_b1d(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -821,13 +768,6 @@ def report_section_b2a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -918,13 +858,6 @@ def report_section_b2b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -975,443 +908,6 @@ def report_section_b2b(results,
     msgreport()
 
 
-# Since all report_() functions have the same signature, it may happen that
-# some arguments passed to the function are not used.
-# pylint: disable=unused-argument
-def report_section_c1a(results,
-                       s1s2d):
-    """
-        report_section_c1a()
-
-        Sub-function of report() for report section "C1a"
-        (pimydoc)report sections
-        ⋅* A         : main informations
-        ⋅  - A1      : main title
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
-        ⋅* B         : full details (raw results)
-        ⋅  - B1      : full details (serializers)
-        ⋅    . B1a   : full details: serializer * data object
-        ⋅    . B1b   : full details: serializers
-        ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
-        ⋅  - B2      : full details (data objects)
-        ⋅    . B2a   : full details: data object * serializer
-        ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
-
-        _______________________________________________________________________
-
-        ARGUMENT:
-        o  results: (SerializationResults)a dict of
-                    [(str)serializer][(str)data_name] = SerializationResult
-
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
-                  )
-    """
-    if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C1a) Full Details: Serializer * Data Object (base 100)")
-
-    table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Serializer > Data Object", width=28)
-    table.add_column("Encod. Ok ?", width=11)
-
-    if base100 := results.get_base('encoding_time'):
-        result = results.repr_attr(serializer=base100.serializer,
-                                   dataobj=base100.dataobj,
-                                   attribute_name='encoding_time')
-        table.add_column(f"Encod. Time (Base 100 = {result} {UNITS['time']})", width=11)
-    else:
-        table.add_column(f"Encod. Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    if base100 := results.get_base('encoding_strlen'):
-        result = results.repr_attr(serializer=base100.serializer,
-                                   dataobj=base100.dataobj,
-                                   attribute_name='encoding_strlen')
-        table.add_column(
-            f"Encoded Str. Length (Base 100 = {result} {UNITS['string length']})", width=13)
-    else:
-        table.add_column(f"Encoded Str. {aspect_nodata('(NO BASE 100)')}",
-                         width=13)
-
-    table.add_column("Decod. Ok ?", width=11)
-
-    if base100 := results.get_base('decoding_time'):
-        result = results.repr_attr(serializer=base100.serializer,
-                                   dataobj=base100.dataobj,
-                                   attribute_name='decoding_time')
-        table.add_column(f"Decod. Time (Base 100 = {result} {UNITS['time']})", width=11)
-    else:
-        table.add_column(f"Decod. Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    table.add_column("Encod.<>Decod. ?", width=16)
-
-    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        table.add_column("finger print ( serial. + dataobj)", width=9)
-
-    for serializer in results.serializers:
-        table.add_row(f"{aspect_serializer(serializer)} :")
-        for dataobj in results.dataobjs:
-            if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
-                # everything but debug mode:
-                table.add_row(
-                    "> " + f"{aspect_data(dataobj)}",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
-                    results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
-                    results.repr_attr(serializer, dataobj, "similarity"))
-            else:
-                # debug mode:
-                table.add_row(
-                    "> " + f"{aspect_data(dataobj)}",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time", output="base100"),
-                    results.repr_attr(serializer, dataobj, "encoding_strlen", output="base100"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time", output="base100"),
-                    results.repr_attr(serializer, dataobj, "similarity"),
-                    "["+strdigest(serializer+dataobj)+"]")
-    msgreport(table)
-    msgreport()
-
-
-def report_section_c1b(results,
-                       s1s2d):
-    """
-        report_section_c1b()
-
-        Sub-function of report() for report section "C1b"
-        (pimydoc)report sections
-        ⋅* A         : main informations
-        ⋅  - A1      : main title
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
-        ⋅* B         : full details (raw results)
-        ⋅  - B1      : full details (serializers)
-        ⋅    . B1a   : full details: serializer * data object
-        ⋅    . B1b   : full details: serializers
-        ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
-        ⋅  - B2      : full details (data objects)
-        ⋅    . B2a   : full details: data object * serializer
-        ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
-
-        _______________________________________________________________________
-
-        ARGUMENT:
-        o  results: (SerializationResults)a dict of
-                    [(str)serializer][(str)data_name] = SerializationResult
-
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
-                  )
-    """
-    if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C1b) Full Details: Serializers (base 100)")
-
-    table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Serializer", width=28)
-    table.add_column(f"Encod. Ok ? (Max={results.dataobjs_number})", width=11)
-    if base100 := results.get_serializers_base('encoding_time'):
-        table.add_column(
-            "Σ Encoded Time "
-            f"(Base 100 = {results.total_encoding_time(serializer=base100)} {UNITS['time']})",
-            width=11)
-    else:
-        table.add_column(f"Σ Encoded Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    if base100 := results.get_serializers_base('encoding_strlen'):
-        table.add_column(
-            "Σ Encoded Str. Length "
-            f"(Base 100 = {results.total_encoding_strlen(serializer=base100)} "
-            f"{UNITS['string length']})",
-            width=13)
-    else:
-        table.add_column(f"Σ Encoded Str. {aspect_nodata('(NO BASE 100)')}", width=11)
-
-    table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
-
-    if base100 := results.get_serializers_base('decoding_time'):
-        table.add_column(
-            "Σ Decoded Time "
-            f"(Base 100 = {results.total_decoding_time(serializer=base100)} {UNITS['time']})",
-            width=11)
-    else:
-        table.add_column(f"Σ Decoded Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
-
-    for serializer in results.serializers:
-        table.add_row(
-            f"{aspect_serializer(serializer)}",
-            f"{results.ratio_encoding_success(serializer=serializer)}",
-            f"{results.total_encoding_time(serializer=serializer, output='base100')}",
-            f"{results.total_encoding_strlen(serializer=serializer, output='base100')}",
-            f"{results.ratio_decoding_success(serializer=serializer)}",
-            f"{results.total_decoding_time(serializer=serializer, output='base100')}",
-            f"{results.ratio_similarity(serializer=serializer)}",
-        )
-    msgreport(table)
-    msgreport()
-
-
-def report_section_c2a(results,
-                       s1s2d):
-    """
-        report_section_c2a()
-
-        Sub-function of report() for report section "C2a"
-        (pimydoc)report sections
-        ⋅* A         : main informations
-        ⋅  - A1      : main title
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
-        ⋅* B         : full details (raw results)
-        ⋅  - B1      : full details (serializers)
-        ⋅    . B1a   : full details: serializer * data object
-        ⋅    . B1b   : full details: serializers
-        ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
-        ⋅  - B2      : full details (data objects)
-        ⋅    . B2a   : full details: data object * serializer
-        ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
-
-        _______________________________________________________________________
-
-        ARGUMENT:
-        o  results: (SerializationResults)a dict of
-                    [(str)serializer][(str)data_name] = SerializationResult
-
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
-                  )
-    """
-    if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C2a) Full Details: Data Object * Serializer (base 100)")
-
-    table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object > Serializer", width=28)
-
-    table.add_column("Encod. Ok ?", width=11)
-
-    if base100 := results.get_base('encoding_time'):
-        result = results.repr_attr(serializer=base100.serializer,
-                                   dataobj=base100.dataobj,
-                                   attribute_name='encoding_time')
-        table.add_column(f"Encod. Time (Base 100 = {result} {UNITS['time']})", width=11)
-    else:
-        table.add_column(f"Encod. Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    if base100 := results.get_base('encoding_strlen'):
-        result = results.repr_attr(serializer=base100.serializer,
-                                   dataobj=base100.dataobj,
-                                   attribute_name='encoding_strlen')
-        table.add_column(
-            f"Encoded Str. Length (Base 100 = {result} {UNITS['string length']})", width=13)
-    else:
-        table.add_column(f"Encoded Str. Length {aspect_nodata('(NO BASE 100)')}",
-                         width=13)
-
-    table.add_column("Decod. Ok ?", width=11)
-
-    if base100 := results.get_base('decoding_time'):
-        result = results.repr_attr(serializer=base100.serializer,
-                                   dataobj=base100.dataobj,
-                                   attribute_name='decoding_time')
-        table.add_column(f"Decod. Time (Base 100 = {result} {UNITS['time']})", width=11)
-    else:
-        table.add_column(f"Decod. Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    table.add_column("Encod.<>Decod. ?", width=16)
-
-    for dataobj in results.dataobjs:
-        table.add_row(f"{aspect_data(dataobj)} :")
-        for serializer in results.serializers:
-            table.add_row(
-                "> " + f"{aspect_serializer(serializer)}",
-                results.repr_attr(serializer, dataobj, "encoding_success"),
-                results.repr_attr(serializer, dataobj, "encoding_time", output='base100'),
-                results.repr_attr(serializer, dataobj, "encoding_strlen", output='base100'),
-                results.repr_attr(serializer, dataobj, "decoding_success"),
-                results.repr_attr(serializer, dataobj, "decoding_time", output='base100'),
-                results.repr_attr(serializer, dataobj, "similarity")
-            )
-    msgreport(table)
-    msgreport()
-
-
-def report_section_c2b(results,
-                       s1s2d):
-    """
-        report_section_c2b()
-
-        Sub-function of report() for report section "C2b"
-        (pimydoc)report sections
-        ⋅* A         : main informations
-        ⋅  - A1      : main title
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
-        ⋅* B         : full details (raw results)
-        ⋅  - B1      : full details (serializers)
-        ⋅    . B1a   : full details: serializer * data object
-        ⋅    . B1b   : full details: serializers
-        ⋅    . B1c   : full details: serializers, hall of fame
-        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
-        ⋅  - B2      : full details (data objects)
-        ⋅    . B2a   : full details: data object * serializer
-        ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
-
-        _______________________________________________________________________
-
-        ARGUMENT:
-        o  results: (SerializationResults)a dict of
-                    [(str)serializer][(str)data_name] = SerializationResult
-
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
-                  )
-    """
-    if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(C2b) Full Details: Data Objects (base 100)")
-
-    table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object", width=28)
-    table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
-
-    if base100 := results.get_dataobjs_base('encoding_time'):
-        table.add_column(
-            "Σ Encoded Time "
-            f"(Base 100 = {results.total_encoding_time(dataobj=base100)} {UNITS['time']})",
-            width=11)
-    else:
-        table.add_column(f"Σ Encoded Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    if base100 := results.get_dataobjs_base('encoding_strlen'):
-        table.add_column(
-            "Σ Encoded Str. Length "
-            f"(Base 100 = {results.total_encoding_strlen(dataobj=base100)} "
-            f"{UNITS['string length']})",
-            width=13)
-    else:
-        table.add_column(f"Σ Encoded Str. Length {aspect_nodata('(NO BASE 100)')}", width=13)
-
-    table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
-
-    if base100 := results.get_dataobjs_base('decoding_time'):
-        table.add_column(
-            "Σ Decoded Time "
-            f"(Base 100 = {results.total_decoding_time(dataobj=base100)} "
-            f"{UNITS['time']})",
-            width=11)
-    else:
-        table.add_column(f"Σ Decoded Time {aspect_nodata('(NO BASE 100)')}",
-                         width=11)
-
-    table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)
-
-    for dataobj in results.dataobjs:
-        table.add_row(
-            f"{aspect_data(dataobj)}",
-            f"{results.ratio_encoding_success(dataobj=dataobj)}",
-            f"{results.total_encoding_time(dataobj=dataobj, output='base100')}",
-            f"{results.total_encoding_strlen(dataobj=dataobj, output='base100')}",
-            f"{results.ratio_decoding_success(dataobj=dataobj)}",
-            f"{results.total_decoding_time(dataobj=dataobj, output='base100')}",
-            f"{results.ratio_similarity(dataobj=dataobj)}",
-        )
-    msgreport(table)
-    msgreport()
-
-
 def report_section_d1a(results,
                        s1s2d):
     """
@@ -1432,13 +928,6 @@ def report_section_d1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -1559,13 +1048,6 @@ def report_section_d1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -1686,13 +1168,6 @@ def report_section_d2a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -1777,13 +1252,6 @@ def report_section_d2b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -1864,13 +1332,6 @@ def report_section_d2c(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -2218,13 +1679,6 @@ def report_section_e1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -2277,13 +1731,6 @@ def report_section_e1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
@@ -2342,17 +1789,6 @@ STR2REPORTSECTION = {
                report_section_b2b,),
         "B2a": (report_section_b2a,),
         "B2b": (report_section_b2b,),
-        "C": (report_section_c1a,
-              report_section_c1b,
-              report_section_c2a,
-              report_section_c2b,),
-        "C1": (report_section_c1a,
-               report_section_c1b,),
-        "C1a": (report_section_c1a,),
-        "C1b": (report_section_c1b,),
-        "C2": (report_section_c2b,),
-        "C2a": (report_section_c2a,),
-        "C2b": (report_section_c2b,),
         "D": (report_section_d1a,
               report_section_d1b,
               report_section_d2a,
@@ -2398,13 +1834,6 @@ def report(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* C         : full details (base 100)
-        ⋅  - C1      : full details (serializers, base 100)
-        ⋅    . C1a   : full details: serializer * data object (base 100)
-        ⋅    . C1b   : full details: serializers (base 100)
-        ⋅  - C2      : full details (data objects, base 100)
-        ⋅    . C2a   : full details: data object * serializer (base 100)
-        ⋅    . C2b   : full details: data objects (base 100)
         ⋅* D         : conclusions
         ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . D1a   : conclusion: data objects handled by the serializer(s)

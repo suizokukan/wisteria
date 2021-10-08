@@ -25,7 +25,6 @@
 
     ___________________________________________________________________________
 
-    o  aspect_base100(bool_is_base100_reference, float_base100)
     o  aspect_boolsuccess(bool_success)
     o  aspect_data(data_objectname)
     o  aspect_list(listitems)
@@ -40,36 +39,6 @@
     o  aspect_title(title)
 """
 import wisteria.globs
-
-
-def aspect_base100(bool_is_base100_reference,
-                   float_base100):
-    """
-        SerializationResults.aspect_base100()
-
-        Format (float)<float_base100> and return this value as a string.
-        If <bool_is_base100_reference> is True, it means that <float_base100>
-        is the base100 reference value: its representation will therefore be
-         slightly different.
-        ___________________________________________________________________
-
-        ARGUMENTS:
-        o  (bool)bool_is_base100_reference : is <float_base100> a base100
-                                             reference value ?
-        o  (float)float_base100
-
-        RETURNED VALUE: a formatted string representing <float_base100>.
-    """
-    if float_base100 is None:
-        return aspect_nodata()
-
-    prefix = " "
-    suffix = ""
-    if bool_is_base100_reference:
-        prefix = "[italic]*"
-        suffix = "[/italic]"
-
-    return f"{prefix}{float_base100:.2f}{suffix}"
 
 
 def aspect_boolsuccess(bool_success):

@@ -47,6 +47,14 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-140
+
+reports: no more base100
+
+    * reports: no more base100 (task-140)
+
+    * Pylint (10/10)
+
 [DONE] task-139
 
 Improved help message for --memoveruse.

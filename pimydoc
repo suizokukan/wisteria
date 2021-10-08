@@ -88,13 +88,6 @@ data objects
   - B2      : full details (data objects)
     . B2a   : full details: data object * serializer
     . B2b   : full details: data objects
-* C         : full details (base 100)
-  - C1      : full details (serializers, base 100)
-    . C1a   : full details: serializer * data object (base 100)
-    . C1b   : full details: serializers (base 100)
-  - C2      : full details (data objects, base 100)
-    . C2a   : full details: data object * serializer (base 100)
-    . C2b   : full details: data objects (base 100)
 * D         : conclusions
   - D1      : conclusion: data objects handled/not handled by the serializer(s)
     . D1a   : conclusion: data objects handled by the serializer(s)
