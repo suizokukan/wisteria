@@ -46,6 +46,15 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-141
+
+Renamed reports sections: ancient E* sections > D*, ancient D* sections > C* .
+
+    * renamed reports sections: ancient E* sections > D*, ancient D* 
+      sections > C* (task-141)
+      
+    * Pylint (10/10)
+
 [DONE] task-140
 
 reports: no more base100

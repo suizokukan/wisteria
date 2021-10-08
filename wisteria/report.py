@@ -41,11 +41,13 @@
     o  report_section_b1d(results, s1s2d)
     o  report_section_b2a(results, s1s2d)
     o  report_section_b2b(results, s1s2d)
+    o  report_section_c1a(results, s1s2d)
+    o  report_section_c1b(results, s1s2d)
+    o  report_section_c2a(results, s1s2d)
+    o  report_section_c2b(results, s1s2d)
+    o  report_section_c2c(results, s1s2d)
     o  report_section_d1a(results, s1s2d)
     o  report_section_d1b(results, s1s2d)
-    o  report_section_d2a(results, s1s2d)
-    o  report_section_d2b(results, s1s2d)
-    o  report_section_d2c(results, s1s2d)
 
     o  report(results, s1s2d)
 """
@@ -306,18 +308,18 @@ def report_section_a1(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -356,18 +358,18 @@ def report_section_a2(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -409,18 +411,18 @@ def report_section_a3(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -463,18 +465,18 @@ def report_section_b1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -553,18 +555,18 @@ def report_section_b1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -626,18 +628,18 @@ def report_section_b1c(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -700,18 +702,18 @@ def report_section_b1d(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -768,18 +770,18 @@ def report_section_b2a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -858,18 +860,18 @@ def report_section_b2b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
 
         _______________________________________________________________________
 
@@ -908,12 +910,12 @@ def report_section_b2b(results,
     msgreport()
 
 
-def report_section_d1a(results,
+def report_section_c1a(results,
                        s1s2d):
     """
-        report_section_d1a()
+        report_section_c1a()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "C1a"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -928,18 +930,18 @@ def report_section_d1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1003,7 +1005,7 @@ def report_section_d1a(results,
                 f"{aspect_list(_list, aspect_data)} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D1a) Conclusion: Data Objects Handled by the Serializer(s)")
+        msgreporttitle("(C1a) Conclusion: Data Objects Handled by the Serializer(s)")
         msgreport()
 
     serializer1, serializer2, cmpdata = s1s2d
@@ -1028,12 +1030,12 @@ def report_section_d1a(results,
         msgreport()
 
 
-def report_section_d1b(results,
+def report_section_c1b(results,
                        s1s2d):
     """
-        report_section_d1b()
+        report_section_c1b()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "C1b"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -1048,18 +1050,18 @@ def report_section_d1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1122,7 +1124,7 @@ def report_section_d1b(results,
                 f"{aspect_list(_list, aspect_data)} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D1b) Conclusion: "
+        msgreporttitle("(C1b) Conclusion: "
                        "Data Objects [italic]NOT[/italic] Handled by the Serializer(s)")
         msgreport()
 
@@ -1148,12 +1150,12 @@ def report_section_d1b(results,
         msgreport()
 
 
-def report_section_d2a(results,
+def report_section_c2a(results,
                        s1s2d):
     """
-        report_section_d2a()
+        report_section_c2a()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "C2a"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -1168,18 +1170,18 @@ def report_section_d2a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1192,7 +1194,7 @@ def report_section_d2a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D2a) Conclusion: Serializers ([italic]Not Sorted[/italic])")
+        msgreporttitle("(C2a) Conclusion: Serializers ([italic]Not Sorted[/italic])")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer", width=25)
@@ -1232,12 +1234,12 @@ def report_section_d2a(results,
     msgreport()
 
 
-def report_section_d2b(results,
+def report_section_c2b(results,
                        s1s2d):
     """
-        report_section_d2b()
+        report_section_c2b()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "C2b"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -1252,18 +1254,18 @@ def report_section_d2b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1276,7 +1278,7 @@ def report_section_d2b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D2b) "
+        msgreporttitle("(C2b) "
                        "Conclusion: Overall Score Based on 3 Points "
                        "(Σ Encoded Str./Σ Encod.+Decod. Time/Encod.<>Decod.)")
 
@@ -1312,12 +1314,12 @@ def report_section_d2b(results,
     msgreport()
 
 
-def report_section_d2c(results,
+def report_section_c2c(results,
                        s1s2d):
     """
-        report_section_d2c()
+        report_section_c2c()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "C2c"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -1332,18 +1334,18 @@ def report_section_d2c(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1356,7 +1358,7 @@ def report_section_d2c(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D2c) Conclusion")
+        msgreporttitle("(C2c) Conclusion")
 
     serializer1, serializer2, cmpdata = s1s2d
 
@@ -1659,12 +1661,12 @@ def report_section_d2c(results,
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
 # pylint: disable=unused-argument
-def report_section_e1a(results,
+def report_section_d1a(results,
                        s1s2d):
     """
-        report_section_e1a()
+        report_section_d1a()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "D1a"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -1679,18 +1681,18 @@ def report_section_e1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1703,7 +1705,7 @@ def report_section_e1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(E1a) Informations About The Machine ([italic]No Details[/italic])")
+        msgreporttitle("(D1a) Informations About The Machine ([italic]No Details[/italic])")
 
     mymachine(fulldetails=False)
 
@@ -1711,12 +1713,12 @@ def report_section_e1a(results,
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
 # pylint: disable=unused-argument
-def report_section_e1b(results,
+def report_section_d1b(results,
                        s1s2d):
     """
-        report_section_e1b()
+        report_section_d1b()
 
-        Sub-function of report() for report section "A3"
+        Sub-function of report() for report section "D1b"
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : main title
@@ -1731,18 +1733,18 @@ def report_section_e1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENT:
@@ -1755,7 +1757,7 @@ def report_section_e1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(E1b) Informations About The Machine ([italic]Full Details[/italic])")
+        msgreporttitle("(D1b) Informations About The Machine ([italic]Full Details[/italic])")
 
     mymachine(fulldetails=True)
 
@@ -1789,27 +1791,27 @@ STR2REPORTSECTION = {
                report_section_b2b,),
         "B2a": (report_section_b2a,),
         "B2b": (report_section_b2b,),
+        "C": (report_section_c1a,
+              report_section_c1b,
+              report_section_c2a,
+              report_section_c2b,
+              report_section_c2c,),
+        "C1": (report_section_c1a,
+               report_section_c1b,),
+        "C1a": (report_section_c1a,),
+        "C1b": (report_section_c1b,),
+        "C2": (report_section_c2a,
+               report_section_c2b,
+               report_section_c2c),
+        "C2a": (report_section_c2a,),
+        "C2b": (report_section_c2b,),
+        "C2c": (report_section_c2c,),
         "D": (report_section_d1a,
-              report_section_d1b,
-              report_section_d2a,
-              report_section_d2b,
-              report_section_d2c,),
+              report_section_d1b,),
         "D1": (report_section_d1a,
-               report_section_d1b,),
+               report_section_d1b),
         "D1a": (report_section_d1a,),
         "D1b": (report_section_d1b,),
-        "D2": (report_section_d2a,
-               report_section_d2b,
-               report_section_d2c),
-        "D2a": (report_section_d2a,),
-        "D2b": (report_section_d2b,),
-        "D2c": (report_section_d2c,),
-        "E": (report_section_e1a,
-              report_section_e1b,),
-        "E1": (report_section_e1a,
-               report_section_e1b),
-        "E1a": (report_section_e1a,),
-        "E1b": (report_section_e1b,),
 }
 
 
@@ -1834,18 +1836,18 @@ def report(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
-        ⋅* D         : conclusions
-        ⋅  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-        ⋅    . D1a   : conclusion: data objects handled by the serializer(s)
-        ⋅    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-        ⋅  - D2      : conclusion: final text and data
-        ⋅    . D2a   : conclusion: serializers (not sorted)
-        ⋅    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-        ⋅    . D2c   : conclusion
-        ⋅* E         : various informations
-        ⋅  - E1      : informations about the machine
-        ⋅    . E1a   : informations about the machine (no details)
-        ⋅    . E1b   : informations about the machine (full details)
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no details)
+        ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
         ARGUMENTS:

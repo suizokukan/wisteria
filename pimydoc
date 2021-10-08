@@ -88,16 +88,16 @@ data objects
   - B2      : full details (data objects)
     . B2a   : full details: data object * serializer
     . B2b   : full details: data objects
-* D         : conclusions
-  - D1      : conclusion: data objects handled/not handled by the serializer(s)
-    . D1a   : conclusion: data objects handled by the serializer(s)
-    . D1b   : conclusion: data objects NOT handled by the serializer(s)
-  - D2      : conclusion: final text and data
-    . D2a   : conclusion: serializers (not sorted)
-    . D2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
-    . D2c   : conclusion
-* E         : various informations
-  - E1      : informations about the machine
-    . E1a   : informations about the machine (no details)
-    . E1b   : informations about the machine (full details)
+* C         : conclusions
+  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+    . C1a   : conclusion: data objects handled by the serializer(s)
+    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+  - C2      : conclusion: final text and data
+    . C2a   : conclusion: serializers (not sorted)
+    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+    . C2c   : conclusion
+* D         : various informations
+  - D1      : informations about the machine
+    . D1a   : informations about the machine (no details)
+    . D1b   : informations about the machine (full details)
 ### ==========================================================================
