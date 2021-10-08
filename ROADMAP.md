@@ -45,6 +45,19 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-137
+
+(--memoveruse); results' func() know how to alloc extra memory 
+when "C++" is in --memoveruse.
+
+    * (--memoveruse); results' func() know how to alloc extra memory 
+      when "C++" is in --memoveruse (task-137)
+    * add cppyy to projects' dependencies (task-137)
+    * new directory: memoverabuse_cpp/
+    * improved documentation (task-137)
+      
+    * Pylint (10/10)
+
 [DONE] task-136
 
 --memoveruse command line argument; results func() knows how to alloc 
