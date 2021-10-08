@@ -4,9 +4,9 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-0.2.2 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+0.2.1 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
       comment signaler cette anomalie ?
-0.2.1 ajouter un max de serializers
+0.2.0 ajouter un max de serializers
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         ion (https://github.com/amzn/ion-python)
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -18,18 +18,17 @@ What's next ?
         yajl (https://pypi.org/project/yajl/)
         ujson (https://pypi.org/project/ujson/)
         
-0.2.0 ajouter un max de données 
+0.1.9 ajouter un max de données 
       jouer avec des données d'au moins 50 Mo de json string.
       numpy data
       panda data
-0.1.9 README.md acceptable
-0.1.8 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+0.1.8 README.md acceptable
+0.1.7 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
       chercher si une combinaison donne des résultats vraiment différents des autres
-0.1.7 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-0.1.6 cwc
-0.1.5 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
-0.1.4 tests
-0.1.3 supprimer base100
+0.1.6 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+0.1.5 cwc
+0.1.4 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
+0.1.3 tests
 0.1.2 graphs (https://serpy.readthedocs.io/en/latest/performance.html,
               https://konstantin.blog/2010/pickle-vs-json-which-is-faster/)
       report000.jpg, report000.jpg, 
