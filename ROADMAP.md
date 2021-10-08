@@ -41,6 +41,8 @@ What's next ?
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 0.1   speed/size/memory usage/similarity/
         https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
+        
+      + doublecheck_memusage.py (valgrind)
 ===============================================================================
 
 [CURRENT] v. 0.1
