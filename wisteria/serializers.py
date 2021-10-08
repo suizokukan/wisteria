@@ -109,6 +109,12 @@ def serializer_iaswn(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID030) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False
@@ -172,12 +178,24 @@ def serializer_json(action="serialize",
     """
     module = MODULES["json"]
 
+    # -------------------
+    # action == "version"
+    # -------------------
     if action == "version":
         return module.__version__
 
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
     if action != "serialize":
         raise WisteriaError(f"(ERRORID031) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False
@@ -241,12 +259,24 @@ def serializer_jsonpickle(action="serialize",
     """
     module = MODULES["jsonpickle"]
 
+    # -------------------
+    # action == "version"
+    # -------------------
     if action == "version":
         return module.__version__
 
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
     if action != "serialize":
         raise WisteriaError(f"(ERRORID032) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False
@@ -310,12 +340,24 @@ def serializer_jsonpickle_keystrue(action="serialize",
     """
     module = MODULES["jsonpickle"]
 
+    # -------------------
+    # action == "version"
+    # -------------------
     if action == "version":
         return module.__version__
 
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
     if action != "serialize":
         raise WisteriaError(f"(ERRORID042) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False
@@ -379,12 +421,24 @@ def serializer_marshal(action="serialize",
     """
     module = MODULES["marshal"]
 
+    # -------------------
+    # action == "version"
+    # -------------------
     if action == "version":
         return f"version {module.version}; (Python version) {sys.version.replace(chr(0x0A), '- ')}"
 
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
     if action != "serialize":
         raise WisteriaError(f"(ERRORID033) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False
@@ -448,12 +502,24 @@ def serializer_pickle(action="serialize",
     """
     module = MODULES["pickle"]
 
+    # -------------------
+    # action == "version"
+    # -------------------
     if action == "version":
         return f"(Python version) {sys.version.replace(chr(0x0A), '- ')}"
 
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
     if action != "serialize":
         raise WisteriaError(f"(ERRORID034) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False
@@ -517,12 +583,24 @@ def serializer_pyyaml(action="serialize",
     """
     module = MODULES["yaml"]
 
+    # -------------------
+    # action == "version"
+    # -------------------
     if action == "version":
         return module.__version__
 
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
     if action != "serialize":
         raise WisteriaError(f"(ERRORID044) Unknown 'action' keyword '{action}'.")
 
+    # ---- --memoveruse ? -----------------------------------------------------
+    if 'Python' in wisteria.globs.ARGS.memoveruse:
+        # pylint: disable=possibly-unused-variable
+        dumbstr = "0123456789"*1000000
+
+    # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
     _error = False

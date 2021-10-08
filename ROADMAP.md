@@ -45,6 +45,19 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-136
+
+--memoveruse command line argument; results func() knows how to alloc 
+extra memory when "Python" is in --memoveruse.
+
+    * --memoveruse command line argument; results func() knows how to alloc 
+      extra memory when "Python" is in --memoveruse (task-136)
+    * new debug message (displayed when verbosity is set to VERBOSITY_DEBUG)
+      describing the content of --memoveruse. (task-136)
+    * improved documentation (task-136)
+
+    * Pylint: 10/10
+
 [DONE] task-135
 
 If verbosity is set to minimal, no progress bar. It's important for scripts

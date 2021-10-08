@@ -150,6 +150,15 @@ PARSER.add_argument(
     help="download default config file and exit")
 
 PARSER.add_argument(
+    '--memoveruse',
+    action='store',
+    default='none',
+    choices=('none', 'Python', 'C++', 'Python/C++'),
+    help="(debug/profile) Alloc extra memory objects, either from Python (='Python') "
+    "either from C++ (='C++') "
+    "either from Python and C++ (='Python+C++')")
+
+PARSER.add_argument(
     '--mymachine',
     action='store_true',
     help="display informations about the current machine and exit. "
@@ -304,6 +313,9 @@ elif not wisteria.globs.ARGS.report.endswith(";"):
 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
     msgdebug("From now --report (wisteria.globs.ARGS.report) is set "
              f"to '{wisteria.globs.ARGS.report}'.")
+
+if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+    msgdebug(f"--memoveruse has been set to '{wisteria.globs.ARGS.memoveruse}' .")
 
 # =============================================================================
 # This point is only reached if there's no --version/--help argument
