@@ -336,8 +336,8 @@ def report_section_a1(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -392,8 +392,8 @@ def report_section_a2(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -445,8 +445,8 @@ def report_section_a3(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -499,8 +499,8 @@ def report_section_b1a(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
 
         _______________________________________________________________________
 
@@ -592,8 +592,8 @@ def report_section_b1b(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
 
         _______________________________________________________________________
 
@@ -667,8 +667,8 @@ def report_section_b1c(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
 
         _______________________________________________________________________
 
@@ -743,8 +743,8 @@ def report_section_b1d(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
 
         _______________________________________________________________________
 
@@ -811,8 +811,8 @@ def report_section_b2a(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
 
         _______________________________________________________________________
 
@@ -904,8 +904,8 @@ def report_section_b2b(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
 
         _______________________________________________________________________
 
@@ -976,8 +976,8 @@ def report_section_c1a(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1096,8 +1096,8 @@ def report_section_c1b(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1216,8 +1216,8 @@ def report_section_c2a(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1302,8 +1302,8 @@ def report_section_c2b(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1832,8 +1832,8 @@ def report_section_c2c(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1891,8 +1891,8 @@ def report_section_d1a(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1905,7 +1905,8 @@ def report_section_d1a(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D1a) Informations About The Machine ([italic]No Details[/italic])")
+        msgreporttitle(
+            "(D1a) Informations About The Machine ([italic]No Extensive Details[/italic])")
 
     mymachine(fulldetails=False)
 
@@ -1943,8 +1944,8 @@ def report_section_d1b(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1957,7 +1958,8 @@ def report_section_d1b(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(D1b) Informations About The Machine ([italic]Full Details[/italic])")
+        msgreporttitle(
+            "(D1b) Informations About The Machine ([italic]Extensive Details[/italic])")
 
     mymachine(fulldetails=True)
 
@@ -2046,8 +2048,8 @@ def report(results,
         ⋅    . C2c   : conclusion
         ⋅* D         : various informations
         ⋅  - D1      : informations about the machine
-        ⋅    . D1a   : informations about the machine (no details)
-        ⋅    . D1b   : informations about the machine (full details)
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
         _______________________________________________________________________
 
         ARGUMENTS:

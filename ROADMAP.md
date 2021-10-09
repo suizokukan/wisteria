@@ -46,6 +46,16 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-148
+
+Improved titles in reports (D1a and D1b).
+
+    * improved titles in reports (D1a and D1b)
+      (task-148)
+    * updated pimydoc (D1a and D1b titles) (task-148)
+      
+    * Pylint: 10/10
+
 [DONE] task-147
 
 Added a shebang line to memoveruse_cpp/compile.sh.

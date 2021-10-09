@@ -98,6 +98,6 @@ data objects
     . C2c   : conclusion
 * D         : various informations
   - D1      : informations about the machine
-    . D1a   : informations about the machine (no details)
-    . D1b   : informations about the machine (full details)
+    . D1a   : informations about the machine (no extensive details)
+    . D1b   : informations about the machine (extensive details)
 ### ==========================================================================
