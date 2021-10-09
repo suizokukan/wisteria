@@ -46,6 +46,14 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-147
+
+Added a shebang line to memoveruse_cpp/compile.sh.
+
+    * added a shebang line to memoveruse_cpp/compile.sh (task-147)
+
+    * Pylint 10/10
+
 [DONE] task-146
 
 Bugfix: if mem usage is 0, no more exception (ZeroDivisionError) in report.
