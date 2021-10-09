@@ -46,6 +46,16 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-143
+
+New variable in globs.py: DEFAULT_LOGFILE_NAME, replacing
+old 'report.txt' occurences.
+
+    * new variable in globs.py: DEFAULT_LOGFILE_NAME, replacing
+      old 'report.txt' occurences (task-143)
+
+    * Pylint (10/10)
+
 [DONE] task-142
 
 Memory usage is now checked and displayed in reports.

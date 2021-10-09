@@ -59,6 +59,8 @@
     o  PROGRESSBAR_LENGTH
 
     o  UNITS
+
+    o  DEFAULT_LOGFILE_NAME
 """
 import re
 
@@ -159,3 +161,6 @@ UNITS = {'time': 'seconds',
          'string length': 'characters',
          'memory': 'bytes',
          }
+
+# default name for the log file
+DEFAULT_LOGFILE_NAME = "report.txt"
