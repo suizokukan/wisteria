@@ -38,6 +38,7 @@
 
     o  init_serializers()
 """
+import resource
 import sys
 import timeit
 
@@ -129,6 +130,8 @@ def serializer_iaswn(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.encode(obj)
@@ -156,6 +159,9 @@ def serializer_iaswn(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -212,6 +218,8 @@ def serializer_json(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.dumps(obj)
@@ -239,6 +247,9 @@ def serializer_json(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -295,6 +306,8 @@ def serializer_jsonpickle(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.dumps(obj)
@@ -322,6 +335,9 @@ def serializer_jsonpickle(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -378,6 +394,8 @@ def serializer_jsonpickle_keystrue(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.dumps(obj, keys=True)
@@ -405,6 +423,9 @@ def serializer_jsonpickle_keystrue(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -461,6 +482,8 @@ def serializer_marshal(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.dumps(obj)
@@ -488,6 +511,9 @@ def serializer_marshal(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -544,6 +570,8 @@ def serializer_pickle(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.dumps(obj)
@@ -571,6 +599,9 @@ def serializer_pickle(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -627,6 +658,8 @@ def serializer_pyyaml(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
+    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     _error = False
     try:
         _res = module.dump(obj, Dumper=module.Dumper)
@@ -654,6 +687,9 @@ def serializer_pyyaml(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
+
+    if res is not None and res.similarity is True:
+        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 

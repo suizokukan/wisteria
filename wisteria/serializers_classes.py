@@ -34,7 +34,7 @@ from dataclasses import dataclass
 
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.reportaspect import aspect_serializer, aspect_ratio, aspect_time, aspect_nodata
-from wisteria.reportaspect import aspect_stringlength, aspect_boolsuccess
+from wisteria.reportaspect import aspect_stringlength, aspect_boolsuccess, aspect_mem_usage
 from wisteria.msg import msgerror
 
 
@@ -158,13 +158,13 @@ class SerializationResult:
         _______________________________________________________________________
 
         instance attributes:
-        o  (bool)encoding_success
-        o  (bool)encoding_time
-        o  (bool)encoding_strlen
-        o  (bool)decoding_success
-        o  (bool)decoding_time
-        o  (bool)similarity
-
+        o  (bool)  encoding_success
+        o  (float) encoding_time
+        o  (int)   encoding_strlen
+        o  (bool)  decoding_success
+        o  (float) decoding_time
+        o  (bool)  similarity
+        o  (int)   mem_usage
 
         methods:
 
@@ -179,12 +179,13 @@ class SerializationResult:
 
             ARGUMENTS:
 
-            o  (bool)encoding_success
-            o  (bool)encoding_time
-            o  (bool)encoding_strlen
-            o  (bool)decoding_success
-            o  (bool)decoding_time
-            o  (bool)similarity
+            o  (bool)  encoding_success
+            o  (float) encoding_time
+            o  (int)   encoding_strlen
+            o  (bool)  decoding_success
+            o  (float) decoding_time
+            o  (bool)  similarity
+            o  (int)   mem_usage
         """
         self.encoding_success = False
         self.encoding_time = None
@@ -192,13 +193,15 @@ class SerializationResult:
         self.decoding_success = False
         self.decoding_time = None
         self.similarity = False
+        self.mem_usage = None
 
     def __repr__(self):
         """
             SerializationResult.__repr__()
         """
         return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_strlen=}; " \
-            f"{self.decoding_success=}; {self.decoding_time=}; {self.similarity=}"
+            f"{self.decoding_success=}; {self.decoding_time=}; {self.similarity=}; " \
+            "{self.mem_usage=}"
 
 
 class SerializationResults(dict):
@@ -252,6 +255,7 @@ class SerializationResults(dict):
         o  total_encoding_plus_decoding_time(self, serializer=None, dataobj=None, output="fmtstr")
         o  total_encoding_strlen(self, serializer=None, dataobj=None, output="fmtstr")
         o  total_encoding_time(self, serializer=None, dataobj=None, output="fmtstr")
+        o  total_mem_usage(self, serializer=None, dataobj=None, output="fmtstr")
     """
     def __init__(self):
         """
@@ -371,6 +375,10 @@ class SerializationResults(dict):
                                                                              output="value"),
                                                     serializer) for serializer in self.serializers),
                                                   reverse=False),
+            "mem_usage": sorted(((self.total_mem_usage(serializer=serializer,
+                                                       output="value"),
+                                  serializer) for serializer in self.serializers),
+                                reverse=False),
             }
 
         # overall score computing:
@@ -386,6 +394,7 @@ class SerializationResults(dict):
             for attribute in ('encoding_plus_decoding_time',
                               'encoding_strlen',
                               'similarity',
+                              'mem_usage',
                               ):
                 for index in range(self.serializers_number):
                     if self.halloffame[attribute][index][1] == serializer:
@@ -407,12 +416,12 @@ class SerializationResults(dict):
             ___________________________________________________________________
 
             ARGUMENT:
-            o  (str)attribute, with only 3 values, namely "encoding_time",
-               "decoding_time" and "encoding_strlen".
+            o  (str)attribute, with only 4 values, namely "encoding_time",
+               "decoding_time", "encoding_strlen" and "mem_usage"
 
             RETURNED VALUE: (SerializerDataObj), i.e. serializer + dataobj
         """
-        assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
+        assert attribute in ("encoding_time", "decoding_time", "encoding_strlen", "mem_usage")
 
         if attribute == "encoding_time":
             for serializer in self.serializers:
@@ -438,70 +447,13 @@ class SerializationResults(dict):
                         return SerializerDataObj(serializer=serializer, dataobj=dataobj)
             return SerializerDataObj()
 
-        return None  # this line should never be executed.
-
-    def get_dataobjs_base(self,
-                          attribute):
-        """
-            SerializationResults.get_dataobjs_base()
-
-            Return a data object that may be a reference data object, for
-            the attribute <attribute>.
-
-            In other words, get_dataobjs_base() answers the question:
-                Among all data objects, what's the first that could be a
-            reference data object ? The serializers have no importance here,
-            we just have to look at the data objects, the first one being
-            often the right one.
-            The selected data object must have its .encoding_success set
-            to True for all serializers.
-
-            ___________________________________________________________________
-
-            ARGUMENT:
-            o  (str)attribute, with only 3 values, namely "encoding_time",
-               "decoding_time" and "encoding_strlen".
-
-            RETURNED VALUE: (str)dataobject name or None if no data object
-                            is adequate.
-        """
-        assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
-
-        if attribute == "encoding_time":
-            for dataobj in self.dataobjs:
-                found = True
-                for serializer in self.serializers:
+        if attribute == "mem_usage":
+            for serializer in self.serializers:
+                for dataobj in self.dataobjs:
                     if self[serializer][dataobj] is not None and \
-                       not self[serializer][dataobj].encoding_success:
-                        found = False
-                        break
-                if found:
-                    return dataobj
-            return None
-
-        if attribute == "encoding_strlen":
-            for dataobj in self.dataobjs:
-                found = True
-                for serializer in self.serializers:
-                    if self[serializer][dataobj] is not None and \
-                       not self[serializer][dataobj].encoding_strlen:
-                        found = False
-                        break
-                if found:
-                    return dataobj
-            return None
-
-        if attribute == "decoding_time":
-            for dataobj in self.dataobjs:
-                found = True
-                for serializer in self.serializers:
-                    if self[serializer][dataobj] is not None and \
-                       not self[serializer][dataobj].decoding_time:
-                        found = False
-                        break
-                if found:
-                    return dataobj
-            return None
+                       self[serializer][dataobj].mem_usage:
+                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
+            return SerializerDataObj()
 
         return None  # this line should never be executed.
 
@@ -524,7 +476,8 @@ class SerializationResults(dict):
                                'decoding_success' or
                                'decoding_time' or
                                'encoding_strlen' or
-                               'similarity'
+                               'similarity' or
+                               'mem_usage' ?
             o  (int)index: 0 <= index < len(self.serializers_numbers-1)
 
             RETURNED VALUE: (str)a formatted string describing the result.
@@ -534,7 +487,8 @@ class SerializationResults(dict):
                              'decoding_success',
                              'decoding_time',
                              'encoding_strlen',
-                             'similarity')
+                             'similarity',
+                             'mem_usage')
 
         serializer = self.halloffame[attribute][index][1]
         value = self.halloffame[attribute][index][0]
@@ -565,6 +519,11 @@ class SerializationResults(dict):
             serializer = self.halloffame[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
                 f"[{aspect_stringlength(value)}]"
+
+        if attribute == 'mem_usage':
+            serializer = self.halloffame[attribute][index][1]
+            return f"{aspect_serializer(serializer)} " \
+                f"[{aspect_mem_usage(value)}]"
 
         return None  # this line should never be executed.
 
@@ -634,71 +593,6 @@ class SerializationResults(dict):
             if self.overallscores[serializer] == worstscore:
                 res.append(serializer)
         return res
-
-    def get_serializers_base(self,
-                             attribute):
-        """
-            SerializationResults.get_serializers_base()
-
-            Return a serializer that may be a reference serializer, for
-            the attribute <attribute>.
-
-            In other words, get_serializers_base() answers the question:
-                Among all serializers, what's the first that could be a
-            reference serializer ? The data objects have no importance here,
-            we just have to look at the serializers, the first one being
-            often the right one.
-            The selected serializer must have its .encoding_success set
-            to True for all data objects.
-
-            ___________________________________________________________________
-
-            ARGUMENT:
-            o  (str)attribute, with only 3 values, namely "encoding_time",
-               "decoding_time" and "encoding_strlen".
-
-            RETURNED VALUE: (str)serializer or None if no serializer
-                            is adequate.
-        """
-        assert attribute in ("encoding_time", "decoding_time", "encoding_strlen")
-
-        if attribute == "encoding_time":
-            for serializer in self.serializers:
-                found = True
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       not self[serializer][dataobj].encoding_success:
-                        found = False
-                        break
-                if found:
-                    return serializer
-            return None
-
-        if attribute == "encoding_strlen":
-            for serializer in self.serializers:
-                found = True
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       not self[serializer][dataobj].encoding_strlen:
-                        found = False
-                        break
-                if found:
-                    return serializer
-            return None
-
-        if attribute == "decoding_time":
-            for serializer in self.serializers:
-                found = True
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       not self[serializer][dataobj].decoding_time:
-                        found = False
-                        break
-                if found:
-                    return serializer
-            return None
-
-        return None  # this line should never be executed.
 
     def ratio_decoding_success(self,
                                serializer=None,
@@ -887,8 +781,13 @@ class SerializationResults(dict):
 
             _______________________________________________________________
 
+            ARGUMENTS:
+
             o  <str>serializer: name of the serializer to be used.
             o  <str>dataobj: name of the data object to be used.
+            o  <str>attribute_name: 'decoding_success', 'decoding_time', 'encoding_strlen',
+                                    'encoding_success', 'encoding_time',
+                                    'similarity', 'mem_usage'
             o  <output>(str): "fmtstr" for a formatted returned string
 
             RETURNED VALUE: a formatted string representing
@@ -897,6 +796,9 @@ class SerializationResults(dict):
         """
         assert serializer is not None
         assert dataobj is not None
+        assert attribute_name in ('decoding_success', 'decoding_time', 'encoding_strlen',
+                                  'encoding_success', 'encoding_time',
+                                  'similarity', 'mem_usage')
         assert output in ('fmtstr',)
 
         res = None  # unexpected result !
@@ -953,10 +855,15 @@ class SerializationResults(dict):
                     res = aspect_boolsuccess(
                         self[serializer][dataobj].similarity)
 
-        if res is None:
-            raise WisteriaError("(ERRORID025) "
-                                "Internal error: the result could not be computed. "
-                                f"{serializer=}; {dataobj=}; {attribute_name=};")
+        if attribute_name == "mem_usage":
+            if output == "fmtstr":
+                if self[serializer][dataobj] is None or \
+                   self[serializer][dataobj].mem_usage is None:
+                    res = aspect_nodata()
+                else:
+                    res = aspect_mem_usage(
+                        self[serializer][dataobj].mem_usage)
+
         return res
 
     def total_decoding_time(self,
@@ -1173,5 +1080,65 @@ class SerializationResults(dict):
 
         if res is None:
             raise WisteriaError("(ERRORID029) Internal error: the result could not be computed. "
+                                f"{serializer=}; {dataobj=}; {output=};")
+        return res
+
+    def total_mem_usage(self,
+                        serializer=None,
+                        dataobj=None,
+                        output="fmtstr"):
+        """
+            SerializationResults.total_mem_usage()
+
+            Compute and format the total mem usage created by a <serializer>
+            OR for a <dataobj>ect.
+
+            _______________________________________________________________
+
+            ARGUMENTS:
+            o  <None|str>serializer: if not None, name of the serializer to be used.
+            o  <None|str>dataobj: if not None, name of the data object to be used.
+                BEWARE ! One and only one argument among <serializer> and <dataobj> can be set to
+                         None.
+            o  (str)output: output type and format
+                    - "value": raw value (float)
+                    - "fmtstr": formatted string (str)
+
+            RETURNED VALUE: a formatted string representing the input arguments.
+        """
+        assert serializer is None or dataobj is None
+        assert output in ('fmtstr', 'value',)
+
+        res = None  # unexpected result !
+        total = 0  # total time
+
+        if serializer is not None:
+            if self.serializers_number == 0:
+                return aspect_mem_usage(None)
+
+            for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is not None and \
+                   self[serializer][_dataobj].mem_usage:
+                    total += self[serializer][_dataobj].mem_usage
+            if output == "value":
+                res = total
+            elif output == "fmtstr":
+                res = aspect_mem_usage(total)
+
+        else:
+            if self.dataobjs_number == 0:
+                return aspect_mem_usage(None)
+
+            for _serializer in self:
+                if self[_serializer][dataobj] is not None and \
+                   self[_serializer][dataobj].mem_usage:
+                    total += self[_serializer][dataobj].mem_usage
+            if output == "value":
+                res = total
+            elif output == "fmtstr":
+                res = aspect_mem_usage(total)
+
+        if res is None:
+            raise WisteriaError("(ERRORID028) Internal error: the result could not be computed. "
                                 f"{serializer=}; {dataobj=}; {output=};")
         return res

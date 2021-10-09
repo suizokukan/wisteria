@@ -28,6 +28,7 @@
     o  aspect_boolsuccess(bool_success)
     o  aspect_data(data_objectname)
     o  aspect_list(listitems)
+    o  aspect_mem_usage(bytesnumber)
     o  aspect_nodata(string)
     o  aspect_nounplural(string, number)
     o  aspect_percentage(percentage)
@@ -100,6 +101,25 @@ def aspect_list(listitems, func=None):
     if len(listitems) == 2:
         return f"{func(listitems[0])} and {func(listitems[1])}"
     return f"{', '.join(func(listitem) for listitem in listitems[:-1])} and {func(listitems[-1])}"
+
+
+def aspect_mem_usage(bytesnumber):
+    """
+    TODO
+    """
+    if bytesnumber is None:
+        return aspect_nodata()
+    if bytesnumber == 0:
+        return "0 byte"
+    if bytesnumber < 5000:
+        return f"{bytesnumber} bytes"
+    if bytesnumber < 95000:
+        return f"{bytesnumber/1000:.1f} Ko"
+    if bytesnumber < 95000000:
+        return f"{bytesnumber/1000000:.1f} Mo"
+    if bytesnumber < 95000000000:
+        return f"{bytesnumber/1000000000:.1f} Go"
+    return f"{bytesnumber/1000000000000:.1f} Po"
 
 
 def aspect_nodata(string=None):

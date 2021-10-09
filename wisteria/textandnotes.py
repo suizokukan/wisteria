@@ -153,7 +153,7 @@ class TextAndNotes(list):
             res.append(line)
 
         if self.notes:
-            res.append("\n\n")
+            res.append("\n- notes -")
 
             for fullnotename, note in self.notes:
                 if fullnotename not in notes2notessymbols:

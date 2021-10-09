@@ -151,11 +151,11 @@ def ratio2phrase(ratio,
 
         ARGUMENTS:
         o  (float)ratio
-        o  (str)base_string: "slow/fast" or "long/short"
+        o  (str)base_string: 'slow/fast', 'long/short', 'good/bad', or 'more/less'
 
         RETURNED VALUE: (str)an adverbial phrase
     """
-    assert base_string in ('slow/fast', 'long/short', 'good/bad')
+    assert base_string in ('slow/fast', 'long/short', 'good/bad', 'more/less')
 
     if base_string == "slow/fast":
         if ratio > 10:
@@ -210,6 +210,24 @@ def ratio2phrase(ratio,
             expression = "much worse"
         else:
             expression = "much, much worse"
+
+    elif base_string == "more/less":
+        if ratio > 10:
+            expression = "much, much more"
+        elif ratio > 2:
+            expression = "much more"
+        elif ratio > 1.4:
+            expression = "more"
+        elif ratio > 1.1:
+            expression = "slightly more"
+        elif ratio > 0.9:
+            expression = "slightly less"
+        elif ratio > 0.5:
+            expression = "less"
+        elif ratio > 0.1:
+            expression = "much less"
+        else:
+            expression = "much, much less"
 
     return expression
 
@@ -372,7 +390,7 @@ def report_section_a2(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -425,7 +443,7 @@ def report_section_a3(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -480,7 +498,7 @@ def report_section_b1a(results,
 
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -500,6 +518,7 @@ def report_section_b1a(results,
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Encod.<>Decod. ?", width=16)
+    table.add_column("memory", width=12)
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         table.add_column("finger print ( serial. + dataobj)", width=9)
 
@@ -515,7 +534,8 @@ def report_section_b1a(results,
                     results.repr_attr(serializer, dataobj, "encoding_strlen"),
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity"),)
+                    results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "mem_usage"),)
             else:
                 # debug mode:
                 table.add_row(
@@ -526,6 +546,7 @@ def report_section_b1a(results,
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
                     results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "mem_usage"),
                     "["+strdigest(serializer+dataobj)+"]")
 
     msgreport(table)
@@ -570,7 +591,7 @@ def report_section_b1b(results,
 
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -590,6 +611,7 @@ def report_section_b1b(results,
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
     table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
+    table.add_column("Σ memory", width=12)
 
     for serializer in results.serializers:
         table.add_row(
@@ -600,6 +622,7 @@ def report_section_b1b(results,
             f"{results.ratio_decoding_success(serializer=serializer)}",
             f"{results.total_decoding_time(serializer=serializer)}",
             f"{results.ratio_similarity(serializer=serializer)}",
+            f"{results.total_mem_usage(serializer=serializer)}",
         )
     msgreport(table)
     msgreport()
@@ -643,7 +666,7 @@ def report_section_b1c(results,
 
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -663,6 +686,7 @@ def report_section_b1c(results,
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=17)
     table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=17)
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=17)
+    table.add_column("memory", width=12)
 
     for index in range(results.serializers_number):
         table.add_row(
@@ -673,6 +697,7 @@ def report_section_b1c(results,
             f"{results.get_halloffame('decoding_success', index)}",
             f"{results.get_halloffame('decoding_time', index)}",
             f"{results.get_halloffame('similarity', index)}",
+            f"{results.get_halloffame('mem_usage', index)}",
         )
 
     msgreport(table)
@@ -717,7 +742,7 @@ def report_section_b1d(results,
 
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -785,7 +810,7 @@ def report_section_b2a(results,
 
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -805,6 +830,7 @@ def report_section_b2a(results,
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Encod.<>Decod. ?", width=16)
+    table.add_column("memory", width=12)
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         table.add_column("finger print ( serial. + dataobj)", width=9)
 
@@ -820,7 +846,8 @@ def report_section_b2a(results,
                     results.repr_attr(serializer, dataobj, "encoding_strlen"),
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity")
+                    results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "mem_usage")
                 )
             else:
                 # debug mode:
@@ -832,6 +859,7 @@ def report_section_b2a(results,
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
                     results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "mem_usage"),
                     "["+strdigest(serializer+dataobj)+"]")
     msgreport(table)
     msgreport()
@@ -875,7 +903,7 @@ def report_section_b2b(results,
 
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -895,6 +923,7 @@ def report_section_b2b(results,
     table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
     table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
     table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)
+    table.add_column("Σ memory", width=12)
 
     for dataobj in results.dataobjs:
         table.add_row(
@@ -905,6 +934,7 @@ def report_section_b2b(results,
             f"{results.ratio_decoding_success(dataobj=dataobj)}",
             f"{results.total_decoding_time(dataobj=dataobj)}",
             f"{results.ratio_similarity(dataobj=dataobj)}",
+            f"{results.total_mem_usage(dataobj=dataobj)}",
         )
     msgreport(table)
     msgreport()
@@ -944,7 +974,7 @@ def report_section_c1a(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -1064,7 +1094,7 @@ def report_section_c1b(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -1184,7 +1214,7 @@ def report_section_c2a(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -1201,6 +1231,7 @@ def report_section_c2a(results,
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=16)
     table.add_column(f"Σ Encod.+Decod. Time ({UNITS['time']})", width=16)
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
+    table.add_column("memory", width=12)
 
     serializer1, serializer2, _ = s1s2d
     _serializers = []
@@ -1222,7 +1253,8 @@ def report_section_c2a(results,
                 f"{aspect_serializer(serializer)}",
                 f"{results.total_encoding_strlen(serializer=serializer)}",
                 f"{results.total_encoding_plus_decoding_time(serializer=serializer)}",
-                f"{results.ratio_similarity(serializer=serializer)}")
+                f"{results.ratio_similarity(serializer=serializer)}",
+                f"{results.total_mem_usage(serializer=serializer)}")
         else:
             table.add_row(
                 "-",
@@ -1268,7 +1300,7 @@ def report_section_c2b(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -1279,8 +1311,8 @@ def report_section_c2b(results,
     """
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(C2b) "
-                       "Conclusion: Overall Score Based on 3 Points "
-                       "(Σ Encoded Str./Σ Encod.+Decod. Time/Encod.<>Decod.)")
+                       "Conclusion: Overall Score Based on 4 Comparisons Points "
+                       "(Σ Encoded Str./Σ Encod.+Decod. Time/Encod.<>Decod./Σ memory)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer", width=25)
@@ -1311,6 +1343,439 @@ def report_section_c2b(results,
                 "-")
 
     msgreport(table)
+    msgreport()
+
+
+def report_section_c2c__allvsall(results,
+                                 s1s2d):
+    """
+        report_section_c2c__allvsall()
+
+        Sub-function of report_section_c2c() in the case where
+        serializer1==serializer2=="all".
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
+    _, _, cmpdata = s1s2d  # serializer1, serializer2, cmpdata
+
+    text = TextAndNotes()
+    text.append(cmpdata2phrase(cmpdata))
+
+    text.append(f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][0][1])} "
+                "is the quickest to encode/decode, ")
+    text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][0][1])} "
+                "produces the shortest strings, ")
+    text.append(f"{aspect_serializer(results.halloffame['similarity'][0][1])} "
+                "has the best coverage ")
+    text.append(f"and {aspect_serializer(results.halloffame['similarity'][0][1])} "
+                "uses the least memory. ")
+
+    bests = results.get_overallscore_bestrank()
+    if len(bests) == 1:
+        text.append(f"{aspect_serializer(bests[0])} is ranked #1 "
+                    f"among {results.serializers_number} serializers, "
+                    "according to the overall scores (__note:overallscore__).")
+    else:
+        text.append(f"{aspect_list(bests, aspect_serializer)} "
+                    f"are ranked #1 among {results.serializers_number} serializers, "
+                    "according to the overall scores (__note:overallscore__).")
+
+    text.append("\nOn the contrary, ")
+    text.append(
+        f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][-1][1])} "
+        "is the slowest to encode/decode, ")
+    text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][-1][1])} "
+                "produces the longest strings, ")
+    text.append(f"{aspect_serializer(results.halloffame['similarity'][-1][1])} "
+                "has the worst coverage ")
+    text.append(f"and {aspect_serializer(results.halloffame['similarity'][0][1])} "
+                "uses the most memory. ")
+
+    worsts = results.get_overallscore_worstrank()
+    if len(worsts) == 1:
+        text.append(f"{aspect_serializer(worsts[0])} is ranked #{results.serializers_number} "
+                    f"among {results.serializers_number} serializers, "
+                    "according to the overall scores (__note:overallscore__).")
+    else:
+        text.append(f"{aspect_list(worsts, aspect_serializer)} "
+                    f"are ranked #{results.serializers_number} among "
+                    f"{results.serializers_number} serializers, "
+                    "according to the overall scores (__note:overallscore__).")
+
+    text.notes.append(
+        ("overallscore",
+         "a rank based on 4 comparisons points: "
+         "Σ encoded str./Σ encod.+decod. time/encod.<>decod./Σ memory"))
+
+    msgreport(text.output())
+    msgreport()
+
+
+def report_section_c2c__serializervsall(results,
+                                        s1s2d):
+    """
+        report_section_c2c__serializervsall()
+
+        Sub-function of report_section_c2c() in the case where
+        serializer1!="all" and where serializer2=="all".
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
+    serializer1, serializer2, cmpdata = s1s2d
+
+    text = TextAndNotes()
+    text.append(cmpdata2phrase(cmpdata))
+
+    # <serializer> is the reference serializer againt all others.
+    if serializer1 != "all":
+        serializer = serializer1
+    else:
+        serializer = serializer2
+    rank = results.get_overallscore_rank(serializer)
+    text.append(f"{aspect_serializer(serializer)} "
+                f"is ranked #{rank+1} among {len(results.serializers)} serializers "
+                f"(__note:overallscore__)")
+    text.append(". ")
+
+    text.notes.append(
+        ("overallscore",
+         "a rank based on 4 comparisons points: "
+         "Σ jsonstr.len./Σ encod.+decod. time/encod.<>decod./Σ memory"))
+    for attribute in ("encoding_strlen",
+                      "encoding_plus_decoding_time",
+                      "similarity",
+                      "mem_usage",
+                      ):
+        subtext = []
+        _less, _more = results.comparison_inside_halloffame(serializer, attribute)
+
+        if attribute == "encoding_strlen":
+            if not _less:
+                subtext.append(
+                    "There's no serializer that produces longer strings than "
+                    f"{aspect_serializer(serializer)} ")
+            elif len(_less) == 1:
+                subtext.append(
+                    f"Only {aspect_serializer(_less[0])} produces longer string than "
+                    f"{aspect_serializer(serializer)} ")
+            else:
+                subtext.append(
+                    f"There are {len(_less)} serializers"
+                    ", namely "
+                    f"{aspect_list(_less, aspect_serializer)} "
+                    f"that produce longer strings than {aspect_serializer(serializer)} ")
+
+            subtext.append("and ")
+
+            if not _more:
+                subtext.append(
+                    "there's no serializer that produces shorter strings than "
+                    f"{aspect_serializer(serializer)}")
+            elif len(_more) == 1:
+                subtext.append(
+                    f"only {aspect_serializer(_more[0])} produces shorter string than "
+                    f"{aspect_serializer(serializer)}")
+            else:
+                subtext.append(
+                    f"there are {len(_more)} serializers"
+                    ", namely "
+                    f"{aspect_list(_more, aspect_serializer)} "
+                    f"that produce shorter strings than {aspect_serializer(serializer)}")
+
+            subtext.append(". ")
+
+        elif attribute == "encoding_plus_decoding_time":
+            if not _less:
+                subtext.append(
+                    "There's no serializer slower than "
+                    f"{aspect_serializer(serializer)} ")
+            elif len(_less) == 1:
+                subtext.append(
+                    f"Only {aspect_serializer(_less[0])} is slower than "
+                    f"{aspect_serializer(serializer)} ")
+            else:
+                subtext.append(
+                    f"There are {len(_less)} serializers"
+                    ", namely "
+                    f"{aspect_list(_less, aspect_serializer)} "
+                    f"that are slower than {aspect_serializer(serializer)} ")
+
+            subtext.append("and ")
+
+            if not _more:
+                subtext.append(
+                    "there's no serializer that is faster than "
+                    f"{aspect_serializer(serializer)}")
+            elif len(_more) == 1:
+                subtext.append(
+                    f"only {aspect_serializer(_more[0])} is faster than "
+                    f"{aspect_serializer(serializer)}")
+            else:
+                subtext.append(
+                    f"there are {len(_more)} serializers"
+                    ", namely "
+                    f"{aspect_list(_more, aspect_serializer)} "
+                    f"that are faster than {aspect_serializer(serializer)}")
+
+            subtext.append(". ")
+
+        elif attribute == "similarity":
+            if not _less:
+                subtext.append(
+                    "There's no serializer worse than "
+                    f"{aspect_serializer(serializer)} "
+                    "when it comes to data coverage ")
+            elif len(_less) == 1:
+                subtext.append(
+                    f"Only {aspect_serializer(_less[0])} is worse than "
+                    f"{aspect_serializer(serializer)} "
+                    "when it comes to data coverage ")
+            else:
+                subtext.append(
+                    f"There are {len(_less)} serializers"
+                    ", namely "
+                    f"{aspect_list(_less, aspect_serializer)} "
+                    f"that are worse than {aspect_serializer(serializer)} "
+                    "when it comes to data coverage ")
+
+            subtext.append("and ")
+
+            if not _more:
+                subtext.append(
+                    "there's no serializer better than "
+                    f"{aspect_serializer(serializer)} "
+                    "when it comes to data coverage")
+            elif len(_more) == 1:
+                subtext.append(
+                    f"only {aspect_serializer(_more[0])} is better than "
+                    f"{aspect_serializer(serializer)} "
+                    "when it comes to data coverage")
+            else:
+                subtext.append(
+                    f"there are {len(_more)} serializers"
+                    ", namely "
+                    f"{aspect_list(_more, aspect_serializer)} "
+                    f"that are better than {aspect_serializer(serializer)} "
+                    "when it comes to data coverage")
+
+            subtext.append(". ")
+
+        elif attribute == "mem_usage":
+            if not _less:
+                subtext.append(
+                    "There's no serializer that consumes more memory than "
+                    f"{aspect_serializer(serializer)} ")
+            elif len(_less) == 1:
+                subtext.append(
+                    f"Only {aspect_serializer(_less[0])} consumes more memory than "
+                    f"{aspect_serializer(serializer)} ")
+            else:
+                subtext.append(
+                    f"There are {len(_less)} serializers"
+                    ", namely "
+                    f"{aspect_list(_less, aspect_serializer)} "
+                    f"that consume more memory than {aspect_serializer(serializer)} ")
+
+            subtext.append("and ")
+
+            if not _more:
+                subtext.append(
+                    "there's no serializer that consumes less memory than "
+                    f"{aspect_serializer(serializer)}")
+            elif len(_more) == 1:
+                subtext.append(
+                    f"only {aspect_serializer(_more[0])} consumes less memory than "
+                    f"{aspect_serializer(serializer)}")
+            else:
+                subtext.append(
+                    f"there are {len(_more)} serializers"
+                    ", namely "
+                    f"{aspect_list(_more, aspect_serializer)} "
+                    f"that consume less memory than {aspect_serializer(serializer)}")
+
+            subtext.append(".")
+
+        text.append("".join(subtext))
+
+    msgreport(text.output())
+    msgreport()
+
+
+def report_section_c2c__serializervsserializer(results,
+                                               s1s2d):
+    """
+        report_section_c2c__serializervsserializer()
+
+        Sub-function of report_section_c2c() in the case where
+        serializer1 and serializer2 !="all".
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)serializer1,
+                    (str)serializer2,
+                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
+    serializer1, serializer2, cmpdata = s1s2d
+
+    text = TextAndNotes()
+    text.append(cmpdata2phrase(cmpdata))
+
+    # ---- encoding/decoding time -----------------------------------------
+    total_encoding_time_ratio = \
+        results.total_encoding_plus_decoding_time(serializer=serializer1, output='value') \
+        / results.total_encoding_plus_decoding_time(serializer=serializer2,
+                                                    output='value')
+
+    if total_encoding_time_ratio == 1:
+        text.append(
+            f"{aspect_serializer(serializer1)} "
+            f"and {aspect_serializer(serializer2)} "
+            "seem to require exactly the same time to encode and decode; ")
+    else:
+        text.append(
+            f"{aspect_serializer(serializer1)} "
+            f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
+            f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
+            "(__note:total_encoding_time_ratio__) - "
+            "than "
+            f"{aspect_serializer(serializer2)} "
+            "to encode and decode; ")
+
+        text.notes.append(
+            ("total_encoding_time_ratio",
+             humanratio(
+                 total_encoding_time_ratio,
+                 explanations=(
+                     f"{aspect_serializer(serializer1)}'s Σ encod.+decod. time",
+                     results.total_encoding_plus_decoding_time(serializer=serializer1,
+                                                               output='value'),
+                     f"{aspect_serializer(serializer2)}'s Σ encod.+decod. time",
+                     results.total_encoding_plus_decoding_time(serializer=serializer2,
+                                                               output='value'),
+                     'time',
+                 ))))
+
+    # ---- total_encoding_strlen -----------------------------------------
+    total_encoding_strlen_ratio = \
+        results.total_encoding_strlen(serializer=serializer1, output='value') \
+        / results.total_encoding_strlen(serializer=serializer2,
+                                        output='value')
+
+    if total_encoding_strlen_ratio == 1:
+        text.append(f"{aspect_serializer(serializer1)} "
+                    f"and {aspect_serializer(serializer2)} "
+                    "seem to produce strings that have exactly the same size; ")
+    else:
+        text.append("strings produced by "
+                    f"{aspect_serializer(serializer1)} "
+                    f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
+                    f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
+                    f"(__note:total_encoding_strlen_ratio__) - "
+                    "than "
+                    f"strings produced by {aspect_serializer(serializer2)}; ")
+
+        text.notes.append(
+            ("total_encoding_strlen_ratio",
+             humanratio(
+                 total_encoding_strlen_ratio,
+                 explanations=(
+                     f"{aspect_serializer(serializer1)}'s jsonstring strlen",
+                     results.total_encoding_strlen(serializer=serializer1,
+                                                   output='value'),
+                     f"{aspect_serializer(serializer2)}'s jsonstring strlen",
+                     results.total_encoding_strlen(serializer=serializer2,
+                                                   output='value'),
+                     'string length',
+                 ))))
+
+    # ---- ratio_similarity -----------------------------------------------
+    ratio_similarity = \
+        results.ratio_similarity(serializer=serializer1, output='value') \
+        / results.ratio_similarity(serializer=serializer2,
+                                   output='value')
+
+    if ratio_similarity == 1:
+        text.append(f"{aspect_serializer(serializer1)} "
+                    f"and {aspect_serializer(serializer2)} "
+                    "seem to have exactly the same data coverage.")
+    else:
+        text.append(f"{aspect_serializer(serializer1)}'s coverage "
+                    f"is {ratio2phrase(ratio_similarity, 'good/bad')} "
+                    f"- by a factor of {humanratio(ratio_similarity):.3f} "
+                    f"(__note:ratio_similarity__) - "
+                    "than "
+                    f"{aspect_serializer(serializer2)}'s coverage; ")
+
+        text.notes.append(
+            ("ratio_similarity",
+             humanratio(
+                 ratio_similarity,
+                 explanations=(
+                     f"{aspect_serializer(serializer1)}'s similarity ratio",
+                     results.ratio_similarity(serializer=serializer1,
+                                              output='value'),
+                     f"{aspect_serializer(serializer2)}'s similarity ratio",
+                     results.ratio_similarity(serializer=serializer2,
+                                              output='value'),
+                     None,
+                 ))))
+
+    # ---- total_mem_usage ------------------------------------------------
+    total_mem_usage_ratio = \
+        results.total_mem_usage(serializer=serializer1, output='value') \
+        / results.total_mem_usage(serializer=serializer2,
+                                  output='value')
+
+    if total_mem_usage_ratio == 1:
+        text.append(f"{aspect_serializer(serializer1)} "
+                    f"and {aspect_serializer(serializer2)} seem "
+                    "to consume exactly as much memory as each other. ")
+    else:
+        text.append(f"{aspect_serializer(serializer1)} "
+                    f"consumes {ratio2phrase(total_mem_usage_ratio, 'more/less')} memory "
+                    f"- by a factor of {humanratio(total_mem_usage_ratio):.3f} "
+                    f"(__note:total_mem_usage_ratio__) - "
+                    "than "
+                    f"{aspect_serializer(serializer2)}. ")
+
+        text.notes.append(
+            ("total_mem_usage_ratio",
+             humanratio(
+                 total_mem_usage_ratio,
+                 explanations=(
+                     f"{aspect_serializer(serializer1)}'s used memory",
+                     results.total_mem_usage(serializer=serializer1,
+                                             output='value'),
+                     f"{aspect_serializer(serializer2)}'s used memory",
+                     results.total_mem_usage(serializer=serializer2,
+                                             output='value'),
+                     'memory',
+                 ))))
+
+    msgreport(text.output())
     msgreport()
 
 
@@ -1348,7 +1813,7 @@ def report_section_c2c(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -1360,302 +1825,14 @@ def report_section_c2c(results,
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(C2c) Conclusion")
 
-    serializer1, serializer2, cmpdata = s1s2d
-
-    text = TextAndNotes()
-    text.append(cmpdata2phrase(cmpdata))
+    serializer1, serializer2, _ = s1s2d  # serializer1, serializer2, cmpdata
 
     if serializer1 == "all" and serializer2 == "all":
-        # ========================================================
-        # (CASE 1/3) serializer1 and serializer2 are both == "all"
-        # ========================================================
-        text.append(f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][0][1])} "
-                    "is the quickest to encode/decode, ")
-        text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][0][1])} "
-                    "produces the shortest strings, ")
-        text.append(f"and {aspect_serializer(results.halloffame['similarity'][0][1])} "
-                    "has the best coverage. ")
-
-        bests = results.get_overallscore_bestrank()
-        if len(bests) == 1:
-            text.append(f"{aspect_serializer(bests[0])} is ranked #1 "
-                        f"among {results.serializers_number} serializers, "
-                        "according to the overall scores (__note:overallscore__).")
-        else:
-            text.append(f"{aspect_list(bests, aspect_serializer)} "
-                        f"are ranked #1 among {results.serializers_number} serializers, "
-                        "according to the overall scores (__note:overallscore__).")
-
-        text.append("\nOn the contrary, ")
-        text.append(
-            f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][-1][1])} "
-            "is the slowest to encode/decode, ")
-        text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][-1][1])} "
-                    "produces the longest strings, ")
-        text.append(f"and {aspect_serializer(results.halloffame['similarity'][-1][1])} "
-                    "has the worst coverage. ")
-
-        worsts = results.get_overallscore_worstrank()
-        if len(worsts) == 1:
-            text.append(f"{aspect_serializer(worsts[0])} is ranked #{results.serializers_number} "
-                        f"among {results.serializers_number} serializers, "
-                        "according to the overall scores (__note:overallscore__).")
-        else:
-            text.append(f"{aspect_list(worsts, aspect_serializer)} "
-                        f"are ranked #{results.serializers_number} among "
-                        f"{results.serializers_number} serializers, "
-                        "according to the overall scores (__note:overallscore__).")
-
-        text.notes.append(
-            ("overallscore",
-             "a rank based on 3 points: Σ encoded str./Σ encod.+decod. time/encod.<>decod."))
-
+        report_section_c2c__allvsall(results, s1s2d)
     elif serializer1 != "all" and serializer2 != "all":
-        # ========================================================
-        # (CASE 2/3) serializer1 and serializer2 are both != "all"
-        # ========================================================
-
-        # ---- encoding/decoding time -----------------------------------------
-        total_encoding_time_ratio = \
-            results.total_encoding_plus_decoding_time(serializer=serializer1, output='value') \
-            / results.total_encoding_plus_decoding_time(serializer=serializer2,
-                                                        output='value')
-
-        if total_encoding_time_ratio == 1:
-            text.append(
-                f"{aspect_serializer(serializer1)} "
-                f"and {aspect_serializer(serializer2)} "
-                "seem to require exactly the same time to encode and decode; ")
-        else:
-            text.append(
-                f"{aspect_serializer(serializer1)} "
-                f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
-                f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
-                "(__note:total_encoding_time_ratio__) - "
-                "than "
-                f"{aspect_serializer(serializer2)} "
-                "to encode and decode; ")
-
-            text.notes.append(
-                ("total_encoding_time_ratio",
-                 humanratio(
-                     total_encoding_time_ratio,
-                     explanations=(
-                         f"{aspect_serializer(serializer1)}'s Σ encod.+decod. time",
-                         results.total_encoding_plus_decoding_time(serializer=serializer1,
-                                                                   output='value'),
-                         f"{aspect_serializer(serializer2)}'s Σ encod.+decod. time",
-                         results.total_encoding_plus_decoding_time(serializer=serializer2,
-                                                                   output='value'),
-                         'time',
-                     ))))
-
-        # ---- total_encoding_strlen -----------------------------------------
-        total_encoding_strlen_ratio = \
-            results.total_encoding_strlen(serializer=serializer1, output='value') \
-            / results.total_encoding_strlen(serializer=serializer2,
-                                            output='value')
-
-        if total_encoding_strlen_ratio == 1:
-            text.append(f"{aspect_serializer(serializer1)} "
-                        f"and {aspect_serializer(serializer2)} "
-                        "seem to produce strings that have exactly the same size; ")
-        else:
-            text.append("strings produced by "
-                        f"{aspect_serializer(serializer1)} "
-                        f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
-                        f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
-                        f"(__note:total_encoding_strlen_ratio__) - "
-                        "than "
-                        f"strings produced by {aspect_serializer(serializer2)}; ")
-
-            text.notes.append(
-                ("total_encoding_strlen_ratio",
-                 humanratio(
-                     total_encoding_strlen_ratio,
-                     explanations=(
-                         f"{aspect_serializer(serializer1)}'s jsonstring strlen",
-                         results.total_encoding_strlen(serializer=serializer1,
-                                                       output='value'),
-                         f"{aspect_serializer(serializer2)}'s jsonstring strlen",
-                         results.total_encoding_strlen(serializer=serializer2,
-                                                       output='value'),
-                         'string length',
-                     ))))
-
-        # ---- ratio_similarity -----------------------------------------------
-        ratio_similarity = \
-            results.ratio_similarity(serializer=serializer1, output='value') \
-            / results.ratio_similarity(serializer=serializer2,
-                                       output='value')
-
-        if ratio_similarity == 1:
-            text.append(f"{aspect_serializer(serializer1)} "
-                        f"and {aspect_serializer(serializer2)} "
-                        "seem to have exactly the same data coverage.")
-        else:
-            text.append(f"{aspect_serializer(serializer1)}'s coverage "
-                        f"is {ratio2phrase(ratio_similarity, 'good/bad')} "
-                        f"- by a factor of {humanratio(ratio_similarity):.3f} "
-                        f"(__note:ratio_similarity__) - "
-                        "than "
-                        f"{aspect_serializer(serializer2)}'s coverage.")
-
-            text.notes.append(
-                ("ratio_similarity",
-                 humanratio(
-                     ratio_similarity,
-                     explanations=(
-                         f"{aspect_serializer(serializer1)}'s similarity ratio",
-                         results.ratio_similarity(serializer=serializer1,
-                                                  output='value'),
-                         f"{aspect_serializer(serializer2)}'s similarity ratio",
-                         results.ratio_similarity(serializer=serializer2,
-                                                  output='value'),
-                         None,
-                     ))))
-
+        report_section_c2c__serializervsserializer(results, s1s2d)
     else:
-        # =====================================================================
-        # (CASE 3/3) One of the two {serializer1|serializer2} is equal to "all"
-        # =====================================================================
-
-        # <serializer> is the reference serializer againt all others.
-        if serializer1 != "all":
-            serializer = serializer1
-        else:
-            serializer = serializer2
-        rank = results.get_overallscore_rank(serializer)
-        text.append(f"{aspect_serializer(serializer)} "
-                    f"is ranked #{rank} among {len(results.serializers)} serializers "
-                    f"(__note:overallscore__)")
-        text.append(". ")
-
-        text.notes.append(
-            ("overallscore",
-             "a rank based on 3 points: Σ jsonstr.len./Σ encod.+decod. time/encod.<>decod."))
-        for attribute in ("encoding_strlen",
-                          "encoding_plus_decoding_time",
-                          "similarity",
-                          ):
-            subtext = []
-            _less, _more = results.comparison_inside_halloffame(serializer, attribute)
-
-            if attribute == "encoding_strlen":
-                if not _less:
-                    subtext.append(
-                        "There's no serializer that produces longer strings than "
-                        f"{aspect_serializer(serializer)} ")
-                elif len(_less) == 1:
-                    subtext.append(
-                        f"Only {aspect_serializer(_less[0])} produces longer string than "
-                        f"{aspect_serializer(serializer)} ")
-                else:
-                    subtext.append(
-                        f"There are {len(_less)} serializers"
-                        ", namely "
-                        f"{aspect_list(_less, aspect_serializer)} "
-                        f"that produce longer strings than {aspect_serializer(serializer)} ")
-
-                subtext.append("and ")
-
-                if not _more:
-                    subtext.append(
-                        "there's no serializer that produces shorter strings than "
-                        f"{aspect_serializer(serializer)}")
-                elif len(_more) == 1:
-                    subtext.append(
-                        f"only {aspect_serializer(_more[0])} produces shorter string than "
-                        f"{aspect_serializer(serializer)}")
-                else:
-                    subtext.append(
-                        f"there are {len(_more)} serializers"
-                        ", namely "
-                        f"{aspect_list(_more, aspect_serializer)} "
-                        f"that produce shorter strings than {aspect_serializer(serializer)}")
-
-                subtext.append(". ")
-
-            elif attribute == "encoding_plus_decoding_time":
-                if not _less:
-                    subtext.append(
-                        "There's no serializer slower than "
-                        f"{aspect_serializer(serializer)} ")
-                elif len(_less) == 1:
-                    subtext.append(
-                        f"Only {aspect_serializer(_less[0])} is slower than "
-                        f"{aspect_serializer(serializer)} ")
-                else:
-                    subtext.append(
-                        f"There are {len(_less)} serializers"
-                        ", namely "
-                        f"{aspect_list(_less, aspect_serializer)} "
-                        f"that are slower than {aspect_serializer(serializer)} ")
-
-                subtext.append("and ")
-
-                if not _more:
-                    subtext.append(
-                        "there's no serializer that is faster than "
-                        f"{aspect_serializer(serializer)}")
-                elif len(_more) == 1:
-                    subtext.append(
-                        f"only {aspect_serializer(_more[0])} is faster than "
-                        f"{aspect_serializer(serializer)}")
-                else:
-                    subtext.append(
-                        f"there are {len(_more)} serializers"
-                        ", namely "
-                        f"{aspect_list(_more, aspect_serializer)} "
-                        f"that are faster than {aspect_serializer(serializer)}")
-
-                subtext.append(". ")
-
-            elif attribute == "similarity":
-                if not _less:
-                    subtext.append(
-                        "There's no serializer is worse than "
-                        f"{aspect_serializer(serializer)} "
-                        "when it comes to data coverage ")
-                elif len(_less) == 1:
-                    subtext.append(
-                        f"Only {aspect_serializer(_less[0])} is worse than "
-                        f"{aspect_serializer(serializer)} "
-                        "when it comes to data coverage ")
-                else:
-                    subtext.append(
-                        f"There are {len(_less)} serializers"
-                        ", namely "
-                        f"{aspect_list(_less, aspect_serializer)} "
-                        f"that are worse than {aspect_serializer(serializer)} "
-                        "when it comes to data coverage ")
-
-                subtext.append("and ")
-
-                if not _more:
-                    subtext.append(
-                        "there's no serializer is better than "
-                        f"{aspect_serializer(serializer)} "
-                        "when it comes to data coverage")
-                elif len(_more) == 1:
-                    subtext.append(
-                        f"only {aspect_serializer(_more[0])} is better than "
-                        f"{aspect_serializer(serializer)} "
-                        "when it comes to data coverage")
-                else:
-                    subtext.append(
-                        f"there are {len(_more)} serializers"
-                        ", namely "
-                        f"{aspect_list(_more, aspect_serializer)} "
-                        f"that are better than {aspect_serializer(serializer)} "
-                        "when it comes to data coverage")
-
-                subtext.append(". ")
-
-            text.append("".join(subtext))
-
-    msgreport(text.output())
-    msgreport()
+        report_section_c2c__serializervsall(results, s1s2d)
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -1695,7 +1872,7 @@ def report_section_d1a(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
@@ -1747,7 +1924,7 @@ def report_section_d1b(results,
         ⋅    . D1b   : informations about the machine (full details)
         _______________________________________________________________________
 
-        ARGUMENT:
+        ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 

@@ -157,4 +157,5 @@ PROGRESSBAR_LENGTH = None
 # units used in this project
 UNITS = {'time': 'seconds',
          'string length': 'characters',
+         'memory': 'bytes',
          }

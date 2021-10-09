@@ -46,6 +46,25 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-142
+
+Memory usage is now checked and displayed in reports.
+
+    * memory usage is now checked and displayed in reports 
+      using the `resource.getrusage(resource.RUSAGE_SELF).ru_maxrss`
+      mechanism (task-142)
+    * new method: SerializationResults.total_mem_usage() (task-142)
+    * removed useless bunch of code (2x TODOs) (task-142)
+    * split report_section_c2c() in 3 sub methods, namely 
+      report_section_c2c__allvsall, report_section_c2c__serializervsall,
+      and report_section_c2c__serializervsserializer (task-142)
+    * new function: aspect_mem_usage() (task-142)
+    * new key in UNITS: UNITS['memory'] (task-142)
+    * improved TextAndNotes.output() output message (task-142)
+    * improved documentation (task-142)
+    
+    * Pylint (10/10)
+
 [DONE] task-141
 
 Renamed reports sections: ancient E* sections > D*, ancient D* sections > C* .
