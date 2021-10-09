@@ -361,6 +361,7 @@ def report_section_a1(results,
             "* --report = "
             f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
 
+
 def report_section_a2(results,
                       s1s2d):
     """

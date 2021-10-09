@@ -60,7 +60,7 @@
 
     o  UNITS
 
-    o  DEFAULT_LOGFILE_NAME
+    o  LOGFILE_NAME
 """
 import re
 
@@ -163,4 +163,4 @@ UNITS = {'time': 'seconds',
          }
 
 # default name for the log file
-DEFAULT_LOGFILE_NAME = "report.txt"
+LOGFILE_NAME = "report.txt"

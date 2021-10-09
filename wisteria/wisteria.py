@@ -77,7 +77,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import TMPFILENAME, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEFAULT_CONFIG_FILENAME
-from wisteria.globs import DEFAULT_LOGFILE_NAME
+from wisteria.globs import LOGFILE_NAME
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report, partial_report__data, partial_report__serializers
 from wisteria.results import compute_results
@@ -119,7 +119,7 @@ PARSER = \
         description='Comparisons of different Python serializers. '
         'Try $ wisteria --checkup then $ wisteria --cmp="pickle against marshal". '
         'The result appears in the console and '
-        f'is also written in a file, \'{DEFAULT_LOGFILE_NAME}\' .',
+        f'is also written in a file, \'{LOGFILE_NAME}\' .',
         epilog=f"{__projectname__}: {__version__}",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -173,11 +173,11 @@ PARSER.add_argument(
 PARSER.add_argument(
     '--output',
     action='store',
-    default=f'console;logfile/w={DEFAULT_LOGFILE_NAME}',
+    default=f'console;logfile/w={LOGFILE_NAME}',
     help="'console' or 'logfile' or 'console;logfile'. "
     "Instead of 'logfile' you may specify 'logfile/a' (append mode) or 'logfile/w' (write mode). "
     "Instead of 'logfile' you may specify 'logfile=myfile.log'. "
-    f"Combinations like 'logfile/w={DEFAULT_LOGFILE_NAME}' are accepted. "
+    f"Combinations like 'logfile/w={LOGFILE_NAME}' are accepted. "
     "See by example the default value.")
 
 PARSER.add_argument(
@@ -237,7 +237,7 @@ if len(sys.argv) == 1:
 # (02) --output string
 # =============================================================================
 if wisteria.globs.ARGS.mute:
-    wisteria.globs.OUTPUT = False, False, "a", DEFAULT_LOGFILE_NAME
+    wisteria.globs.OUTPUT = False, False, "a", LOGFILE_NAME
 else:
     wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
     if not wisteria.globs.OUTPUT[0]:

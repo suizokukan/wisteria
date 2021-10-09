@@ -31,7 +31,7 @@
 """
 from rich import print as rprint
 
-from wisteria.globs import DEFAULT_LOGFILE_NAME
+from wisteria.globs import LOGFILE_NAME
 
 
 def parse_output_argument(output_string):
@@ -56,7 +56,7 @@ def parse_output_argument(output_string):
     bool_console = False
     bool_logfile = False
     opening_mode = "w"
-    logfile_name = DEFAULT_LOGFILE_NAME
+    logfile_name = LOGFILE_NAME
 
     # ---- console part -------------------------------------------------------
     if "console;" in output_string:

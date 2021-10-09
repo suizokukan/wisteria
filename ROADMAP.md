@@ -46,6 +46,15 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-145
+
+'DEFAULT_LOGFILE_NAME' > 'LOGFILE_NAME'
+
+    * 'DEFAULT_LOGFILE_NAME' > 'LOGFILE_NAME' (task-145)
+    * added a missing blank line in report.py (task-145)
+
+    * Pylint: 10/10
+
 [DONE] task-144
 
 Improved A1 report section.
