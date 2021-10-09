@@ -314,7 +314,7 @@ def report_section_a1(results,
         Sub-function of report() for report section "A1"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -351,10 +351,15 @@ def report_section_a1(results,
     """
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle(
-            "(A1) Report (--cmp = "
-            f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]')")
+            "(A1) Options Used to Create Reports")
         msgreport()
 
+    msgreport(
+            "* --cmp = "
+            f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'")
+    msgreport(
+            "* --report = "
+            f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
 
 def report_section_a2(results,
                       s1s2d):
@@ -364,7 +369,7 @@ def report_section_a2(results,
         Sub-function of report() for report section "A2"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -417,7 +422,7 @@ def report_section_a3(results,
         Sub-function of report() for report section "A3"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -471,7 +476,7 @@ def report_section_b1a(results,
         Sub-function of report() for report section "B1a"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -564,7 +569,7 @@ def report_section_b1b(results,
         Sub-function of report() for report section "B1b"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -639,7 +644,7 @@ def report_section_b1c(results,
         Sub-function of report() for report section "B1c"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -715,7 +720,7 @@ def report_section_b1d(results,
         Sub-function of report() for report section "B1d"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -783,7 +788,7 @@ def report_section_b2a(results,
         Sub-function of report() for report section "B2a"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -876,7 +881,7 @@ def report_section_b2b(results,
         Sub-function of report() for report section "B2b"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -948,7 +953,7 @@ def report_section_c1a(results,
         Sub-function of report() for report section "C1a"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -1068,7 +1073,7 @@ def report_section_c1b(results,
         Sub-function of report() for report section "C1b"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -1188,7 +1193,7 @@ def report_section_c2a(results,
         Sub-function of report() for report section "C2a"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -1274,7 +1279,7 @@ def report_section_c2b(results,
         Sub-function of report() for report section "C2b"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -1787,7 +1792,7 @@ def report_section_c2c(results,
         Sub-function of report() for report section "C2c"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -1846,7 +1851,7 @@ def report_section_d1a(results,
         Sub-function of report() for report section "D1a"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -1898,7 +1903,7 @@ def report_section_d1b(results,
         Sub-function of report() for report section "D1b"
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)
@@ -2001,7 +2006,7 @@ def report(results,
 
         (pimydoc)report sections
         ⋅* A         : main informations
-        ⋅  - A1      : main title
+        ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
         ⋅* B         : full details (raw results)

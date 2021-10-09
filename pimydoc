@@ -76,7 +76,7 @@ data objects
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations
-  - A1      : main title
+  - A1      : options used to create reports
   - A2      : list of the serializers to be used
   - A3      : list of the data objects to be used
 * B         : full details (raw results)

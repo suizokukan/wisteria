@@ -46,6 +46,16 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-144
+
+Improved A1 report section.
+
+    * improved A1 report section: report_section_a1()
+      now displays --cmp & --report content. (task-144)
+    * updated pimydoc
+    
+    * Pylint: 10/10
+
 [DONE] task-143
 
 New variable in globs.py: DEFAULT_LOGFILE_NAME, replacing
