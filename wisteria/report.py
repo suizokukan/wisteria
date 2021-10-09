@@ -62,7 +62,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest
 from wisteria.msg import msgreport, msgreporttitle, msgdebug
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
-from wisteria.reportaspect import aspect_nounplural
+from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -344,8 +344,8 @@ def report_section_a1(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -400,8 +400,8 @@ def report_section_a2(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -453,8 +453,8 @@ def report_section_a3(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -508,8 +508,8 @@ def report_section_b1a(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -601,8 +601,8 @@ def report_section_b1b(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -676,8 +676,8 @@ def report_section_b1c(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -752,8 +752,8 @@ def report_section_b1d(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -820,8 +820,8 @@ def report_section_b2a(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -913,8 +913,8 @@ def report_section_b2b(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -984,8 +984,8 @@ def report_section_c1a(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -1044,22 +1044,22 @@ def report_section_c1a(results,
         msgreporttitle("(C1a) Conclusion: Data Objects Handled by the Serializer(s)")
         msgreport()
 
-    serializer1, serializer2, cmpdata = s1s2d
-    if serializer1 != "all":
-        show(serializer1, cmpdata)
+    seria1, seria2, cmpdata = s1s2d
+    if seria1 != "all":
+        show(seria1, cmpdata)
         msgreport()
-    if serializer2 != "all":
-        show(serializer2, cmpdata)
+    if seria2 != "all":
+        show(seria2, cmpdata)
         msgreport()
 
-    # Other serializers, leaving apart <serializer1> and <serializer2> ?
+    # Other serializers, leaving apart <seria1> and <seria2> ?
     _serializers = list(wisteria.globs.SERIALIZERS.keys())
-    if serializer1 != "all":
-        _serializers.remove(serializer1)
-    if serializer2 != "all":
-        _serializers.remove(serializer2)
-    if _serializers and (serializer1 == "all" or serializer2 == "all"):
-        if serializer1 != "all" or serializer2 != "all":
+    if seria1 != "all":
+        _serializers.remove(seria1)
+    if seria2 != "all":
+        _serializers.remove(seria2)
+    if _serializers and (seria1 == "all" or seria2 == "all"):
+        if seria1 != "all" or seria2 != "all":
             msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
@@ -1104,8 +1104,8 @@ def report_section_c1b(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -1164,22 +1164,22 @@ def report_section_c1b(results,
                        "Data Objects [italic]NOT[/italic] Handled by the Serializer(s)")
         msgreport()
 
-    serializer1, serializer2, cmpdata = s1s2d
-    if serializer1 != "all":
-        show(serializer1, cmpdata)
+    seria1, seria2, cmpdata = s1s2d
+    if seria1 != "all":
+        show(seria1, cmpdata)
         msgreport()
-    if serializer2 != "all":
-        show(serializer2, cmpdata)
+    if seria2 != "all":
+        show(seria2, cmpdata)
         msgreport()
 
-    # Other serializers, leaving apart <serializer1> and <serializer2> ?
+    # Other serializers, leaving apart <seria1> and <seria2> ?
     _serializers = list(wisteria.globs.SERIALIZERS.keys())
-    if serializer1 != "all":
-        _serializers.remove(serializer1)
-    if serializer2 != "all":
-        _serializers.remove(serializer2)
-    if _serializers and (serializer1 == "all" or serializer2 == "all"):
-        if serializer1 != "all" or serializer2 != "all":
+    if seria1 != "all":
+        _serializers.remove(seria1)
+    if seria2 != "all":
+        _serializers.remove(seria2)
+    if _serializers and (seria1 == "all" or seria2 == "all"):
+        if seria1 != "all" or seria2 != "all":
             msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
@@ -1224,8 +1224,8 @@ def report_section_c2a(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -1239,12 +1239,12 @@ def report_section_c2a(results,
     table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
     table.add_column("memory", width=12)
 
-    serializer1, serializer2, _ = s1s2d
+    seria1, seria2, _ = s1s2d
     _serializers = []
-    if serializer1 != "all":
-        _serializers.append(serializer1)
-    if serializer2 != "all":
-        _serializers.append(serializer2)
+    if seria1 != "all":
+        _serializers.append(seria1)
+    if seria2 != "all":
+        _serializers.append(seria2)
     _serializers.append("-")
     for serializer in results.serializers:
         if serializer not in _serializers:
@@ -1310,8 +1310,8 @@ def report_section_c2b(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -1324,12 +1324,12 @@ def report_section_c2b(results,
     table.add_column("Serializer", width=25)
     table.add_column("Overall Score", width=13)
 
-    serializer1, serializer2, _ = s1s2d
+    seria1, seria2, _ = s1s2d
     _serializers = []
-    if serializer1 != "all":
-        _serializers.append(serializer1)
-    if serializer2 != "all":
-        _serializers.append(serializer2)
+    if seria1 != "all":
+        _serializers.append(seria1)
+    if seria2 != "all":
+        _serializers.append(seria2)
     _serializers.append("-")
     for serializer in results.serializers:
         if serializer not in _serializers:
@@ -1358,7 +1358,7 @@ def report_section_c2c__allvsall(results,
         report_section_c2c__allvsall()
 
         Sub-function of report_section_c2c() in the case where
-        serializer1==serializer2=="all".
+        seria1==seria2=="all".
 
         _______________________________________________________________________
 
@@ -1366,12 +1366,12 @@ def report_section_c2c__allvsall(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    _, _, cmpdata = s1s2d  # serializer1, serializer2, cmpdata
+    _, _, cmpdata = s1s2d  # seria1, seria2, cmpdata
 
     text = TextAndNotes()
     text.append(cmpdata2phrase(cmpdata))
@@ -1432,7 +1432,7 @@ def report_section_c2c__serializervsall(results,
         report_section_c2c__serializervsall()
 
         Sub-function of report_section_c2c() in the case where
-        serializer1!="all" and where serializer2=="all".
+        seria1!="all" and where seria2=="all".
 
         _______________________________________________________________________
 
@@ -1440,21 +1440,21 @@ def report_section_c2c__serializervsall(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    serializer1, serializer2, cmpdata = s1s2d
+    seria1, seria2, cmpdata = s1s2d
 
     text = TextAndNotes()
     text.append(cmpdata2phrase(cmpdata))
 
     # <serializer> is the reference serializer againt all others.
-    if serializer1 != "all":
-        serializer = serializer1
+    if seria1 != "all":
+        serializer = seria1
     else:
-        serializer = serializer2
+        serializer = seria2
     rank = results.get_overallscore_rank(serializer)
     text.append(f"{aspect_serializer(serializer)} "
                 f"is ranked #{rank+1} among {len(results.serializers)} serializers "
@@ -1631,7 +1631,7 @@ def report_section_c2c__serializervsserializer(results,
         report_section_c2c__serializervsserializer()
 
         Sub-function of report_section_c2c() in the case where
-        serializer1 and serializer2 !="all".
+        seria1 and seria2 !="all".
 
         _______________________________________________________________________
 
@@ -1639,35 +1639,35 @@ def report_section_c2c__serializervsserializer(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
-    serializer1, serializer2, cmpdata = s1s2d
+    seria1, seria2, cmpdata = s1s2d
 
     text = TextAndNotes()
     text.append(cmpdata2phrase(cmpdata))
 
     # ---- encoding/decoding time -----------------------------------------
     total_encoding_time_ratio = \
-        results.total_encoding_plus_decoding_time(serializer=serializer1, output='value') \
-        / results.total_encoding_plus_decoding_time(serializer=serializer2,
+        results.total_encoding_plus_decoding_time(serializer=seria1, output='value') \
+        / results.total_encoding_plus_decoding_time(serializer=seria2,
                                                     output='value')
 
     if total_encoding_time_ratio == 1:
         text.append(
-            f"{aspect_serializer(serializer1)} "
-            f"and {aspect_serializer(serializer2)} "
+            f"{aspect_serializer(seria1)} "
+            f"and {aspect_serializer(seria2)} "
             "seem to require exactly the same time to encode and decode; ")
     else:
         text.append(
-            f"{aspect_serializer(serializer1)} "
+            f"{aspect_serializer(seria1)} "
             f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
             f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
             "(__note:total_encoding_time_ratio__) - "
             "than "
-            f"{aspect_serializer(serializer2)} "
+            f"{aspect_serializer(seria2)} "
             "to encode and decode; ")
 
         text.notes.append(
@@ -1675,111 +1675,128 @@ def report_section_c2c__serializervsserializer(results,
              humanratio(
                  total_encoding_time_ratio,
                  explanations=(
-                     f"{aspect_serializer(serializer1)}'s Σ encod.+decod. time",
-                     results.total_encoding_plus_decoding_time(serializer=serializer1,
+                     f"{aspect_serializer(seria1)}'s Σ encod.+decod. time",
+                     results.total_encoding_plus_decoding_time(serializer=seria1,
                                                                output='value'),
-                     f"{aspect_serializer(serializer2)}'s Σ encod.+decod. time",
-                     results.total_encoding_plus_decoding_time(serializer=serializer2,
+                     f"{aspect_serializer(seria2)}'s Σ encod.+decod. time",
+                     results.total_encoding_plus_decoding_time(serializer=seria2,
                                                                output='value'),
                      'time',
                  ))))
 
     # ---- total_encoding_strlen -----------------------------------------
     total_encoding_strlen_ratio = \
-        results.total_encoding_strlen(serializer=serializer1, output='value') \
-        / results.total_encoding_strlen(serializer=serializer2,
+        results.total_encoding_strlen(serializer=seria1, output='value') \
+        / results.total_encoding_strlen(serializer=seria2,
                                         output='value')
 
     if total_encoding_strlen_ratio == 1:
-        text.append(f"{aspect_serializer(serializer1)} "
-                    f"and {aspect_serializer(serializer2)} "
+        text.append(f"{aspect_serializer(seria1)} "
+                    f"and {aspect_serializer(seria2)} "
                     "seem to produce strings that have exactly the same size; ")
     else:
         text.append("strings produced by "
-                    f"{aspect_serializer(serializer1)} "
+                    f"{aspect_serializer(seria1)} "
                     f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
                     f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
                     f"(__note:total_encoding_strlen_ratio__) - "
                     "than "
-                    f"strings produced by {aspect_serializer(serializer2)}; ")
+                    f"strings produced by {aspect_serializer(seria2)}; ")
 
         text.notes.append(
             ("total_encoding_strlen_ratio",
              humanratio(
                  total_encoding_strlen_ratio,
                  explanations=(
-                     f"{aspect_serializer(serializer1)}'s jsonstring strlen",
-                     results.total_encoding_strlen(serializer=serializer1,
+                     f"{aspect_serializer(seria1)}'s jsonstring strlen",
+                     results.total_encoding_strlen(serializer=seria1,
                                                    output='value'),
-                     f"{aspect_serializer(serializer2)}'s jsonstring strlen",
-                     results.total_encoding_strlen(serializer=serializer2,
+                     f"{aspect_serializer(seria2)}'s jsonstring strlen",
+                     results.total_encoding_strlen(serializer=seria2,
                                                    output='value'),
                      'string length',
                  ))))
 
     # ---- ratio_similarity -----------------------------------------------
     ratio_similarity = \
-        results.ratio_similarity(serializer=serializer1, output='value') \
-        / results.ratio_similarity(serializer=serializer2,
+        results.ratio_similarity(serializer=seria1, output='value') \
+        / results.ratio_similarity(serializer=seria2,
                                    output='value')
 
     if ratio_similarity == 1:
-        text.append(f"{aspect_serializer(serializer1)} "
-                    f"and {aspect_serializer(serializer2)} "
+        text.append(f"{aspect_serializer(seria1)} "
+                    f"and {aspect_serializer(seria2)} "
                     "seem to have exactly the same data coverage.")
     else:
-        text.append(f"{aspect_serializer(serializer1)}'s coverage "
+        text.append(f"{aspect_serializer(seria1)}'s coverage "
                     f"is {ratio2phrase(ratio_similarity, 'good/bad')} "
                     f"- by a factor of {humanratio(ratio_similarity):.3f} "
                     f"(__note:ratio_similarity__) - "
                     "than "
-                    f"{aspect_serializer(serializer2)}'s coverage; ")
+                    f"{aspect_serializer(seria2)}'s coverage; ")
 
         text.notes.append(
             ("ratio_similarity",
              humanratio(
                  ratio_similarity,
                  explanations=(
-                     f"{aspect_serializer(serializer1)}'s similarity ratio",
-                     results.ratio_similarity(serializer=serializer1,
+                     f"{aspect_serializer(seria1)}'s similarity ratio",
+                     results.ratio_similarity(serializer=seria1,
                                               output='value'),
-                     f"{aspect_serializer(serializer2)}'s similarity ratio",
-                     results.ratio_similarity(serializer=serializer2,
+                     f"{aspect_serializer(seria2)}'s similarity ratio",
+                     results.ratio_similarity(serializer=seria2,
                                               output='value'),
                      None,
                  ))))
 
     # ---- total_mem_usage ------------------------------------------------
-    total_mem_usage_ratio = \
-        results.total_mem_usage(serializer=serializer1, output='value') \
-        / results.total_mem_usage(serializer=serializer2,
-                                  output='value')
-
-    if total_mem_usage_ratio == 1:
-        text.append(f"{aspect_serializer(serializer1)} "
-                    f"and {aspect_serializer(serializer2)} seem "
-                    "to consume exactly as much memory as each other. ")
+    if results.total_mem_usage(serializer=seria2,
+                               output='value') == 0:
+        if results.total_mem_usage(serializer=seria1,
+                                   output='value') == 0:
+            # mem_usage==0 for both serializers:
+            text.append(
+                f"Neither {aspect_serializer(seria1)} "
+                f"nor {aspect_serializer(seria2)} seem to consume memory.")
+        else:
+            # mem_usage==0 for seria2:
+            text.append(
+                f"{aspect_serializer(seria1)} consumes "
+                f"{aspect_mem_usage(results.total_mem_usage(serializer=seria1, output='value'))}"
+                " but "
+                f"{aspect_serializer(seria2)} seems to consume no memory.")
     else:
-        text.append(f"{aspect_serializer(serializer1)} "
-                    f"consumes {ratio2phrase(total_mem_usage_ratio, 'more/less')} memory "
-                    f"- by a factor of {humanratio(total_mem_usage_ratio):.3f} "
-                    f"(__note:total_mem_usage_ratio__) - "
-                    "than "
-                    f"{aspect_serializer(serializer2)}. ")
+        # mem_usage!=0 for both serializers:
+        total_mem_usage_ratio = \
+            results.total_mem_usage(serializer=seria1, output='value') \
+            / results.total_mem_usage(serializer=seria2,
+                                      output='value')
 
-        text.notes.append(
-            ("total_mem_usage_ratio",
-             humanratio(
-                 total_mem_usage_ratio,
-                 explanations=(
-                     f"{aspect_serializer(serializer1)}'s used memory",
-                     results.total_mem_usage(serializer=serializer1,
-                                             output='value'),
-                     f"{aspect_serializer(serializer2)}'s used memory",
-                     results.total_mem_usage(serializer=serializer2,
-                                             output='value'),
-                     'memory',
-                 ))))
+        if total_mem_usage_ratio == 1:
+            text.append(f"{aspect_serializer(seria1)} "
+                        f"and {aspect_serializer(seria2)} seem "
+                        "to consume exactly as much memory as each other. ")
+        else:
+            text.append(f"{aspect_serializer(seria1)} "
+                        f"consumes {ratio2phrase(total_mem_usage_ratio, 'more/less')} memory "
+                        f"- by a factor of {humanratio(total_mem_usage_ratio):.3f} "
+                        f"(__note:total_mem_usage_ratio__) - "
+                        "than "
+                        f"{aspect_serializer(seria2)}. ")
+
+            text.notes.append(
+                ("total_mem_usage_ratio",
+                 humanratio(
+                     total_mem_usage_ratio,
+                     explanations=(
+                         f"{aspect_serializer(seria1)}'s used memory",
+                         results.total_mem_usage(serializer=seria1,
+                                                 output='value'),
+                         f"{aspect_serializer(seria2)}'s used memory",
+                         results.total_mem_usage(serializer=seria2,
+                                                 output='value'),
+                         'memory',
+                     ))))
 
     msgreport(text.output())
     msgreport()
@@ -1823,19 +1840,19 @@ def report_section_c2c(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(C2c) Conclusion")
 
-    serializer1, serializer2, _ = s1s2d  # serializer1, serializer2, cmpdata
+    seria1, seria2, _ = s1s2d  # seria1, seria2, cmpdata
 
-    if serializer1 == "all" and serializer2 == "all":
+    if seria1 == "all" and seria2 == "all":
         report_section_c2c__allvsall(results, s1s2d)
-    elif serializer1 != "all" and serializer2 != "all":
+    elif seria1 != "all" and seria2 != "all":
         report_section_c2c__serializervsserializer(results, s1s2d)
     else:
         report_section_c2c__serializervsall(results, s1s2d)
@@ -1882,8 +1899,8 @@ def report_section_d1a(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -1934,8 +1951,8 @@ def report_section_d1b(results,
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
 
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """
@@ -2036,8 +2053,8 @@ def report(results,
         ARGUMENTS:
         o  results: (SerializationResults)a dict of
                     [(str)serializer][(str)data_name] = SerializationResult
-        o  s1s2d: ( (str)serializer1,
-                    (str)serializer2,
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
                     (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
                   )
     """

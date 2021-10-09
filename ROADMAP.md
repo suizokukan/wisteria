@@ -46,6 +46,16 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-146
+
+Bugfix: if mem usage is 0, no more exception (ZeroDivisionError) in report.
+
+    * bugfix: if mem usage is 0, no more exception (ZeroDivisionError) in report.
+      (task-146)
+    * improved output message from TextAndNotes.output()
+    
+    * Pylint 10/10
+
 [DONE] task-145
 
 'DEFAULT_LOGFILE_NAME' > 'LOGFILE_NAME'
