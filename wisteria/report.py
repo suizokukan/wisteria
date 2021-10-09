@@ -68,7 +68,8 @@ from wisteria.textandnotes import TextAndNotes
 
 
 def humanratio(ratio,
-               explanations=None):
+               explanations=None,
+               numbersformat="raw"):
     """
         humanratio()
 
@@ -79,6 +80,9 @@ def humanratio(ratio,
         - if <explanations> is not None, return an (str)explanation describing the
         (float)ratio value.
 
+        Use <numbersformat> to modify the appearance of numbers in the explanation.
+        Please note all ratios computed are not affected by <numbersformat>.
+
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -86,14 +90,38 @@ def humanratio(ratio,
         o  (None|list of str)explanations:
                 (str)ratio1_str, (float)ratio1, (str)ratio2_str, (float)ratio2,
                 (None if no unit or str)unit_name
+        o  numbersformat: "raw" or ".3f" to modify the appearance of numbers in the
+                          explanation (ratios are not affected by <numbersformat>)
 
         RETURNED VALUE: (float)ratio or (float)1/ratio.
     """
+    def numbersfmt_raw(number):
+        """
+            numbersfmt_raw()
+
+            Return <number>.
+        """
+        return number
+
+    def numbersfmt_3f(number):
+        """
+            numbersfmt_3f()
+
+            Return a formatted version of <number>, with 3 decimal after the
+            decimal point.
+        """
+        return f"{number:.3f}"
+
     # ---- explanations is None > let's return a (float)value -----------------
     if explanations is None:
         if ratio < 1:
             return 1/ratio
         return ratio
+
+    if numbersformat == "raw":
+        numbersfmt = numbersfmt_raw
+    elif numbersformat == ".3f":
+        numbersfmt = numbersfmt_3f
 
     # ---- explanations is not None > let's return a (str)explanation ---------
     ratio1_str, ratio1, ratio2_str, ratio2, unit_name = explanations
@@ -101,16 +129,16 @@ def humanratio(ratio,
     if ratio < 1:
         ratio = 1/ratio
         res = f"factor {ratio:.3f} = {ratio2_str} / {ratio1_str} " \
-            f"= {ratio2:.3f} {unit_str} / {ratio1:.3f} {unit_str}" \
+            f"= {numbersfmt(ratio2)} {unit_str} / {numbersfmt(ratio1)} {unit_str}" \
             "\n" \
-            f"{ratio1_str} * {ratio:.3f} = {ratio1:.3f} {unit_str} * {ratio:.3f} = " \
-            f"{ratio2_str} = {ratio2:.3f} {unit_str}"
+            f"{ratio1_str} * {ratio:.3f} = {numbersfmt(ratio1)} {unit_str} * {ratio:.3f} = " \
+            f"{ratio2_str} = {numbersfmt(ratio2)} {unit_str}"
     else:
         res = f"factor {ratio:.3f} = {ratio1_str} / {ratio2_str} " \
-            f"= {ratio1:.3f} {unit_str} / {ratio2:.3f} {unit_str}" \
+            f"= {numbersfmt(ratio1)} {unit_str} / {numbersfmt(ratio2)} {unit_str}" \
             "\n" \
-            f"{ratio2_str} * {ratio:.3f} = {ratio2:.3f} {unit_str} * {ratio:.3f} " \
-            f"= {ratio1_str} = {ratio1:.3f} {unit_str}"
+            f"{ratio2_str} * {ratio:.3f} = {numbersfmt(ratio2)} {unit_str} * {ratio:.3f} " \
+            f"= {ratio1_str} = {numbersfmt(ratio1)} {unit_str}"
     return res
 
 
@@ -1682,7 +1710,9 @@ def report_section_c2c__serializervsserializer(results,
                      results.total_encoding_plus_decoding_time(serializer=seria2,
                                                                output='value'),
                      'time',
-                 ))))
+                 ),
+                 numbersformat=".3f"
+             )))
 
     # ---- total_encoding_strlen -----------------------------------------
     total_encoding_strlen_ratio = \
@@ -1715,7 +1745,9 @@ def report_section_c2c__serializervsserializer(results,
                      results.total_encoding_strlen(serializer=seria2,
                                                    output='value'),
                      'string length',
-                 ))))
+                 ),
+                 numbersformat="raw",
+             )))
 
     # ---- ratio_similarity -----------------------------------------------
     ratio_similarity = \
@@ -1747,7 +1779,9 @@ def report_section_c2c__serializervsserializer(results,
                      results.ratio_similarity(serializer=seria2,
                                               output='value'),
                      None,
-                 ))))
+                 ),
+                 numbersformat=".3f"
+             )))
 
     # ---- total_mem_usage ------------------------------------------------
     if results.total_mem_usage(serializer=seria2,
@@ -1796,7 +1830,9 @@ def report_section_c2c__serializervsserializer(results,
                          results.total_mem_usage(serializer=seria2,
                                                  output='value'),
                          'memory',
-                     ))))
+                     ),
+                     numbersformat="raw",
+                 )))
 
     msgreport(text.output())
     msgreport()

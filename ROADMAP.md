@@ -46,6 +46,16 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-149
+
+Improved humanratio() output: numbers that aren't a ratio may be
+formatted trough the <numbersformat> argument.
+
+    * improved humanratio() output: numbers that aren't a ratio may be
+      formatted trough the <numbersformat> argument (task-149)
+      
+    * Pylint: 10/10
+
 [DONE] task-148
 
 Improved titles in reports (D1a and D1b).
