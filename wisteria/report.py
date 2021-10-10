@@ -551,7 +551,7 @@ def report_section_b1a(results,
     table.add_column(f"Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
-    table.add_column("Encod.<>Decod. ?", width=16)
+    table.add_column("Reversibility ?", width=16)
     table.add_column("memory", width=12)
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         table.add_column("finger print ( serial. + dataobj)", width=9)
@@ -568,7 +568,7 @@ def report_section_b1a(results,
                     results.repr_attr(serializer, dataobj, "encoding_strlen"),
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "reversibility"),
                     results.repr_attr(serializer, dataobj, "mem_usage"),)
             else:
                 # debug mode:
@@ -579,7 +579,7 @@ def report_section_b1a(results,
                     results.repr_attr(serializer, dataobj, "encoding_strlen"),
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "reversibility"),
                     results.repr_attr(serializer, dataobj, "mem_usage"),
                     "["+strdigest(serializer+dataobj)+"]")
 
@@ -644,7 +644,7 @@ def report_section_b1b(results,
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=11)
     table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
-    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
+    table.add_column(f"Reversibility ? (Max={results.dataobjs_number})", width=16)
     table.add_column("Σ memory", width=12)
 
     for serializer in results.serializers:
@@ -655,7 +655,7 @@ def report_section_b1b(results,
             f"{results.total_encoding_strlen(serializer=serializer)}",
             f"{results.ratio_decoding_success(serializer=serializer)}",
             f"{results.total_decoding_time(serializer=serializer)}",
-            f"{results.ratio_similarity(serializer=serializer)}",
+            f"{results.ratio_reversibility(serializer=serializer)}",
             f"{results.total_mem_usage(serializer=serializer)}",
         )
     msgreport(table)
@@ -719,7 +719,7 @@ def report_section_b1c(results,
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=17)
     table.add_column(f"Decod. Ok ? (Max={results.dataobjs_number})", width=17)
     table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=17)
-    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=17)
+    table.add_column(f"Reversibility (Coverage Rate) (Max={results.dataobjs_number})", width=17)
     table.add_column("memory", width=12)
 
     for index in range(results.serializers_number):
@@ -730,7 +730,7 @@ def report_section_b1c(results,
             f"{results.get_halloffame('encoding_strlen', index)}",
             f"{results.get_halloffame('decoding_success', index)}",
             f"{results.get_halloffame('decoding_time', index)}",
-            f"{results.get_halloffame('similarity', index)}",
+            f"{results.get_halloffame('reversibility', index)}",
             f"{results.get_halloffame('mem_usage', index)}",
         )
 
@@ -791,8 +791,8 @@ def report_section_b1d(results,
     for serializer in results.serializers:
         _list = tuple(dataobj for dataobj in results[serializer]
                       if results[serializer][dataobj] is None or
-                      results[serializer][dataobj].similarity is None or
-                      not results[serializer][dataobj].similarity)
+                      results[serializer][dataobj].reversibility is None or
+                      not results[serializer][dataobj].reversibility)
         if not _list:
             msgreport(f"* ({aspect_serializer(serializer)}) "
                       "There's no data object that serializer "
@@ -863,7 +863,7 @@ def report_section_b2a(results,
     table.add_column(f"Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
-    table.add_column("Encod.<>Decod. ?", width=16)
+    table.add_column("Reversibility ?", width=16)
     table.add_column("memory", width=12)
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         table.add_column("finger print ( serial. + dataobj)", width=9)
@@ -880,7 +880,7 @@ def report_section_b2a(results,
                     results.repr_attr(serializer, dataobj, "encoding_strlen"),
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "reversibility"),
                     results.repr_attr(serializer, dataobj, "mem_usage")
                 )
             else:
@@ -892,7 +892,7 @@ def report_section_b2a(results,
                     results.repr_attr(serializer, dataobj, "encoding_strlen"),
                     results.repr_attr(serializer, dataobj, "decoding_success"),
                     results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "similarity"),
+                    results.repr_attr(serializer, dataobj, "reversibility"),
                     results.repr_attr(serializer, dataobj, "mem_usage"),
                     "["+strdigest(serializer+dataobj)+"]")
     msgreport(table)
@@ -956,7 +956,7 @@ def report_section_b2b(results,
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
     table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
     table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
-    table.add_column(f"Encod.<>Decod. ? (Max={results.serializers_number})", width=16)
+    table.add_column(f"Reversibility (Coverage Rate) (Max={results.serializers_number})", width=16)
     table.add_column("Σ memory", width=12)
 
     for dataobj in results.dataobjs:
@@ -967,7 +967,7 @@ def report_section_b2b(results,
             f"{results.total_encoding_strlen(dataobj=dataobj)}",
             f"{results.ratio_decoding_success(dataobj=dataobj)}",
             f"{results.total_decoding_time(dataobj=dataobj)}",
-            f"{results.ratio_similarity(dataobj=dataobj)}",
+            f"{results.ratio_reversibility(dataobj=dataobj)}",
             f"{results.total_mem_usage(dataobj=dataobj)}",
         )
     msgreport(table)
@@ -1035,7 +1035,7 @@ def report_section_c1a(results,
         _list = []  # list of the dataobj_name that CAN'T BE HANDLED by <serializer>.
         for dataobj_name in results.dataobjs:
             if results[serializer][dataobj_name] is not None and \
-               results[serializer][dataobj_name].similarity:
+               results[serializer][dataobj_name].reversibility:
                 _list.append(dataobj_name)
 
         if not data:
@@ -1155,7 +1155,7 @@ def report_section_c1b(results,
         _list = []  # list of the dataobj_name that CAN BE HANDLED by <serializer>.
         for dataobj_name in results.dataobjs:
             if results[serializer][dataobj_name] is not None and \
-               not results[serializer][dataobj_name].similarity:
+               not results[serializer][dataobj_name].reversibility:
                 _list.append(dataobj_name)
 
         if not data:
@@ -1264,7 +1264,7 @@ def report_section_c2a(results,
     table.add_column("Serializer", width=25)
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=16)
     table.add_column(f"Σ Encod.+Decod. Time ({UNITS['time']})", width=16)
-    table.add_column(f"Encod.<>Decod. ? (Max={results.dataobjs_number})", width=16)
+    table.add_column(f"Reversibility (Coverage Rate) (Max={results.dataobjs_number})", width=16)
     table.add_column("memory", width=12)
 
     seria1, seria2, _ = s1s2d
@@ -1287,7 +1287,7 @@ def report_section_c2a(results,
                 f"{aspect_serializer(serializer)}",
                 f"{results.total_encoding_strlen(serializer=serializer)}",
                 f"{results.total_encoding_plus_decoding_time(serializer=serializer)}",
-                f"{results.ratio_similarity(serializer=serializer)}",
+                f"{results.ratio_reversibility(serializer=serializer)}",
                 f"{results.total_mem_usage(serializer=serializer)}")
         else:
             table.add_row(
@@ -1346,7 +1346,7 @@ def report_section_c2b(results,
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(C2b) "
                        "Conclusion: Overall Score Based on 4 Comparisons Points "
-                       "(Σ Encoded Str./Σ Encod.+Decod. Time/Encod.<>Decod./Σ memory)")
+                       "(Σ Encoded Str./Σ Encod.+Decod. Time/Coverage Rate/Σ memory)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer", width=25)
@@ -1408,9 +1408,9 @@ def report_section_c2c__allvsall(results,
                 "is the quickest to encode/decode, ")
     text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][0][1])} "
                 "produces the shortest strings, ")
-    text.append(f"{aspect_serializer(results.halloffame['similarity'][0][1])} "
+    text.append(f"{aspect_serializer(results.halloffame['reversibility'][0][1])} "
                 "has the best coverage ")
-    text.append(f"and {aspect_serializer(results.halloffame['similarity'][0][1])} "
+    text.append(f"and {aspect_serializer(results.halloffame['reversibility'][0][1])} "
                 "uses the least memory. ")
 
     bests = results.get_overallscore_bestrank()
@@ -1429,9 +1429,9 @@ def report_section_c2c__allvsall(results,
         "is the slowest to encode/decode, ")
     text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][-1][1])} "
                 "produces the longest strings, ")
-    text.append(f"{aspect_serializer(results.halloffame['similarity'][-1][1])} "
+    text.append(f"{aspect_serializer(results.halloffame['reversibility'][-1][1])} "
                 "has the worst coverage ")
-    text.append(f"and {aspect_serializer(results.halloffame['similarity'][0][1])} "
+    text.append(f"and {aspect_serializer(results.halloffame['reversibility'][0][1])} "
                 "uses the most memory. ")
 
     worsts = results.get_overallscore_worstrank()
@@ -1448,7 +1448,7 @@ def report_section_c2c__allvsall(results,
     text.notes.append(
         ("overallscore",
          "a rank based on 4 comparisons points: "
-         "Σ encoded str./Σ encod.+decod. time/encod.<>decod./Σ memory"))
+         "Σ encoded str./Σ encod.+decod. time/Coverage Rate/Σ memory"))
 
     msgreport(text.output())
     msgreport()
@@ -1495,10 +1495,10 @@ def report_section_c2c__serializervsall(results,
     text.notes.append(
         ("overallscore",
          "a rank based on 4 comparisons points: "
-         "Σ jsonstr.len./Σ encod.+decod. time/encod.<>decod./Σ memory"))
+         "Σ jsonstr.len./Σ encod.+decod. time/Coverage Rate/Σ memory"))
     for attribute in ("encoding_strlen",
                       "encoding_plus_decoding_time",
-                      "similarity",
+                      "reversibility",
                       "mem_usage",
                       ):
         subtext = []
@@ -1574,7 +1574,7 @@ def report_section_c2c__serializervsall(results,
 
             subtext.append(". ")
 
-        elif attribute == "similarity":
+        elif attribute == "reversibility":
             if not _less:
                 subtext.append(
                     "There's no serializer worse than "
@@ -1752,35 +1752,35 @@ def report_section_c2c__serializervsserializer(results,
                  numbersformat="raw",
              )))
 
-    # ---- ratio_similarity -----------------------------------------------
-    ratio_similarity = \
-        results.ratio_similarity(serializer=seria1, output='value') \
-        / results.ratio_similarity(serializer=seria2,
-                                   output='value')
+    # ---- ratio_reversibility -----------------------------------------------
+    ratio_reversibility = \
+        results.ratio_reversibility(serializer=seria1, output='value') \
+        / results.ratio_reversibility(serializer=seria2,
+                                      output='value')
 
-    if ratio_similarity == 1:
+    if ratio_reversibility == 1:
         text.append(f"{aspect_serializer(seria1)} "
                     f"and {aspect_serializer(seria2)} "
                     "seem to have exactly the same data coverage.")
     else:
         text.append(f"{aspect_serializer(seria1)}'s coverage "
-                    f"is {ratio2phrase(ratio_similarity, 'good/bad')} "
-                    f"- by a factor of {humanratio(ratio_similarity):.3f} "
-                    f"(__note:ratio_similarity__) - "
+                    f"is {ratio2phrase(ratio_reversibility, 'good/bad')} "
+                    f"- by a factor of {humanratio(ratio_reversibility):.3f} "
+                    f"(__note:ratio_reversibility__) - "
                     "than "
                     f"{aspect_serializer(seria2)}'s coverage; ")
 
         text.notes.append(
-            ("ratio_similarity",
+            ("ratio_reversibility",
              humanratio(
-                 ratio_similarity,
+                 ratio_reversibility,
                  explanations=(
-                     f"{aspect_serializer(seria1)}'s similarity ratio",
-                     results.ratio_similarity(serializer=seria1,
-                                              output='value'),
-                     f"{aspect_serializer(seria2)}'s similarity ratio",
-                     results.ratio_similarity(serializer=seria2,
-                                              output='value'),
+                     f"{aspect_serializer(seria1)}'s reversibility ratio",
+                     results.ratio_reversibility(serializer=seria1,
+                                                 output='value'),
+                     f"{aspect_serializer(seria2)}'s reversibility ratio",
+                     results.ratio_reversibility(serializer=seria2,
+                                                 output='value'),
                      None,
                  ),
                  numbersformat=".3f"

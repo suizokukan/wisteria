@@ -46,6 +46,15 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-152
+
+Improved output messages: 'Encod.<>Decod.' > 'Reversibility' or 'Coverage rate'.
+
+    * improved output messages: 'Encod.<>Decod.' > 'Reversibility' or 'Coverage rate'.
+      (task-152)
+
+    * Pylint: 10/10
+
 [DONE] task-151
 
 Improved code in report_section_c2c__serializervsall() by replacing a

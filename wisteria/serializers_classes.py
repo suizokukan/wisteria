@@ -163,7 +163,7 @@ class SerializationResult:
         o  (int)   encoding_strlen
         o  (bool)  decoding_success
         o  (float) decoding_time
-        o  (bool)  similarity
+        o  (bool)  reversibility
         o  (int)   mem_usage
 
         methods:
@@ -184,7 +184,7 @@ class SerializationResult:
             o  (int)   encoding_strlen
             o  (bool)  decoding_success
             o  (float) decoding_time
-            o  (bool)  similarity
+            o  (bool)  reversibility
             o  (int)   mem_usage
         """
         self.encoding_success = False
@@ -192,7 +192,7 @@ class SerializationResult:
         self.encoding_strlen = None
         self.decoding_success = False
         self.decoding_time = None
-        self.similarity = False
+        self.reversibility = False
         self.mem_usage = None
 
     def __repr__(self):
@@ -200,7 +200,7 @@ class SerializationResult:
             SerializationResult.__repr__()
         """
         return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_strlen=}; " \
-            f"{self.decoding_success=}; {self.decoding_time=}; {self.similarity=}; " \
+            f"{self.decoding_success=}; {self.decoding_time=}; {self.reversibility=}; " \
             "{self.mem_usage=}"
 
 
@@ -230,7 +230,7 @@ class SerializationResults(dict):
                                       keys are: 'encoding_success', 'encoding_time',
                                                 'encoding_strlen',
                                                 'decoding_success', 'decoding_time',
-                                                'similarity',
+                                                'reversibility',
                                                 'encoding_plus_decoding_time'
         o  (dict)overallscores      : overallscores[serializer] = (int)overallscore
 
@@ -250,7 +250,7 @@ class SerializationResults(dict):
         o  get_serializers_whose_overallscore_rank_is(self, rank)
         o  ratio_decoding_success(self, serializer=None, dataobj=None, output="fmtstr")
         o  ratio_encoding_success(self, serializer=None, dataobj=None, output="fmtstr")
-        o  ratio_similarity(self, serializer=None, dataobj=None, output="fmtstr")
+        o  ratio_reversibility(self, serializer=None, dataobj=None, output="fmtstr")
         o  repr_attr(self, serializer, dataobj, attribute_name, output="fmtstr")
         o  total_decoding_time(self, serializer=None, dataobj=None, output="fmtstr")
         o  total_encoding_plus_decoding_time(self, serializer=None, dataobj=None, output="fmtstr")
@@ -276,7 +276,7 @@ class SerializationResults(dict):
                                           keys are: 'encoding_success', 'encoding_time',
                                                     'encoding_strlen',
                                                     'decoding_success', 'decoding_time',
-                                                    'similarity',
+                                                    'reversibility',
                                                     'encoding_plus_decoding_time'
             o  (dict)overallscores      : overallscores[serializer] = (int)overallscore
         """
@@ -366,10 +366,10 @@ class SerializationResults(dict):
                                                                    output="value"),
                                         serializer) for serializer in self.serializers),
                                       reverse=False),
-            "similarity": sorted(((self.ratio_similarity(serializer=serializer,
-                                                         output="value"),
-                                   serializer) for serializer in self.serializers),
-                                 reverse=True),
+            "reversibility": sorted(((self.ratio_reversibility(serializer=serializer,
+                                                               output="value"),
+                                      serializer) for serializer in self.serializers),
+                                    reverse=True),
             "encoding_plus_decoding_time": sorted(((self.total_encoding_time(serializer=serializer,
                                                                              output="value") +
                                                     self.total_decoding_time(serializer=serializer,
@@ -394,7 +394,7 @@ class SerializationResults(dict):
 
             for attribute in ('encoding_plus_decoding_time',
                               'encoding_strlen',
-                              'similarity',
+                              'reversibility',
                               'mem_usage',
                               ):
                 for index in range(self.serializers_number):
@@ -477,7 +477,7 @@ class SerializationResults(dict):
                                'decoding_success' or
                                'decoding_time' or
                                'encoding_strlen' or
-                               'similarity' or
+                               'reversibility' or
                                'mem_usage' ?
             o  (int)index: 0 <= index < len(self.serializers_numbers-1)
 
@@ -488,7 +488,7 @@ class SerializationResults(dict):
                              'decoding_success',
                              'decoding_time',
                              'encoding_strlen',
-                             'similarity',
+                             'reversibility',
                              'mem_usage')
 
         serializer = self.halloffame[attribute][index][1]
@@ -511,10 +511,10 @@ class SerializationResults(dict):
             return f"{aspect_serializer(serializer)} " \
                 f"[{aspect_time(value)}]"
 
-        if attribute == 'similarity':
+        if attribute == 'reversibility':
             serializer = self.halloffame[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
-                f"[{self.ratio_similarity(serializer=serializer)}]"
+                f"[{self.ratio_reversibility(serializer=serializer)}]"
 
         if attribute == 'encoding_strlen':
             serializer = self.halloffame[attribute][index][1]
@@ -727,14 +727,14 @@ class SerializationResults(dict):
 
         return None  # this line should never be executed.
 
-    def ratio_similarity(self,
-                         serializer=None,
-                         dataobj=None,
-                         output="fmtstr"):
+    def ratio_reversibility(self,
+                            serializer=None,
+                            dataobj=None,
+                            output="fmtstr"):
         """
-            SerializationResults.ratio_similarity()
+            SerializationResults.ratio_reversibility()
 
-            Compute and/or format the ratio of similarity success for a <serializer>
+            Compute and/or format the ratio of reversibility success for a <serializer>
             OR for a <dataobj>ect.
 
             _______________________________________________________________
@@ -763,7 +763,7 @@ class SerializationResults(dict):
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
-                   self[serializer][_dataobj].similarity:
+                   self[serializer][_dataobj].reversibility:
                     count += 1
             if output == "fmtstr":
                 return aspect_ratio((count, count/self.dataobjs_number))
@@ -776,7 +776,7 @@ class SerializationResults(dict):
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
-               self[_serializer][dataobj].similarity:
+               self[_serializer][dataobj].reversibility:
                 count += 1
 
         if output == "fmtstr":
@@ -804,7 +804,7 @@ class SerializationResults(dict):
             o  <str>dataobj: name of the data object to be used.
             o  <str>attribute_name: 'decoding_success', 'decoding_time', 'encoding_strlen',
                                     'encoding_success', 'encoding_time',
-                                    'similarity', 'mem_usage'
+                                    'reversibility', 'mem_usage'
             o  <output>(str): "fmtstr" for a formatted returned string
 
             RETURNED VALUE: a formatted string representing
@@ -815,7 +815,7 @@ class SerializationResults(dict):
         assert dataobj is not None
         assert attribute_name in ('decoding_success', 'decoding_time', 'encoding_strlen',
                                   'encoding_success', 'encoding_time',
-                                  'similarity', 'mem_usage')
+                                  'reversibility', 'mem_usage')
         assert output in ('fmtstr',)
 
         res = None  # unexpected result !
@@ -863,14 +863,14 @@ class SerializationResults(dict):
                     res = aspect_boolsuccess(
                         self[serializer][dataobj].encoding_success)
 
-        if attribute_name == "similarity":
+        if attribute_name == "reversibility":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].similarity is None:
+                   self[serializer][dataobj].reversibility is None:
                     res = aspect_nodata()
                 else:
                     res = aspect_boolsuccess(
-                        self[serializer][dataobj].similarity)
+                        self[serializer][dataobj].reversibility)
 
         if attribute_name == "mem_usage":
             if output == "fmtstr":

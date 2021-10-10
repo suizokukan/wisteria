@@ -154,13 +154,13 @@ def serializer_iaswn(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except module.IaswnError as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
@@ -242,13 +242,13 @@ def serializer_json(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
@@ -330,13 +330,13 @@ def serializer_jsonpickle(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
@@ -418,13 +418,13 @@ def serializer_jsonpickle_keystrue(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
@@ -506,13 +506,13 @@ def serializer_marshal(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
@@ -594,13 +594,13 @@ def serializer_pickle(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
@@ -682,13 +682,13 @@ def serializer_pyyaml(action="serialize",
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
             if obj == _res2:
-                res.similarity = True
+                res.reversibility = True
         except (module.constructor.ConstructorError, ValueError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             res = None
 
-    if res is not None and res.similarity is True:
+    if res is not None and res.reversibility is True:
         res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
