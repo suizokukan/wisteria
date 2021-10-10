@@ -46,8 +46,145 @@ What's next ?
       + doublecheck_memusage.py (valgrind)
 ===============================================================================
 
-[CURRENT] v. 0.1
+[DONE] v. 0.1
 
+--memoveruse command line argument
+--mute command line argument; 'none' is a new --report shortcut;
+Memory usage is now checked and displayed in reports.
+New script (doublecheck_memusage.sh) used to check if memory allocation
+is correctly detected by valgrind.
+
+
+bugs
+
+    * bugfix: if mem usage is 0, no more exception (ZeroDivisionError) in report.
+      (task-146)
+
+command line
+
+    * --memoveruse command line argument; results func() knows how to alloc 
+      extra memory when "Python" is in --memoveruse (task-136)
+    * --mute command line argumet; 'none' is a new --report shortcut;
+      (task-138)
+    * added default value to --checkup and --mymachine command line
+      argument definitions (task-138)
+
+code quality
+
+    * Pylint: 10/10
+    
+code structure
+
+    * add cppyy to projects' dependencies (task-137)
+    * (--memoveruse); results' func() know how to alloc extra memory 
+      when "C++" is in --memoveruse (task-137)
+    * new directory: memoverabuse_cpp/ (task-137)
+    * new key in UNITS: UNITS['memory'] (task-142)
+    * new function: aspect_mem_usage() (task-142)
+    * split report_section_c2c() in 3 sub methods, namely 
+      report_section_c2c__allvsall, report_section_c2c__serializervsall,
+      and report_section_c2c__serializervsserializer (task-142)
+    * removed useless bunch of code (2x TODOs) (task-142)
+    * new method: SerializationResults.total_mem_usage() (task-142)
+    * memory usage is now checked and displayed in reports 
+      using the `resource.getrusage(resource.RUSAGE_SELF).ru_maxrss`
+      mechanism (task-142)
+    * new variable in globs.py: DEFAULT_LOGFILE_NAME, replacing
+      old 'report.txt' occurences (task-143)
+    * 'DEFAULT_LOGFILE_NAME' > 'LOGFILE_NAME' (task-145)
+    * added a missing blank line in report.py (task-145)
+    * added a shebang line to memoveruse_cpp/compile.sh (task-147)
+    * improved humanratio() output: numbers that aren't a ratio may be
+      formatted through the <numbersformat> argument (task-149)
+    * new method: SerializationResults.get_serializers_whose_overallscore_is()
+    * new aspect function: aspect_exaequowith() (task-150)
+    * improved code in report_section_c2c__serializervsall() by replacing a
+      call to `len(results.serializers)` by `results.serializers_number`, the
+      result being already computed (task-151)
+    * new script (doublecheck_memusage.sh) used to check if memory allocation
+      is correctly detected by valgrind (task-153)
+    * Python memoryoveruse is now 1 Mo (task-153)
+    * C++ memoryoveruse is now 3 Mo (task-153)
+
+documentation
+
+    * improved documentation (task-136, task-137, task-138, task-142, task-144,
+      task-150)
+    * updated pimydoc (D1a and D1b titles) (task-148)
+
+interface, output messages
+
+    * if verbosity is set to minimal, no progress bar. It's important for scripts
+      calling this project from the outside (task-135)
+    * new debug message (displayed when verbosity is set to VERBOSITY_DEBUG)
+      describing the content of --memoveruse. (task-136)
+    * reports: no more base100 (task-140)
+    * improved TextAndNotes.output() output message (task-142)
+    * improved A1 report section: report_section_a1()
+      now displays --cmp & --report content. (task-144)
+    * improved output message from TextAndNotes.output()
+    * improved titles in reports (D1a and D1b)
+      (task-148)
+    * improved message in report section C2c (report_section_c2c__serializervsall())
+      by using the new aspect_exaequowith() function (task-150)
+    * improved output messages: 'Encod.<>Decod.' > 'Reversibility' or 'Coverage rate'.
+      (task-152)
+      
+tasks:
+
+    * task(s) : task-135, task-136, task-137, task-138, task-139, task-140,
+                task-141, task-142, task-143, task-144, task-145, task-146,
+                task-147, task-148, task-149, task-150, task-151, task-152,
+                task-153
+
+version:
+
+    * version set to '0.1'
+                
+```
+$ poetry show --tree
+
+cppyy 2.1.0 Cling-based Python-C++ bindings
+├── cppyy-backend 1.14.6
+│   └── cppyy-cling >=6.25.1 
+├── cppyy-cling 6.25.1
+└── cpycppyy 1.12.7
+    ├── cppyy-backend >=1.14.6 
+    │   └── cppyy-cling >=6.25.1 
+    └── cppyy-cling >=6.25.1 (circular dependency aborted here)
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+                
 [DONE] task-153
 
 New script (doublecheck_memusage.sh) used to check if memory allocation
@@ -81,7 +218,7 @@ result being already computed.
 
     * Pylint: 10/10
 
-[CURRENT] task-150
+[DONE] task-150
 
 Improved message in report section C2c (report_section_c2c__serializervsall())
 by using the new aspect_exaequowith() function.
@@ -100,7 +237,7 @@ Improved humanratio() output: numbers that aren't a ratio may be
 formatted trough the <numbersformat> argument.
 
     * improved humanratio() output: numbers that aren't a ratio may be
-      formatted trough the <numbersformat> argument (task-149)
+      formatted through the <numbersformat> argument (task-149)
       
     * Pylint: 10/10
 
@@ -147,7 +284,7 @@ Improved A1 report section.
 
     * improved A1 report section: report_section_a1()
       now displays --cmp & --report content. (task-144)
-    * updated pimydoc
+    * updated pimydoc (task-144)
     
     * Pylint: 10/10
 
@@ -225,7 +362,7 @@ when "C++" is in --memoveruse.
     * (--memoveruse); results' func() know how to alloc extra memory 
       when "C++" is in --memoveruse (task-137)
     * add cppyy to projects' dependencies (task-137)
-    * new directory: memoverabuse_cpp/
+    * new directory: memoverabuse_cpp/ (task-137)
     * improved documentation (task-137)
       
     * Pylint (10/10)
