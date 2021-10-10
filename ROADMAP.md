@@ -29,6 +29,8 @@ What's next ?
 0.1.5 cwc
 0.1.4 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
 0.1.3 tests
+        * tester toutes les divisions
+        * sur des ordis très rapides, le temps pourrait être nul.
 0.1.2 graphs (https://serpy.readthedocs.io/en/latest/performance.html,
               https://konstantin.blog/2010/pickle-vs-json-which-is-faster/)
       report000.jpg, report000.jpg, 
@@ -45,6 +47,18 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.1
+
+[DONE] task-153
+
+New script (doublecheck_memusage.sh) used to check if memory allocation
+is correctly detected by valgrind.
+
+    * new script (doublecheck_memusage.sh) used to check if memory allocation
+      is correctly detected by valgrind (task-153)
+    * Python memoryoveruse is now 1 Mo (task-153)
+    * C++ memoryoveruse is now 3 Mo (task-153)
+
+    * Pylint: 10/10
 
 [DONE] task-152
 

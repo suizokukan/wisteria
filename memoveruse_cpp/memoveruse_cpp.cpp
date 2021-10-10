@@ -3,5 +3,5 @@
 
 void MemOverUse::memoveruse()
 {
-  std::string s(33000000, '*');
+  std::string s(3000000, '*');
 }

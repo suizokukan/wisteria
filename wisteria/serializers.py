@@ -123,7 +123,7 @@ def serializer_iaswn(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
@@ -211,7 +211,7 @@ def serializer_json(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
@@ -299,7 +299,7 @@ def serializer_jsonpickle(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
@@ -387,7 +387,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
@@ -475,7 +475,7 @@ def serializer_marshal(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
@@ -563,7 +563,7 @@ def serializer_pickle(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
@@ -651,7 +651,7 @@ def serializer_pyyaml(action="serialize",
     # ---- --memoveruse ? -----------------------------------------------------
     if 'Python' in wisteria.globs.ARGS.memoveruse:
         # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*1000000
+        dumbstr = "0123456789"*100000
     if 'C++' in wisteria.globs.ARGS.memoveruse:
         MemOverUse().memoveruse()
 
