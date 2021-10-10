@@ -1487,7 +1487,7 @@ def report_section_c2c__serializervsall(results,
     score = results.overallscores[serializer]
     text.append(
         f"{aspect_serializer(serializer)} "
-        f"is ranked #{rank+1} among {len(results.serializers)} serializers"
+        f"is ranked #{rank+1} among {results.serializers_number} serializers"
         f"{(aspect_exaequowith(serializer, results.get_serializers_whose_overallscore_is(score)))}"
         f" (__note:overallscore__)")
     text.append(". ")

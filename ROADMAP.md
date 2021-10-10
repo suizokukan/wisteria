@@ -46,6 +46,18 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[DONE] task-151
+
+Improved code in report_section_c2c__serializervsall() by replacing a
+call to `len(results.serializers)` by `results.serializers_number`, the
+result being already computed.
+
+    * improved code in report_section_c2c__serializervsall() by replacing a
+      call to `len(results.serializers)` by `results.serializers_number`, the
+      result being already computed (task-151)
+
+    * Pylint: 10/10
+
 [CURRENT] task-150
 
 Improved message in report section C2c (report_section_c2c__serializervsall())
