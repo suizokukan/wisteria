@@ -62,7 +62,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest
 from wisteria.msg import msgreport, msgreporttitle, msgdebug
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
-from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage
+from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage, aspect_exaequowith
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -1478,15 +1478,18 @@ def report_section_c2c__serializervsall(results,
     text = TextAndNotes()
     text.append(cmpdata2phrase(cmpdata))
 
-    # <serializer> is the reference serializer againt all others.
+    # <serializer> is the reference serializer against all others.
     if seria1 != "all":
         serializer = seria1
     else:
         serializer = seria2
     rank = results.get_overallscore_rank(serializer)
-    text.append(f"{aspect_serializer(serializer)} "
-                f"is ranked #{rank+1} among {len(results.serializers)} serializers "
-                f"(__note:overallscore__)")
+    score = results.overallscores[serializer]
+    text.append(
+        f"{aspect_serializer(serializer)} "
+        f"is ranked #{rank+1} among {len(results.serializers)} serializers"
+        f"{(aspect_exaequowith(serializer, results.get_serializers_whose_overallscore_is(score)))}"
+        f" (__note:overallscore__)")
     text.append(". ")
 
     text.notes.append(

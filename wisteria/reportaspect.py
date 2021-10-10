@@ -38,6 +38,8 @@
     o  aspect_stringlength(int_stringlength)
     o  aspect_time(floattime)
     o  aspect_title(title)
+
+    o  aspect_exaequowith(item, listitems)
 """
 import wisteria.globs
 
@@ -70,7 +72,7 @@ def aspect_data(data_objectname):
 
         ARGUMENT: (str)data_objectname
 
-        RETURNED VALUE: (str)_objectname + some text attributes.
+        RETURNED VALUE: (str)data_objectname + some text attributes.
     """
     return f"[bold white]{data_objectname}[/bold white]"
 
@@ -105,7 +107,15 @@ def aspect_list(listitems, func=None):
 
 def aspect_mem_usage(bytesnumber):
     """
-    TODO
+        aspect_mem_usage()
+
+        Modify the aspect of (int)bytesnumber.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (int)bytesnumber
+
+        RETURNED VALUE: (str)bytesnumber + some text attributes.
     """
     if bytesnumber is None:
         return aspect_nodata()
@@ -282,3 +292,31 @@ def aspect_title(title):
         RETURNED VALUE: (str)title + some text attributes.
     """
     return f"[bold white on blue]{title}[/bold white on blue]"
+
+
+# function defined here since it depends from aspect_list().
+def aspect_exaequowith(item,
+                       listitems,
+                       func=aspect_serializer,
+                       prefix=", [i]ex aequo[/i] with "):
+    """
+        aspect_exaequowith()
+
+        <listitems> is a list of (str)items, <item> being one of the items,
+        something like: listitems=['a', 'b', 'c'], items="b".
+        This function will return <prefix>(~"ex aequo") + "a and c".
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  (str)           item
+        o  (list of str)   listitems
+        o  (callable)      func        , callable that will be called upon each <item>.
+        o  (str)           prefix      , string that will be added before the result
+
+        RETURNED VALUE: (str)
+    """
+    if len(listitems) == 1:
+        return ""
+    listitems.remove(item)
+    return prefix + aspect_list(listitems, func)

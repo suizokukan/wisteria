@@ -247,6 +247,7 @@ class SerializationResults(dict):
         o  get_overallscore_bestrank(self)
         o  get_overallscore_worstrank(self)
         o  get_serializers_base(self, attribute)
+        o  get_serializers_whose_overallscore_rank_is(self, rank)
         o  ratio_decoding_success(self, serializer=None, dataobj=None, output="fmtstr")
         o  ratio_encoding_success(self, serializer=None, dataobj=None, output="fmtstr")
         o  ratio_similarity(self, serializer=None, dataobj=None, output="fmtstr")
@@ -593,6 +594,22 @@ class SerializationResults(dict):
             if self.overallscores[serializer] == worstscore:
                 res.append(serializer)
         return res
+
+    def get_serializers_whose_overallscore_is(self,
+                                              score):
+        """
+            SerializationResults.get_serializers_whose_overallscore_is()
+
+            Return a list of all serializers whose overallscore is <score>.
+
+            ___________________________________________________________________
+
+            ARGUMENT: (int)score
+
+            RETURNED VALUE: (list of str)list of serializers whose overallscore is <score>
+        """
+        return list(serializer for serializer in self.serializers
+                    if self.overallscores[serializer] == score)
 
     def ratio_decoding_success(self,
                                serializer=None,

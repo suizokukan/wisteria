@@ -46,6 +46,19 @@ What's next ?
 
 [CURRENT] v. 0.1
 
+[CURRENT] task-150
+
+Improved message in report section C2c (report_section_c2c__serializervsall())
+by using the new aspect_exaequowith() function.
+
+    * improved message in report section C2c (report_section_c2c__serializervsall())
+      by using the new aspect_exaequowith() function (task-150)
+    * new method: SerializationResults.get_serializers_whose_overallscore_is()
+    * new aspect function: aspect_exaequowith() (task-150)
+    * improved documentation (task-150)
+
+    * Pylint: 10/10
+
 [DONE] task-149
 
 Improved humanratio() output: numbers that aren't a ratio may be
