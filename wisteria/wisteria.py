@@ -155,16 +155,16 @@ PARSER.add_argument(
     action='store_true',
     help="download default config file and exit")
 
-PARSER.add_argument(
-    '--memoveruse',
-    action='store',
-    default='none',
-    choices=('none', 'Python', 'C++', 'Python/C++'),
-    help="(debug/profile, not normally to be used) Alloc extra memory objects, "
-    "either from Python (='Python') "
-    "either from C++ (='C++') "
-    "either from Python and C++ (='Python/C++') "
-    "Why ? Just to see if memory profilers detect these allocations.")
+# MEMOVERUSEPARSER.add_argument(
+# MEMOVERUSE    '--memoveruse',
+# MEMOVERUSE    action='store',
+# MEMOVERUSE    default='none',
+# MEMOVERUSE    choices=('none', 'Python', 'C++', 'Python/C++'),
+# MEMOVERUSE    help="(debug/profile, not normally to be used) Alloc extra memory objects, "
+# MEMOVERUSE    "either from Python (='Python') "
+# MEMOVERUSE    "either from C++ (='C++') "
+# MEMOVERUSE    "either from Python and C++ (='Python/C++') "
+# MEMOVERUSE    "Why ? Just to see if memory profilers detect these allocations.")
 
 PARSER.add_argument(
     '--mymachine',
@@ -341,8 +341,8 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
     msgdebug("From now --report (wisteria.globs.ARGS.report) is set "
              f"to '{wisteria.globs.ARGS.report}'.")
 
-if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-    msgdebug(f"--memoveruse has been set to '{wisteria.globs.ARGS.memoveruse}' .")
+# MEMOVERUSEif wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+# MEMOVERUSE    msgdebug(f"--memoveruse has been set to '{wisteria.globs.ARGS.memoveruse}' .")
 
 # =============================================================================
 # This point is only reached if there's no --version/--help argument

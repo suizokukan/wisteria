@@ -38,6 +38,16 @@ What's next ?
 
 [CURRENT] v. 0.1.2
 
+[DONE] task-161
+
+Removed everything that concerned the 'memory double check'.
+
+    * removed everything that concerned the 'memory double check',
+      including doublecheck_memusage.sh script.
+      (task-161)
+
+    * Pylint: 10/10
+
 [DONE] v. 0.1.1
 
 'graphs' in reports.

@@ -42,8 +42,8 @@ import resource
 import sys
 import timeit
 
-# --memoveruse C++ module:
-import cppyy
+# MEMOVERUSE# --memoveruse C++ module:
+# MEMOVERUSEimport cppyy
 
 import wisteria.globs
 from wisteria.globs import TIMEITNUMBER, MODULES
@@ -53,12 +53,12 @@ from wisteria.utils import trytoimport
 from wisteria.serializers_classes import SerializerData, SerializationResult
 from wisteria.msg import msgdebug
 
-# --memoveruse C++ module:
-cppyy.include("memoveruse_cpp/memoveruse_cpp.h")
-cppyy.load_library("memoveruse_cpp/libmemoveruse_cpp")
-#    pylint: disable=import-error,wrong-import-position,wrong-import-order
-#    about noqa: https://pep8.readthedocs.io/en/latest/intro.html#configuration
-from cppyy.gbl import MemOverUse  # noqa
+# MEMOVERUSE# --memoveruse C++ module:
+# MEMOVERUSEcppyy.include("memoveruse_cpp/memoveruse_cpp.h")
+# MEMOVERUSEcppyy.load_library("memoveruse_cpp/libmemoveruse_cpp")
+# MEMOVERUSE#    pylint: disable=import-error,wrong-import-position,wrong-import-order
+# MEMOVERUSE#    about noqa: https://pep8.readthedocs.io/en/latest/intro.html#configuration
+# MEMOVERUSEfrom cppyy.gbl import MemOverUse  # noqa
 
 
 def _len(obj):
@@ -120,12 +120,12 @@ def serializer_iaswn(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID030) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
@@ -208,12 +208,12 @@ def serializer_json(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID031) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
@@ -296,12 +296,12 @@ def serializer_jsonpickle(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID032) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
@@ -384,12 +384,12 @@ def serializer_jsonpickle_keystrue(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID042) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
@@ -472,12 +472,12 @@ def serializer_marshal(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID033) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
@@ -560,12 +560,12 @@ def serializer_pickle(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID034) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
@@ -648,12 +648,12 @@ def serializer_pyyaml(action="serialize",
     if action != "serialize":
         raise WisteriaError(f"(ERRORID044) Unknown 'action' keyword '{action}'.")
 
-    # ---- --memoveruse ? -----------------------------------------------------
-    if 'Python' in wisteria.globs.ARGS.memoveruse:
-        # pylint: disable=possibly-unused-variable
-        dumbstr = "0123456789"*100000
-    if 'C++' in wisteria.globs.ARGS.memoveruse:
-        MemOverUse().memoveruse()
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
 
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()

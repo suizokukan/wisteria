@@ -18,50 +18,6 @@ python-versions = "*"
 test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
-name = "cppyy"
-version = "2.1.0"
-description = "Cling-based Python-C++ bindings"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-cppyy-backend = "1.14.6"
-cppyy-cling = "6.25.1"
-CPyCppyy = "1.12.7"
-
-[[package]]
-name = "cppyy-backend"
-version = "1.14.6"
-description = "C/C++ wrapper for Cling"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-cppyy-cling = ">=6.25.1"
-
-[[package]]
-name = "cppyy-cling"
-version = "6.25.1"
-description = "Re-packaged Cling, as backend for cppyy"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
-name = "cpycppyy"
-version = "1.12.7"
-description = "Cling-based Python-C++ bindings for CPython"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-cppyy-backend = ">=1.14.6"
-cppyy-cling = ">=6.25.1"
-
-[[package]]
 name = "psutil"
 version = "5.8.0"
 description = "Cross-platform lib for process and system monitoring in Python."
@@ -107,7 +63,7 @@ jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d04c5c03943d35351d1a8b5f9e089f5585dea4978101595d1682e4978323efd1"
+content-hash = "5f14ad69746862f45b28e6113145cfb4f5eb2525b05385dd33b31291fa58f246"
 
 [metadata.files]
 colorama = [
@@ -117,23 +73,6 @@ colorama = [
 commonmark = [
     {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
     {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
-]
-cppyy = [
-    {file = "cppyy-2.1.0.tar.gz", hash = "sha256:e5feb67fe6af2314da8ced934b2966ec3dd55a4649462b21607a2f51de1d0b27"},
-]
-cppyy-backend = [
-    {file = "cppyy-backend-1.14.6.tar.gz", hash = "sha256:42598fc1f578ccd389a8c5a5410f57809726dce758185585c3a2ab1d72bd4ed3"},
-]
-cppyy-cling = [
-    {file = "cppyy-cling-6.25.1.tar.gz", hash = "sha256:bedb63a5b47a2bcb482f793fbd992f4b4a9318dd0dbd24e6dd57de07c30b66fd"},
-    {file = "cppyy_cling-6.25.1-py2.py3-none-macosx_10_12_x86_64.whl", hash = "sha256:b3dd95a96989d2d552f78de92feaf2b7052be6d7e6b64d617ee377874cf3fbcf"},
-    {file = "cppyy_cling-6.25.1-py2.py3-none-manylinux1_x86_64.whl", hash = "sha256:4a88b88fd53b91d09000f545edcdc09dee37a63635b7166077c399d769361d2c"},
-    {file = "cppyy_cling-6.25.1-py2.py3-none-manylinux2014_x86_64.whl", hash = "sha256:9db039a3f68eb8a62eca0e419e7a8a145120147c41cb8b45844a51828387daa7"},
-    {file = "cppyy_cling-6.25.1-py2.py3-none-win32.whl", hash = "sha256:6aef281e0e897e52955091a69f06ef06a0429292a70ce6500c3b981b22ae2359"},
-    {file = "cppyy_cling-6.25.1-py2.py3-none-win_amd64.whl", hash = "sha256:da5fd43598bf643fbfed9bbc2f8b044058c30517e556eabf418159deb86c8884"},
-]
-cpycppyy = [
-    {file = "CPyCppyy-1.12.7.tar.gz", hash = "sha256:2c55a5c0d3ce13c6c120288d78fff09447dc4cb29b337f4a90fae6fb83fd9e3c"},
 ]
 psutil = [
     {file = "psutil-5.8.0-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:0066a82f7b1b37d334e68697faba68e5ad5e858279fd6351c8ca6024e8d6ba64"},
