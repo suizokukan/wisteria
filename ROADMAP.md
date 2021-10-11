@@ -45,6 +45,15 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-160
+
+Improved --memoveruse help message.
+
+    * improved --memoveruse help message ('Python+C++' > 'Python/C++') 
+      (task-160)
+    
+    * Pylint: 10/10
+
 [DONE] task-159
 
 Improved --help and --checkup messages.
