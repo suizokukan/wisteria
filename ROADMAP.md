@@ -4,9 +4,9 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-0.2.1 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+0.2.3 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
       comment signaler cette anomalie ?
-0.2.0 ajouter un max de serializers
+0.2.2 ajouter un max de serializers
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         ion (https://github.com/amzn/ion-python)
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -18,25 +18,86 @@ What's next ?
         yajl (https://pypi.org/project/yajl/)
         ujson (https://pypi.org/project/ujson/)
         
-0.1.9 ajouter un max de données 
+0.2.1 ajouter un max de données 
       jouer avec des données d'au moins 50 Mo de json string.
       numpy data
       panda data
-0.1.8 README.md acceptable
-0.1.7 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+0.2.0 README.md acceptable
+0.1.9 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
       chercher si une combinaison donne des résultats vraiment différents des autres
-0.1.6 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-0.1.5 cwc
-0.1.4 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
-0.1.3 tests
+0.1.8 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+0.1.7 cwc
+0.1.6 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
+0.1.5 tests
         * tester toutes les divisions
         * sur des ordis très rapides, le temps pourrait être nul.
-0.1.2 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
+0.1.4 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
-
+0.1.3 MacOS + Win
 ===============================================================================
 
-[CURRENT] v. 0.1.2
+[DONE] v. 0.1.2
+
+Removed everything that concerned the 'memory double check'.
+In `pyproject.toml`, python = "^3.8".
+
+bug
+
+    * bug: in report_section_graphs(), msgdebug() is now called only in debug
+      mode, if verbosity is set to VERBOSITY_DEBUG (task-164)
+
+code structure
+
+    * removed everything that concerned the 'memory double check',
+      including doublecheck_memusage.sh script.
+      (task-161)
+    * in `pyproject.toml`, python = "^3.8" (task-162)
+    * added `memoveruse_cpp/libmemoveruse_cpp.so`, a forgotten file
+      (task-163)
+    * modified `.gitignore` to include .so files (task-163)
+    
+version
+
+    * set version to '0.1.2'
+
+tasks
+
+    * task(s): task-161, task-162, task-163, task-164
+
+```
+$ poetry show --tree
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.2
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-164
 
