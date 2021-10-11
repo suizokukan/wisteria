@@ -60,7 +60,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.globs import GRAPHS_FILENAME
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.utils import shortenedstr, strdigest, trytoimport
+from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
 from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage, aspect_exaequowith
@@ -2103,6 +2103,7 @@ def report_section_graphs(results,
                       fontsize=8, fontweight='normal')
         axes.set_xlabel(unit)
         axes.set_title(title)
+        msgdebug(f"About to write on disk graph file '{filename}' ({normpath(filename)}) .")
         pyplot.savefig(filename)
 
 

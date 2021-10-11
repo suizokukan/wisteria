@@ -45,6 +45,15 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-156
+
+Added to report_section_graphs() debug message.
+
+    * added to report_section_graphs() debug message, namely graph filenames.
+      (task-156)
+
+    * Pylint: 10/10
+
 [DONE] task-155
 
 Improved checkup() output.
