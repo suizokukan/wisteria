@@ -1278,7 +1278,7 @@ def report_section_c2a(results,
     table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=16)
     table.add_column(f"Σ Encod.+Decod. Time ({UNITS['time']})", width=16)
     table.add_column(f"Reversibility (Coverage Rate) (Max={results.dataobjs_number})", width=16)
-    table.add_column("memory", width=12)
+    table.add_column("Memory", width=12)
 
     seria1, seria2, _ = s1s2d
     _serializers = []

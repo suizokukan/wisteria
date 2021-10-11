@@ -45,6 +45,15 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-158
+
+Improved report_section_c2a() output.
+
+    * improved report_section_c2a() output: table title 'memory' > 'Memory'
+      (task-158)
+
+    * Pylint: 10/10
+
 [DONE] task-157
 
 Bug: report_section_graphs() has to stop if no matplotlib package.
