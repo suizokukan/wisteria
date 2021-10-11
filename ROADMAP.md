@@ -31,19 +31,101 @@ What's next ?
 0.1.3 tests
         * tester toutes les divisions
         * sur des ordis très rapides, le temps pourrait être nul.
-0.1.2 graphs (https://serpy.readthedocs.io/en/latest/performance.html,
-              https://konstantin.blog/2010/pickle-vs-json-which-is-faster/)
-      report000.jpg, report000.jpg, 
-      --graph=yes (default=yes)
-      --removeoldgraphs (default=yes)
-      si graphviz n'est pas installé et que --graph, arrêter le programme
-      si graphviz n'est pas installé et que --graph=no, laisser le programme avancer
-0.1.1 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
+0.1.2 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 
 ===============================================================================
 
-[CURRENT] v. 0.1.1
+[DONE] v. 0.1.1
+
+'graphs' in reports.
+
+bugs
+
+    * Bug: report_section_graphs() has to stop if matplotlib package is
+      not installed (task-157)
+
+code structure
+
+    * 'graphs' is now one of the REPORTS sections 
+      new report function: report_section_graphs() (task-154)
+    * new file: wisteria/helpmsg.py and its unique function, help_graphsfilenames()
+      (task-159)
+
+code quality
+
+    * Pylint: 10/10
+
+interface
+
+    * improved output message in partial_report__serializers(): removed useless
+      blank line (task-154)
+    * updated pimydoc: 'graphs' is now a report section (task-154)
+    * checkup() now says if it's possible to draw graphs (task-154)
+    * improved checkup() output: what would be the graphs filenames?
+      (task-155)
+    * added to report_section_graphs() debug message, namely graph filenames.
+      (task-156)
+    * improved error message in report_section_graphs() (task-157)
+    * improved report_section_c2a() output: table title 'memory' > 'Memory'
+      (task-158)
+    * improved --help and --checkup messages by showing graphs filenames
+      (task-159)
+    * improved --memoveruse help message ('Python+C++' > 'Python/C++') 
+      (task-160)
+
+tasks
+
+    * task(s): task-154, task-155, task-156, task-157, task-158,
+               task-159, task-160
+
+version
+
+    * set version to '0.1.1'
+
+```
+$ poetry show --tree
+
+cppyy 2.1.0 Cling-based Python-C++ bindings
+├── cppyy-backend 1.14.6
+│   └── cppyy-cling >=6.25.1 
+├── cppyy-cling 6.25.1
+└── cpycppyy 1.12.7
+    ├── cppyy-backend >=1.14.6 
+    │   └── cppyy-cling >=6.25.1 
+    └── cppyy-cling >=6.25.1 (circular dependency aborted here)
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.11.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.0
+Python 3.9.7 (default, Aug 31 2021, 13:28:12) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-160
 
