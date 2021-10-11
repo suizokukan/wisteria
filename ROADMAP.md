@@ -45,6 +45,15 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-155
+
+Improved checkup() output.
+
+    * improved checkup() output: what would be the graphs filenames?
+      (task-155)
+      
+    * Pylint: 10/10
+
 [DONE] task-154
 
 'graphs' in reports.

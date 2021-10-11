@@ -77,7 +77,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import TMPFILENAME, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEFAULT_CONFIG_FILENAME
-from wisteria.globs import LOGFILE_NAME
+from wisteria.globs import LOGFILE_NAME, GRAPHS_FILENAME
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report, partial_report__data, partial_report__serializers
 from wisteria.results import compute_results
@@ -588,8 +588,14 @@ def checkup():
 
     # ---- graphs -------------------------------------------------------------
     if trytoimport("matplotlib.pyplot"):
-        msgreport("* Graphs could be created, if required, "
-                  "since [bold]matplotlib[/bold] is installed.")
+        msgreport(
+            "* Graphs could be created, if required, "
+            "since [bold]matplotlib[/bold] is installed. "
+            f"They would be called '{GRAPHS_FILENAME.replace('__SUFFIX__', '1')}' "
+            f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '1'))}), "
+            f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '2')}' "
+            f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '2'))}), "
+            "...")
     else:
         msgreport("! [bold red]Graphs could NOT be created[/bold red], "
                   "if required, since [bold]matplotlib[/bold] isn't installed; "
