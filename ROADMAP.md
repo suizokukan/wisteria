@@ -38,6 +38,16 @@ What's next ?
 
 [CURRENT] v. 0.1.2
 
+[DONE] task-163
+
+Added `memoveruse_cpp/libmemoveruse_cpp.so`, a forgotten file.
+
+    * added `memoveruse_cpp/libmemoveruse_cpp.so`, a forgotten file
+      (task-163)
+    * modified `.gitignore` to include .so files (task-163)
+
+    * Pylint: 10/10
+
 [DONE] task-162
 
 In `pyproject.toml`, python = "^3.8".
