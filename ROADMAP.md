@@ -45,6 +45,19 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-154
+
+'graphs' in reports.
+
+    * 'graphs' is now one of the REPORTS sections 
+      new report function: report_section_graphs() (task-154)
+    * improved output message in partial_report__serializers(): removed useless
+      blank line (task-154)
+    * updated pimydoc: 'graphs' is now a report section (task-154)
+    * checkup() now says if it's possible to draw graphs (task-154)
+    
+    * Pylint: 10/10
+
 [DONE] v. 0.1
 
 --memoveruse command line argument

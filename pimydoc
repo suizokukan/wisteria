@@ -100,4 +100,5 @@ data objects
   - D1      : informations about the machine
     . D1a   : informations about the machine (no extensive details)
     . D1b   : informations about the machine (extensive details)
+* graphs    : graphic visualizations
 ### ==========================================================================

@@ -12,6 +12,11 @@ max-branches=12 > max-branches=40
 max-args=5 > max-args=6
 ```
 
+Dependencies
+------------
+
+matplotlib required only to draw graphs.(https://matplotlib.org/)
+
 
 Built-in Types coverage
 -----------------------

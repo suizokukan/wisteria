@@ -58,9 +58,10 @@ import wisteria.globs
 from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
+from wisteria.globs import GRAPHS_FILENAME
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.utils import shortenedstr, strdigest
-from wisteria.msg import msgreport, msgreporttitle, msgdebug
+from wisteria.utils import shortenedstr, strdigest, trytoimport
+from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
 from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage, aspect_exaequowith
 from wisteria.cmdline_mymachine import mymachine
@@ -318,9 +319,9 @@ def partial_report__serializers():
         "\n- ".join(f"{serializer.checkup_repr()}"
                     for serializer in wisteria.globs.SERIALIZERS.values()))
 
-    msgreport()
-
     if wisteria.globs.UNAVAILABLE_SERIALIZERS:
+        msgreport()
+
         msgreport(
             f"! {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
             f"{aspect_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}:")
@@ -366,6 +367,7 @@ def report_section_a1(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -422,6 +424,7 @@ def report_section_a2(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -475,6 +478,7 @@ def report_section_a3(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -529,6 +533,7 @@ def report_section_b1a(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
 
         _______________________________________________________________________
 
@@ -622,6 +627,7 @@ def report_section_b1b(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
 
         _______________________________________________________________________
 
@@ -697,6 +703,7 @@ def report_section_b1c(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
 
         _______________________________________________________________________
 
@@ -773,6 +780,7 @@ def report_section_b1d(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
 
         _______________________________________________________________________
 
@@ -841,6 +849,7 @@ def report_section_b2a(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
 
         _______________________________________________________________________
 
@@ -934,6 +943,7 @@ def report_section_b2b(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
 
         _______________________________________________________________________
 
@@ -1006,6 +1016,7 @@ def report_section_c1a(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1126,6 +1137,7 @@ def report_section_c1b(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1246,6 +1258,7 @@ def report_section_c2a(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1332,6 +1345,7 @@ def report_section_c2b(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1873,6 +1887,7 @@ def report_section_c2c(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1932,6 +1947,7 @@ def report_section_d1a(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1985,6 +2001,7 @@ def report_section_d1b(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -2003,11 +2020,98 @@ def report_section_d1b(results,
     mymachine(fulldetails=True)
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+# pylint: disable=unused-argument
+def report_section_graphs(results,
+                          s1s2d):
+    """
+        report_section_graphs()
+
+        Sub-function of report() for report section "D1a"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : options used to create reports
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
+                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                  )
+    """
+    if not trytoimport("matplotlib.pyplot"):
+        msgerror("(ERRORID022) Can't draw graphs: missing package 'matplotlib', "
+                 "see https://matplotlib.org/ .")
+
+    pyplot = wisteria.globs.MODULES["matplotlib.pyplot"]
+
+    for (attribute, fmtstring, value_coeff, value_color, unit, title, filename) in (
+            ('encoding_time', "{0:.3f}", 1, 'red', UNITS['time'], 'Speed',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
+            ('mem_usage', "{0}", 1, 'red', UNITS['memory'], 'Memory Usage',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
+            ('encoding_strlen', "{0}", 1, 'red', UNITS['string length'], 'Encoded String Length',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
+            ('reversibility', "{0:.1f}", 100, 'red', "%", 'Coverage data (Reversibility)',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "4")),
+           ):
+        pyplot.rcdefaults()
+        pyplot.rcParams.update({'axes.labelsize': 'large',
+                                'xtick.labelsize': 'x-small',
+                                'ytick.labelsize': 'large',
+                                })
+        fig, axes = pyplot.subplots()
+        fig.subplots_adjust(left=0.3)
+        axes.barh(tuple(value[1] for value in results.halloffame[attribute]),
+                  tuple(value[0]*value_coeff for value in results.halloffame[attribute]),
+                  align='center')
+        for value_index, value in enumerate(
+                tuple(value[0]*value_coeff for value in results.halloffame[attribute])):
+            axes.text(value,
+                      value_index,
+                      fmtstring.format(value),
+                      color=value_color,
+                      va='center',
+                      fontsize=8, fontweight='normal')
+        axes.set_xlabel(unit)
+        axes.set_title(title)
+        pyplot.savefig(filename)
+
+
 # STR2REPORTSECTION has two goals:
 # (1) translate a (str)report section name > list of corresponding functions
 # (2) store all known keys accepted in --report.
 STR2REPORTSECTION = {
         "titles": None,
+        "graphs": (report_section_graphs,),
         "A": (report_section_a1,
               report_section_a2,
               report_section_a3,),
@@ -2089,6 +2193,7 @@ def report(results,
         ⋅  - D1      : informations about the machine
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
         _______________________________________________________________________
 
         ARGUMENTS:

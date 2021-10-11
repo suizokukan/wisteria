@@ -92,13 +92,13 @@ REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
 # (1) it translates a simple, human-readable string into a list of section parts
 # (2) it gives all the accepted keywords that --report may understand.
 REPORT_SHORTCUTS = {
-    "bestof": "B1c;C2b;C2c;",
-    "full": "titles;A;B;C;D1a;",
-    "full+": "titles;A;B;C;D1b;",
-    "full_debug": "titles;A;B;C;D;",
-    "glance": "titles;B1b;C1a;C1b;C2a;C2b;C2c;",
-    "laconic": "C;",
-    "minimal": "C2c;",
+    "bestof": "B1c;C2b;C2c;graphs;",
+    "full": "titles;A;B;C;D1a;graphs;",
+    "full+": "titles;A;B;C;D1b;graphs;",
+    "full_debug": "titles;A;B;C;D;graphs;",
+    "glance": "titles;B1b;C1a;C1b;C2a;C2b;C2c;graphs;",
+    "laconic": "C;graphs;",
+    "minimal": "C2c;graphs;",
     "none": "",
     }
 
@@ -162,5 +162,8 @@ UNITS = {'time': 'seconds',
          'memory': 'bytes',
          }
 
-# default name for the log file
+# name of the log file
 LOGFILE_NAME = "report.txt"
+
+# name of the graphs file
+GRAPHS_FILENAME = "report__SUFFIX__.png"

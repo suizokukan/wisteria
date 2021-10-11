@@ -81,7 +81,7 @@ from wisteria.globs import LOGFILE_NAME
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report, partial_report__data, partial_report__serializers
 from wisteria.results import compute_results
-from wisteria.utils import normpath
+from wisteria.utils import normpath, trytoimport
 import wisteria.serializers
 import wisteria.data
 from wisteria.wisteriaerror import WisteriaError
@@ -583,6 +583,18 @@ def checkup():
                  "when checking if a key is defined in DATA and also in UNAVAILABLE_DATA:")
         for error in errors:
             msgerror(error)
+
+    msgreport()
+
+    # ---- graphs -------------------------------------------------------------
+    if trytoimport("matplotlib.pyplot"):
+        msgreport("* Graphs could be created, if required, "
+                  "since [bold]matplotlib[/bold] is installed.")
+    else:
+        msgreport("! [bold red]Graphs could NOT be created[/bold red], "
+                  "if required, since [bold]matplotlib[/bold] isn't installed; "
+                  "see https://matplotlib.org/ .")
+    msgreport()
 
 
 if wisteria.globs.ARGS.checkup:
