@@ -38,6 +38,16 @@ What's next ?
 
 [CURRENT] v. 0.1.2
 
+[DONE] task-164
+
+Bug: in report_section_graphs(), msgdebug() is now called only in debug
+     mode, if verbosity is set to VERBOSITY_DEBUG.
+     
+    * bug: in report_section_graphs(), msgdebug() is now called only in debug
+      mode, if verbosity is set to VERBOSITY_DEBUG (task-164)
+       
+    * Pylint: 10/10
+
 [DONE] task-163
 
 Added `memoveruse_cpp/libmemoveruse_cpp.so`, a forgotten file.

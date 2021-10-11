@@ -2108,7 +2108,10 @@ def report_section_graphs(results,
                       fontsize=8, fontweight='normal')
         axes.set_xlabel(unit)
         axes.set_title(title)
-        msgdebug(f"About to write on disk graph file '{filename}' ({normpath(filename)}) .")
+
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"About to write on disk graph file '{filename}' ({normpath(filename)}) .")
+
         pyplot.savefig(filename)
 
 
