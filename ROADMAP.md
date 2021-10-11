@@ -45,6 +45,17 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-159
+
+Improved --help and --checkup messages.
+
+    * improved --help and --checkup messages by showing graphs filenames
+      (task-159)
+    * new file: wisteria/helpmsg.py and its unique function, help_graphsfilenames()
+      (task-159)
+  
+    * Pylint: 10/10
+      
 [DONE] task-158
 
 Improved report_section_c2a() output.

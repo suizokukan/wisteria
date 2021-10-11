@@ -77,7 +77,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import TMPFILENAME, REGEX_CMP__HELP
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEFAULT_CONFIG_FILENAME
-from wisteria.globs import LOGFILE_NAME, GRAPHS_FILENAME
+from wisteria.globs import LOGFILE_NAME
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.report import report, partial_report__data, partial_report__serializers
 from wisteria.results import compute_results
@@ -90,6 +90,7 @@ from wisteria.cmdline_output import parse_output_argument
 from wisteria.cmdline_cmp import read_cmpstring
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.cfgfile import read_cfgfile, downloadconfigfile
+from wisteria.helpmsg import help_graphsfilenames
 
 
 # =============================================================================
@@ -118,8 +119,10 @@ PARSER = \
     argparse.ArgumentParser(
         description='Comparisons of different Python serializers. '
         'Try $ wisteria --checkup then $ wisteria --cmp="pickle against marshal". '
-        'The result appears in the console and '
-        f'is also written in a file, \'{LOGFILE_NAME}\' .',
+        'The results appear in the console and '
+        f'are also written in a file, \'{LOGFILE_NAME}\' ({normpath(LOGFILE_NAME)}), '
+        f'and - if matplotlib is installed - graphs are written in files named '
+        f'{help_graphsfilenames()}.',
         epilog=f"{__projectname__}: {__version__}",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -591,11 +594,7 @@ def checkup():
         msgreport(
             "* Graphs could be created, if required, "
             "since [bold]matplotlib[/bold] is installed. "
-            f"They would be called '{GRAPHS_FILENAME.replace('__SUFFIX__', '1')}' "
-            f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '1'))}), "
-            f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '2')}' "
-            f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '2'))}), "
-            "...")
+            f"They would be called {help_graphsfilenames()}.")
     else:
         msgreport("! [bold red]Graphs could NOT be created[/bold red], "
                   "if required, since [bold]matplotlib[/bold] isn't installed; "
