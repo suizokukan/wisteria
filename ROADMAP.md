@@ -45,6 +45,16 @@ What's next ?
 
 [CURRENT] v. 0.1.1
 
+[DONE] task-157
+
+Bug: report_section_graphs() has to stop if no matplotlib package.
+
+    * Bug: report_section_graphs() has to stop if matplotlib package is
+      not installed (task-157)
+    * improved error message in report_section_graphs() (task-157)
+    
+    * Pylint: 10/10
+
 [DONE] task-156
 
 Added to report_section_graphs() debug message.

@@ -2068,8 +2068,13 @@ def report_section_graphs(results,
                   )
     """
     if not trytoimport("matplotlib.pyplot"):
-        msgerror("(ERRORID022) Can't draw graphs: missing package 'matplotlib', "
-                 "see https://matplotlib.org/ .")
+        msgerror(
+            "(ERRORID022) Can't draw graphs: missing package 'matplotlib'. "
+            "Either you install matplotlib (see https://matplotlib.org/), either "
+            "- if you don't want to draw graphs - "
+            "you remove keyword 'graphs' from the --report string. "
+            "Try --verbosity=3 and check log file for more informations about --report string.")
+        return
 
     pyplot = wisteria.globs.MODULES["matplotlib.pyplot"]
 
