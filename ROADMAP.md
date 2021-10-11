@@ -38,6 +38,14 @@ What's next ?
 
 [CURRENT] v. 0.1.2
 
+[DONE] task-162
+
+In `pyproject.toml`, python = "^3.8".
+
+    * in `pyproject.toml`, python = "^3.8" (task-162)
+
+    * Pylint: 10/10
+
 [DONE] task-161
 
 Removed everything that concerned the 'memory double check'.
