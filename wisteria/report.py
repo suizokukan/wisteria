@@ -1967,6 +1967,7 @@ def report_section_d1a(results,
     mymachine(fulldetails=False)
     msgreport()
 
+
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
 # pylint: disable=unused-argument
@@ -2020,6 +2021,7 @@ def report_section_d1b(results,
 
     mymachine(fulldetails=True)
     msgreport()
+
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.

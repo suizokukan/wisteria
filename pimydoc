@@ -33,28 +33,29 @@ step A: command line arguments, --help message
 step B: initializations & --checkup
 - (B/02) normal imports
 - (B/03) wisteria.globs.ARGS initialization
-- (B/04) a special case: if no argument has been given, we modify the output
-- (B/05) --output string
-- (B/06) logfile opening
-- (B/07) msgxxx() functions can be used
-- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-- (B/09) project name & version
-- (B/10) ARGS.report interpretation
-- (B/11) exit handler
-- (B/12) serializers import
-- (B/13) temp file opening
-- (B/14) known data init > à besoin du précédent
-- (B/15) checkup
-- (B/16) informations about the current machine
-- (B/17) download default config file
+- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
+- (B/05) a special case: if no argument has been given, we modify the output
+- (B/06) --output string
+- (B/07) logfile opening
+- (B/08) msgxxx() functions can be used
+- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+- (B/10) project name & version
+- (B/11) ARGS.report interpretation
+- (B/12) exit handler
+- (B/13) serializers import
+- (B/14) temp file opening
+- (B/15) known data init (to be placed after 'temp file opening')
+- (B/16) checkup
+- (B/17) informations about the current machine
+- (B/18) download default config file
 
 step C: main()
-- (C/18) call to main()
-       - (C/18.1) main(): debug messages
-       - (C/18.2) main(): cmp string interpretation
-       - (C/18.3) main(): config file reading
-       - (C/18.4) main(): results computing
-       - (C/18.5) main(): report
+- (C/19) call to main()
+       - (C/19.1) main(): debug messages
+       - (C/19.2) main(): cmp string interpretation
+       - (C/19.3) main(): config file reading
+       - (C/19.4) main(): results computing
+       - (C/19.5) main(): report
 ### ==========================================================================
 [(pimydoc)config file format]
 

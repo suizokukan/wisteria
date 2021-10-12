@@ -38,11 +38,7 @@ What's next ?
 [CURRENT] v. 0.1.3
 
 installation + MacOS + Win
-
-[CURRENT] task-173
-
-    * time_start > mem0 (dans serializers.py)
-
+        # The "PermissionError" exception may be raised on Windows system:
 peak memory usage:
 https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 windows:
@@ -50,12 +46,21 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-173
+
+Wisteria can be executed on Linux & Windows systems.
+
+    * wisteria can be executed on Linux & Windows systems (task-173)
+    * PLATFORM_SYSTEM is variable defined globs.py (task-173)
     * improved message displayed in B/04 step: a 'f' prefix has been forgotten
       in a f-string (task-173)
+    * updated pimydoc (task-173)
     * added a blank line at the end of the A1, D1a and D1b report sections (task-173)
     * fixed default --report string when no command line arguments are given to
       "titles;A1;B1b;C2c;D1a;" instead of the dumb "titles;A1;B1b;D1a;D1b;D2a;D2b;D2c;"
       (task-173)
+
+    * Pylint: 10/10
 
 [DONE] task-172
 

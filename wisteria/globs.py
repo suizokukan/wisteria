@@ -209,3 +209,7 @@ STR2REPORTSECTION_KEYS = (
     'D1a',
     'D1b',
 )
+
+
+# = platform.system()
+PLATFORM_SYSTEM = None
