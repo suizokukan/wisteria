@@ -46,6 +46,16 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-177
+
+Improved message in step:
+  (B/04) a special case: if no argument has been given, we modify the output
+
+    * Improved message in step "a special case: if no argument " \
+      "has been given, we modify the output" (task-177)
+
+    * Pylint: 10/10
+
 [DONE] task-176
 
 bug: fixed output message in report_section_c2c__allvsall().

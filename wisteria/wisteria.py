@@ -433,7 +433,9 @@ if len(sys.argv) == 1:
     rprint(
         f"[bold]Since no argument was passed to {__projectname__}, "
         f"--verbosity is now set to '{wisteria.globs.ARGS.verbosity}' "
-        f"and --report to '{wisteria.globs.ARGS.report}' .[/bold]")
+        f"and --report to '{wisteria.globs.ARGS.report}'; "
+        f"--output is still equal to '{wisteria.globs.ARGS.output}' ."
+        "[/bold]")
 
 
 # =============================================================================
