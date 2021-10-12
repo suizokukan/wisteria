@@ -1425,7 +1425,7 @@ def report_section_c2c__allvsall(results,
                 "produces the shortest strings, ")
     text.append(f"{aspect_serializer(results.halloffame['reversibility'][0][1])} "
                 "has the best coverage ")
-    text.append(f"and {aspect_serializer(results.halloffame['reversibility'][0][1])} "
+    text.append(f"and {aspect_serializer(results.halloffame['mem_usage'][0][1])} "
                 "uses the least memory. ")
 
     bests = results.get_overallscore_bestrank()
@@ -1446,7 +1446,7 @@ def report_section_c2c__allvsall(results,
                 "produces the longest strings, ")
     text.append(f"{aspect_serializer(results.halloffame['reversibility'][-1][1])} "
                 "has the worst coverage ")
-    text.append(f"and {aspect_serializer(results.halloffame['reversibility'][0][1])} "
+    text.append(f"and {aspect_serializer(results.halloffame['mem_usage'][-1][1])} "
                 "uses the most memory. ")
 
     worsts = results.get_overallscore_worstrank()

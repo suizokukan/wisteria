@@ -46,6 +46,15 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-176
+
+bug: fixed output message in report_section_c2c__allvsall().
+
+    * bug: fixed output message in report_section_c2c__allvsall()
+      (task-176)
+
+    * Pylint: 10/10
+
 [DONE] task-175
 
 Improved aspect_mem_usage() output.
