@@ -33,8 +33,11 @@ What's next ?
         * sur des ordis très rapides, le temps pourrait être nul.
 0.1.4 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
-0.1.3 MacOS + Win
 ===============================================================================
+
+[CURRENT] v. 0.1.3
+
+installation + MacOS + Win
 
 [DONE] v. 0.1.2
 
