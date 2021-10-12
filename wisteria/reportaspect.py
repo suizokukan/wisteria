@@ -121,13 +121,13 @@ def aspect_mem_usage(bytesnumber):
         return aspect_nodata()
     if bytesnumber == 0:
         return "0 byte"
-    if bytesnumber < 5000:
+    if bytesnumber < 120000:
         return f"{bytesnumber} bytes"
-    if bytesnumber < 95000:
+    if bytesnumber < 120000000:
         return f"{bytesnumber/1000:.1f} Ko"
-    if bytesnumber < 95000000:
+    if bytesnumber < 120000000000:
         return f"{bytesnumber/1000000:.1f} Mo"
-    if bytesnumber < 95000000000:
+    if bytesnumber < 120000000000000:
         return f"{bytesnumber/1000000000:.1f} Go"
     return f"{bytesnumber/1000000000000:.1f} Po"
 

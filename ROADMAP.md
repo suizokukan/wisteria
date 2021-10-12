@@ -46,6 +46,15 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-175
+
+Improved aspect_mem_usage() output.
+
+   * improved aspect_mem_usage() output by changing all the thresholds
+     to 0, 120000, 120000000, 120000000000, ... (task-175)
+
+    * Pylint: 10/10
+
 [DONE] task-174
 
 bugfix: missing 'f' prefix in a f-string in win_memory().
