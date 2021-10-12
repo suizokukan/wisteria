@@ -1158,6 +1158,6 @@ class SerializationResults(dict):
                 res = aspect_mem_usage(total)
 
         if res is None:
-            raise WisteriaError("(ERRORID028) Internal error: the result could not be computed. "
+            raise WisteriaError("(ERRORID025) Internal error: the result could not be computed. "
                                 f"{serializer=}; {dataobj=}; {output=};")
         return res

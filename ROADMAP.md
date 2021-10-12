@@ -39,9 +39,18 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-169
+
+bug: in total_mem_usage(), ERRORID028 > ERRORID025 (duplicated error number).
+
+    * bug: in total_mem_usage(), ERRORID028 > ERRORID025 (duplicated error number).
+      (task-169)
+
+    * Pylint: 10/10
+
 [DONE] task-168
 
-We import a minimum of packages so that the user can show the --help message
+We import a minimum of packages so that the user can see the --help message
 even if some required package(s) are missing.
 
     * we import a minimum of packages so that the user can show the --help message
