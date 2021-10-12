@@ -39,6 +39,17 @@ What's next ?
 
 installation + MacOS + Win
 
+[CURRENT] task-173
+
+    * resource: Linux only
+    * time_start > mem0 (dans serializers.py)
+
+peak memory usage:
+https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
+
+windows:
+https://bugs.python.org/file19215/memory.py
+
 [DONE] task-172
 
 Added debug messages to init_serializers(), describing what has been
