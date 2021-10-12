@@ -23,6 +23,7 @@
 
     ___________________________________________________________________________
 
+    o  get_missing_required_modules()
     o  normpath(path)
     o  shortenedstr(string, maximallength)
     o  trytoimport(module_name)
@@ -33,8 +34,23 @@ import os
 import os.path
 
 import wisteria.globs
-from wisteria.globs import VERBOSITY_DETAILS
-from wisteria.msg import msginfo
+
+
+def get_missing_required_modules():
+    """
+        get_missing_required_modules()
+
+        Return a list of the missing required modules.
+
+        _______________________________________________________________________
+
+        RETURNED VALUE: (list of str) a list of the missing required modules.
+    """
+    missing_modules = []
+    for module_name in ('rich', 'psutil', 'cpuinfo'):
+        if not trytoimport(module_name):
+            missing_modules.append(module_name)
+    return missing_modules
 
 
 def normpath(path):
@@ -117,8 +133,6 @@ def trytoimport(module_name):
     res = True
     try:
         wisteria.globs.MODULES[module_name] = importlib.import_module(module_name)
-        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"Module '{module_name}' successfully imported.")
     except ModuleNotFoundError:
         res = False
     return res

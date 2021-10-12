@@ -2118,6 +2118,17 @@ def report_section_graphs(results,
 # STR2REPORTSECTION has two goals:
 # (1) translate a (str)report section name > list of corresponding functions
 # (2) store all known keys accepted in --report.
+#
+#  globs.py:STR2REPORTSECTION_KEYS should be nothing but STR2REPORTSECTION.keys()
+#
+# Why those two variables ?
+# Because the program needs to know STR2REPORTSECTION.keys() at step A
+# before STR2REPORTSECTION has been initialized. Since this initialization
+# requires modules that can't fit step A, we have to create a distinct list
+# of keys.
+#
+# check_str2reportsection_keys() checks that keys from STR2REPORTSECTION and
+# from STR2REPORTSECTION_KEYS are exactly the same.
 STR2REPORTSECTION = {
         "titles": None,
         "graphs": (report_section_graphs,),

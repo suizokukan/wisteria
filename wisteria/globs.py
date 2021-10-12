@@ -61,6 +61,8 @@
     o  UNITS
 
     o  LOGFILE_NAME
+
+    o  STR2REPORTSECTION_KEYS
 """
 import re
 
@@ -167,3 +169,43 @@ LOGFILE_NAME = "report.txt"
 
 # name of the graphs file
 GRAPHS_FILENAME = "report__SUFFIX__.png"
+
+#  globs.py:STR2REPORTSECTION_KEYS should be nothing but STR2REPORTSECTION.keys()
+#
+# Why those two variables ?
+# Because the program needs to know STR2REPORTSECTION.keys() at step A
+# before STR2REPORTSECTION has been initialized. Since this initialization
+# requires modules that can't fit step A, we have to create a distinct list
+# of keys.
+#
+# check_str2reportsection_keys() checks that keys from STR2REPORTSECTION and
+# from STR2REPORTSECTION_KEYS are exactly the same.
+STR2REPORTSECTION_KEYS = (
+    'titles',
+    'graphs',
+    'A',
+    'A1',
+    'A2',
+    'A3',
+    'B',
+    'B1',
+    'B1a',
+    'B1b',
+    'B1c',
+    'B1d',
+    'B2',
+    'B2a',
+    'B2b',
+    'C',
+    'C1',
+    'C1a',
+    'C1b',
+    'C2',
+    'C2a',
+    'C2b',
+    'C2c',
+    'D',
+    'D1',
+    'D1a',
+    'D1b',
+)

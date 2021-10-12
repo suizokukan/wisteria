@@ -39,6 +39,25 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-168
+
+We import a minimum of packages so that the user can show the --help message
+even if some required package(s) are missing.
+
+    * we import a minimum of packages so that the user can show the --help message
+      even if some required package(s) are missing (task-168)
+    * updated pimydoc: new exit codes (task-168)
+    * improved documentation: no more TODOs (task-168)
+    * --help message completed by help_helpcommandlineargument() (task-168)
+    * STR2REPORTSECTION_KEYS contains the keys of STR2REPORTSECTION,
+      and vice-versa (task-168)
+    * check_str2reportsection_keys() checks if STR2REPORTSECTION_KEYS contains 
+      the keys of STR2REPORTSECTION, and vice-versa (task-168)
+    * utils.py:get_missing_required_modules() gives the list of the
+      missing required modules (task-168)
+
+    * Pylint: 10/10
+
 [DONE] task-167
 
 Improved SerializationResults docstring.

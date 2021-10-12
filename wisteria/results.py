@@ -242,6 +242,8 @@ def compute_results(config,
                 # ⋅* -5: internal error, an error in main()
                 # ⋅* -6: error, ill-formed --output string
                 # ⋅* -7: error, an absurd value has been computed
+                # ⋅* -8: error, missing required module
+                # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
                 return None, -7
 
         # (progress bar)
@@ -266,6 +268,8 @@ def compute_results(config,
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
             # ⋅* -7: error, an absurd value has been computed
+            # ⋅* -8: error, missing required module
+            # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
             return None, -3
         if results.dataobjs_number == 0:
             msginfo("No data to handle, the program can stop.")
@@ -282,6 +286,8 @@ def compute_results(config,
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
             # ⋅* -7: error, an absurd value has been computed
+            # ⋅* -8: error, missing required module
+            # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
             return None, 2
 
         return results, None
@@ -301,4 +307,6 @@ def compute_results(config,
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
         # ⋅* -7: error, an absurd value has been computed
+        # ⋅* -8: error, missing required module
+        # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
         return None, -4

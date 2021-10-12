@@ -26,24 +26,35 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 
 ### ==========================================================================
 [(pimydoc)code structure]
-- (01) command line parsing
-- (02) --output string
-- (03) logfile opening
-- (04) project name & version
-- (05) ARGS.report interpretation
-- (06) exit handler
-- (07) serializers import
-- (08) temp file opening
-- (09) known data init > à besoin du précédent
-- (10) checkup
-- (11) informations about the current machine
-- (12) download default config file
-- (13) call to main()
-       - (13.1) main(): debug messages
-       - (14.2) main(): cmp string interpretation
-       - (13.3) main(): config file reading
-       - (13.4) main(): results computing
-       - (13.5) main(): report
+step A: command line arguments, --help message
+- (A/00) minimal imports
+- (A/01) command line parsing
+
+step B: initializations & --checkup
+- (B/02) normal imports
+- (B/03) wisteria.globs.ARGS initialization
+- (B/04) a special case: if no argument has been given, we modify the output
+- (B/05) --output string
+- (B/06) logfile opening
+- (B/07) msgxxx() functions can be used
+- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+- (B/09) project name & version
+- (B/10) ARGS.report interpretation
+- (B/11) exit handler
+- (B/12) serializers import
+- (B/13) temp file opening
+- (B/14) known data init > à besoin du précédent
+- (B/15) checkup
+- (B/16) informations about the current machine
+- (B/17) download default config file
+
+step C: main()
+- (C/18) call to main()
+       - (C/18.1) main(): debug messages
+       - (C/18.2) main(): cmp string interpretation
+       - (C/18.3) main(): config file reading
+       - (C/18.4) main(): results computing
+       - (C/18.5) main(): report
 ### ==========================================================================
 [(pimydoc)config file format]
 
@@ -73,6 +84,8 @@ data objects
 * -5: internal error, an error in main()
 * -6: error, ill-formed --output string
 * -7: error, an absurd value has been computed
+* -8: error, missing required module
+* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations
