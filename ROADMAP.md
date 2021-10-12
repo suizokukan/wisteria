@@ -39,6 +39,14 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-167
+
+Improved SerializationResults docstring.
+
+    * improved SerializationResults docstring (task-167)
+
+    * Pylint: 10/10
+
 [DONE] task-166
 
 Fixed sheband in ./bin/wisteria: '#!/usr/bin/env python3.9'

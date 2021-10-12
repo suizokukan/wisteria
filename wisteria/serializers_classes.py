@@ -231,7 +231,9 @@ class SerializationResults(dict):
                                                 'encoding_strlen',
                                                 'decoding_success', 'decoding_time',
                                                 'reversibility',
-                                                'encoding_plus_decoding_time'
+                                                'encoding_plus_decoding_time',
+                                                'mem_usage'
+
         o  (dict)overallscores      : overallscores[serializer] = (int)overallscore
 
 
