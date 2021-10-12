@@ -21,6 +21,10 @@
 """
     Wisteria project : wisteria/utils.py
 
+    BEWARE! Please use only verby basic imports since this file is used in
+    "step A" section of the program, where no third-party libraries may
+    be used.
+
     ___________________________________________________________________________
 
     o  get_missing_required_modules()
@@ -28,6 +32,9 @@
     o  shortenedstr(string, maximallength)
     o  trytoimport(module_name)
 """
+# BEWARE! Please use only verby basic imports since this file is used in
+# "step A" section of the program, where no third-party libraries may
+# be used.
 import hashlib
 import importlib
 import os

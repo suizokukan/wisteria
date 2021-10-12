@@ -39,6 +39,15 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-171
+
+Improved documentation in utils.py: no third-party libraries in this file!
+
+    * improved documentation in utils.py: no third-party libraries in this file!
+      (task-171)
+
+    * Pylint: 10/10
+
 [DONE] task-170
 
 Improved graph title in report_section_graphs(): "Speed" > "Slowness".
