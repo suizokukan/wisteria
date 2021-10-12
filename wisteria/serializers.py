@@ -38,9 +38,18 @@
 
     o  init_serializers()
 """
-import resource
+import platform
 import sys
 import timeit
+
+PLATFORM_SYSTEM = platform.system()   #TODO à placer dans globs.py, init dans wisteria.py
+
+if PLATFORM_SYSTEM == "Windows":
+    import os
+    from wmi import WMI
+else:
+    import resource
+
 
 # MEMOVERUSE# --memoveruse C++ module:
 # MEMOVERUSEimport cppyy
@@ -76,6 +85,13 @@ def _len(obj):
     if isinstance(obj, str):
         return len(bytes(obj, "utf-8"))
     return len(obj)
+
+
+def win_memory():
+    w = WMI('.')
+    result = w.query("SELECT WorkingSet FROM Win32_PerfRawData_PerfProc_Process WHERE IDProcess=%d" % os.getpid())
+    res = int(result[0].WorkingSet)
+    return res
 
 
 def serializer_iaswn(action="serialize",
@@ -130,7 +146,10 @@ def serializer_iaswn(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -161,7 +180,10 @@ def serializer_iaswn(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -218,7 +240,10 @@ def serializer_json(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -249,7 +274,10 @@ def serializer_json(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -306,7 +334,10 @@ def serializer_jsonpickle(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -337,7 +368,10 @@ def serializer_jsonpickle(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -394,7 +428,10 @@ def serializer_jsonpickle_keystrue(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -425,7 +462,10 @@ def serializer_jsonpickle_keystrue(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -482,7 +522,10 @@ def serializer_marshal(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -513,7 +556,10 @@ def serializer_marshal(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -570,7 +616,10 @@ def serializer_pickle(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -601,7 +650,10 @@ def serializer_pickle(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 
@@ -658,7 +710,10 @@ def serializer_pyyaml(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if PLATFORM_SYSTEM == "Windows":
+        time_start = win_memory()
+    else:
+        time_start = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
     _error = False
     try:
@@ -689,7 +744,10 @@ def serializer_pyyaml(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
+        if PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - time_start
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - time_start
 
     return res
 

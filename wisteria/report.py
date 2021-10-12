@@ -390,6 +390,7 @@ def report_section_a1(results,
     msgreport(
             "* --report = "
             f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
+    msgreport()
 
 
 def report_section_a2(results,
@@ -1964,7 +1965,7 @@ def report_section_d1a(results,
             "(D1a) Informations About The Machine ([italic]No Extensive Details[/italic])")
 
     mymachine(fulldetails=False)
-
+    msgreport()
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
@@ -2018,7 +2019,7 @@ def report_section_d1b(results,
             "(D1b) Informations About The Machine ([italic]Extensive Details[/italic])")
 
     mymachine(fulldetails=True)
-
+    msgreport()
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.

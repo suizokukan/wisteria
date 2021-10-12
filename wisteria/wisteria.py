@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ################################################################################
 #    Wisteria Copyright (C) 2021 suizokukan
@@ -427,10 +426,10 @@ wisteria.globs.ARGS = ARGS
 # a special case: if no argument has been given, we modify the output
 if len(sys.argv) == 1:
     wisteria.globs.ARGS.verbosity = 2
-    wisteria.globs.ARGS.report = "titles;A1;B1b;D1a;D1b;D2a;D2b;D2c;"
+    wisteria.globs.ARGS.report = "titles;A1;B1b;C2c;D1a;"
     rprint(
         f"[bold]Since no argument was passed to {__projectname__}, "
-        "--verbosity is now set to '{wisteria.globs.ARGS.verbosity}' "
+        f"--verbosity is now set to '{wisteria.globs.ARGS.verbosity}' "
         f"and --report to '{wisteria.globs.ARGS.report}' .[/bold]")
 
 
@@ -755,7 +754,13 @@ def exit_handler():
             msgdebug(f"(exit_handler) Let's remove the temp file "
                      f"'{wisteria.globs.TMPFILENAME}' "
                      f"('{normpath(wisteria.globs.TMPFILENAME)}')")
-        os.remove(wisteria.globs.TMPFILENAME)
+
+        # TODO pas clair
+        # The "PermissionError" exception may be raised on Windows system:
+        try:
+            os.remove(wisteria.globs.TMPFILENAME)
+        except PermissionError:
+            pass
 
     if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:

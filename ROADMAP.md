@@ -41,14 +41,21 @@ installation + MacOS + Win
 
 [CURRENT] task-173
 
-    * resource: Linux only
     * time_start > mem0 (dans serializers.py)
 
 peak memory usage:
 https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
-
 windows:
-https://bugs.python.org/file19215/memory.py
+$ pip install wmi
+
+C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
+
+    * improved message displayed in B/04 step: a 'f' prefix has been forgotten
+      in a f-string (task-173)
+    * added a blank line at the end of the A1, D1a and D1b report sections (task-173)
+    * fixed default --report string when no command line arguments are given to
+      "titles;A1;B1b;C2c;D1a;" instead of the dumb "titles;A1;B1b;D1a;D1b;D2a;D2b;D2c;"
+      (task-173)
 
 [DONE] task-172
 
