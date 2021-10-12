@@ -39,11 +39,24 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-166
+
+Fixed sheband in ./bin/wisteria: '#!/usr/bin/env python3.9'
+> '#!/usr/bin/env python3' .
+
+    * fixed sheband in ./bin/wisteria: '#!/usr/bin/env python3.9'
+      > '#!/usr/bin/env python3' (task-166)
+
+    * set version to "0.1.3rc2"
+
+    * Pylint: 10/10
+
 [DONE] task-165
 
 Fixed shebang in .py files: 'python3.9' > 'python3'.
 
     * fixed shebang in .py files: 'python3.9' > 'python3' (task-165)
+
     * set version to "0.1.3pre1"
 
     * Pylint: 10/10
