@@ -2079,7 +2079,7 @@ def report_section_graphs(results,
     pyplot = wisteria.globs.MODULES["matplotlib.pyplot"]
 
     for (attribute, fmtstring, value_coeff, value_color, unit, title, filename) in (
-            ('encoding_time', "{0:.3f}", 1, 'red', UNITS['time'], 'Speed',
+            ('encoding_time', "{0:.3f}", 1, 'red', UNITS['time'], 'Slowness',
              GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
             ('mem_usage', "{0}", 1, 'red', UNITS['memory'], 'Memory Usage',
              GRAPHS_FILENAME.replace("__SUFFIX__", "2")),

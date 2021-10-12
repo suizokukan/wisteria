@@ -39,6 +39,15 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-170
+
+Improved graph title in report_section_graphs(): "Speed" > "Slowness".
+
+    * improved graph title in report_section_graphs(): "Speed" > "Slowness"
+      (task-170)
+
+    * Pylint: 10/10
+
 [DONE] task-169
 
 bug: in total_mem_usage(), ERRORID028 > ERRORID025 (duplicated error number).
