@@ -747,5 +747,9 @@ def init_serializers():
         if trytoimport(serializerdata.module_name):
             wisteria.globs.SERIALIZERS[serializerdata.name] = serializerdata
             wisteria.globs.SERIALIZERS[serializerdata.name].version = serializerdata.func("version")
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"Successfully imported '{serializerdata.module_name}' module.")
         else:
             wisteria.globs.UNAVAILABLE_SERIALIZERS[serializerdata.name] = serializerdata
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"Could not import '{serializerdata.module_name}' module.")

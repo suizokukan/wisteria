@@ -48,6 +48,8 @@ def get_missing_required_modules():
         get_missing_required_modules()
 
         Return a list of the missing required modules.
+        No debug message here since this function belongs to the 'A' step of the
+        program.
 
         _______________________________________________________________________
 

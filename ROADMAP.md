@@ -39,6 +39,17 @@ What's next ?
 
 installation + MacOS + Win
 
+[DONE] task-172
+
+Added debug messages to init_serializers(), describing what has been
+imported/not imported.
+
+    * added debug messages to init_serializers(), describing what has been
+      imported/not imported (task-172)
+    * improved get_missing_required_modules() docstring (task-172)
+    
+    * Pylint: 10/10
+
 [DONE] task-171
 
 Improved documentation in utils.py: no third-party libraries in this file!
