@@ -28,31 +28,30 @@
     ⋅- (A/01) command line parsing
     ⋅
     ⋅step B: initializations & --checkup
-    ⋅- (B/02) normal imports
+    ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
     ⋅- (B/03) wisteria.globs.ARGS initialization
-    ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-    ⋅- (B/05) a special case: if no argument has been given, we modify the output
-    ⋅- (B/06) --output string
-    ⋅- (B/07) logfile opening
-    ⋅- (B/08) msgxxx() functions can be used
-    ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-    ⋅- (B/10) project name & version
-    ⋅- (B/11) ARGS.report interpretation
-    ⋅- (B/12) exit handler
-    ⋅- (B/13) serializers import
-    ⋅- (B/14) temp file opening
-    ⋅- (B/15) known data init (to be placed after 'temp file opening')
-    ⋅- (B/16) checkup
-    ⋅- (B/17) informations about the current machine
-    ⋅- (B/18) download default config file
+    ⋅- (B/04) a special case: if no argument has been given, we modify the output
+    ⋅- (B/05) --output string
+    ⋅- (B/06) logfile opening
+    ⋅- (B/07) msgxxx() functions can be used
+    ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+    ⋅- (B/09) project name & version
+    ⋅- (B/10) ARGS.report interpretation
+    ⋅- (B/11) exit handler
+    ⋅- (B/12) serializers import
+    ⋅- (B/13) temp file opening
+    ⋅- (B/14) known data init (to be placed after 'temp file opening')
+    ⋅- (B/15) checkup
+    ⋅- (B/16) informations about the current machine
+    ⋅- (B/17) download default config file
     ⋅
     ⋅step C: main()
-    ⋅- (C/19) call to main()
-    ⋅       - (C/19.1) main(): debug messages
-    ⋅       - (C/19.2) main(): cmp string interpretation
-    ⋅       - (C/19.3) main(): config file reading
-    ⋅       - (C/19.4) main(): results computing
-    ⋅       - (C/19.5) main(): report
+    ⋅- (C/18) call to main()
+    ⋅       - (C/18.1) main(): debug messages
+    ⋅       - (C/18.2) main(): cmp string interpretation
+    ⋅       - (C/18.3) main(): config file reading
+    ⋅       - (C/18.4) main(): results computing
+    ⋅       - (C/18.5) main(): report
 
     (pimydoc)exit codes
     ⋅*  0: normal exit code
@@ -94,31 +93,30 @@ import sys
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -145,31 +143,30 @@ from wisteria.globs import STR2REPORTSECTION_KEYS
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 PARSER = \
     argparse.ArgumentParser(
         description='Comparisons of different Python serializers. '
@@ -279,7 +276,7 @@ ARGS = PARSER.parse_args()
 
 
 # =============================================================================
-# (B/02) normal imports
+# (B/02) normal imports & PLATFORM_SYSTEM initialization
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -287,31 +284,30 @@ ARGS = PARSER.parse_args()
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 
 from wisteria.utils import get_missing_required_modules  # noqa
 MISSING_REQUIRED_MODULES = get_missing_required_modules()
@@ -345,6 +341,8 @@ import rich.console  # noqa
 from rich import print as rprint  # noqa
 
 import wisteria.globs  # noqa
+wisteria.globs.PLATFORM_SYSTEM = platform.system()
+
 from wisteria.globs import TMPFILENAME  # noqa
 from wisteria.report import report, partial_report__data, partial_report__serializers  # noqa
 from wisteria.results import compute_results  # noqa
@@ -368,41 +366,35 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 wisteria.globs.ARGS = ARGS
 
-# =============================================================================
-# (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# =============================================================================
-wisteria.globs.PLATFORM_SYSTEM = platform.system()
-
 
 # =============================================================================
-# (B/05) a special case: if no argument has been given, we modify the output
+# (B/04) a special case: if no argument has been given, we modify the output
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -410,31 +402,30 @@ wisteria.globs.PLATFORM_SYSTEM = platform.system()
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 # a special case: if no argument has been given, we modify the output
 if len(sys.argv) == 1:
     wisteria.globs.ARGS.verbosity = 2
@@ -446,7 +437,7 @@ if len(sys.argv) == 1:
 
 
 # =============================================================================
-# (B/06) --output string
+# (B/05) --output string
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -454,31 +445,30 @@ if len(sys.argv) == 1:
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.mute:
     wisteria.globs.OUTPUT = False, False, "a", LOGFILE_NAME
 else:
@@ -505,7 +495,7 @@ else:
 
 
 # =============================================================================
-# (B/07) logfile opening
+# (B/06) logfile opening
 # =============================================================================
 # It would be great to use something like:
 #   with open(...) as wisteria.globs.FILECONSOLE_FILEOBJECT:
@@ -519,7 +509,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 
 
 # =============================================================================
-# (B/08) msgxxx() functions can be used
+# (B/07) msgxxx() functions can be used
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -527,34 +517,33 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 
 # =============================================================================
-# (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -562,31 +551,30 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 def check_str2reportsection_keys():
     """
         check_str2reportsection_keys()
@@ -633,7 +621,7 @@ if not check_str2reportsection_keys():
 
 
 # =============================================================================
-# (B/10) project name & version
+# (B/09) project name & version
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -641,37 +629,36 @@ if not check_str2reportsection_keys():
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
     msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
 
 # =============================================================================
-# (B/11) ARGS.report interpretation
+# (B/10) ARGS.report interpretation
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -679,31 +666,30 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.mute:
     wisteria.globs.ARGS.report = ""
     wisteria.globs.ARGS.verbosity = VERBOSITY_MINIMAL
@@ -728,7 +714,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 
 
 # =============================================================================
-# (B/12) exit handler
+# (B/11) exit handler
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -736,31 +722,30 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 def exit_handler():
     """
         exit_handler()
@@ -791,7 +776,7 @@ atexit.register(exit_handler)
 
 
 # =============================================================================
-# (B/13) serializers import
+# (B/12) serializers import
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -799,36 +784,35 @@ atexit.register(exit_handler)
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 wisteria.serializers.init_serializers()
 
 
 # =============================================================================
-# (B/14) temp file opening
+# (B/13) temp file opening
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -836,31 +820,30 @@ wisteria.serializers.init_serializers()
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
@@ -870,7 +853,7 @@ if not os.path.exists(TMPFILENAME):
 
 
 # =============================================================================
-# (B/15) known data init
+# (B/14) known data init
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -878,36 +861,35 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 wisteria.data.init_data()
 
 
 # =============================================================================
-# (B/16) checkup
+# (B/15) checkup
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -915,31 +897,30 @@ wisteria.data.init_data()
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 def checkup():
     """
         checkup()
@@ -1063,7 +1044,7 @@ if wisteria.globs.ARGS.checkup:
 
 
 # =============================================================================
-# (B/17) informations about the current machine
+# (B/16) informations about the current machine
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -1071,31 +1052,30 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
     if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
@@ -1121,7 +1101,7 @@ if wisteria.globs.ARGS.mymachine:
 
 
 # =============================================================================
-# (B/18) download default config file
+# (B/17) download default config file
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -1129,31 +1109,30 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()
     # (pimydoc)exit codes
@@ -1174,7 +1153,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 
 
 # =============================================================================
-# (C/19) call to main()
+# (C/18) call to main()
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -1182,31 +1161,30 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
-# ⋅- (B/02) normal imports
+# ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-# ⋅- (B/05) a special case: if no argument has been given, we modify the output
-# ⋅- (B/06) --output string
-# ⋅- (B/07) logfile opening
-# ⋅- (B/08) msgxxx() functions can be used
-# ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-# ⋅- (B/10) project name & version
-# ⋅- (B/11) ARGS.report interpretation
-# ⋅- (B/12) exit handler
-# ⋅- (B/13) serializers import
-# ⋅- (B/14) temp file opening
-# ⋅- (B/15) known data init (to be placed after 'temp file opening')
-# ⋅- (B/16) checkup
-# ⋅- (B/17) informations about the current machine
-# ⋅- (B/18) download default config file
+# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/05) --output string
+# ⋅- (B/06) logfile opening
+# ⋅- (B/07) msgxxx() functions can be used
+# ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+# ⋅- (B/09) project name & version
+# ⋅- (B/10) ARGS.report interpretation
+# ⋅- (B/11) exit handler
+# ⋅- (B/12) serializers import
+# ⋅- (B/13) temp file opening
+# ⋅- (B/14) known data init (to be placed after 'temp file opening')
+# ⋅- (B/15) checkup
+# ⋅- (B/16) informations about the current machine
+# ⋅- (B/17) download default config file
 # ⋅
 # ⋅step C: main()
-# ⋅- (C/19) call to main()
-# ⋅       - (C/19.1) main(): debug messages
-# ⋅       - (C/19.2) main(): cmp string interpretation
-# ⋅       - (C/19.3) main(): config file reading
-# ⋅       - (C/19.4) main(): results computing
-# ⋅       - (C/19.5) main(): report
+# ⋅- (C/18) call to main()
+# ⋅       - (C/18.1) main(): debug messages
+# ⋅       - (C/18.2) main(): cmp string interpretation
+# ⋅       - (C/18.3) main(): config file reading
+# ⋅       - (C/18.4) main(): results computing
+# ⋅       - (C/18.5) main(): report
 def main():
     """
         main()
@@ -1236,7 +1214,7 @@ def main():
     serializers = wisteria.globs.SERIALIZERS
 
     # =========================================================================
-    # (C/19.1) main(): debug messages
+    # (C/18.1) main(): debug messages
     # =========================================================================
     # (pimydoc)code structure
     # ⋅step A: command line arguments, --help message
@@ -1244,31 +1222,30 @@ def main():
     # ⋅- (A/01) command line parsing
     # ⋅
     # ⋅step B: initializations & --checkup
-    # ⋅- (B/02) normal imports
+    # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
     # ⋅- (B/03) wisteria.globs.ARGS initialization
-    # ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-    # ⋅- (B/05) a special case: if no argument has been given, we modify the output
-    # ⋅- (B/06) --output string
-    # ⋅- (B/07) logfile opening
-    # ⋅- (B/08) msgxxx() functions can be used
-    # ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-    # ⋅- (B/10) project name & version
-    # ⋅- (B/11) ARGS.report interpretation
-    # ⋅- (B/12) exit handler
-    # ⋅- (B/13) serializers import
-    # ⋅- (B/14) temp file opening
-    # ⋅- (B/15) known data init (to be placed after 'temp file opening')
-    # ⋅- (B/16) checkup
-    # ⋅- (B/17) informations about the current machine
-    # ⋅- (B/18) download default config file
+    # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+    # ⋅- (B/05) --output string
+    # ⋅- (B/06) logfile opening
+    # ⋅- (B/07) msgxxx() functions can be used
+    # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+    # ⋅- (B/09) project name & version
+    # ⋅- (B/10) ARGS.report interpretation
+    # ⋅- (B/11) exit handler
+    # ⋅- (B/12) serializers import
+    # ⋅- (B/13) temp file opening
+    # ⋅- (B/14) known data init (to be placed after 'temp file opening')
+    # ⋅- (B/15) checkup
+    # ⋅- (B/16) informations about the current machine
+    # ⋅- (B/17) download default config file
     # ⋅
     # ⋅step C: main()
-    # ⋅- (C/19) call to main()
-    # ⋅       - (C/19.1) main(): debug messages
-    # ⋅       - (C/19.2) main(): cmp string interpretation
-    # ⋅       - (C/19.3) main(): config file reading
-    # ⋅       - (C/19.4) main(): results computing
-    # ⋅       - (C/19.5) main(): report
+    # ⋅- (C/18) call to main()
+    # ⋅       - (C/18.1) main(): debug messages
+    # ⋅       - (C/18.2) main(): cmp string interpretation
+    # ⋅       - (C/18.3) main(): config file reading
+    # ⋅       - (C/18.4) main(): results computing
+    # ⋅       - (C/18.5) main(): report
     if ARGS.verbosity == VERBOSITY_DEBUG:
         msgdebug(f"known data: {list(data.keys())}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1276,7 +1253,7 @@ def main():
 
     try:
         # =========================================================================
-        # (C/19.2) main(): cmp string interpretation
+        # (C/18.2) main(): cmp string interpretation
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
@@ -1284,31 +1261,30 @@ def main():
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
-        # ⋅- (B/02) normal imports
+        # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-        # ⋅- (B/05) a special case: if no argument has been given, we modify the output
-        # ⋅- (B/06) --output string
-        # ⋅- (B/07) logfile opening
-        # ⋅- (B/08) msgxxx() functions can be used
-        # ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-        # ⋅- (B/10) project name & version
-        # ⋅- (B/11) ARGS.report interpretation
-        # ⋅- (B/12) exit handler
-        # ⋅- (B/13) serializers import
-        # ⋅- (B/14) temp file opening
-        # ⋅- (B/15) known data init (to be placed after 'temp file opening')
-        # ⋅- (B/16) checkup
-        # ⋅- (B/17) informations about the current machine
-        # ⋅- (B/18) download default config file
+        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/05) --output string
+        # ⋅- (B/06) logfile opening
+        # ⋅- (B/07) msgxxx() functions can be used
+        # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+        # ⋅- (B/09) project name & version
+        # ⋅- (B/10) ARGS.report interpretation
+        # ⋅- (B/11) exit handler
+        # ⋅- (B/12) serializers import
+        # ⋅- (B/13) temp file opening
+        # ⋅- (B/14) known data init (to be placed after 'temp file opening')
+        # ⋅- (B/15) checkup
+        # ⋅- (B/16) informations about the current machine
+        # ⋅- (B/17) download default config file
         # ⋅
         # ⋅step C: main()
-        # ⋅- (C/19) call to main()
-        # ⋅       - (C/19.1) main(): debug messages
-        # ⋅       - (C/19.2) main(): cmp string interpretation
-        # ⋅       - (C/19.3) main(): config file reading
-        # ⋅       - (C/19.4) main(): results computing
-        # ⋅       - (C/19.5) main(): report
+        # ⋅- (C/18) call to main()
+        # ⋅       - (C/18.1) main(): debug messages
+        # ⋅       - (C/18.2) main(): cmp string interpretation
+        # ⋅       - (C/18.3) main(): config file reading
+        # ⋅       - (C/18.4) main(): results computing
+        # ⋅       - (C/18.5) main(): report
         success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"Result of the call to read_cmpstring('{ARGS.cmp}'): "
@@ -1335,7 +1311,7 @@ def main():
             return -2
 
         # =========================================================================
-        # (C/19.3) main(): config file reading
+        # (C/18.3) main(): config file reading
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
@@ -1343,31 +1319,30 @@ def main():
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
-        # ⋅- (B/02) normal imports
+        # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-        # ⋅- (B/05) a special case: if no argument has been given, we modify the output
-        # ⋅- (B/06) --output string
-        # ⋅- (B/07) logfile opening
-        # ⋅- (B/08) msgxxx() functions can be used
-        # ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-        # ⋅- (B/10) project name & version
-        # ⋅- (B/11) ARGS.report interpretation
-        # ⋅- (B/12) exit handler
-        # ⋅- (B/13) serializers import
-        # ⋅- (B/14) temp file opening
-        # ⋅- (B/15) known data init (to be placed after 'temp file opening')
-        # ⋅- (B/16) checkup
-        # ⋅- (B/17) informations about the current machine
-        # ⋅- (B/18) download default config file
+        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/05) --output string
+        # ⋅- (B/06) logfile opening
+        # ⋅- (B/07) msgxxx() functions can be used
+        # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+        # ⋅- (B/09) project name & version
+        # ⋅- (B/10) ARGS.report interpretation
+        # ⋅- (B/11) exit handler
+        # ⋅- (B/12) serializers import
+        # ⋅- (B/13) temp file opening
+        # ⋅- (B/14) known data init (to be placed after 'temp file opening')
+        # ⋅- (B/15) checkup
+        # ⋅- (B/16) informations about the current machine
+        # ⋅- (B/17) download default config file
         # ⋅
         # ⋅step C: main()
-        # ⋅- (C/19) call to main()
-        # ⋅       - (C/19.1) main(): debug messages
-        # ⋅       - (C/19.2) main(): cmp string interpretation
-        # ⋅       - (C/19.3) main(): config file reading
-        # ⋅       - (C/19.4) main(): results computing
-        # ⋅       - (C/19.5) main(): report
+        # ⋅- (C/18) call to main()
+        # ⋅       - (C/18.1) main(): debug messages
+        # ⋅       - (C/18.2) main(): cmp string interpretation
+        # ⋅       - (C/18.3) main(): config file reading
+        # ⋅       - (C/18.4) main(): results computing
+        # ⋅       - (C/18.5) main(): report
         config = None
         if cmpdata == "ini":
             config = read_cfgfile(ARGS.cfgfile)
@@ -1390,7 +1365,7 @@ def main():
                 return -1
 
         # =========================================================================
-        # (C/19.4) main(): results computing
+        # (C/18.4) main(): results computing
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
@@ -1398,31 +1373,30 @@ def main():
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
-        # ⋅- (B/02) normal imports
+        # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-        # ⋅- (B/05) a special case: if no argument has been given, we modify the output
-        # ⋅- (B/06) --output string
-        # ⋅- (B/07) logfile opening
-        # ⋅- (B/08) msgxxx() functions can be used
-        # ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-        # ⋅- (B/10) project name & version
-        # ⋅- (B/11) ARGS.report interpretation
-        # ⋅- (B/12) exit handler
-        # ⋅- (B/13) serializers import
-        # ⋅- (B/14) temp file opening
-        # ⋅- (B/15) known data init (to be placed after 'temp file opening')
-        # ⋅- (B/16) checkup
-        # ⋅- (B/17) informations about the current machine
-        # ⋅- (B/18) download default config file
+        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/05) --output string
+        # ⋅- (B/06) logfile opening
+        # ⋅- (B/07) msgxxx() functions can be used
+        # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+        # ⋅- (B/09) project name & version
+        # ⋅- (B/10) ARGS.report interpretation
+        # ⋅- (B/11) exit handler
+        # ⋅- (B/12) serializers import
+        # ⋅- (B/13) temp file opening
+        # ⋅- (B/14) known data init (to be placed after 'temp file opening')
+        # ⋅- (B/15) checkup
+        # ⋅- (B/16) informations about the current machine
+        # ⋅- (B/17) download default config file
         # ⋅
         # ⋅step C: main()
-        # ⋅- (C/19) call to main()
-        # ⋅       - (C/19.1) main(): debug messages
-        # ⋅       - (C/19.2) main(): cmp string interpretation
-        # ⋅       - (C/19.3) main(): config file reading
-        # ⋅       - (C/19.4) main(): results computing
-        # ⋅       - (C/19.5) main(): report
+        # ⋅- (C/18) call to main()
+        # ⋅       - (C/18.1) main(): debug messages
+        # ⋅       - (C/18.2) main(): cmp string interpretation
+        # ⋅       - (C/18.3) main(): config file reading
+        # ⋅       - (C/18.4) main(): results computing
+        # ⋅       - (C/18.5) main(): report
         compute_results__res = compute_results(config,
                                                serializer1,
                                                serializer2,
@@ -1432,7 +1406,7 @@ def main():
         results = compute_results__res[0]
 
         # =========================================================================
-        # (C/19.5) main(): report
+        # (C/18.5) main(): report
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
@@ -1440,31 +1414,30 @@ def main():
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
-        # ⋅- (B/02) normal imports
+        # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) wisteria.globs.PLATFORM_SYSTEM initialization
-        # ⋅- (B/05) a special case: if no argument has been given, we modify the output
-        # ⋅- (B/06) --output string
-        # ⋅- (B/07) logfile opening
-        # ⋅- (B/08) msgxxx() functions can be used
-        # ⋅- (B/09) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-        # ⋅- (B/10) project name & version
-        # ⋅- (B/11) ARGS.report interpretation
-        # ⋅- (B/12) exit handler
-        # ⋅- (B/13) serializers import
-        # ⋅- (B/14) temp file opening
-        # ⋅- (B/15) known data init (to be placed after 'temp file opening')
-        # ⋅- (B/16) checkup
-        # ⋅- (B/17) informations about the current machine
-        # ⋅- (B/18) download default config file
+        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/05) --output string
+        # ⋅- (B/06) logfile opening
+        # ⋅- (B/07) msgxxx() functions can be used
+        # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+        # ⋅- (B/09) project name & version
+        # ⋅- (B/10) ARGS.report interpretation
+        # ⋅- (B/11) exit handler
+        # ⋅- (B/12) serializers import
+        # ⋅- (B/13) temp file opening
+        # ⋅- (B/14) known data init (to be placed after 'temp file opening')
+        # ⋅- (B/15) checkup
+        # ⋅- (B/16) informations about the current machine
+        # ⋅- (B/17) download default config file
         # ⋅
         # ⋅step C: main()
-        # ⋅- (C/19) call to main()
-        # ⋅       - (C/19.1) main(): debug messages
-        # ⋅       - (C/19.2) main(): cmp string interpretation
-        # ⋅       - (C/19.3) main(): config file reading
-        # ⋅       - (C/19.4) main(): results computing
-        # ⋅       - (C/19.5) main(): report
+        # ⋅- (C/18) call to main()
+        # ⋅       - (C/18.1) main(): debug messages
+        # ⋅       - (C/18.2) main(): cmp string interpretation
+        # ⋅       - (C/18.3) main(): config file reading
+        # ⋅       - (C/18.4) main(): results computing
+        # ⋅       - (C/18.5) main(): report
         report(results,
                (serializer1, serializer2, cmpdata))
 

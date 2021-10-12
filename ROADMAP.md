@@ -46,6 +46,17 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-174
+
+bugfix: missing 'f' prefix in a f-string in win_memory().
+bugfix: PLATFORM_SYSTEM is now correctly read in report.py (task-174)
+
+    * bugfix: missing 'f' prefix in a f-string in win_memory() (task-174)
+    * bugfix: PLATFORM_SYSTEM is now correctly read in report.py (task-174)
+    * updated pimydoc: new code structure (task-174)
+
+    * Pylint: 10/10
+
 [DONE] task-173
 
 Wisteria can be executed on Linux & Windows systems.

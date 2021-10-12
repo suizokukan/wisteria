@@ -43,8 +43,9 @@
 import sys
 import timeit
 
-from wisteria.globs import PLATFORM_SYSTEM
-if PLATFORM_SYSTEM == "Windows":
+import wisteria.globs
+
+if wisteria.globs.PLATFORM_SYSTEM == "Windows":
     import os  # pylint: disable=unused-import
     from wmi import WMI  # pylint: disable=import-error
 else:
@@ -53,7 +54,6 @@ else:
 # MEMOVERUSE# --memoveruse C++ module:
 # MEMOVERUSEimport cppyy
 
-import wisteria.globs
 from wisteria.globs import TIMEITNUMBER, MODULES
 from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.wisteriaerror import WisteriaError
@@ -99,7 +99,7 @@ def win_memory():
     wmi = WMI('.')
     result = wmi.query(
         "SELECT WorkingSet "
-        "FROM Win32_PerfRawData_PerfProc_Process WHERE IDProcess={os.getpid()}")
+        f"FROM Win32_PerfRawData_PerfProc_Process WHERE IDProcess={os.getpid()}")
     res = int(result[0].WorkingSet)
     return res
 
@@ -156,7 +156,7 @@ def serializer_iaswn(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -190,7 +190,7 @@ def serializer_iaswn(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
@@ -250,7 +250,7 @@ def serializer_json(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -284,7 +284,7 @@ def serializer_json(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
@@ -344,7 +344,7 @@ def serializer_jsonpickle(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -378,7 +378,7 @@ def serializer_jsonpickle(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
@@ -438,7 +438,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -472,7 +472,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
@@ -532,7 +532,7 @@ def serializer_marshal(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -566,7 +566,7 @@ def serializer_marshal(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
@@ -626,7 +626,7 @@ def serializer_pickle(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -660,7 +660,7 @@ def serializer_pickle(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
@@ -720,7 +720,7 @@ def serializer_pyyaml(action="serialize",
     # ---- main computation ---------------------------------------------------
     res = SerializationResult()
 
-    if PLATFORM_SYSTEM == "Windows":
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
         mem0 = win_memory()
     else:
         mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -754,7 +754,7 @@ def serializer_pyyaml(action="serialize",
             res = None
 
     if res is not None and res.reversibility is True:
-        if PLATFORM_SYSTEM == "Windows":
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
