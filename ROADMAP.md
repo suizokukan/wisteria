@@ -46,6 +46,22 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-179
+
+README.md documentation; improved displayed messages.
+
+    * improved README.md documentation (task-179)
+    * improved help message for --tolerateabsurdvalues command line option 
+      (task-179)
+    * improved message displayed by help_graphsfilenames(): added a space
+      before '(' (task-179)
+    * improved error message in report(): ((...)) > (...) (task-179)
+    * improved help message for --cfgfile command line argument (task-179)
+    * fixed --tolerateabsurdvalues definition ('store' > 'store_true'),
+      thus improving --help display (task-179)
+    
+    * Pylint: 10/10
+
 [DONE] task-178
 
 Improved report_section_c2c__allvsall() output by adding some calls

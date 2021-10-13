@@ -1,7 +1,157 @@
+WORK IN PROGRESS, NOT TO BE USED !
+
+
+
+
 # Wisteria
-Comparisons of different Python serializers.
+
+Use [Wisteria](#01-what-about-the-name-) to compare different Python serializers.
+
+This is a [GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
+
+
+-------------------------------------------------------------------------------
+
+**TABLE OF CONTENTS**
+
+- [0] [the project in a few words](#0-the-project-in-a-few-words)
+  - [0.1] [What about the name ?](#01-what-about-the-name-)
+- [1] [installation](#1-installation)
+  - [1.1] [poetry and dependencies](#11-poetry-and-dependencies)
+- [2] [how to use](#2-how-to-use)
+  - [2.0] [overview](#20-overview)
+- [3] [if you want to read/test/modify the code](#3-if-you-want-to-readtestmodify-the-code)
+  - [3.0] [classes hierarchy](#30-classes-hierarchy)
+  - [3.1] [checks and tests](#31-checks-and-tests)
+    - [3.1.1] [check_tools](#311-check_tools)
+    - [3.1.2] [launch the tests](#312-launch-the-tests)
+    - [3.1.3] [check code quality](#313-check-code-quality)
+    - [3.1.4] [check pip conflicts](#314-check-pip-conflicts)
+    - [3.1.5] [search all errors/warnings codes](#315-search-all-errorswarnings-codes)
+    - [3.1.6] [automatically generate the main __init__py file](#316-automatically-generate-the-main-__init__py-file)
+  - [3.2] [code quality](#32-code-quality)
+    - [3.2.1] [code quality matters](#321-code-quality-matters)
+      - [3.2.1.1] [about pylint and pylintrc](#3211-about-pylint-and-pylintrc)
+    - [3.2.2] [how to read and write documentation](#322-how-to-read-and-write-documentation)
+      - [3.2.2.1] [about markdown files](#3221-about-markdown-files)
+    - [3.2.3] [before committing](#323-before-committing) 
+  - [3.3] [coding conventions](#33-coding-conventions)
+  - [3.4] [errors and warnings](#34-errors-and-warnings)
+  - [3.5] [git and poetry workflow](#35-git-and-poetry-workflow)
+  
+# [0] the project in a few words
+
+## [0.1] What about the name ?
+
+**`Wisteria`** is the project's name; package name is `wisteria` for Python, [pipy](https://pypi.org/project/iaswn/) and Poetry.
+
+`Wisteria` is the name of splendid flowers.
 
 ![(source: Wikipedia)Wisteria is a genus of flowering plants in the legume family, Fabaceae (Leguminosae), that includes ten species of woody twining vines that are native to China, Korea, Japan, Southern Canada, the Eastern United States, and north of Iran.](https://github.com/suizokukan/wisteria/blob/main/wikipedia__Chinese_Wisteria_Bl%C3%BCtentrauben__resized.jpg?raw=true)
+
+## [1] installation
+
+### installation with pip
+
+Ideally - if `$ python --version` is Python3.8+ - you may write:
+
+```
+$ pip install wisteria
+
+$ wisteria --help
+$ wisteria --checkup
+```
+
+### installation with git/poetry/a compiled version of Python3.8.11
+
+Feel free to choose another Python's version and another directory where to compile Python. Code below for Debian systems:
+
+```
+    # Python3.8.11:
+    $ sudo apt install gcc make git curl
+    $ cd ~/Desktop
+    $ wget https://www.python.org/ftp/python/3.8.11/Python-3.8.11.tgz
+    $ tar -xvzf Python-3.8.11.tgz
+    $ cd Python-3.8.11
+    $ ./configure
+    $ make
+    $ cd ..
+
+    # wisteria:
+    $ git clone https://github.com/suizokukan/wisteria
+    $ cd wisteria
+
+    # poetry:
+    $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+
+    # dependencies' installation & execution:
+    $ ~/.poetry/bin/poetry env use ~/Desktop/Python-3.8.11/python
+    $ ~/.poetry/bin/poetry install
+    
+    $ ~/.poetry/bin/poetry run ./bin/wisteria --help
+    $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
+```
+
+### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies
+
+Feel free to choose another Python's version and another directory where to compile Python. Code below for Debian systems:
+
+```
+    $ git clone https://github.com/suizokukan/wisteria
+    $ cd wisteria
+    $ ~/Pythons/Python-3.7.9/python -m venv venv
+    $ ./venv/bin/pip install --upgrade pip
+    $ ./venv/bin/pip install rich psutil py-cpuinfo matplotlib
+    
+    $ ./venv/bin/python ./bin/wisteria --help
+    $ ./venv/bin/python ./bin/wisteria --checkup
+```
+
+## [1.1] poetry and dependencies
+
+This package has been built and published thanks to [poetry](https://python-poetry.org/). [Here is the result](poetry_show_tree.md) of the `$ poetry show --tree` command.
+
+# [2] how to use
+
+## [2.0] overview
+
+`Wisteria` compares serializers %%en se basant sur 4 critères: rapidité de l'encodage/décodage, longueur de la chaîne encodée, empreinte mémoire de l'encodage et du décodage, capacité à encoder/décoder différents types de données.
+
+You want to know what serializers can be compared:
+
+    $ wisteria --checkup
+    
+You want to know what data types the serializers can compare:
+
+    $ wisteria --checkup
+
+You want to compare 2 serializers, e.g. `json` and `pickle`:
+
+    $ wisteria --cmp="json vs pickle"
+
+You want to compare a serializer (e.g. `json`) against all serializers:
+
+    $ wisteria --cmp="json vs all"
+
+You want to compare all serializers between them:
+
+    $ wisteria --cmp="all vs all"
+
+You want as much informations as possible:
+
+    --report="full+"
+    
+You want %%le moins d'informations possible:
+
+    --report="minimal"
+    
+You want only graphs:
+
+    --report="graphs"
+
+
+pylintrc
+--------
 
 ```
 max-module-lines=1000 > max-module-lines=2500

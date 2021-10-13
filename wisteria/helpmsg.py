@@ -67,8 +67,8 @@ def help_graphsfilenames():
 
         RETURNED VALUE: (str)an help message
     """
-    return f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '1')}'" \
+    return f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '1')}' " \
         f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '1'))}), " \
-        f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '2')}'" \
+        f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '2')}' " \
         f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '2'))}), " \
         "and so on"

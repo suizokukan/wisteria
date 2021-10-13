@@ -190,7 +190,7 @@ PARSER.add_argument(
     '--cfgfile',
     action='store',
     default=DEFAULT_CONFIG_FILENAME,
-    help="config file to be used.")
+    help="config file to be read.")
 
 PARSER.add_argument(
     '--checkup',
@@ -256,10 +256,10 @@ PARSER.add_argument(
 
 PARSER.add_argument(
     '--tolerateabsurdvalues',
+    action='store_true',
     default=False,
-    type=bool,
-    action='store',
-    help="If False, stop the program in an absurd value is computed.")
+    help="(debug only, not normally to be used) "
+    "If False, stop the program if an absurd value has been computed.")
 
 PARSER.add_argument(
     '--verbosity',
