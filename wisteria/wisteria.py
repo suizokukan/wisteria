@@ -1460,7 +1460,9 @@ def main():
         return 0
 
     except WisteriaError as exception:
-        msgerror(exception)
+        # We need to convert exception into a str. so that msgerror() will apply
+        # aspect_error() to the string.
+        msgerror(str(exception))
 
         # (pimydoc)exit codes
         # ⋅*  0: normal exit code

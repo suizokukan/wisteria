@@ -27,6 +27,7 @@
 
     o  aspect_boolsuccess(bool_success)
     o  aspect_data(data_objectname)
+    o  aspect_error(msg)
     o  aspect_list(listitems)
     o  aspect_mem_usage(bytesnumber)
     o  aspect_nodata(string)
@@ -44,6 +45,8 @@
     o  aspect_exaequowith_hall(results, item_number, attribute, func=aspect_serializer,
                                prefix=", [i]ex aequo[/i] with ")
 """
+import re
+
 import wisteria.globs
 
 
@@ -78,6 +81,23 @@ def aspect_data(data_objectname):
         RETURNED VALUE: (str)data_objectname + some text attributes.
     """
     return f"[bold white]{data_objectname}[/bold white]"
+
+
+def aspect_error(msg):
+    """
+        aspect_error()
+
+        Modify the aspect of (str)msg
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)msg
+
+        RETURNED VALUE: (str)msg + some text attributes.
+    """
+    return re.sub(r"\(ERRORID[\d]+\)",
+                  lambda re_match: f"[bold red]{re_match.group()}[/bold red]",
+                  msg)
 
 
 def aspect_list(listitems, func=None):

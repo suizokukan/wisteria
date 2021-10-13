@@ -46,6 +46,18 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-180
+
+All exceptions messages are now formatted with aspect_error().
+
+    * all exceptions messages are now formatted with aspect_error()
+      (task-180)
+    * fixed a minor bug in report(): removed useless f- prefix before a string
+      (task-180)
+    * new aspect_xxx method: aspect_error()
+
+    * Pylint: 10/10
+
 [DONE] task-179
 
 README.md documentation; improved displayed messages.

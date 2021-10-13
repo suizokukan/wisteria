@@ -2242,7 +2242,7 @@ def report(results,
     """
     if wisteria.globs.ARGS.report.strip() == ";":
         raise WisteriaError(
-            f"(ERRORID018) Can't interpret report section which is empty. "
+            "(ERRORID018) Can't interpret report section which is empty. "
             f"Accepted keywords are {tuple(STR2REPORTSECTION.keys())} . "
             f"You may simply use shortcuts {tuple(REPORT_SHORTCUTS.keys())} "
             "but be sure to use this shortcut alone, with nothing else in the --report string. "
