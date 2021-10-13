@@ -1081,10 +1081,10 @@ if wisteria.globs.ARGS.checkup:
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
     if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
-        mymachine(fulldetails=False)
+        mymachine(detailslevel=1)
         msgreport("\nMore informations are available using --verbosity=2.")
     else:
-        mymachine(fulldetails=True)
+        mymachine(detailslevel=2)
     # (pimydoc)exit codes
     # ⋅*  0: normal exit code
     # ⋅*  1: normal exit code after --checkup

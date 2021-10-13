@@ -51,10 +51,13 @@
 
     o  report(results, s1s2d)
 """
+import datetime
+
 import rich.table
 from rich.console import Console
 
 import wisteria.globs
+from wisteria.aboutproject import __version__, __projectname__
 from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
@@ -385,13 +388,26 @@ def report_section_a1(results,
             "(A1) Options Used to Create Reports")
         msgreport()
 
+    msgreport(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+
+    mymachine(detailslevel=0)
+
+    msgreport()
+
     msgreport(
             "* --cmp = "
             f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'")
     msgreport(
             "* --report = "
             f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
+
     msgreport()
+
+    partial_report__serializers()
+
+    msgreport()
+
+    partial_report__data()
 
 
 def report_section_a2(results,
@@ -1977,7 +1993,7 @@ def report_section_d1a(results,
         msgreporttitle(
             "(D1a) Informations About The Machine ([italic]No Extensive Details[/italic])")
 
-    mymachine(fulldetails=False)
+    mymachine(detailslevel=1)
     msgreport()
 
 
@@ -2032,7 +2048,7 @@ def report_section_d1b(results,
         msgreporttitle(
             "(D1b) Informations About The Machine ([italic]Extensive Details[/italic])")
 
-    mymachine(fulldetails=True)
+    mymachine(detailslevel=2)
     msgreport()
 
 

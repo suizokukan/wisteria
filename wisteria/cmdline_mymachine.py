@@ -25,7 +25,7 @@
 
     ___________________________________________________________________________
 
-    o  mymachine(fulldetails=False)
+    o  mymachine(detailslevel=1)
 """
 import platform
 
@@ -35,7 +35,7 @@ import cpuinfo
 from wisteria.msg import msgreport
 
 
-def mymachine(fulldetails=False):
+def mymachine(detailslevel=1):
     """
         mymachine()
 
@@ -48,9 +48,16 @@ def mymachine(fulldetails=False):
 
         _______________________________________________________________________
 
-        ARGUMENT: (bool)fulldetails: if True, all available informations
-                                     are displayed
+        ARGUMENT: (int)detailslevel:
+                        0: minimal      (one line)
+                        1: normal       (several lines)
+                        2: full details (several lines)
     """
+    if detailslevel == 0:
+        msgreport(f"{platform.system()} ({platform.release()}) "
+                  f"/ {cpuinfo.get_cpu_info()['brand_raw']}")
+        return
+
     # ---- platform package ---------------------------------------------------
     infos = {'platform': platform.system(),
              'platform-release': platform.release(),
@@ -83,7 +90,7 @@ def mymachine(fulldetails=False):
     # ---- cpuinfo package ----------------------------------------------------
     try:
         for key, value in cpuinfo.get_cpu_info().items():
-            if key == "brand_raw" or fulldetails:
+            if key == "brand_raw" or detailslevel == 2:
                 infos["(cpuinfo) "+str(key)] = value
 
     except ImportError:

@@ -46,6 +46,16 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-181
+
+Improved A1 report section output: platform system, serializers and data objects.
+
+    * improved A1 report section output: platform system, serializers and 
+      data objects (task-181)
+    * mymachine() has now (int)'detailslevel' as unique argument (task-181)
+
+    * Pylint: 10/10
+    
 [DONE] task-180
 
 All exceptions messages are now formatted with aspect_error().
