@@ -46,7 +46,7 @@
 """
 from rich import print as rprint
 
-from wisteria.reportaspect import aspect_title, aspect_error
+from wisteria.reprfmt import fmt_title, fmt_error
 import wisteria.globs
 
 
@@ -103,7 +103,7 @@ def msgerror(obj=""):
         ARGUMENT: <obj>, the object to be displayed/written in the log file.
     """
     if isinstance(obj, str):
-        obj = aspect_error(obj)
+        obj = fmt_error(obj)
     _message(obj)
 
 
@@ -143,7 +143,7 @@ def msgreporttitle(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the log file.
     """
-    _message(aspect_title(obj))
+    _message(fmt_title(obj))
 
 
 def warning(obj=""):

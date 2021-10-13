@@ -31,7 +31,7 @@ import re
 
 from wisteria.msg import msgerror
 from wisteria.globs import REGEX_CMP, REGEX_CMP__HELP
-from wisteria.reportaspect import aspect_serializer0, aspect_serializer, aspect_nounplural
+from wisteria.reprfmt import fmt_serializer0, fmt_serializer, fmt_nounplural
 import wisteria.globs
 
 
@@ -82,11 +82,11 @@ def read_cmpstring(cmpstring):
         # error: serializer1 is not in SERIALIZERS among UNAVAILABLE_SERIALIZES.
         if serializer1 in u_serializers:
             # BEWARE !
-            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # DO NOT USE fmt_serializer() instead of fmt_serializer0()
             # to display acceptable serializers name
             # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
             msgerror(
-                f"(ERRORID045) {aspect_serializer0(serializer1)} is a known serializer "
+                f"(ERRORID045) {fmt_serializer0(serializer1)} is a known serializer "
                 f"but the corresponding package has not been installed. "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
@@ -94,7 +94,7 @@ def read_cmpstring(cmpstring):
         # error: serializer1 is an unknown serializer.
         if not (serializer1 == "all" or serializer1 in serializers):
             # BEWARE !
-            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # DO NOT USE fmt_serializer() instead of fmt_serializer0()
             # to display acceptable serializers name
             # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
             msgerror(
@@ -102,23 +102,23 @@ def read_cmpstring(cmpstring):
                 f"read in the --cmp string '{cmpstring}': "
                 f"what is '{serializer1}' ? "
                 "Known serializers for position 1 are "
-                f"{aspect_serializer('all')} and "
-                f"{', '.join(aspect_serializer0(serial) for serial in serializers)} . "
+                f"{fmt_serializer('all')} and "
+                f"{', '.join(fmt_serializer0(serial) for serial in serializers)} . "
                 "Unavailable "
-                f"{aspect_nounplural('serializer', len(u_serializers))} "
+                f"{fmt_nounplural('serializer', len(u_serializers))} "
                 ": "
-                f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
+                f"{', '.join(fmt_serializer(serial) for serial in u_serializers)} . "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
 
         # error: serializer2 is not in SERIALIZERS among UNAVAILABLE_SERIALIZES.
         if serializer2 in u_serializers:
             # BEWARE !
-            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # DO NOT USE fmt_serializer() instead of fmt_serializer0()
             # to display acceptable serializers name
             # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
             msgerror(
-                f"(ERRORID046) {aspect_serializer0(serializer2)} is a known serializer "
+                f"(ERRORID046) {fmt_serializer0(serializer2)} is a known serializer "
                 f"but the corresponding package has not been installed. "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
@@ -126,7 +126,7 @@ def read_cmpstring(cmpstring):
         # error: serializer2 is an unknown serializer.
         if not (serializer2 == "all" or serializer2 == "others" or serializer2 in serializers):
             # BEWARE !
-            # DO NOT USE aspect_serializer() instead of aspect_serializer0()
+            # DO NOT USE fmt_serializer() instead of fmt_serializer0()
             # to display acceptable serializers name
             # since 'Iaswn' isn't an acceptable name, but 'iaswn' is.
             msgerror(
@@ -134,12 +134,12 @@ def read_cmpstring(cmpstring):
                 f"read in the --cmp string '{cmpstring}': "
                 f"what is '{serializer2}' ? "
                 f"Known serializers for position 2 are "
-                f"{aspect_serializer('all')}, {aspect_serializer('others')} and "
-                f"{', '.join(aspect_serializer0(serial) for serial in serializers)} . "
+                f"{fmt_serializer('all')}, {fmt_serializer('others')} and "
+                f"{', '.join(fmt_serializer0(serial) for serial in serializers)} . "
                 "Unavailable "
-                f"{aspect_nounplural('serializer', len(u_serializers))} "
+                f"{fmt_nounplural('serializer', len(u_serializers))} "
                 ": "
-                f"{', '.join(aspect_serializer(serial) for serial in u_serializers)} . "
+                f"{', '.join(fmt_serializer(serial) for serial in u_serializers)} . "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
         if serializer1 == serializer2 and serializer1 != "all":

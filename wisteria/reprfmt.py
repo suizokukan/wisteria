@@ -19,31 +19,31 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    Wisteria project : wisteria/reportaspect.py
+    Wisteria project : wisteria/reprfmt.py
 
-    Define some 'aspects' (=some text attributes) for some excepts in report.
+    Format some objects representation by adding some text attributes.
 
     ___________________________________________________________________________
 
-    o  aspect_boolsuccess(bool_success)
-    o  aspect_data(data_objectname)
-    o  aspect_error(msg)
-    o  aspect_list(listitems)
-    o  aspect_mem_usage(bytesnumber)
-    o  aspect_nodata(string)
-    o  aspect_nounplural(string, number)
-    o  aspect_percentage(percentage)
-    o  aspect_projectversion(add_timestamp=False)
-    o  aspect_ratio(inttotal_and_floatratio)
-    o  aspect_serializer0(serializer_name)
-    o  aspect_serializer(serializer_name)
-    o  aspect_stringlength(int_stringlength)
-    o  aspect_time(floattime)
-    o  aspect_title(title)
+    o  fmt_boolsuccess(bool_success)
+    o  fmt_data(data_objectname)
+    o  fmt_error(msg)
+    o  fmt_list(listitems)
+    o  fmt_mem_usage(bytesnumber)
+    o  fmt_nodata(string)
+    o  fmt_nounplural(string, number)
+    o  fmt_percentage(percentage)
+    o  fmt_projectversion(add_timestamp=False)
+    o  fmt_ratio(inttotal_and_floatratio)
+    o  fmt_serializer0(serializer_name)
+    o  fmt_serializer(serializer_name)
+    o  fmt_stringlength(int_stringlength)
+    o  fmt_time(floattime)
+    o  fmt_title(title)
 
-    o  aspect_exaequowith(item, listitems, func=aspect_serializer,
+    o  fmt_exaequowith(item, listitems, func=fmt_serializer,
                           prefix=", [i]ex aequo[/i] with ")
-    o  aspect_exaequowith_hall(results, item_number, attribute, func=aspect_serializer,
+    o  fmt_exaequowith_hall(results, item_number, attribute, func=fmt_serializer,
                                prefix=", [i]ex aequo[/i] with ")
 """
 import datetime
@@ -53,9 +53,9 @@ from wisteria.aboutproject import __version__, __projectname__
 import wisteria.globs
 
 
-def aspect_boolsuccess(bool_success):
+def fmt_boolsuccess(bool_success):
     """
-        aspect_boolsuccess()
+        fmt_boolsuccess()
 
         Format the input argument into a string. The input argument is a (bool)success.
             ex: False > "NOT OK"
@@ -67,15 +67,15 @@ def aspect_boolsuccess(bool_success):
         RETURNED VALUE: a formatted string representing the (bool)bool_success.
     """
     if bool_success is None:
-        return aspect_nodata()
+        return fmt_nodata()
     return "ok" if bool_success else "[red]NOT OK[/red]"
 
 
-def aspect_data(data_objectname):
+def fmt_data(data_objectname):
     """
-        aspect_data()
+        fmt_data()
 
-        Modify the aspect of (str)data_objectname.
+        Format the representation of (str)data_objectname.
 
         _______________________________________________________________________
 
@@ -86,11 +86,11 @@ def aspect_data(data_objectname):
     return f"[bold white]{data_objectname}[/bold white]"
 
 
-def aspect_error(msg):
+def fmt_error(msg):
     """
-        aspect_error()
+        fmt_error()
 
-        Modify the aspect of (str)msg
+        Format the representation of (str)msg
 
         _______________________________________________________________________
 
@@ -103,9 +103,9 @@ def aspect_error(msg):
                   msg)
 
 
-def aspect_list(listitems, func=None):
+def fmt_list(listitems, func=None):
     """
-        aspect_list()
+        fmt_list()
 
         Return a (str)list of words written in good English, something
         like "a, b, and c" (no Oxford Comma here, confer
@@ -131,11 +131,11 @@ def aspect_list(listitems, func=None):
     return f"{', '.join(func(listitem) for listitem in listitems[:-1])} and {func(listitems[-1])}"
 
 
-def aspect_mem_usage(bytesnumber):
+def fmt_mem_usage(bytesnumber):
     """
-        aspect_mem_usage()
+        fmt_mem_usage()
 
-        Modify the aspect of (int)bytesnumber.
+        Format the representation of (int)bytesnumber.
 
         _______________________________________________________________________
 
@@ -144,7 +144,7 @@ def aspect_mem_usage(bytesnumber):
         RETURNED VALUE: (str)bytesnumber + some text attributes.
     """
     if bytesnumber is None:
-        return aspect_nodata()
+        return fmt_nodata()
     if bytesnumber == 0:
         return "0 byte"
     if bytesnumber < 120000:
@@ -158,9 +158,9 @@ def aspect_mem_usage(bytesnumber):
     return f"{bytesnumber/1000000000000:.1f} Po"
 
 
-def aspect_nodata(string=None):
+def fmt_nodata(string=None):
     """
-        aspect_nodata()
+        fmt_nodata()
 
         Return a string with rich text attribute saying that no data is available.
 
@@ -177,10 +177,10 @@ def aspect_nodata(string=None):
     return f"[red]{string}[/red]"
 
 
-def aspect_nounplural(string,
-                      number):
+def fmt_nounplural(string,
+                   number):
     """
-        aspect_nounplural()
+        fmt_nounplural()
 
         Return string with a final -s if <number> is greater than one.
 
@@ -196,11 +196,11 @@ def aspect_nounplural(string,
     return string+"s"
 
 
-def aspect_percentage(percentage):
+def fmt_percentage(percentage):
     """
-        aspect_percentage()
+        fmt_percentage()
 
-        Modify the aspect of (float)percentage.
+        Format the representation of (float)percentage.
 
         _______________________________________________________________________
 
@@ -211,9 +211,9 @@ def aspect_percentage(percentage):
     return f"{percentage:.2f}%"
 
 
-def aspect_projectversion(add_timestamp=False):
+def fmt_projectversion(add_timestamp=False):
     """
-        aspect_ratio()
+        fmt_ratio()
 
         Format __projectname__, __version__ into a string.
         If timestamp is True, add the current timestamp.
@@ -235,9 +235,9 @@ def aspect_projectversion(add_timestamp=False):
     return f"{__projectname__}, {__version__}                                 "
 
 
-def aspect_ratio(inttotal_and_floatratio):
+def fmt_ratio(inttotal_and_floatratio):
     """
-        aspect_ratio()
+        fmt_ratio()
 
         Format the input argument into a string. The input argument is an absolute
         (int)number and a (float)fraction, its ratio.
@@ -251,15 +251,15 @@ def aspect_ratio(inttotal_and_floatratio):
     """
     if inttotal_and_floatratio != (None, None):
         return f"{inttotal_and_floatratio[0]} " \
-            f"({aspect_percentage(100*inttotal_and_floatratio[1])})"
-    return aspect_nodata()
+            f"({fmt_percentage(100*inttotal_and_floatratio[1])})"
+    return fmt_nodata()
 
 
-def aspect_serializer0(serializer_name):
+def fmt_serializer0(serializer_name):
     """
-        aspect_serializer0()
+        fmt_serializer0()
 
-        Modify the aspect of (str)serializer_name.
+        Format the representation of (str)serializer_name.
 
         _______________________________________________________________________
 
@@ -272,11 +272,11 @@ def aspect_serializer0(serializer_name):
         "[/yellow]"
 
 
-def aspect_serializer(serializer_name):
+def fmt_serializer(serializer_name):
     """
-        aspect_serializer()
+        fmt_serializer()
 
-        Modify the aspect of (str)serializer_name; if possible, replace it by its
+        Format the representation of (str)serializer_name; if possible, replace it by its
         .human_name.
 
         _______________________________________________________________________
@@ -286,13 +286,13 @@ def aspect_serializer(serializer_name):
         RETURNED VALUE: (str)serializer_name + some text attributes.
     """
     if serializer_name in wisteria.globs.SERIALIZERS:
-        return f"{aspect_serializer0(wisteria.globs.SERIALIZERS[serializer_name].human_name)}"
-    return f"{aspect_serializer0(serializer_name)}"
+        return f"{fmt_serializer0(wisteria.globs.SERIALIZERS[serializer_name].human_name)}"
+    return f"{fmt_serializer0(serializer_name)}"
 
 
-def aspect_stringlength(int_stringlength):
+def fmt_stringlength(int_stringlength):
     """
-        aspect_stringlength()
+        fmt_stringlength()
 
         Format the input argument into a string. The input argument is a (int)number
         of characters
@@ -306,13 +306,13 @@ def aspect_stringlength(int_stringlength):
         RETURNED VALUE: a formatted string representing the input argument.
     """
     if int_stringlength is None:
-        return aspect_nodata()
+        return fmt_nodata()
     return f"{int_stringlength}"
 
 
-def aspect_time(floattime):
+def fmt_time(floattime):
     """
-        aspect_time()
+        fmt_time()
 
         Format the input argument into a string. The input argument is a (float)time laps.
             ex: 0.333345677 > "0.333345"
@@ -325,15 +325,15 @@ def aspect_time(floattime):
         RETURNED VALUE: a formatted string representing the input argument.
     """
     if floattime is None:
-        return aspect_nodata()
+        return fmt_nodata()
     return f"{floattime:.6f}"
 
 
-def aspect_title(title):
+def fmt_title(title):
     """
-        aspect_title()
+        fmt_title()
 
-        Modify the aspect of (str)title.
+        Format the representation of (str)title.
 
         _______________________________________________________________________
 
@@ -344,13 +344,13 @@ def aspect_title(title):
     return f"[bold white on blue]{title}[/bold white on blue]"
 
 
-# function defined here since it depends from aspect_list().
-def aspect_exaequowith(item,
-                       listitems,
-                       func=aspect_serializer,
-                       prefix=", [i]ex aequo[/i] with "):
+# function defined here since it depends from fmt_list().
+def fmt_exaequowith(item,
+                    listitems,
+                    func=fmt_serializer,
+                    prefix=", [i]ex aequo[/i] with "):
     """
-        aspect_exaequowith()
+        fmt_exaequowith()
 
         Return a list of the items in <listitems> without <item>.
 
@@ -373,18 +373,18 @@ def aspect_exaequowith(item,
     if len(listitems) == 1:
         return ""
     listitems.remove(item)
-    return prefix + aspect_list(listitems, func)
+    return prefix + fmt_list(listitems, func)
 
 
-def aspect_exaequowith_hall(results,
-                            item_number,
-                            attribute,
-                            func=aspect_serializer,
-                            prefix=", [i]ex aequo[/i] with "):
+def fmt_exaequowith_hall(results,
+                         item_number,
+                         attribute,
+                         func=fmt_serializer,
+                         prefix=", [i]ex aequo[/i] with "):
     """
-        aspect_exaequowith_hall()
+        fmt_exaequowith_hall()
 
-        See aspect_exaequowith(): this function returns all serializers
+        See fmt_exaequowith(): this function returns all serializers
         whose score is equal to results.hall[attribute][item_number][0];
         the returned list doesn't contain results.hall[attribute][item_number][1]
 
@@ -413,4 +413,4 @@ def aspect_exaequowith_hall(results,
     if len(listitems) == 1:
         return ""
     listitems.remove(serializer)
-    return prefix + aspect_list(listitems, func)
+    return prefix + fmt_list(listitems, func)

@@ -33,8 +33,8 @@
 from dataclasses import dataclass
 
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.reportaspect import aspect_serializer, aspect_ratio, aspect_time, aspect_nodata
-from wisteria.reportaspect import aspect_stringlength, aspect_boolsuccess, aspect_mem_usage
+from wisteria.reprfmt import fmt_serializer, fmt_ratio, fmt_time, fmt_nodata
+from wisteria.reprfmt import fmt_stringlength, fmt_boolsuccess, fmt_mem_usage
 from wisteria.msg import msgerror
 
 
@@ -113,7 +113,7 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .__repr__() and .simple_repr()
         """
-        return f"{aspect_serializer(self.name)} ({self.version}), see {self.internet} ."
+        return f"{fmt_serializer(self.name)} ({self.version}), see {self.internet} ."
 
     def simple_repr(self):
         """
@@ -126,7 +126,7 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .checkup_repr() and .__repr__()
         """
-        return f"{aspect_serializer(self.name)} ({self.version})"
+        return f"{fmt_serializer(self.name)} ({self.version})"
 
 
 @dataclass
@@ -497,36 +497,36 @@ class SerializationResults(dict):
         value = self.hall[attribute][index][0]
 
         if attribute == 'encoding_success':
-            return f"{aspect_serializer(serializer)} " \
+            return f"{fmt_serializer(serializer)} " \
                 f"[{self.ratio_encoding_success(serializer=serializer)}]"
 
         if attribute == 'encoding_time':
-            return f"{aspect_serializer(serializer)} " \
-                f"[{aspect_time(value)}]"
+            return f"{fmt_serializer(serializer)} " \
+                f"[{fmt_time(value)}]"
 
         if attribute == 'decoding_success':
-            return f"{aspect_serializer(serializer)} " \
+            return f"{fmt_serializer(serializer)} " \
                 f"[{self.ratio_decoding_success(serializer=serializer)}]"
 
         if attribute == 'decoding_time':
             serializer = self.hall[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
-                f"[{aspect_time(value)}]"
+            return f"{fmt_serializer(serializer)} " \
+                f"[{fmt_time(value)}]"
 
         if attribute == 'reversibility':
             serializer = self.hall[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
+            return f"{fmt_serializer(serializer)} " \
                 f"[{self.ratio_reversibility(serializer=serializer)}]"
 
         if attribute == 'encoding_strlen':
             serializer = self.hall[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
-                f"[{aspect_stringlength(value)}]"
+            return f"{fmt_serializer(serializer)} " \
+                f"[{fmt_stringlength(value)}]"
 
         if attribute == 'mem_usage':
             serializer = self.hall[attribute][index][1]
-            return f"{aspect_serializer(serializer)} " \
-                f"[{aspect_mem_usage(value)}]"
+            return f"{fmt_serializer(serializer)} " \
+                f"[{fmt_mem_usage(value)}]"
 
         return None  # this line should never be executed.
 
@@ -645,27 +645,27 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_ratio((None, None))
+                return fmt_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].decoding_success:
                     count += 1
             if output == "fmtstr":
-                return aspect_ratio((count, count/self.dataobjs_number))
+                return fmt_ratio((count, count/self.dataobjs_number))
             if output == "value":
                 return count/self.dataobjs_number
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return aspect_ratio((None, None))
+            return fmt_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
                self[_serializer][dataobj].decoding_success:
                 count += 1
         if output == "fmtstr":
-            return aspect_ratio((count, count/self.serializers_number))
+            return fmt_ratio((count, count/self.serializers_number))
         if output == "value":
             return count/self.serializers_number
 
@@ -703,27 +703,27 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_ratio((None, None))
+                return fmt_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].encoding_success:
                     count += 1
             if output == "fmtstr":
-                return aspect_ratio((count, count/self.dataobjs_number))
+                return fmt_ratio((count, count/self.dataobjs_number))
             if output == "value":
                 return count/self.dataobjs_number
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return aspect_ratio((None, None))
+            return fmt_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
                self[_serializer][dataobj].encoding_success:
                 count += 1
         if output == "fmtstr":
-            return aspect_ratio((count, count/self.serializers_number))
+            return fmt_ratio((count, count/self.serializers_number))
         if output == "value":
             return count/self.serializers_number
 
@@ -761,20 +761,20 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_ratio((None, None))
+                return fmt_ratio((None, None))
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].reversibility:
                     count += 1
             if output == "fmtstr":
-                return aspect_ratio((count, count/self.dataobjs_number))
+                return fmt_ratio((count, count/self.dataobjs_number))
             if output == "value":
                 return count/self.dataobjs_number
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return aspect_ratio((None, None))
+            return fmt_ratio((None, None))
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
@@ -782,7 +782,7 @@ class SerializationResults(dict):
                 count += 1
 
         if output == "fmtstr":
-            return aspect_ratio((count, count/self.serializers_number))
+            return fmt_ratio((count, count/self.serializers_number))
         if output == "value":
             return count/self.serializers_number
 
@@ -825,62 +825,62 @@ class SerializationResults(dict):
         if attribute_name == "decoding_success":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_boolsuccess(
+                    res = fmt_boolsuccess(
                         self[serializer][dataobj].decoding_success)
 
         if attribute_name == "decoding_time":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_time(
+                    res = fmt_time(
                         self[serializer][dataobj].decoding_time)
 
         if attribute_name == "encoding_strlen":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].encoding_strlen is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_stringlength(
+                    res = fmt_stringlength(
                         self[serializer][dataobj].encoding_strlen)
 
         if attribute_name == "encoding_time":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].encoding_time is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_time(
+                    res = fmt_time(
                         self[serializer][dataobj].encoding_time)
 
         if attribute_name == "encoding_success":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].encoding_success is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_boolsuccess(
+                    res = fmt_boolsuccess(
                         self[serializer][dataobj].encoding_success)
 
         if attribute_name == "reversibility":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].reversibility is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_boolsuccess(
+                    res = fmt_boolsuccess(
                         self[serializer][dataobj].reversibility)
 
         if attribute_name == "mem_usage":
             if output == "fmtstr":
                 if self[serializer][dataobj] is None or \
                    self[serializer][dataobj].mem_usage is None:
-                    res = aspect_nodata()
+                    res = fmt_nodata()
                 else:
-                    res = aspect_mem_usage(
+                    res = fmt_mem_usage(
                         self[serializer][dataobj].mem_usage)
 
         return res
@@ -916,7 +916,7 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_time(None)
+                return fmt_time(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -925,11 +925,11 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_time(total)
+                res = fmt_time(total)
 
         else:
             if self.dataobjs_number == 0:
-                return aspect_time(None)
+                return fmt_time(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -938,7 +938,7 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_time(total)
+                res = fmt_time(total)
 
         if res is None:
             raise WisteriaError("(ERRORID026) Internal error: the result could not be computed. "
@@ -975,7 +975,7 @@ class SerializationResults(dict):
             return self.total_encoding_time(serializer, dataobj, output) + \
                 self.total_decoding_time(serializer, dataobj, output)
         if output == "fmtstr":
-            return aspect_time(
+            return fmt_time(
                 self.total_encoding_time(serializer, dataobj, output='value') +
                 self.total_decoding_time(serializer, dataobj, output='value'))
 
@@ -1013,7 +1013,7 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_stringlength(None)
+                return fmt_stringlength(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -1022,11 +1022,11 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_stringlength(total)
+                res = fmt_stringlength(total)
 
         else:
             if self.dataobjs_number == 0:
-                return aspect_stringlength(None)
+                return fmt_stringlength(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -1035,7 +1035,7 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_stringlength(total)
+                res = fmt_stringlength(total)
 
         if res is None:
             raise WisteriaError("(ERRORID028) Internal error: the result could not be computed. "
@@ -1073,7 +1073,7 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_time(None)
+                return fmt_time(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -1082,11 +1082,11 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_time(total)
+                res = fmt_time(total)
 
         else:
             if self.dataobjs_number == 0:
-                res = aspect_time(None)
+                res = fmt_time(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -1095,7 +1095,7 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_time(total)
+                res = fmt_time(total)
 
         if res is None:
             raise WisteriaError("(ERRORID029) Internal error: the result could not be computed. "
@@ -1133,7 +1133,7 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return aspect_mem_usage(None)
+                return fmt_mem_usage(None)
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -1142,11 +1142,11 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_mem_usage(total)
+                res = fmt_mem_usage(total)
 
         else:
             if self.dataobjs_number == 0:
-                return aspect_mem_usage(None)
+                return fmt_mem_usage(None)
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -1155,7 +1155,7 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = aspect_mem_usage(total)
+                res = fmt_mem_usage(total)
 
         if res is None:
             raise WisteriaError("(ERRORID025) Internal error: the result could not be computed. "

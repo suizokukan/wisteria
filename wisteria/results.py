@@ -40,7 +40,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
 from wisteria.serializers_classes import SerializationResults
 from wisteria.utils import strdigest
-from wisteria.reportaspect import aspect_serializer
+from wisteria.reprfmt import fmt_serializer
 
 
 def get_serializers_selection(serializer1,
@@ -228,7 +228,7 @@ def compute_results(config,
                not wisteria.globs.ARGS.tolerateabsurdvalues:
                 erase_progress_bar()
                 msgerror("(ERRORID043) Absurd value computed "
-                         f"for serializer {aspect_serializer(serializer)} : "
+                         f"for serializer {fmt_serializer(serializer)} : "
                          "Σ sum(results[serializer][dataobj].encoding_strlen) is 0.")
                 # (pimydoc)exit codes
                 # ⋅*  0: normal exit code

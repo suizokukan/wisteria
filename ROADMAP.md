@@ -46,6 +46,15 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-183
+
+'aspect_' > '_fmt' and wisteria/reportaspect.py > wisteria/reprfmt.py
+ 
+    * 'aspect_' > '_fmt' and wisteria/reportaspect.py > wisteria/reprfmt.py
+      (task-183)
+
+    * Pylint: 10/10
+
 [DONE] task-182
 
 Moved some parts of the code in a unique function (report_projectversion()).
