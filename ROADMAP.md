@@ -46,6 +46,16 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-182
+
+Moved some parts of the code in a unique function (report_projectversion()).
+
+    * moved some parts of the code in a unique function 
+      (report_projectversion()) (task-182)
+    * new aspect function, namely report_projectversion() (task-182)
+    
+    * Pylint: 10/10
+
 [DONE] task-181
 
 Improved A1 report section output: platform system, serializers and data objects.

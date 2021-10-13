@@ -79,7 +79,6 @@
 # not installed.
 import argparse
 import atexit
-import datetime
 import os
 import os.path
 import sys
@@ -310,9 +309,10 @@ ARGS = PARSER.parse_args()
 # ⋅       - (C/18.5) main(): report
 
 from wisteria.utils import get_missing_required_modules  # noqa
+from wisteria.reportaspect import aspect_projectversion  # noqa
 MISSING_REQUIRED_MODULES = get_missing_required_modules()
 if MISSING_REQUIRED_MODULES:
-    print(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+    print(aspect_projectversion(add_timestamp=True))
     print("The program can't be executed. "
           "At least one required module is missing, namely",
           " and ".join(MISSING_REQUIRED_MODULES),
@@ -656,7 +656,7 @@ if not check_str2reportsection_keys():
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-    msginfo(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+    msginfo(aspect_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
 
 # =============================================================================
@@ -937,7 +937,7 @@ def checkup():
     # pylint: disable=consider-using-dict-items
 
     # ---- Project name & version, time stamp ---------------------------------
-    msgreport(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+    msgreport(aspect_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
     msgreport()
 

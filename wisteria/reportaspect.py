@@ -33,6 +33,7 @@
     o  aspect_nodata(string)
     o  aspect_nounplural(string, number)
     o  aspect_percentage(percentage)
+    o  aspect_projectversion(add_timestamp=False)
     o  aspect_ratio(inttotal_and_floatratio)
     o  aspect_serializer0(serializer_name)
     o  aspect_serializer(serializer_name)
@@ -45,8 +46,10 @@
     o  aspect_exaequowith_hall(results, item_number, attribute, func=aspect_serializer,
                                prefix=", [i]ex aequo[/i] with ")
 """
+import datetime
 import re
 
+from wisteria.aboutproject import __version__, __projectname__
 import wisteria.globs
 
 
@@ -206,6 +209,30 @@ def aspect_percentage(percentage):
         RETURNED VALUE: (str)percentage + some text attributes.
     """
     return f"{percentage:.2f}%"
+
+
+def aspect_projectversion(add_timestamp=False):
+    """
+        aspect_ratio()
+
+        Format __projectname__, __version__ into a string.
+        If timestamp is True, add the current timestamp.
+
+        PLEASE DO NOT ADD RICH ATTRIBUTES TO THE RETURNED STRING
+        since this function is called by wisteria.py with a simple
+        print() statement.
+
+        _______________________________________________________________
+
+        ARGUMENT: (bool)add_timestamp, if True, add the current timestamp
+                  to the returned string.
+
+        RETURNED VALUE: a formatted string with __projectname__, __version__
+                        and (if timestamp is True) the current timestamp.
+    """
+    if add_timestamp:
+        return f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})"
+    return f"{__projectname__}, {__version__}                                 "
 
 
 def aspect_ratio(inttotal_and_floatratio):

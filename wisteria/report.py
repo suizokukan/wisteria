@@ -51,13 +51,10 @@
 
     o  report(results, s1s2d)
 """
-import datetime
-
 import rich.table
 from rich.console import Console
 
 import wisteria.globs
-from wisteria.aboutproject import __version__, __projectname__
 from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
@@ -67,7 +64,7 @@ from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
 from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage
-from wisteria.reportaspect import aspect_exaequowith, aspect_exaequowith_hall
+from wisteria.reportaspect import aspect_exaequowith, aspect_exaequowith_hall, aspect_projectversion
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -388,7 +385,7 @@ def report_section_a1(results,
             "(A1) Options Used to Create Reports")
         msgreport()
 
-    msgreport(f"{__projectname__}, {__version__} ({str(datetime.datetime.now())})")
+    msgreport(aspect_projectversion(add_timestamp=True))
 
     mymachine(detailslevel=0)
 
