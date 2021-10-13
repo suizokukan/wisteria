@@ -63,7 +63,8 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reportaspect import aspect_serializer, aspect_data, aspect_percentage, aspect_list
-from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage, aspect_exaequowith
+from wisteria.reportaspect import aspect_nounplural, aspect_mem_usage
+from wisteria.reportaspect import aspect_exaequowith, aspect_exaequowith_hall
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 
@@ -733,13 +734,13 @@ def report_section_b1c(results,
     for index in range(results.serializers_number):
         table.add_row(
             f"{index+1}",
-            f"{results.get_halloffame('encoding_success', index)}",
-            f"{results.get_halloffame('encoding_time', index)}",
-            f"{results.get_halloffame('encoding_strlen', index)}",
-            f"{results.get_halloffame('decoding_success', index)}",
-            f"{results.get_halloffame('decoding_time', index)}",
-            f"{results.get_halloffame('reversibility', index)}",
-            f"{results.get_halloffame('mem_usage', index)}",
+            f"{results.get_hall('encoding_success', index)}",
+            f"{results.get_hall('encoding_time', index)}",
+            f"{results.get_hall('encoding_strlen', index)}",
+            f"{results.get_hall('decoding_success', index)}",
+            f"{results.get_hall('decoding_time', index)}",
+            f"{results.get_hall('reversibility', index)}",
+            f"{results.get_hall('mem_usage', index)}",
         )
 
     msgreport(table)
@@ -1419,14 +1420,19 @@ def report_section_c2c__allvsall(results,
     text = TextAndNotes()
     text.append(cmpdata2phrase(cmpdata))
 
-    text.append(f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][0][1])} "
-                "is the quickest to encode/decode, ")
-    text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][0][1])} "
-                "produces the shortest strings, ")
-    text.append(f"{aspect_serializer(results.halloffame['reversibility'][0][1])} "
-                "has the best coverage ")
-    text.append(f"and {aspect_serializer(results.halloffame['mem_usage'][0][1])} "
-                "uses the least memory. ")
+    text.append(f"{aspect_serializer(results.hall['encoding_plus_decoding_time'][0][1])}"
+                f"{(aspect_exaequowith_hall(results, 0, 'encoding_plus_decoding_time'))}"
+                " is the quickest to encode/decode, ")
+    text.append(f"{aspect_serializer(results.hall['encoding_strlen'][0][1])}"
+                f"{(aspect_exaequowith_hall(results, 0, 'encoding_strlen'))}"
+                " produces the shortest strings, ")
+    text.append(f"{aspect_serializer(results.hall['reversibility'][0][1])}"
+                f"{(aspect_exaequowith_hall(results, 0, 'reversibility'))}"
+                " has the best coverage ")
+    text.append(
+        f"and {aspect_serializer(results.hall['mem_usage'][0][1])}"
+        f"{(aspect_exaequowith_hall(results, 0, 'mem_usage'))}"
+        " uses the least memory. ")
 
     bests = results.get_overallscore_bestrank()
     if len(bests) == 1:
@@ -1440,14 +1446,21 @@ def report_section_c2c__allvsall(results,
 
     text.append("\nOn the contrary, ")
     text.append(
-        f"{aspect_serializer(results.halloffame['encoding_plus_decoding_time'][-1][1])} "
+        f"{aspect_serializer(results.hall['encoding_plus_decoding_time'][-1][1])}"
+        f"{(aspect_exaequowith_hall(results, -1, 'encoding_plus_decoding_time'))}"
         "is the slowest to encode/decode, ")
-    text.append(f"{aspect_serializer(results.halloffame['encoding_strlen'][-1][1])} "
-                "produces the longest strings, ")
-    text.append(f"{aspect_serializer(results.halloffame['reversibility'][-1][1])} "
-                "has the worst coverage ")
-    text.append(f"and {aspect_serializer(results.halloffame['mem_usage'][-1][1])} "
-                "uses the most memory. ")
+    text.append(
+        f"{aspect_serializer(results.hall['encoding_strlen'][-1][1])}"
+        f"{(aspect_exaequowith_hall(results, -1, 'encoding_strlen'))}"
+        " produces the longest strings, ")
+    text.append(
+        f"{aspect_serializer(results.hall['reversibility'][-1][1])}"
+        f"{(aspect_exaequowith_hall(results, -1, 'reversibility'))}"
+        " has the worst coverage ")
+    text.append(
+        f"and {aspect_serializer(results.hall['mem_usage'][-1][1])}"
+        f"{(aspect_exaequowith_hall(results, -1, 'mem_usage'))}"
+        " uses the most memory. ")
 
     worsts = results.get_overallscore_worstrank()
     if len(worsts) == 1:
@@ -1517,7 +1530,7 @@ def report_section_c2c__serializervsall(results,
                       "mem_usage",
                       ):
         subtext = []
-        _less, _more = results.comparison_inside_halloffame(serializer, attribute)
+        _less, _more = results.comparison_inside_hall(serializer, attribute)
 
         if attribute == "encoding_strlen":
             if not _less:
@@ -2098,11 +2111,11 @@ def report_section_graphs(results,
                                 })
         fig, axes = pyplot.subplots()
         fig.subplots_adjust(left=0.3)
-        axes.barh(tuple(value[1] for value in results.halloffame[attribute]),
-                  tuple(value[0]*value_coeff for value in results.halloffame[attribute]),
+        axes.barh(tuple(value[1] for value in results.hall[attribute]),
+                  tuple(value[0]*value_coeff for value in results.hall[attribute]),
                   align='center')
         for value_index, value in enumerate(
-                tuple(value[0]*value_coeff for value in results.halloffame[attribute])):
+                tuple(value[0]*value_coeff for value in results.hall[attribute])):
             axes.text(value,
                       value_index,
                       fmtstring.format(value),

@@ -223,7 +223,7 @@ class SerializationResults(dict):
         o  (list)dataobjs           : list of str
         o  (int) serializers_number : =len(self.serializers)
         o  (int) dataobjs_number    : =len(self.dataobjs)
-        o  (dict)halloffame         : e.g. {'encoding_success' = [(0.24, 'marshal'),
+        o  (dict)hall         : e.g. {'encoding_success' = [(0.24, 'marshal'),
                                                                   (0.22, 'pickle')],
                                             ...
 
@@ -240,11 +240,11 @@ class SerializationResults(dict):
         methods:
 
         o  __init__(self)
-        o  comparison_inside_halloffame(self, serializer, attribute)
+        o  comparison_inside_hall(self, serializer, attribute)
         o  finish_initialization(self)
         o  get_base(self, attribute)
         o  get_dataobjs_base(self, attribute)
-        o  get_halloffame(self, attribute, index)
+        o  get_hall(self, attribute, index)
         o  get_overallscore_rank(self, serializer)
         o  get_overallscore_bestrank(self)
         o  get_overallscore_worstrank(self)
@@ -271,7 +271,7 @@ class SerializationResults(dict):
             o  (list)dataobjs           : list of str
             o  (int) serializers_number : =len(self.serializers)
             o  (int) dataobjs_number    : =len(self.dataobjs)
-            o  (dict)halloffame         : e.g. {'encoding_success' = [(0.24, 'marshal'),
+            o  (dict)hall         : e.g. {'encoding_success' = [(0.24, 'marshal'),
                                                                       (0.22, 'pickle')],
                                                 ...
 
@@ -287,14 +287,14 @@ class SerializationResults(dict):
         self.dataobjs = []
         self.serializers_number = None
         self.dataobjs_number = None
-        self.halloffame = None
+        self.hall = None
         self.overallscores = None
 
-    def comparison_inside_halloffame(self,
-                                     serializer,
-                                     attribute):
+    def comparison_inside_hall(self,
+                               serializer,
+                               attribute):
         """
-            SerializationResults.comparison_inside_halloffame()
+            SerializationResults.comparison_inside_hall()
 
             Returns the serializers better placed than <serializer>
             (=placed before <serializer>) and the less well placed
@@ -315,12 +315,12 @@ class SerializationResults(dict):
 
         before_serializer = False  # will be True when <serializer> will be read in the loop.
         for index in range(self.serializers_number):
-            if self.halloffame[attribute][index][1] == serializer:
+            if self.hall[attribute][index][1] == serializer:
                 before_serializer = True
             elif before_serializer:
-                _less.append(self.halloffame[attribute][index][1])
+                _less.append(self.hall[attribute][index][1])
             else:
-                _more.append(self.halloffame[attribute][index][1])
+                _more.append(self.hall[attribute][index][1])
 
         return _less, _more
 
@@ -330,7 +330,7 @@ class SerializationResults(dict):
 
             Once the initialization of <self> is over, this method must be called to
             set self.self.serializers, self.dataobjs, self.serializers_number
-            self.dataobjs_number, self.halloffame and self.overallscores
+            self.dataobjs_number, self.hall and self.overallscores
 
             ___________________________________________________________________
 
@@ -347,7 +347,7 @@ class SerializationResults(dict):
         self.dataobjs = sorted(self[first_serializer].keys())
         self.dataobjs_number = len(self.dataobjs)
 
-        self.halloffame = {
+        self.hall = {
             "encoding_success": sorted(((self.ratio_encoding_success(serializer=serializer,
                                                                      output="value"),
                                          serializer) for serializer in self.serializers),
@@ -400,7 +400,7 @@ class SerializationResults(dict):
                               'mem_usage',
                               ):
                 for index in range(self.serializers_number):
-                    if self.halloffame[attribute][index][1] == serializer:
+                    if self.hall[attribute][index][1] == serializer:
                         self.overallscores[serializer] += self.serializers_number-index
 
         return True
@@ -460,11 +460,11 @@ class SerializationResults(dict):
 
         return None  # this line should never be executed.
 
-    def get_halloffame(self,
-                       attribute,
-                       index):
+    def get_hall(self,
+                 attribute,
+                 index):
         """
-            SerializationResults.get_halloffame()
+            SerializationResults.get_hall()
 
             Return the formatted string result of the 'hall of fame'
             for a given <attribute> and an <index>.
@@ -493,8 +493,8 @@ class SerializationResults(dict):
                              'reversibility',
                              'mem_usage')
 
-        serializer = self.halloffame[attribute][index][1]
-        value = self.halloffame[attribute][index][0]
+        serializer = self.hall[attribute][index][1]
+        value = self.hall[attribute][index][0]
 
         if attribute == 'encoding_success':
             return f"{aspect_serializer(serializer)} " \
@@ -509,22 +509,22 @@ class SerializationResults(dict):
                 f"[{self.ratio_decoding_success(serializer=serializer)}]"
 
         if attribute == 'decoding_time':
-            serializer = self.halloffame[attribute][index][1]
+            serializer = self.hall[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
                 f"[{aspect_time(value)}]"
 
         if attribute == 'reversibility':
-            serializer = self.halloffame[attribute][index][1]
+            serializer = self.hall[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
                 f"[{self.ratio_reversibility(serializer=serializer)}]"
 
         if attribute == 'encoding_strlen':
-            serializer = self.halloffame[attribute][index][1]
+            serializer = self.hall[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
                 f"[{aspect_stringlength(value)}]"
 
         if attribute == 'mem_usage':
-            serializer = self.halloffame[attribute][index][1]
+            serializer = self.hall[attribute][index][1]
             return f"{aspect_serializer(serializer)} " \
                 f"[{aspect_mem_usage(value)}]"
 

@@ -46,6 +46,19 @@ $ pip install wmi
 
 C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
 
+[DONE] task-178
+
+Improved report_section_c2c__allvsall() output by adding some calls
+to aspect_exaequoxxx() methods.
+
+    * improved report_section_c2c__allvsall() output by adding some calls
+      to aspect_exaequoxxx() methods (task-178)
+    * new aspect method, namely aspect_exaequo_hall() (task-178)
+    * improved documentation (task-178)
+    * 'halloffame' > 'hall' (task-178)
+    
+    * Pylint: 10/10
+
 [DONE] task-177
 
 Improved message in step:

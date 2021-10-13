@@ -39,14 +39,17 @@
     o  aspect_time(floattime)
     o  aspect_title(title)
 
-    o  aspect_exaequowith(item, listitems)
+    o  aspect_exaequowith(item, listitems, func=aspect_serializer,
+                          prefix=", [i]ex aequo[/i] with ")
+    o  aspect_exaequowith_hall(results, item_number, attribute, func=aspect_serializer,
+                               prefix=", [i]ex aequo[/i] with ")
 """
 import wisteria.globs
 
 
 def aspect_boolsuccess(bool_success):
     """
-        SerializationResults.aspect_boolsuccess()
+        aspect_boolsuccess()
 
         Format the input argument into a string. The input argument is a (bool)success.
             ex: False > "NOT OK"
@@ -187,7 +190,7 @@ def aspect_percentage(percentage):
 
 def aspect_ratio(inttotal_and_floatratio):
     """
-        SerializationResults.aspect_ratio()
+        aspect_ratio()
 
         Format the input argument into a string. The input argument is an absolute
         (int)number and a (float)fraction, its ratio.
@@ -242,7 +245,7 @@ def aspect_serializer(serializer_name):
 
 def aspect_stringlength(int_stringlength):
     """
-        SerializationResults.aspect_stringlength()
+        aspect_stringlength()
 
         Format the input argument into a string. The input argument is a (int)number
         of characters
@@ -262,7 +265,7 @@ def aspect_stringlength(int_stringlength):
 
 def aspect_time(floattime):
     """
-        SerializationResults.aspect_time()
+        aspect_time()
 
         Format the input argument into a string. The input argument is a (float)time laps.
             ex: 0.333345677 > "0.333345"
@@ -302,9 +305,13 @@ def aspect_exaequowith(item,
     """
         aspect_exaequowith()
 
-        <listitems> is a list of (str)items, <item> being one of the items,
-        something like: listitems=['a', 'b', 'c'], items="b".
-        This function will return <prefix>(~"ex aequo") + "a and c".
+        Return a list of the items in <listitems> without <item>.
+
+        <listitems> is a list of (str)items, <item> being one of the items
+        something like:
+                listitems=['a', 'b', 'c'], items="b".
+        This function will return:
+                <prefix>(~"ex aequo") + "a and c".
 
         _______________________________________________________________________
 
@@ -319,4 +326,44 @@ def aspect_exaequowith(item,
     if len(listitems) == 1:
         return ""
     listitems.remove(item)
+    return prefix + aspect_list(listitems, func)
+
+
+def aspect_exaequowith_hall(results,
+                            item_number,
+                            attribute,
+                            func=aspect_serializer,
+                            prefix=", [i]ex aequo[/i] with "):
+    """
+        aspect_exaequowith_hall()
+
+        See aspect_exaequowith(): this function returns all serializers
+        whose score is equal to results.hall[attribute][item_number][0];
+        the returned list doesn't contain results.hall[attribute][item_number][1]
+
+        By example, if all serializers whose score is 15 are ['a', 'b', 'c']
+        and if results.hall[attribute][item_number][1]=="a", the returned
+        string will be:
+                <prefix>(~"ex aequo") + "a and c".
+
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+
+        o  (SerializationResults) results     : object where .hall is stored
+        o  (int)                  item_number : in order to work on
+                                                        results.hall[attribute][item_number]
+        o  (str)                  attribute   : in order to work on
+                                                        results.hall[attribute][item_number]
+        o  (callable)             func        , callable that will be called upon each <item>.
+        o  (str)                  prefix      , string that will be added before the result
+
+        RETURNED VALUE: (str)
+    """
+    score, serializer = results.hall[attribute][item_number]
+    listitems = [_serializer for _score, _serializer in results.hall[attribute] if _score == score]
+    if len(listitems) == 1:
+        return ""
+    listitems.remove(serializer)
     return prefix + aspect_list(listitems, func)
