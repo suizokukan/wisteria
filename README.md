@@ -7,7 +7,7 @@ WORK IN PROGRESS, NOT TO BE USED !
 
 Use [Wisteria](#01-what-about-the-name-) to compare different Python serializers.
 
-This is a [GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
+This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
 
 
 -------------------------------------------------------------------------------
@@ -20,6 +20,8 @@ This is a [GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.
   - [1.1] [poetry and dependencies](#11-poetry-and-dependencies)
 - [2] [how to use](#2-how-to-use)
   - [2.0] [overview](#20-overview)
+  - [2.1] [with CLI and with Python interpreter](#21-with-cli-and-with-python-interpreter)
+  - [2.2] [more about command line arguments](#22-more-about-command-line-arguments)
 - [3] [if you want to read/test/modify the code](#3-if-you-want-to-readtestmodify-the-code)
   - [3.0] [classes hierarchy](#30-classes-hierarchy)
   - [3.1] [checks and tests](#31-checks-and-tests)
@@ -34,16 +36,16 @@ This is a [GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.
       - [3.2.1.1] [about pylint and pylintrc](#3211-about-pylint-and-pylintrc)
     - [3.2.2] [how to read and write documentation](#322-how-to-read-and-write-documentation)
       - [3.2.2.1] [about markdown files](#3221-about-markdown-files)
-    - [3.2.3] [before committing](#323-before-committing) 
+    - [3.2.3] [before committing](#323-before-committing)
   - [3.3] [coding conventions](#33-coding-conventions)
   - [3.4] [errors and warnings](#34-errors-and-warnings)
   - [3.5] [git and poetry workflow](#35-git-and-poetry-workflow)
-  
+
 # [0] the project in a few words
 
 Use `Wisteria` to compare two serializers: which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
 
-After [installing](#1-installation) `Wisteria`, simply try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on you system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
+After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on you system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 
 ## [0.1] What about the name ?
 
@@ -55,9 +57,9 @@ After [installing](#1-installation) `Wisteria`, simply try `$ wisteria --help` a
 
 ## [1] installation
 
-### installation with pip
+### installation with pip (best method, if possible)
 
-Ideally - if `$ python --version` is Python3.8+ - you may write:
+Ideally — if `$ python --version` is Python3.8+ — you may write:
 
 ```
 $ pip install wisteria
@@ -66,7 +68,7 @@ $ wisteria --help
 $ wisteria --checkup
 ```
 
-### installation with git/poetry/a compiled version of Python3.8.11
+### installation with git/poetry/a compiled version of Python3.8.11 (not so bad, if installation with pip doesn't work)
 
 Feel free to choose another Python's version and another directory where to compile Python. Code below for Debian systems:
 
@@ -91,12 +93,12 @@ Feel free to choose another Python's version and another directory where to comp
     # dependencies' installation & execution:
     $ ~/.poetry/bin/poetry env use ~/Desktop/Python-3.8.11/python
     $ ~/.poetry/bin/poetry install
-    
+
     $ ~/.poetry/bin/poetry run ./bin/wisteria --help
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
 ```
 
-### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies
+### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies (as a last resort)
 
 Feel free to choose another Python's version and another directory where to compile Python. Code below for Debian systems:
 
@@ -106,14 +108,18 @@ Feel free to choose another Python's version and another directory where to comp
     $ ~/Pythons/Python-3.7.9/python -m venv venv
     $ ./venv/bin/pip install --upgrade pip
     $ ./venv/bin/pip install rich psutil py-cpuinfo matplotlib
-    
+
     $ ./venv/bin/python ./bin/wisteria --help
     $ ./venv/bin/python ./bin/wisteria --checkup
 ```
 
+On Windows systems, don't forget to install [WMI](https://pypi.org/project/WMI/) package too.
+
 ## [1.1] poetry and dependencies
 
 This package has been built and published thanks to [poetry](https://python-poetry.org/). [Here is the result](poetry_show_tree.md) of the `$ poetry show --tree` command.
+
+Please note that installation on Windows systems requires the installation of the [WMI](https://pypi.org/project/WMI/) package, automatically added by poetry and pip.
 
 # [2] how to use
 
@@ -124,7 +130,7 @@ This package has been built and published thanks to [poetry](https://python-poet
 You want to know what serializers can be compared:
 
     $ wisteria --checkup
-    
+
 You want to know what data types the serializers can compare:
 
     $ wisteria --checkup
@@ -141,14 +147,24 @@ You want to compare all serializers between them:
 
     $ wisteria --cmp="all vs all"
 
+## [2.1] with CLI and with Python interpreter
+
+You may use Wisteria on the command line or with a Python interpreter:
+
+    from wisteria import wisteria
+    wisteria.checkup()
+    wisteria.main()
+
+## [2.2] more about command line arguments
+
 You want as much informations as possible:
 
     --report="full+"
-    
+
 You want %%le moins d'informations possible:
 
     --report="minimal"
-    
+
 You want only graphs:
 
     --report="graphs"

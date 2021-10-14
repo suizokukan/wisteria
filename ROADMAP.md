@@ -51,17 +51,20 @@ What's next ?
 * dégradés (matplotlib inclut numpy, rendant possible les dégradés)
 * report.txt > wisteria.txt (plus clair)
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
-* README.md : - > tiret quadratin
 * README.md : %%français > anglais
-* README.md : [1] installation, indiquer que la méthode (2) est à préférer à la méthode (3)
-* README.md : poetry_show_tree.md est illisible sur github.
-* README.md : dependencies: un mot sur wim avec un lien
-* README.md : This is a GPLv3/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
-            > This is a CLI/GPLv3/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
-* README.md : supprimer 'simply' du texte
 ===============================================================================
 
 [CURRENT] v. 0.1.4
+
+[DONE] task-188
+
+    * improved documentation and messages: no more 'simply' word (task-188)
+    * improved documentation in README.md (task-188)
+    * improved poetry_show_tree.sh: version "poetry_show_tree.sh v.7/2021-10-14"
+      This version adds backquotes to format the text to be correctly displayed by GitHub.
+      (task-188)
+    
+    * Pylint: 10/10
 
 [DONE] task-187
 

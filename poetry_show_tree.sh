@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="poetry_show_tree.sh v.6/2021-09-29"
+VERSION="poetry_show_tree.sh v.7/2021-10-14"
 
 # ---- --help ----------------------------------------------------------------
 if [[ $1 = "--help" ]] || [[ $1 = "-h" ]]; then
@@ -48,9 +48,11 @@ else
       echo "   $ poetry show --tree --all";
       echo "";
       echo "----";
-      echo "";} >> poetry_show_tree.md
+      echo "";
+      echo "\`\`\`";} >> poetry_show_tree.md
     cat _tmp_poetry_show_tree.md >> poetry_show_tree.md
-
+      echo "\`\`\`" >> poetry_show_tree.md
+ 
     rm _tmp_poetry_show_tree.md
 fi
 

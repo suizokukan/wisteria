@@ -2232,7 +2232,7 @@ def report(results,
         raise WisteriaError(
             "(ERRORID018) Can't interpret report section which is empty. "
             f"Accepted keywords are {tuple(STR2REPORTSECTION.keys())} . "
-            f"You may simply use shortcuts {tuple(REPORT_SHORTCUTS.keys())} "
+            f"You may use stand alone shortcuts {tuple(REPORT_SHORTCUTS.keys())} "
             "but be sure to use this shortcut alone, with nothing else in the --report string. "
             "More informations in the documentation.")
 
@@ -2252,6 +2252,6 @@ def report(results,
                 f"(ERRORID017) Can't interpret report section; "
                 f"what is '{report_section}' ? args.report is '{wisteria.globs.ARGS.report}' . "
                 f"Accepted keywords are {tuple(STR2REPORTSECTION.keys())} . "
-                f"You may simply use shortcuts {tuple(REPORT_SHORTCUTS.keys())} "
+                f"You may use stand alone shortcuts {tuple(REPORT_SHORTCUTS.keys())} "
                 "but be sure to use this shortcut alone, with nothing else in the --report string. "
                 "More informations in the documentation.")
