@@ -33,7 +33,7 @@ step A: command line arguments, --help message
 step B: initializations & --checkup
 - (B/02) normal imports & PLATFORM_SYSTEM initialization
 - (B/03) wisteria.globs.ARGS initialization
-- (B/04) a special case: if no argument has been given, we modify the output
+- (B/04) a special case: if no argument has been given, we explicit the default values
 - (B/05) --output string
 - (B/06) logfile opening
 - (B/07) msgxxx() functions can be used

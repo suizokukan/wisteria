@@ -63,6 +63,15 @@ What's next ?
 
 [CURRENT] v. 0.1.4
 
+[DONE] task-186
+
+Improved message displayed when there's no command line argument.
+
+    * improved message displayed when there's no command line argument 
+      (task-186)
+
+    * Pylint: 10/10
+
 [DONE] task-185
 
 Bugfix: modified the way 'wmi' is required in pyproject.toml.

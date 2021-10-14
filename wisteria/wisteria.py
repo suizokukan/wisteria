@@ -30,7 +30,7 @@
     ⋅step B: initializations & --checkup
     ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
     ⋅- (B/03) wisteria.globs.ARGS initialization
-    ⋅- (B/04) a special case: if no argument has been given, we modify the output
+    ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
     ⋅- (B/05) --output string
     ⋅- (B/06) logfile opening
     ⋅- (B/07) msgxxx() functions can be used
@@ -94,7 +94,7 @@ import sys
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -144,7 +144,7 @@ from wisteria.globs import STR2REPORTSECTION_KEYS
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -285,7 +285,7 @@ ARGS = PARSER.parse_args()
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -368,7 +368,7 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -393,9 +393,9 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 wisteria.globs.ARGS = ARGS
 
 
-# =============================================================================
-# (B/04) a special case: if no argument has been given, we modify the output
-# =============================================================================
+# ====================================================================================
+# (B/04) a special case: if no argument has been given, we explicit the default values
+# ====================================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
 # ⋅- (A/00) minimal imports
@@ -404,7 +404,7 @@ wisteria.globs.ARGS = ARGS
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -428,13 +428,12 @@ wisteria.globs.ARGS = ARGS
 # ⋅       - (C/18.5) main(): report
 # a special case: if no argument has been given, we modify the output
 if len(sys.argv) == 1:
-    wisteria.globs.ARGS.verbosity = 2
-    wisteria.globs.ARGS.report = "titles;A1;B1b;C2c;D1a;"
     rprint(
-        f"[bold]Since no argument was passed to {__projectname__}, "
-        f"--verbosity is now set to '{wisteria.globs.ARGS.verbosity}' "
-        f"and --report to '{wisteria.globs.ARGS.report}'; "
-        f"--output is still equal to '{wisteria.globs.ARGS.output}' ."
+        f"[bold]No argument was passed to {__projectname__}: "
+        "by default, "
+        f"--verbosity is set to '{wisteria.globs.ARGS.verbosity}', "
+        f"--report to '{wisteria.globs.ARGS.report}', "
+        f"and --output is equal to '{wisteria.globs.ARGS.output}' ."
         "[/bold]")
 
 
@@ -449,7 +448,7 @@ if len(sys.argv) == 1:
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -521,7 +520,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -555,7 +554,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -633,7 +632,7 @@ if not check_str2reportsection_keys():
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -670,7 +669,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -726,7 +725,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -788,7 +787,7 @@ atexit.register(exit_handler)
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -824,7 +823,7 @@ wisteria.serializers.init_serializers()
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -865,7 +864,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -901,7 +900,7 @@ wisteria.data.init_data()
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -1056,7 +1055,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -1113,7 +1112,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -1165,7 +1164,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅step B: initializations & --checkup
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
-# ⋅- (B/04) a special case: if no argument has been given, we modify the output
+# ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
 # ⋅- (B/06) logfile opening
 # ⋅- (B/07) msgxxx() functions can be used
@@ -1226,7 +1225,7 @@ def main():
     # ⋅step B: initializations & --checkup
     # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
     # ⋅- (B/03) wisteria.globs.ARGS initialization
-    # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+    # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
     # ⋅- (B/05) --output string
     # ⋅- (B/06) logfile opening
     # ⋅- (B/07) msgxxx() functions can be used
@@ -1265,7 +1264,7 @@ def main():
         # ⋅step B: initializations & --checkup
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
         # ⋅- (B/06) logfile opening
         # ⋅- (B/07) msgxxx() functions can be used
@@ -1323,7 +1322,7 @@ def main():
         # ⋅step B: initializations & --checkup
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
         # ⋅- (B/06) logfile opening
         # ⋅- (B/07) msgxxx() functions can be used
@@ -1377,7 +1376,7 @@ def main():
         # ⋅step B: initializations & --checkup
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
         # ⋅- (B/06) logfile opening
         # ⋅- (B/07) msgxxx() functions can be used
@@ -1418,7 +1417,7 @@ def main():
         # ⋅step B: initializations & --checkup
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
-        # ⋅- (B/04) a special case: if no argument has been given, we modify the output
+        # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
         # ⋅- (B/06) logfile opening
         # ⋅- (B/07) msgxxx() functions can be used
