@@ -3,6 +3,7 @@ Result of a call to
    $ poetry show --tree --all
 
 ----
+
 ```
 psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
 py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3

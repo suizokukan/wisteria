@@ -44,6 +44,10 @@ if ! grep -q '[^[:space:]]' _tmp_poetry_show_tree.md; then
     echo "(NO RESULT)"
 else
     echo "Result of a call to " > poetry_show_tree.md
+    # No way for me to avoid the following warning:
+    #   SC2129: Consider using { cmd1; cmd2; } >> file instead of individual redirects.
+    #
+    # shellcheck disable=SC2129
     { echo "";
       echo "   $ poetry show --tree --all";
       echo "";

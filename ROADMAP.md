@@ -54,9 +54,78 @@ What's next ?
 * README.md : %%français > anglais
 ===============================================================================
 
-[CURRENT] v. 0.1.4
+[DONE] v. 0.1.4
+
+Graphs with gradients, bugfix & documentation.
+
+
+bugs:
+
+    * bugfix: modified the way 'wmi' is required in pyproject.toml (task-185)
+    
+code quality
+
+    * Pylint: 10/10
+
+interface
+
+    * improved message displayed when there's no command line argument 
+      (task-186)
+    * graphs with gradients (task-187) thanks to a new file, matplotgraphs.py.
+      (task-187)
+    * improved documentation and messages: no more 'simply' word (task-188)
+    * improved documentation in README.md (task-188)
+    * improved poetry_show_tree.sh: version "poetry_show_tree.sh v.7/2021-10-14"
+      This version adds backquotes to format the text to be correctly displayed by GitHub.
+      (task-188)
+
+tasks:
+
+    * task(s): task-185, task-186, task-187, task-188
+    
+version
+
+    * set version to 0.1.3
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.2
+Python 3.9.7 (default, Aug 31 2021, 13:28:12)
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+
 
 [DONE] task-188
+
+Documentation.
 
     * improved documentation and messages: no more 'simply' word (task-188)
     * improved documentation in README.md (task-188)
@@ -88,7 +157,7 @@ Improved message displayed when there's no command line argument.
 
 Bugfix: modified the way 'wmi' is required in pyproject.toml.
 
-    * modified the way 'wmi' is required in pyproject.toml (task-185)
+    * bugfix: modified the way 'wmi' is required in pyproject.toml (task-185)
     
     * set version to '0.1.4rc2'
 
