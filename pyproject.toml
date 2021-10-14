@@ -10,7 +10,9 @@ python = "^3.8"
 rich = "^10.11.0"
 py-cpuinfo = "^8.0.0"
 psutil = "^5.8.0"
-
+wim = [
+    { version = '*', platform = 'windows' },
+]
 [tool.poetry.dev-dependencies]
 
 [build-system]

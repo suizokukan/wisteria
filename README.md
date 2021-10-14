@@ -41,11 +41,15 @@ This is a [GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.
   
 # [0] the project in a few words
 
+Use `Wisteria` to compare two serializers: which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
+
+After [installing](#1-installation) `Wisteria`, simply try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on you system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
+
 ## [0.1] What about the name ?
 
-**`Wisteria`** is the project's name; package name is `wisteria` for Python, [pipy](https://pypi.org/project/iaswn/) and Poetry.
+`Wisteria` is the project's name; package name is `wisteria` for Python, [pipy](https://pypi.org/project/iaswn/) and Poetry.
 
-`Wisteria` is the name of splendid flowers.
+`Wisteria` is the name of the beautiful flowers under which some of the code was written.
 
 ![(source: Wikipedia)Wisteria is a genus of flowering plants in the legume family, Fabaceae (Leguminosae), that includes ten species of woody twining vines that are native to China, Korea, Japan, Southern Canada, the Eastern United States, and north of Iran.](https://github.com/suizokukan/wisteria/blob/main/wikipedia__Chinese_Wisteria_Bl%C3%BCtentrauben__resized.jpg?raw=true)
 

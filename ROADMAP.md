@@ -4,9 +4,9 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-0.2.3 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+0.2.4 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
       comment signaler cette anomalie ?
-0.2.2 ajouter un max de serializers
+0.2.3 ajouter un max de serializers
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         ion (https://github.com/amzn/ion-python)
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -18,33 +18,50 @@ What's next ?
         yajl (https://pypi.org/project/yajl/)
         ujson (https://pypi.org/project/ujson/)
         
-0.2.1 ajouter un max de données 
+0.2.2 ajouter un max de données 
       jouer avec des données d'au moins 50 Mo de json string.
       numpy data
       panda data
-0.2.0 README.md acceptable
+0.2.1 README.md acceptable
+      + __init__.py
+0.2.0 tests
+        * tester toutes les divisions
+        * sur des ordis très rapides, le temps pourrait être nul.
 0.1.9 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
       chercher si une combinaison donne des résultats vraiment différents des autres
 0.1.8 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-0.1.7 cwc
-0.1.6 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
-0.1.5 tests
-        * tester toutes les divisions
-        * sur des ordis très rapides, le temps pourrait être nul.
-0.1.4 --cmp="iaswn vs json+pickle" / liste des serializers dans le .ini
+0.1.7 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
+0.1.6 --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
+0.1.5 cwc
+0.1.4 cwc_iaswn, cwc_default
+
+* # The "PermissionError" exception may be raised on Windows system
+    tester ce qui se passe avec with open()..: pass >>> le fichier est-il fermé ?
+* peak memory usage:
+    remplacer le vague "memory usage" par "peak memory usage"; mais est-ce vrai sur Windows ?
+    https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
+* --logfilename > reportfilename (idem pour les constantes associées, définies dans globs.py)
+* reportTIMESTAMP.txt
+* comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
+* branche doublecheck
+  branche doublecheckmemusage qui ne doit être rien d'autre que (1) main < virer #MEMMACHIN
+  + (2) __version__ = "0.1.3 (doublecheckmemusage branch)", il nous faut donc un script de 
+  conversion, à grand coups de grep(?) __version__ = "0.1.3" + "(doub...)" (??)
+* dégradés (matplotlib inclut numpy, rendant possible les dégradés)
+
 ===============================================================================
 
 [CURRENT] v. 0.1.3
 
-installation + MacOS + Win
-        # The "PermissionError" exception may be raised on Windows system:
-peak memory usage:
-https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
-windows:
-$ pip install wmi
+[DONE] task-184
 
-C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
+Documentation: README.md; wim is now a dependency for Windows systems.
+
+    * documentation: README.md (task-184)
+    * added `wim` as a dependency for Windows systems (task-184)
+    
+    * Pylint: 10/10
 
 [DONE] task-183
 

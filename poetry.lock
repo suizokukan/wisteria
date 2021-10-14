@@ -1,4 +1,12 @@
 [[package]]
+name = "click"
+version = "3.3"
+description = "A simple wrapper around optparse for powerful command line utilities."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
@@ -16,6 +24,14 @@ python-versions = "*"
 
 [package.extras]
 test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
+
+[[package]]
+name = "pillow"
+version = "2.7.0"
+description = "Python Imaging Library (Fork)"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "psutil"
@@ -46,11 +62,11 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "rich"
-version = "10.11.0"
+version = "10.12.0"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 category = "main"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.6.2,<4.0.0"
 
 [package.dependencies]
 colorama = ">=0.4.0,<0.5.0"
@@ -60,12 +76,28 @@ pygments = ">=2.6.0,<3.0.0"
 [package.extras]
 jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 
+[[package]]
+name = "wim"
+version = "0.2.1"
+description = "wim is a command line tool to create Web images."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+click = "3.3"
+Pillow = "2.7.0"
+
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9"
-content-hash = "5f14ad69746862f45b28e6113145cfb4f5eb2525b05385dd33b31291fa58f246"
+python-versions = "^3.8"
+content-hash = "e35114172c54766e3f3f4087d8cc385a34cae433466f2bfd6923c3d142a53298"
 
 [metadata.files]
+click = [
+    {file = "click-3.3-py2.py3-none-any.whl", hash = "sha256:c9972f4d2b80575bb9112500cfec750eaf4f04e07abda4b2c44e453cde65ee77"},
+    {file = "click-3.3.tar.gz", hash = "sha256:f79c8c04d7eb50071bcad67fd23f3c10fab6c72d56857adf848367806845d6e5"},
+]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
@@ -73,6 +105,44 @@ colorama = [
 commonmark = [
     {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
     {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
+]
+pillow = [
+    {file = "Pillow-2.7.0-cp26-none-win32.whl", hash = "sha256:c20881b6a8bebb32e7e396954bd44214ea91326a78952f20474ee6747cf235b0"},
+    {file = "Pillow-2.7.0-cp26-none-win_amd64.whl", hash = "sha256:bc803e417ded2e073775fe4ee99d9fe9958691b1ff2b085df45b627cff361aab"},
+    {file = "Pillow-2.7.0-cp27-none-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl", hash = "sha256:01047449bc6e46792217fe62deba683979a60b33de7efd99ed564cf43907021b"},
+    {file = "Pillow-2.7.0-cp27-none-win32.whl", hash = "sha256:b314088190cc9af4604544521517528fb0f7842ab08233daa89f0526a34ae285"},
+    {file = "Pillow-2.7.0-cp27-none-win_amd64.whl", hash = "sha256:d75388537a4b550418c8e0c5b35fd8d1a7cf8658f8119a2ed2ad5b45e16dce92"},
+    {file = "Pillow-2.7.0-cp32-cp32m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl", hash = "sha256:228f73c20509f5dc61e59680376bab0ab2fffec05b25518d83c08ba0b0d4847b"},
+    {file = "Pillow-2.7.0-cp32-none-win32.whl", hash = "sha256:281bdd4e109be0717086e7c4cc63a788f557288ba60f31a5c47ba3f373bb8ee9"},
+    {file = "Pillow-2.7.0-cp32-none-win_amd64.whl", hash = "sha256:cd443b284749a5d0ea9723f455feef1678240dca22e77a54f5d37da3c567409c"},
+    {file = "Pillow-2.7.0-cp33-cp33m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl", hash = "sha256:4534d8d341f35fe9bfd77d49832341f7102f5e2a08086b57a501b4bf6c20ee73"},
+    {file = "Pillow-2.7.0-cp33-none-win32.whl", hash = "sha256:7c06292b5ea7acf46656852c3b6fb3fd71ede5ceab3591efe64d1997447096e1"},
+    {file = "Pillow-2.7.0-cp33-none-win_amd64.whl", hash = "sha256:a60e48be5bc6ba4e9a269c3fa1599e022b63946e568382ab438ceac3d259452c"},
+    {file = "Pillow-2.7.0-cp34-cp34m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl", hash = "sha256:f2f46ccd499cb433c32ce136fc096f858deb5c9129d64772000a94fc57af1a77"},
+    {file = "Pillow-2.7.0-cp34-none-win32.whl", hash = "sha256:e867d1bf02a53e05aa6e57261f8dbdd83cbfdbdeb1531c205952ff52b16f5d16"},
+    {file = "Pillow-2.7.0-cp34-none-win_amd64.whl", hash = "sha256:ec1ca32b0dacbf8f81e698f1616c89e841dc566c2236805cd108407bf664e306"},
+    {file = "Pillow-2.7.0-py2.6-win-amd64.egg", hash = "sha256:6ab873269450a0e93e2ab538bcffd3e8af69d138cce4464d0bb3b12d83f5040f"},
+    {file = "Pillow-2.7.0-py2.6-win32.egg", hash = "sha256:a534c904f72d16b9751847ad2c3532ac1bbf18dfb7d0cc6fa1f06b6b346f7c01"},
+    {file = "Pillow-2.7.0-py2.7-win-amd64.egg", hash = "sha256:cf05b8aadfb459a1a3155c839b4704e226d0b10cb64b092d55ddf817fa99f95a"},
+    {file = "Pillow-2.7.0-py2.7-win32.egg", hash = "sha256:5b37c00e252498a939cee44bb0955e02f8ab556550456fa6cf649554b01ed43c"},
+    {file = "Pillow-2.7.0-py3.2-win-amd64.egg", hash = "sha256:3c1d5f03752b20dbc5f615ab780667ed55e0fcb88d7c6367989dcd8d5b5aafd6"},
+    {file = "Pillow-2.7.0-py3.2-win32.egg", hash = "sha256:f1680ac173e56e6da980eee40dfe8e7eca4f69fbf1c24b68db0d753b2a6f1541"},
+    {file = "Pillow-2.7.0-py3.3-win-amd64.egg", hash = "sha256:93c97f5c10480aa93ca9c85013373273465d35f11491a0c9f101a9f78465ecd9"},
+    {file = "Pillow-2.7.0-py3.3-win32.egg", hash = "sha256:8d52fae1ea740ef0e2969360c3cc81feeeb89db5c6138b525f4cc61dad8fdde9"},
+    {file = "Pillow-2.7.0-py3.4-win-amd64.egg", hash = "sha256:96bbb100e852726efbd0460e1a1bc6d76755fd92501952aedc0906bced43e453"},
+    {file = "Pillow-2.7.0-py3.4-win32.egg", hash = "sha256:4d4ae9f943667082af02063e28cb8f96af07dc47948d0d6b57af5eed2adee262"},
+    {file = "Pillow-2.7.0.tar.gz", hash = "sha256:26e9320e73f5821826b6b2408a3bff0a8c29e45159530069a117efd39ef619f8"},
+    {file = "Pillow-2.7.0.win-amd64-py2.6.exe", hash = "sha256:5ea4a46d25a6fb549cb77f8b3e01e7361c8bc7ef09d20c2497bfcbb966bf4e4c"},
+    {file = "Pillow-2.7.0.win-amd64-py2.7.exe", hash = "sha256:e3de716a36d041d21dc85dbb52999a0dd7e5e70b131e7eed152f4b8b0a547d52"},
+    {file = "Pillow-2.7.0.win-amd64-py3.2.exe", hash = "sha256:48c88eb8f4a466fbae6985aec045f822f5127aa41d1a143b91daccf5d8419466"},
+    {file = "Pillow-2.7.0.win-amd64-py3.3.exe", hash = "sha256:623e2140847b214f3d08a2a43a7788b270a4f8e6fdb1c1de06c5576fe80ce8c7"},
+    {file = "Pillow-2.7.0.win-amd64-py3.4.exe", hash = "sha256:c2818dfa2e62bcc34fe4a7316cd39eace771ba13bf256d414b7db7437dfb4e09"},
+    {file = "Pillow-2.7.0.win32-py2.6.exe", hash = "sha256:384aa84bf7f7711c9dc08c9140a7d2af8bead8846ebb0ee5e203be2eb7d18cf1"},
+    {file = "Pillow-2.7.0.win32-py2.7.exe", hash = "sha256:02915befcd033b09c74e1ec65e1b3d4bd0a6013094d7b4f4e0cce9d6f2c5ef06"},
+    {file = "Pillow-2.7.0.win32-py3.2.exe", hash = "sha256:a7c642ee6ebb9937daab9816cf9510dd4f4e7f0c4c76a3866d29f37b82be1011"},
+    {file = "Pillow-2.7.0.win32-py3.3.exe", hash = "sha256:0b2d7f2b2ae3ad82cdd9210a88302f19018a525eda6f883480c3e18eb8b78145"},
+    {file = "Pillow-2.7.0.win32-py3.4.exe", hash = "sha256:50aa696b8ad1ba23cdf6b3eaa9e0290345a9bcd9273e9f78710b9ebbe69d9289"},
+    {file = "Pillow-2.7.0.zip", hash = "sha256:33a5d0145e82326e781ddee1ad375f92cb84f8cfafea56e9504682adff64a5ee"},
 ]
 psutil = [
     {file = "psutil-5.8.0-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:0066a82f7b1b37d334e68697faba68e5ad5e858279fd6351c8ca6024e8d6ba64"},
@@ -112,6 +182,10 @@ pygments = [
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 rich = [
-    {file = "rich-10.11.0-py3-none-any.whl", hash = "sha256:44bb3f9553d00b3c8938abf89828df870322b9ba43caf3b12bb7758debdc6dec"},
-    {file = "rich-10.11.0.tar.gz", hash = "sha256:016fa105f34b69c434e7f908bb5bd7fefa9616efdb218a2917117683a6394ce5"},
+    {file = "rich-10.12.0-py3-none-any.whl", hash = "sha256:c30d6808d1cd3defd56a7bd2d587d13e53b5f55de6cf587f035bcbb56bc3f37b"},
+    {file = "rich-10.12.0.tar.gz", hash = "sha256:83fb3eff778beec3c55201455c17cccde1ccdf66d5b4dade8ef28f56b50c4bd4"},
+]
+wim = [
+    {file = "wim-0.2.1-py2.py3-none-any.whl", hash = "sha256:a39e5ea9d7befa73551fdaa2af954dc1d6fa734fca91ca2bb284d085f98f2ae1"},
+    {file = "wim-0.2.1.tar.gz", hash = "sha256:a1c77a67ee30d817f4a221fdc1fd83bd47b751e8b21db0f8604d8d4688e071c4"},
 ]
