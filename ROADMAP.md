@@ -49,8 +49,19 @@ What's next ?
   + (2) __version__ = "0.1.3 (doublecheckmemusage branch)", il nous faut donc un script de
   conversion, à grand coups de grep(?) __version__ = "0.1.3" + "(doub...)" (??)
 * dégradés (matplotlib inclut numpy, rendant possible les dégradés)
-
+* report.txt > wisteria.txt (plus clair)
+* bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
+* README.md : - > tiret quadratin
+* README.md : %%français > anglais
+* README.md : [1] installation, indiquer que la méthode (2) est à préférer à la méthode (3)
+* README.md : poetry_show_tree.md est illisible sur github.
+* README.md : dependencies: un mot sur wim avec un lien
+* README.md : This is a GPLv3/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
+            > This is a CLI/GPLv3/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
+* README.md : supprimer 'simply' du texte
 ===============================================================================
+
+[CURRENT] v. 0.1.4
 
 [DONE] v. 0.1.3
 
