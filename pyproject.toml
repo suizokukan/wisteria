@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wisteria"
-version = "0.1.3rc2"
+version = "0.1.3"
 description = "Python serializers comparisons"
 authors = ["suizokukan <suizokukan@orange.fr>"]
 license = "GPLv3"
@@ -11,7 +11,7 @@ rich = "^10.11.0"
 py-cpuinfo = "^8.0.0"
 psutil = "^5.8.0"
 wim = [
-    { version = '*', platform = 'windows' },
+{ version = '*', platform = 'windows' },
 ]
 [tool.poetry.dev-dependencies]
 
