@@ -60,13 +60,14 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.globs import GRAPHS_FILENAME
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
+from wisteria.utils import shortenedstr, strdigest, trytoimport
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reprfmt import fmt_serializer, fmt_data, fmt_percentage, fmt_list
 from wisteria.reprfmt import fmt_nounplural, fmt_mem_usage
 from wisteria.reprfmt import fmt_exaequowith, fmt_exaequowith_hall, fmt_projectversion
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
+from wisteria.matplotgraphs import hbar2png
 
 
 def humanratio(ratio,
@@ -2105,43 +2106,17 @@ def report_section_graphs(results,
             "Try --verbosity=3 and check log file for more informations about --report string.")
         return
 
-    pyplot = wisteria.globs.MODULES["matplotlib.pyplot"]
-
-    for (attribute, fmtstring, value_coeff, value_color, unit, title, filename) in (
-            ('encoding_time', "{0:.3f}", 1, 'red', UNITS['time'], 'Slowness',
+    for (attribute, fmtstring, value_coeff, unit, title, filename) in (
+            ('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
              GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
-            ('mem_usage', "{0}", 1, 'red', UNITS['memory'], 'Memory Usage',
+            ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
              GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
-            ('encoding_strlen', "{0}", 1, 'red', UNITS['string length'], 'Encoded String Length',
+            ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
              GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
-            ('reversibility', "{0:.1f}", 100, 'red', "%", 'Coverage data (Reversibility)',
+            ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
              GRAPHS_FILENAME.replace("__SUFFIX__", "4")),
            ):
-        pyplot.rcdefaults()
-        pyplot.rcParams.update({'axes.labelsize': 'large',
-                                'xtick.labelsize': 'x-small',
-                                'ytick.labelsize': 'large',
-                                })
-        fig, axes = pyplot.subplots()
-        fig.subplots_adjust(left=0.3)
-        axes.barh(tuple(value[1] for value in results.hall[attribute]),
-                  tuple(value[0]*value_coeff for value in results.hall[attribute]),
-                  align='center')
-        for value_index, value in enumerate(
-                tuple(value[0]*value_coeff for value in results.hall[attribute])):
-            axes.text(value,
-                      value_index,
-                      fmtstring.format(value),
-                      color=value_color,
-                      va='center',
-                      fontsize=8, fontweight='normal')
-        axes.set_xlabel(unit)
-        axes.set_title(title)
-
-        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"About to write on disk graph file '{filename}' ({normpath(filename)}) .")
-
-        pyplot.savefig(filename)
+        hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
 
 
 # STR2REPORTSECTION has two goals:

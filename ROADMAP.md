@@ -63,6 +63,15 @@ What's next ?
 
 [CURRENT] v. 0.1.4
 
+[DONE] task-187
+
+Graphs with gradients.
+
+    * graphs with gradients (task-187) thanks to a new file, matplotgraphs.py.
+      (task-187)
+
+    * Pylint: 10/10
+
 [DONE] task-186
 
 Improved message displayed when there's no command line argument.
