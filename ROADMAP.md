@@ -63,6 +63,16 @@ What's next ?
 
 [CURRENT] v. 0.1.4
 
+[DONE] task-185
+
+Bugfix: modified the way 'wmi' is required in pyproject.toml.
+
+    * modified the way 'wmi' is required in pyproject.toml (task-185)
+    
+    * set version to '0.1.4rc2'
+
+    * Pylint: 10/10
+
 [DONE] v. 0.1.3
 
 Wisteria can be executed on Linux & Windows systems; wim is now a dependency
