@@ -54,6 +54,8 @@ What's next ?
 * README.md : %%français > anglais
 ===============================================================================
 
+[CURRENT] v. 0.1.5
+
 [DONE] v. 0.1.4
 
 Graphs with gradients, bugfix & documentation.
