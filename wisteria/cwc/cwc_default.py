@@ -62,20 +62,17 @@ class ChessResult:
 
 class ChessPlayer:
     def __init__(self,
-                 name):
+                 name="unknown"):
         self.name = name
 
 
-class ChessEvent:
+class ChessEvent(dict):
     def __init__(self,
-                 event_name=None,
-                 site=None,
-                 date=None,
-                 event_round=None):
-        self.event_name = event_name
-        self.site = site
-        self.date = date
-        self.event_round = event_round
+                 datadict=None):
+        dict.__init__(self)
+        if datadict:
+            for key, value in datadict:
+                self[key] = value
 
 
 class ChessPiece:
@@ -109,16 +106,16 @@ class ChessPiece:
     def __repr__(self):
         return f"(ChessPiece: {self.color=}; {self.nature=})"
 
-    def is_empty(self):
-        return self.color==COLOR_NOCOLOR and self.nature==PIECENATURE_NOPIECE
+    def get_unicode(self):
+        return ChessPiece.piece2unicode[self.nature, self.color]
 
     def init_from_unicode_string(self,
                               string):
         self.nature, self.color = ChessPiece.unicode2piece[string]
         return self
 
-    def get_unicode(self):
-        return ChessPiece.piece2unicode[self.nature, self.color]
+    def is_empty(self):
+        return self.color==COLOR_NOCOLOR and self.nature==PIECENATURE_NOPIECE
 
 
 class ChessMove:
@@ -183,14 +180,6 @@ class ChessBoard:
                                    "♙♙♙♙♙♙♙♙" \
                                    "♖♘♗♕♔♗♘♖")
 
-    def init_from_unicode_string(self,
-                              string):
-        index = 0
-        for y in range(8):
-            for x in range(8):
-                self.set_xy(x, y, ChessPiece().init_from_unicode_string(string[index]))
-                index += 1
-
     def get_king_coord(self, color):
         """Return the (x, y) of the <color>(white/black) king"""
         for x in range(0, 8):
@@ -201,10 +190,32 @@ class ChessBoard:
                     return (x, y)
         return None  # error: no king !
 
+    def get_unicode(self):
+        res = []
+        for y in range(8):
+            res.append("".join(self.get_xy(x, y).get_unicode() for x in range(8)))
+        return "\n".join(res)
+
     def get_xy(self,
                x,
                y):
         return self.board[(x, y)]
+
+    def init_from_unicode_string(self,
+                              string):
+        index = 0
+        for y in range(8):
+            for x in range(8):
+                self.set_xy(x, y, ChessPiece().init_from_unicode_string(string[index]))
+                index += 1
+
+    def is_empty_or_is_this_piece(self,
+                                  x,
+                                  y,
+                                  piece):
+        """return True if [x, y] is an empty square OR if [x, y] is <piece>"""
+        obj = self.get_xy(x, y)
+        return obj.is_empty() or obj == piece
 
     def set_xy(self,
                x,
@@ -216,12 +227,6 @@ class ChessBoard:
                      x,
                      y):
         self.set_xy(x, y, ChessPiece())
-
-    def get_unicode(self):
-        res = []
-        for y in range(8):
-            res.append("".join(self.get_xy(x, y).get_unicode() for x in range(8)))
-        return "\n".join(res)
 
     def update_by_playing_a_move(self,
                                  move):
@@ -244,19 +249,6 @@ class ChessBoard:
             self.set_xy(after[0], after[1], piece)
         else:
             raise NotImplementedError
-
-    @staticmethod
-    def xy_is_off_the_board(x,
-                            y):
-        return not ((0 <= x <= 7) and (0 <= y <= 7))
-
-    def is_empty_or_is_this_piece(self,
-                                  x,
-                                  y,
-                                  piece):
-        """return True if [x, y] is an empty square OR if [x, y] is <piece>"""
-        obj = self.get_xy(x, y)
-        return obj.is_empty() or obj == piece
 
     def which_piece_could_go_to(self,
                                 piece,
@@ -329,14 +321,14 @@ class ChessBoard:
 
         return res
 
+    @staticmethod
+    def xy_is_off_the_board(x,
+                            y):
+        return not ((0 <= x <= 7) and (0 <= y <= 7))
+
+
 class ChessGame:
-    regex_pgn = {'event': re.compile('^\s*\[Event\s+\"(?P<value>.+)\"\]$'),
-                 'site': re.compile('^\s*\[Site\s+\"(?P<value>.+)\"\]$'),
-                 'date': re.compile('^\s*\[Date\s+\"(?P<value>.+)\"\]$'),
-                 'round': re.compile('^\s*\[Round\s+\"(?P<value>.+)\"\]$'),
-                 'white': re.compile('^\s*\[White\s+\"(?P<value>.+)\"\]$'),
-                 'black': re.compile('^\s*\[Black\s+\"(?P<value>.+)\"\]$'),
-                 'result': re.compile('^\s*\[Result\s+\"(?P<value>.+)\"\]$'),}
+    regex_pgn_tags = re.compile('^\s*\[(?P<key>.+)\s+\"(?P<value>.+)\"\]$')
 
     regex_pgn_listofmoves = {'doublemovenumber': re.compile('[\d]+\.\s'),
                              }
@@ -384,8 +376,8 @@ class ChessGame:
     coord2strcoord = {value: key for key, value in strcoord2coord.items()}
 
     def __init__(self,
-                 white_player,
-                 black_player,
+                 white_player=ChessPlayer(),
+                 black_player=ChessPlayer(),
                  chess_event=ChessEvent(),
                  gameboard=ChessBoard(),
                  result=ChessResult()):
@@ -396,11 +388,47 @@ class ChessGame:
         self.result = result
         self.listofmoves = ChessListOfMoves()
 
-    def _read_pgn__simplemove(self,
-                              str_simplemove):
-        """
+    def read_pgn(self,
+                 pgnfilename):
+        self.listofmoves = ChessListOfMoves()
 
-        """
+        str_listofmoves = []
+        with open(pgnfilename) as src:
+            for _line in src:
+                line = _line.strip()
+
+                if line:
+                    regex_pgn__found = False
+                    if res_regex_pgn_tags := re.match(ChessGame.regex_pgn_tags, line):
+                        regex_pgn__found = True
+                        self.chess_event[res_regex_pgn_tags.group('key')] = res_regex_pgn_tags.group('value')
+
+                    if regex_pgn__found is False:
+                        str_listofmoves.append(line)
+
+        str_listofmoves = " ".join(str_listofmoves)
+
+        self.read_pgn__listofmoves(str_listofmoves)
+
+    def read_pgn__doublemove(self,
+                             str_doublemove):
+        """str_doublemove: e4 e5"""
+        move1, move2 = str_doublemove.split(" ")
+        self.read_pgn__simplemove(move1)
+        self.read_pgn__simplemove(move2)
+
+    def read_pgn__listofmoves(self,
+                              src):
+        """src: str_listofmoves"""
+        doublemove_number = 0
+        for _str_doublemove in re.split(ChessGame.regex_pgn_listofmoves['doublemovenumber'], src):
+            str_doublemove = _str_doublemove.strip()
+            if str_doublemove:
+                doublemove_number += 1
+                self.read_pgn__doublemove(str_doublemove)
+
+    def read_pgn__simplemove(self,
+                             str_simplemove):
         """simplemove: e6e4 // e6-e4 // e4"""
         print("===", str_simplemove)
         who_plays = self.listofmoves.who_plays()
@@ -451,51 +479,48 @@ class ChessGame:
             else:
                 raise NotImplementedError
 
+            if res_algebricnotation["str_piecenature"] is not None:
+                # str_piecenature: 'Q' / 'K' / 'R' / 'B' / 'N'
+                piece1_piecenature = ALGEBRICNOTATION2PIECENATURE[res_algebricnotation["str_piecenature"]]
+            else:
+                # no piecenature: it's a pawn
+                piece1_piecenature = PIECENATURE_PAWN
+
             if res_algebricnotation["str_coord_x0"] is None:  # coord_x0 wasn't given (e.g. 'Rxb4')
+                piece1_coord_after = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x1"]]
                 if res_algebricnotation["str_intersymb"] == "x":
                     raise NotImplementedError
-                else:
-                    # ---- no intersymb (ie. no '-' or no 'x') --------------------
-                    piece1_coord_after = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x1"]]
-                    if res_algebricnotation["str_piecenature"] is not None:
-                        # str_piecenature: 'Q' / 'K' / 'R' / 'B' / 'N'
-                        piece1_piecenature = ALGEBRICNOTATION2PIECENATURE[res_algebricnotation["str_piecenature"]]
-                    else:
-                        # no piecenature: it's a pawn
-                        piece1_piecenature = PIECENATURE_PAWN
+
             else:  # coord_x0 was given, at least partially (e.g. 'cxb5', 'Rbxb4')
-                # ---- intersymb: 'x' or '-' --------------------------------------
+                piece1_coord_before = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x0"]]  # maybe partial (e.g. 'Rbb4')
+                piece1_coord_after = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x1"]]
+
+                if piece1_coord_before[1] is None:
+                    # <piece1_coord_before> is only partially initialized: we only have the column, as in 'Qab2'
+                    for _x, _y in  self.gameboard.which_piece_could_go_to(
+                            piece=ChessPiece(nature=piece1_piecenature,
+                                             color=self.listofmoves.next_player),
+                            coord_after=piece1_coord_after,
+                            movetype=movetype):
+                        if _x == piece1_coord_before[0]:
+                            piece1_coord_before = list(piece1_coord_before)  # a tuple would not be writable
+                            piece1_coord_before[1] = _y  # we found the row
+                            break  # let's pray there was no other solutions !
+
+                elif piece1_coord_before[0] is None:
+                    # <piece1_coord_before> is only partially initialized: we only have the row, as in 'Q2b2'
+                    for _x, _y in  self.gameboard.which_piece_could_go_to(
+                            piece=ChessPiece(nature=piece1_piecenature,
+                                             color=self.listofmoves.next_player),
+                            coord_after=piece1_coord_after,
+                            movetype=movetype):
+                        if _y == piece1_coord_before[1]:
+                            piece1_coord_before = list(piece1_coord_before)  # a tuple would not be writable
+                            piece1_coord_before[0] = _x  # we found the column
+                            break  # let's pray there was no other solutions !
+
                 if res_algebricnotation["str_intersymb"] == "x":
                     raise NotImplementedError
-                else:
-                    # ---- no intersymb (ie. no '-' or no 'x') --------------------
-                    piece1_piecenature = ALGEBRICNOTATION2PIECENATURE[res_algebricnotation["str_piecenature"]]
-                    piece1_coord_before = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x0"]]  # maybe partial (e.g. 'Rbb4')
-                    piece1_coord_after = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x1"]]
-
-                    if piece1_coord_before[1] is None:
-                        # <piece1_coord_before> is only partially initialized: we only have the column, as in 'Qab2'
-                        for _x, _y in  self.gameboard.which_piece_could_go_to(
-                                piece=ChessPiece(nature=piece1_piecenature,
-                                                 color=self.listofmoves.next_player),
-                                coord_after=piece1_coord_after,
-                                movetype=movetype):
-                            if _x == piece1_coord_before[0]:
-                                piece1_coord_before = list(piece1_coord_before)  # a tuple would not be writable
-                                piece1_coord_before[1] = _y  # we found the row
-                                break  # let's pray there was no other solutions !
-
-                    elif piece1_coord_before[0] is None:
-                        # <piece1_coord_before> is only partially initialized: we only have the row, as in 'Q2b2'
-                        for _x, _y in  self.gameboard.which_piece_could_go_to(
-                                piece=ChessPiece(nature=piece1_piecenature,
-                                                 color=self.listofmoves.next_player),
-                                coord_after=piece1_coord_after,
-                                movetype=movetype):
-                            if _y == piece1_coord_before[1]:
-                                piece1_coord_before = list(piece1_coord_before)  # a tuple would not be writable
-                                piece1_coord_before[0] = _x  # we found the column
-                                break  # let's pray there was no other solutions !
 
         # ---- piece1_coord_before has not yet been initialized ---------------
         if movetype == MOVETYPE_SINGLE:
@@ -516,58 +541,6 @@ class ChessGame:
         print(self.listofmoves)
         print(self.gameboard.get_unicode())
 
-    def _read_pgn__doublemove(self,
-                              str_doublemove):
-        """str_doublemove: e4 e5"""
-        move1, move2 = str_doublemove.split(" ")
-        self._read_pgn__simplemove(move1)
-        self._read_pgn__simplemove(move2)
 
-    def _read_pgn__listofmoves(self,
-                               src):
-        """src: str_listofmoves"""
-        doublemove_number = 0
-        for _str_doublemove in re.split(ChessGame.regex_pgn_listofmoves['doublemovenumber'], src):
-            str_doublemove = _str_doublemove.strip()
-            if str_doublemove:
-                doublemove_number += 1
-                self._read_pgn__doublemove(str_doublemove)
-
-    def read_pgn(self,
-                 pgnfilename):
-        self.listofmoves = ChessListOfMoves()
-
-        str_listofmoves = []
-        with open(pgnfilename) as src:
-            for _line in src:
-                line = _line.strip()
-
-                if line:
-                    regex_pgn__found = False
-                    for regex_pgn__key in ChessGame.regex_pgn:
-                        if res_regex_pgn := re.match(ChessGame.regex_pgn[regex_pgn__key], line):
-                            regex_pgn__found = True
-
-                            if regex_pgn__key == "event":
-                                self.chess_event.event_name = res_regex_pgn.group("value")
-                            elif regex_pgn__key == "date":
-                                self.chess_event.date = res_regex_pgn.group("value")
-                            elif regex_pgn__key == "site":
-                                self.chess_event.site = res_regex_pgn.group("value")
-                            elif regex_pgn__key == "event_round":
-                                self.chess_event.event_round = res_regex_pgn.group("value")
-
-                    if regex_pgn__found is False:
-                        str_listofmoves.append(line)
-
-        str_listofmoves = " ".join(str_listofmoves)
-
-        self._read_pgn__listofmoves(str_listofmoves)
-
-game = ChessGame(white_player=ChessPlayer(name="Fischer, Robert J."),
-                 black_player=ChessPlayer(name="Spassky, Boris V."),
-                 chess_event=ChessEvent(event_name="F/S Return Match",
-                                        site="Belgrade, Serbia JUG",
-                                        date="1992.11.04",
-                                        event_round=29))
+game = ChessGame()
 game.read_pgn("game1.pgn")

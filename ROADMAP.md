@@ -56,6 +56,13 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-190
+
+Working on cwc_default.py.
+
+    * cwc_default.py: methods are now sorted by name (task-190)
+    * cwc_default.py: better .pgn tags storage (task-190)
+
 [DONE] task-189
 
 First try to code a PGN reader/writer* as 'cwc_default'.
