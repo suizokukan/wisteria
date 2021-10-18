@@ -56,6 +56,14 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-189
+
+First try to code a PGN reader/writer* as 'cwc_default'.
+(*) https://fr.wikipedia.org/wiki/Portable_Game_Notation
+
+    * first try to code a PGN reader/writer as 'cwc_default' (task-189)
+    * new directory: wisteria/cwc (task-189)
+
 [DONE] v. 0.1.4
 
 Graphs with gradients, bugfix & documentation.
