@@ -56,6 +56,14 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-191
+
+Working on cwc_default.py: the code can read one .pgn file.
+No en passant, no promotion.
+
+    * working on cwc_default.py: the code can read one .pgn file
+      No en passant, no promotion. (task-191)
+
 [DONE] task-190
 
 Working on cwc_default.py.

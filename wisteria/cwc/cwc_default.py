@@ -15,9 +15,10 @@ la partie coup après coup.
 
 TODO:
 notation algébrique: e6-e4 // e6e4 // e4 / Rd3xd7 // Qh4e1
-- revoir la regex.
+- (pas fait) ChessGames, i.e. une liste de ChessGame
+- (pas fait) prise en passant
+- (pas fait) promotion
 - status: white_king already moved
-- revoir ChessGame.regex pour events, ... : remplacer les attributs (.event, ...) par un dictionnaire
 
 https://fr.chesstempo.com/pgn-viewer/
 https://theweekinchess.com/a-year-of-pgn-game-files
@@ -50,9 +51,10 @@ CHESSRESULT_WHITEWINS = 2
 CHESSRESULT_BLACKWINS = 3
 
 MOVETYPE_SINGLE = 0
-MOVETYPE_CASTLING_OO = 1
-MOVETYPE_CASTLING_OOO = 2
-MOVETYPE_ENPASSANT = 3
+MOVETYPE_CAPTURE = 1
+MOVETYPE_CASTLING_OO = 2
+MOVETYPE_CASTLING_OOO = 3  # TODO pas sûr qu'il faille distinguer les 2 roques
+MOVETYPE_ENPASSANT = 4
 
 class ChessResult:
     def __init__(self,
@@ -66,7 +68,7 @@ class ChessPlayer:
         self.name = name
 
 
-class ChessEvent(dict):
+class ChessGameTags(dict):
     def __init__(self,
                  datadict=None):
         dict.__init__(self)
@@ -131,17 +133,20 @@ class ChessMove:
         self.beforeafter_coord_piece2 = beforeafter_coord_piece2
         self.beforeafter_advpiece = beforeafter_advpiece
         self.validmove = validmove
+        self.promotion = promotion
 
     def __repr__(self):
         return f"{self.movetype=}; {self.beforeafter_coord_piece1=}; {self.beforeafter_coord_piece2}; " \
-            f"{self.beforeafter_advpiece=}; {self.validmove=}"
+            f"{self.beforeafter_advpiece=}; {self.validmove=}; {self.promotion=};"
 
 
 class ChessListOfMoves(list):
-    def __init__(self):
+    def __init__(self,
+                 next_player=COLOR_WHITE,
+                 doublemove_number=1):
         list.__init__(self)
-        self.next_player = COLOR_WHITE
-        self.doublemove_number = 1
+        self.next_player = next_player
+        self.doublemove_number = doublemove_number
 
     def add_move(self, move):
         """This move is played by self.next_player"""
@@ -157,15 +162,24 @@ class ChessListOfMoves(list):
         return self.next_player
 
 
-class ChessPiecesStatus:
-    # TODO: est-ce que les rois ont bougé ?
-    pass
+class ChessGameStatus:
+    def __init__(self,
+                 pieces = {
+                     COLOR_BLACK: {PIECENATURE_KING: {"has already moved": False,},},
+                     COLOR_WHITE: {PIECENATURE_KING: {"has already moved": False,},},
+                 },
+                 game_is_over = False,
+                 who_won = None):
+
+        self.pieces = pieces
+        self.game_is_over = game_is_over  # (bool)
+        self.who_won = who_won  # COLOR_NOCOLOR / COLOR_BLACK / COLOR_WHITE
+
 
 class ChessBoard:
     def __init__(self):
-        self.moves = []
-        self.board = {}
-        self.pieces_status = ChessPiecesStatus()
+        self.board = {}  # cf .get_xy(), set_xy()
+        self.pieces_status = ChessGameStatus()
 
         for x in range(8):
             for y in range(8):
@@ -231,7 +245,7 @@ class ChessBoard:
     def update_by_playing_a_move(self,
                                  move):
         """Modify <self> by playing a <move>."""
-        if move.movetype == MOVETYPE_SINGLE:
+        if move.movetype in (MOVETYPE_SINGLE, MOVETYPE_CAPTURE):
             before, after = move.beforeafter_coord_piece1
             piece = self.get_xy(before[0], before[1])
             self.set_xy_empty(before[0], before[1])
@@ -263,6 +277,18 @@ class ChessBoard:
         x, y = coord_after
         res = []  # there should be only one result; see the end of this function.
 
+        moves = {PIECENATURE_BISHOP: (8,
+                                      ((+1, -1), (+1, +1), (-1, +1), (-1, -1)),),
+                 PIECENATURE_ROOK: (8,
+                                    ((0, -1), (0, +1), (-1, 0), (+1, 0)),),
+                 PIECENATURE_QUEEN: (8,
+                                     ((+1, -1), (+1, +1), (-1, +1), (-1, -1),
+                                      (0, -1), (0, +1), (-1, 0), (+1, 0)),),
+                 PIECENATURE_KING: (2,
+                                    ((+1, -1), (+1, +1), (-1, +1), (-1, -1),
+                                     (0, -1), (0, +1), (-1, 0), (+1, 0)),),
+                 }
+
         def add_to_res_if_rightpiece(x, y, piece):
             if 0 <= x <= 7 and \
                0 <= y <= 7 and \
@@ -281,41 +307,37 @@ class ChessBoard:
                         add_to_res_if_rightpiece(x, y-2, piece)
                     else:
                         add_to_res_if_rightpiece(x, y-1, piece)
-            else:
-                raise NotImplementedError
-        elif piece.nature == PIECENATURE_KNIGHT:
-            if movetype == MOVETYPE_SINGLE:
-                add_to_res_if_rightpiece(x-2, y-1, piece)
-                add_to_res_if_rightpiece(x-2, y+1, piece)
-                add_to_res_if_rightpiece(x+2, y-1, piece)
-                add_to_res_if_rightpiece(x+2, y+1, piece)
-                add_to_res_if_rightpiece(x-1, y-2, piece)
-                add_to_res_if_rightpiece(x-1, y+2, piece)
-                add_to_res_if_rightpiece(x+1, y-2, piece)
-                add_to_res_if_rightpiece(x+1, y+2, piece)
-            else:
-                raise NotImplementedError
-        elif piece.nature == PIECENATURE_BISHOP:
-            for deltax, deltay in ((+1, -1), (+1, +1), (-1, +1), (-1, -1)):  # 4 diagonals to check
-                for delta in range(1, 8):
-                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)) or \
-                       self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece) is False:
-                        # A piece (different from <piece>) was encountered on the diagonal or
-                        # we were about to go off the board:
-                        break
-                    if self.get_xy(x+(deltax*delta), y+(deltay*delta))==piece:
-                        res.append((x+(deltax*delta), y+(deltay*delta)))
-        elif piece.nature == PIECENATURE_ROOK:
-            for deltax, deltay in ((0, -1), (0, +1), (-1, 0), (+1, 0)):  # 4 columns/rows to check
-                for delta in range(1, 8):
-                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)) or \
-                       self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece) is False:
-                        # A piece (different from <piece>) was encountered on the diagonal or
-                        # we were about to go off the board:
-                        break
-                    if self.get_xy(x+(deltax*delta), y+(deltay*delta))==piece:
-                        res.append((x+(deltax*delta), y+(deltay*delta)))
+            elif movetype == MOVETYPE_CAPTURE:
+                if piece.color == COLOR_WHITE:
+                    add_to_res_if_rightpiece(x+1, y+1, piece)
+                    add_to_res_if_rightpiece(x-1, y+1, piece)
+                else:
+                    add_to_res_if_rightpiece(x+1, y-1, piece)
+                    add_to_res_if_rightpiece(x-1, y-1, piece)
 
+        elif piece.nature == PIECENATURE_KNIGHT:
+            add_to_res_if_rightpiece(x-2, y-1, piece)
+            add_to_res_if_rightpiece(x-2, y+1, piece)
+            add_to_res_if_rightpiece(x+2, y-1, piece)
+            add_to_res_if_rightpiece(x+2, y+1, piece)
+            add_to_res_if_rightpiece(x-1, y-2, piece)
+            add_to_res_if_rightpiece(x-1, y+2, piece)
+            add_to_res_if_rightpiece(x+1, y-2, piece)
+            add_to_res_if_rightpiece(x+1, y+2, piece)
+        elif piece.nature in (PIECENATURE_BISHOP,
+                              PIECENATURE_ROOK,
+                              PIECENATURE_QUEEN,
+                              PIECENATURE_KING):
+            deltamax = moves[piece.nature][0]
+            for deltax, deltay in moves[piece.nature][1]:
+                for delta in range(1, deltamax):
+                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)) or \
+                       self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece) is False:
+                        # A piece (different from <piece>) was encountered on the diagonal/column/row or
+                        # we were about to go off the board:
+                        break
+                    if self.get_xy(x+(deltax*delta), y+(deltay*delta))==piece:
+                        res.append((x+(deltax*delta), y+(deltay*delta)))
         else:
             raise NotImplementedError
 
@@ -339,6 +361,7 @@ class ChessGame:
         "(?P<str_intersymb>[x|\-])?"
         "(?P<str_coord_x1>[a-h]|[1-8]|[a-h][1-8])"
         "(=(?P<str_promotion>[KQNRB]))?"
+        "(?P<str_chess>\+)?"
         "$")
     regex_simplemove_algebraicnotation2 = re.compile(
         "^"
@@ -347,6 +370,7 @@ class ChessGame:
         "(?P<str_intersymb>[x|\-])?"
         "(?P<str_coord_x1>[a-h][1-8]|[a-h]|[1-8])"
         "(=(?P<str_promotion>[KQNRB]))?"
+        "(?P<str_chess>\+)?"
         "$")
 
     strcoord2coord = {
@@ -378,15 +402,17 @@ class ChessGame:
     def __init__(self,
                  white_player=ChessPlayer(),
                  black_player=ChessPlayer(),
-                 chess_event=ChessEvent(),
+                 chess_event=ChessGameTags(),
                  gameboard=ChessBoard(),
-                 result=ChessResult()):
+                 result=ChessResult(),
+                 status=ChessGameStatus()):
         self.white_player = white_player
         self.black_player = black_player
         self.chess_event = chess_event
         self.gameboard = gameboard
         self.result = result
         self.listofmoves = ChessListOfMoves()
+        self.status = ChessGameStatus()
 
     def read_pgn(self,
                  pgnfilename):
@@ -430,7 +456,7 @@ class ChessGame:
     def read_pgn__simplemove(self,
                              str_simplemove):
         """simplemove: e6e4 // e6-e4 // e4"""
-        print("===", str_simplemove)
+        print("===", self.listofmoves.doublemove_number, str_simplemove)
         who_plays = self.listofmoves.who_plays()
 
         movetype = MOVETYPE_SINGLE  # default value, may be changed.
@@ -439,7 +465,23 @@ class ChessGame:
         piece2_coord_before = None
         piece2_coord_after = None
 
-        if str_simplemove == "O-O":
+        if str_simplemove in ("1/2-1/2", "0-1", "1-0", "*"):
+            # TODO: mettre à jour un flag "draw"
+            if str_simplemove == "1/2-1/2":
+                self.status.game_is_over = True
+                self.status.who_won = COLOR_NOCOLOR
+            elif str_simplemove == "0-1":
+                self.status.game_is_over = True
+                self.status.who_won = COLOR_BLACK
+            elif str_simplemove == "1-0":
+                self.status.game_is_over = True
+                self.status.who_won = COLOR_WHITE
+            elif str_simplemove == "*":
+                self.status.game_is_over = False
+                self.status.who_won = None
+
+            return
+        elif str_simplemove == "O-O":
             movetype = MOVETYPE_CASTLING_OO
             # king
             piece1_coord_before = self.gameboard.get_king_coord(color=who_plays)
@@ -461,6 +503,7 @@ class ChessGame:
                                     "str_intersymb": None,
                                     "str_coord_x1": None,
                                     "str_promotion": None,
+                                    "str_chess": None,
                                     }
 
             if _res := re.match(ChessGame.regex_simplemove_algebraicnotation,
@@ -469,6 +512,7 @@ class ChessGame:
                 res_algebricnotation["str_intersymb"] = _res.group("str_intersymb")
                 res_algebricnotation["str_coord_x1"] = _res.group("str_coord_x1")
                 res_algebricnotation["str_promotion"] = _res.group("str_promotion")
+                res_algebricnotation["str_chess"] = _res.group("str_chess")
             elif _res := re.match(ChessGame.regex_simplemove_algebraicnotation2,
                                   str_simplemove):
                 res_algebricnotation["str_piecenature"] = _res.group("str_piecenature")
@@ -476,8 +520,12 @@ class ChessGame:
                 res_algebricnotation["str_intersymb"] = _res.group("str_intersymb")
                 res_algebricnotation["str_coord_x1"] = _res.group("str_coord_x1")
                 res_algebricnotation["str_promotion"] = _res.group("str_promotion")
+                res_algebricnotation["str_chess"] = _res.group("str_chess")
             else:
                 raise NotImplementedError
+
+            if res_algebricnotation["str_intersymb"] == "x":
+                movetype = MOVETYPE_CAPTURE
 
             if res_algebricnotation["str_piecenature"] is not None:
                 # str_piecenature: 'Q' / 'K' / 'R' / 'B' / 'N'
@@ -488,15 +536,12 @@ class ChessGame:
 
             if res_algebricnotation["str_coord_x0"] is None:  # coord_x0 wasn't given (e.g. 'Rxb4')
                 piece1_coord_after = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x1"]]
-                if res_algebricnotation["str_intersymb"] == "x":
-                    raise NotImplementedError
-
             else:  # coord_x0 was given, at least partially (e.g. 'cxb5', 'Rbxb4')
                 piece1_coord_before = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x0"]]  # maybe partial (e.g. 'Rbb4')
                 piece1_coord_after = ChessGame.strcoord2coord[res_algebricnotation["str_coord_x1"]]
 
                 if piece1_coord_before[1] is None:
-                    # <piece1_coord_before> is only partially initialized: we only have the column, as in 'Qab2'
+                    # <piece1_coord_before> is only partially initialized: we only have the column, as in 'Qab2', 'cxb5'
                     for _x, _y in  self.gameboard.which_piece_could_go_to(
                             piece=ChessPiece(nature=piece1_piecenature,
                                              color=self.listofmoves.next_player),
@@ -519,28 +564,23 @@ class ChessGame:
                             piece1_coord_before[0] = _x  # we found the column
                             break  # let's pray there was no other solutions !
 
-                if res_algebricnotation["str_intersymb"] == "x":
-                    raise NotImplementedError
-
         # ---- piece1_coord_before has not yet been initialized ---------------
-        if movetype == MOVETYPE_SINGLE:
+        if piece1_coord_before is None:
             piece1_coord_before = self.gameboard.which_piece_could_go_to(
                 piece=ChessPiece(nature=piece1_piecenature,
                                  color=self.listofmoves.next_player),
                 coord_after=piece1_coord_after,
                 movetype=movetype)[0]  # [0] since there is only ONE POSSIBILITY: here, no ambiguous algebric string like 'Q2b2'
 
-        # ---- new_move, .listofmoves and .gameboard updates ------------------
+        # ---- new_move, update of .listofmoves and .gameboard ----------------
         new_move = ChessMove(movetype=movetype,
                              beforeafter_coord_piece1=(piece1_coord_before, piece1_coord_after),
                              beforeafter_coord_piece2=(piece2_coord_before, piece2_coord_after))
-        print(movetype)
         self.listofmoves.add_move(new_move)
         self.gameboard.update_by_playing_a_move(new_move)
         print(new_move)
-        print(self.listofmoves)
         print(self.gameboard.get_unicode())
-
+        #input()
 
 game = ChessGame()
 game.read_pgn("game1.pgn")
