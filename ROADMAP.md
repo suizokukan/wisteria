@@ -56,6 +56,12 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-192
+
+cwc_default.py knows how to read 6 different .pgn games.
+
+    * cwc_default.py knows how to read 6 different .pgn games (task-192)
+
 [DONE] task-191
 
 Working on cwc_default.py: the code can read one .pgn file.
