@@ -169,7 +169,7 @@ class ChessListOfMoves(list):
         self.doublemove_number = doublemove_number
 
     def __repr__(self):
-        return f"list of moves: {self.nextplayer=}; {self.doublemove_number=}; " + \
+        return f"list of moves: {self.next_player=}; {self.doublemove_number=}; " + \
             "; ".join(repr(move) for move in self)
 
     def add_move(self, move):
@@ -188,13 +188,16 @@ class ChessListOfMoves(list):
 
 class ChessGameStatus:
     def __init__(self,
-                 pieces = {COLOR_BLACK: {PIECENATURE_KING: {"has already moved": False,},},
-                           COLOR_WHITE: {PIECENATURE_KING: {"has already moved": False,},},
-                           },
+                 pieces = None,
                  game_is_over = False,
                  who_won = None):
 
-        self.pieces = pieces
+        if pieces is None:
+            self.pieces = {COLOR_BLACK: {PIECENATURE_KING: {"has already moved": False,},},
+                           COLOR_WHITE: {PIECENATURE_KING: {"has already moved": False,},},
+                           }
+        else:
+            self.pieces = pieces
         self.game_is_over = game_is_over  # (bool)
         self.who_won = who_won  # COLOR_NOCOLOR / COLOR_BLACK / COLOR_WHITE
 
@@ -247,9 +250,8 @@ class ChessBoard:
         self.board = {}  # cf .get_xy(), set_xy()
         self.pieces_status = ChessGameStatus()
 
-        for x in range(8):
-            for y in range(8):
-                self.set_xy(x, y, ChessPiece())
+        for xy in self.iter_through_all_squares():
+            self.set_xy(xy, ChessPiece())
 
         self.init_from_unicode_string("♜♞♝♛♚♝♞♜" \
                                       "♟♟♟♟♟♟♟♟" \
@@ -272,105 +274,103 @@ class ChessBoard:
     def get_king_coord(self,
                        color):
         """Return the (x, y) of the <color>(white/black) king"""
-        for x in range(0, 8):
-            for y in range(0, 8):
-                obj = self.get_xy(x, y)
-                if obj.nature == PIECENATURE_KING and \
-                   obj.color == color:
-                    return (x, y)
+        for xy in self.iter_through_all_squares():
+            obj = self.get_xy(xy)
+            if obj.nature == PIECENATURE_KING and \
+               obj.color == color:
+                return xy
         raise ChessError(f"No king (color: {color}): {self.get_unicode()}")
+
+    @staticmethod
+    def iter_through_all_squares():
+        for y in range(8):
+            for x in range(8):
+                yield x, y
 
     def get_unicode(self):
         res = []
         for y in range(8):
-            res.append("".join(self.get_xy(x, y).get_unicode() for x in range(8)))
+            res.append("".join(self.get_xy((x, y)).get_unicode() for x in range(8)))
         return "\n".join(res)
 
     def get_xy(self,
-               x,
-               y):
-        return self.board[(x, y)]
+               xy):
+        return self.board[xy[0], xy[1]]
 
     def init_from_unicode_string(self,
                               string):
         index = 0
-        for y in range(8):
-            for x in range(8):
-                self.set_xy(x, y, ChessPiece().init_from_unicode_string(string[index]))
-                index += 1
+        for xy in self.iter_through_all_squares():
+            self.set_xy(xy, ChessPiece().init_from_unicode_string(string[index]))
+            index += 1
 
     def is_empty_or_is_this_piece(self,
-                                  x,
-                                  y,
+                                  xy,
                                   piece):
         """return True if [x, y] is an empty square OR if [x, y] is <piece>"""
-        obj = self.get_xy(x, y)
+        obj = self.get_xy(xy)
         return obj.is_empty() or obj == piece
 
     def is_kingpinned(self,
-                      x0,
-                      y0,
+                      xy0,
                       xy1):
         """return True if board[x0, y0] moving to bord[x1, y1] is impossible since board[x0, y0] is a pinned piece."""
         """pinned: au sens fort du terme, c'est le roi qui est attaqué"""
-        x1, y1 = xy1
-
         # <piece> is the piece that may be pinned:
-        piece = self.get_xy(x0, y0)
+        piece = self.get_xy(xy0)
         # <king> is the king of <piece>:
         king = self.get_king_coord(piece.color)
-        len0 = len(self.who_attacks(king[0], king[1]))
+        len0 = len(self.who_attacks(king))
 
         # <board> is an alternative board with <piece> being moved to (x1, y1):
         _board = self.copy()
-        _board.set_xy_empty(x0, y0)
-        _board.set_xy(x1, y1, piece)
-        king = _board.get_king_coord(piece.color)  # the king may have just moved !
-        len1 = len(_board.who_attacks(king[0], king[1]))
+        _board.set_xy_empty(xy0)
+        _board.set_xy(xy1, piece)
+        # the king may have just moved, so we update his position:
+        king = _board.get_king_coord(piece.color)
+        len1 = len(_board.who_attacks(king))
 
         return len0 < len1
 
     def set_xy(self,
-               x,
-               y,
+               xy,
                value):
-        self.board[(x, y)] = value
+        self.board[xy[0], xy[1]] = value
 
     def set_xy_empty(self,
-                     x,
-                     y):
-        self.set_xy(x, y, ChessPiece())
+                     xy):
+        self.set_xy(xy, ChessPiece())
 
     def update_by_playing_a_move(self,
                                  move):
         """Modify <self> by playing a <move>."""
         if move.movetype in (MOVETYPE_SINGLE, MOVETYPE_CAPTURE):
             before, after = move.beforeafter_coord_piece1
-            piece = self.get_xy(before[0], before[1])
-            self.set_xy_empty(before[0], before[1])
+            piece = self.get_xy(before)
+            self.set_xy_empty(before)
             if not move.promotion:
-                self.set_xy(after[0], after[1], piece)
+                self.set_xy(after, piece)
             else:
-                self.set_xy(after[0], after[1], ChessPiece(nature=move.promotion,
-                                                           color=piece.color))
+                self.set_xy(after, ChessPiece(nature=move.promotion,
+                                              color=piece.color))
 
             if move.enpassant:
                 if piece.color == COLOR_WHITE:
-                    self.set_xy_empty(after[0], after[1]+1)
+                    self.set_xy_empty((after[0], after[1]+1))
                 else:
-                    self.set_xy_empty(after[0], after[1]-1)
+                    self.set_xy_empty((after[0], after[1]-1))
 
         elif move.movetype == MOVETYPE_CASTLING:
             # king:
             before, after = move.beforeafter_coord_piece1
-            piece = self.get_xy(before[0], before[1])
-            self.set_xy_empty(before[0], before[1])
-            self.set_xy(after[0], after[1], piece)
+            piece = self.get_xy(before)
+            self.set_xy_empty(before)
+            self.set_xy(after, piece)
             # rook:
             before, after = move.beforeafter_coord_piece2
-            piece = self.get_xy(before[0], before[1])
-            self.set_xy_empty(before[0], before[1])
-            self.set_xy(after[0], after[1], piece)
+            piece = self.get_xy(before)
+            self.set_xy_empty(before)
+            self.set_xy(after, piece)
         else:
             raise NotImplementedError
 
@@ -383,45 +383,44 @@ class ChessBoard:
 
         More than one result may be returned !
         """
+        def add_to_res_if_rightpiece_notpinned(_xy, coord_after, piece):
+            if not ChessBoard.xy_is_off_the_board(_xy) and \
+               self.get_xy(_xy) == piece and \
+               not self.is_kingpinned(_xy, coord_after):
+                res.append(_xy)
+
         x, y = coord_after
         res = []
-
-        def add_to_res_if_rightpiece_notpinned(x, y, coord_after, piece):
-            if 0 <= x <= 7 and \
-               0 <= y <= 7 and \
-               self.get_xy(x, y) == piece and \
-               not self.is_kingpinned(x, y, coord_after):
-                res.append((x, y))
 
         if piece.nature == PIECENATURE_PAWN:
             if movetype == MOVETYPE_SINGLE:
                 if piece.color == COLOR_WHITE:
-                    if y==4 and self.get_xy(x, y+1).is_empty():
-                        add_to_res_if_rightpiece_notpinned(x, y+2, coord_after, piece)
+                    if y==4 and self.get_xy((x, y+1)).is_empty():
+                        add_to_res_if_rightpiece_notpinned((x, y+2), coord_after, piece)
                     else:
-                        add_to_res_if_rightpiece_notpinned(x, y+1, coord_after, piece)
+                        add_to_res_if_rightpiece_notpinned((x, y+1), coord_after, piece)
                 else:  # piece.color == COLOR_BLACK
-                    if y==3 and self.get_xy(x, y-1).is_empty():
-                        add_to_res_if_rightpiece_notpinned(x, y-2, coord_after, piece)
+                    if y==3 and self.get_xy((x, y-1)).is_empty():
+                        add_to_res_if_rightpiece_notpinned((x, y-2), coord_after, piece)
                     else:
-                        add_to_res_if_rightpiece_notpinned(x, y-1, coord_after, piece)
+                        add_to_res_if_rightpiece_notpinned((x, y-1), coord_after, piece)
             elif movetype == MOVETYPE_CAPTURE:
                 if piece.color == COLOR_WHITE:
-                    add_to_res_if_rightpiece_notpinned(x+1, y+1, coord_after, piece)
-                    add_to_res_if_rightpiece_notpinned(x-1, y+1, coord_after, piece)
+                    add_to_res_if_rightpiece_notpinned((x+1, y+1), coord_after, piece)
+                    add_to_res_if_rightpiece_notpinned((x-1, y+1), coord_after, piece)
                 else:
-                    add_to_res_if_rightpiece_notpinned(x+1, y-1, coord_after, piece)
-                    add_to_res_if_rightpiece_notpinned(x-1, y-1, coord_after, piece)
+                    add_to_res_if_rightpiece_notpinned((x+1, y-1), coord_after, piece)
+                    add_to_res_if_rightpiece_notpinned((x-1, y-1), coord_after, piece)
 
         elif piece.nature == PIECENATURE_KNIGHT:
-            add_to_res_if_rightpiece_notpinned(x-2, y-1, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x-2, y+1, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x+2, y-1, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x+2, y+1, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x-1, y-2, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x-1, y+2, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x+1, y-2, coord_after, piece)
-            add_to_res_if_rightpiece_notpinned(x+1, y+2, coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x-2, y-1), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x-2, y+1), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x+2, y-1), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x+2, y+1), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x-1, y-2), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x-1, y+2), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x+1, y-2), coord_after, piece)
+            add_to_res_if_rightpiece_notpinned((x+1, y+2), coord_after, piece)
         elif piece.nature in (PIECENATURE_BISHOP,
                               PIECENATURE_ROOK,
                               PIECENATURE_QUEEN,
@@ -430,15 +429,15 @@ class ChessBoard:
             for deltax, deltay in ChessBoard.moves_descr[piece.nature][1]:
                 for delta in range(1, deltamax):
                     # ~~
-                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)):
+                    if ChessBoard.xy_is_off_the_board((x+(deltax*delta), y+(deltay*delta))):
                         # we have to try another (deltax, deltay)
                         break
-                    elif self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece):
-                        add_to_res_if_rightpiece_notpinned(x+(deltax*delta),
-                                                           y+(deltay*delta),
+                    if self.is_empty_or_is_this_piece((x+(deltax*delta), y+(deltay*delta)), piece):
+                        add_to_res_if_rightpiece_notpinned((x+(deltax*delta),
+                                                            y+(deltay*delta)),
                                                            coord_after,
                                                            piece)
-                        if self.get_xy(x+(deltax*delta), y+(deltay*delta)) == piece:
+                        if self.get_xy((x+(deltax*delta), y+(deltay*delta))) == piece:
                             break
                     else:
                         break
@@ -448,39 +447,39 @@ class ChessBoard:
         return res
 
     def who_attacks(self,
-                    x,
-                    y):
-        def add_to_res_if_rightpiece(x, y, piece):
-            if 0 <= x <= 7 and \
-               0 <= y <= 7 and \
-               self.get_xy(x, y)==piece:
-                res.append((x, y))
+                    xy):
+        def add_to_res_if_rightpiece(xy, piece):
+            if not ChessBoard.xy_is_off_the_board(xy) and \
+               self.get_xy(xy) == piece:
+                res.append(xy)
 
-        target = self.get_xy(x, y)
+        target = self.get_xy(xy)
         _color = invert_color(target.color)
         res = []
+
+        x, y = xy
 
         # ---- do a pawn attack (x, y) ? --------------------------------------
         piece = ChessPiece(color=_color,
                            nature=PIECENATURE_PAWN)
         if target.color == COLOR_WHITE:
-            add_to_res_if_rightpiece(x+1, y-1, piece)
-            add_to_res_if_rightpiece(x-1, y-1, piece)
+            add_to_res_if_rightpiece((x+1, y-1), piece)
+            add_to_res_if_rightpiece((x-1, y-1), piece)
         else:
-            add_to_res_if_rightpiece(x+1, y+1, piece)
-            add_to_res_if_rightpiece(x-1, y+1, piece)
+            add_to_res_if_rightpiece((x+1, y+1), piece)
+            add_to_res_if_rightpiece((x-1, y+1), piece)
 
         # ---- do a knight attack (x, y) ? ------------------------------------
         piece = ChessPiece(color=_color,
                            nature=PIECENATURE_KNIGHT)
-        add_to_res_if_rightpiece(x-2, y-1, piece)
-        add_to_res_if_rightpiece(x-2, y+1, piece)
-        add_to_res_if_rightpiece(x+2, y-1, piece)
-        add_to_res_if_rightpiece(x+2, y+1, piece)
-        add_to_res_if_rightpiece(x-1, y-2, piece)
-        add_to_res_if_rightpiece(x-1, y+2, piece)
-        add_to_res_if_rightpiece(x+1, y-2, piece)
-        add_to_res_if_rightpiece(x+1, y+2, piece)
+        add_to_res_if_rightpiece((x-2, y-1), piece)
+        add_to_res_if_rightpiece((x-2, y+1), piece)
+        add_to_res_if_rightpiece((x+2, y-1), piece)
+        add_to_res_if_rightpiece((x+2, y+1), piece)
+        add_to_res_if_rightpiece((x-1, y-2), piece)
+        add_to_res_if_rightpiece((x-1, y+2), piece)
+        add_to_res_if_rightpiece((x+1, y-2), piece)
+        add_to_res_if_rightpiece((x+1, y+2), piece)
 
         # ---- do a bishop/rook/queen/king attack (x, y) ? --------------------
         for nature in (PIECENATURE_BISHOP,
@@ -493,14 +492,14 @@ class ChessBoard:
             for deltax, deltay in ChessBoard.moves_descr[nature][1]:
                 for delta in range(1, deltamax):
                     # ~~
-                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)):
-                        # we have to try another (deltax, deltay)
+                    if ChessBoard.xy_is_off_the_board((x+(deltax*delta), y+(deltay*delta))):
+                        # we have to try another (deltax, deltay):
                         break
-                    elif self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece):
-                        add_to_res_if_rightpiece(x+(deltax*delta),
-                                                 y+(deltay*delta),
+                    if self.is_empty_or_is_this_piece((x+(deltax*delta), y+(deltay*delta)), piece):
+                        add_to_res_if_rightpiece((x+(deltax*delta),
+                                                  y+(deltay*delta)),
                                                  piece)
-                        if self.get_xy(x+(deltax*delta), y+(deltay*delta))==piece:
+                        if self.get_xy((x+(deltax*delta), y+(deltay*delta)))==piece:
                             break
                     else:
                         break
@@ -508,9 +507,8 @@ class ChessBoard:
         return res
 
     @staticmethod
-    def xy_is_off_the_board(x,
-                            y):
-        return not ((0 <= x <= 7) and (0 <= y <= 7))
+    def xy_is_off_the_board(xy):
+        return not ((0 <= xy[0] <= 7) and (0 <= xy[1] <= 7))  # TODO utiliser cette fonction partout où qqc de similaire apparaît dans le code
 
 
 class ChessGame:
@@ -581,10 +579,10 @@ class ChessGame:
 
     def __repr__(self):
         res = f"{self.white_player=}; {self.black_player=}; {self.chessgame_tags=}; " \
-            "{self.board=}; {self.result=}; {self.listofmoves=}; {self.status=}"
-
+            f"{self.board=}; {self.result=}; {self.listofmoves=}; {self.status=}"
         if self.errors:
             res += "errors: "+str(self.errors)
+        return res
 
     def read_pgn(self,
                  lines):
@@ -609,7 +607,7 @@ class ChessGame:
 
             self.read_pgn__listofmoves(str_listofmoves)
 
-        except (ChessError, TypeError) as error:
+        except ChessError as error:
             self.errors.append(error)
             success = False
 
@@ -688,6 +686,8 @@ class ChessGame:
         promotion = None  # if promotion, <promotion> will be the PIECENATURE_xxx constant
         enpassant=False
 
+        # ---- let's try to initialize <piece1_coord_before> and --------------
+        # ---- <piece1_coord_after> from <str_simplemove>. --------------------
         if str_simplemove == "O-O":
             movetype = MOVETYPE_CASTLING
             # king
@@ -788,7 +788,12 @@ class ChessGame:
             if res_algebricnotation["str_promotion"]:
                 promotion = ALGEBRICNOTATION2PIECENATURE[res_algebricnotation["str_promotion"]]
 
-        # ---- piece1_coord_before has not yet been initialized ---------------
+            if piece1_coord_after[0] is None or piece1_coord_after[1] is None:
+                raise ChessError(f"Can't understand this (simple) move: {str_simplemove} .")
+
+        # ---- special case: piece1_coord_before has not yet been initialized -
+        # It happens if <str_simplemove> contains an extra character to remove
+        # any ambiguity.
         if piece1_coord_before is None:
             _possibilities = self.board.which_piece_could_go_to(
                 piece=ChessPiece(nature=piece1_piecenature,
@@ -809,7 +814,7 @@ class ChessGame:
 
         # ---- en passant ? ---------------------------------------------------
         enpassant = movetype == MOVETYPE_CAPTURE and \
-            self.board.get_xy(piece1_coord_after[0], piece1_coord_after[1]).is_empty()
+            self.board.get_xy((piece1_coord_after[0], piece1_coord_after[1])).is_empty()
 
         # ---- new_move, update of .listofmoves and .board ----------------
         new_move = ChessMove(movetype=movetype,
@@ -829,7 +834,7 @@ class ChessGames(list):
         inside_header = False
         buff = []
 
-        with open(pgnfilename) as src:
+        with open(pgnfilename, encoding="utf-8") as src:
 
             for _line in src:
                 line = _line.strip()

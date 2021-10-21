@@ -56,6 +56,13 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-195
+
+(cwc_default.py) x, y > xy
+
+    * (cwc_default.py) x, y > xy
+    * tests: 9 tests ok out of 9.
+
 [DONE] task-194
 
 'gameboard' > 'board'; no more TODOs
