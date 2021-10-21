@@ -13,8 +13,6 @@ la partie coup après coup.
 (B) structure optimisée + datetime
 
 
-TODO:
-- (pas fait) init Player name
 - (pas fait) long alg. notation
 - (pas fait) status: white_king already moved
 
@@ -31,7 +29,6 @@ https://theweekinchess.com/a-year-of-pgn-game-files
     o  MOVETYPE_SINGLE, MOVETYPE_CAPTURE, MOVETYPE_CASTLING
 
     o  ChessError class
-    o  ChessPlayer class
     o  ChessGameTags class
     o  ChessPiece class
     o  ChessMove class
@@ -85,25 +82,6 @@ class ChessError(Exception):
 
         Unique error raised by the program.
     """
-
-
-class ChessPlayer:
-    """
-        ChessPlayer class
-
-        _______________________________________________________________________
-
-        o  __init__(self, name="unknown")
-        o  __repr__(self)
-    """
-    def __init__(self,
-                 name="unknown"):
-        """ChessPlayer.__init__()"""
-        self.name = name
-
-    def __repr__(self):
-        """ChessPlayer.__repr__()"""
-        return f"player: {self.name=}"
 
 
 class ChessGameTags(dict):
@@ -185,8 +163,8 @@ class ChessPiece:
         """ChessPiece.__repr__()"""
         return f"ChessPiece: {self.color=}; {self.nature=}"
 
-    def get_unicode(self):
-        """ChessPiece.get_unicode()"""
+    def human_repr(self):
+        """ChessPiece.human_repr()"""
         return ChessPiece.piece2unicode[self.nature, self.color]
 
     def init_from_unicode_string(self,
@@ -366,8 +344,8 @@ class ChessBoard:
         o  __repr__(self)
         o  copy(self)
         o  get_king_coord(self, color)
-        o  get_unicode(self)
         o  get_xy(self)
+        o  human_repr(self)
         o  init_from_unicode_string(self, string)
         o  is_empty_or_is_this_piece(self, xy, piece)
         o  is_kingpinned(self, xy0, xy1)
@@ -412,7 +390,7 @@ class ChessBoard:
 
     def __repr__(self):
         """ChessBoard.__repr__()"""
-        return self.get_unicode() + repr(self.pieces_status)
+        return self.human_repr() + repr(self.pieces_status)
 
     def copy(self):
         """ChessBoard.copy()"""
@@ -433,19 +411,19 @@ class ChessBoard:
             if obj.nature == PIECENATURE_KING and \
                obj.color == color:
                 return xy
-        raise ChessError(f"No king (color: {color}): {self.get_unicode()}")
-
-    def get_unicode(self):
-        """ChessBoard.get_unicode()"""
-        res = []
-        for y in range(8):
-            res.append("".join(self.get_xy((x, y)).get_unicode() for x in range(8)))
-        return "\n".join(res)
+        raise ChessError(f"No king (color: {color}): {self.human_repr()}")
 
     def get_xy(self,
                xy):
         """ChessBoard.get_xy()"""
         return self.board[xy[0], xy[1]]
+
+    def human_repr(self):
+        """ChessBoard.human_repr()"""
+        res = []
+        for y in range(8):
+            res.append("".join(self.get_xy((x, y)).human_repr() for x in range(8)))
+        return "\n".join(res)
 
     def init_from_unicode_string(self,
                                  string):
@@ -760,8 +738,6 @@ class ChessGame:
 
     def __init__(self):
         """ChessGame.__init__()"""
-        self.white_player = ChessPlayer()
-        self.black_player = ChessPlayer()
         self.chessgame_tags = ChessGameTags()
         self.board = ChessBoard()
         self.listofmoves = ChessListOfMoves()
@@ -771,7 +747,7 @@ class ChessGame:
 
     def __repr__(self):
         """ChessGame.__repr__()"""
-        res = f"{self.white_player=}; {self.black_player=}; {self.chessgame_tags=}; " \
+        res = f"{self.chessgame_tags=}; " \
             f"{self.board=}; {self.listofmoves=}; {self.status=}"
         if self.errors:
             res += "errors: "+str(self.errors)

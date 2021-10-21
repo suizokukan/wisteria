@@ -56,6 +56,21 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-198
+
+(cwc_default.py) 'get_unicode' > 'human_repr' (task-198);
+                 removed useless ChessPlayer class and 
+                 .white_player/.black_player attributes
+                 from ChessGame.
+
+    * (cwc_default.py) 'get_unicode' > 'human_repr' (task-198);
+                       removed useless ChessPlayer class and 
+                       .white_player/.black_player attributes
+                       from ChessGame (task-198)
+
+    * tests: 9 tests ok out of 9.
+    * Pylint: 10/10
+
 [DONE] task-197
 
 (cwc_default.py): docstrings.
