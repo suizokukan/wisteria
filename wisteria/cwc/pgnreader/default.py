@@ -284,27 +284,19 @@ class ChessGameStatus:
                                current_player)
     """
     def __init__(self,
-                 pieces=None,
                  game_is_over=False,
                  who_won=None):
         """ChessGameStatus.__init__()"""
-        if pieces is None:
-            self.pieces = {COLOR_BLACK: {PIECENATURE_KING: {"has already moved": False,},},
-                           COLOR_WHITE: {PIECENATURE_KING: {"has already moved": False,},},
-                           }
-        else:
-            self.pieces = pieces
         self.game_is_over = game_is_over  # (bool)
         self.who_won = who_won  # COLOR_NOCOLOR / COLOR_BLACK / COLOR_WHITE
 
     def __repr__(self):
         """ChessGameStatus.__repr__()"""
-        return f"{self.pieces=}; {self.game_is_over=}; {self.who_won=}"
+        return f"{self.game_is_over=}; {self.who_won=}"
 
     def copy(self):
         """ChessGameStatus.copy()"""
-        return ChessGameStatus(pieces=copy.deepcopy(self.pieces),
-                               game_is_over=self.game_is_over,
+        return ChessGameStatus(game_is_over=self.game_is_over,
                                who_won=self.who_won)
 
     def update_from_pgn_string(self,

@@ -56,6 +56,17 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-200
+
+(cwc_default.py): Removed useless .pieces attribute from ChessGameStatus.
+
+    * (cwc_default.py): Removed useless .pieces attribute from ChessGameStatus
+      (task-200)
+    * fixed a typo in ROADMAP.md about task-199
+    
+    * tests: 11 tests ok out of 11.
+    * Pylint: 10/10
+
 [DONE] task-199
 
 (cwc_default.py): two new tests (namely CWCPgnreader.test_game10pgn() and
@@ -67,7 +78,7 @@ What's next ?
                         reader knows how to handle long algebric notation
                         (task-199)
 
-    * tests: 9 tests ok out of 9.
+    * tests: 11 tests ok out of 11.
     * Pylint: 10/10
 
 [DONE] task-198
