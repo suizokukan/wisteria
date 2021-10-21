@@ -14,7 +14,8 @@ la partie coup après coup.
 
 
 TODO:
-- tests
+- tests & ChessGames.read_pgn() qui attrape les ChessError
+- tests: essayer avec un .pgn défectueux.
 - TODOs
 - x, y > xy
 - à propos de game6, une idée de test: http://blog.mathieuacher.com/LongestChessGame/
@@ -153,7 +154,7 @@ class ChessMove:
         return f"{self.movetype=}; " \
             f"{self.beforeafter_coord_piece1=}; {self.beforeafter_coord_piece2}; " \
             f"{self.beforeafter_advpiece=}; {self.promotion=}; {self.enpassant=}; " \
-            "{self.validmove=};"
+            f"{self.validmove=};"
 
 
 class ChessListOfMoves(list):
@@ -370,7 +371,6 @@ class ChessBoard:
         More than one result may be returned !
         """
         # TODO
-        # print("@@@", piece, coord_after, movetype)
         x, y = coord_after
         res = []  # there should be only one result; see the end of this function.
 
@@ -417,24 +417,19 @@ class ChessBoard:
             deltamax = ChessBoard.moves_descr[piece.nature][0]
             for deltax, deltay in ChessBoard.moves_descr[piece.nature][1]:
                 for delta in range(1, deltamax):
-                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)) or \
-                       self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece) is False:
-                        # A piece (different from <piece>) was encountered on the diagonal/column/row or
-                        # we were about to go off the board:
+                    # ~~
+                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)):
+                        # we have to try another (deltax, deltay)
                         break
-
-                    # TODO
-                    # if 0 <= x+(deltax*delta) <= 7 and \
-                    #    0 <= y+(deltay*delta) <= 7 and \
-                    #    not self.get_xy(x+(deltax*delta), y+(deltay*delta)).is_empty():
-                    #     print("~",
-                    #           x+(deltax*delta),
-                    #           y+(deltay*delta),
-                    #           self.is_kingpinned(x+(deltax*delta), y+(deltay*delta)))
-                    add_to_res_if_rightpiece_notpinned(x+(deltax*delta),
-                                                       y+(deltay*delta),
-                                                       coord_after,
-                                                       piece)
+                    elif self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece):
+                        add_to_res_if_rightpiece_notpinned(x+(deltax*delta),
+                                                           y+(deltay*delta),
+                                                           coord_after,
+                                                           piece)
+                        if self.get_xy(x+(deltax*delta), y+(deltay*delta)) == piece:
+                            break
+                    else:
+                        break
         else:
             raise NotImplementedError
 
@@ -485,16 +480,19 @@ class ChessBoard:
             deltamax = ChessBoard.moves_descr[nature][0]
             for deltax, deltay in ChessBoard.moves_descr[nature][1]:
                 for delta in range(1, deltamax):
-                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)) or \
-                       self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece) is False:
-                        # A piece (different from <piece>) was encountered on the diagonal/column/row or
-                        # we were about to go off the board:
+                    # ~~
+                    if ChessBoard.xy_is_off_the_board(x+(deltax*delta), y+(deltay*delta)):
+                        # we have to try another (deltax, deltay)
                         break
-                    add_to_res_if_rightpiece(x+(deltax*delta), y+(deltay*delta), piece)
+                    elif self.is_empty_or_is_this_piece(x+(deltax*delta), y+(deltay*delta), piece):
+                        add_to_res_if_rightpiece(x+(deltax*delta),
+                                                 y+(deltay*delta),
+                                                 piece)
+                        if self.get_xy(x+(deltax*delta), y+(deltay*delta))==piece:
+                            break
+                    else:
+                        break
 
-        # TODO
-        # print("!who_attacks", x, y, target, res, _color)
-        # print(self.get_unicode())
         return res
 
     @staticmethod
@@ -558,29 +556,25 @@ class ChessGame:
         }
     coord2strcoord = {value: key for key, value in strcoord2coord.items()}
 
-    def __init__(self,
-                 white_player=ChessPlayer(),
-                 black_player=ChessPlayer(),
-                 chess_event=ChessGameTags(),
-                 gameboard=ChessBoard(),
-                 result=ChessResult(),
-                 listofmoves=ChessListOfMoves(),
-                 status=ChessGameStatus()):
-        self.white_player = white_player
-        self.black_player = black_player
-        self.chess_event = chess_event
-        self.gameboard = gameboard
-        self.result = result
-        self.listofmoves = listofmoves
-        self.status = status
+    def __init__(self):
+        self.white_player = ChessPlayer()
+        self.black_player = ChessPlayer()
+        self.chess_event = ChessGameTags()
+        self.gameboard = ChessBoard()
+        self.result = ChessResult()
+        self.listofmoves = ChessListOfMoves()
+        self.status = ChessGameStatus()
+
+        self.errors = []
 
     def read_pgn(self,
-                 pgnfilename):
-        self.listofmoves = ChessListOfMoves()
+                 lines):
+        success = True
 
-        str_listofmoves = []
-        with open(pgnfilename) as src:
-            for _line in src:
+        self.listofmoves = ChessListOfMoves()
+        try:
+            str_listofmoves = []
+            for _line in lines:
                 line = _line.strip()
 
                 if line:
@@ -592,14 +586,19 @@ class ChessGame:
                     if regex_pgn__found is False:
                         str_listofmoves.append(line)
 
-        str_listofmoves = " ".join(str_listofmoves)
+            str_listofmoves = " ".join(str_listofmoves)
 
-        self.read_pgn__listofmoves(str_listofmoves)
+            self.read_pgn__listofmoves(str_listofmoves)
+
+        except (ChessError, TypeError) as error:
+            self.errors.append(error)
+            success = False
+
+        return success
 
     def read_pgn__doublemove(self,
                              str_doublemove):
         """str_doublemove: e4 e5"""
-
         # " e.p." with space(s) must be rewritten "e.p." (without space)
         if re.search(ChessGame.regex_pgn_listofmoves['en passant'], str_doublemove):
             str_doublemove = re.sub(ChessGame.regex_pgn_listofmoves['en passant'],
@@ -771,6 +770,8 @@ class ChessGame:
                     f"Can't interpret (simple) move '{str_simplemove}' for the current board. "
                     f"No legal move matches this string. "
                     f"self={repr(self)}")
+            if len(_possibilities) > 1:
+                raise ChessError("!!")  # TODO: too much possibilites > ambiguity
             piece1_coord_before = _possibilities[0]  # [0] since there is only ONE POSSIBILITY: here, no ambiguous algebric string like 'Q2b2'
 
         # ---- en passant ? ---------------------------------------------------
@@ -785,10 +786,51 @@ class ChessGame:
                              enpassant=enpassant)
         self.listofmoves.add_move(new_move)
         self.gameboard.update_by_playing_a_move(new_move)
-        # TODO
-        # print(new_move)
-        # print(self.gameboard.get_unicode())
 
+class ChessGames(list):
+    def read_pgn(self,
+                 pgnfilename):
+        success = True
 
-game = ChessGame()
-game.read_pgn("game6.pgn")
+        inside_header = False
+        buff = []
+
+        with open(pgnfilename) as src:
+
+            for _line in src:
+                line = _line.strip()
+
+                if line:
+                    if inside_header:
+                        if re.search(ChessGame.regex_pgn_tags, line) and not line.startswith("1. "):
+                            # we're still in the header.
+                            pass
+                        else:
+                            # we're not in the header anymore.
+                            inside_header = False
+                    else:
+                        if re.search(ChessGame.regex_pgn_tags, line) and not line.startswith("1. "):
+                            # we weren't in the header but <line> is a header line.
+                            if buff:
+                                game = ChessGame()
+                                success = success and game.read_pgn(buff)
+                                self.append(game)
+                            buff = []
+                            inside_header = True
+                        else:
+                            # we're still reading data lines that are not in a header.
+                            if line.startswith("1. "):
+                                if buff:
+                                    game = ChessGame()
+                                    success = success and game.read_pgn(buff)
+                                    self.append(game)
+                                buff = []
+
+                    buff.append(line)
+
+        if buff:
+            game = ChessGame()
+            success = success and game.read_pgn(buff)
+            self.append(game)
+
+        return success
