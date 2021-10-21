@@ -56,6 +56,14 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-196
+
+(cwc_default.py): no more NotImplemetedError; docstrings; no more ChessResult class
+
+    * (cwc_default.py): no more NotImplemetedError; docstrings; 
+                        no more ChessResult class (task-196)
+    * tests: 9 tests ok out of 9.
+
 [DONE] task-195
 
 (cwc_default.py) x, y > xy
