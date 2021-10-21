@@ -57,8 +57,8 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game1.pgn"))
-        self.assertEqual(games[0].chess_event["Black"], "Spassky, Boris V.")
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].chessgame_tags["Black"], "Spassky, Boris V.")
+        self.assertEqual(games[0].board.get_unicode(),
                          "________\n"
                          "________\n"
                          "____♖_♟_\n"
@@ -77,7 +77,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game2.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "_______♕\n"
                          "_♝_♚♝___\n"
                          "♟__♟♟___\n"
@@ -93,7 +93,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game3.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "________\n"
                          "__♟__♟__\n"
                          "_♟_____♟\n"
@@ -109,7 +109,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game4.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "♝_♜_♛♜♞_\n"
                          "______♚_\n"
                          "__♟_♟♞_♟\n"
@@ -131,7 +131,7 @@ class CWCPgnreader(unittest.TestCase):
 
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game5.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "___♚____\n"
                          "___♕____\n"
                          "____♔___\n"
@@ -147,7 +147,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game6.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "________\n"
                          "__♟__♟__\n"
                          "_♟_____♟\n"
@@ -157,7 +157,7 @@ class CWCPgnreader(unittest.TestCase):
                          "_______♟\n"
                          "________")
 
-        self.assertEqual(games[1].gameboard.get_unicode(),
+        self.assertEqual(games[1].board.get_unicode(),
                          "♝_♜_♛♜♞_\n"
                          "______♚_\n"
                          "__♟_♟♞_♟\n"
@@ -173,7 +173,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game7.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "________\n"
                          "__♟__♟__\n"
                          "_♟_____♟\n"
@@ -183,7 +183,7 @@ class CWCPgnreader(unittest.TestCase):
                          "_______♟\n"
                          "________")
 
-        self.assertEqual(games[1].gameboard.get_unicode(),
+        self.assertEqual(games[1].board.get_unicode(),
                          "♝_♜_♛♜♞_\n"
                          "______♚_\n"
                          "__♟_♟♞_♟\n"
@@ -199,7 +199,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game8.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "________\n"
                          "__♟__♟__\n"
                          "_♟_____♟\n"
@@ -209,7 +209,7 @@ class CWCPgnreader(unittest.TestCase):
                          "_______♟\n"
                          "________")
 
-        self.assertEqual(games[1].gameboard.get_unicode(),
+        self.assertEqual(games[1].board.get_unicode(),
                          "♝_♜_♛♜♞_\n"
                          "______♚_\n"
                          "__♟_♟♞_♟\n"
@@ -225,7 +225,7 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn("tests/game9.pgn"))
-        self.assertEqual(games[0].gameboard.get_unicode(),
+        self.assertEqual(games[0].board.get_unicode(),
                          "________\n"
                          "__♟__♟__\n"
                          "_♟_____♟\n"
@@ -235,7 +235,7 @@ class CWCPgnreader(unittest.TestCase):
                          "_______♟\n"
                          "________")
 
-        self.assertEqual(games[1].gameboard.get_unicode(),
+        self.assertEqual(games[1].board.get_unicode(),
                          "♝_♜_♛♜♞_\n"
                          "______♚_\n"
                          "__♟_♟♞_♟\n"

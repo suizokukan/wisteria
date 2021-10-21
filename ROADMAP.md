@@ -56,6 +56,13 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-194
+
+'gameboard' > 'board'; no more TODOs
+
+    * 'gameboard' > 'board'; no more TODOs (task-194)
+    * tests: 9 tests ok out of 9.
+
 [DONE] task-193
 
 tests; new directories: tests/, wisteria/cwc/pgnreader; new script: tests.sh
