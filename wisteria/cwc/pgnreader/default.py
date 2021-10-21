@@ -14,7 +14,6 @@ la partie coup après coup.
 
 
 TODO:
-- il manque des docstrings
 - (pas fait) init Player name
 - (pas fait) long alg. notation
 - (pas fait) status: white_king already moved
@@ -55,6 +54,7 @@ COLOR_NOCOLOR = 0
 COLOR_WHITE = 1
 COLOR_BLACK = 2
 def invert_color(color):
+    """invert_color(color)"""
     if color == COLOR_WHITE:
         return COLOR_BLACK
     return COLOR_WHITE
@@ -685,6 +685,25 @@ class ChessBoard:
 
 
 class ChessGame:
+    """
+        ChessGame class
+
+
+        _______________________________________________________________________
+
+        o  regex_pgn_tags
+        o  regex_pgn_listofmoves
+        o  regex_simplemove_algebraicnotation
+        o  regex_simplemove_algebraicnotation2
+        o  strcoord2coord / coord2strcoord
+
+        o  __init__(self)
+        o  __repr__(self)
+        o  read_pgn(self, lines)
+        o  read_pgn__doublemove(self, str_doublemove)
+        o  read_pgn__listofmoves(self, src)
+        o  read_pgn__simplemove(self, str_simplemove)
+    """
     # e.g. [Event "F/S Return Match"]
     regex_pgn_tags = re.compile(r'^\s*\[(?P<key>.+)\s+\"(?P<value>.+)\"\]$')
 
@@ -740,6 +759,7 @@ class ChessGame:
     coord2strcoord = {value: key for key, value in strcoord2coord.items()}
 
     def __init__(self):
+        """ChessGame.__init__()"""
         self.white_player = ChessPlayer()
         self.black_player = ChessPlayer()
         self.chessgame_tags = ChessGameTags()
@@ -750,6 +770,7 @@ class ChessGame:
         self.errors = []
 
     def __repr__(self):
+        """ChessGame.__repr__()"""
         res = f"{self.white_player=}; {self.black_player=}; {self.chessgame_tags=}; " \
             f"{self.board=}; {self.listofmoves=}; {self.status=}"
         if self.errors:
@@ -758,6 +779,7 @@ class ChessGame:
 
     def read_pgn(self,
                  lines):
+        """ChessGame.read_pgn()"""
         success = True
 
         self.listofmoves = ChessListOfMoves()
@@ -788,7 +810,7 @@ class ChessGame:
 
     def read_pgn__doublemove(self,
                              str_doublemove):
-        """str_doublemove: e4 e5"""
+        """ChessGame.read_pgn__doublemove()"""
         # " e.p." with space(s) must be rewritten "e.p." (without space)
         if re.search(ChessGame.regex_pgn_listofmoves['en passant'], str_doublemove):
             str_doublemove = re.sub(ChessGame.regex_pgn_listofmoves['en passant'],
@@ -818,7 +840,11 @@ class ChessGame:
 
     def read_pgn__listofmoves(self,
                               src):
-        """src: str_listofmoves"""
+        """
+            ChessGame.read_pgn__listofmoves()
+
+            src: (list of str)listofmoves
+        """
         doublemove_number = 0
         for _str_doublemove in re.split(ChessGame.regex_pgn_listofmoves['doublemovenumber'], src):
             str_doublemove = _str_doublemove.strip()
@@ -1009,8 +1035,17 @@ class ChessGame:
 
 
 class ChessGames(list):
+    """
+        ChessGames class
+
+
+        _______________________________________________________________________
+
+        o  read_pgn(self, pgnfilename)
+    """
     def read_pgn(self,
                  pgnfilename):
+        """ChessGames.read_pgn()"""
         success = True
 
         inside_header = False

@@ -56,6 +56,15 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-197
+
+(cwc_default.py): docstrings.
+
+    * (cwc_default.py): docstrings (task-197)
+
+    * tests: 9 tests ok out of 9.
+    * Pylint: 10/10
+
 [DONE] task-196
 
 (cwc_default.py): no more NotImplemetedError; docstrings; no more ChessResult class
