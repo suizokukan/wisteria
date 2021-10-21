@@ -56,6 +56,20 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-199
+
+(cwc_default.py): two new tests (namely CWCPgnreader.test_game10pgn() and
+                  CWCPgnreader.test_game11pgn()) to check if the PGN
+                  reader knows how to handle long algebric notation.
+
+    * (cwc_default.py): two new tests (namely CWCPgnreader.test_game10pgn() and
+                        CWCPgnreader.test_game11pgn()) to check if the PGN
+                        reader knows how to handle long algebric notation
+                        (task-199)
+
+    * tests: 9 tests ok out of 9.
+    * Pylint: 10/10
+
 [DONE] task-198
 
 (cwc_default.py) 'get_unicode' > 'human_repr' (task-198);

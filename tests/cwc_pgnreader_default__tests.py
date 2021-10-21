@@ -49,6 +49,8 @@ class CWCPgnreader(unittest.TestCase):
         o  test_game7pgn(self)
         o  test_game8pgn(self)
         o  test_game9pgn(self)
+        o  test_game10pgn(self)
+        o  test_game11pgn(self)
     """
 
     def test_game1pgn(self):
@@ -244,3 +246,35 @@ class CWCPgnreader(unittest.TestCase):
                          "_♕___♙♗_\n"
                          "♙♙♗___♙♙\n"
                          "___♖♖_♔_")
+
+    def test_game10pgn(self):
+        """
+            CWCPgnreader.test_game10pgn()
+        """
+        games = ChessGames()
+        self.assertTrue(games.read_pgn("tests/game10.pgn"))
+        self.assertEqual(games[0].board.human_repr(),
+                         "♜_♝♛_♜♚_\n"
+                         "___♞♝♟♟♟\n"
+                         "__♟♟_♞__\n"
+                         "_♟__♟___\n"
+                         "___♙♙___\n"
+                         "_♗___♘_♙\n"
+                         "♙♙___♙♙_\n"
+                         "♖♘♗♕♖_♔_")
+
+    def test_game11pgn(self):
+        """
+            CWCPgnreader.test_game11pgn()
+        """
+        games = ChessGames()
+        self.assertTrue(games.read_pgn("tests/game11.pgn"))
+        self.assertEqual(games[0].board.human_repr(),
+                         "♜_♝♛_♜♚_\n"
+                         "___♞♝♟♟♟\n"
+                         "__♟♟_♞__\n"
+                         "_♟__♟___\n"
+                         "___♙♙___\n"
+                         "_♗___♘_♙\n"
+                         "♙♙___♙♙_\n"
+                         "♖♘♗♕♖_♔_")

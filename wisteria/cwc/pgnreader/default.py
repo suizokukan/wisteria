@@ -13,7 +13,6 @@ la partie coup après coup.
 (B) structure optimisée + datetime
 
 
-- (pas fait) long alg. notation
 - (pas fait) status: white_king already moved
 
 https://fr.chesstempo.com/pgn-viewer/
