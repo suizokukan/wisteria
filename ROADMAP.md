@@ -56,6 +56,18 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-206
+
+(cwc_default.py): game result is now added to .pgn files
+
+    * (cwc_default.py) game result is now added to .pgn files (task-206)
+    * (cwc_default.py) read_pgn__simplemove: removed useless lines of code
+      (task-206)
+    * (cwc_default.py) documentation (task-206)
+
+    * tests: 12 tests ok out of 12.
+    * Pylint: 10/10
+
 [DONE] task-205
 
 (cwc_default.py): removed useless ChessMove.valid attribute

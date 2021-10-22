@@ -9,14 +9,10 @@ L'idée est de voir comment sérialiser un objet aussi complexe qu'une partie d'
 de sauver la partie sous un double format: PNG + dump du serializer. Il faut pouvoir rejouer
 la partie coup après coup.
 
-(A) pas de structure optimisée (array), pas de datetime.
-(B) structure optimisée + datetime
-
 
 TODO:
-- dans les .pgn n'est pas écrit le résult (1-0, *, ...)
 - dans ListOfMoves, je pense qu'il n'est pas nécessaire de stocker doublemove_number & who_plays
-- supprimer .valid
+- true doc
 
 https://fr.chesstempo.com/pgn-viewer/
 https://theweekinchess.com/a-year-of-pgn-game-files
@@ -196,8 +192,7 @@ class ChessMove:
                  beforeafter_coord_piece2=None,
                  movetype=MOVETYPE_SINGLE,
                  promotion=None,
-                 enpassant=False,
-                 validmove=True)
+                 enpassant=False)
         o __repr__(self)
     """
     def __init__(self,
@@ -206,19 +201,20 @@ class ChessMove:
                  movetype=MOVETYPE_SINGLE,
                  promotion=None,
                  enpassant=False,
-                 validmove=True):
+                 str_game_result=None):
         """ChessMove.__init__()"""
         self.movetype = movetype
         self.beforeafter_coord_piece1 = beforeafter_coord_piece1
         self.beforeafter_coord_piece2 = beforeafter_coord_piece2
         self.promotion = promotion
         self.enpassant = enpassant
+        self.str_game_result = str_game_result
 
     def __repr__(self):
         """ChessMove.__repr__()"""
         return f"{self.movetype=}; " \
             f"{self.beforeafter_coord_piece1=}; {self.beforeafter_coord_piece2}; " \
-            f"{self.promotion=}; {self.enpassant=}; "
+            f"{self.promotion=}; {self.enpassant=}; {self.str_game_result=};"
 
 
 class ChessListOfMoves(list):
@@ -684,6 +680,7 @@ class ChessGame:
         o  read_pgn__simplemove(self, str_simplemove)
         o  write_pgn(self)
         o  write_pgn__listofmoves(self)
+        o  write_pgn__simplemove(self, move)
     """
     # e.g. [Event "F/S Return Match"]
     regex_pgn_tags = re.compile(r'^\s*\[(?P<key>.+)\s+\"(?P<value>.+)\"\]$')
@@ -834,8 +831,15 @@ class ChessGame:
     def read_pgn__simplemove(self,
                              str_simplemove):
         """simplemove: e6e4 // e6-e4 // e4"""
+
+        # ---------------------------------------------------------------------
+        # ---- let's remove from <str_simplemove> the game result. ------------
+        # ---------------------------------------------------------------------
+        str_game_result = None
         if res__game_result := re.search(ChessGame.regex_pgn_listofmoves['game_result'],
                                          str_simplemove):
+            str_game_result = res__game_result.group('game_result')
+
             # let's remove the '_' character added by read_pgn__doublemove() before the game result:
             str_simplemove = str_simplemove.replace('_', '')
             # we can now remove the game result suffix (e.g. '1-0')
@@ -848,11 +852,8 @@ class ChessGame:
 
         str_simplemove = str_simplemove.strip()
 
-        if not str_simplemove:
-            return
-
         # ---------------------------------------------------------------------
-        # ---- normal case: str_simplemove describes a move -------------------
+        # ---- let's extract from str_simplemove the move details -------------
         # ---------------------------------------------------------------------
 
         # default values:
@@ -1010,7 +1011,8 @@ class ChessGame:
                              beforeafter_coord_piece1=(piece1_coord_before, piece1_coord_after),
                              beforeafter_coord_piece2=(piece2_coord_before, piece2_coord_after),
                              promotion=promotion,
-                             enpassant=enpassant)
+                             enpassant=enpassant,
+                             str_game_result=str_game_result)
         self.listofmoves.add_move(new_move)
         self.board.update_by_playing_a_move(new_move)
 
@@ -1042,6 +1044,10 @@ class ChessGame:
                 # black plays:
                 doublemove_str += " " + self.write_pgn__simplemove(simplemove)
                 res.append(doublemove_str)
+                doublemove_str = ""
+
+        if doublemove_str:
+            res.append(doublemove_str)
 
         return res
 
@@ -1108,6 +1114,9 @@ class ChessGame:
 
         if move.enpassant:
             res += " e.p."
+
+        if move.str_game_result:
+            res += " " + move.str_game_result
 
         return res
 
