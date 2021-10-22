@@ -56,6 +56,16 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-203
+
+(cwc_default.py): pylinted the code
+
+    * (cwc_default.py): pylinted the code (task-203)
+    * (pylintrc) max-public-methods=20 > max-public-methods=30 (task-203)
+
+    * tests: 22 tests ok out of 22.
+    * Pylint: 10/10
+
 [DONE] task-202
 
 (cwc_default.py): new tests (CWCPgnreader.test_readwrite_*)

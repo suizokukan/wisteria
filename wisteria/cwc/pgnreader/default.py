@@ -52,11 +52,14 @@ import re
 COLOR_NOCOLOR = 0
 COLOR_WHITE = 1
 COLOR_BLACK = 2
+
+
 def invert_color(color):
     """invert_color(color)"""
     if color == COLOR_WHITE:
         return COLOR_BLACK
     return COLOR_WHITE
+
 
 PIECENATURE_NOPIECE = 0
 PIECENATURE_PAWN = 1
@@ -65,7 +68,7 @@ PIECENATURE_KNIGHT = 3
 PIECENATURE_BISHOP = 4
 PIECENATURE_QUEEN = 5
 PIECENATURE_KING = 6
-PIECENATURE2ALGEBRICNOTATION =  {
+PIECENATURE2ALGEBRICNOTATION = {
     PIECENATURE_ROOK: 'R',
     PIECENATURE_KNIGHT: 'N',
     PIECENATURE_BISHOP: 'B',
@@ -77,6 +80,7 @@ MOVETYPE_SINGLE = 0
 MOVETYPE_CAPTURE = 1
 MOVETYPE_CASTLING_OO = 2
 MOVETYPE_CASTLING_OOO = 3
+
 
 class ChessError(Exception):
     """
@@ -177,7 +181,7 @@ class ChessPiece:
 
     def is_empty(self):
         """ChessPiece.is_empty()"""
-        return self.color==COLOR_NOCOLOR and self.nature==PIECENATURE_NOPIECE
+        return self.color == COLOR_NOCOLOR and self.nature == PIECENATURE_NOPIECE
 
 
 class ChessMove:
@@ -466,13 +470,13 @@ class ChessBoard:
         for xy in self.iter_through_all_squares():
             self.set_xy(xy, ChessPiece())
 
-        self.init_from_unicode_string("♜♞♝♛♚♝♞♜" \
-                                      "♟♟♟♟♟♟♟♟" \
-                                      "________" \
-                                      "________" \
-                                      "________" \
-                                      "________" \
-                                      "♙♙♙♙♙♙♙♙" \
+        self.init_from_unicode_string("♜♞♝♛♚♝♞♜"
+                                      "♟♟♟♟♟♟♟♟"
+                                      "________"
+                                      "________"
+                                      "________"
+                                      "________"
+                                      "♙♙♙♙♙♙♙♙"
                                       "♖♘♗♕♔♗♘♖")
 
     def set_xy(self,
@@ -544,12 +548,12 @@ class ChessBoard:
         if piece.nature == PIECENATURE_PAWN:
             if movetype == MOVETYPE_SINGLE:
                 if piece.color == COLOR_WHITE:
-                    if y==4 and self.get_xy((x, y+1)).is_empty():
+                    if y == 4 and self.get_xy((x, y+1)).is_empty():
                         add_to_res_if_rightpiece_notpinned((x, y+2), coord_after, piece)
                     else:
                         add_to_res_if_rightpiece_notpinned((x, y+1), coord_after, piece)
                 else:  # piece.color == COLOR_BLACK
-                    if y==3 and self.get_xy((x, y-1)).is_empty():
+                    if y == 3 and self.get_xy((x, y-1)).is_empty():
                         add_to_res_if_rightpiece_notpinned((x, y-2), coord_after, piece)
                     else:
                         add_to_res_if_rightpiece_notpinned((x, y-1), coord_after, piece)
@@ -648,7 +652,7 @@ class ChessBoard:
                         add_to_res_if_rightpiece((x+(deltax*delta),
                                                   y+(deltay*delta)),
                                                  piece)
-                        if self.get_xy((x+(deltax*delta), y+(deltay*delta)))==piece:
+                        if self.get_xy((x+(deltax*delta), y+(deltay*delta))) == piece:
                             break
                     else:
                         break
@@ -798,7 +802,7 @@ class ChessGame:
         # we have to attach the last part using the '_' character:
         #   "Kd5 Kxb3_0-1"
         if res__game_result := re.search(ChessGame.regex_pgn_listofmoves['game_result'],
-                                        str_doublemove):
+                                         str_doublemove):
             self.status.update_from_pgn_string(status_string=res__game_result.group('game_result'),
                                                current_player=self.listofmoves.next_player)
             str_doublemove = re.sub(
@@ -863,7 +867,7 @@ class ChessGame:
         piece2_coord_before = None
         piece2_coord_after = None
         promotion = None  # if promotion, <promotion> will be the PIECENATURE_xxx constant
-        enpassant=False
+        enpassant = False
 
         # ---- let's try to initialize <piece1_coord_before> and --------------
         # ---- <piece1_coord_after> from <str_simplemove>. --------------------
@@ -935,7 +939,7 @@ class ChessGame:
                 if piece1_coord_before[1] is None:
                     # <piece1_coord_before> is only partially initialized: we only have the column,
                     # as in 'Qab2', 'cxb5'
-                    for _x, _y in  self.board.which_piece_could_go_to(
+                    for _x, _y in self.board.which_piece_could_go_to(
                             piece=ChessPiece(nature=piece1_piecenature,
                                              color=self.listofmoves.next_player),
                             coord_after=piece1_coord_after,
@@ -955,7 +959,7 @@ class ChessGame:
                 elif piece1_coord_before[0] is None:
                     # <piece1_coord_before> is only partially initialized: we only have the row,
                     # as in 'Q2b2'.
-                    for _x, _y in  self.board.which_piece_could_go_to(
+                    for _x, _y in self.board.which_piece_could_go_to(
                             piece=ChessPiece(nature=piece1_piecenature,
                                              color=self.listofmoves.next_player),
                             coord_after=piece1_coord_after,
@@ -1051,8 +1055,8 @@ class ChessGame:
         _possi = None
         if move.movetype in (MOVETYPE_SINGLE, MOVETYPE_CAPTURE):
             _possi = self.board.which_piece_could_go_to(piece1,
-                                                                move.beforeafter_coord_piece1[1],
-                                                                move.movetype)
+                                                        move.beforeafter_coord_piece1[1],
+                                                        move.movetype)
 
         self.board.update_by_playing_a_move(move)
 
@@ -1108,6 +1112,7 @@ class ChessGame:
             res += " e.p."
 
         return res
+
 
 class ChessGames(list):
     """
@@ -1168,7 +1173,7 @@ class ChessGames(list):
         return success
 
     def write_pgn(self,
-                 pgnfilename):
+                  pgnfilename):
         """ChessGames.write_pgn()"""
         with open(pgnfilename, "w", encoding="utf-8") as dest:
             for game in self:

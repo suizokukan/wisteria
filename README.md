@@ -180,6 +180,7 @@ max-statements=50 > max-statements=120
 max-locals=15 > max-locals=20
 max-branches=12 > max-branches=40
 max-args=5 > max-args=6
+max-public-methods=20 > max-public-methods=30
 ```
 
 Dependencies
