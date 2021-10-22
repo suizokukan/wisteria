@@ -1,21 +1,42 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+################################################################################
+#    Wisteria Copyright (C) 2021 suizokukan
+#    Contact: suizokukan _A.T._ orange dot fr
+#
+#    This file is part of Wisteria.
+#    Wisteria is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Wisteria is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 """
-PGN reader/writer; regular chess only; no sophisticated rules (castling, en passant: ok)
+    Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
 
-La validation d'un coup n'est jamais vérifiée; elle est supposée vraie.
-Les données autres que la liste des coups, event, noms des joueurs et date sont
-complètement laissés de côté
+    Default cwc/pgnreader+writer.
 
-L'idée est de voir comment sérialiser un objet aussi complexe qu'une partie d'échecs, permettant
-de sauver la partie sous un double format: PNG + dump du serializer. Il faut pouvoir rejouer
-la partie coup après coup.
+    PGN reader/writer; regular chess only; no sophisticated rules (but castling, en passant and
+    promotion are known). This is a very simple version of what a real PGN reader/writer might
+    look like: no optimized storage, no move validation.
 
+    With this module you can read a .pgn file, play the game move by move and write the game in
+    another file. PGN-files containing several games are correctly read and written.
 
-TODO:
-- dans ListOfMoves, je pense qu'il n'est pas nécessaire de stocker doublemove_number & who_plays
-- true doc
+    No move validation: a move is always assumed to be valid.
+    Data other than the moves (events, player names, dates) are
+    stored but are not used.
 
-https://fr.chesstempo.com/pgn-viewer/
-https://theweekinchess.com/a-year-of-pgn-game-files
+    A good PGN viewer, allowing to show giant games (cf tests/game5.pgn):
+            https://fr.chesstempo.com/pgn-viewer/
+
 
     ___________________________________________________________________________
 
