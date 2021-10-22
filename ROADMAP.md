@@ -56,6 +56,15 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-204
+
+(cwc_default.py): reduced tests numbers from 22 to 12.
+
+    * (cwc_default.py): reduced tests numbers from 22 to 12 (task-204)
+
+    * tests: 22 tests ok out of 22.
+    * Pylint: 10/10
+
 [DONE] task-203
 
 (cwc_default.py): pylinted the code

@@ -29,6 +29,7 @@
 """
 import filecmp
 import os
+import os.path
 import unittest
 
 # Pylint is wrong: we can import wisteria.cwc.pgnreader.default.
@@ -43,7 +44,7 @@ class CWCPgnreader(unittest.TestCase):
         Test of wisteria/cwc/pgnreader/default.py
 
         _______________________________________________________________________
-g
+
         o  test_read_game1pgn(self)
         o  test_read_game2pgn(self)
         o  test_read_game3pgn(self)
@@ -55,17 +56,7 @@ g
         o  test_read_game9pgn(self)
         o  test_read_game10pgn(self)
         o  test_read_game11pgn(self)
-        o  test_readwrite_game1pgn(self)
-        o  test_readwrite_game2pgn(self)
-        o  test_readwrite_game3pgn(self)
-        o  test_readwrite_game4pgn(self)
-        o  test_readwrite_game5pgn(self)
-        o  test_readwrite_game6pgn(self)
-        o  test_readwrite_game7pgn(self)
-        o  test_readwrite_game8pgn(self)
-        o  test_readwrite_game9pgn(self)
-        o  test_readwrite_game10pgn(self)
-        o  test_readwrite_game11pgn(self)
+        o  test_readwrite_gamespgn(self)
     """
 
     def test_read_game1pgn(self):
@@ -73,7 +64,7 @@ g
             CWCPgnreader.test_read_game1pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game1.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game1.pgn")))
         self.assertEqual(games[0].chessgame_tags["Black"], "Spassky, Boris V.")
         self.assertEqual(games[0].board.human_repr(),
                          "________\n"
@@ -93,7 +84,7 @@ g
             CWCPgnreader.test_read_game2pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game2.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game2.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "_______♕\n"
                          "_♝_♚♝___\n"
@@ -109,7 +100,7 @@ g
             CWCPgnreader.test_read_game3pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game3.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game3.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "________\n"
                          "__♟__♟__\n"
@@ -125,7 +116,7 @@ g
             CWCPgnreader.test_read_game4pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game4.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game4.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "♝_♜_♛♜♞_\n"
                          "______♚_\n"
@@ -144,10 +135,10 @@ g
                 http://blog.mathieuacher.com/LongestChessGame/
         """
         games = ChessGames()
-        self.assertFalse(games.read_pgn("tests/game5x.pgn"))
+        self.assertFalse(games.read_pgn(os.path.join("tests", "game5x.pgn")))
 
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game5.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game5.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "___♚____\n"
                          "___♕____\n"
@@ -163,7 +154,7 @@ g
             CWCPgnreader.test_read_game6pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game6.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game6.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "________\n"
                          "__♟__♟__\n"
@@ -189,7 +180,7 @@ g
             CWCPgnreader.test_read_game7pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game7.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game7.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "________\n"
                          "__♟__♟__\n"
@@ -215,7 +206,7 @@ g
             CWCPgnreader.test_read_game8pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game8.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game8.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "________\n"
                          "__♟__♟__\n"
@@ -241,7 +232,7 @@ g
             CWCPgnreader.test_read_game9pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game9.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game9.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "________\n"
                          "__♟__♟__\n"
@@ -267,7 +258,7 @@ g
             CWCPgnreader.test_read_game10pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game10.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game10.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "♜_♝♛_♜♚_\n"
                          "___♞♝♟♟♟\n"
@@ -283,7 +274,7 @@ g
             CWCPgnreader.test_read_game11pgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn("tests/game11.pgn"))
+        self.assertTrue(games.read_pgn(os.path.join("tests", "game11.pgn")))
         self.assertEqual(games[0].board.human_repr(),
                          "♜_♝♛_♜♚_\n"
                          "___♞♝♟♟♟\n"
@@ -294,211 +285,22 @@ g
                          "♙♙___♙♙_\n"
                          "♖♘♗♕♖_♔_")
 
-    def test_readwrite_game1pgn(self):
+    def test_readwrite_gamespgn(self):
         """
-            CWCPgnreader.test_readwrite_game1pgn()
+            CWCPgnreader.test_readwrite_gamespgn()
         """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
+        tmpfile1 = os.path.join("tests", "tests_tmp1.pgn")
+        tmpfile2 = os.path.join("tests", "tests_tmp2.pgn")
 
-        games = ChessGames()
-        games.read_pgn("tests/game1.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
+        for index in range(1, 11+1):
+            games = ChessGames()
+            games.read_pgn(os.path.join("tests", f"game{index}.pgn"))
+            games.write_pgn(tmpfile1)
+            games = ChessGames()
+            games.read_pgn(tmpfile1)
+            games.write_pgn(tmpfile2)
 
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game2pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game2pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game2.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game3pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game2pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game3.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game4pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game4pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game4.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game5pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game5pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game5.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game6pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game6pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game6.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game7pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game7pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game7.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game8pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game8pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game8.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game9pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game9pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game9.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game10pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game10pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game10.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
-
-    def test_readwrite_game11pgn(self):
-        """
-            CWCPgnreader.test_readwrite_game11pgn()
-        """
-        tmpfile1 = "tests/z1.pgn"
-        tmpfile2 = "tests/z2.pgn"
-
-        games = ChessGames()
-        games.read_pgn("tests/game11.pgn")
-        games.write_pgn(tmpfile1)
-        games = ChessGames()
-        games.read_pgn(tmpfile1)
-        games.write_pgn(tmpfile2)
-
-        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+            self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
 
         os.remove(tmpfile1)
         os.remove(tmpfile2)
