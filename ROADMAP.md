@@ -56,13 +56,23 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-205
+
+(cwc_default.py): removed useless ChessMove.valid attribute
+
+    * (cwc_default.py): removed useless ChessMove.valid attribute (task-205)
+    * fixed a typo in ROADMAP.md (cf task-204)
+
+    * tests: 12 tests ok out of 12.
+    * Pylint: 10/10
+
 [DONE] task-204
 
 (cwc_default.py): reduced tests numbers from 22 to 12.
 
     * (cwc_default.py): reduced tests numbers from 22 to 12 (task-204)
 
-    * tests: 22 tests ok out of 22.
+    * tests: 12 tests ok out of 12.
     * Pylint: 10/10
 
 [DONE] task-203

@@ -213,14 +213,12 @@ class ChessMove:
         self.beforeafter_coord_piece2 = beforeafter_coord_piece2
         self.promotion = promotion
         self.enpassant = enpassant
-        self.validmove = validmove
 
     def __repr__(self):
         """ChessMove.__repr__()"""
         return f"{self.movetype=}; " \
             f"{self.beforeafter_coord_piece1=}; {self.beforeafter_coord_piece2}; " \
-            f"{self.promotion=}; {self.enpassant=}; " \
-            f"{self.validmove=};"
+            f"{self.promotion=}; {self.enpassant=}; "
 
 
 class ChessListOfMoves(list):
