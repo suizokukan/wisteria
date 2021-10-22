@@ -56,6 +56,18 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-202
+
+(cwc_default.py): new tests (CWCPgnreader.test_readwrite_*)
+
+    * (cwc_default.py): new tests (CWCPgnreader.test_readwrite_*)
+      (task-202)
+    * (cwc_default.py): bugfix in ChessGame.write_pgn__listofmoves():
+      duplicated final line
+      (task-202)
+    
+    * tests: 22 tests ok out of 22.
+
 [DONE] task-201
 
 (cwc_default.py): cwc_default.py knows how to write a .pgn file

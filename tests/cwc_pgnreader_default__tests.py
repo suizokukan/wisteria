@@ -27,6 +27,8 @@
 
     o  CWCPgnreader class
 """
+import filecmp
+import os
 import unittest
 
 from wisteria.cwc.pgnreader.default import ChessGames
@@ -51,6 +53,17 @@ g
         o  test_read_game9pgn(self)
         o  test_read_game10pgn(self)
         o  test_read_game11pgn(self)
+        o  test_readwrite_game1pgn(self)
+        o  test_readwrite_game2pgn(self)
+        o  test_readwrite_game3pgn(self)
+        o  test_readwrite_game4pgn(self)
+        o  test_readwrite_game5pgn(self)
+        o  test_readwrite_game6pgn(self)
+        o  test_readwrite_game7pgn(self)
+        o  test_readwrite_game8pgn(self)
+        o  test_readwrite_game9pgn(self)
+        o  test_readwrite_game10pgn(self)
+        o  test_readwrite_game11pgn(self)
     """
 
     def test_read_game1pgn(self):
@@ -279,10 +292,211 @@ g
                          "♙♙___♙♙_\n"
                          "♖♘♗♕♖_♔_")
 
-    def test_z(self):
+    def test_readwrite_game1pgn(self):
         """
-            CWCPgnreader.TODO
+            CWCPgnreader.test_readwrite_game1pgn()
         """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
         games = ChessGames()
         games.read_pgn("tests/game1.pgn")
-        games.write_pgn("tests/z.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game2pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game2pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game2.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game3pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game2pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game3.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game4pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game4pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game4.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game5pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game5pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game5.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game6pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game6pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game6.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game7pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game7pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game7.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game8pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game8pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game8.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game9pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game9pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game9.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game10pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game10pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game10.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)
+
+    def test_readwrite_game11pgn(self):
+        """
+            CWCPgnreader.test_readwrite_game11pgn()
+        """
+        tmpfile1 = "tests/z1.pgn"
+        tmpfile2 = "tests/z2.pgn"
+
+        games = ChessGames()
+        games.read_pgn("tests/game11.pgn")
+        games.write_pgn(tmpfile1)
+        games = ChessGames()
+        games.read_pgn(tmpfile1)
+        games.write_pgn(tmpfile2)
+
+        self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
+
+        os.remove(tmpfile1)
+        os.remove(tmpfile2)

@@ -14,6 +14,7 @@ la partie coup après coup.
 
 
 TODO:
+- dans les .pgn n'est pas écrit le résult (1-0, *, ...)
 - dans ListOfMoves, je pense qu'il n'est pas nécessaire de stocker doublemove_number & who_plays
 - supprimer .valid
 
@@ -1040,9 +1041,6 @@ class ChessGame:
                 doublemove_str += " " + self.write_pgn__simplemove(simplemove)
                 res.append(doublemove_str)
 
-        if doublemove_str:
-            res.append(doublemove_str)
-
         return res
 
     def write_pgn__simplemove(self,
@@ -1176,3 +1174,4 @@ class ChessGames(list):
             for game in self:
                 for line in game.write_pgn():
                     dest.write(line+"\n")
+                dest.write("\n")
