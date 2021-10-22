@@ -56,6 +56,18 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-201
+
+(cwc_default.py): cwc_default.py knows how to write a .pgn file
+
+    * (cwc_default.py): cwc_default.py knows how to write a .pgn file
+      (task-201)
+    * ChessBoard.set_startpos(), ChessGame.write_pgn__listofmoves(), ChessGame.write_pgn()
+      (task-201)
+
+    * tests: 11 tests ok out of 11.
+    * Pylint: 10/10
+
 [DONE] task-200
 
 (cwc_default.py): Removed useless .pieces attribute from ChessGameStatus.

@@ -13,7 +13,9 @@ la partie coup après coup.
 (B) structure optimisée + datetime
 
 
-- (pas fait) status: white_king already moved
+TODO:
+- dans ListOfMoves, je pense qu'il n'est pas nécessaire de stocker doublemove_number & who_plays
+- supprimer .valid
 
 https://fr.chesstempo.com/pgn-viewer/
 https://theweekinchess.com/a-year-of-pgn-game-files
@@ -72,8 +74,8 @@ ALGEBRICNOTATION2PIECENATURE = {value: key for key, value in PIECENATURE2ALGEBRI
 
 MOVETYPE_SINGLE = 0
 MOVETYPE_CAPTURE = 1
-MOVETYPE_CASTLING = 2
-
+MOVETYPE_CASTLING_OO = 2
+MOVETYPE_CASTLING_OOO = 3
 
 class ChessError(Exception):
     """
@@ -187,7 +189,6 @@ class ChessMove:
         o __init__(self,
                  beforeafter_coord_piece1,
                  beforeafter_coord_piece2=None,
-                 beforeafter_advpiece=None,
                  movetype=MOVETYPE_SINGLE,
                  promotion=None,
                  enpassant=False,
@@ -197,7 +198,6 @@ class ChessMove:
     def __init__(self,
                  beforeafter_coord_piece1,
                  beforeafter_coord_piece2=None,
-                 beforeafter_advpiece=None,
                  movetype=MOVETYPE_SINGLE,
                  promotion=None,
                  enpassant=False,
@@ -206,7 +206,6 @@ class ChessMove:
         self.movetype = movetype
         self.beforeafter_coord_piece1 = beforeafter_coord_piece1
         self.beforeafter_coord_piece2 = beforeafter_coord_piece2
-        self.beforeafter_advpiece = beforeafter_advpiece
         self.promotion = promotion
         self.enpassant = enpassant
         self.validmove = validmove
@@ -215,7 +214,7 @@ class ChessMove:
         """ChessMove.__repr__()"""
         return f"{self.movetype=}; " \
             f"{self.beforeafter_coord_piece1=}; {self.beforeafter_coord_piece2}; " \
-            f"{self.beforeafter_advpiece=}; {self.promotion=}; {self.enpassant=}; " \
+            f"{self.promotion=}; {self.enpassant=}; " \
             f"{self.validmove=};"
 
 
@@ -341,6 +340,7 @@ class ChessBoard:
         o  is_empty_or_is_this_piece(self, xy, piece)
         o  is_kingpinned(self, xy0, xy1)
         o  iter_through_all_squares()
+        o  set_startpos(self)
         o  set_xy(self, xy, value)
         o  set_xy_empty(self, xy)
         o  update_by_playing_a_move(self, move)
@@ -367,17 +367,7 @@ class ChessBoard:
         self.board = {}  # cf .get_xy(), set_xy()
         self.pieces_status = ChessGameStatus()
 
-        for xy in self.iter_through_all_squares():
-            self.set_xy(xy, ChessPiece())
-
-        self.init_from_unicode_string("♜♞♝♛♚♝♞♜" \
-                                      "♟♟♟♟♟♟♟♟" \
-                                      "________" \
-                                      "________" \
-                                      "________" \
-                                      "________" \
-                                      "♙♙♙♙♙♙♙♙" \
-                                      "♖♘♗♕♔♗♘♖")
+        self.set_startpos()
 
     def __repr__(self):
         """ChessBoard.__repr__()"""
@@ -467,6 +457,23 @@ class ChessBoard:
             for x in range(8):
                 yield x, y
 
+    def set_startpos(self):
+        """ChessBoard.set_startpos()"""
+        self.board = {}
+        self.pieces_status = ChessGameStatus()
+
+        for xy in self.iter_through_all_squares():
+            self.set_xy(xy, ChessPiece())
+
+        self.init_from_unicode_string("♜♞♝♛♚♝♞♜" \
+                                      "♟♟♟♟♟♟♟♟" \
+                                      "________" \
+                                      "________" \
+                                      "________" \
+                                      "________" \
+                                      "♙♙♙♙♙♙♙♙" \
+                                      "♖♘♗♕♔♗♘♖")
+
     def set_xy(self,
                xy,
                value):
@@ -501,7 +508,7 @@ class ChessBoard:
                 else:
                     self.set_xy_empty((after[0], after[1]-1))
 
-        elif move.movetype == MOVETYPE_CASTLING:
+        elif move.movetype in (MOVETYPE_CASTLING_OO, MOVETYPE_CASTLING_OOO):
             # king:
             before, after = move.beforeafter_coord_piece1
             piece = self.get_xy(before)
@@ -672,6 +679,8 @@ class ChessGame:
         o  read_pgn__doublemove(self, str_doublemove)
         o  read_pgn__listofmoves(self, src)
         o  read_pgn__simplemove(self, str_simplemove)
+        o  write_pgn(self)
+        o  write_pgn__listofmoves(self)
     """
     # e.g. [Event "F/S Return Match"]
     regex_pgn_tags = re.compile(r'^\s*\[(?P<key>.+)\s+\"(?P<value>.+)\"\]$')
@@ -858,7 +867,7 @@ class ChessGame:
         # ---- let's try to initialize <piece1_coord_before> and --------------
         # ---- <piece1_coord_after> from <str_simplemove>. --------------------
         if str_simplemove == "O-O":
-            movetype = MOVETYPE_CASTLING
+            movetype = MOVETYPE_CASTLING_OO
             # king
             piece1_coord_before = self.board.get_king_coord(color=who_plays)
             piece1_coord_after = piece1_coord_before[0]+2, piece1_coord_before[1]
@@ -866,7 +875,7 @@ class ChessGame:
             piece2_coord_before = piece1_coord_before[0]+3, piece1_coord_before[1]
             piece2_coord_after = piece1_coord_before[0]+1, piece1_coord_before[1]
         elif str_simplemove == "O-O-O":
-            movetype = MOVETYPE_CASTLING
+            movetype = MOVETYPE_CASTLING_OOO
             # king
             piece1_coord_before = self.board.get_king_coord(color=who_plays)
             piece1_coord_after = piece1_coord_before[0]-2, piece1_coord_before[1]
@@ -934,6 +943,7 @@ class ChessGame:
                             # a tuple would not be writable:
                             piece1_coord_before = list(piece1_coord_before)
                             piece1_coord_before[1] = _y  # we found the row
+                            piece1_coord_before = tuple(piece1_coord_before)
                             #
                             # To optimize, you may want to consider the first solution is the right
                             # one and therefore add 'break'; without this 'break' statement you may
@@ -953,6 +963,7 @@ class ChessGame:
                             # a tuple would not be writable:
                             piece1_coord_before = list(piece1_coord_before)
                             piece1_coord_before[0] = _x  # we found the column
+                            piece1_coord_before = tuple(piece1_coord_before)
                             #
                             # To optimize, you may want to consider the first solution is the right
                             # one and therefore add 'break'; without this 'break' statement you may
@@ -970,22 +981,22 @@ class ChessGame:
         # It happens if <str_simplemove> contains an extra character to remove
         # any ambiguity.
         if piece1_coord_before is None:
-            _possibilities = self.board.which_piece_could_go_to(
+            _possi = self.board.which_piece_could_go_to(
                 piece=ChessPiece(nature=piece1_piecenature,
                                  color=self.listofmoves.next_player),
                 coord_after=piece1_coord_after,
                 movetype=movetype)
-            if not _possibilities:
+            if not _possi:
                 raise ChessError(
                     f"Can't interpret (simple) move '{str_simplemove}' for the current board. "
                     f"No legal move matches this string. "
                     f"self={repr(self)}")
-            if len(_possibilities) > 1:
+            if len(_possi) > 1:
                 raise ChessError(
                     f"Anomaly: too many possibilities, the move '{str_simplemove}' is ambiguous. "
                     f"Current situation is: {repr(self)}")
-            # [0] since there is only ONE POSSIBILITY here: len(_possibilities) is 1.
-            piece1_coord_before = _possibilities[0]
+            # [0] since there is only ONE POSSIBILITY here: len(_possi) is 1.
+            piece1_coord_before = _possi[0]
 
         # ---- en passant ? ---------------------------------------------------
         enpassant = movetype == MOVETYPE_CAPTURE and \
@@ -1000,6 +1011,105 @@ class ChessGame:
         self.listofmoves.add_move(new_move)
         self.board.update_by_playing_a_move(new_move)
 
+    def write_pgn(self):
+        """ChessGame.write_pgn()"""
+        res = []
+
+        for key, value in self.chessgame_tags.items():
+            res.append(f'[{key} "{value}"]')
+
+        res.append("")
+
+        res.extend(self.write_pgn__listofmoves())
+
+        return res
+
+    def write_pgn__listofmoves(self):
+        """ChessGame.write_pgn__listofmoves()"""
+        res = []
+
+        self.board.set_startpos()
+
+        doublemove_str = ""
+        for simplemove_index, (doublemove_index, _, simplemove) in enumerate(self.listofmoves):
+            if simplemove_index % 2 == 0:
+                # white plays:
+                doublemove_str = str(doublemove_index)+". " + self.write_pgn__simplemove(simplemove)
+            else:
+                # black plays:
+                doublemove_str += " " + self.write_pgn__simplemove(simplemove)
+                res.append(doublemove_str)
+
+        if doublemove_str:
+            res.append(doublemove_str)
+
+        return res
+
+    def write_pgn__simplemove(self,
+                              move):
+        """ChessGame.write_pgn__simplemove()"""
+        piece1 = self.board.get_xy(move.beforeafter_coord_piece1[0])
+
+        _possi = None
+        if move.movetype in (MOVETYPE_SINGLE, MOVETYPE_CAPTURE):
+            _possi = self.board.which_piece_could_go_to(piece1,
+                                                                move.beforeafter_coord_piece1[1],
+                                                                move.movetype)
+
+        self.board.update_by_playing_a_move(move)
+
+        if move.movetype == MOVETYPE_CASTLING_OO:
+            return "O-O"
+
+        if move.movetype == MOVETYPE_CASTLING_OOO:
+            return "O-O-O"
+
+        res = ""
+        if piece1.nature != PIECENATURE_PAWN:
+            res += PIECENATURE2ALGEBRICNOTATION[piece1.nature]
+
+        if len(_possi) == 1:
+            if piece1.nature == PIECENATURE_PAWN and move.movetype == MOVETYPE_CAPTURE:
+                # 'd' in 'dxe5'
+                res += ChessGame.coord2strcoord[(move.beforeafter_coord_piece1[0][0], None)]
+            else:
+                pass
+        else:
+            if piece1.nature == PIECENATURE_PAWN:
+                # 'd' in 'dxe5'
+                res += ChessGame.coord2strcoord[(move.beforeafter_coord_piece1[0][0], None)]
+            else:
+                # The ambiguity must be resolved by specifying only the column ('a', 'b', ...) or,
+                # if the column does not resolve the ambiguity, only the row ('1', '2', ...);
+                # otherwise, the column and row must be written.
+                #
+                # E.g. if beforeafter_coord_piece1[0] is equal to (2, 0) (==[c8]),
+                # we count the number of times (int)2 appears in _possi: it must
+                # appear at last one time(*); if it's the case, there's no ambiguity to add only
+                # the column; it (int)2 appears more than one time, the ambiguity is not resolved.
+                #
+                # (*) Why at least one time ? Because among _possiilites lies the right move, the
+                #     one that has been chosen. If this possibility is ambiguous, other moves will
+                #     add their column/row.
+                if tuple(_x for _x, _y in _possi).count(move.beforeafter_coord_piece1[0][0]) == 1:
+                    res += ChessGame.coord2strcoord[(move.beforeafter_coord_piece1[0][0], None)]
+                elif tuple(_y for _x, _y in _possi).count(move.beforeafter_coord_piece1[0][1]) == 1:
+                    res += ChessGame.coord2strcoord[(None, move.beforeafter_coord_piece1[0][1])]
+                else:
+                    res += ChessGame.coord2strcoord[move.beforeafter_coord_piece1[0]]
+
+        if move.movetype == MOVETYPE_SINGLE:
+            res += ChessGame.coord2strcoord[move.beforeafter_coord_piece1[1]]
+        elif move.movetype == MOVETYPE_CAPTURE:
+            res += "x"+ChessGame.coord2strcoord[move.beforeafter_coord_piece1[1]]
+
+        if move.promotion:
+            res += "="+PIECENATURE2ALGEBRICNOTATION[move.promotion]
+
+        if move.enpassant:
+            res += " e.p."
+
+        return res
 
 class ChessGames(list):
     """
@@ -1009,6 +1119,7 @@ class ChessGames(list):
         _______________________________________________________________________
 
         o  read_pgn(self, pgnfilename)
+        o  write_pgn(self, pgnfilename)
     """
     def read_pgn(self,
                  pgnfilename):
@@ -1057,3 +1168,11 @@ class ChessGames(list):
             self.append(game)
 
         return success
+
+    def write_pgn(self,
+                 pgnfilename):
+        """ChessGames.write_pgn()"""
+        with open(pgnfilename, "w", encoding="utf-8") as dest:
+            for game in self:
+                for line in game.write_pgn():
+                    dest.write(line+"\n")
