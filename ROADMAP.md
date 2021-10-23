@@ -58,6 +58,10 @@ What's next ?
 * "# pylint: disable" > "#   pylint: disable"
 ===============================================================================
 
+[CURRENT] v. 0.1.6
+
+cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
 [DONE] v. 0.1.5
 
 wisteria/cwc/pgnreader/default.py
