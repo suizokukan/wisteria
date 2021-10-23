@@ -27,7 +27,6 @@
 
     o  CWCPgnreader class
 """
-import filecmp
 import os
 import os.path
 import unittest
@@ -35,6 +34,8 @@ import unittest
 # Pylint is wrong: we can import wisteria.cwc.pgnreader.default.
 # pylint: disable=import-error, no-name-in-module
 from wisteria.cwc.pgnreader.default import ChessGames
+from wisteria.dmfile import DMFile
+
 
 FINAL_POSITIONS = {
     "game1.pgn":
@@ -131,31 +132,34 @@ class CWCPgnreader(unittest.TestCase):
         """
         for pgnfilename, finalposition in FINAL_POSITIONS.items():
             games = ChessGames()
-            self.assertTrue(games.read_pgn(os.path.join("tests", pgnfilename)))
-            self.assertEqual(games[0].board.human_repr(), finalposition)
+            with open(os.path.join("tests", pgnfilename), encoding="utf-8") as src:
+                self.assertTrue(games.read_pgn(src))
+                self.assertEqual(games[0].board.human_repr(), finalposition)
 
     def test_read_game1pgn_tags(self):
         """
             CWCPgnreader.test_read_game1pgn_tags()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game1.pgn")))
-        self.assertEqual(games[0].chessgame_tags["Black"], "Spassky, Boris V.")
+        with open(os.path.join("tests", "game1.pgn"), encoding="utf-8") as src:
+            self.assertTrue(games.read_pgn(src))
+            self.assertEqual(games[0].chessgame_tags["Black"], "Spassky, Boris V.")
 
     def test_read_game1xpgn(self):
         """
             CWCPgnreader.test_read_game1xpgn()
         """
-
         games = ChessGames()
-        self.assertFalse(games.read_pgn("tests/game1x.pgn"))
+        with open(os.path.join("tests", "game1x.pgn"), encoding="utf-8") as src:
+            self.assertFalse(games.read_pgn(src))
 
     def test_read_game5xpgn(self):
         """
             CWCPgnreader.test_read_game5xpgn()
         """
         games = ChessGames()
-        self.assertFalse(games.read_pgn("tests/game5x.pgn"))
+        with open(os.path.join("tests", "game5x.pgn"), encoding="utf-8") as src:
+            self.assertFalse(games.read_pgn(src))
 
     def test_read_pgngames2(self):
         """
@@ -163,19 +167,17 @@ class CWCPgnreader(unittest.TestCase):
         """
         games = ChessGames()
         for pgnfilename in ('game6.pgn', 'game7.pgn', 'game8.pgn', 'game9.pgn'):
-            self.assertTrue(games.read_pgn(os.path.join("tests", pgnfilename)))
-            self.assertEqual(games[0].board.human_repr(),
-                             FINAL_POSITIONS['game3.pgn'])
-            self.assertEqual(games[1].board.human_repr(),
-                             FINAL_POSITIONS['game4.pgn'])
+            with open(os.path.join("tests", pgnfilename), encoding="utf-8") as src:
+                self.assertTrue(games.read_pgn(src))
+                self.assertEqual(games[0].board.human_repr(),
+                                 FINAL_POSITIONS['game3.pgn'])
+                self.assertEqual(games[1].board.human_repr(),
+                                 FINAL_POSITIONS['game4.pgn'])
 
     def test_readwrite_pgngames(self):
         """
             CWCPgnreader.test_readwrite_pgngames()
         """
-        tmpfile1 = os.path.join("tests", "tests_tmp1.pgn")
-        tmpfile2 = os.path.join("tests", "tests_tmp2.pgn")
-
         for pgnfilename in ('game1.pgn',
                             'game2.pgn',
                             'game3.pgn',
@@ -187,19 +189,19 @@ class CWCPgnreader(unittest.TestCase):
                             'game9.pgn',
                             'game10.pgn',
                             'game11.pgn'):
-            games = ChessGames()
-            games.read_pgn(os.path.join("tests", pgnfilename))
-            games.write_pgn(tmpfile1)
-            games = ChessGames()
-            games.read_pgn(tmpfile1)
+            with (open(os.path.join("tests", pgnfilename), encoding="utf-8") as src,
+                  DMFile(":tests_tmp1.pgn:") as tmpfile1,   # in-memory file
+                  DMFile(":tests_tmp2.pgn:") as tmpfile2):  # in-memory file
+                games = ChessGames()
+                self.assertTrue(games.read_pgn(src))
+                games.write_pgn(tmpfile1)
+                games = ChessGames()
+                self.assertTrue(games.read_pgn(tmpfile1))
 
-            if pgnfilename in FINAL_POSITIONS:
-                self.assertTrue(games[0].board.human_repr(),
-                                FINAL_POSITIONS[pgnfilename])
+                if pgnfilename in FINAL_POSITIONS:
+                    self.assertTrue(games[0].board.human_repr(),
+                                    FINAL_POSITIONS[pgnfilename])
 
-            games.write_pgn(tmpfile2)
+                games.write_pgn(tmpfile2)
 
-            self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
-
-        os.remove(tmpfile1)
-        os.remove(tmpfile2)
+                self.assertEqual(tmpfile1.read(), tmpfile2.read())

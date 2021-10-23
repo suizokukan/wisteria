@@ -1160,45 +1160,43 @@ class ChessGames(list):
         o  write_pgn(self, pgnfilename)
     """
     def read_pgn(self,
-                 pgnfilename):
+                 src):
         """ChessGames.read_pgn()"""
         success = True
 
         inside_header = False
         buff = []
 
-        with open(pgnfilename, encoding="utf-8") as src:
+        for _line in src:
+            line = _line.strip()
 
-            for _line in src:
-                line = _line.strip()
-
-                if line:
-                    if inside_header:
-                        if re.search(ChessGame.regex_pgn_tags, line) and not line.startswith("1. "):
-                            # we're still in the header.
-                            pass
-                        else:
-                            # we're not in the header anymore.
-                            inside_header = False
+            if line:
+                if inside_header:
+                    if re.search(ChessGame.regex_pgn_tags, line) and not line.startswith("1. "):
+                        # we're still in the header.
+                        pass
                     else:
-                        if re.search(ChessGame.regex_pgn_tags, line) and not line.startswith("1. "):
-                            # we weren't in the header but <line> is a header line.
+                        # we're not in the header anymore.
+                        inside_header = False
+                else:
+                    if re.search(ChessGame.regex_pgn_tags, line) and not line.startswith("1. "):
+                        # we weren't in the header but <line> is a header line.
+                        if buff:
+                            game = ChessGame()
+                            success = success and game.read_pgn(buff)
+                            self.append(game)
+                        buff = []
+                        inside_header = True
+                    else:
+                        # we're still reading data lines that are not in a header.
+                        if line.startswith("1. "):
                             if buff:
                                 game = ChessGame()
                                 success = success and game.read_pgn(buff)
                                 self.append(game)
                             buff = []
-                            inside_header = True
-                        else:
-                            # we're still reading data lines that are not in a header.
-                            if line.startswith("1. "):
-                                if buff:
-                                    game = ChessGame()
-                                    success = success and game.read_pgn(buff)
-                                    self.append(game)
-                                buff = []
 
-                    buff.append(line)
+                buff.append(line)
 
         if buff:
             game = ChessGame()
@@ -1208,10 +1206,9 @@ class ChessGames(list):
         return success
 
     def write_pgn(self,
-                  pgnfilename):
+                  dest):
         """ChessGames.write_pgn()"""
-        with open(pgnfilename, "w", encoding="utf-8") as dest:
-            for game in self:
-                for line in game.write_pgn():
-                    dest.write(line+"\n")
-                dest.write("\n")
+        for game in self:
+            for line in game.write_pgn():
+                dest.write(line+"\n")
+            dest.write("\n")

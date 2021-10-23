@@ -62,6 +62,21 @@ What's next ?
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
+task-213: cwc/pgnreader/iaswn.py
+task-212: (cwc) > avec test() et erreur normale puisque certaines serializers
+          ne pourront pas réussir le test.
+task-211: default.py::test()
+
+[DONE] task-210
+
+(cwc_default.py): the tests are now partly in-memory.
+
+    * (cwc_default.py): the tests are now partly in-memory (task-210)
+    * new file: wisteria/dmfile.py (DMFile class) (task-210)
+
+    * tests: 6 tests ok out of 6.
+    * Pylint: 10/10
+
 [DONE] v. 0.1.5
 
 wisteria/cwc/pgnreader/default.py
