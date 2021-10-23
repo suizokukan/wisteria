@@ -21,9 +21,10 @@
 """
     Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
 
-    Default cwc/pgnreader+writer.
+    Default cwc/PGN reader+writer.
 
-    PGN reader/writer; regular chess only; no sophisticated rules (but castling, en passant and
+    PGN reader+writer (https://en.wikipedia.org/wiki/Portable_Game_Notation).
+    Regular chess only; no sophisticated rules (but castling, en passant and
     promotion are known). This is a very simple version of what a real PGN reader/writer might
     look like: no optimized storage, no move validation.
 
@@ -31,10 +32,10 @@
     another file. PGN-files containing several games are correctly read and written.
 
     No move validation: a move is always assumed to be valid.
-    Data other than the moves (events, player names, dates) are
+    Data other than the moves (events, player names, dates and so on) are
     stored but are not used.
 
-    A good PGN viewer, allowing to show giant games (cf tests/game5.pgn):
+    A PGN viewer allowing to show giant games (cf tests/game5.pgn) may be find at:
             https://fr.chesstempo.com/pgn-viewer/
 
 
@@ -72,7 +73,7 @@ COLOR_BLACK = 2
 
 
 def invert_color(color):
-    """invert_color(color)"""
+    """invert_color((int)color)"""
     if color == COLOR_WHITE:
         return COLOR_BLACK
     return COLOR_WHITE
@@ -146,7 +147,6 @@ class ChessPiece:
         ChessPiece class
 
         _______________________________________________________________________
-
 
         o  piece2unicode/unicode2piece
 
@@ -321,7 +321,12 @@ class ChessGameStatus:
     def update_from_pgn_string(self,
                                status_string,
                                current_player):
-        """ChessGameStatus.update_from_pgn_string()"""
+        """
+            ChessGameStatus.update_from_pgn_string()
+
+            Beware ! if you modify this method, please update
+                    ChessGame.regex_pgn_listofmoves['game_result']
+        """
         if status_string == "1/2-1/2":
             self.game_is_over = True
             self.who_won = COLOR_NOCOLOR
@@ -708,6 +713,8 @@ class ChessGame:
 
     regex_pgn_listofmoves = {
         'doublemovenumber': re.compile(r'[\d]+\.\s'),
+        # Beware ! if you modify 'game_result', please update
+        # ChessGameStatus.update_from_pgn_string().
         'game_result': re.compile(r'(?P<pre>.+)(?P<game_result>1\/2-1\/2|1\-0|0\-1|#|\*|\+\+)'),
         'en passant': re.compile(r'\s*e\.p\.'),
     }

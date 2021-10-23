@@ -196,7 +196,7 @@ class CWCPgnreader(unittest.TestCase):
             if pgnfilename in FINAL_POSITIONS:
                 self.assertTrue(games[0].board.human_repr(),
                                 FINAL_POSITIONS[pgnfilename])
-                
+
             games.write_pgn(tmpfile2)
 
             self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))

@@ -56,6 +56,15 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-209
+
+(cwc_default.py): documentation.
+
+    * (cwc_default.py): documentation (task-209)
+
+    * tests: 6 tests ok out of 6.
+    * Pylint: 10/10
+
 [DONE] task-208
 
 (cwc_default.py): reduced test numbers from 12 to 6.
