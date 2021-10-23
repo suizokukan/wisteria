@@ -4,9 +4,9 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-0.2.4 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+0.2.5 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
       comment signaler cette anomalie ?
-0.2.3 ajouter un max de serializers
+0.2.4 ajouter un max de serializers
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         ion (https://github.com/amzn/ion-python)
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -18,23 +18,22 @@ What's next ?
         yajl (https://pypi.org/project/yajl/)
         ujson (https://pypi.org/project/ujson/)
 
-0.2.2 ajouter un max de données
+0.2.3 ajouter un max de données
       jouer avec des données d'au moins 50 Mo de json string.
       numpy data
       panda data
-0.2.1 README.md acceptable
+0.2.2 README.md acceptable
       + __init__.py
-0.2.0 tests
+0.2.1 tests
         * tester toutes les divisions
         * sur des ordis très rapides, le temps pourrait être nul.
-0.1.9 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+0.2.0 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
       chercher si une combinaison donne des résultats vraiment différents des autres
-0.1.8 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-0.1.7 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
-0.1.6 --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
+0.1.9 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+0.1.8 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
+0.1.7 --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
-0.1.5 cwc
-0.1.4 cwc_iaswn, cwc_default
+0.1.6 cwc/pgnreader/iaswn.py + test()
 
 * # The "PermissionError" exception may be raised on Windows system
     tester ce qui se passe avec with open()..: pass >>> le fichier est-il fermé ?
@@ -48,13 +47,83 @@ What's next ?
   branche doublecheckmemusage qui ne doit être rien d'autre que (1) main < virer #MEMMACHIN
   + (2) __version__ = "0.1.3 (doublecheckmemusage branch)", il nous faut donc un script de
   conversion, à grand coups de grep(?) __version__ = "0.1.3" + "(doub...)" (??)
-* dégradés (matplotlib inclut numpy, rendant possible les dégradés)
 * report.txt > wisteria.txt (plus clair)
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
+* j'aimerais que --cmp="iaswn" ne parle que de iaswn
+* make take long time > several minutes
+* echo "=== wisteria/*.py ===" dans tests.sh
+* ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
+* ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
+* "# pylint: disable" > "#   pylint: disable"
 ===============================================================================
 
-[CURRENT] v. 0.1.5
+[DONE] v. 0.1.5
+
+wisteria/cwc/pgnreader/default.py
+
+
+code structure
+
+    * wisteria/cwc/pgnreader/default.py 
+      (task-190, task-191, task-192, task-194, task-195, task-196, task-197, task-198,
+       task-200, task-201, task-203, task-205, task-206, task-207, task-209)
+    * tests; new directories: tests/, wisteria/cwc/pgnreader; new script: tests.sh
+      (task-193, task-199, task-202, task-204, task-208)
+    * codesearch.py: uncomment some lines in order to search in tests/ too 
+      (task-208)
+
+code quality
+
+    * tests: 6 tests ok out of 6.
+    * Pylint: 10/10
+    
+tasks
+
+    * task(s): task-191, task-192, task-193, task-194, task-195, task-196, task-197, 
+               task-198, task-199, task-200, task-201, task-202, task-203, task-204,
+               task-205, task-206, task-207, task-208, task-209
+
+version
+
+    * set version to '0.1.5'
+
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.3
+Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-209
 
