@@ -64,8 +64,18 @@ cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
 task-213: cwc/pgnreader/iaswn.py
 task-212: (cwc) > avec test() et erreur normale puisque certaines serializers
-          ne pourront pas réussir le test.
-task-211: default.py::test()
+          ne pourront pas réussir le test (comme Iaswn)
+
+[DONE] task-211
+
+(cwc_default.py): test() function
+
+    * (cwc_default.py): test() function
+      Like all cwc files, test() allows to check that the objects created in
+      this file are usable. Return (bool)success. (task-211)
+
+    * tests: 6 tests ok out of 6.
+    * Pylint: 10/10
 
 [DONE] task-210
 
