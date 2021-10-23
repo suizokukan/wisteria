@@ -105,11 +105,11 @@ try:
                    check=True)
 
     if not ARGS.codesubdirectoryonly:
-        # # tests/ : .py files
-        # subprocess.run(['find', 'tests', '-type', 'f', '-name', '*.py', ] +
-        #                EXCLUDE_ARG +
-        #                ['-exec', 'grep', '-rHn', '--color', ARGS.string, '{}', ';'],
-        #                check=True)
+        # tests/ : .py files
+        subprocess.run(['find', 'tests', '-type', 'f', '-name', '*.py', ] +
+                       EXCLUDE_ARG +
+                       ['-exec', 'grep', '-rHn', '--color', ARGS.string, '{}', ';'],
+                       check=True)
 
         # root directory : .py files
         subprocess.run(['find', '.', '-maxdepth', '1', '-type', 'f', '-name', '*.py', ] +

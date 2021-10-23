@@ -56,6 +56,19 @@ What's next ?
 
 [CURRENT] v. 0.1.5
 
+[DONE] task-208
+
+(cwc_default.py): reduced test numbers from 12 to 6.
+
+    * (cwc_default.py): improved tests (added comparison to the value of 
+                        human_repr() in one test) (task-208)
+    * (cwc_default.py): reduced test numbers from 12 to 6 (task-208)
+    * codesearch.py: uncomment some lines in order to search in tests/ too 
+      (task-208)
+
+    * tests: 6 tests ok out of 6.
+    * Pylint: 10/10
+
 [DONE] task-207
 
 (cwc_default.py): documentation.

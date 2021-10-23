@@ -36,6 +36,78 @@ import unittest
 # pylint: disable=import-error, no-name-in-module
 from wisteria.cwc.pgnreader.default import ChessGames
 
+FINAL_POSITIONS = {
+    "game1.pgn":
+    "________\n"
+    "________\n"
+    "____♖_♟_\n"
+    "__♚___♟_\n"
+    "_♟____♙_\n"
+    "_♙_♝_♙__\n"
+    "___♔_♞__\n"
+    "________",
+
+    "game2.pgn":
+    "_______♕\n"
+    "_♝_♚♝___\n"
+    "♟__♟♟___\n"
+    "_____♙__\n"
+    "♟_♛♘____\n"
+    "♙____♙__\n"
+    "_♙♙_____\n"
+    "_♔_♖____",
+
+    "game3.pgn":
+    "________\n"
+    "__♟__♟__\n"
+    "_♟_____♟\n"
+    "___♔_♙__\n"
+    "♙_____♞_\n"
+    "_♚___♗__\n"
+    "_______♟\n"
+    "________",
+
+    "game4.pgn":
+    "♝_♜_♛♜♞_\n"
+    "______♚_\n"
+    "__♟_♟♞_♟\n"
+    "__♙__♟♟_\n"
+    "__♘♙____\n"
+    "_♕___♙♗_\n"
+    "♙♙♗___♙♙\n"
+    "___♖♖_♔_",
+
+    "game5.pgn":
+    "___♚____\n"
+    "___♕____\n"
+    "____♔___\n"
+    "________\n"
+    "________\n"
+    "________\n"
+    "________\n"
+    "________",
+
+    "game10.pgn":
+    "♜_♝♛_♜♚_\n"
+    "___♞♝♟♟♟\n"
+    "__♟♟_♞__\n"
+    "_♟__♟___\n"
+    "___♙♙___\n"
+    "_♗___♘_♙\n"
+    "♙♙___♙♙_\n"
+    "♖♘♗♕♖_♔_",
+
+    "game11.pgn":
+    "♜_♝♛_♜♚_\n"
+    "___♞♝♟♟♟\n"
+    "__♟♟_♞__\n"
+    "_♟__♟___\n"
+    "___♙♙___\n"
+    "_♗___♘_♙\n"
+    "♙♙___♙♙_\n"
+    "♖♘♗♕♖_♔_",
+    }
+
 
 class CWCPgnreader(unittest.TestCase):
     """
@@ -45,259 +117,86 @@ class CWCPgnreader(unittest.TestCase):
 
         _______________________________________________________________________
 
-        o  test_read_game1pgn(self)
-        o  test_read_game2pgn(self)
-        o  test_read_game3pgn(self)
-        o  test_read_game4pgn(self)
-        o  test_read_game5pgn(self)
-        o  test_read_game6pgn(self)
-        o  test_read_game7pgn(self)
-        o  test_read_game8pgn(self)
-        o  test_read_game9pgn(self)
-        o  test_read_game10pgn(self)
-        o  test_read_game11pgn(self)
-        o  test_readwrite_gamespgn(self)
+        o  test_read_pgngames(self)
+        o  test_read_game1pgn_tags(self)
+        o  test_read_game1xpgn(self)
+        o  test_read_game5xpgn(self)
+        o  test_read_pgngames2(self)
+        o  test_readwrite_pgngames(self)
     """
 
-    def test_read_game1pgn(self):
+    def test_read_pgngames(self):
         """
-            CWCPgnreader.test_read_game1pgn()
+            CWCPgnreader.test_read_pgngames()
+        """
+        for pgnfilename, finalposition in FINAL_POSITIONS.items():
+            games = ChessGames()
+            self.assertTrue(games.read_pgn(os.path.join("tests", pgnfilename)))
+            self.assertEqual(games[0].board.human_repr(), finalposition)
+
+    def test_read_game1pgn_tags(self):
+        """
+            CWCPgnreader.test_read_game1pgn_tags()
         """
         games = ChessGames()
         self.assertTrue(games.read_pgn(os.path.join("tests", "game1.pgn")))
         self.assertEqual(games[0].chessgame_tags["Black"], "Spassky, Boris V.")
-        self.assertEqual(games[0].board.human_repr(),
-                         "________\n"
-                         "________\n"
-                         "____♖_♟_\n"
-                         "__♚___♟_\n"
-                         "_♟____♙_\n"
-                         "_♙_♝_♙__\n"
-                         "___♔_♞__\n"
-                         "________")
+
+    def test_read_game1xpgn(self):
+        """
+            CWCPgnreader.test_read_game1xpgn()
+        """
 
         games = ChessGames()
         self.assertFalse(games.read_pgn("tests/game1x.pgn"))
 
-    def test_read_game2pgn(self):
+    def test_read_game5xpgn(self):
         """
-            CWCPgnreader.test_read_game2pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game2.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "_______♕\n"
-                         "_♝_♚♝___\n"
-                         "♟__♟♟___\n"
-                         "_____♙__\n"
-                         "♟_♛♘____\n"
-                         "♙____♙__\n"
-                         "_♙♙_____\n"
-                         "_♔_♖____")
-
-    def test_read_game3pgn(self):
-        """
-            CWCPgnreader.test_read_game3pgn()
+            CWCPgnreader.test_read_game5xpgn()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game3.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "________\n"
-                         "__♟__♟__\n"
-                         "_♟_____♟\n"
-                         "___♔_♙__\n"
-                         "♙_____♞_\n"
-                         "_♚___♗__\n"
-                         "_______♟\n"
-                         "________")
+        self.assertFalse(games.read_pgn("tests/game5x.pgn"))
 
-    def test_read_game4pgn(self):
+    def test_read_pgngames2(self):
         """
-            CWCPgnreader.test_read_game4pgn()
+            CWCPgnreader.test_read_pgngames2()
         """
         games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game4.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "♝_♜_♛♜♞_\n"
-                         "______♚_\n"
-                         "__♟_♟♞_♟\n"
-                         "__♙__♟♟_\n"
-                         "__♘♙____\n"
-                         "_♕___♙♗_\n"
-                         "♙♙♗___♙♙\n"
-                         "___♖♖_♔_")
+        for pgnfilename in ('game6.pgn', 'game7.pgn', 'game8.pgn', 'game9.pgn'):
+            self.assertTrue(games.read_pgn(os.path.join("tests", pgnfilename)))
+            self.assertEqual(games[0].board.human_repr(),
+                             FINAL_POSITIONS['game3.pgn'])
+            self.assertEqual(games[1].board.human_repr(),
+                             FINAL_POSITIONS['game4.pgn'])
 
-    def test_read_game5pgn(self):
+    def test_readwrite_pgngames(self):
         """
-            CWCPgnreader.test_read_game5pgn()
-
-            About game5.pgn and game5x.pgn, see:
-                http://blog.mathieuacher.com/LongestChessGame/
-        """
-        games = ChessGames()
-        self.assertFalse(games.read_pgn(os.path.join("tests", "game5x.pgn")))
-
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game5.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "___♚____\n"
-                         "___♕____\n"
-                         "____♔___\n"
-                         "________\n"
-                         "________\n"
-                         "________\n"
-                         "________\n"
-                         "________")
-
-    def test_read_game6pgn(self):
-        """
-            CWCPgnreader.test_read_game6pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game6.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "________\n"
-                         "__♟__♟__\n"
-                         "_♟_____♟\n"
-                         "___♔_♙__\n"
-                         "♙_____♞_\n"
-                         "_♚___♗__\n"
-                         "_______♟\n"
-                         "________")
-
-        self.assertEqual(games[1].board.human_repr(),
-                         "♝_♜_♛♜♞_\n"
-                         "______♚_\n"
-                         "__♟_♟♞_♟\n"
-                         "__♙__♟♟_\n"
-                         "__♘♙____\n"
-                         "_♕___♙♗_\n"
-                         "♙♙♗___♙♙\n"
-                         "___♖♖_♔_")
-
-    def test_read_game7pgn(self):
-        """
-            CWCPgnreader.test_read_game7pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game7.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "________\n"
-                         "__♟__♟__\n"
-                         "_♟_____♟\n"
-                         "___♔_♙__\n"
-                         "♙_____♞_\n"
-                         "_♚___♗__\n"
-                         "_______♟\n"
-                         "________")
-
-        self.assertEqual(games[1].board.human_repr(),
-                         "♝_♜_♛♜♞_\n"
-                         "______♚_\n"
-                         "__♟_♟♞_♟\n"
-                         "__♙__♟♟_\n"
-                         "__♘♙____\n"
-                         "_♕___♙♗_\n"
-                         "♙♙♗___♙♙\n"
-                         "___♖♖_♔_")
-
-    def test_read_game8pgn(self):
-        """
-            CWCPgnreader.test_read_game8pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game8.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "________\n"
-                         "__♟__♟__\n"
-                         "_♟_____♟\n"
-                         "___♔_♙__\n"
-                         "♙_____♞_\n"
-                         "_♚___♗__\n"
-                         "_______♟\n"
-                         "________")
-
-        self.assertEqual(games[1].board.human_repr(),
-                         "♝_♜_♛♜♞_\n"
-                         "______♚_\n"
-                         "__♟_♟♞_♟\n"
-                         "__♙__♟♟_\n"
-                         "__♘♙____\n"
-                         "_♕___♙♗_\n"
-                         "♙♙♗___♙♙\n"
-                         "___♖♖_♔_")
-
-    def test_read_game9pgn(self):
-        """
-            CWCPgnreader.test_read_game9pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game9.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "________\n"
-                         "__♟__♟__\n"
-                         "_♟_____♟\n"
-                         "___♔_♙__\n"
-                         "♙_____♞_\n"
-                         "_♚___♗__\n"
-                         "_______♟\n"
-                         "________")
-
-        self.assertEqual(games[1].board.human_repr(),
-                         "♝_♜_♛♜♞_\n"
-                         "______♚_\n"
-                         "__♟_♟♞_♟\n"
-                         "__♙__♟♟_\n"
-                         "__♘♙____\n"
-                         "_♕___♙♗_\n"
-                         "♙♙♗___♙♙\n"
-                         "___♖♖_♔_")
-
-    def test_read_game10pgn(self):
-        """
-            CWCPgnreader.test_read_game10pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game10.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "♜_♝♛_♜♚_\n"
-                         "___♞♝♟♟♟\n"
-                         "__♟♟_♞__\n"
-                         "_♟__♟___\n"
-                         "___♙♙___\n"
-                         "_♗___♘_♙\n"
-                         "♙♙___♙♙_\n"
-                         "♖♘♗♕♖_♔_")
-
-    def test_read_game11pgn(self):
-        """
-            CWCPgnreader.test_read_game11pgn()
-        """
-        games = ChessGames()
-        self.assertTrue(games.read_pgn(os.path.join("tests", "game11.pgn")))
-        self.assertEqual(games[0].board.human_repr(),
-                         "♜_♝♛_♜♚_\n"
-                         "___♞♝♟♟♟\n"
-                         "__♟♟_♞__\n"
-                         "_♟__♟___\n"
-                         "___♙♙___\n"
-                         "_♗___♘_♙\n"
-                         "♙♙___♙♙_\n"
-                         "♖♘♗♕♖_♔_")
-
-    def test_readwrite_gamespgn(self):
-        """
-            CWCPgnreader.test_readwrite_gamespgn()
+            CWCPgnreader.test_readwrite_pgngames()
         """
         tmpfile1 = os.path.join("tests", "tests_tmp1.pgn")
         tmpfile2 = os.path.join("tests", "tests_tmp2.pgn")
 
-        for index in range(1, 11+1):
+        for pgnfilename in ('game1.pgn',
+                            'game2.pgn',
+                            'game3.pgn',
+                            'game4.pgn',
+                            'game5.pgn',
+                            'game6.pgn',
+                            'game7.pgn',
+                            'game8.pgn',
+                            'game9.pgn',
+                            'game10.pgn',
+                            'game11.pgn'):
             games = ChessGames()
-            games.read_pgn(os.path.join("tests", f"game{index}.pgn"))
+            games.read_pgn(os.path.join("tests", pgnfilename))
             games.write_pgn(tmpfile1)
             games = ChessGames()
             games.read_pgn(tmpfile1)
+
+            if pgnfilename in FINAL_POSITIONS:
+                self.assertTrue(games[0].board.human_repr(),
+                                FINAL_POSITIONS[pgnfilename])
+                
             games.write_pgn(tmpfile2)
 
             self.assertTrue(filecmp.cmp(tmpfile1, tmpfile2, shallow=False))
