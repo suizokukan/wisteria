@@ -132,6 +132,8 @@ def trytoimport(module_name):
         trytoimport()
 
         Try to import <module_name> module.
+
+
         _______________________________________________________________________
 
         ARGUMENT:
@@ -141,7 +143,8 @@ def trytoimport(module_name):
     """
     res = True
     try:
-        wisteria.globs.MODULES[module_name] = importlib.import_module(module_name)
+        wisteria.globs.MODULES[module_name] = \
+            importlib.import_module(module_name)
     except ModuleNotFoundError:
         res = False
     return res

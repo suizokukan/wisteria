@@ -125,8 +125,17 @@ UNAVAILABLE_SERIALIZERS = {}
 
 # dict storing all data used by the program.
 #
-# * format: DATA[(str)data name] = data object
-# * initialized by data.py::init_data()
+# (pimydoc)DATA format
+# ⋅Initialized by data.py::init_data()
+# ⋅
+# ⋅- for Python basic types, DATA values are the real value:
+# ⋅    e.g. DATA["bool/false"] = False
+# ⋅- for cwc modules, DATA keys are the ini name (not the real name)
+# ⋅  and DATA values are the real name:
+# ⋅    e.g. DATA["wisteria.cwc.pgnreader.iaswn.ChessGames"] =
+# ⋅        "wisteria.cwc.pgnreader.iaswn.chessgames"
+# ⋅- for third party types, DATA values are the real value:
+# ⋅    e.g. DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
 DATA = {}
 # dict storing all data that the program can't use.
 #

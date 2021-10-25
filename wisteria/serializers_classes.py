@@ -53,7 +53,7 @@ class SerializerData:
         o  (str)internet
         o  (str)version
         o  (callable)func   : function to be called to use this serializer
-
+        o  (str)cwc         : name of the module in cwc/xxx/
 
         methods:
 
@@ -67,7 +67,8 @@ class SerializerData:
                  module_name,
                  human_name,
                  internet,
-                 func):
+                 func,
+                 cwc):
         """
             SerializerData.__init__()
 
@@ -80,6 +81,7 @@ class SerializerData:
             o  (str)internet
             o  (str)version
             o  (callable)func   : function to be called to use this serializer
+            o  (str)cwc         : name of the module in cwc/xxx/
         """
         self.name = name
         self.module_name = module_name
@@ -87,6 +89,7 @@ class SerializerData:
         self.internet = internet
         self.version = None
         self.func = func
+        self.cwc = cwc
 
     def __repr__(self):
         """
@@ -100,7 +103,7 @@ class SerializerData:
                             See also .checkup_repr() and .simple_repr()
         """
         return f"{self.name=}; {self.module_name=}; {self.human_name=}; {self.internet=}; " \
-            f"{self.version=}; {self.func=}"
+            f"{self.version=}; {self.func=}; {self.cwc=}"
 
     def checkup_repr(self):
         """
@@ -113,7 +116,8 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .__repr__() and .simple_repr()
         """
-        return f"{fmt_serializer(self.name)} ({self.version}), see {self.internet} ."
+        return f"{fmt_serializer(self.name)} ({self.version}) \\[cwc: '{self.cwc}'], " \
+            f"see {self.internet} ."
 
     def simple_repr(self):
         """
@@ -201,7 +205,7 @@ class SerializationResult:
         """
         return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_strlen=}; " \
             f"{self.decoding_success=}; {self.decoding_time=}; {self.reversibility=}; " \
-            "{self.mem_usage=}"
+            f"{self.mem_usage=}"
 
 
 class SerializationResults(dict):

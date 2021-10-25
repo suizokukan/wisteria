@@ -21,9 +21,11 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### ==========================================================================
 ### (pimydoc)code structure
 ### (pimydoc)config file format
+### (pimydoc)cwc modules names
+### (pimydoc)DATA format
 ### (pimydoc)exit codes
 ### (pimydoc)report sections
-
+    
 ### ==========================================================================
 [(pimydoc)code structure]
 step A: command line arguments, --help message
@@ -71,6 +73,36 @@ data objects
     set1 = yes or false             〖"data objects"〗〖"set1"〗 = (bool)True/False
     set2 = yes or false
     ...
+### ==========================================================================
+[(pimydoc)cwc modules names]
+
+cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+    
+moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+classname            : e.g. "ChessGames" (NOT "chessgames")
+modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+
+- `moduleininame` are defined in config file;
+- conversion from `moduleininame` to `modulefullrealname` is defined in
+  data.py:DATA and is made by function
+  cwc_utils.py:moduleininame_to_modulefullrealname()
+- conversion from `modulefullrealname` to `modulerealname` is made by
+  function cwc_utils.py:modulefullrealname_to_modulerealname()
+- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+### ==========================================================================
+[(pimydoc)DATA format]
+Initialized by data.py::init_data()
+   
+- for Python basic types, DATA values are the real value:
+    e.g. DATA["bool/false"] = False
+- for cwc modules, DATA keys are the ini name (not the real name)
+  and DATA values are the real name:
+    e.g. DATA["wisteria.cwc.pgnreader.iaswn.ChessGames"] =
+        "wisteria.cwc.pgnreader.iaswn.chessgames"
+- for third party types, DATA values are the real value:
+    e.g. DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
+###
 ### ==========================================================================    
 [(pimydoc)exit codes]
 *  0: normal exit code
@@ -114,4 +146,3 @@ data objects
     . D1a   : informations about the machine (no extensive details)
     . D1b   : informations about the machine (extensive details)
 * graphs    : graphic visualizations
-### ==========================================================================

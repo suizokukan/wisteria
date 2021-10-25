@@ -19,9 +19,9 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
+    Wisteria project : wisteria/wisteria/cwc/pgnreader/iaswn.py
 
-    Default cwc/PGN reader+writer.
+    cwc/PGN reader+writer specific to Iaswn serializer.
 
     ___________________________________________________________________________
 
@@ -70,6 +70,8 @@
 import copy
 import re
 
+from iaswn.iaswn import Iaswn
+
 from wisteria.dmfile import DMFile
 
 
@@ -106,7 +108,7 @@ MOVETYPE_CASTLING_OO = 2
 MOVETYPE_CASTLING_OOO = 3
 
 
-class ChessError(Exception):
+class ChessError(Exception, Iaswn):
     """
         ChessError class
 
@@ -114,7 +116,7 @@ class ChessError(Exception):
     """
 
 
-class ChessGameTags(dict):
+class ChessGameTags(dict, Iaswn):
     """
         ChessGameTags class
 
@@ -138,6 +140,7 @@ class ChessGameTags(dict):
     def __init__(self,
                  datadict=None):
         """ChessGameTags.__init__()"""
+        Iaswn.__init__(self)
         dict.__init__(self)
         if datadict:
             for key, value in datadict:
@@ -148,7 +151,7 @@ class ChessGameTags(dict):
         return "; ".join(f"{key}: {value}" for key, value in self.items())
 
 
-class ChessPiece:
+class ChessPiece(Iaswn):
     """
         ChessPiece class
 
@@ -185,6 +188,7 @@ class ChessPiece:
                  color=COLOR_NOCOLOR,
                  nature=PIECENATURE_NOPIECE):
         """ChessPiece.__init__()"""
+        Iaswn.__init__(self)
         self.color = color
         self.nature = nature
 
@@ -230,6 +234,7 @@ class ChessMove:
                  enpassant=False,
                  str_game_result=None):
         """ChessMove.__init__()"""
+        Iaswn.__init__(self)
         self.movetype = movetype
         self.beforeafter_coord_piece1 = beforeafter_coord_piece1
         self.beforeafter_coord_piece2 = beforeafter_coord_piece2
@@ -244,7 +249,7 @@ class ChessMove:
             f"{self.promotion=}; {self.enpassant=}; {self.str_game_result=};"
 
 
-class ChessListOfMoves(list):
+class ChessListOfMoves(list, Iaswn):
     """
         ChessListOfMoves class
 
@@ -262,6 +267,7 @@ class ChessListOfMoves(list):
                  next_player=COLOR_WHITE,
                  doublemove_number=1):
         """ChessListOfMoves.__init__()"""
+        Iaswn.__init__(self)
         list.__init__(self)
         self.next_player = next_player
         self.doublemove_number = doublemove_number
@@ -291,7 +297,7 @@ class ChessListOfMoves(list):
         return self.next_player
 
 
-class ChessGameStatus:
+class ChessGameStatus(Iaswn):
     """
         ChessGameStatus class
 
@@ -312,6 +318,7 @@ class ChessGameStatus:
                  game_is_over=False,
                  who_won=None):
         """ChessGameStatus.__init__()"""
+        Iaswn.__init__(self)
         self.game_is_over = game_is_over  # (bool)
         self.who_won = who_won  # COLOR_NOCOLOR / COLOR_BLACK / COLOR_WHITE
 
@@ -352,7 +359,7 @@ class ChessGameStatus:
             raise ChessError(f"Unknown status string '{status_string}'.")
 
 
-class ChessBoard:
+class ChessBoard(Iaswn):
     """
         ChessBoard class
 
@@ -395,6 +402,8 @@ class ChessBoard:
 
     def __init__(self):
         """ChessBoard.__init__()"""
+        Iaswn.__init__(self)
+
         self.board = {}  # cf .get_xy(), set_xy()
         self.pieces_status = ChessGameStatus()
 
@@ -691,7 +700,7 @@ class ChessBoard:
         return not ((0 <= xy[0] <= 7) and (0 <= xy[1] <= 7))
 
 
-class ChessGame:
+class ChessGame(Iaswn):
     """
         ChessGame class
 
@@ -772,6 +781,8 @@ class ChessGame:
 
     def __init__(self):
         """ChessGame.__init__()"""
+        Iaswn.__init__(self)
+
         self.chessgame_tags = ChessGameTags()
         self.board = ChessBoard()
         self.listofmoves = ChessListOfMoves()
@@ -1155,7 +1166,7 @@ class ChessGame:
         return res
 
 
-class ChessGames(list):
+class ChessGames(list, Iaswn):
     """
         ChessGames class
 

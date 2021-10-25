@@ -267,7 +267,7 @@ def partial_report__data():
     """
         partial_report__data()
 
-        Display a mini report abouter data.
+        Display a mini report about data.
     """
     msgreport(
         f"* {len(wisteria.globs.DATA)} Available Data "
@@ -1803,7 +1803,7 @@ def report_section_c2c__serializervsserializer(results,
     if ratio_reversibility == 1:
         text.append(f"{fmt_serializer(seria1)} "
                     f"and {fmt_serializer(seria2)} "
-                    "seem to have exactly the same data coverage.")
+                    "seem to have exactly the same data coverage; ")
     else:
         text.append(f"{fmt_serializer(seria1)}'s coverage "
                     f"is {ratio2phrase(ratio_reversibility, 'good/bad')} "
@@ -1835,8 +1835,8 @@ def report_section_c2c__serializervsserializer(results,
                                    output='value') == 0:
             # mem_usage==0 for both serializers:
             text.append(
-                f"Neither {fmt_serializer(seria1)} "
-                f"nor {fmt_serializer(seria2)} seem to consume memory.")
+                f"neither {fmt_serializer(seria1)} "
+                f"nor {fmt_serializer(seria2)} seems to consume memory.")
         else:
             # mem_usage==0 for seria2:
             text.append(

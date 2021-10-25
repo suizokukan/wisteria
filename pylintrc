@@ -122,7 +122,7 @@ score=yes
 [REFACTORING]
 
 # Maximum number of nested blocks for function / method body
-max-nested-blocks=5
+max-nested-blocks=6
 
 # Complete name of functions that never returns. When checking for
 # inconsistent-return-statements if a never returning function is called then
@@ -455,7 +455,7 @@ check-str-concat-over-line-jumps=no
 ignored-parents=
 
 # Maximum number of arguments for function / method.
-max-args=6
+max-args=7
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes=7

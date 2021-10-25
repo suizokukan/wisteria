@@ -45,6 +45,9 @@ from wisteria.globs import TMPFILENAME
 from wisteria.classesexamples.simpleclasses import MetaClass, RegularClass
 from wisteria.classesexamples.simpleclasses import RegularClassInheritedDict
 from wisteria.classesexamples.simpleclasses import RegularClassInheritedList
+from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
+from wisteria.utils import trytoimport
+from wisteria.wisteriaerror import WisteriaError
 
 
 def anyfunc():
@@ -63,7 +66,22 @@ def init_data():
 
         PLEASE SYNCHRONIZE THIS LIST OF DATA WITH THE LIST IN THE
         CONFIG FILE(S) AND THE LIST IN README.MD.
+
+        (pimydoc)DATA format
+        ⋅Initialized by data.py::init_data()
+        ⋅
+        ⋅- for Python basic types, DATA values are the real value:
+        ⋅    e.g. DATA["bool/false"] = False
+        ⋅- for cwc modules, DATA keys are the ini name (not the real name)
+        ⋅  and DATA values are the real name:
+        ⋅    e.g. DATA["wisteria.cwc.pgnreader.iaswn.ChessGames"] =
+        ⋅        "wisteria.cwc.pgnreader.iaswn.chessgames"
+        ⋅- for third party types, DATA values are the real value:
+        ⋅    e.g. DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
     """
+    # -------------------------------------------------------------------------
+    # -------------------- 1/3 basic Python types -----------------------------
+    # -------------------------------------------------------------------------
     wisteria.globs.DATA = {
         "array(b)":  array.array('b', (-1, 2)),
         "array(b/empty)": array.array('b'),
@@ -214,6 +232,41 @@ def init_data():
         "type(type(str))": type(str),
     }
 
+    # -------------------------------------------------------------------------
+    # --------------------------- 2/3 cwc modules -----------------------------
+    # -------------------------------------------------------------------------
+    # (pimydoc)cwc modules names
+    # ⋅
+    # ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+    # ⋅
+    # ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+    # ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+    # ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
+    # ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+    # ⋅
+    # ⋅- `moduleininame` are defined in config file;
+    # ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
+    # ⋅  data.py:DATA and is made by function
+    # ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
+    # ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
+    # ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
+    # ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+    for cwc_moduleininame, cwc_modulefullrealname in (
+            ("wisteria.cwc.pgnreader.default.chessgames",
+             "wisteria.cwc.pgnreader.default.ChessGames"),
+            ("wisteria.cwc.pgnreader.iaswn.chessgames",
+             "wisteria.cwc.pgnreader.iaswn.ChessGames"),
+    ):
+        if not trytoimport(modulefullrealname_to_modulerealname(cwc_modulefullrealname)):
+            raise WisteriaError(
+                "(ERRORID047) "
+                "Internal error: can't import cwc module "
+                f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' .")
+        wisteria.globs.DATA[cwc_moduleininame] = cwc_modulefullrealname
+
+    # -------------------------------------------------------------------------
+    # --------------------------- 3/3 third party types -----------------------
+    # -------------------------------------------------------------------------
     try:
         # The following 'import' statement has deliberately placed here and
         # not at the beginning of the file.

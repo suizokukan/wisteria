@@ -62,9 +62,39 @@ What's next ?
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
-task-213: cwc/pgnreader/iaswn.py
+task-213: worked_as_ex pour les types de base.
 task-212: (cwc) > avec test() et erreur normale puisque certaines serializers
           ne pourront pas réussir le test (comme Iaswn)
+
+task-214: cwc init(); il faut que le
+task-213: afficher jsonstr avec verbo=2; d'ailleurs, qu'est-ce qui est affiché avec verbo=2
+          faire le point
+          
+
+[DONE] task-212
+
+`cwc mode` works with 'pickle' (and all serializers requiring 'default' cwc
+module) and with 'iaswn'. Please note that cwc objects are not yet fully
+initialized.
+
+    * `cwc mode` works with 'pickle' (and all serializers requiring 'default' cwc
+      module) and with 'iaswn'. Please note that cwc objects are not yet fully
+      initialized. (task-212)
+    * DATA[] contains cwc modules too (task-212)
+    * new cwc/pgnreader file: iaswn.py (task-212)
+    * new entries in pimydoc: `cwc modules names` and `DATA format` (task-212)
+    * new file (`cwc_utils.py`) with the following functions:
+      - is_a_cwc_name()
+      - moduleininame_to_modulefullrealname()
+      - modulefullrealname_to_modulerealname()
+      - modulefullrealname_to_objectname()
+      - is_this_an_appropriate_module_for_serializer()
+      (task-212)
+    * fixed a typo in partial_report__data() (task-212)
+    * fixed a typo in `report_section_c2c__serializervsserializer()`
+      (task-212)
+    * (pylintrc) max-nested-blocks=5 > max-nested-blocks=6 (task-212)
+    * improved documentation (task-212)
 
 [DONE] task-211
 
