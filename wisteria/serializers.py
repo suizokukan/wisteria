@@ -55,11 +55,11 @@ else:
 # MEMOVERUSEimport cppyy
 
 from wisteria.globs import TIMEITNUMBER, MODULES
-from wisteria.globs import VERBOSITY_DEBUG
+from wisteria.globs import VERBOSITY_DEBUG, VERBOSITY_DETAILS
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import trytoimport
 from wisteria.serializers_classes import SerializerData, SerializationResult
-from wisteria.msg import msgdebug
+from wisteria.msg import msgdebug, msginfo
 
 # MEMOVERUSE# --memoveruse C++ module:
 # MEMOVERUSEcppyy.include("memoveruse_cpp/memoveruse_cpp.h")
@@ -169,6 +169,11 @@ def serializer_iaswn(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except module.IaswnError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
@@ -263,6 +268,11 @@ def serializer_json(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
@@ -357,6 +367,11 @@ def serializer_jsonpickle(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
@@ -451,6 +466,11 @@ def serializer_jsonpickle_keystrue(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
@@ -545,6 +565,11 @@ def serializer_marshal(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except (TypeError, ValueError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
@@ -639,6 +664,11 @@ def serializer_pickle(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
@@ -733,6 +763,11 @@ def serializer_pyyaml(action="serialize",
         res.encoding_success = True
         res.encoding_strlen = _len(_res)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
     except (ValueError, TypeError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")

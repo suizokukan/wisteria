@@ -56,20 +56,33 @@ What's next ?
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 * "# pylint: disable" > "#   pylint: disable"
+* checkup(): signaler que plus d'informations sont disponibles avec verbosity=3; dans ce dernier cas, le "width=70" qui
+  s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
+  data.py:DATA (je pense à la valeur de chaque clef)
+* chercher "return None, 2" (dans results.py) : incohérence, on devrait renvoyer un autre exit code.
+* Let's remove the temp file > About to remove
+* Let's close the > About to close
+* la chaîne affichée pour --help utilise tantôt une minuscule, tantôt une majuscule en début de phrase > à unifier
+* --checkup: affichage non trié pour les "Available Data Objects"
+
 ===============================================================================
 
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
-task-213: worked_as_ex pour les types de base.
-task-212: (cwc) > avec test() et erreur normale puisque certaines serializers
-          ne pourront pas réussir le test (comme Iaswn)
+task-214: worked_as_ex pour les types de base.
+                   
+[DONE] task-213
 
-task-214: cwc init(); il faut que le
-task-213: afficher jsonstr avec verbo=2; d'ailleurs, qu'est-ce qui est affiché avec verbo=2
-          faire le point
-          
+Serializers can from now display the encoded string they have computed.
+
+    * Serializers can from now display the encoded string they have computed (task-213)
+    * new entry in `pimydoc`: (pimydoc)progress bar (task-213)
+    * documentation (task-213)
+
+    * tests: 6 tests ok out of 6.
+    * Pylint: 10/10
 
 [DONE] task-212
 

@@ -34,7 +34,7 @@ from rich.progress_bar import ProgressBar
 
 import wisteria.data
 import wisteria.globs
-from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
+from wisteria.globs import VERBOSITY_NORMAL, VERBOSITY_DEBUG, VERBOSITY_DETAILS
 from wisteria.globs import PROGRESSBAR_LENGTH
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
@@ -157,8 +157,17 @@ def compute_results(config,
             the ancient progress bar.
 
             Show the cursor.
+
+            (pimydoc)progress bar
+            ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
+            ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
+            ⋅console output is authorized: it's important for scripts calling the
+            ⋅project from the outside.
+            ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+            ⋅in order to avoid mixing the progress bar with the text displayed while
+            ⋅computing the result, which is unpleasant to see.
         """
-        if wisteria.globs.ARGS.verbosity not in (VERBOSITY_MINIMAL, VERBOSITY_DEBUG):
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
             # the following lines make the progress bar disappear.
             # the next rprint() will overwrite the spaces that are about
             # to be added:
@@ -185,12 +194,15 @@ def compute_results(config,
 
         results = SerializationResults()
 
-        # (progress bar)
-        # Please note that there can be NO progress bar if the debug mode is enabled:
-        # the output can't display both correctly.
-        # Please note that there can be NO progress bar if verbosity is set to minimal:
-        # it's important for scripts calling this project from the outside.
-        if wisteria.globs.ARGS.verbosity not in (VERBOSITY_MINIMAL, VERBOSITY_DEBUG):
+        # (pimydoc)progress bar
+        # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
+        # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
+        # ⋅console output is authorized: it's important for scripts calling the
+        # ⋅project from the outside.
+        # ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+        # ⋅in order to avoid mixing the progress bar with the text displayed while
+        # ⋅computing the result, which is unpleasant to see.
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
             console = Console()
             progressbar = ProgressBar(width=PROGRESSBAR_LENGTH,
                                       total=len(_serializers)*len(_dataobjs))
@@ -239,7 +251,7 @@ def compute_results(config,
                                 f"doesn't end with SERIALIZERS['{serializer}'].cwc="
                                 f"'{wisteria.globs.SERIALIZERS[serializer].cwc}' .")
                     else:
-                        # ok, let's do {serializer, data_name}
+                        # ok, let's compute results for {serializer, data_name}
                         fingerprint = strdigest(serializer+data_name)
 
                         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -260,12 +272,15 @@ def compute_results(config,
                                 getattr(wisteria.globs.MODULES[data_name__strmodule],
                                         "work_as_expected")()
 
-                # (progress bar)
-                # Please note that there can be NO progress bar if the debug mode is enabled:
-                # the output can't display both correctly.
-                # Please note that there can be NO progress bar if verbosity is set to minimal:
-                # it's important for scripts calling this project from the outside.
-                if wisteria.globs.ARGS.verbosity not in (VERBOSITY_MINIMAL, VERBOSITY_DEBUG):
+                # (pimydoc)progress bar
+                # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
+                # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
+                # ⋅console output is authorized: it's important for scripts calling the
+                # ⋅project from the outside.
+                # ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+                # ⋅in order to avoid mixing the progress bar with the text displayed while
+                # ⋅computing the result, which is unpleasant to see.
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
                     progressbar_index += 1
                     progressbar.update(progressbar_index)
                     console.print(progressbar)
@@ -305,11 +320,14 @@ def compute_results(config,
                 # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
                 return None, -7
 
-        # (progress bar)
-        # Please note that there can be NO progress bar if the debug mode is enabled:
-        # the output can't display both correctly.
-        # Please note that there can be NO progress bar if verbosity is set to minimal:
-        # it's important for scripts calling this project from the outside.
+        # (pimydoc)progress bar
+        # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
+        # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
+        # ⋅console output is authorized: it's important for scripts calling the
+        # ⋅project from the outside.
+        # ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+        # ⋅in order to avoid mixing the progress bar with the text displayed while
+        # ⋅computing the result, which is unpleasant to see.
         erase_progress_bar()
 
         if not results.finish_initialization():

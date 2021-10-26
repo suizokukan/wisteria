@@ -24,6 +24,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
 ### (pimydoc)exit codes
+### (pimydoc)progress bar
 ### (pimydoc)report sections
     
 ### ==========================================================================
@@ -118,6 +119,15 @@ Initialized by data.py::init_data()
 * -7: error, an absurd value has been computed
 * -8: error, missing required module
 * -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+### ==========================================================================
+[(pimydoc)progress bar]
+A progress bar is displayed only if verbosity is set to 1 (normal).
+If verbosity is set to 0 (minimal), the progress bar is hidden since no
+console output is authorized: it's important for scripts calling the
+project from the outside.
+If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+in order to avoid mixing the progress bar with the text displayed while
+computing the result, which is unpleasant to see.
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations

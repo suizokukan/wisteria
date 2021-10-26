@@ -1,7 +1,21 @@
 WORK IN PROGRESS, NOT TO BE USED !
 
-
-
+TODO:
+verbosity level
+Please notice that --verbosity has no effect upon --report.
+* --verbosity=0 (minimal)
+  You'll just see the report (see --report).
+  Leaving the report aside, strictly nothing on screen: no progress bar, no messages.
+  Even if verbosity is set to 0, this has no effect on --checkup or on --mymachine
+* --verbosity=1 (normal)
+  You'll see the report (see --report), a progress bar and a normal amount of messages.  
+  Messages displayed by --checkup and by --mymachine have a normal quantity of text.
+* --verbosity=2 (details)
+  You'll see the report (see --report); no progress bar, more details (encoded string are shown).
+  Messages displayed by --checkup and by --mymachine have an increased quantity of text.
+* --verbosity=3 (debug)
+  You'll see the report (see --report) and a maximal amount of messages.
+  Messages displayed by --checkup and by --mymachine have a maximal quantity of text.
 
 # Wisteria
 
