@@ -51,13 +51,11 @@ What's next ?
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
-* echo "=== wisteria/*.py ===" dans tests.sh
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 * checkup(): signaler que plus d'informations sont disponibles avec verbosity=3; dans ce dernier cas, le "width=70" qui
   s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
   data.py:DATA (je pense à la valeur de chaque clef)
-* chercher "return None, 2" (dans results.py) : incohérence, on devrait renvoyer un autre exit code.
 * --checkup: affichage non trié pour les "Available Data Objects"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 * all > allbutcwc; all signifie absolument tout, même cwc
@@ -79,6 +77,18 @@ What's next ?
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
+[DONE] task-219
+
+Bugfix: compute_results() now returns new exit code 4 if there's no 
+data to handle. 
+
+    * bugfix: compute_results() now returns new exit code 4 if there's no 
+      data to handle (task-219)
+    * pimydoc: added to 'exit codes' new exit code 4
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-218
 
