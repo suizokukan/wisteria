@@ -80,8 +80,15 @@ What's next ?
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
-task-217: * Let's remove the temp file > About to remove
-task-218: * Let's close the > About to close
+
+[DONE] task-217
+
+Improved debug messages displayed by exit_handler().
+
+    * Improved debug messages displayed by exit_handler() (task-217)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-216
 

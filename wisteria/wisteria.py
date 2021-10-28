@@ -763,7 +763,7 @@ def exit_handler():
     """
     if os.path.exists(wisteria.globs.TMPFILENAME):
         if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) Let's remove the temp file "
+            msgdebug(f"(exit_handler) About to remove the temp file "
                      f"'{wisteria.globs.TMPFILENAME}' "
                      f"('{normpath(wisteria.globs.TMPFILENAME)}')")
 
@@ -775,7 +775,7 @@ def exit_handler():
 
     if not wisteria.globs.DATA['file descriptor'].closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) Let's close the wisteria.globs.DATA['file descriptor'] "
+            msgdebug(f"(exit_handler) About to close the wisteria.globs.DATA['file descriptor'] "
                      "file descriptor"
                      f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
         wisteria.globs.DATA['file descriptor'].close()
