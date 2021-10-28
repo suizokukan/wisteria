@@ -328,6 +328,8 @@ def partial_report__serializers():
             # please don't use fmt_serializer() with the following line since
             # we want the raw name of the serializer:
             msgreport(f"  > use '{serializer.name}' in --cmp string.")
+        if serializer.comment:
+            msgreport(f"  > {serializer.comment}")
 
     if wisteria.globs.UNAVAILABLE_SERIALIZERS:
         msgreport()

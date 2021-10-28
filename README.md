@@ -203,8 +203,9 @@ max-locals=15 > max-locals=20
 max-branches=12 > max-branches=40
 max-args=5 > max-args=6
 max-public-methods=20 > max-public-methods=30
-max-args=6 > max-args=7
+max-args=6 > max-args=8
 max-nested-blocks=5 > max-nested-blocks=6
+max-attributes=7 > max-attributes=8
 ```
 
 Dependencies

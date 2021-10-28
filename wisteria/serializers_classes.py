@@ -52,8 +52,9 @@ class SerializerData:
         o  (str)human_name
         o  (str)internet
         o  (str)version
-        o  (callable)func   : function to be called to use this serializer
-        o  (str)cwc         : name of the module in cwc/xxx/
+        o  (callable)func    : function to be called to use this serializer
+        o  (str)cwc          : name of the module in cwc/xxx/
+        o  (None|str)comment : human-readable comment
 
         methods:
 
@@ -68,7 +69,8 @@ class SerializerData:
                  human_name,
                  internet,
                  func,
-                 cwc):
+                 cwc,
+                 comment=None):
         """
             SerializerData.__init__()
 
@@ -79,9 +81,9 @@ class SerializerData:
             o  (str)module_name
             o  (str)human_name
             o  (str)internet
-            o  (str)version
-            o  (callable)func   : function to be called to use this serializer
-            o  (str)cwc         : name of the module in cwc/xxx/
+            o  (callable)func    : function to be called to use this serializer
+            o  (str)cwc          : name of the module in cwc/xxx/
+            o  (None|str)comment : human-readable comment
         """
         self.name = name
         self.module_name = module_name
@@ -90,6 +92,7 @@ class SerializerData:
         self.version = None
         self.func = func
         self.cwc = cwc
+        self.comment = comment
 
     def __repr__(self):
         """
@@ -103,7 +106,7 @@ class SerializerData:
                             See also .checkup_repr() and .simple_repr()
         """
         return f"{self.name=}; {self.module_name=}; {self.human_name=}; {self.internet=}; " \
-            f"{self.version=}; {self.func=}; {self.cwc=}"
+            f"{self.version=}; {self.func=}; {self.cwc=}; {self.comment=}"
 
     def checkup_repr(self):
         """

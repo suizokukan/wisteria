@@ -71,6 +71,17 @@ What's next ?
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
+[DONE] task-223
+
+It's now possible to add a comment for a serializer.
+
+    * it's now possible to add a comment for a serializer:
+      Serializer.comment may be None or a string. (task-223)
+    * modified pylintrc: max-attributes=8 & max-args=8 (task-223)
+    * updated README.md (task-223)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-222
 

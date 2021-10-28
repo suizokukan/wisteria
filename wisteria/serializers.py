@@ -931,7 +931,8 @@ def init_serializers():
                 human_name="jsonpickle(keys=True)",
                 internet="https://jsonpickle.github.io/",
                 func=serializer_jsonpickle_keystrue,
-                cwc="default"),
+                cwc="default",
+                comment="jsonpickle with keys=True"),
             SerializerData(
                 name="marshal",
                 module_name="marshal",
