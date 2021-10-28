@@ -72,13 +72,34 @@ What's next ?
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
 task-214: worked_as_ex pour les types de base.
-                   
+
+[DONE] task-214
+
+Reversibility is now computed thanks to a call to works_as_expected() method
+defined in the new file wisteria/cwc/pgnreader/works_as_expected.py.
+
+    * (cwc/pgnreader) initialize() and works_as_expected() have been moved to
+       the new file wisteria/cwc/pgnreader/works_as_expected.py (task-214)
+    * new function in cwc_utils.py: modulefullrealname_to_waemodulename() (task-214)
+    * (cwc/pgnreader) added __eq__ method to all classes so that evaluation
+      (reversibility) is possible (task-214)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] task-213
 
 Serializers can from now display the encoded string they have computed.
 
     * Serializers can from now display the encoded string they have computed (task-213)
     * new entry in `pimydoc`: (pimydoc)progress bar (task-213)
+    * new entry in `pimydoc`: ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
+    * new entry in `pimydoc`: ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
+    * new entry in `pimydoc`: ⋅console output is authorized: it's important for scripts calling the
+    * new entry in `pimydoc`: ⋅project from the outside.
+    * new entry in `pimydoc`: ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+    * new entry in `pimydoc`: ⋅in order to avoid mixing the progress bar with the text displayed while
+    * new entry in `pimydoc`: ⋅computing the result, which is unpleasant to see.
     * documentation (task-213)
 
     * tests: 6 tests ok out of 6.

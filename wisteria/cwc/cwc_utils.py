@@ -30,6 +30,7 @@
     ⋅
     ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
     ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+    ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
     ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
     ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
     ⋅
@@ -44,9 +45,10 @@
 
     ___________________________________________________________________________
 
-    o  modulefullrealname_to_modulerealname(data_object_name)
-    o  modulefullrealname_to_classname(data_object_name)
-    o  moduleininame_to_modulefullrealname(data_object_name)
+    o  modulefullrealname_to_modulerealname(modulefullrealname)
+    o  modulefullrealname_to_classname(modulefullrealname)
+    o  moduleininame_to_modulefullrealname(moduleininame)
+    o  modulefullrealname_to_waemodulename(modulefullrealname)
     o  is_a_cwc_name(data_object_name)
     o  is_this_an_appropriate_module_for_serializer(data_name__module, serializer)
 """
@@ -66,6 +68,7 @@ def modulefullrealname_to_modulerealname(modulefullrealname):
         ⋅
         ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
         ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
         ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
         ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
         ⋅
@@ -101,6 +104,7 @@ def modulefullrealname_to_classname(modulefullrealname):
         ⋅
         ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
         ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
         ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
         ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
         ⋅
@@ -136,6 +140,7 @@ def moduleininame_to_modulefullrealname(moduleininame):
         ⋅
         ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
         ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
         ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
         ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
         ⋅
@@ -157,6 +162,26 @@ def moduleininame_to_modulefullrealname(moduleininame):
     return wisteria.globs.DATA[moduleininame]
 
 
+def modulefullrealname_to_waemodulename(modulefullrealname):
+    """
+        modulefullrealname_to_waemodulename()
+
+        Convert module full real name into a wae('works as expected') module name, something like:
+                "wisteria.cwc.pgnreader.default.ChessGames" >
+                        "wisteria.cwc.pgnreader.works_as_expected"
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
+
+        RETURNED VALUE: (str)wae('works as expected') module name
+
+    """
+    name = modulefullrealname[:modulefullrealname.rfind(".")]
+    name = name[:name.rfind(".")]
+    return name + ".works_as_expected"
+
+
 def is_a_cwc_name(data_object_name):
     """
         is_a_cwc_name()
@@ -170,6 +195,7 @@ def is_a_cwc_name(data_object_name):
         ⋅
         ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
         ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
         ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
         ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
         ⋅
@@ -210,6 +236,7 @@ def is_this_an_appropriate_module_for_serializer(data_name__module,
         ⋅
         ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
         ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
         ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
         ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
         ⋅

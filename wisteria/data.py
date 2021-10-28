@@ -46,6 +46,7 @@ from wisteria.classesexamples.simpleclasses import MetaClass, RegularClass
 from wisteria.classesexamples.simpleclasses import RegularClassInheritedDict
 from wisteria.classesexamples.simpleclasses import RegularClassInheritedList
 from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
+from wisteria.cwc.cwc_utils import modulefullrealname_to_waemodulename
 from wisteria.utils import trytoimport
 from wisteria.wisteriaerror import WisteriaError
 
@@ -241,6 +242,7 @@ def init_data():
     # ⋅
     # ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
     # ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+    # ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
     # ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
     # ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
     # ⋅
@@ -257,12 +259,21 @@ def init_data():
             ("wisteria.cwc.pgnreader.iaswn.chessgames",
              "wisteria.cwc.pgnreader.iaswn.ChessGames"),
     ):
+
+        # main module, like "wisteria.cwc.pgnreader.default.ChessGames"
         if not trytoimport(modulefullrealname_to_modulerealname(cwc_modulefullrealname)):
             raise WisteriaError(
                 "(ERRORID047) "
                 "Internal error: can't import cwc module "
                 f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' .")
         wisteria.globs.DATA[cwc_moduleininame] = cwc_modulefullrealname
+
+        # wae (=works as expected module), like "wisteria.cwc.pgnreader.works_as_expected"
+        if not trytoimport(modulefullrealname_to_waemodulename(cwc_modulefullrealname)):
+            raise WisteriaError(
+                "(ERRORID048) "
+                "Internal error: can't import 'works_as_expected' cwc module "
+                f"'{modulefullrealname_to_waemodulename(cwc_modulefullrealname)}' .")
 
     # -------------------------------------------------------------------------
     # --------------------------- 3/3 third party types -----------------------

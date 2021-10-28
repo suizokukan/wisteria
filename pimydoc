@@ -81,6 +81,7 @@ cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
     
 moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
 modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
 classname            : e.g. "ChessGames" (NOT "chessgames")
 modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
 

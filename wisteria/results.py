@@ -45,6 +45,7 @@ from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrea
 from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_classname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
+from wisteria.cwc.cwc_utils import modulefullrealname_to_waemodulename
 
 
 def get_serializers_selection(serializer1,
@@ -232,6 +233,8 @@ def compute_results(config,
                     data_name = moduleininame_to_modulefullrealname(data_name)
                     # data_name__strmodule: e.g. "cwc.pgnreader.default"
                     data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
+                    # data_name__strmodule_wae: e.g. "cwc.pgnreader.works_as_expected"
+                    data_name__strwaemodulename = modulefullrealname_to_waemodulename(data_name)
                     # data_name__strclassname: e.g. "ChessGames"
                     data_name__strclassname = modulefullrealname_to_classname(data_name)
 
@@ -260,17 +263,20 @@ def compute_results(config,
                                      f"and (cwc) data name='{data_name}' "
                                      f"[{fingerprint}]")
 
+                        cwc_object = \
+                            getattr(wisteria.globs.MODULES[data_name__strwaemodulename],
+                                    "initialize")(getattr(
+                                        wisteria.globs.MODULES[data_name__strmodule],
+                                        data_name__strclassname)())
+
                         results[serializer][data_name] = \
                             wisteria.globs.SERIALIZERS[serializer].func(
                                 action="serialize",
-                                obj=getattr(wisteria.globs.MODULES[data_name__strmodule],
-                                            data_name__strclassname)(),
-                                fingerprint=fingerprint)
-
-                        if results[serializer][data_name].reversibility:
-                            results[serializer][data_name].reversibility = \
-                                getattr(wisteria.globs.MODULES[data_name__strmodule],
-                                        "work_as_expected")()
+                                obj=cwc_object,
+                                fingerprint=fingerprint,
+                                works_as_expected=getattr(
+                                    wisteria.globs.MODULES[data_name__strwaemodulename],
+                                    "works_as_expected"))
 
                 # (pimydoc)progress bar
                 # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).

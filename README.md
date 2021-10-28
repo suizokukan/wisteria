@@ -17,6 +17,14 @@ Please notice that --verbosity has no effect upon --report.
   You'll see the report (see --report) and a maximal amount of messages.
   Messages displayed by --checkup and by --mymachine have a maximal quantity of text.
 
+results: pipeline
+   obj > encoded string > decoded string > _res2
+   
+   * obj == _res2 ?
+     * if obj == _res2:
+           if <obj> is a cwc module > is works_as_expected(_res2) True ?
+           if <obj> isn't a cwc module and if data.works_as_expected > data.works_as_expected(obj)
+
 # Wisteria
 
 Use [Wisteria](#01-what-about-the-name-) to compare different Python serializers.

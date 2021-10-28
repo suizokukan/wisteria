@@ -19,9 +19,10 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    Wisteria project : wisteria/wisteria/cwc/pgnreader/iaswn.py
+    Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
 
     cwc/PGN reader+writer specific to Iaswn serializer.
+
 
     ___________________________________________________________________________
 
@@ -60,7 +61,8 @@
     o  ChessGame class
     o  ChessGames class
 
-    o  test()
+    o  fill(obj)
+    o  work_as_expected()
 """
 # For this demonstration file, some writing rules are not respected:
 # pylint: disable=invalid-name
@@ -71,9 +73,6 @@ import copy
 import re
 
 from iaswn.iaswn import Iaswn
-
-from wisteria.dmfile import DMFile
-
 
 COLOR_NOCOLOR = 0
 COLOR_WHITE = 1
@@ -133,14 +132,29 @@ class ChessGameTags(dict, Iaswn):
 
         _______________________________________________________________________
 
+        o  __eq__(self, other)
         o  __init__(self, datadict=None)
         o  __repr__(self)
     """
+    def __eq__(self,
+               other):
+        """
+            ChessGamesTags.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessGamesTags)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return dict.__eq__(self, other)
 
     def __init__(self,
                  datadict=None):
         """ChessGameTags.__init__()"""
-        Iaswn.__init__(self)
         dict.__init__(self)
         if datadict:
             for key, value in datadict:
@@ -188,7 +202,6 @@ class ChessPiece(Iaswn):
                  color=COLOR_NOCOLOR,
                  nature=PIECENATURE_NOPIECE):
         """ChessPiece.__init__()"""
-        Iaswn.__init__(self)
         self.color = color
         self.nature = nature
 
@@ -211,21 +224,43 @@ class ChessPiece(Iaswn):
         return self.color == COLOR_NOCOLOR and self.nature == PIECENATURE_NOPIECE
 
 
-class ChessMove:
+class ChessMove(Iaswn):
     """
         ChessMove class
 
 
         _______________________________________________________________________
 
-        o __init__(self,
-                 beforeafter_coord_piece1,
-                 beforeafter_coord_piece2=None,
-                 movetype=MOVETYPE_SINGLE,
-                 promotion=None,
-                 enpassant=False)
-        o __repr__(self)
+        o  __eq__(self, other)
+        o  __init__(self,
+                  beforeafter_coord_piece1,
+                  beforeafter_coord_piece2=None,
+                  movetype=MOVETYPE_SINGLE,
+                  promotion=None,
+                  enpassant=False)
+        o  __repr__(self)
     """
+    def __eq__(self,
+               other):
+        """
+            ChessMove.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessMove)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return self.movetype == other.movetype and \
+            self.beforeafter_coord_piece1 == other.beforeafter_coord_piece1 and \
+            self.beforeafter_coord_piece2 == other.beforeafter_coord_piece2 and \
+            self.promotion == other.promotion and \
+            self.enpassant == other.enpassant and \
+            self.str_game_result == other.str_game_result
+
     def __init__(self,
                  beforeafter_coord_piece1,
                  beforeafter_coord_piece2=None,
@@ -234,7 +269,6 @@ class ChessMove:
                  enpassant=False,
                  str_game_result=None):
         """ChessMove.__init__()"""
-        Iaswn.__init__(self)
         self.movetype = movetype
         self.beforeafter_coord_piece1 = beforeafter_coord_piece1
         self.beforeafter_coord_piece2 = beforeafter_coord_piece2
@@ -253,21 +287,41 @@ class ChessListOfMoves(list, Iaswn):
     """
         ChessListOfMoves class
 
+        A list of ((int)doublemove_number, (int)self.next_player, (ChessMove)move)
+
 
         _______________________________________________________________________
 
+        o  __eq__(self, other)
         o  __init__(self,
                  next_player=COLOR_WHITE,
                  doublemove_number=1)
-        o __repr__(self)
-        o add_move(self, move)
-        o who_plays(self)
+        o  __repr__(self)
+        o  add_move(self, move)
+        o  who_plays(self)
     """
+    def __eq__(self,
+               other):
+        """
+            ChessListOfMoves.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessListOfMoves)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return list.__eq__(self, other) and \
+            self.next_player == other.next_player and \
+            self.doublemove_number == other.doublemove_number
+
     def __init__(self,
                  next_player=COLOR_WHITE,
                  doublemove_number=1):
         """ChessListOfMoves.__init__()"""
-        Iaswn.__init__(self)
         list.__init__(self)
         self.next_player = next_player
         self.doublemove_number = doublemove_number
@@ -304,6 +358,7 @@ class ChessGameStatus(Iaswn):
 
         _______________________________________________________________________
 
+        o  __eq__(self, other)
         o  __init__(self,
                  pieces=None,
                  game_is_over=False,
@@ -314,11 +369,27 @@ class ChessGameStatus(Iaswn):
                                status_string,
                                current_player)
     """
+    def __eq__(self,
+               other):
+        """
+            ChessGameStatus.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessGameStatus)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return self.game_is_over == other.game_is_over and \
+            self.who_won == other.who_won
+
     def __init__(self,
                  game_is_over=False,
                  who_won=None):
         """ChessGameStatus.__init__()"""
-        Iaswn.__init__(self)
         self.game_is_over = game_is_over  # (bool)
         self.who_won = who_won  # COLOR_NOCOLOR / COLOR_BLACK / COLOR_WHITE
 
@@ -368,6 +439,7 @@ class ChessBoard(Iaswn):
 
         o  moves_descr
 
+        o  __eq__(self, other)
         o  __init__(self)
         o  __repr__(self)
         o  copy(self)
@@ -400,10 +472,25 @@ class ChessBoard(Iaswn):
                                        (0, -1), (0, +1), (-1, 0), (+1, 0)),),
                    }
 
+    def __eq__(self,
+               other):
+        """
+            ChessBoard.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessBoard)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return self.board == other.board and \
+            self.pieces_status == other.pieces_status
+
     def __init__(self):
         """ChessBoard.__init__()"""
-        Iaswn.__init__(self)
-
         self.board = {}  # cf .get_xy(), set_xy()
         self.pieces_status = ChessGameStatus()
 
@@ -713,6 +800,7 @@ class ChessGame(Iaswn):
         o  regex_simplemove_algebraicnotation2
         o  strcoord2coord / coord2strcoord
 
+        o  __eq__(self, other)
         o  __init__(self)
         o  __repr__(self)
         o  read_pgn(self, lines)
@@ -779,10 +867,28 @@ class ChessGame(Iaswn):
         }
     coord2strcoord = {value: key for key, value in strcoord2coord.items()}
 
+    def __eq__(self,
+               other):
+        """
+            ChessGame.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessGame)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return self.chessgame_tags == other.chessgame_tags and \
+            self.board == other.board and \
+            self.listofmoves == other.listofmoves and \
+            self.status == other.status and \
+            self.errors == other.errors
+
     def __init__(self):
         """ChessGame.__init__()"""
-        Iaswn.__init__(self)
-
         self.chessgame_tags = ChessGameTags()
         self.board = ChessBoard()
         self.listofmoves = ChessListOfMoves()
@@ -1173,9 +1279,26 @@ class ChessGames(list, Iaswn):
 
         _______________________________________________________________________
 
+        o  __eq__(self, other)
         o  read_pgn(self, pgnfilename)
         o  write_pgn(self, pgnfilename)
     """
+    def __eq__(self,
+               other):
+        """
+            ChessGames.__eq__()
+
+            Stricly speaking, not required to read/write PGN files but required
+            to check that everything "works as expected" (see cwc validation).
+
+            ___________________________________________________________________
+
+            ARGUMENT: (ChessGames)other, the object compared to self
+
+            RETURNED VALUE: (bool)True if other == self
+        """
+        return list.__eq__(self, other)
+
     def read_pgn(self,
                  src):
         """ChessGames.read_pgn()"""
@@ -1229,85 +1352,3 @@ class ChessGames(list, Iaswn):
             for line in game.write_pgn():
                 dest.write(line+"\n")
             dest.write("\n")
-
-
-def work_as_expected():
-    """
-        work_as_expected function.
-
-        Like all cwc files, work_as_expected() allows to check that the objects created in
-        this file are usable. Return (bool)success.
-
-        _______________________________________________________________________
-
-        RETURNED VALUE: (bool)True if everything is allright.
-    """
-    data = """
-[Event "Aimchess US Rapid Prelim"]
-[Site "chess24.com INT"]
-[Date "2021.08.29"]
-[Round "6.6"]
-[White "Dominguez Perez, Leinier"]
-[Black "Aronian, Levon"]
-[Result "0-1"]
-[WhiteTitle "GM"]
-[BlackTitle "GM"]
-[WhiteElo "2758"]
-[BlackElo "2782"]
-[ECO "C53"]
-[Opening "Giuoco Piano"]
-[WhiteFideId "3503240"]
-[BlackFideId "13300474"]
-[EventDate "2021.08.28"]
-
-1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d3 O-O 6. O-O d5 7. exd5 Nxd5 8. Re1
-Bg4 9. Nbd2 Nb6 10. h3 Bh5 11. Bb3 Qxd3 12. Nxe5 Qf5 13. Nef3 Rad8 14. Qe2 Nd5
-15. Ne4 Bxf3 16. Qxf3 Qxf3 17. gxf3 Bb6 18. a4 h6 19. Rd1 Nde7 20. Rxd8 Rxd8 21.
-Kf1 Kf8 22. Be3 Nf5 23. Bxb6 axb6 24. Rd1 Rxd1+ 25. Bxd1 Ne5 26. Ng3 Nh4 27. Ke2
-Nhxf3 28. Ke3 Ng1 29. b3 Nxh3 30. f4 Ng6 31. Nh5 Ne7 32. Bg4 Nd5+ 33. Kf3 g6 34.
-Bxh3 gxh5 35. Bc8 Nxc3 36. Bxb7 Ke7 37. Ke3 Kd6 38. Kd4 Na2 39. Ke4 Nb4 40. Kf5
-Nd5 41. Ba6 h4 42. Kg4 h3 43. Be2 h2 44. Bf3 Kc5 45. f5 Nf6+ 46. Kf4 Kb4 47. Ke5
-Ng4+ 48. Kd5 Kxb3 0-1
-
-[Event "Vienna"]
-[Site "Vienna AUH"]
-[Date "1882.05.17"]
-[EventDate "1882.05.10"]
-[Round "7"]
-[Result "1-0"]
-[White "Wilhelm Steinitz"]
-[Black "Bernhard Fleissig"]
-[ECO "C00"]
-[WhiteElo "?"]
-[BlackElo "?"]
-[PlyCount "77"]
-
-1. e4 e6 2. e5 d5 3. exd6 Bxd6 4. d4 Ne7 5. Bd3 Ng6 6. Nf3 Nc6
-7. Nc3 Nb4 8. Bc4 c6 9. Ne4 Bc7 10. O-O O-O 11. Re1 Nd5
-12. Nc5 Nh4 13. Ne5 Nf5 14. c3 Bxe5 15. Rxe5 Nf6 16. Re1 h6
-17. Qf3 Nd5 18. Bb3 b6 19. Nd3 Ba6 20. Ne5 Rc8 21. Bc2 Nfe7
-22. Qg3 Kh8 23. Qh4 Kg8 24. Qg3 Kh8 25. Qh3 Ng8 26. Qh5 Rc7
-27. Bd2 Ndf6 28. Qh3 Nd5 29. c4 Ndf6 30. Rad1 Qe8 31. Bf4 Rc8
-32. Qa3 Bb7 33. Qxa7 Ba8 34. Qxb6 g5 35. Bg3 Nd7 36. Qb3 f5
-37. f3 Kg7 38. c5 Ndf6 39. Nc4 1-0
-    """
-
-    with DMFile(":memory:") as src:
-        src.write(data)
-        games = ChessGames()
-        if games.read_pgn(src) is False:
-            return False
-        if len(games) != 2:
-            return False
-        if games[1].board.human_repr() != \
-           "♝_♜_♛♜♞_\n" \
-           "______♚_\n" \
-           "__♟_♟♞_♟\n" \
-           "__♙__♟♟_\n" \
-           "__♘♙____\n" \
-           "_♕___♙♗_\n" \
-           "♙♙♗___♙♙\n" \
-           "___♖♖_♔_":
-            return False
-
-        return True

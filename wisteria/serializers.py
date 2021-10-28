@@ -106,7 +106,8 @@ def win_memory():
 
 def serializer_iaswn(action="serialize",
                      obj=None,
-                     fingerprint=""):
+                     fingerprint="",
+                     works_as_expected=None):
     """
         serializer_iaswn()
 
@@ -123,9 +124,11 @@ def serializer_iaswn(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action:      (str) either "version" either "serialize"
-        o  obj:         the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -189,6 +192,16 @@ def serializer_iaswn(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except module.IaswnError as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
@@ -205,7 +218,8 @@ def serializer_iaswn(action="serialize",
 
 def serializer_json(action="serialize",
                     obj=None,
-                    fingerprint=""):
+                    fingerprint="",
+                    works_as_expected=None):
     """
         serializer_json()
 
@@ -222,9 +236,11 @@ def serializer_json(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -288,6 +304,16 @@ def serializer_json(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
@@ -304,7 +330,8 @@ def serializer_json(action="serialize",
 
 def serializer_jsonpickle(action="serialize",
                           obj=None,
-                          fingerprint=""):
+                          fingerprint="",
+                          works_as_expected=None):
     """
         serializer_jsonpickle()
 
@@ -321,9 +348,11 @@ def serializer_jsonpickle(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -387,6 +416,16 @@ def serializer_jsonpickle(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
@@ -403,7 +442,8 @@ def serializer_jsonpickle(action="serialize",
 
 def serializer_jsonpickle_keystrue(action="serialize",
                                    obj=None,
-                                   fingerprint=""):
+                                   fingerprint="",
+                                   works_as_expected=None):
     """
         serializer_jsonpickle_keystrue()
 
@@ -420,9 +460,11 @@ def serializer_jsonpickle_keystrue(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -486,6 +528,16 @@ def serializer_jsonpickle_keystrue(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
@@ -502,7 +554,8 @@ def serializer_jsonpickle_keystrue(action="serialize",
 
 def serializer_marshal(action="serialize",
                        obj=None,
-                       fingerprint=""):
+                       fingerprint="",
+                       works_as_expected=None):
     """
         serializer_marshal()
 
@@ -519,9 +572,11 @@ def serializer_marshal(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -585,6 +640,16 @@ def serializer_marshal(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
@@ -601,7 +666,8 @@ def serializer_marshal(action="serialize",
 
 def serializer_pickle(action="serialize",
                       obj=None,
-                      fingerprint=""):
+                      fingerprint="",
+                      works_as_expected=None):
     """
         serializer_pickle()
 
@@ -618,9 +684,11 @@ def serializer_pickle(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -684,6 +752,16 @@ def serializer_pickle(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
@@ -700,7 +778,8 @@ def serializer_pickle(action="serialize",
 
 def serializer_pyyaml(action="serialize",
                       obj=None,
-                      fingerprint=""):
+                      fingerprint="",
+                      works_as_expected=None):
     """
         serializer_pyyaml()
 
@@ -717,9 +796,11 @@ def serializer_pyyaml(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action: (str) either "version" either "serialize"
-        o  obj:    the object to be serialized
-        o  fingerprint: a string describing the operation (usefull to debug)
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
 
         RETURNED VALUE:
            - None if an error occcured
@@ -783,6 +864,16 @@ def serializer_pyyaml(action="serialize",
 
             if obj == _res2:
                 res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
         except (module.constructor.ConstructorError, ValueError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
