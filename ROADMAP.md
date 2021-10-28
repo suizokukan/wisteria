@@ -72,10 +72,16 @@ What's next ?
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
 
-* checkup(): signaler que plus d'informations sont disponibles avec verbosity=3; dans ce dernier cas, le "width=70" qui
-  s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
-  data.py:DATA (je pense à la valeur de chaque clef)
-* --checkup: affichage non trié pour les "Available Data Objects"
+[DONE] task-222
+
+Improved partial_report__data() display: DATA-s and UNAVAILABLE_DATA-s
+are now sorted.
+
+    * improved partial_report__data() display: DATA-s and UNAVAILABLE_DATA-s
+      are now sorted (task-222)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-221
 

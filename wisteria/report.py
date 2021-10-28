@@ -274,8 +274,9 @@ def partial_report__data():
         f"* {len(wisteria.globs.DATA)} Available Data "
         f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}:")
     msgreport(
-        "; ".join(f"{fmt_data(dataobject_name)}"
-                  for dataobject_name, dataobject in wisteria.globs.DATA.items()))
+        "; ".join(
+            f"{fmt_data(dataobject_name)}"
+            for dataobject_name, dataobject in sorted(wisteria.globs.DATA.items())))
 
     if wisteria.globs.UNAVAILABLE_DATA:
         msgreport()
@@ -283,8 +284,9 @@ def partial_report__data():
             f"! {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
             f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
         msgreport(
-            "; ".join(f"{fmt_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
-                      for dataobject_name, dataobject in wisteria.globs.UNAVAILABLE_DATA.items()))
+            "; ".join(
+                f"{fmt_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+                for dataobject_name, dataobject in sorted(wisteria.globs.UNAVAILABLE_DATA.items())))
 
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
         console = Console(width=DEBUG_CONSOLEWIDTH)
