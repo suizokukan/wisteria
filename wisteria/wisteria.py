@@ -172,7 +172,13 @@ PARSER = \
         description='Comparisons of different Python serializers. '
         f'{help_helpcommandlineargument()}',
         epilog=f"{__projectname__}: {__version__}",
+        add_help=False,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+PARSER.add_argument(
+    '--help', '-h',
+    action='help',
+    help="Show this help message and exit.")
 
 PARSER.add_argument(
     '--version', '-v',
@@ -190,19 +196,19 @@ PARSER.add_argument(
     '--cfgfile',
     action='store',
     default=DEFAULT_CONFIG_FILENAME,
-    help="config file to be read.")
+    help="Config file to be read.")
 
 PARSER.add_argument(
     '--checkup',
     action='store_true',
     default=False,
-    help="show installed serializers, try to read current config file and exit. "
+    help="Show installed serializers, try to read current config file and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
 PARSER.add_argument(
     '--downloadconfigfile',
     action='store_true',
-    help="download default config file and exit")
+    help="Download default config file and exit.")
 
 # MEMOVERUSEPARSER.add_argument(
 # MEMOVERUSE    '--memoveruse',
@@ -219,14 +225,14 @@ PARSER.add_argument(
     '--mymachine',
     action='store_true',
     default=False,
-    help="display informations about the current machine and exit. "
+    help="Display informations about the current machine and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
 PARSER.add_argument(
     '--output',
     action='store',
     default=f'console;logfile/w={LOGFILE_NAME}',
-    help="'console' or 'logfile' or 'console;logfile'. "
+    help="Values are 'console' or 'logfile' or 'console;logfile'. "
     "Instead of 'logfile' you may specify 'logfile/a' (append mode) or 'logfile/w' (write mode). "
     "Instead of 'logfile' you may specify 'logfile=myfile.log'. "
     f"Combinations like 'logfile/w={LOGFILE_NAME}' are accepted. "
@@ -236,7 +242,7 @@ PARSER.add_argument(
     '--mute',
     action='store_true',
     default=False,
-    help="(debug/profile only, not normally to be used) "
+    help="Warning: debug/profile only, not normally to be used. "
     "Prevent any console or file output. "
     "If set, set the value of --verbosity to 'minimal', "
     "--report to 'none' and --console to ''.")
@@ -259,7 +265,7 @@ PARSER.add_argument(
     '--tolerateabsurdvalues',
     action='store_true',
     default=False,
-    help="(debug only, not normally to be used) "
+    help="Warning: debug only, not normally to be used. "
     "If False, stop the program if an absurd value has been computed.")
 
 PARSER.add_argument(

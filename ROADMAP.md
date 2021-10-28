@@ -59,9 +59,6 @@ What's next ?
   s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
   data.py:DATA (je pense à la valeur de chaque clef)
 * chercher "return None, 2" (dans results.py) : incohérence, on devrait renvoyer un autre exit code.
-* Let's remove the temp file > About to remove
-* Let's close the > About to close
-* la chaîne affichée pour --help utilise tantôt une minuscule, tantôt une majuscule en début de phrase > à unifier
 * --checkup: affichage non trié pour les "Available Data Objects"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 * all > allbutcwc; all signifie absolument tout, même cwc
@@ -76,12 +73,26 @@ What's next ?
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
 * worked_as_expected pour les types de base.
+* --exportreport='md'
 
 ===============================================================================
 
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+task-217: * Let's remove the temp file > About to remove
+task-218: * Let's close the > About to close
+
+[DONE] task-216
+
+Improved --help messages readibility: each sentence starts with an uppercase
+letter and ends with a point.
+
+    * improved --help messages readibility: each sentence starts with an uppercase
+      letter and ends with a point (task-216)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-215
 
