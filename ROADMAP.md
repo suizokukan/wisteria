@@ -64,9 +64,6 @@ What's next ?
 * encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * les docstrings dans default/iaswn sont à revoir: il manque les class attributes(?)
 * l'exemple suivant:
-  ./bin/wisteria --cmp="iaswn vs jsonpickle(keys=True)(cwc)" --report="C2a;C2b;C2c"
-    montre qu'il faut que checkup affiche le bon serializer name à utiliser
-* l'exemple suivant:
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
 * worked_as_expected pour les types de base.
@@ -77,6 +74,22 @@ What's next ?
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
+[DONE] task-220
+
+checkup() now displays the internal serializer name (SERIALIZER.name)
+if it's different from the human name (SERIALIZER.human_name)
+
+    * checkup() now displays the internal serializer name (SERIALIZER.name)
+      if it's different from the human name (SERIALIZER.human_name) (task-220)
+    * added a message displayed at the beginning of --checkup messages,
+      explaining (1) that the informations displayed may have been written in 
+      the report file and (2) that --verbosity value has an effect upon the 
+      displayed informations (task-220)
+    * improved partial_report__serializers()'s docstring (task-220)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-219
 

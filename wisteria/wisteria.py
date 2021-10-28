@@ -958,6 +958,9 @@ def checkup():
     # ---- Project name & version, time stamp ---------------------------------
     msgreport(fmt_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
+    msgreport("The following informations may have been written in the report file, "
+              "depending of the parameters you passed to the script. "
+              "--verbosity value has an effect upon the displayed informations.")
     msgreport()
 
     # ---- configuration file -------------------------------------------------

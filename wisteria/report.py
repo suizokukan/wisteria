@@ -311,15 +311,18 @@ def partial_report__serializers():
     """
         partial_report__serializers()
 
-        Display a mini report abouter serializers.
+        Display a mini report about serializers.
     """
     msgreport(
         f"* {len(wisteria.globs.SERIALIZERS)} Available "
         f"{fmt_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
-    msgreport(
-        "- " +
-        "\n- ".join(f"{serializer.checkup_repr()}"
-                    for serializer in wisteria.globs.SERIALIZERS.values()))
+
+    for serializer in wisteria.globs.SERIALIZERS.values():
+        msgreport(f"- {serializer.checkup_repr()}")
+        if serializer.name != serializer.human_name:
+            # please don't use fmt_serializer() with the following line since
+            # we want the raw name of the serializer:
+            msgreport(f"  > use '{serializer.name}' in --cmp string.")
 
     if wisteria.globs.UNAVAILABLE_SERIALIZERS:
         msgreport()
