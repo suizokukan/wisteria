@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="tests.sh v.3/2021-10-21"
+VERSION="tests.sh v.4/2021-10-28"
 
 # ---- --help ----------------------------------------------------------------
 if [[ $1 = "--help" ]] || [[ $1 = "-h" ]]; then
@@ -18,7 +18,7 @@ elif [[ $1 = "--version" ]] || [[ $1 = "-v" ]]; then
 fi
 
 # ==== REAL WORK =============================================================
-echo "WARNING: be patient, these tests may take long time on slow machines."
+echo "WARNING: be patient, these tests may take several minutes on slow machines."
 
 python3.9 -m unittest tests/*.py
 

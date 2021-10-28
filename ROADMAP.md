@@ -51,7 +51,6 @@ What's next ?
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
-* make take long time > several minutes
 * echo "=== wisteria/*.py ===" dans tests.sh
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
@@ -80,6 +79,15 @@ What's next ?
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
+[DONE] task-218
+
+Improved message displayed by `tests.sh`.
+
+    * improved message displayed by `tests.sh` (task-218)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-217
 
