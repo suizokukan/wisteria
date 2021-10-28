@@ -59,6 +59,7 @@ from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DEBUG
 from wisteria.globs import GRAPHS_FILENAME
+from wisteria.globs import DEBUG_CONSOLEWIDTH
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest, trytoimport
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
@@ -286,14 +287,15 @@ def partial_report__data():
                       for dataobject_name, dataobject in wisteria.globs.UNAVAILABLE_DATA.items()))
 
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        console = Console(width=70)
+        console = Console(width=DEBUG_CONSOLEWIDTH)
 
         # ---- data objects ---------------------------------------------------
         all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
                                  tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
 
         msgdebug(
-            f"All data objects ({len(all_dataobjects)} data obj., unvailable+available/width=70):")
+            f"All data objects ({len(all_dataobjects)} "
+            f"data obj., unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
 
         console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
 
@@ -302,7 +304,8 @@ def partial_report__data():
                                  tuple(wisteria.globs.UNAVAILABLE_SERIALIZERS.keys()))
 
         msgdebug(
-            f"All serializers ({len(all_serializers)} seria., unvailable+available/width=70):")
+            f"All serializers ({len(all_serializers)} seria., "
+            f"unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
 
         console.print('; '.join(serializer_name for serializer_name in all_serializers))
 

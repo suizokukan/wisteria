@@ -53,10 +53,6 @@ What's next ?
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
-* checkup(): signaler que plus d'informations sont disponibles avec verbosity=3; dans ce dernier cas, le "width=70" qui
-  s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
-  data.py:DATA (je pense à la valeur de chaque clef)
-* --checkup: affichage non trié pour les "Available Data Objects"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 * all > allbutcwc; all signifie absolument tout, même cwc
 * pgnreader: utiliser les dataclass pour certaines classes
@@ -74,6 +70,21 @@ What's next ?
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
+
+* checkup(): signaler que plus d'informations sont disponibles avec verbosity=3; dans ce dernier cas, le "width=70" qui
+  s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
+  data.py:DATA (je pense à la valeur de chaque clef)
+* --checkup: affichage non trié pour les "Available Data Objects"
+
+[DONE] task-221
+
+New globs.py variable: DEBUG_CONSOLEWIDTH.
+
+    * new globs.py variable: DEBUG_CONSOLEWIDTH (task-221)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-220
 

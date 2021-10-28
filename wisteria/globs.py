@@ -63,6 +63,8 @@
     o  LOGFILE_NAME
 
     o  STR2REPORTSECTION_KEYS
+
+    o  DEBUG_CONSOLEWIDTH
 """
 import re
 
@@ -222,3 +224,7 @@ STR2REPORTSECTION_KEYS = (
 
 # = platform.system()
 PLATFORM_SYSTEM = None
+
+
+# maximal console width used to display some debug messages:
+DEBUG_CONSOLEWIDTH = 70
