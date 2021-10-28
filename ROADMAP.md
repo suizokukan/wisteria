@@ -64,6 +64,18 @@ What's next ?
 * Let's close the > About to close
 * la chaîne affichée pour --help utilise tantôt une minuscule, tantôt une majuscule en début de phrase > à unifier
 * --checkup: affichage non trié pour les "Available Data Objects"
+* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
+* all > allbutcwc; all signifie absolument tout, même cwc
+* pgnreader: utiliser les dataclass pour certaines classes
+* extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
+* encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
+* les docstrings dans default/iaswn sont à revoir: il manque les class attributes(?)
+* l'exemple suivant:
+  ./bin/wisteria --cmp="iaswn vs jsonpickle(keys=True)(cwc)" --report="C2a;C2b;C2c"
+    montre qu'il faut que checkup affiche le bon serializer name à utiliser
+* l'exemple suivant:
+  ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
+  provoque un ZeroDivisionError
 
 ===============================================================================
 
