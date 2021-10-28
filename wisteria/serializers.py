@@ -38,7 +38,7 @@
 
     o  init_serializers()
 """
-# pylint: disable = wrong-import-position
+#   pylint: disable = wrong-import-position
 
 import sys
 import timeit
@@ -46,10 +46,19 @@ import timeit
 import wisteria.globs
 
 if wisteria.globs.PLATFORM_SYSTEM == "Windows":
-    import os  # pylint: disable=unused-import
-    from wmi import WMI  # pylint: disable=import-error
+    # We have to import 'os' only for Windows systems, hence the useless
+    # remark from Pylint when Pylint is used on non-Windows systems.
+    #   pylint: disable=unused-import
+    import os
+    # We have to import 'WMI' only for Windows systems, hence the useless
+    # remark from Pylint when Pylint is used on non-Windows systems.
+    #   pylint: disable=import-error
+    from wmi import WMI
 else:
-    import resource  # pylint: disable=import-error
+    # We have to import 'resource' only for non-Windows systems, hence the useless
+    # remark from Pylint when Pylint is used on Windows systems.
+    #   pylint: disable=import-error
+    import resource
 
 # MEMOVERUSE# --memoveruse C++ module:
 # MEMOVERUSEimport cppyy
@@ -151,7 +160,7 @@ def serializer_iaswn(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()
@@ -263,7 +272,7 @@ def serializer_json(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()
@@ -375,7 +384,7 @@ def serializer_jsonpickle(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()
@@ -487,7 +496,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()
@@ -599,7 +608,7 @@ def serializer_marshal(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()
@@ -711,7 +720,7 @@ def serializer_pickle(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()
@@ -823,7 +832,7 @@ def serializer_pyyaml(action="serialize",
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
-    # MEMOVERUSE    # pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
     # MEMOVERUSE    dumbstr = "0123456789"*100000
     # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
     # MEMOVERUSE    MemOverUse().memoveruse()

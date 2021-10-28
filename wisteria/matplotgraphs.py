@@ -103,7 +103,7 @@ def gradient_bar(axes,
         top = bottom + height
 
         # Pylint doesn't seem to know pyplot.cm.* members:
-        # pylint: disable=no-member
+        #   pylint: disable=no-member
         gradient_image(axes, extent=(left, right, bottom - 0.4, top),
                        cmap=pyplot.cm.Reds_r, cmap_range=(0, 0.8))
 

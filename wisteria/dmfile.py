@@ -75,7 +75,7 @@ class DMFile:
         self.in_memory = name[0] == ":" and name[-1] == ":"
         if not self.in_memory:
             self.name = name
-            # pylint: disable=consider-using-with
+            #   pylint: disable=consider-using-with
             self.obj = open(name, mode=mode, encoding="utf-8")
         else:
             self.name = name[1:-1]

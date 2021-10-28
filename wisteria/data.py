@@ -151,7 +151,10 @@ def init_data():
         "dict(keys/str)": {"key1": "value1", "key2": "value2"},
         "dict(keys/str+subdicts)": {"key1": "value1", "key2": "value2", "key3": {"key4": "key4", }},
 
-        "file descriptor": open(TMPFILENAME,      # pylint: disable=consider-using-with
+        # DATA["file descriptor"] contains a file descriptor which will be closed
+        # by
+        #   pylint: disable=consider-using-with
+        "file descriptor": open(TMPFILENAME,
                                 encoding="utf-8"),
 
         "float": 1.1,
@@ -281,8 +284,8 @@ def init_data():
     try:
         # The following 'import' statement has deliberately placed here and
         # not at the beginning of the file.
-        # pylint: disable=import-outside-toplevel
-        # pylint: disable=import-error
+        #   pylint: disable=import-outside-toplevel
+        #   pylint: disable=import-error
         import dateutil.parser
         wisteria.globs.DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
     except ImportError:

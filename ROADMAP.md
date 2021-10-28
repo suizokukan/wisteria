@@ -55,7 +55,6 @@ What's next ?
 * echo "=== wisteria/*.py ===" dans tests.sh
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
-* "# pylint: disable" > "#   pylint: disable"
 * checkup(): signaler que plus d'informations sont disponibles avec verbosity=3; dans ce dernier cas, le "width=70" qui
   s'affiche dans le checkup n'est pas clair (width>console with). Afficher encore plus de détails sur le contenu de
   data.py:DATA (je pense à la valeur de chaque clef)
@@ -76,6 +75,7 @@ What's next ?
 * l'exemple suivant:
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
+* worked_as_expected pour les types de base.
 
 ===============================================================================
 
@@ -83,8 +83,16 @@ What's next ?
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
-task-214: worked_as_ex pour les types de base.
+[DONE] task-215
 
+exit_handler() closes wisteria.globs.DATA['file descriptor'] (task-215)
+
+    * exit_handler() closes wisteria.globs.DATA['file descriptor'] (task-215)
+    * "# pylint: disable" > "#   pylint: disable" (task-215)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+    
 [DONE] task-214
 
 Reversibility is now computed thanks to a call to works_as_expected() method

@@ -65,10 +65,10 @@
     o  work_as_expected()
 """
 # For this demonstration file, some writing rules are not respected:
-# pylint: disable=invalid-name
-# pylint: disable=too-few-public-methods
-# pylint: disable=too-many-nested-blocks
-# pylint: disable=too-many-arguments
+#   pylint: disable=invalid-name
+#   pylint: disable=too-few-public-methods
+#   pylint: disable=too-many-nested-blocks
+#   pylint: disable=too-many-arguments
 import copy
 import re
 

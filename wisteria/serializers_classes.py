@@ -152,7 +152,7 @@ class SerializerDataObj:
 
 
 # No useless public methods to add, indeed!
-# pylint: disable=too-few-public-methods
+#   pylint: disable=too-few-public-methods
 class SerializationResult:
     """
         SerializationResult class

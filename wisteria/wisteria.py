@@ -504,7 +504,7 @@ else:
 #   with open(...) as wisteria.globs.FILECONSOLE_FILEOBJECT:
 # but it's not possible here. Please notice that we check the closing of this
 # file in exit handler.
-# pylint: disable=consider-using-with
+#   pylint: disable=consider-using-with
 wisteria.globs.FILECONSOLE_FILEOBJECT = open(wisteria.globs.OUTPUT[3],
                                              wisteria.globs.OUTPUT[2],
                                              encoding="utf-8")
@@ -767,11 +767,19 @@ def exit_handler():
         except PermissionError:
             pass
 
+    if not wisteria.globs.DATA['file descriptor'].closed:
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) Let's close the wisteria.globs.DATA['file descriptor'] "
+                     "file descriptor"
+                     f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
+        wisteria.globs.DATA['file descriptor'].close()
+
+    # this file should be the last one to be closed if we want to use msgxxx() methods:
     if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"(exit_handler) Let's close the filenconsole file "
                      f"'{wisteria.globs.FILECONSOLE_FILEOBJECT.name}' "
-                     f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}')")
+                     f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
         wisteria.globs.FILECONSOLE_FILEOBJECT.close()
 
 
@@ -935,7 +943,7 @@ def checkup():
         - data objects
     """
     # Pylint gets mixed up when reading how we iterate over <serializers>:
-    # pylint: disable=consider-using-dict-items
+    #   pylint: disable=consider-using-dict-items
 
     # ---- Project name & version, time stamp ---------------------------------
     msgreport(fmt_projectversion(add_timestamp=True))

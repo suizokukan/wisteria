@@ -336,7 +336,7 @@ def partial_report__serializers():
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_a1(results,
                       s1s2d):
     """
@@ -461,7 +461,7 @@ def report_section_a2(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_a3(results,
                       s1s2d):
     """
@@ -516,7 +516,7 @@ def report_section_a3(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_b1a(results,
                        s1s2d):
     """
@@ -610,7 +610,7 @@ def report_section_b1a(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_b1b(results,
                        s1s2d):
     """
@@ -686,7 +686,7 @@ def report_section_b1b(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_b1c(results,
                        s1s2d):
     """
@@ -763,7 +763,7 @@ def report_section_b1c(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_b1d(results,
                        s1s2d):
     """
@@ -832,7 +832,7 @@ def report_section_b1d(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_b2a(results,
                        s1s2d):
     """
@@ -926,7 +926,7 @@ def report_section_b2a(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_b2b(results,
                        s1s2d):
     """
@@ -1942,7 +1942,7 @@ def report_section_c2c(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_d1a(results,
                        s1s2d):
     """
@@ -1997,7 +1997,7 @@ def report_section_d1a(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_d1b(results,
                        s1s2d):
     """
@@ -2052,7 +2052,7 @@ def report_section_d1b(results,
 
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
-# pylint: disable=unused-argument
+#   pylint: disable=unused-argument
 def report_section_graphs(results,
                           s1s2d):
     """
