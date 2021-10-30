@@ -226,7 +226,10 @@ def compute_results(config,
                     results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
                         action="serialize",
                         obj=wisteria.globs.DATA[data_name],
-                        fingerprint=fingerprint)
+                        fingerprint=fingerprint,
+                        works_as_expected=wisteria.data.works_as_expected
+                        if wisteria.data.works_as_expected(data_name=data_name,
+                                                           obj=None) is True else None)
                 else:
                     # data_name: e.g. "cwc.pgnreader.default.chessgames"
                     #                > "cwc.pgnreader.default.ChessGames"

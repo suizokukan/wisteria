@@ -26,6 +26,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)exit codes
 ### (pimydoc)progress bar
 ### (pimydoc)report sections
+### (pimydoc)works_as_expected arguments and returned value
     
 ### ==========================================================================
 [(pimydoc)code structure]
@@ -158,3 +159,15 @@ computing the result, which is unpleasant to see.
     . D1a   : informations about the machine (no extensive details)
     . D1b   : informations about the machine (extensive details)
 * graphs    : graphic visualizations
+### ===========================================================================
+[(pimydoc)works_as_expected arguments and returned value]
+All works_as_expected() functions are supposed to (1) say if <data_name> is in
+the scope of this function (2) and say if <obj> works as expected. 
+    
+ARGUMENTS:
+    o  data_name:   (None or str)data_name of the <obj>ect
+    o  obj:         (None or any object) object to be checked
+    
+RETURNED VALUE: 
+    (<obj> is None, <data_name> is not None) (bool)<data_name> is known
+    (<obj> is not None, <data_name> may be None or a str.) <obj> works as expected.

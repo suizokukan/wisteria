@@ -57,7 +57,7 @@ from rich.console import Console
 import wisteria.globs
 from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
-from wisteria.globs import VERBOSITY_DEBUG
+from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import GRAPHS_FILENAME
 from wisteria.globs import DEBUG_CONSOLEWIDTH
 from wisteria.wisteriaerror import WisteriaError
@@ -69,6 +69,7 @@ from wisteria.reprfmt import fmt_exaequowith, fmt_exaequowith_hall, fmt_projectv
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 from wisteria.matplotgraphs import hbar2png
+from wisteria.cwc.cwc_utils import select__works_as_expected__function
 
 
 def humanratio(ratio,
@@ -273,10 +274,16 @@ def partial_report__data():
     msgreport(
         f"* {len(wisteria.globs.DATA)} Available Data "
         f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}:")
-    msgreport(
-        "; ".join(
-            f"{fmt_data(dataobject_name)}"
-            for dataobject_name, dataobject in sorted(wisteria.globs.DATA.items())))
+
+    string = []
+    for data_object_name, _ in sorted(wisteria.globs.DATA.items()):  # data_object_name, data_object
+        wae = ""
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            wae_func = select__works_as_expected__function(data_object_name)
+            if wae_func:
+                wae = f"({wae_func.__module__}.{wae_func.__name__}())"
+        string.append(f"{fmt_data(data_object_name)}{wae}")
+    msgreport("; ".join(string))
 
     if wisteria.globs.UNAVAILABLE_DATA:
         msgreport()

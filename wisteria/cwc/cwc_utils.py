@@ -51,6 +51,7 @@
     o  modulefullrealname_to_waemodulename(modulefullrealname)
     o  is_a_cwc_name(data_object_name)
     o  is_this_an_appropriate_module_for_serializer(data_name__module, serializer)
+    o  select__works_as_expected__function(data_object_name)
 """
 import wisteria.globs
 
@@ -259,3 +260,28 @@ def is_this_an_appropriate_module_for_serializer(data_name__module,
                         <serializer>
     """
     return data_name__module.endswith(wisteria.globs.SERIALIZERS[serializer].cwc)
+
+
+def select__works_as_expected__function(data_object_name):
+    """
+        select__works_as_expected__function()
+
+        Return a "works_as_expected" function apppropriate to <data_object_name>.
+
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)<data_object_name>
+
+        RETURNED VALUE: None or a callable
+    """
+    if not is_a_cwc_name(data_object_name):
+        # <data_object_name> is a simple type like "int" (and not a cwc type)
+        return None if not wisteria.data.works_as_expected(data_name=data_object_name) \
+            else wisteria.data.works_as_expected
+
+    # <data_object_name> is a cwc name:
+    #  e.g. "wisteria.cwc.pgnreader.default.ChessGames" >
+    #               "wisteria.cwc.pgnreader.works_as_expected.works_as_expected
+    return getattr(wisteria.globs.MODULES[modulefullrealname_to_waemodulename(data_object_name)],
+                   "works_as_expected")

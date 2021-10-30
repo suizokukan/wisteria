@@ -92,18 +92,27 @@ Ng4+ 48. Kd5 Kxb3 0-1
     return obj
 
 
-def works_as_expected(obj):
+def works_as_expected(data_name=None,
+                      obj=None):
     """
-        works_as_expected() function.
+        works_as_expected()
 
-        Like all cwc files, work_as_expected() allows to check that the objects created in
-        this file are usable. Return (bool)success.
+        works_as_expected() function for basic types defined DATA/UNAVAILABLE_DATA.
+
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be tested
-
-        RETURNED VALUE: (bool)True if everything is allright.
+        (pimydoc)works_as_expected arguments and returned value
+        ⋅All works_as_expected() functions are supposed to (1) say if <data_name> is in
+        ⋅the scope of this function (2) and say if <obj> works as expected.
+        ⋅
+        ⋅ARGUMENTS:
+        ⋅    o  data_name:   (None or str)data_name of the <obj>ect
+        ⋅    o  obj:         (None or any object) object to be checked
+        ⋅
+        ⋅RETURNED VALUE:
+        ⋅    (<obj> is None, <data_name> is not None) (bool)<data_name> is known
+        ⋅    (<obj> is not None, <data_name> may be None or a str.) <obj> works as expected.
     """
     if len(obj) != 2:
         return False

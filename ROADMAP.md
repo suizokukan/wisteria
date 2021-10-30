@@ -43,6 +43,7 @@ What's next ?
 * --logfilename > reportfilename (idem pour les constantes associées, définies dans globs.py)
 * reportTIMESTAMP.txt
 * comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
+* comment expliquer que pickle n'utilise pas de mémoire pour pgnreader, mais Iaswn, si ?
 * branche doublecheck
   branche doublecheckmemusage qui ne doit être rien d'autre que (1) main < virer #MEMMACHIN
   + (2) __version__ = "0.1.3 (doublecheckmemusage branch)", il nous faut donc un script de
@@ -62,7 +63,6 @@ What's next ?
 * l'exemple suivant:
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
-* worked_as_expected pour les types de base.
 * --exportreport='md'
 
 ===============================================================================
@@ -70,6 +70,22 @@ What's next ?
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
+[DONE] task-224
+
+Modified --checkup output so that a works_as_expected() function linked
+to a data type is displayed.
+
+    * modified --checkup output so that a works_as_expected() function linked
+      to a data type is displayed (task-224)
+    * new entry in `pimydoc`: `works_as_expected arguments and returned value` 
+      (task-224)
+    * new function in cwc_utils.py: `select__works_as_expected__function()` 
+      (task-224)
+    * all works_as_expected() functions have now two arguments (task-224)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-223
 

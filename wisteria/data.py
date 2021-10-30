@@ -290,3 +290,43 @@ def init_data():
         wisteria.globs.DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
     except ImportError:
         wisteria.globs.UNAVAILABLE_DATA["dateutil(parser.parse)"] = "missing package: dateutil"
+
+
+def works_as_expected(data_name=None,
+                      obj=None):
+    """
+        works_as_expected()
+
+        works_as_expected() function for basic types defined DATA/UNAVAILABLE_DATA.
+
+
+        _______________________________________________________________________
+
+        (pimydoc)works_as_expected arguments and returned value
+        ⋅All works_as_expected() functions are supposed to (1) say if <data_name> is in
+        ⋅the scope of this function (2) and say if <obj> works as expected.
+        ⋅
+        ⋅ARGUMENTS:
+        ⋅    o  data_name:   (None or str)data_name of the <obj>ect
+        ⋅    o  obj:         (None or any object) object to be checked
+        ⋅
+        ⋅RETURNED VALUE:
+        ⋅    (<obj> is None, <data_name> is not None) (bool)<data_name> is known
+        ⋅    (<obj> is not None, <data_name> may be None or a str.) <obj> works as expected.
+    """
+    if data_name == "list":
+        if obj is None:
+            # yes, this data_name is known:
+            return True
+        # <obj> is not None: does <obj> work as expected ?
+        obj.clear()
+        if len(obj) != 0:
+            return False
+        obj.append("1")
+        obj.append("2")
+        if obj[1] != "2":
+            return False
+        return True
+
+    # unknown data_name:
+    return False
