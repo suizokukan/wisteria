@@ -11,4 +11,6 @@ rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markd
 |-- colorama >=0.4.0,<0.5.0
 |-- commonmark >=0.9.0,<0.10.0
 `-- pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+`-- pywin32 *
 ```

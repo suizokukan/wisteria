@@ -62,6 +62,15 @@ What's next ?
 
 [CURRENT] v. 0.1.7
 
+[DONE] task-230
+
+Updated project dependencies with `poetry update`.
+
+    * updated project dependencies with `poetry update` (task-230)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] task-229
 
 Added a new serializer: 'yajl'.
