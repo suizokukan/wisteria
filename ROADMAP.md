@@ -60,6 +60,8 @@ What's next ?
 
 ===============================================================================
 
+[CURRENT] v. 0.1.7
+
 [DONE] v. 0.1.6
 
 - added 'allbutcwc' as a valid cmp data string
