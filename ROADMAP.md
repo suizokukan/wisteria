@@ -73,8 +73,16 @@ What's next ?
 
 'allbutcwc' (cmp data string); each data type may be tested; 
 
-task-227: * les docstrings dans default/iaswn sont à revoir: il manque les class attributes(?)
 task-228: * pgnreader: utiliser les dataclass pour certaines classes
+
+[DONE] task-227
+
+Improved documentation in pgn/default.py and in pgn/iaswn.py.
+
+    * improved documentation in pgn/default.py and in pgn/iaswn.py (task-227)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-226
 

@@ -21,9 +21,10 @@
 """
     Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
 
-    cwc/PGN reader+writer specific to Iaswn serializer.
-
-
+    cwc/PGN reader+writer specific to Iaswn serializer. The following types are used:
+    - bool, int, str
+    - dict, list, tuple
+        Note that dicts may have non string keys.
     ___________________________________________________________________________
 
     PGN reader+writer (https://en.wikipedia.org/wiki/Portable_Game_Notation).
@@ -62,7 +63,7 @@
     o  ChessGames class
 
     o  fill(obj)
-    o  work_as_expected()
+    o  works_as_expected()
 """
 # For this demonstration file, some writing rules are not respected:
 #   pylint: disable=invalid-name
@@ -173,6 +174,9 @@ class ChessPiece(Iaswn):
 
         o  piece2unicode/unicode2piece
 
+        o  (int)color, e.g. COLOR_WHITE
+        o  (int)nature, e.g. PIECENATURE_PAWN
+
         o  __eq__(self, other)
         o  __init__(self, color=COLOR_NOCOLOR, nature=PIECENATURE_NOPIECE)
     """
@@ -230,6 +234,13 @@ class ChessMove(Iaswn):
 
 
         _______________________________________________________________________
+
+        o  (int)movetype, e.g. MOVETYPE_SINGLE
+        o  (iterable)beforeafter_coord_piece1, e.g. ((0,0), (1,1))
+        o  (iterable)beforeafter_coord_piece2, e.g. ((0,0), (1,1))
+        o  (None|int)promotion, e.g. PIECENATURE_QUEEN
+        o  (bool)enpassant
+        o  (str)str_game_result, e.g. "0-1"
 
         o  __eq__(self, other)
         o  __init__(self,
@@ -291,6 +302,9 @@ class ChessListOfMoves(list, Iaswn):
 
 
         _______________________________________________________________________
+
+        o  (int)next_player
+        o  (int)doublemove_number
 
         o  __eq__(self, other)
         o  __init__(self,
@@ -357,6 +371,9 @@ class ChessGameStatus(Iaswn):
 
 
         _______________________________________________________________________
+
+        o  (bool)game_is_over
+        o  (int)who_won, e.g. COLOR_BLACK
 
         o  __eq__(self, other)
         o  __init__(self,
@@ -438,6 +455,9 @@ class ChessBoard(Iaswn):
         _______________________________________________________________________
 
         o  moves_descr
+
+        o  (dict)board
+        o  (ChessGameStatus)pieces_status
 
         o  __eq__(self, other)
         o  __init__(self)
@@ -799,6 +819,12 @@ class ChessGame(Iaswn):
         o  regex_simplemove_algebraicnotation
         o  regex_simplemove_algebraicnotation2
         o  strcoord2coord / coord2strcoord
+
+        o  (ChessGameTags)chessgame_tags
+        o  (ChessBoard)board
+        o  (ChessListOfMoves)listofmoves
+        o  (ChessGameStatus)status
+        o  (list of str)errors
 
         o  __eq__(self, other)
         o  __init__(self)
