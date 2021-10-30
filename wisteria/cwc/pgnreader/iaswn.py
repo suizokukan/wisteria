@@ -72,6 +72,7 @@
 #   pylint: disable=too-many-arguments
 import copy
 import re
+from dataclasses import dataclass
 
 from iaswn.iaswn import Iaswn
 
@@ -166,6 +167,7 @@ class ChessGameTags(dict, Iaswn):
         return "; ".join(f"{key}: {value}" for key, value in self.items())
 
 
+@dataclass
 class ChessPiece(Iaswn):
     """
         ChessPiece class
@@ -178,8 +180,10 @@ class ChessPiece(Iaswn):
         o  (int)nature, e.g. PIECENATURE_PAWN
 
         o  __eq__(self, other)
-        o  __init__(self, color=COLOR_NOCOLOR, nature=PIECENATURE_NOPIECE)
     """
+    color: int = COLOR_NOCOLOR
+    nature: int = PIECENATURE_NOPIECE
+
     piece2unicode = {
         (PIECENATURE_NOPIECE, COLOR_NOCOLOR): '_',
         (PIECENATURE_PAWN, COLOR_WHITE): '♙',
@@ -202,13 +206,6 @@ class ChessPiece(Iaswn):
         """ChessPiece.__eq__()"""
         return self.color == other.color and self.nature == other.nature
 
-    def __init__(self,
-                 color=COLOR_NOCOLOR,
-                 nature=PIECENATURE_NOPIECE):
-        """ChessPiece.__init__()"""
-        self.color = color
-        self.nature = nature
-
     def __repr__(self):
         """ChessPiece.__repr__()"""
         return f"ChessPiece: {self.color=}; {self.nature=}"
@@ -228,6 +225,7 @@ class ChessPiece(Iaswn):
         return self.color == COLOR_NOCOLOR and self.nature == PIECENATURE_NOPIECE
 
 
+@dataclass
 class ChessMove(Iaswn):
     """
         ChessMove class
@@ -243,14 +241,15 @@ class ChessMove(Iaswn):
         o  (str)str_game_result, e.g. "0-1"
 
         o  __eq__(self, other)
-        o  __init__(self,
-                  beforeafter_coord_piece1,
-                  beforeafter_coord_piece2=None,
-                  movetype=MOVETYPE_SINGLE,
-                  promotion=None,
-                  enpassant=False)
         o  __repr__(self)
     """
+    beforeafter_coord_piece1: tuple
+    beforeafter_coord_piece2: tuple
+    movetype: int = MOVETYPE_SINGLE
+    promotion: int = None
+    enpassant: bool = False
+    str_game_result: str = None
+
     def __eq__(self,
                other):
         """
@@ -272,21 +271,6 @@ class ChessMove(Iaswn):
             self.enpassant == other.enpassant and \
             self.str_game_result == other.str_game_result
 
-    def __init__(self,
-                 beforeafter_coord_piece1,
-                 beforeafter_coord_piece2=None,
-                 movetype=MOVETYPE_SINGLE,
-                 promotion=None,
-                 enpassant=False,
-                 str_game_result=None):
-        """ChessMove.__init__()"""
-        self.movetype = movetype
-        self.beforeafter_coord_piece1 = beforeafter_coord_piece1
-        self.beforeafter_coord_piece2 = beforeafter_coord_piece2
-        self.promotion = promotion
-        self.enpassant = enpassant
-        self.str_game_result = str_game_result
-
     def __repr__(self):
         """ChessMove.__repr__()"""
         return f"{self.movetype=}; " \
@@ -294,6 +278,7 @@ class ChessMove(Iaswn):
             f"{self.promotion=}; {self.enpassant=}; {self.str_game_result=};"
 
 
+@dataclass
 class ChessListOfMoves(list, Iaswn):
     """
         ChessListOfMoves class
@@ -307,13 +292,13 @@ class ChessListOfMoves(list, Iaswn):
         o  (int)doublemove_number
 
         o  __eq__(self, other)
-        o  __init__(self,
-                 next_player=COLOR_WHITE,
-                 doublemove_number=1)
         o  __repr__(self)
         o  add_move(self, move)
         o  who_plays(self)
     """
+    next_player: int = COLOR_WHITE
+    doublemove_number: int = 1
+
     def __eq__(self,
                other):
         """
@@ -332,14 +317,6 @@ class ChessListOfMoves(list, Iaswn):
             self.next_player == other.next_player and \
             self.doublemove_number == other.doublemove_number
 
-    def __init__(self,
-                 next_player=COLOR_WHITE,
-                 doublemove_number=1):
-        """ChessListOfMoves.__init__()"""
-        list.__init__(self)
-        self.next_player = next_player
-        self.doublemove_number = doublemove_number
-
     def __repr__(self):
         """ChessListOfMoves.__repr__()"""
         return f"list of moves: {self.next_player=}; {self.doublemove_number=}; " + \
@@ -348,7 +325,7 @@ class ChessListOfMoves(list, Iaswn):
     def add_move(self,
                  move):
         """
-            ChessListOfMoves.__init__()
+            ChessListOfMoves.add_move()
 
             This move is played by self.next_player
         """
@@ -365,6 +342,7 @@ class ChessListOfMoves(list, Iaswn):
         return self.next_player
 
 
+@dataclass
 class ChessGameStatus(Iaswn):
     """
         ChessGameStatus class
@@ -376,16 +354,15 @@ class ChessGameStatus(Iaswn):
         o  (int)who_won, e.g. COLOR_BLACK
 
         o  __eq__(self, other)
-        o  __init__(self,
-                 pieces=None,
-                 game_is_over=False,
-                 who_won=None
         o  __repr__(self)
         o  copy(self)
         o  update_from_pgn_string(self,
                                status_string,
                                current_player)
     """
+    game_is_over: bool = False
+    who_won: int = COLOR_NOCOLOR
+
     def __eq__(self,
                other):
         """
@@ -402,13 +379,6 @@ class ChessGameStatus(Iaswn):
         """
         return self.game_is_over == other.game_is_over and \
             self.who_won == other.who_won
-
-    def __init__(self,
-                 game_is_over=False,
-                 who_won=None):
-        """ChessGameStatus.__init__()"""
-        self.game_is_over = game_is_over  # (bool)
-        self.who_won = who_won  # COLOR_NOCOLOR / COLOR_BLACK / COLOR_WHITE
 
     def __repr__(self):
         """ChessGameStatus.__repr__()"""

@@ -71,9 +71,18 @@ What's next ?
 
 [CURRENT] v. 0.1.6
 
-'allbutcwc' (cmp data string); each data type may be tested; 
+'allbutcwc' (cmp data string); each data type may be tested thanks to the
+'works_as_expected' (=wae) mechanism.
 
-task-228: * pgnreader: utiliser les dataclass pour certaines classes
+[DONE] task-228
+
+Simplified code in pgnreader/[default|iaswn].py by using dataclass.
+
+    * simplified code in pgnreader/[default|iaswn].py by using dataclass
+      (task-228)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-227
 
