@@ -62,6 +62,15 @@ What's next ?
 
 [CURRENT] v. 0.1.7
 
+[DONE] task-229
+
+Added a new serializer: 'yajl'.
+
+    * Added a new serializer: 'yajl' (task-229)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] v. 0.1.6
 
 - added 'allbutcwc' as a valid cmp data string
