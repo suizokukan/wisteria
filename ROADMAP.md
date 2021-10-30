@@ -4,51 +4,13 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-0.2.5 anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
-      comment signaler cette anomalie ?
-0.2.4 ajouter un max de serializers
-        https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
-        ion (https://github.com/amzn/ion-python)
-        xdrlib (https://docs.python.org/3/library/xdrlib.html)
-        Django (https://www.django-rest-framework.org/api-guide/serializers/)
-        serpy (https://serpy.readthedocs.io/en/latest/performance.html)
-        messagegpack (https://msgpack.org/)
-        python-cjson (https://pypi.org/project/python-cjson/)
-        python-rapidjson (https://pypi.org/project/python-rapidjson/)
-        yajl (https://pypi.org/project/yajl/)
-        ujson (https://pypi.org/project/ujson/)
-
-0.2.3 ajouter un max de données
-      jouer avec des données d'au moins 50 Mo de json string.
-      numpy data
-      panda data
-0.2.2 README.md acceptable
-      + __init__.py
-0.2.1 tests
-        * tester toutes les divisions
-        * sur des ordis très rapides, le temps pourrait être nul.
-0.2.0 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
-      chercher si une combinaison donne des résultats vraiment différents des autres
-0.1.9 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-0.1.8 ajouter des serializes comme Django, ce qui oblige à travailler sur du vrai code
-0.1.7 --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
+* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+* --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
-0.1.6 cwc/pgnreader/iaswn.py + test()
-
 * # The "PermissionError" exception may be raised on Windows system
     tester ce qui se passe avec with open()..: pass >>> le fichier est-il fermé ?
-* peak memory usage:
-    remplacer le vague "memory usage" par "peak memory usage"; mais est-ce vrai sur Windows ?
-    https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 * --logfilename > reportfilename (idem pour les constantes associées, définies dans globs.py)
-* reportTIMESTAMP.txt
-* comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
-* comment expliquer que pickle n'utilise pas de mémoire pour pgnreader, mais Iaswn, si ?
-* branche doublecheck
-  branche doublecheckmemusage qui ne doit être rien d'autre que (1) main < virer #MEMMACHIN
-  + (2) __version__ = "0.1.3 (doublecheckmemusage branch)", il nous faut donc un script de
-  conversion, à grand coups de grep(?) __version__ = "0.1.3" + "(doub...)" (??)
-* report.txt > wisteria.txt (plus clair)
+* report.txt > wisteriaTIMESTAMP.txt (plus clair)
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
@@ -61,18 +23,190 @@ What's next ?
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
 * --exportreport='md'
-* finir de couvrir le plus de datas possible
+* finir de couvrir le plus de datas possible:
+    - third-party à ajouter, en particulier panda+numpy
+    - écrire les adaptations spécifiques pour cwc
+    - fonctions wae pour les types de base
 * finir de couvrir le plus de serializers possible
-* finir de valider le plus de datas possible (fonctions wae())
+        https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
+        ion (https://github.com/amzn/ion-python)
+        xdrlib (https://docs.python.org/3/library/xdrlib.html)
+        Django (https://www.django-rest-framework.org/api-guide/serializers/)
+        serpy (https://serpy.readthedocs.io/en/latest/performance.html)
+        messagegpack (https://msgpack.org/)
+        python-cjson (https://pypi.org/project/python-cjson/)
+        python-rapidjson (https://pypi.org/project/python-rapidjson/)
+        yajl (https://pypi.org/project/yajl/)
+        ujson (https://pypi.org/project/ujson/)
 * data_object, dataobj_name: c'est le bazar
-
+* README.md acceptable
+      + __init__.py
+* tests
+        * tester toutes les divisions
+        * sur des ordis très rapides, le temps pourrait être nul.
+* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+      chercher si une combinaison donne des résultats vraiment différents des autres
+* anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+      comment signaler cette anomalie ?
+* comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
+* comment expliquer que pickle n'utilise pas de mémoire pour pgnreader, mais Iaswn, si ?
+* branche doublecheck
+  branche doublecheckmemusage qui ne doit être rien d'autre que (1) main < virer #MEMMACHIN
+  + (2) __version__ = "0.1.3 (doublecheckmemusage branch)", il nous faut donc un script de
+  conversion, à grand coups de grep(?) __version__ = "0.1.3" + "(doub...)" (??)
+* peak memory usage:
+    remplacer le vague "memory usage" par "peak memory usage"; mais est-ce vrai sur Windows ?
+    https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 
 ===============================================================================
 
-[CURRENT] v. 0.1.6
+[DONE] v. 0.1.6
 
-'allbutcwc' (cmp data string); each data type may be tested thanks to the
-'works_as_expected' (=wae) mechanism.
+- added 'allbutcwc' as a valid cmp data string
+- each data type may be tested thanks to the 'works_as_expected' (=wae) mechanism.
+
+
+bugfix
+
+    * bugfix: compute_results() now returns new exit code 4 if there's no
+      data to handle (task-219)
+    * bugfix: serializer_xxx() methods call now correctly works_as_expected()
+              method (task-225)
+
+code quality
+
+    * (pylintrc) max-nested-blocks=5 > max-nested-blocks=6 (task-212)
+    * "# pylint: disable" > "#   pylint: disable" (task-215)
+    * modified pylintrc: max-attributes=8 & max-args=8 (task-223)
+    * replaced double quotes in the code with single quotes for some arguments:
+      "cwc" > 'cwc', "ini" > 'ini', ... (task-225)
+    * functions in cwc_utils.py are now in alphabetical order.
+     (task-226)
+    * simplified code in pgnreader/[default|iaswn].py by using dataclass
+      (task-228)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
+code structure
+
+    * (cwc_default.py): the tests are now partly in-memory (task-210)
+    * new file: wisteria/dmfile.py (DMFile class) (task-210)
+    * (cwc_default.py): test() function
+      Like all cwc files, test() allows to check that the objects created in
+      this file are usable. Return (bool)success. (task-211)
+    * `cwc mode` works with 'pickle' (and all serializers requiring 'default' cwc
+      module) and with 'iaswn'. Please note that cwc objects are not yet fully
+      initialized. (task-212)
+    * DATA[] contains cwc modules too (task-212)
+    * new cwc/pgnreader file: iaswn.py (task-212)
+    * new file (`cwc_utils.py`) with the following functions:
+      - is_a_cwc_name()
+      - moduleininame_to_modulefullrealname()
+      - modulefullrealname_to_modulerealname()
+      - modulefullrealname_to_objectname()
+      - is_this_an_appropriate_module_for_serializer()
+      (task-212)
+    * (cwc/pgnreader) initialize() and works_as_expected() have been moved to
+       the new file wisteria/cwc/pgnreader/works_as_expected.py (task-214)
+    * new function in cwc_utils.py: modulefullrealname_to_waemodulename() (task-214)
+    * (cwc/pgnreader) added __eq__ method to all classes so that evaluation
+      (reversibility) is possible (task-214)
+    * exit_handler() closes wisteria.globs.DATA['file descriptor'] (task-215)
+    * new globs.py variable: DEBUG_CONSOLEWIDTH (task-221)
+    * it's now possible to add a comment for a serializer:
+      Serializer.comment may be None or a string. (task-223)
+    * new function in cwc_utils.py: `select__works_as_expected__function()`
+      (task-224)
+    * all works_as_expected() functions have now two arguments (task-224)
+    * 4 values are now accepted for cmpdata: 'cwc', 'ini', 'allbutcwc' and 'all'
+      (task-225)
+
+documentation
+
+    * new entries in pimydoc: `cwc modules names` and `DATA format` (task-212)
+    * improved documentation (task-212)
+    * new entry in `pimydoc`: progress bar (task-213)
+    * documentation (task-213)
+    * pimydoc: added to 'exit codes' new exit code 4
+    * improved partial_report__serializers()'s docstring (task-220)
+    * updated README.md (task-223)
+    * new entry in `pimydoc`: `works_as_expected arguments and returned value`
+      (task-224)
+    * new entry in `pimydoc`: `--cmp format` (task-225)
+    * improved documentation in pgn/default.py and in pgn/iaswn.py (task-227)
+    * improved ROADMAP.md (0.1.6)
+    
+interface
+
+    * fixed a typo in partial_report__data() (task-212)
+    * fixed a typo in `report_section_c2c__serializervsserializer()`
+      (task-212)
+    * Serializers can from now display the encoded string they have computed (task-213)
+    * improved --help messages readibility: each sentence starts with an uppercase
+      letter and ends with a point (task-216)
+    * Improved debug messages displayed by exit_handler() (task-217)
+    * improved message displayed by `tests.sh` (task-218)
+    * checkup() now displays the internal serializer name (SERIALIZER.name)
+      if it's different from the human name (SERIALIZER.human_name) (task-220)
+    * added a message displayed at the beginning of --checkup messages,
+      explaining (1) that the informations displayed may have been written in
+      the report file and (2) that --verbosity value has an effect upon the
+      displayed informations (task-220)
+    * improved partial_report__data() display: DATA-s and UNAVAILABLE_DATA-s
+      are now sorted (task-222)
+    * modified --checkup output so that a works_as_expected() function linked
+      to a data type is displayed (task-224)
+    * 4 values are now accepted for cmpdata: 'cwc', 'ini', 'allbutcwc' and 'all'
+      (task-225)
+
+tasks
+
+    * task(s): task-210, task-211, task-212, task-213, task-214, task-215,
+               task-216, task-217, task-218, task-219, task-220, task-221,
+               task-222, task-223, task-224, task-225, task-226, task-227,
+               task-228
+
+version
+
+    * set version to '0.1.6'
+    
+    
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.4
+Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-228
 
@@ -97,8 +231,8 @@ Improved documentation in pgn/default.py and in pgn/iaswn.py.
 
 Functions in cwc_utils.py are now in alphabetical order.
 
-   * functions in cwc_utils.py are now in alphabetical order.
-     (task-226)
+    * functions in cwc_utils.py are now in alphabetical order.
+      (task-226)
 
     * tests: 6 tests ok out of 6
     * Pylint: 10/10
@@ -125,9 +259,9 @@ to a data type is displayed.
 
     * modified --checkup output so that a works_as_expected() function linked
       to a data type is displayed (task-224)
-    * new entry in `pimydoc`: `works_as_expected arguments and returned value` 
+    * new entry in `pimydoc`: `works_as_expected arguments and returned value`
       (task-224)
-    * new function in cwc_utils.py: `select__works_as_expected__function()` 
+    * new function in cwc_utils.py: `select__works_as_expected__function()`
       (task-224)
     * all works_as_expected() functions have now two arguments (task-224)
 
@@ -174,8 +308,8 @@ if it's different from the human name (SERIALIZER.human_name)
     * checkup() now displays the internal serializer name (SERIALIZER.name)
       if it's different from the human name (SERIALIZER.human_name) (task-220)
     * added a message displayed at the beginning of --checkup messages,
-      explaining (1) that the informations displayed may have been written in 
-      the report file and (2) that --verbosity value has an effect upon the 
+      explaining (1) that the informations displayed may have been written in
+      the report file and (2) that --verbosity value has an effect upon the
       displayed informations (task-220)
     * improved partial_report__serializers()'s docstring (task-220)
 
@@ -184,10 +318,10 @@ if it's different from the human name (SERIALIZER.human_name)
 
 [DONE] task-219
 
-Bugfix: compute_results() now returns new exit code 4 if there's no 
-data to handle. 
+Bugfix: compute_results() now returns new exit code 4 if there's no
+data to handle.
 
-    * bugfix: compute_results() now returns new exit code 4 if there's no 
+    * bugfix: compute_results() now returns new exit code 4 if there's no
       data to handle (task-219)
     * pimydoc: added to 'exit codes' new exit code 4
 
@@ -232,7 +366,7 @@ exit_handler() closes wisteria.globs.DATA['file descriptor'] (task-215)
 
     * tests: 6 tests ok out of 6
     * Pylint: 10/10
-    
+
 [DONE] task-214
 
 Reversibility is now computed thanks to a call to works_as_expected() method
@@ -252,14 +386,7 @@ defined in the new file wisteria/cwc/pgnreader/works_as_expected.py.
 Serializers can from now display the encoded string they have computed.
 
     * Serializers can from now display the encoded string they have computed (task-213)
-    * new entry in `pimydoc`: (pimydoc)progress bar (task-213)
-    * new entry in `pimydoc`: ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
-    * new entry in `pimydoc`: ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
-    * new entry in `pimydoc`: ⋅console output is authorized: it's important for scripts calling the
-    * new entry in `pimydoc`: ⋅project from the outside.
-    * new entry in `pimydoc`: ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
-    * new entry in `pimydoc`: ⋅in order to avoid mixing the progress bar with the text displayed while
-    * new entry in `pimydoc`: ⋅computing the result, which is unpleasant to see.
+    * new entry in `pimydoc`: progress bar (task-213)
     * documentation (task-213)
 
     * tests: 6 tests ok out of 6.
