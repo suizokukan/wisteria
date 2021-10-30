@@ -45,142 +45,15 @@
 
     ___________________________________________________________________________
 
-    o  modulefullrealname_to_modulerealname(modulefullrealname)
-    o  modulefullrealname_to_classname(modulefullrealname)
-    o  moduleininame_to_modulefullrealname(moduleininame)
-    o  modulefullrealname_to_waemodulename(modulefullrealname)
     o  is_a_cwc_name(data_object_name)
     o  is_this_an_appropriate_module_for_serializer(data_name__module, serializer)
+    o  modulefullrealname_to_classname(modulefullrealname)
+    o  modulefullrealname_to_modulerealname(modulefullrealname)
+    o  modulefullrealname_to_waemodulename(modulefullrealname)
+    o  moduleininame_to_modulefullrealname(moduleininame)
     o  select__works_as_expected__function(data_object_name)
 """
 import wisteria.globs
-
-
-def modulefullrealname_to_modulerealname(modulefullrealname):
-    """
-        modulefullrealname_to_modulerealname()
-
-        Convert module full real name into module read name, something like:
-            "wisteria.cwc.pgnreader.default.ChessGames" > "wisteria.cwc.pgnreader.default"
-
-        (pimydoc)cwc modules names
-        ⋅
-        ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
-        ⋅
-        ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
-        ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
-        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
-        ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
-        ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
-        ⋅
-        ⋅- `moduleininame` are defined in config file;
-        ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
-        ⋅  data.py:DATA and is made by function
-        ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
-        ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
-        ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
-        ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
-
-        RETURNED VALUE: (str)module real name
-    """
-    return modulefullrealname[:modulefullrealname.rfind(".")]
-
-
-def modulefullrealname_to_classname(modulefullrealname):
-    """
-        modulefullrealname_to_classname()
-
-        Convert module full real name into class name, something like:
-                "wisteria.cwc.pgnreader.default.ChessGames" > "ChessGames"
-
-
-        (pimydoc)cwc modules names
-        ⋅
-        ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
-        ⋅
-        ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
-        ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
-        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
-        ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
-        ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
-        ⋅
-        ⋅- `moduleininame` are defined in config file;
-        ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
-        ⋅  data.py:DATA and is made by function
-        ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
-        ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
-        ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
-        ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
-
-        RETURNED VALUE: (str)class name
-    """
-    return modulefullrealname[modulefullrealname.rfind(".")+1:]
-
-
-def moduleininame_to_modulefullrealname(moduleininame):
-    """
-        moduleininame_to_modulefullrealname()
-
-        Convert module ini name into module full real name, something like:
-            "cwc.pgnreader.default.chessgames" > "cwc.pgnreader.default.ChessGames"
-
-
-        (pimydoc)cwc modules names
-        ⋅
-        ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
-        ⋅
-        ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
-        ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
-        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
-        ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
-        ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
-        ⋅
-        ⋅- `moduleininame` are defined in config file;
-        ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
-        ⋅  data.py:DATA and is made by function
-        ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
-        ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
-        ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
-        ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)moduleininame, the module ini name to be converted
-
-        RETURNED VALUE: (str)module full real name
-    """
-    return wisteria.globs.DATA[moduleininame]
-
-
-def modulefullrealname_to_waemodulename(modulefullrealname):
-    """
-        modulefullrealname_to_waemodulename()
-
-        Convert module full real name into a wae('works as expected') module name, something like:
-                "wisteria.cwc.pgnreader.default.ChessGames" >
-                        "wisteria.cwc.pgnreader.works_as_expected"
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
-
-        RETURNED VALUE: (str)wae('works as expected') module name
-
-    """
-    name = modulefullrealname[:modulefullrealname.rfind(".")]
-    name = name[:name.rfind(".")]
-    return name + ".works_as_expected"
 
 
 def is_a_cwc_name(data_object_name):
@@ -260,6 +133,133 @@ def is_this_an_appropriate_module_for_serializer(data_name__module,
                         <serializer>
     """
     return data_name__module.endswith(wisteria.globs.SERIALIZERS[serializer].cwc)
+
+
+def modulefullrealname_to_classname(modulefullrealname):
+    """
+        modulefullrealname_to_classname()
+
+        Convert module full real name into class name, something like:
+                "wisteria.cwc.pgnreader.default.ChessGames" > "ChessGames"
+
+
+        (pimydoc)cwc modules names
+        ⋅
+        ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+        ⋅
+        ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+        ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
+        ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
+        ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+        ⋅
+        ⋅- `moduleininame` are defined in config file;
+        ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
+        ⋅  data.py:DATA and is made by function
+        ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
+        ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
+        ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
+        ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
+
+        RETURNED VALUE: (str)class name
+    """
+    return modulefullrealname[modulefullrealname.rfind(".")+1:]
+
+
+def modulefullrealname_to_modulerealname(modulefullrealname):
+    """
+        modulefullrealname_to_modulerealname()
+
+        Convert module full real name into module read name, something like:
+            "wisteria.cwc.pgnreader.default.ChessGames" > "wisteria.cwc.pgnreader.default"
+
+        (pimydoc)cwc modules names
+        ⋅
+        ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+        ⋅
+        ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+        ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
+        ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
+        ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+        ⋅
+        ⋅- `moduleininame` are defined in config file;
+        ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
+        ⋅  data.py:DATA and is made by function
+        ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
+        ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
+        ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
+        ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
+
+        RETURNED VALUE: (str)module real name
+    """
+    return modulefullrealname[:modulefullrealname.rfind(".")]
+
+
+def modulefullrealname_to_waemodulename(modulefullrealname):
+    """
+        modulefullrealname_to_waemodulename()
+
+        Convert module full real name into a wae('works as expected') module name, something like:
+                "wisteria.cwc.pgnreader.default.ChessGames" >
+                        "wisteria.cwc.pgnreader.works_as_expected"
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)modulefullrealname, the module full real name to be converted
+
+        RETURNED VALUE: (str)wae('works as expected') module name
+
+    """
+    name = modulefullrealname[:modulefullrealname.rfind(".")]
+    name = name[:name.rfind(".")]
+    return name + ".works_as_expected"
+
+
+def moduleininame_to_modulefullrealname(moduleininame):
+    """
+        moduleininame_to_modulefullrealname()
+
+        Convert module ini name into module full real name, something like:
+            "cwc.pgnreader.default.chessgames" > "cwc.pgnreader.default.ChessGames"
+
+
+        (pimydoc)cwc modules names
+        ⋅
+        ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+        ⋅
+        ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+        ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+        ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
+        ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
+        ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+        ⋅
+        ⋅- `moduleininame` are defined in config file;
+        ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
+        ⋅  data.py:DATA and is made by function
+        ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
+        ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
+        ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
+        ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)moduleininame, the module ini name to be converted
+
+        RETURNED VALUE: (str)module full real name
+    """
+    return wisteria.globs.DATA[moduleininame]
 
 
 def select__works_as_expected__function(data_object_name):

@@ -66,7 +66,6 @@ What's next ?
 * finir de couvrir le plus de datas possible
 * finir de couvrir le plus de serializers possible
 * finir de valider le plus de datas possible (fonctions wae())
-* les fonctions dans cwc_utils.py ne sont pas dans ordre alphabétique
 * data_object, dataobj_name: c'est le bazar
 
 
@@ -76,7 +75,17 @@ What's next ?
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
 
-[TODO] task-225
+[DONE] task-226
+
+Functions in cwc_utils.py are now in alphabetical order.
+
+   * functions in cwc_utils.py are now in alphabetical order.
+     (task-226)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
+[DONE] task-225
 
 4 values are now accepted for cmpdata: 'cwc', 'ini', 'allbutcwc' and 'all'.
 
