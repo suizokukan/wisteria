@@ -205,7 +205,7 @@ def serializer_iaswn(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -317,7 +317,7 @@ def serializer_json(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -429,7 +429,7 @@ def serializer_jsonpickle(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -541,7 +541,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -653,7 +653,7 @@ def serializer_marshal(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -765,7 +765,7 @@ def serializer_pickle(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -877,7 +877,7 @@ def serializer_pyyaml(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility}")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(_res2)
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "

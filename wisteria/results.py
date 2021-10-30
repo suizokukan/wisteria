@@ -66,13 +66,13 @@ def get_serializers_selection(serializer1,
     """
     res = set()
 
-    if serializer1 == "all":
+    if serializer1 == 'all':
         for serializer in wisteria.globs.SERIALIZERS:
             res.add(serializer)
     else:
         res.add(serializer1)
 
-    if serializer2 == "all":
+    if serializer2 == 'all':
         for serializer in wisteria.globs.SERIALIZERS:
             res.add(serializer)
     else:
@@ -91,19 +91,19 @@ def get_data_selection(cmpdata,
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  cmpdata: (str)"all", "ini" or "cwc"
+        o  cmpdata: (str)'all', 'ini', 'cwc' or 'allbutcwc'
         o  config:  (dict) dict returned by read_cfgfile()
 
         RETURNED VALUE: (tuple) a tuple of (str)data keys
     """
     res = []
 
-    if cmpdata == "all":
+    if cmpdata == 'all':
         res = tuple(wisteria.globs.DATA.keys())
-    elif cmpdata == "ini":
-        if config["data selection"]["data selection"] == "all":
+    elif cmpdata == 'ini':
+        if config["data selection"]["data selection"] == 'all':
             res = tuple(config["objects"].keys())
-        elif config["data selection"]["data selection"] == "only if yes":
+        elif config["data selection"]["data selection"] == 'only if yes':
             res = (data_name for data_name in config["data objects"]
                    if config["data objects"][data_name])
         elif config["data selection"]["data selection"].startswith("data set/"):
@@ -115,9 +115,12 @@ def get_data_selection(cmpdata,
                 f"what is '{config['data selection']['data selection']}' ? "
                 "Known values are 'all', 'ini' and 'data set/xxx' "
                 "where xxx is a string.")
-    elif cmpdata == "cwc":
+    elif cmpdata == 'cwc':
         res = tuple(data_name for data_name in wisteria.globs.DATA
-                    if "wisteria.cwc" in data_name)
+                    if is_a_cwc_name(data_name))
+    elif cmpdata == 'allbutcwc':
+        res = tuple(data_name for data_name in wisteria.globs.DATA
+                    if not is_a_cwc_name(data_name))
     else:
         raise WisteriaError(
             "(ERRORID021) Can't understand a value given to the 'data' part in --cmp: "
@@ -145,7 +148,7 @@ def compute_results(config,
                                   returned by read_cfgfile().
         o  (str)serializer1
         o  (str)serializer2
-        o  (str)cmpdata         : 'all', 'ini' or 'cwc'
+        o  (str)cmpdata         : 'all', 'ini', 'cwc' or 'allbutcwc'
 
         RETURNED VALUE:    (SerializationResults, None) if no error occured
                         or (None, (int)exit_code) if an error occured

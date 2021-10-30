@@ -41,29 +41,45 @@ def read_cmpstring(cmpstring):
 
         Return a simpler representation of (str)<cmpstring>.
 
-        Some valid examples, "..." being "(bool/success)True".
-        --cmp="jsonpickle vs all (all)"
-        --cmp="jsonpickle vs all"
-        --cmp="jsonpickle"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (cmpdata/str)"all"
 
-        --cmp="jsonpickle (ini)"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"all", (cmpdata/str)"ini"
+        (pimydoc)--cmp format
+        ⋅
+        ⋅(I) serializers
+        ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+        ⋅a serializer against all serializers(3) or all serializers(4) together.
+        ⋅
+        ⋅    (1) --cmp="jsonpickle(cwc)"
+        ⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
+        ⋅    (3) --cmp="jsonpickle vs all (cwc)"
+        ⋅    (4) --cmp="all vs all (cwc)"
+        ⋅
+        ⋅(II) data types:
+        ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+        ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+        ⋅
+        ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
+        ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
+        ⋅    (c) --cmp="jsonpickle vs pickle (ini)"
+        ⋅    (d) --cmp="jsonpickle vs pickle (all)"
+        ⋅
+        ⋅NB: You may use 'vs' as well as 'against', as if:
+        ⋅    --cmp="jsonpickle vs pickle (cwc)"
+        ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
+        ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
+        ⋅                              string is used as help message by the
+        ⋅                              command line --help argument.
+        ⋅
 
-        --cmp="jsonpickle vs json"
-          > ..., (serializer#1/str)"jsonpickle", (serializer#2/str)"json", (cmpdata/str)"all"
-
-        "vs" may be used as well as "versus" or "against".
 
         _______________________________________________________________________
 
         ARGUMENT: (str)cmpstring, the source string to be read.
-                syntax: "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
+                syntax: "all|serializer1[vs all|serializer2][(all|allbutcwc|cwc|ini)]"
 
         RETURNED VALUE: (bool)success,
                         (str)serializer1,
                         (str)serializer2,
-                        (str:"all|cwc|ini")cmpdata
+                        (str:"all|allbutcwc|cwc|ini")cmpdata
     """
     serializers = wisteria.globs.SERIALIZERS
     u_serializers = wisteria.globs.UNAVAILABLE_SERIALIZERS
@@ -71,13 +87,13 @@ def read_cmpstring(cmpstring):
     if res := re.match(REGEX_CMP, cmpstring):
         serializer1 = res.group("serializer1")
         if serializer1 is None or serializer1 == "others":
-            serializer1 = "all"
+            serializer1 = 'all'
         serializer2 = res.group("serializer2")
         if serializer2 is None or serializer2 == "others":
-            serializer2 = "all"
+            serializer2 = 'all'
         cmpdata = res.group("cmpdata")
         if cmpdata is None:
-            cmpdata = "all"
+            cmpdata = 'all'
 
         # error: serializer1 is not in SERIALIZERS among UNAVAILABLE_SERIALIZES.
         if serializer1 in u_serializers:
@@ -92,7 +108,7 @@ def read_cmpstring(cmpstring):
             return False, None, None, None
 
         # error: serializer1 is an unknown serializer.
-        if not (serializer1 == "all" or serializer1 in serializers):
+        if not (serializer1 == 'all' or serializer1 in serializers):
             # BEWARE !
             # DO NOT USE fmt_serializer() instead of fmt_serializer0()
             # to display acceptable serializers name
@@ -124,7 +140,7 @@ def read_cmpstring(cmpstring):
             return False, None, None, None
 
         # error: serializer2 is an unknown serializer.
-        if not (serializer2 == "all" or serializer2 == "others" or serializer2 in serializers):
+        if not (serializer2 == 'all' or serializer2 == "others" or serializer2 in serializers):
             # BEWARE !
             # DO NOT USE fmt_serializer() instead of fmt_serializer0()
             # to display acceptable serializers name
@@ -142,7 +158,7 @@ def read_cmpstring(cmpstring):
                 f"{', '.join(fmt_serializer(serial) for serial in u_serializers)} . "
                 "Try $ wisteria --checkup for more informations.")
             return False, None, None, None
-        if serializer1 == serializer2 and serializer1 != "all":
+        if serializer1 == serializer2 and serializer1 != 'all':
             msgerror(
                 f"(ERRORID011) Both serializer-s from cmp string '{cmpstring}' "
                 f"(here, both set to '{serializer1}') "

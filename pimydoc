@@ -19,6 +19,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### ==========================================================================
 ### ================================ SUMMARY =================================
 ### ==========================================================================
+### (pimydoc)--cmp format
 ### (pimydoc)code structure
 ### (pimydoc)config file format
 ### (pimydoc)cwc modules names
@@ -27,7 +28,35 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)progress bar
 ### (pimydoc)report sections
 ### (pimydoc)works_as_expected arguments and returned value
-    
+
+### ==========================================================================
+[(pimydoc)--cmp format]
+
+(I) serializers
+Test one serializer alone(1) or one serializer against another serializer(2) or
+a serializer against all serializers(3) or all serializers(4) together.
+
+    (1) --cmp="jsonpickle(cwc)"
+    (2) --cmp="jsonpickle vs pickle (cwc)"
+    (3) --cmp="jsonpickle vs all (cwc)"
+    (4) --cmp="all vs all (cwc)"
+
+(II) data types:  
+Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+
+    (a) --cmp="jsonpickle vs pickle (cwc)"
+    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
+    (c) --cmp="jsonpickle vs pickle (ini)"
+    (d) --cmp="jsonpickle vs pickle (all)"
+
+NB: You may use 'vs' as well as 'against', as if:
+    --cmp="jsonpickle vs pickle (cwc)"
+NB: globs.py::REGEX_CMP defines exactly the expected format
+    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
+                              string is used as help message by the
+                              command line --help argument.
+      
 ### ==========================================================================
 [(pimydoc)code structure]
 step A: command line arguments, --help message

@@ -155,19 +155,22 @@ def cmpdata2phrase(cmpdata):
 
         _______________________________________________________________________
 
-        ARGUMENT: (str)<cmpdata>: 'all', 'ini', 'cwc'
+        ARGUMENT: (str)<cmpdata>: 'all', 'ini', 'cwc' or 'allbutcwc'
 
         RETURNED VALUE: (str)a string describing <cmpdata>
     """
-    assert cmpdata in ('all', 'ini', 'cwc')
+    assert cmpdata in ('all', 'ini', 'cwc', 'allbutcwc')
 
-    if cmpdata == "all":
+    if cmpdata == 'all':
         return "According to the tests " \
             "carried out on all data, "
-    if cmpdata == "ini":
+    if cmpdata == 'ini':
         return "According to the tests " \
             "carried out on the data defined in the configuration file, "
-    # cmpdata == "cwc"
+    if cmpdata == 'allbutcwc':
+        return "According to the tests " \
+            "carried out on all data but cwc data, "
+    # cmpdata == 'cwc'
     return "According to the tests " \
         "conducted on data of the 'comparing what is comparable' type, "
 
@@ -395,7 +398,7 @@ def report_section_a1(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -466,7 +469,7 @@ def report_section_a2(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc' cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -520,7 +523,7 @@ def report_section_a3(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -576,7 +579,7 @@ def report_section_b1a(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -670,7 +673,7 @@ def report_section_b1b(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -746,7 +749,7 @@ def report_section_b1c(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -823,7 +826,7 @@ def report_section_b1d(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -892,7 +895,7 @@ def report_section_b2a(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -986,7 +989,7 @@ def report_section_b2b(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1058,7 +1061,7 @@ def report_section_c1a(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     def show(serializer,
@@ -1072,7 +1075,7 @@ def report_section_c1a(results,
 
             ARGUMENTS:
             o  (str)serializer
-            o  (str)cmpdata              -> "all" or "ini" or "cwc", cf read_cmpstring()
+            o  (str)cmpdata              -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
         """
         data = wisteria.globs.DATA
 
@@ -1117,21 +1120,21 @@ def report_section_c1a(results,
         msgreport()
 
     seria1, seria2, cmpdata = s1s2d
-    if seria1 != "all":
+    if seria1 != 'all':
         show(seria1, cmpdata)
         msgreport()
-    if seria2 != "all":
+    if seria2 != 'all':
         show(seria2, cmpdata)
         msgreport()
 
     # Other serializers, leaving apart <seria1> and <seria2> ?
     _serializers = list(wisteria.globs.SERIALIZERS.keys())
-    if seria1 != "all":
+    if seria1 != 'all':
         _serializers.remove(seria1)
-    if seria2 != "all":
+    if seria2 != 'all':
         _serializers.remove(seria2)
-    if _serializers and (seria1 == "all" or seria2 == "all"):
-        if seria1 != "all" or seria2 != "all":
+    if _serializers and (seria1 == 'all' or seria2 == 'all'):
+        if seria1 != 'all' or seria2 != 'all':
             msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
@@ -1179,7 +1182,7 @@ def report_section_c1b(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     def show(serializer,
@@ -1193,7 +1196,7 @@ def report_section_c1b(results,
 
             ARGUMENTS:
             o  (str)serializer
-            o  (str)cmpdata              -> "all" or "ini" or "cwc", cf read_cmpstring()
+            o  (str)cmpdata              -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
         """
         data = wisteria.globs.DATA
 
@@ -1238,21 +1241,21 @@ def report_section_c1b(results,
         msgreport()
 
     seria1, seria2, cmpdata = s1s2d
-    if seria1 != "all":
+    if seria1 != 'all':
         show(seria1, cmpdata)
         msgreport()
-    if seria2 != "all":
+    if seria2 != 'all':
         show(seria2, cmpdata)
         msgreport()
 
     # Other serializers, leaving apart <seria1> and <seria2> ?
     _serializers = list(wisteria.globs.SERIALIZERS.keys())
-    if seria1 != "all":
+    if seria1 != 'all':
         _serializers.remove(seria1)
-    if seria2 != "all":
+    if seria2 != 'all':
         _serializers.remove(seria2)
-    if _serializers and (seria1 == "all" or seria2 == "all"):
-        if seria1 != "all" or seria2 != "all":
+    if _serializers and (seria1 == 'all' or seria2 == 'all'):
+        if seria1 != 'all' or seria2 != 'all':
             msgreport("[bold]Other serializers:[/bold]")
         for __serializer in _serializers:
             show(__serializer, cmpdata)
@@ -1300,7 +1303,7 @@ def report_section_c2a(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1315,9 +1318,9 @@ def report_section_c2a(results,
 
     seria1, seria2, _ = s1s2d
     _serializers = []
-    if seria1 != "all":
+    if seria1 != 'all':
         _serializers.append(seria1)
-    if seria2 != "all":
+    if seria2 != 'all':
         _serializers.append(seria2)
     _serializers.append("-")
     for serializer in results.serializers:
@@ -1387,7 +1390,7 @@ def report_section_c2b(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1401,9 +1404,9 @@ def report_section_c2b(results,
 
     seria1, seria2, _ = s1s2d
     _serializers = []
-    if seria1 != "all":
+    if seria1 != 'all':
         _serializers.append(seria1)
-    if seria2 != "all":
+    if seria2 != 'all':
         _serializers.append(seria2)
     _serializers.append("-")
     for serializer in results.serializers:
@@ -1433,7 +1436,7 @@ def report_section_c2c__allvsall(results,
         report_section_c2c__allvsall()
 
         Sub-function of report_section_c2c() in the case where
-        seria1==seria2=="all".
+        seria1==seria2=='all'.
 
         _______________________________________________________________________
 
@@ -1443,7 +1446,7 @@ def report_section_c2c__allvsall(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     _, _, cmpdata = s1s2d  # seria1, seria2, cmpdata
@@ -1519,7 +1522,7 @@ def report_section_c2c__serializervsall(results,
         report_section_c2c__serializervsall()
 
         Sub-function of report_section_c2c() in the case where
-        seria1!="all" and where seria2=="all".
+        seria1!='all' and where seria2=='all'.
 
         _______________________________________________________________________
 
@@ -1529,7 +1532,7 @@ def report_section_c2c__serializervsall(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     seria1, seria2, cmpdata = s1s2d
@@ -1538,7 +1541,7 @@ def report_section_c2c__serializervsall(results,
     text.append(cmpdata2phrase(cmpdata))
 
     # <serializer> is the reference serializer against all others.
-    if seria1 != "all":
+    if seria1 != 'all':
         serializer = seria1
     else:
         serializer = seria2
@@ -1721,7 +1724,7 @@ def report_section_c2c__serializervsserializer(results,
         report_section_c2c__serializervsserializer()
 
         Sub-function of report_section_c2c() in the case where
-        seria1 and seria2 !="all".
+        seria1 and seria2 !='all'.
 
         _______________________________________________________________________
 
@@ -1731,7 +1734,7 @@ def report_section_c2c__serializervsserializer(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     seria1, seria2, cmpdata = s1s2d
@@ -1941,7 +1944,7 @@ def report_section_c2c(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1949,9 +1952,9 @@ def report_section_c2c(results,
 
     seria1, seria2, _ = s1s2d  # seria1, seria2, cmpdata
 
-    if seria1 == "all" and seria2 == "all":
+    if seria1 == 'all' and seria2 == 'all':
         report_section_c2c__allvsall(results, s1s2d)
-    elif seria1 != "all" and seria2 != "all":
+    elif seria1 != 'all' and seria2 != 'all':
         report_section_c2c__serializervsserializer(results, s1s2d)
     else:
         report_section_c2c__serializervsall(results, s1s2d)
@@ -2001,7 +2004,7 @@ def report_section_d1a(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -2056,7 +2059,7 @@ def report_section_d1b(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
@@ -2111,7 +2114,7 @@ def report_section_graphs(results,
 
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if not trytoimport("matplotlib.pyplot"):
@@ -2242,7 +2245,7 @@ def report(results,
                     [(str)serializer][(str)data_name] = SerializationResult
         o  s1s2d: ( (str)seria1,
                     (str)seria2,
-                    (str)cmpdata         -> "all" or "ini" or "cwc", cf read_cmpstring()
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
     if wisteria.globs.ARGS.report.strip() == ";":

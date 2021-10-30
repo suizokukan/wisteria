@@ -144,7 +144,7 @@ def read_cfgfile(filename):
     if not success:
         return None
 
-    if config["data selection"]["data selection"] in ("all", "only if yes"):
+    if config["data selection"]["data selection"] in ('all', 'only if yes'):
         # ok, nothing to do.
         pass
     elif config["data selection"]["data selection"].startswith("data set/"):

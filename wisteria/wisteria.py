@@ -1373,7 +1373,7 @@ def main():
         # ⋅       - (C/18.4) main(): results computing
         # ⋅       - (C/18.5) main(): report
         config = None
-        if cmpdata == "ini":
+        if cmpdata == 'ini':
             config = read_cfgfile(ARGS.cfgfile)
 
             if config is None:

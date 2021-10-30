@@ -55,7 +55,6 @@ What's next ?
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
-* all > allbutcwc; all signifie absolument tout, même cwc
 * pgnreader: utiliser les dataclass pour certaines classes
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 * encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
@@ -64,12 +63,33 @@ What's next ?
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
 * --exportreport='md'
+* finir de couvrir le plus de datas possible
+* finir de couvrir le plus de serializers possible
+* finir de valider le plus de datas possible (fonctions wae())
+* les fonctions dans cwc_utils.py ne sont pas dans ordre alphabétique
+* data_object, dataobj_name: c'est le bazar
+
 
 ===============================================================================
 
 [CURRENT] v. 0.1.6
 
 cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+
+[TODO] task-225
+
+4 values are now accepted for cmpdata: 'cwc', 'ini', 'allbutcwc' and 'all'.
+
+    * 4 values are now accepted for cmpdata: 'cwc', 'ini', 'allbutcwc' and 'all'
+      (task-225)
+    * replaced double quotes in the code with single quotes for some arguments:
+      "cwc" > 'cwc', "ini" > 'ini', ... (task-225)
+    * new entry in `pimydoc`: `--cmp format` (task-225)
+    * bugfix: serializer_xxx() methods call now correctly works_as_expected()
+              method (task-225)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-224
 

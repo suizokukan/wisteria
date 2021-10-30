@@ -85,12 +85,39 @@ TIMEITNUMBER = 1
 # temp file default name
 TMPFILENAME = "wisteria.tmp"
 
+# (pimydoc)--cmp format
+# ⋅
+# ⋅(I) serializers
+# ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+# ⋅a serializer against all serializers(3) or all serializers(4) together.
+# ⋅
+# ⋅    (1) --cmp="jsonpickle(cwc)"
+# ⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
+# ⋅    (3) --cmp="jsonpickle vs all (cwc)"
+# ⋅    (4) --cmp="all vs all (cwc)"
+# ⋅
+# ⋅(II) data types:
+# ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+# ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+# ⋅
+# ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
+# ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
+# ⋅    (c) --cmp="jsonpickle vs pickle (ini)"
+# ⋅    (d) --cmp="jsonpickle vs pickle (all)"
+# ⋅
+# ⋅NB: You may use 'vs' as well as 'against', as if:
+# ⋅    --cmp="jsonpickle vs pickle (cwc)"
+# ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
+# ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
+# ⋅                              string is used as help message by the
+# ⋅                              command line --help argument.
+# ⋅
 # regex used to parse the --cmp argument string
 REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?"
-                       r"(\s*\((?P<cmpdata>all|cwc|ini)\))?\s*$")
+                       r"(\s*\((?P<cmpdata>all|cwc|allbutcwc|ini)\))?\s*$")
 # string used by --help
-REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(all|cwc|ini)]"
+REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(cwc|allbutcwc|ini|all)]"
 
 # REPORT_SHORTCUTS has two goals:
 # (1) it translates a simple, human-readable string into a list of section parts
