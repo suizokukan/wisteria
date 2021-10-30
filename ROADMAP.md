@@ -55,10 +55,8 @@ What's next ?
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
-* pgnreader: utiliser les dataclass pour certaines classes
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 * encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
-* les docstrings dans default/iaswn sont à revoir: il manque les class attributes(?)
 * l'exemple suivant:
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
@@ -73,7 +71,10 @@ What's next ?
 
 [CURRENT] v. 0.1.6
 
-cwc/pgnreader/iaswn.py + test() + --cmp="xxx vx xxx(cwc)"
+'allbutcwc' (cmp data string); each data type may be tested; 
+
+task-227: * les docstrings dans default/iaswn sont à revoir: il manque les class attributes(?)
+task-228: * pgnreader: utiliser les dataclass pour certaines classes
 
 [DONE] task-226
 
