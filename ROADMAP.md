@@ -66,12 +66,17 @@ What's next ?
       module_name: str
       module_name__version: str
       human_name: str
-* graphs: coverage data n'est pas correctement affiché car l'échelle des X ne va pas de 0 à 100%.
 * problème avec les valeurs absurdes, par exemple déclenchée par:
     ./bin/wisteria --cmp="pickle vs simpleion(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
 * serializers.py: main docstring=> il manque des fonctions + works_as_expected=None  dans les serializer_xxx()
+
+[DONE] task-238
+
+Bugfix: hbar2png() draws now correctly xticks numbers.
+
+    * bugfix: hbar2png() draws now correctly xticks numbers (task-238)
 
 [DONE] task-237
 

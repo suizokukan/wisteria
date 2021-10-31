@@ -145,7 +145,7 @@ def hbar2png(results_hall_attribute,
                             })
 
     length = len(results_hall_attribute)
-    values = tuple(item[0] for item in results_hall_attribute)
+    values = tuple(item[0]*value_coeff for item in results_hall_attribute)
     serializers_names = tuple(
         wisteria.globs.SERIALIZERS[item[1]].human_name for item in results_hall_attribute)
 
@@ -168,7 +168,7 @@ def hbar2png(results_hall_attribute,
     for value_index, value in enumerate(values):
         axes.text(value,
                   value_index,
-                  "  " + fmtstring.format(value*value_coeff),
+                  "  " + fmtstring.format(value),
                   color='red',
                   va='center',
                   fontsize=9, fontweight='normal')
