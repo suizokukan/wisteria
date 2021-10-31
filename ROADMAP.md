@@ -9,7 +9,6 @@ What's next ?
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 * # The "PermissionError" exception may be raised on Windows system
     tester ce qui se passe avec with open()..: pass >>> le fichier est-il fermé ?
-* report.txt > wisteriaTIMESTAMP.txt (plus clair)
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
@@ -35,7 +34,6 @@ What's next ?
         messagegpack (https://msgpack.org/)
         python-cjson (https://pypi.org/project/python-cjson/)
         python-rapidjson (https://pypi.org/project/python-rapidjson/)
-        yajl (https://pypi.org/project/yajl/)
         ujson (https://pypi.org/project/ujson/)
 * data_object, dataobj_name: c'est le bazar
 * README.md acceptable
@@ -59,7 +57,75 @@ What's next ?
 
 ===============================================================================
 
-[CURRENT] v. 0.1.7
+[DONE] v. 0.1.7
+
+- Added a new serializer: 'yajl'.
+- documentation and code readibility
+
+
+code quality
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
+code structure
+
+    * added a new serializer: 'yajl' (task-229)
+    * updated project dependencies with `poetry update` (task-230)
+    * globs.py:REPORTFILE_NAME > globs.py:DEFAULT_REPORTFILE_NAME (task-231)
+    * 'logfile' > 'reportfile' everywhere in the code (task-231)
+    
+documentation
+
+    * new entry in `pimydoc`: `report filename format` (task-231)
+    * improved documentation (task-231)
+
+task(s):
+
+    * task(s): task-229, task-230, task-231
+    
+version:
+
+    * set version to '0.1.7'
+    
+    
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+└── pywin32 *
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.4
+Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-231
 
@@ -86,7 +152,7 @@ Updated project dependencies with `poetry update`.
 
 Added a new serializer: 'yajl'.
 
-    * Added a new serializer: 'yajl' (task-229)
+    * added a new serializer: 'yajl' (task-229)
 
     * tests: 6 tests ok out of 6
     * Pylint: 10/10
