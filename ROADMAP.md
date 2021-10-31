@@ -58,7 +58,6 @@ What's next ?
 
 [CURRENT] v. 0.1.8
 
-* may have been written in the report file > may have been written in the report file, namely xxx,
 *-exportreport='md'
 * soulager init_serializers() à l'aide d'un dataclass
   @dataclass
@@ -73,6 +72,12 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
 * serializers.py: main docstring=> il manque des fonctions + works_as_expected=None  dans les serializer_xxx()
+
+[DONE] task-237
+
+Improved checkup() message: added the report filename.
+
+    * improved checkup() message: added the report filename (task-237)
     
 [DONE] task-236
 
