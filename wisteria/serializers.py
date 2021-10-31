@@ -1066,7 +1066,7 @@ def serializer_yajl(action="serialize",
     # action == "version"
     # -------------------
     if action == "version":
-        return "unkown version"
+        return "unknown version"
 
     # ---------------------
     # action == "serialize"

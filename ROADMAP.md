@@ -58,7 +58,6 @@ What's next ?
 
 [CURRENT] v. 0.1.8
 
-* konwn > known
 * may have been written in the report file > may have been written in the report file, namely xxx,
 *-exportreport='md'
 * soulager init_serializers() à l'aide d'un dataclass
@@ -80,6 +79,12 @@ What's next ?
     to see what can be done on you system
    >
     to see what can be done on your system
+    
+[DONE] task-233
+
+Fixed a minor typo in serializers.py: 'konwn' > 'known'
+
+    * fixed a minor typo in serializers.py: 'konwn' > 'known' (task-233)
 
 [DONE] task-232
 
