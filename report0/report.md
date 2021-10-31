@@ -1,5 +1,5 @@
 ```
-Wisteria, 0.1.7 (2021-10-31 19:23:32.837734)
+Wisteria, 0.1.7 (2021-10-31 19:31:21.978807)
 Running on Python 3.9.7 (default, Oct 10 2021, 15:13:22) - [GCC 11.1.0]
 The following informations may have been written in the report file ('report.txt') depending of the parameters you passed to the script. --verbosity value has an effect
 upon the displayed informations.
@@ -45,11 +45,11 @@ tuple(empty); type(str); type(type(str)); wisteria.cwc.pgnreader.default.chessga
 
 ```
 
-![](report1.pgn)
+![abc](report1.pgn)
 
-![](report2.pgn)
+![abc](report2.pgn)
 
-![](report3.pgn)
+![abc](report3.pgn)
 
-![](report4.pgn)
+![abc](report4.pgn)
 
