@@ -83,7 +83,7 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
 
 Use `Wisteria` to compare two serializers: which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
 
-After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on you system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
+After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 
 ## [0.1] What about the name ?
 

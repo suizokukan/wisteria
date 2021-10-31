@@ -80,6 +80,12 @@ What's next ?
    >
     to see what can be done on your system
     
+[DONE] task-234
+
+Fixed a minor typo in README.md: 'can be done on you system' > 'can be done on your system'
+
+    * fixed a minor typo in serializers.py: 'konwn' > 'known' (task-234)
+
 [DONE] task-233
 
 Fixed a minor typo in serializers.py: 'konwn' > 'known'
