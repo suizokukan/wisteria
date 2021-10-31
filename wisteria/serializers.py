@@ -35,6 +35,7 @@
     o  serializer_marshal(action="serialize", obj=None, fingerprint="")
     o  serializer_pickle(action="serialize", obj=None, fingerprint="")
     o  serializer_pyyaml(action="serialize", obj=None, fingerprint="")
+    o  serializer_simpleion(action="serialize", obj=None, fingerprint="")
     o  serializer_yajl(action="serialize", obj=None, fingerprint="")
 
     o  init_serializers()
@@ -145,7 +146,9 @@ def serializer_iaswn(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["iaswn"]
+    serializer_name = 'iaswn'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -257,7 +260,9 @@ def serializer_json(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["json"]
+    serializer_name = 'json'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -369,7 +374,9 @@ def serializer_jsonpickle(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["jsonpickle"]
+    serializer_name = 'jsonpickle'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -481,7 +488,9 @@ def serializer_jsonpickle_keystrue(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["jsonpickle"]
+    serializer_name = 'jsonpickle'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -593,7 +602,9 @@ def serializer_marshal(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["marshal"]
+    serializer_name = 'marshal'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -705,7 +716,9 @@ def serializer_pickle(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["pickle"]
+    serializer_name = 'pickle'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -817,7 +830,9 @@ def serializer_pyyaml(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["yaml"]
+    serializer_name = 'pyyaml'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -898,6 +913,120 @@ def serializer_pyyaml(action="serialize",
     return res
 
 
+def serializer_simpleion(action="serialize",
+                         obj=None,
+                         fingerprint="",
+                         works_as_expected=None):
+    """
+        serializer_simpleion()
+
+        Serializer for the simpleion module.
+
+        Like every serializer_xxx() function:
+        * this function may return (action='version') the version of the concerned module.
+        * this function may try (action='serialize') to encode/decode an <obj>ect.
+        * if the serializer raises an error, this error is silently converted and no exception
+          is raised. If an internal error happpens, a WisteriaError exception is raised.
+
+        This function assumes that the concerned module has already be imported.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  action           : (str) either "version" either "serialize"
+        o  obj              : the object to be serialized
+        o  fingerprint      : a string describing the operation (usefull to debug)
+        o  works_as_expected: (None or callable)if not None, will be called to check
+                              the reversibility of the de-serialized object.
+
+        RETURNED VALUE:
+           - None if an error occcured
+           - if <action> is (str)"version", return a string.
+           - if <action> is (str)"serialize", return a SerializationResult object.
+    """
+    serializer_name = 'simpleion'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
+
+    # -------------------
+    # action == "version"
+    # -------------------
+    if action == "version":
+        return MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name__version].__version__
+
+    # ---------------------
+    # action == "serialize"
+    # ---------------------
+    if action != "serialize":
+        raise WisteriaError(f"(ERRORID044) Unknown 'action' keyword '{action}'.")
+
+    # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
+    # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    #   pylint: disable=possibly-unused-variable
+    # MEMOVERUSE    dumbstr = "0123456789"*100000
+    # MEMOVERUSEif 'C++' in wisteria.globs.ARGS.memoveruse:
+    # MEMOVERUSE    MemOverUse().memoveruse()
+
+    # ---- main computation ---------------------------------------------------
+    res = SerializationResult()
+
+    if wisteria.globs.PLATFORM_SYSTEM == "Windows":
+        mem0 = win_memory()
+    else:
+        mem0 = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
+    _error = False
+    try:
+        _res = module.dumps(obj)
+        _timeit = timeit.Timer('module.dumps(obj)',
+                               globals=locals())
+        res.encoding_success = True
+        res.encoding_strlen = _len(_res)
+        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
+                    f"encoded string='{_res}'")
+
+    except (AssertionError, AttributeError, ValueError, TypeError) as error:
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
+        _error = True
+
+    if not _error:
+        try:
+            _res2 = module.loads(_res)
+            res.decoding_success = True
+            _timeit = timeit.Timer("module.loads(_res)",
+                                   globals=locals())
+            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+
+            if obj == _res2:
+                res.reversibility = True
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
+                         f"is {res.reversibility}")
+            if res.reversibility and works_as_expected:
+                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug(f"[{fingerprint}] res.reversibility "
+                             f"(second part:works_as_expected(_res2)) "
+                             f"is {res.reversibility}.")
+
+        except (ValueError,) as error:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
+            res = None
+
+    if res is not None and res.reversibility is True:
+        if wisteria.globs.PLATFORM_SYSTEM == "Windows":
+            res.mem_usage = win_memory() - mem0
+        else:
+            res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
+
+    return res
+
+
 def serializer_yajl(action="serialize",
                     obj=None,
                     fingerprint="",
@@ -929,7 +1058,9 @@ def serializer_yajl(action="serialize",
            - if <action> is (str)"version", return a string.
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
-    module = MODULES["yajl"]
+    serializer_name = 'yajl'
+
+    module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
     # action == "version"
@@ -1068,6 +1199,15 @@ def init_serializers():
                 func=serializer_pyyaml,
                 cwc="default"),
             SerializerData(
+                name="simpleion",
+                module_name="amazon.ion.simpleion",
+                module_name__version="amazon.ion",
+                human_name="Amazon Ion Python",
+                internet="https://github.com/amzn/ion-python",
+                func=serializer_simpleion,
+                cwc="default",
+                comment="installation tip: `pip install git+https://github.com/amzn/ion-python`"),
+            SerializerData(
                 name="yajl",
                 module_name="yajl",
                 human_name="yajl",
@@ -1076,10 +1216,25 @@ def init_serializers():
                 cwc="default"),
             ):
         if trytoimport(serializerdata.module_name):
+            # main module:
             wisteria.globs.SERIALIZERS[serializerdata.name] = serializerdata
-            wisteria.globs.SERIALIZERS[serializerdata.name].version = serializerdata.func("version")
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"Successfully imported '{serializerdata.module_name}' module.")
+
+            # module_name__version:
+            if serializerdata.module_name__version != serializerdata.module_name:
+                if not trytoimport(serializerdata.module_name__version):
+                    raise WisteriaError(
+                        "(ERRORID040) Internal error: couldn't import "
+                        f"'{serializerdata.module_name__version}' module although "
+                        f"'{serializerdata.module_name}' module "
+                        "has already been successfully imported.")
+
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug("Successfully imported "
+                             f"'{serializerdata.module_name__version}' module.")
+
+            wisteria.globs.SERIALIZERS[serializerdata.name].version = serializerdata.func("version")
         else:
             wisteria.globs.UNAVAILABLE_SERIALIZERS[serializerdata.name] = serializerdata
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:

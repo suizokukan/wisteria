@@ -49,16 +49,20 @@ class SerializerData:
         instance attributes:
 
         o  (str)name
+        o  (str)module_name
         o  (str)human_name
         o  (str)internet
         o  (str)version
-        o  (callable)func    : function to be called to use this serializer
-        o  (str)cwc          : name of the module in cwc/xxx/
-        o  (None|str)comment : human-readable comment
+        o  (callable)func           : function to be called to use this serializer
+        o  (str)cwc                 : name of the module in cwc/xxx/
+        o  (None|str)comment        : human-readable comment
+        o  (str)module_name__version: will be <module_name> if __init__() doesn't set it.
 
         methods:
 
-        o  __init__(self, name, module_name, human_name, internet, func)
+        o  __init__(self,
+                    name, module_name, human_name,
+                    internet, func, cwc, comment=None, module_name__version=None)
         o  __repr__(self)
         o  checkup_repr(self)
         o  simple_repr(self)
@@ -70,7 +74,8 @@ class SerializerData:
                  internet,
                  func,
                  cwc,
-                 comment=None):
+                 comment=None,
+                 module_name__version=None):
         """
             SerializerData.__init__()
 
@@ -81,9 +86,12 @@ class SerializerData:
             o  (str)module_name
             o  (str)human_name
             o  (str)internet
-            o  (callable)func    : function to be called to use this serializer
-            o  (str)cwc          : name of the module in cwc/xxx/
-            o  (None|str)comment : human-readable comment
+            o  (str)version
+            o  (callable)func                : function to be called to use this serializer
+            o  (str)cwc                      : name of the module in cwc/xxx/
+            o  (None|str)comment             : human-readable comment
+            o  (None|str)module_name__version: if None, <self.module_name__version> will be set
+                                               to <self.module_name>
         """
         self.name = name
         self.module_name = module_name
@@ -93,6 +101,8 @@ class SerializerData:
         self.func = func
         self.cwc = cwc
         self.comment = comment
+        self.module_name__version = module_name__version \
+            if module_name__version is not None else self.module_name
 
     def __repr__(self):
         """
@@ -105,7 +115,9 @@ class SerializerData:
             RETURNED VALUE: (str)a basic representation of <self>.
                             See also .checkup_repr() and .simple_repr()
         """
-        return f"{self.name=}; {self.module_name=}; {self.human_name=}; {self.internet=}; " \
+        return f"{self.name=}; {self.module_name=}; {self.module_name__version=}; " \
+            f"{self.human_name=}; " \
+            f"{self.internet=}; " \
             f"{self.version=}; {self.func=}; {self.cwc=}; {self.comment=}"
 
     def checkup_repr(self):

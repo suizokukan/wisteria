@@ -791,7 +791,10 @@ def exit_handler():
         except PermissionError:
             pass
 
-    if not wisteria.globs.DATA['file descriptor'].closed:
+    # it may happen that wisteria.globs.DATA has not been fully
+    # initialized, hence the first part of the 'if':
+    if 'file descriptor' in wisteria.globs.DATA and \
+       not wisteria.globs.DATA['file descriptor'].closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"(exit_handler) About to close the wisteria.globs.DATA['file descriptor'] "
                      "file descriptor"

@@ -58,10 +58,40 @@ What's next ?
 
 [CURRENT] v. 0.1.8
 
-- konwn > known
-- may have been written in the report file > may have been written in the report file, namely xxx,
---exportreport='md'
-- ion (https://github.com/amzn/ion-python)
+* konwn > known
+* may have been written in the report file > may have been written in the report file, namely xxx,
+*-exportreport='md'
+* soulager init_serializers() à l'aide d'un dataclass
+  @dataclass
+  class NMVH:
+      name: str
+      module_name: str
+      module_name__version: str
+      human_name: str
+* graphs: coverage data n'est pas correctement affiché car l'échelle des X ne va pas de 0 à 100%.
+* problème avec les valeurs absurdes, par exemple déclenchée par:
+    ./bin/wisteria --cmp="pickle vs simpleion(cwc)" --report="C2a;C2b;C2c" --verbosity=3
+  Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
+  expliquant pourquoi.
+* err list
+* Let's close the filenconsole file > About to close the filenconsole file
+* serializers.py: main docstring=> il manque des fonctions + works_as_expected=None  dans les serializer_xxx()
+* README.md :
+    to see what can be done on you system
+   >
+    to see what can be done on your system
+
+[DONE] task-232
+
+Added a new serializer: 'amazon.ion.simpleion'.
+
+    * added a new serializer: 'amazon.ion.simpleion', hence the new
+      serializer_simpleion() function (task-232)
+    * improved exit_handler(): DATA['file descriptor'] is not closed if
+      'file descriptor' isn't in DATA, as it may happen if an error occurs
+      while DATA has not been fully initialized (task-232)
+    * improved code readibilty in serializer_xxx() function; each serializer_xxx()
+      function now starts with a `module = ` statement (task-232)
 
 [DONE] v. 0.1.7
 
