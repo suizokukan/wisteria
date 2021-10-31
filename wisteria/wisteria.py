@@ -177,23 +177,6 @@ PARSER = \
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 PARSER.add_argument(
-    '--help', '-h',
-    action='help',
-    help="Show this help message and exit.")
-
-PARSER.add_argument(
-    '--version', '-v',
-    action='version',
-    version=f"{__projectname__} {__version__}",
-    help="Show the version and exit.")
-
-PARSER.add_argument(
-    '--cmp',
-    action='store',
-    default="all vs all",
-    help=f"Comparisons details. Expected syntax: '{REGEX_CMP__HELP}'.")
-
-PARSER.add_argument(
     '--cfgfile',
     action='store',
     default=DEFAULT_CONFIG_FILENAME,
@@ -207,9 +190,35 @@ PARSER.add_argument(
     "Use --verbosity to change the quantity of displayed informations.")
 
 PARSER.add_argument(
+    '--cmp',
+    action='store',
+    default="all vs all",
+    help=f"Comparisons details. Expected syntax: '{REGEX_CMP__HELP}'.")
+
+PARSER.add_argument(
     '--downloadconfigfile',
     action='store_true',
     help="Download default config file and exit.")
+
+PARSER.add_argument(
+    '--exportreport',
+    action='store',
+    default='no export',
+    help=f"Export report; e.g. 'md=myfile.md'")
+
+PARSER.add_argument(
+    '--help', '-h',
+    action='help',
+    help="Show this help message and exit.")
+
+PARSER.add_argument(
+    '--mute',
+    action='store_true',
+    default=False,
+    help="Warning: debug/profile only, not normally to be used. "
+    "Prevent any console or file output. "
+    "If set, set the value of --verbosity to 'minimal', "
+    "--report to 'none' and --console to ''.")
 
 # MEMOVERUSEPARSER.add_argument(
 # MEMOVERUSE    '--memoveruse',
@@ -254,15 +263,6 @@ PARSER.add_argument(
     "See by example the default value.")
 
 PARSER.add_argument(
-    '--mute',
-    action='store_true',
-    default=False,
-    help="Warning: debug/profile only, not normally to be used. "
-    "Prevent any console or file output. "
-    "If set, set the value of --verbosity to 'minimal', "
-    "--report to 'none' and --console to ''.")
-
-PARSER.add_argument(
     '--report',
     action='store',
     default="glance",
@@ -293,6 +293,12 @@ PARSER.add_argument(
              VERBOSITY_DEBUG),
     help="Verbosity level: 0(=minimal), 1(=normal), 2(=normal+details), 3(=debug). "
     "Please notice that --verbosity has no effect upon --report.")
+
+PARSER.add_argument(
+    '--version', '-v',
+    action='version',
+    version=f"{__projectname__} {__version__}",
+    help="Show the version and exit.")
 
 ARGS = PARSER.parse_args()
 
@@ -801,6 +807,7 @@ def exit_handler():
                      f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
         wisteria.globs.DATA['file descriptor'].close()
 
+    # ---- closing wisteria.globs.FILECONSOLE_FILEOBJECT ----------------------
     # this file should be the last one to be closed if we want to use msgxxx() methods:
     if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -809,6 +816,33 @@ def exit_handler():
                      f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
         wisteria.globs.FILECONSOLE_FILEOBJECT.close()
 
+    # ---- exported report ----------------------------------------------------
+    # no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
+    if wisteria.globs.ARGS.exportreport.startswith("md"):
+        if "=" not in wisteria.globs.ARGS.exportreport:
+            exportreport_filename = "report.md"
+            if ARGS.verbosity == VERBOSITY_DEBUG:
+                print("(exit_handler) exported report will be named, by default, "
+                      f"'{exportreport_filename}' .")
+        else:
+            exportreport_filename = \
+                wisteria.globs.ARGS.exportreport[wisteria.globs.ARGS.exportreport.index("="):]
+
+        with (open(exportreport_filename, "w", encoding="utf-8") as exportedreport,
+              open(wisteria.globs.OUTPUT[3], "r", encoding="utf-8") as report):
+            exportedreport.write("```\n")
+            for line in report.readlines():
+                exportedreport.write(line)
+            exportedreport.write("```\n")
+            exportedreport.write("\n")
+            exportedreport.write("![](report1.pgn)\n")
+            exportedreport.write("\n")
+            exportedreport.write("![](report2.pgn)\n")
+            exportedreport.write("\n")
+            exportedreport.write("![](report3.pgn)\n")
+            exportedreport.write("\n")
+            exportedreport.write("![](report4.pgn)\n")
+            exportedreport.write("\n")
 
 atexit.register(exit_handler)
 

@@ -58,7 +58,7 @@ What's next ?
 
 [CURRENT] v. 0.1.8
 
-*-exportreport='md'
+
 * soulager init_serializers() à l'aide d'un dataclass
   @dataclass
   class NMVH:
@@ -71,6 +71,12 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
 
+[CURRENT] task-240
+
+*-exportreport='md'
+
+    * command line arguments are now sorted in wisteria.py by alphabetical 
+      order (task-240) 
 
 [DONE] task-239
 
