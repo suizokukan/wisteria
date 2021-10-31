@@ -70,7 +70,13 @@ What's next ?
     ./bin/wisteria --cmp="pickle vs simpleion(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
-* serializers.py: main docstring=> il manque des fonctions + works_as_expected=None  dans les serializer_xxx()
+
+
+[DONE] task-239
+
+Improved doc. in serializers.py.
+
+    * improved doc. in serializers.py (task-239)
 
 [DONE] task-238
 

@@ -28,15 +28,26 @@
     ___________________________________________________________________________
 
     o  _len(obj)
-    o  serializer_iaswn(action="serialize", obj=None, fingerprint="")
-    o  serializer_json(action="serialize", obj=None, fingerprint="")
-    o  serializer_jsonpickle(action="serialize", obj=None, fingerprint="")
-    o  serializer_jsonpickle_keystrue(action="serialize", obj=None, fingerprint="")
-    o  serializer_marshal(action="serialize", obj=None, fingerprint="")
-    o  serializer_pickle(action="serialize", obj=None, fingerprint="")
-    o  serializer_pyyaml(action="serialize", obj=None, fingerprint="")
-    o  serializer_simpleion(action="serialize", obj=None, fingerprint="")
-    o  serializer_yajl(action="serialize", obj=None, fingerprint="")
+    o  win_memory()
+
+    o  serializer_iaswn(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_json(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_jsonpickle(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_jsonpickle_keystrue(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_marshal(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_pickle(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_pyyaml(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_simpleion(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
+    o  serializer_yajl(action="serialize", obj=None, fingerprint="",
+       works_as_expected=None)
 
     o  init_serializers()
 """
