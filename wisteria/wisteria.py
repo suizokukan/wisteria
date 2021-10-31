@@ -804,7 +804,7 @@ def exit_handler():
     # this file should be the last one to be closed if we want to use msgxxx() methods:
     if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) Let's close the filenconsole file "
+            msgdebug(f"(exit_handler) About to close the console file "
                      f"'{wisteria.globs.FILECONSOLE_FILEOBJECT.name}' "
                      f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
         wisteria.globs.FILECONSOLE_FILEOBJECT.close()

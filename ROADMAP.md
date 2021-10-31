@@ -73,12 +73,19 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
 * err list
-* Let's close the filenconsole file > About to close the filenconsole file
 * serializers.py: main docstring=> il manque des fonctions + works_as_expected=None  dans les serializer_xxx()
 * README.md :
     to see what can be done on you system
    >
     to see what can be done on your system
+    
+[DONE] task-235
+
+Improved a message in exit_handler(): "Let's close the filenconsole file" > 
+"About to close the console file".
+
+    * Improved a message in exit_handler(): "Let's close the filenconsole file" >
+      "About to close the console file" (task-235)
     
 [DONE] task-234
 
