@@ -958,7 +958,7 @@ def serializer_simpleion(action="serialize",
     # action == "serialize"
     # ---------------------
     if action != "serialize":
-        raise WisteriaError(f"(ERRORID044) Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID050) Unknown 'action' keyword '{action}'.")
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
@@ -1072,7 +1072,7 @@ def serializer_yajl(action="serialize",
     # action == "serialize"
     # ---------------------
     if action != "serialize":
-        raise WisteriaError(f"(ERRORID044) Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID051) Unknown 'action' keyword '{action}'.")
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:
@@ -1225,7 +1225,7 @@ def init_serializers():
             if serializerdata.module_name__version != serializerdata.module_name:
                 if not trytoimport(serializerdata.module_name__version):
                     raise WisteriaError(
-                        "(ERRORID040) Internal error: couldn't import "
+                        "(ERRORID049) Internal error: couldn't import "
                         f"'{serializerdata.module_name__version}' module although "
                         f"'{serializerdata.module_name}' module "
                         "has already been successfully imported.")
