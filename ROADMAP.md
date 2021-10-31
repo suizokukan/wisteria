@@ -20,7 +20,6 @@ What's next ?
 * l'exemple suivant:
   ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   provoque un ZeroDivisionError
-* --exportreport='md'
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
@@ -56,6 +55,13 @@ What's next ?
     https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
 
 ===============================================================================
+
+[CURRENT] v. 0.1.8
+
+- konwn > known
+- may have been written in the report file > may have been written in the report file, namely xxx,
+--exportreport='md'
+- ion (https://github.com/amzn/ion-python)
 
 [DONE] v. 0.1.7
 
