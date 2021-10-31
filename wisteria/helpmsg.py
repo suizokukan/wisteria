@@ -29,7 +29,7 @@
 """
 import sys
 
-from wisteria.globs import GRAPHS_FILENAME, LOGFILE_NAME
+from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.utils import normpath, get_missing_required_modules
 
 
@@ -46,7 +46,8 @@ def help_helpcommandlineargument():
     if not missing_modules:
         return 'Try $ wisteria --checkup then $ wisteria --cmp="pickle against marshal". ' \
             'The results appear in the console and ' \
-            f'are also written in a file, \'{LOGFILE_NAME}\' ({normpath(LOGFILE_NAME)}), ' \
+            'are also written in a file, ' \
+            f'\'{DEFAULT_REPORTFILE_NAME}\' ({normpath(DEFAULT_REPORTFILE_NAME)}), ' \
             'and - if matplotlib is installed - graphs are written in files named ' \
             f'{help_graphsfilenames()}.'
 

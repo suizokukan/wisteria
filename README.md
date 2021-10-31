@@ -24,6 +24,21 @@ results: pipeline
      * if obj == _res2:
            if <obj> is a cwc module > is works_as_expected(_res2) True ?
            if <obj> isn't a cwc module and if data.works_as_expected > data.works_as_expected(obj)
+           
+           
+Report filename format
+```
+(pimydoc)report filename format
+⋅* either a simple string like 'report.txt'
+⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
+⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+⋅  e.g. "report_DATETIME.txt" would become something like
+⋅       "report_2021-12-31.23.59.59.txt"
+⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+⋅  be replaced by str(int(time.time()))
+⋅    e.g. "report_DATETIME.txt" would become something like
+⋅         "report_1635672267.txt"
+```
 
 # Wisteria
 
@@ -62,6 +77,7 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
   - [3.3] [coding conventions](#33-coding-conventions)
   - [3.4] [errors and warnings](#34-errors-and-warnings)
   - [3.5] [git and poetry workflow](#35-git-and-poetry-workflow)
+- [4] [FAQ](#4-faq)
 
 # [0] the project in a few words
 
@@ -856,3 +872,22 @@ Third-party Modules coverage
 dateutil (https://dateutil.readthedocs.io/en/stable/)
 
         > "dateutil(parser.parse)": dateutil.parser.parse("2021-03-04")
+
+
+# [4] FAQ
+
+**Q: How to modify the report (=log) file name ?**
+A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.
+```
+(pimydoc)report filename format
+⋅* either a simple string like 'report.txt'
+⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
+⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+⋅  e.g. "report_DATETIME.txt" would become something like
+⋅       "report_2021-12-31.23.59.59.txt"
+⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+⋅  be replaced by str(int(time.time()))
+⋅    e.g. "report_DATETIME.txt" would become something like
+⋅         "report_1635672267.txt"
+```
+

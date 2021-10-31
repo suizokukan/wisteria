@@ -29,9 +29,12 @@
 
     o  parse_output_argument(output_string)
 """
+import datetime
+import time
+
 from rich import print as rprint
 
-from wisteria.globs import LOGFILE_NAME
+from wisteria.globs import DEFAULT_REPORTFILE_NAME
 
 
 def parse_output_argument(output_string):
@@ -47,16 +50,16 @@ def parse_output_argument(output_string):
         RETURNED VALUE:(
                         (bool)success, True if the --output string had been successfully parsed
                         (bool)output to the console ?,
-                        (bool)output to the logfile ?,
-                        (str)logfile open mode = 'a' or 'w',
-                        (str)logfile name,
+                        (bool)output to the reportfile ?,
+                        (str)reportfile open mode = 'a' or 'w',
+                        (str)reportfile name,
                        )
     """
     success = False
     bool_console = False
-    bool_logfile = False
+    bool_reportfile = False
     opening_mode = "w"
-    logfile_name = LOGFILE_NAME
+    reportfile_name = DEFAULT_REPORTFILE_NAME
 
     # ---- console part -------------------------------------------------------
     if "console;" in output_string:
@@ -66,27 +69,49 @@ def parse_output_argument(output_string):
         bool_console = True
         output_string = output_string.replace("console", "")
 
-    # ---- logfile part -------------------------------------------------------
-    if "logfile" in output_string:
-        bool_logfile = True
-        if "logfile/a" in output_string:
+    # ---- reportfile part -------------------------------------------------------
+    if "reportfile" in output_string:
+        bool_reportfile = True
+        if "reportfile/a" in output_string:
             opening_mode = "a"
-            output_string = output_string.replace("logfile/a", "")
-        elif "logfile/w" in output_string:
+            output_string = output_string.replace("reportfile/a", "")
+        elif "reportfile/w" in output_string:
             opening_mode = "w"
-            output_string = output_string.replace("logfile/w", "")
+            output_string = output_string.replace("reportfile/w", "")
         else:
-            output_string = output_string.replace("logfile", "")
+            output_string = output_string.replace("reportfile", "")
 
         output_string = output_string.replace(";", "")
 
         if "=" in output_string:
-            logfile_name = output_string[output_string.index('=')+1:]
+            reportfile_name = output_string[output_string.index('=')+1:]
             output_string = output_string.replace("=", "")
-            output_string = output_string.replace(logfile_name, "")
-            if not logfile_name:
-                rprint("(ERRORID014) Ill-formed --output string: empty logfile name.")
+            output_string = output_string.replace(reportfile_name, "")
+            if not reportfile_name:
+                rprint("(ERRORID014) Ill-formed --output string: empty reportfile name.")
                 return False, None, None, None, None
+
+            # Should we replace special strings 'TIMESTAMP'/'DATETIME' (in <reportfile_name>)
+            # by the expected string ?
+            #
+            # (pimydoc)report filename format
+            # ⋅* either a simple string like 'report.txt'
+            # ⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
+            # ⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+            # ⋅  e.g. "report_DATETIME.txt" would become something like
+            # ⋅       "report_2021-12-31.23.59.59.txt"
+            # ⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+            # ⋅  be replaced by str(int(time.time()))
+            # ⋅    e.g. "report_DATETIME.txt" would become something like
+            # ⋅         "report_1635672267.txt"
+            if 'DATETIME' in reportfile_name:
+                reportfile_name = reportfile_name.replace(
+                    'DATETIME',
+                    datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S"))
+            if 'TIMESTAMP' in reportfile_name:
+                reportfile_name = reportfile_name.replace(
+                    'TIMESTAMP',
+                    str(int(time.time())))
 
     # ---- what else ? --------------------------------------------------------
     if output_string.strip() == "":
@@ -95,4 +120,4 @@ def parse_output_argument(output_string):
         rprint(f"(ERRORID019) Ill-formed --output string: what is '{output_string}' ?.")
         return False, None, None, None, None
 
-    return success, bool_console, bool_logfile, opening_mode, logfile_name
+    return success, bool_console, bool_reportfile, opening_mode, reportfile_name

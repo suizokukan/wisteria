@@ -33,7 +33,7 @@
     ⋅- (B/03) wisteria.globs.ARGS initialization
     ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
     ⋅- (B/05) --output string
-    ⋅- (B/06) logfile opening
+    ⋅- (B/06) reportfile opening
     ⋅- (B/07) msgxxx() functions can be used
     ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
     ⋅- (B/09) project name & version
@@ -98,7 +98,7 @@ import sys
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -127,7 +127,7 @@ import sys
 from wisteria.utils import normpath
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_helpcommandlineargument
-from wisteria.globs import LOGFILE_NAME
+from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import REGEX_CMP__HELP
@@ -148,7 +148,7 @@ from wisteria.globs import STR2REPORTSECTION_KEYS
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -229,14 +229,28 @@ PARSER.add_argument(
     help="Display informations about the current machine and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
+# (pimydoc)report filename format
+# ⋅* either a simple string like 'report.txt'
+# ⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
+# ⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+# ⋅  e.g. "report_DATETIME.txt" would become something like
+# ⋅       "report_2021-12-31.23.59.59.txt"
+# ⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+# ⋅  be replaced by str(int(time.time()))
+# ⋅    e.g. "report_DATETIME.txt" would become something like
+# ⋅         "report_1635672267.txt"
 PARSER.add_argument(
     '--output',
     action='store',
-    default=f'console;logfile/w={LOGFILE_NAME}',
-    help="Values are 'console' or 'logfile' or 'console;logfile'. "
-    "Instead of 'logfile' you may specify 'logfile/a' (append mode) or 'logfile/w' (write mode). "
-    "Instead of 'logfile' you may specify 'logfile=myfile.log'. "
-    f"Combinations like 'logfile/w={LOGFILE_NAME}' are accepted. "
+    default=f'console;reportfile/w={DEFAULT_REPORTFILE_NAME}',
+    help="Values are 'console' or 'reportfile' or 'console;reportfile'. "
+    "Instead of 'reportfile' "
+    "you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode). "
+    "You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name "
+    "in order to add a timestamp in the filename."
+    "Instead of 'reportfile' "
+    "you may specify 'reportfile=myreportfile'. "
+    f"Combinations like 'reportfile/w={DEFAULT_REPORTFILE_NAME}' are accepted. "
     "See by example the default value.")
 
 PARSER.add_argument(
@@ -296,7 +310,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -380,7 +394,7 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -416,7 +430,7 @@ wisteria.globs.ARGS = ARGS
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -460,7 +474,7 @@ if len(sys.argv) == 1:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -481,11 +495,11 @@ if len(sys.argv) == 1:
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
 if wisteria.globs.ARGS.mute:
-    wisteria.globs.OUTPUT = False, False, "a", LOGFILE_NAME
+    wisteria.globs.OUTPUT = False, False, "a", DEFAULT_REPORTFILE_NAME
 else:
     wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
     if not wisteria.globs.OUTPUT[0]:
-        # no log available, hence the use of rprint():
+        # no report(=log) available, hence the use of rprint():
         rprint("[bold red]Ill-formed --output string. The program has to stop.[/bold red]")
         # (pimydoc)exit codes
         # ⋅*  0: normal exit code
@@ -507,7 +521,7 @@ else:
 
 
 # =============================================================================
-# (B/06) logfile opening
+# (B/06) reportfile opening
 # =============================================================================
 # It would be great to use something like:
 #   with open(...) as wisteria.globs.FILECONSOLE_FILEOBJECT:
@@ -533,7 +547,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -567,7 +581,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -646,7 +660,7 @@ if not check_str2reportsection_keys():
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -683,7 +697,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -739,7 +753,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -809,7 +823,7 @@ atexit.register(exit_handler)
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -845,7 +859,7 @@ wisteria.serializers.init_serializers()
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -886,7 +900,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -922,7 +936,7 @@ wisteria.data.init_data()
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1081,7 +1095,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1139,7 +1153,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1192,7 +1206,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string
-# ⋅- (B/06) logfile opening
+# ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1254,7 +1268,7 @@ def main():
     # ⋅- (B/03) wisteria.globs.ARGS initialization
     # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
     # ⋅- (B/05) --output string
-    # ⋅- (B/06) logfile opening
+    # ⋅- (B/06) reportfile opening
     # ⋅- (B/07) msgxxx() functions can be used
     # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
     # ⋅- (B/09) project name & version
@@ -1293,7 +1307,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
-        # ⋅- (B/06) logfile opening
+        # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -1352,7 +1366,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
-        # ⋅- (B/06) logfile opening
+        # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -1407,7 +1421,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
-        # ⋅- (B/06) logfile opening
+        # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -1448,7 +1462,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string
-        # ⋅- (B/06) logfile opening
+        # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version

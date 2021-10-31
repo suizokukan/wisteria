@@ -2123,7 +2123,7 @@ def report_section_graphs(results,
             "Either you install matplotlib (see https://matplotlib.org/), either "
             "- if you don't want to draw graphs - "
             "you remove keyword 'graphs' from the --report string. "
-            "Try --verbosity=3 and check log file for more informations about --report string.")
+            "Try --verbosity=3 and check report file for more informations about --report string.")
         return
 
     for (attribute, fmtstring, value_coeff, unit, title, filename) in (

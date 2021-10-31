@@ -9,7 +9,6 @@ What's next ?
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 * # The "PermissionError" exception may be raised on Windows system
     tester ce qui se passe avec with open()..: pass >>> le fichier est-il fermé ?
-* --logfilename > reportfilename (idem pour les constantes associées, définies dans globs.py)
 * report.txt > wisteriaTIMESTAMP.txt (plus clair)
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
@@ -61,6 +60,18 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.1.7
+
+[DONE] task-231
+
+Improved code readibility and the documentation.
+
+    * new entry in `pimydoc`: `report filename format` (task-231)
+    * 'logfile' > 'reportfile' everywhere in the code (task-231)
+    * globs.py:REPORTFILE_NAME > globs.py:DEFAULT_REPORTFILE_NAME (task-231)
+    * improved documentation (task-231)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-230
 

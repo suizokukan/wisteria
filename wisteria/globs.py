@@ -60,7 +60,7 @@
 
     o  UNITS
 
-    o  LOGFILE_NAME
+    o  DEFAULT_REPORTFILE_NAME
 
     o  STR2REPORTSECTION_KEYS
 
@@ -172,9 +172,6 @@ DATA = {}
 # * initialized by data.py::init_data()
 UNAVAILABLE_DATA = {}
 
-# log file.
-#
-
 # Both variables are initialized by main.py()
 FILECONSOLE_FILEOBJECT = None
 #   value: rich.console.Console(file=...)
@@ -185,9 +182,9 @@ FILECONSOLE = None
 # format:
 #        ((bool)success, True if the --output string had been successfully parsed
 #         (bool)output to the console ?,
-#         (bool)output to the logfile ?,
-#         (str)logfile open mode = 'a' or 'w',
-#         (str)logfile name,
+#         (bool)output to the reportfile ?,
+#         (str)reportfile open mode = 'a' or 'w',
+#         (str)reportfile name,
 #        )
 OUTPUT = []
 
@@ -202,8 +199,7 @@ UNITS = {'time': 'seconds',
          'memory': 'bytes',
          }
 
-# name of the log file
-LOGFILE_NAME = "report.txt"
+DEFAULT_REPORTFILE_NAME = "report.txt"
 
 # name of the graphs file
 GRAPHS_FILENAME = "report__SUFFIX__.png"

@@ -54,11 +54,11 @@ def _message(obj):
     """
         _message()
 
-        Internal function: displays and/or writes <obj> in the log file.
+        Internal function: displays and/or writes <obj> in the report (=log) file.
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file
     """
     if wisteria.globs.OUTPUT[0]:
         rprint(obj)
@@ -70,11 +70,11 @@ def msgcritical(obj=""):
     """
         msgcritical()
 
-        Display and/or write <obj> in the log file; to be used like log.critical() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.critical() .
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
     _message("!!! "+str(obj))
 
@@ -83,11 +83,11 @@ def msgdebug(obj=""):
     """
         msgcritical()
 
-        Display and/or write <obj> in the log file; to be used like log.debug() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.debug() .
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
     _message("@ "+str(obj))
 
@@ -96,11 +96,11 @@ def msgerror(obj=""):
     """
         msgerror()
 
-        Display and/or write <obj> in the log file; to be used like log.error() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.error() .
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
     if isinstance(obj, str):
         obj = fmt_error(obj)
@@ -111,11 +111,11 @@ def msginfo(obj=""):
     """
         msginfo()
 
-        Display and/or write <obj> in the log file; to be used like log.info() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.info() .
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
     _message("> "+str(obj))
 
@@ -124,11 +124,11 @@ def msgreport(obj=""):
     """
         msgreport()
 
-        Display and/or write <obj> in the log file; to be used like log.info() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.info() .
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
     _message(obj)
 
@@ -137,7 +137,7 @@ def msgreporttitle(obj=""):
     """
         msgreporttitle()
 
-        Display and/or write <obj> in the log file; to be used like log.info() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.info() .
 
         _______________________________________________________________________
 
@@ -150,10 +150,10 @@ def warning(obj=""):
     """
         msgwarning()
 
-        Display and/or write <obj> in the log file; to be used like log.warning() .
+        Display and/or write <obj> in the report (=log) file; to be used like log.warning() .
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the log file.
+        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
     _message("! "+str(obj))
