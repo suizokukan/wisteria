@@ -179,7 +179,16 @@ def cmpdata2phrase(cmpdata):
 
 def open_reportfile(mode=None):
     """
-    TODO
+        open_reportfile()
+
+        Open the report file, as defined in wisteria.globs.OUTPUT.
+        Note that this file is closed by exit_handler().
+
+        _______________________________________________________________________
+
+        ARGUMENT: (None|str)mode: 'r', 'w'... if None, will be wisteria.globs.OUTPUT[2]
+
+        RETURNED RESULT: the report file descriptor
     """
     if mode is None:
         mode = wisteria.globs.OUTPUT[2]
@@ -2137,6 +2146,18 @@ def report_section_graphs(results,
             "Try --verbosity=3 and check report file for more informations about --report string.")
         return
 
+    # (pimydoc)GRAPHS_DESCRIPTION format
+    # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+    # ⋅report; each description is passed to hbar2png(). Note that len(GRAPHS_DESCRIPTION)
+    # ⋅gives the number of graphs to be created.
+    # ⋅
+    # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+    # ⋅- (str)fmtstring   : format string to be applied to each value when printed on the
+    # ⋅                     graph; e.g. '{0}' or '{0:.1f}'
+    # ⋅- (int)value_coeff : each value will be multiplied by this number
+    # ⋅- (str)unit        : x unit
+    # ⋅- (str)title       : graph title
+    # ⋅- (str)filename    : file name to be written
     for (attribute, fmtstring, value_coeff, unit, title, filename) in GRAPHS_DESCRIPTION:
         hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
 

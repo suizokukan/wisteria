@@ -53,6 +53,8 @@
     ⋅       - (C/18.3) main(): config file reading
     ⋅       - (C/18.4) main(): results computing
     ⋅       - (C/18.5) main(): report
+    ⋅
+    ⋅step D: exit_handler
 
     (pimydoc)exit codes
     ⋅*  0: normal exit code
@@ -118,6 +120,8 @@ import sys
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -169,6 +173,8 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 PARSER = \
     argparse.ArgumentParser(
         description='Comparisons of different Python serializers. '
@@ -343,6 +349,8 @@ ARGS = PARSER.parse_args()
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 
 from wisteria.utils import get_missing_required_modules  # noqa
 from wisteria.reprfmt import fmt_projectversion  # noqa
@@ -381,7 +389,7 @@ import wisteria.globs  # noqa
 wisteria.globs.PLATFORM_SYSTEM = platform.system()
 
 from wisteria.globs import TMPFILENAME  # noqa
-from wisteria.report import report, partial_report__data, partial_report__serializers # noqa
+from wisteria.report import report, partial_report__data, partial_report__serializers  # noqa
 from wisteria.report import open_reportfile  # noqa
 from wisteria.results import compute_results  # noqa
 from wisteria.utils import trytoimport  # noqa
@@ -428,6 +436,8 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 wisteria.globs.ARGS = ARGS
 
 
@@ -464,6 +474,8 @@ wisteria.globs.ARGS = ARGS
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 # a special case: if no argument has been given, we modify the output
 if len(sys.argv) == 1:
     rprint(
@@ -508,6 +520,8 @@ if len(sys.argv) == 1:
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 if wisteria.globs.ARGS.mute:
     wisteria.globs.OUTPUT = False, False, "a", DEFAULT_REPORTFILE_NAME
 else:
@@ -579,6 +593,8 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 
 # =============================================================================
 # (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -613,6 +629,8 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 def check_str2reportsection_keys():
     """
         check_str2reportsection_keys()
@@ -692,6 +710,8 @@ if not check_str2reportsection_keys():
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(fmt_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
@@ -729,6 +749,8 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 if wisteria.globs.ARGS.mute:
     wisteria.globs.ARGS.report = ""
     wisteria.globs.ARGS.verbosity = VERBOSITY_MINIMAL
@@ -785,6 +807,8 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 def exit_handler():
     """
         exit_handler()
@@ -846,9 +870,18 @@ def exit_handler():
             exportedreportfile.write("```\n")
             exportedreportfile.write("\n")
 
-            # TODO > à mettre dans pimydoc, il y a TROIS occurences de ce format dans le code.
-            # GRAPHS_DESCRIPTION:
-            # attribute, fmtstring, value_coeff, unit, title, filename
+            # (pimydoc)GRAPHS_DESCRIPTION format
+            # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+            # ⋅report; each description is passed to hbar2png(). Note that len(GRAPHS_DESCRIPTION)
+            # ⋅gives the number of graphs to be created.
+            # ⋅
+            # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+            # ⋅- (str)fmtstring   : format string to be applied to each value when printed on the
+            # ⋅                     graph; e.g. '{0}' or '{0:.1f}'
+            # ⋅- (int)value_coeff : each value will be multiplied by this number
+            # ⋅- (str)unit        : x unit
+            # ⋅- (str)title       : graph title
+            # ⋅- (str)filename    : file name to be written
             for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
                 exportedreportfile.write(f"![{title}]({filename})\n")
                 exportedreportfile.write("\n")
@@ -890,6 +923,8 @@ atexit.register(exit_handler)
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 wisteria.serializers.init_serializers()
 
 
@@ -926,6 +961,8 @@ wisteria.serializers.init_serializers()
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
@@ -967,6 +1004,8 @@ if not os.path.exists(TMPFILENAME):
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 wisteria.data.init_data()
 
 
@@ -1003,6 +1042,8 @@ wisteria.data.init_data()
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 def checkup():
     """
         checkup()
@@ -1163,6 +1204,8 @@ if wisteria.globs.ARGS.checkup:
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
     if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
@@ -1221,6 +1264,8 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()
     # (pimydoc)exit codes
@@ -1274,6 +1319,8 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅       - (C/18.3) main(): config file reading
 # ⋅       - (C/18.4) main(): results computing
 # ⋅       - (C/18.5) main(): report
+# ⋅
+# ⋅step D: exit_handler
 def main():
     """
         main()
@@ -1336,6 +1383,8 @@ def main():
     # ⋅       - (C/18.3) main(): config file reading
     # ⋅       - (C/18.4) main(): results computing
     # ⋅       - (C/18.5) main(): report
+    # ⋅
+    # ⋅step D: exit_handler
     if ARGS.verbosity == VERBOSITY_DEBUG:
         msgdebug(f"known data: {list(data.keys())}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1375,6 +1424,8 @@ def main():
         # ⋅       - (C/18.3) main(): config file reading
         # ⋅       - (C/18.4) main(): results computing
         # ⋅       - (C/18.5) main(): report
+        # ⋅
+        # ⋅step D: exit_handler
         success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"Result of the call to read_cmpstring('{ARGS.cmp}'): "
@@ -1434,6 +1485,8 @@ def main():
         # ⋅       - (C/18.3) main(): config file reading
         # ⋅       - (C/18.4) main(): results computing
         # ⋅       - (C/18.5) main(): report
+        # ⋅
+        # ⋅step D: exit_handler
         config = None
         if cmpdata == 'ini':
             config = read_cfgfile(ARGS.cfgfile)
@@ -1489,6 +1542,8 @@ def main():
         # ⋅       - (C/18.3) main(): config file reading
         # ⋅       - (C/18.4) main(): results computing
         # ⋅       - (C/18.5) main(): report
+        # ⋅
+        # ⋅step D: exit_handler
         compute_results__res = compute_results(config,
                                                serializer1,
                                                serializer2,
@@ -1530,6 +1585,8 @@ def main():
         # ⋅       - (C/18.3) main(): config file reading
         # ⋅       - (C/18.4) main(): results computing
         # ⋅       - (C/18.5) main(): report
+        # ⋅
+        # ⋅step D: exit_handler
         report(results,
                (serializer1, serializer2, cmpdata))
 

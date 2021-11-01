@@ -70,6 +70,13 @@ What's next ?
     ./bin/wisteria --cmp="pickle vs simpleion(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
+  
+[DONE] task-241
+
+Improved doc.
+
+    * new entry in `pimydoc`: `GRAPHS_DESCRIPTION format` (task-241)
+    * improved doc. (task-241)
 
 [DONE] task-240
 

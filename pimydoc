@@ -25,6 +25,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
 ### (pimydoc)exit codes
+### (pimydoc)GRAPHS_DESCRIPTION format
 ### (pimydoc)progress bar
 ### (pimydoc)report filename format
 ### (pimydoc)report sections
@@ -89,6 +90,8 @@ step C: main()
        - (C/18.3) main(): config file reading
        - (C/18.4) main(): results computing
        - (C/18.5) main(): report
+
+step D: exit_handler
 ### ==========================================================================
 [(pimydoc)config file format]
 
@@ -153,6 +156,19 @@ Initialized by data.py::init_data()
 * -8: error, missing required module
 * -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
 ### ==========================================================================
+[(pimydoc)GRAPHS_DESCRIPTION format]
+Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+report; each description is passed to hbar2png(). Note that len(GRAPHS_DESCRIPTION)
+gives the number of graphs to be created.
+    
+- (str)attribute   : hbar2png will read results.hall[attribute]
+- (str)fmtstring   : format string to be applied to each value when printed on the
+                     graph; e.g. '{0}' or '{0:.1f}'
+- (int)value_coeff : each value will be multiplied by this number
+- (str)unit        : x unit
+- (str)title       : graph title
+- (str)filename    : file name to be written
+### ===========================================================================
 [(pimydoc)progress bar]
 A progress bar is displayed only if verbosity is set to 1 (normal).
 If verbosity is set to 0 (minimal), the progress bar is hidden since no
