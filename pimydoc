@@ -75,7 +75,7 @@ step B: initializations & --checkup
 - (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 - (B/09) project name & version
 - (B/10) ARGS.report interpretation
-- (B/11) exit handler
+- (B/11) exit handler installation
 - (B/12) serializers import
 - (B/13) temp file opening
 - (B/14) known data init (to be placed after 'temp file opening')

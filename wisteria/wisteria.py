@@ -38,7 +38,7 @@
     ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
     ⋅- (B/09) project name & version
     ⋅- (B/10) ARGS.report interpretation
-    ⋅- (B/11) exit handler
+    ⋅- (B/11) exit handler installation
     ⋅- (B/12) serializers import
     ⋅- (B/13) temp file opening
     ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -105,7 +105,7 @@ import sys
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -158,7 +158,7 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -334,7 +334,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -421,7 +421,7 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -459,7 +459,7 @@ wisteria.globs.ARGS = ARGS
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -505,7 +505,7 @@ if len(sys.argv) == 1:
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -578,7 +578,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -614,7 +614,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -695,7 +695,7 @@ if not check_str2reportsection_keys():
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -734,7 +734,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -792,7 +792,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -815,6 +815,19 @@ def exit_handler():
 
         Remove the tmp file if it exists and close the file console file object.
     """
+    # =============================================================================
+    # (D/01) closing and removing of tempfile
+    # =============================================================================
+    # it may happen that wisteria.globs.DATA has not been fully
+    # initialized, hence the first part of the 'if':
+    if 'file descriptor' in wisteria.globs.DATA and \
+       not wisteria.globs.DATA['file descriptor'].closed:
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) About to close the wisteria.globs.DATA['file descriptor'] "
+                     "file descriptor"
+                     f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
+        wisteria.globs.DATA['file descriptor'].close()
+
     if os.path.exists(wisteria.globs.TMPFILENAME):
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"(exit_handler) About to remove the temp file "
@@ -827,17 +840,9 @@ def exit_handler():
         except PermissionError:
             pass
 
-    # it may happen that wisteria.globs.DATA has not been fully
-    # initialized, hence the first part of the 'if':
-    if 'file descriptor' in wisteria.globs.DATA and \
-       not wisteria.globs.DATA['file descriptor'].closed:
-        if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) About to close the wisteria.globs.DATA['file descriptor'] "
-                     "file descriptor"
-                     f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
-        wisteria.globs.DATA['file descriptor'].close()
-
-    # ---- closing wisteria.globs.FILECONSOLE_FILEOBJECT ----------------------
+    # =============================================================================
+    # (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+    # =============================================================================
     # this file should be the last one to be closed if we want to use msgxxx() methods:
     if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -846,7 +851,9 @@ def exit_handler():
                      f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
         wisteria.globs.FILECONSOLE_FILEOBJECT.close()
 
-    # ---- exported report ----------------------------------------------------
+    # =============================================================================
+    # (D/03) exported report
+    # =============================================================================
     # no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
     # so we use print() instead.
     if wisteria.globs.ARGS.exportreport.startswith("md"):
@@ -908,7 +915,7 @@ atexit.register(exit_handler)
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -946,7 +953,7 @@ wisteria.serializers.init_serializers()
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -989,7 +996,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1027,7 +1034,7 @@ wisteria.data.init_data()
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1189,7 +1196,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1249,7 +1256,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1304,7 +1311,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
 # ⋅- (B/10) ARGS.report interpretation
-# ⋅- (B/11) exit handler
+# ⋅- (B/11) exit handler installation
 # ⋅- (B/12) serializers import
 # ⋅- (B/13) temp file opening
 # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1368,7 +1375,7 @@ def main():
     # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
     # ⋅- (B/09) project name & version
     # ⋅- (B/10) ARGS.report interpretation
-    # ⋅- (B/11) exit handler
+    # ⋅- (B/11) exit handler installation
     # ⋅- (B/12) serializers import
     # ⋅- (B/13) temp file opening
     # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1409,7 +1416,7 @@ def main():
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
         # ⋅- (B/10) ARGS.report interpretation
-        # ⋅- (B/11) exit handler
+        # ⋅- (B/11) exit handler installation
         # ⋅- (B/12) serializers import
         # ⋅- (B/13) temp file opening
         # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1470,7 +1477,7 @@ def main():
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
         # ⋅- (B/10) ARGS.report interpretation
-        # ⋅- (B/11) exit handler
+        # ⋅- (B/11) exit handler installation
         # ⋅- (B/12) serializers import
         # ⋅- (B/13) temp file opening
         # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1527,7 +1534,7 @@ def main():
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
         # ⋅- (B/10) ARGS.report interpretation
-        # ⋅- (B/11) exit handler
+        # ⋅- (B/11) exit handler installation
         # ⋅- (B/12) serializers import
         # ⋅- (B/13) temp file opening
         # ⋅- (B/14) known data init (to be placed after 'temp file opening')
@@ -1570,7 +1577,7 @@ def main():
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
         # ⋅- (B/10) ARGS.report interpretation
-        # ⋅- (B/11) exit handler
+        # ⋅- (B/11) exit handler installation
         # ⋅- (B/12) serializers import
         # ⋅- (B/13) temp file opening
         # ⋅- (B/14) known data init (to be placed after 'temp file opening')
