@@ -23,8 +23,10 @@
 
     All classes required to handle serializers.
 
+
     ___________________________________________________________________________
 
+    o  SerializersDataNMVH class
     o  SerializerData class
     o  SerializerDataObj class
     o  SerializationResult class
@@ -36,6 +38,19 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.reprfmt import fmt_serializer, fmt_ratio, fmt_time, fmt_nodata
 from wisteria.reprfmt import fmt_stringlength, fmt_boolsuccess, fmt_mem_usage
 from wisteria.msg import msgerror
+
+
+@dataclass
+class SerializersDataNMVH:
+    """
+        SerializersDataNMVH class
+
+        Class used by SerializerData to store modules' different names.
+    """
+    name: str
+    module_name: str
+    human_name: str
+    module_name__version: str = None
 
 
 class SerializerData:
@@ -68,41 +83,34 @@ class SerializerData:
         o  simple_repr(self)
     """
     def __init__(self,
-                 name,
-                 module_name,
-                 human_name,
+                 serializersdata_nmvh,
                  internet,
                  func,
                  cwc,
-                 comment=None,
-                 module_name__version=None):
+                 comment=None):
         """
             SerializerData.__init__()
 
             ___________________________________________________________________
 
             ARGUMENTS:
-            o  (str)name
-            o  (str)module_name
-            o  (str)human_name
+            o  (SerializersDataNVMH)serializersdata_nmvh
             o  (str)internet
             o  (str)version
             o  (callable)func                : function to be called to use this serializer
             o  (str)cwc                      : name of the module in cwc/xxx/
             o  (None|str)comment             : human-readable comment
-            o  (None|str)module_name__version: if None, <self.module_name__version> will be set
-                                               to <self.module_name>
         """
-        self.name = name
-        self.module_name = module_name
-        self.human_name = human_name
+        self.name = serializersdata_nmvh.name
+        self.module_name = serializersdata_nmvh.module_name
+        self.human_name = serializersdata_nmvh.human_name
         self.internet = internet
         self.version = None
         self.func = func
         self.cwc = cwc
         self.comment = comment
-        self.module_name__version = module_name__version \
-            if module_name__version is not None else self.module_name
+        self.module_name__version = serializersdata_nmvh.module_name__version \
+            if serializersdata_nmvh.module_name__version is not None else self.module_name
 
     def __repr__(self):
         """

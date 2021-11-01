@@ -71,6 +71,12 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
   
+[DONE] task-242
+
+New class `SerializersDataNMVH`, used by SerializersData.__init__().
+
+    * new class `SerializersDataNMVH`, used by SerializersData.__init__() (task-242)
+  
 [DONE] task-241
 
 Improved doc.
