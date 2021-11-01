@@ -52,8 +52,6 @@
     o  init_serializers()
 """
 #   pylint: disable = wrong-import-position
-
-import sys
 import timeit
 
 import wisteria.globs
@@ -79,7 +77,7 @@ else:
 from wisteria.globs import TIMEITNUMBER, MODULES
 from wisteria.globs import VERBOSITY_DEBUG, VERBOSITY_DETAILS
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.utils import trytoimport
+from wisteria.utils import trytoimport, get_python_version
 from wisteria.serializers_classes import SerializersDataNMVH, SerializerData, SerializationResult
 from wisteria.msg import msgdebug, msginfo
 
@@ -621,7 +619,7 @@ def serializer_marshal(action="serialize",
     # action == "version"
     # -------------------
     if action == "version":
-        return f"version {module.version}; (Python version) {sys.version.replace(chr(0x0A), '- ')}"
+        return f"version {module.version}; (Python version) {get_python_version()}"
 
     # ---------------------
     # action == "serialize"
@@ -735,7 +733,7 @@ def serializer_pickle(action="serialize",
     # action == "version"
     # -------------------
     if action == "version":
-        return f"(Python version) {sys.version.replace(chr(0x0A), '- ')}"
+        return f"(Python version) {get_python_version()}"
 
     # ---------------------
     # action == "serialize"

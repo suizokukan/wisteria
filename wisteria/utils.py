@@ -28,6 +28,7 @@
     ___________________________________________________________________________
 
     o  get_missing_required_modules()
+    o  get_python_version()
     o  normpath(path)
     o  shortenedstr(string, maximallength)
     o  trytoimport(module_name)
@@ -39,6 +40,7 @@ import hashlib
 import importlib
 import os
 import os.path
+import sys
 
 import wisteria.globs
 
@@ -60,6 +62,15 @@ def get_missing_required_modules():
         if not trytoimport(module_name):
             missing_modules.append(module_name)
     return missing_modules
+
+
+def get_python_version():
+    """
+        get_python_version()
+
+        Return the Python version on one line.
+    """
+    return sys.version.replace(chr(0x0A), '- ')
 
 
 def normpath(path):

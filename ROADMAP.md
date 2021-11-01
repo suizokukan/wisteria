@@ -63,6 +63,15 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
   
+[DONE] task-247
+
+New function get_python_version() to factorize some parts of the code.
+
+    * new function get_python_version() to factorize some parts of the code.
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+  
 [DONE] task-246
 
 Added a debug message in exit_handler() if an expected graph is missing.

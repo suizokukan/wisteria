@@ -134,7 +134,7 @@ import sys
 # not installed.
 #   pylint: disable=wrong-import-position
 #   pylint: disable=wrong-import-order
-from wisteria.utils import normpath
+from wisteria.utils import normpath, get_python_version
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_helpcommandlineargument
 from wisteria.globs import DEFAULT_REPORTFILE_NAME
@@ -744,7 +744,7 @@ if not check_str2reportsection_keys():
 # ⋅- (D/03) (D/03) exported report
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(fmt_projectversion(add_timestamp=True))
-    msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
+    msgreport(f"Running on Python {get_python_version()}")
 
 # =============================================================================
 # (B/10) ARGS.report interpretation
@@ -1122,7 +1122,7 @@ def checkup():
 
     # ---- Project name & version, time stamp ---------------------------------
     msgreport(fmt_projectversion(add_timestamp=True))
-    msgreport(f"Running on Python {sys.version.replace(chr(0x0A), '- ')}")
+    msgreport(f"Running on Python {get_python_version()}")
     msgreport("The following informations may have been written in the report file "
               f"('{wisteria.globs.FILECONSOLE_FILEOBJECT.name}') "
               "depending of the parameters you passed to the script. "

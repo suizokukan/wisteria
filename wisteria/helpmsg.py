@@ -27,10 +27,8 @@
 
     o  help_graphsfilenames()
 """
-import sys
-
 from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
-from wisteria.utils import normpath, get_missing_required_modules
+from wisteria.utils import normpath, get_missing_required_modules, get_python_version
 
 
 def help_helpcommandlineargument():
@@ -54,7 +52,7 @@ def help_helpcommandlineargument():
     return "\n\nERROR !\nBEWARE, MISSING REQUIRED PACKAGAGES ! " \
         "THE PROGRAM CAN'T BE EXECUTED WITHOUT THE FOLLOWING PACKAGE(S): " \
         f"{tuple(missing_modules)}; " \
-        f"current Python version: {sys.version.replace(chr(0x0A), '- ')}"
+        f"current Python version: {get_python_version()}"
 
 
 def help_graphsfilenames():
