@@ -891,22 +891,22 @@ def exit_handler():
     # (D/03) exported report
     # =============================================================================
     # no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
-    # so we use print() instead.
+    # so we use rprint() instead.
     if wisteria.globs.ARGS.exportreport.startswith("md"):
         if ARGS.verbosity == VERBOSITY_DEBUG:
-            print("(exit_handler) about to create 'md' exported report.")
+            rprint("(exit_handler/exported report) about to create 'md' exported report.")
 
         if "=" not in wisteria.globs.ARGS.exportreport:
             exportreport_filename = DEFAULT_EXPORTREPORT_FILENAME
             if ARGS.verbosity == VERBOSITY_DEBUG:
-                print("(exit_handler) exported report will be named, by default, "
-                      f"'{exportreport_filename}' .")
+                rprint("(exit_handler/exported report) exported report will be named, by default, "
+                       f"'{exportreport_filename}' .")
         else:
             exportreport_filename = \
                 wisteria.globs.ARGS.exportreport[wisteria.globs.ARGS.exportreport.index("=")+1:]
             if ARGS.verbosity == VERBOSITY_DEBUG:
-                print("(exit_handler) exported report will be named "
-                      f"'{exportreport_filename}' .")
+                rprint("(exit_handler/exported report) exported report will be named "
+                       f"'{exportreport_filename}' .")
 
         with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile,
               open_reportfile(mode="r") as reportfile):
@@ -929,8 +929,13 @@ def exit_handler():
             # ⋅- (str)title       : graph title
             # ⋅- (str)filename    : file name to be written
             for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
-                exportedreportfile.write(f"![{title}]({filename})\n")
-                exportedreportfile.write("\n")
+                if not os.path.exists(filename):
+                    rprint("(exit_handler/exported report) "
+                           f"Didn't add '{filename}' to exported report file "
+                           "since this file doesn't exist.")
+                else:
+                    exportedreportfile.write(f"![{title}]({filename})\n")
+                    exportedreportfile.write("\n")
 
 
 atexit.register(exit_handler)

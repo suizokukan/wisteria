@@ -63,6 +63,17 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
   
+[DONE] task-246
+
+Added a debug message in exit_handler() if an expected graph is missing.
+
+    * added a debug message in exit_handler() if an expected graph is missing
+      (task-247)
+    * replaced called to print() by called to rprint() (task-247)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] task-245
 
 Improved doc. in the code and debug message in exit_handler().
