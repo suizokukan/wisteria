@@ -27,6 +27,7 @@
 
     o  humanratio(ratio)
     o  cmpdata2phrase(cmpdata)
+    o  open_reportfile(mode=None)
     o  ratio2phrase(ratio, base_string)
 
     o  partial_report__data()
@@ -48,6 +49,7 @@
     o  report_section_c2c(results, s1s2d)
     o  report_section_d1a(results, s1s2d)
     o  report_section_d1b(results, s1s2d)
+    o  report_section_graphs(results, s1s2d)
 
     o  report(results, s1s2d)
 """
@@ -58,8 +60,8 @@ import wisteria.globs
 from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
-from wisteria.globs import GRAPHS_FILENAME
 from wisteria.globs import DEBUG_CONSOLEWIDTH
+from wisteria.globs import GRAPHS_DESCRIPTION
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest, trytoimport
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
@@ -173,6 +175,15 @@ def cmpdata2phrase(cmpdata):
     # cmpdata == 'cwc'
     return "According to the tests " \
         "conducted on data of the 'comparing what is comparable' type, "
+
+
+def open_reportfile(mode=None):
+    """
+    TODO
+    """
+    if mode is None:
+        mode = wisteria.globs.OUTPUT[2]
+    return open(wisteria.globs.OUTPUT[3], mode, encoding="utf-8")
 
 
 def ratio2phrase(ratio,
@@ -2126,16 +2137,7 @@ def report_section_graphs(results,
             "Try --verbosity=3 and check report file for more informations about --report string.")
         return
 
-    for (attribute, fmtstring, value_coeff, unit, title, filename) in (
-            ('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
-            ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
-            ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
-            ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "4")),
-           ):
+    for (attribute, fmtstring, value_coeff, unit, title, filename) in GRAPHS_DESCRIPTION:
         hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
 
 

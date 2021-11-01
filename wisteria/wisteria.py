@@ -133,6 +133,7 @@ from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import REGEX_CMP__HELP
 from wisteria.globs import DEFAULT_CONFIG_FILENAME
 from wisteria.globs import STR2REPORTSECTION_KEYS
+from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 
 
 # =============================================================================
@@ -204,7 +205,13 @@ PARSER.add_argument(
     '--exportreport',
     action='store',
     default='no export',
-    help=f"Export report; e.g. 'md=myfile.md'")
+    help="Export report by creating a new file in which "
+    "both report text and graphics are put together. "
+    "'md' is the only value or the only acceptable start string "
+    "since md format is the only known format for exported report; "
+    "you may add the exported report filename after '=', "
+    "e.g. 'md=myfile.md'; "
+    f"otherwise the default filename is {DEFAULT_EXPORTREPORT_FILENAME}")
 
 PARSER.add_argument(
     '--help', '-h',
@@ -374,7 +381,8 @@ import wisteria.globs  # noqa
 wisteria.globs.PLATFORM_SYSTEM = platform.system()
 
 from wisteria.globs import TMPFILENAME  # noqa
-from wisteria.report import report, partial_report__data, partial_report__serializers  # noqa
+from wisteria.report import report, partial_report__data, partial_report__serializers # noqa
+from wisteria.report import open_reportfile  # noqa
 from wisteria.results import compute_results  # noqa
 from wisteria.utils import trytoimport  # noqa
 import wisteria.serializers  # noqa
@@ -534,9 +542,7 @@ else:
 # but it's not possible here. Please notice that we check the closing of this
 # file in exit handler.
 #   pylint: disable=consider-using-with
-wisteria.globs.FILECONSOLE_FILEOBJECT = open(wisteria.globs.OUTPUT[3],
-                                             wisteria.globs.OUTPUT[2],
-                                             encoding="utf-8")
+wisteria.globs.FILECONSOLE_FILEOBJECT = open_reportfile()
 wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOLE_FILEOBJECT)
 
 
@@ -818,40 +824,35 @@ def exit_handler():
 
     # ---- exported report ----------------------------------------------------
     # no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
+    # so we use print() instead.
     if wisteria.globs.ARGS.exportreport.startswith("md"):
         if "=" not in wisteria.globs.ARGS.exportreport:
-            exportreport_filename = "report.md"
+            exportreport_filename = DEFAULT_EXPORTREPORT_FILENAME
             if ARGS.verbosity == VERBOSITY_DEBUG:
                 print("(exit_handler) exported report will be named, by default, "
                       f"'{exportreport_filename}' .")
         else:
             exportreport_filename = \
-                wisteria.globs.ARGS.exportreport[wisteria.globs.ARGS.exportreport.index("="):]
+                wisteria.globs.ARGS.exportreport[wisteria.globs.ARGS.exportreport.index("=")+1:]
+            if ARGS.verbosity == VERBOSITY_DEBUG:
+                print("(exit_handler) exported report will be named "
+                      f"'{exportreport_filename}' .")
 
-        with (open(exportreport_filename, "w", encoding="utf-8") as exportedreport,
-              open(wisteria.globs.OUTPUT[3], "r", encoding="utf-8") as report):
-            exportedreport.write("```\n")
-            for line in report.readlines():
-                exportedreport.write(line)
-            exportedreport.write("```\n")
-            # exportedreport.write("\n")
-            # exportedreport.write("![abc](https://github.com/suizokukan/wisteria/blob/task-240/report0/report1.png?raw=true)\n")
-            # exportedreport.write("\n")
-            # exportedreport.write("![abc](https://github.com/suizokukan/wisteria/blob/task-240/report0/report2.png?raw=true)\n")
-            # exportedreport.write("\n")
-            # exportedreport.write("![abc](https://github.com/suizokukan/wisteria/blob/task-240/report0/report3.png?raw=true)\n")
-            # exportedreport.write("\n")
-            # exportedreport.write("![abc](https://github.com/suizokukan/wisteria/blob/task-240/report0/report4.png?raw=true)\n")
-            # exportedreport.write("\n")
-            exportedreport.write("\n")
-            exportedreport.write("![](report1.png)\n")
-            exportedreport.write("\n")
-            exportedreport.write("![](report2.png)\n")
-            exportedreport.write("\n")
-            exportedreport.write("![](report3.png)\n")
-            exportedreport.write("\n")
-            exportedreport.write("![](report4.png)\n")
-            exportedreport.write("\n")
+        with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile,
+              open_reportfile(mode="r") as reportfile):
+            exportedreportfile.write("```\n")
+            for line in reportfile.readlines():
+                exportedreportfile.write(line)
+            exportedreportfile.write("```\n")
+            exportedreportfile.write("\n")
+
+            # TODO > à mettre dans pimydoc, il y a TROIS occurences de ce format dans le code.
+            # GRAPHS_DESCRIPTION:
+            # attribute, fmtstring, value_coeff, unit, title, filename
+            for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
+                exportedreportfile.write(f"![{title}]({filename})\n")
+                exportedreportfile.write("\n")
+
 
 atexit.register(exit_handler)
 

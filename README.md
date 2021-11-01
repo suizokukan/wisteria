@@ -877,6 +877,7 @@ dateutil (https://dateutil.readthedocs.io/en/stable/)
 # [4] FAQ
 
 **Q: How to modify the report (=log) file name ?**
+
 A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.
 ```
 (pimydoc)report filename format
@@ -891,3 +892,6 @@ A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You m
 ⋅         "report_1635672267.txt"
 ```
 
+**Q: Where is defined in the code the number of graphs?**
+
+A: globs.py::GRAPHS_DESCRIPTION

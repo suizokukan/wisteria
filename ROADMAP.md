@@ -71,12 +71,16 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
 
-[CURRENT] task-240
+[DONE] task-240
 
-*-exportreport='md'
+-exportreport='md'.
 
+    * --exportreport='md:myfile.md', defined in exit_handler() (task-240)
     * command line arguments are now sorted in wisteria.py by alphabetical 
-      order (task-240) 
+      order (task-240)
+    * new variable in globs.py: `DEFAULT_EXPORTREPORT_FILENAME` (task-240)
+    * the normal way to open the report file is now `open_reportfile()` (task-240)
+    * improved doc in report.py (task-240)
 
 [DONE] task-239
 

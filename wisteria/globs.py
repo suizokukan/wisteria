@@ -65,6 +65,8 @@
     o  STR2REPORTSECTION_KEYS
 
     o  DEBUG_CONSOLEWIDTH
+
+    o  DEFAULT_EXPORTREPORT_FILENAME
 """
 import re
 
@@ -203,6 +205,16 @@ DEFAULT_REPORTFILE_NAME = "report.txt"
 
 # name of the graphs file
 GRAPHS_FILENAME = "report__SUFFIX__.png"
+# GRAPHS_DESCRIPTION:
+# attribute, fmtstring, value_coeff, unit, title, filename:
+GRAPHS_DESCRIPTION = (('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
+                      GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
+                      ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
+                       GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
+                      ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
+                       GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
+                      ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
+                       GRAPHS_FILENAME.replace("__SUFFIX__", "4")),)
 
 #  globs.py:STR2REPORTSECTION_KEYS should be nothing but STR2REPORTSECTION.keys()
 #
@@ -251,3 +263,6 @@ PLATFORM_SYSTEM = None
 
 # maximal console width used to display some debug messages:
 DEBUG_CONSOLEWIDTH = 70
+
+# default filename for --exportreport
+DEFAULT_EXPORTREPORT_FILENAME = "report.md"
