@@ -91,7 +91,10 @@ step C: main()
        - (C/18.4) main(): results computing
        - (C/18.5) main(): report
 
-step D: exit_handler
+step D: exit_handler()
+- (D/01) closing and removing of tempfile
+- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+- (D/03) (D/03) exported report
 ### ==========================================================================
 [(pimydoc)config file format]
 

@@ -63,6 +63,15 @@ What's next ?
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
   
+[DONE] task-245
+
+Improved doc. in the code and debug message in exit_handler().
+
+    * improved doc. in the code and debug message (task-245)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] task-244
 
 Bugfix: in exit_handler(), temp file is now closed before being removed.
