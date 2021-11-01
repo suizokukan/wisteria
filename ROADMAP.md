@@ -58,19 +58,20 @@ What's next ?
 
 [CURRENT] v. 0.1.8
 
-
-* soulager init_serializers() à l'aide d'un dataclass
-  @dataclass
-  class NMVH:
-      name: str
-      module_name: str
-      module_name__version: str
-      human_name: str
 * problème avec les valeurs absurdes, par exemple déclenchée par:
     ./bin/wisteria --cmp="pickle vs simpleion(cwc)" --report="C2a;C2b;C2c" --verbosity=3
   Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
   expliquant pourquoi.
   
+[DONE] task-243
+
+Updated pylintrc and README.md (pylintrc: max-attributes=9)
+
+    * pylintrc: max-attributes=9 (task-243)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] task-242
 
 New class `SerializersDataNMVH`, used by SerializersData.__init__().
