@@ -225,7 +225,9 @@ PARSER.add_argument(
     "since md format is the only known format for exported report; "
     "you may add the exported report filename after '=', "
     "e.g. 'md=myfile.md'; "
-    f"otherwise the default filename is {DEFAULT_EXPORTREPORT_FILENAME}")
+    f"otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+    "Please note that graphs will not be added to the exported file if "
+    "--checkup/--downloadconfigfile/--mymachine is set. ")
 
 PARSER.add_argument(
     '--help', '-h',
@@ -899,32 +901,37 @@ def exit_handler():
 
         with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile,
               open_reportfile(mode="r") as reportfile):
+            # ---- (1/2) exported report: text --------------------------------
             exportedreportfile.write("```\n")
             for line in reportfile.readlines():
                 exportedreportfile.write(line)
             exportedreportfile.write("```\n")
             exportedreportfile.write("\n")
 
-            # (pimydoc)GRAPHS_DESCRIPTION format
-            # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-            # ⋅report; each description is passed to hbar2png(). Note that len(GRAPHS_DESCRIPTION)
-            # ⋅gives the number of graphs to be created.
-            # ⋅
-            # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
-            # ⋅- (str)fmtstring   : format string to be applied to each value when printed on the
-            # ⋅                     graph; e.g. '{0}' or '{0:.1f}'
-            # ⋅- (int)value_coeff : each value will be multiplied by this number
-            # ⋅- (str)unit        : x unit
-            # ⋅- (str)title       : graph title
-            # ⋅- (str)filename    : file name to be written
-            for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
-                if not os.path.exists(filename):
-                    rprint("(exit_handler/exported report) "
-                           f"Didn't add '{filename}' to exported report file "
-                           "since this file doesn't exist.")
-                else:
-                    exportedreportfile.write(f"![{title}]({filename})\n")
-                    exportedreportfile.write("\n")
+            # ---- (2/2) exported report: graphs ------------------------------
+            if not wisteria.globs.ARGS.mymachine and \
+               not wisteria.globs.ARGS.checkup and \
+               not wisteria.globs.ARGS.downloadconfigfile:
+                # (pimydoc)GRAPHS_DESCRIPTION format
+                # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+                # ⋅report; each description is passed to hbar2png(). Note that
+                # ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
+                # ⋅
+                # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+                # ⋅- (str)fmtstring   : format string to be applied to each value when printed
+                # ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
+                # ⋅- (int)value_coeff : each value will be multiplied by this number
+                # ⋅- (str)unit        : x unit
+                # ⋅- (str)title       : graph title
+                # ⋅- (str)filename    : file name to be written
+                for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
+                    if not os.path.exists(filename):
+                        rprint("(exit_handler/exported report) "
+                               f"Didn't add '{filename}' to exported report file "
+                               "since this file doesn't exist.")
+                    else:
+                        exportedreportfile.write(f"![{title}]({filename})\n")
+                        exportedreportfile.write("\n")
 
 
 atexit.register(exit_handler)

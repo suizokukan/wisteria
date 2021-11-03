@@ -52,6 +52,17 @@ What's next ?
 [CURRENT] v. 0.1.8
 * data_object, dataobj_name: c'est le bazar
 
+[DONE] task-250
+
+If --checkup/--downloadconfigfile/--mymachine is set, no graph file is added
+to the exported report anymore.
+
+    * If --checkup/--downloadconfigfile/--mymachine is set, no graph file is 
+      added to the exported report anymore (task-250)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
+
 [DONE] task-249
 
 'fmt_stringlength' > 'fmt_strlen'.

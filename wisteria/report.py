@@ -2165,12 +2165,12 @@ def report_section_graphs(results,
 
     # (pimydoc)GRAPHS_DESCRIPTION format
     # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-    # ⋅report; each description is passed to hbar2png(). Note that len(GRAPHS_DESCRIPTION)
-    # ⋅gives the number of graphs to be created.
+    # ⋅report; each description is passed to hbar2png(). Note that
+    # ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
     # ⋅
     # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
-    # ⋅- (str)fmtstring   : format string to be applied to each value when printed on the
-    # ⋅                     graph; e.g. '{0}' or '{0:.1f}'
+    # ⋅- (str)fmtstring   : format string to be applied to each value when printed
+    # ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
     # ⋅- (int)value_coeff : each value will be multiplied by this number
     # ⋅- (str)unit        : x unit
     # ⋅- (str)title       : graph title
