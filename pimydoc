@@ -155,9 +155,8 @@ Initialized by data.py::init_data()
 * -4: internal error, an error occured while computing the results
 * -5: internal error, an error in main()
 * -6: error, ill-formed --output string
-* -7: error, an absurd value has been computed
-* -8: error, missing required module
-* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+* -7: error, missing required module
+* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
 ### ==========================================================================
 [(pimydoc)GRAPHS_DESCRIPTION format]
 Use GRAPHS_DESCRIPTION to store the description of each graph created by the

@@ -7,8 +7,6 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
-* # The "PermissionError" exception may be raised on Windows system
-    tester ce qui se passe avec with open()..: pass >>> le fichier est-il fermé ?
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 * README.md : %%français > anglais
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
@@ -17,16 +15,12 @@ What's next ?
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 * encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
-* l'exemple suivant:
-  ./bin/wisteria --cmp="iaswn vs jsonpickle(cwc)" --report="C2a;C2b;C2c" --verbosity=3
-  provoque un ZeroDivisionError
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
     - fonctions wae pour les types de base
 * finir de couvrir le plus de serializers possible
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
-        ion (https://github.com/amzn/ion-python)
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
         Django (https://www.django-rest-framework.org/api-guide/serializers/)
         serpy (https://serpy.readthedocs.io/en/latest/performance.html)
@@ -34,7 +28,6 @@ What's next ?
         python-cjson (https://pypi.org/project/python-cjson/)
         python-rapidjson (https://pypi.org/project/python-rapidjson/)
         ujson (https://pypi.org/project/ujson/)
-* data_object, dataobj_name: c'est le bazar
 * README.md acceptable
       + __init__.py
 * tests
@@ -57,11 +50,20 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.1.8
+* data_object, dataobj_name: c'est le bazar
 
-* problème avec les valeurs absurdes, par exemple déclenchée par:
-    ./bin/wisteria --cmp="pickle vs simpleion(cwc)" --report="C2a;C2b;C2c" --verbosity=3
-  Au lieu de déclencher une exception il serait plus sage de désactiver un serializer et de donner un message
-  expliquant pourquoi.
+  
+[DONE] task-248
+
+Improved results functions so that incoherent results are correctly marked 
+as incoherent results.
+
+    * improved results functions so that incoherent results are correctly marked 
+      as incoherent results. SerializationResults functions have been improved,
+      and report_() functions too. (task-248)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
   
 [DONE] task-247
 

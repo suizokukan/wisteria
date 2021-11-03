@@ -63,7 +63,7 @@ from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEBUG_CONSOLEWIDTH
 from wisteria.globs import GRAPHS_DESCRIPTION
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.utils import shortenedstr, strdigest, trytoimport
+from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reprfmt import fmt_serializer, fmt_data, fmt_percentage, fmt_list
 from wisteria.reprfmt import fmt_nounplural, fmt_mem_usage
@@ -1763,76 +1763,88 @@ def report_section_c2c__serializervsserializer(results,
     text.append(cmpdata2phrase(cmpdata))
 
     # ---- encoding/decoding time -----------------------------------------
-    total_encoding_time_ratio = \
-        results.total_encoding_plus_decoding_time(serializer=seria1, output='value') \
-        / results.total_encoding_plus_decoding_time(serializer=seria2,
-                                                    output='value')
-
-    if total_encoding_time_ratio == 1:
-        text.append(
-            f"{fmt_serializer(seria1)} "
-            f"and {fmt_serializer(seria2)} "
-            "seem to require exactly the same time to encode and decode; ")
+    if results.total_encoding_plus_decoding_time(serializer=seria1, output='value') is None or \
+       results.total_encoding_plus_decoding_time(serializer=seria2, output='value') is None:
+        text.append("no information can be given about the total amount of times "
+                    "required to encode and decode since at least one serializer "
+                    "returns incoherent informations about this amount of time; ")
     else:
-        text.append(
-            f"{fmt_serializer(seria1)} "
-            f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
-            f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
-            "(__note:total_encoding_time_ratio__) - "
-            "than "
-            f"{fmt_serializer(seria2)} "
-            "to encode and decode; ")
+        total_encoding_time_ratio = \
+            results.total_encoding_plus_decoding_time(serializer=seria1, output='value') \
+            / results.total_encoding_plus_decoding_time(serializer=seria2,
+                                                        output='value')
 
-        text.notes.append(
-            ("total_encoding_time_ratio",
-             humanratio(
-                 total_encoding_time_ratio,
-                 explanations=(
-                     f"{fmt_serializer(seria1)}'s Σ encod.+decod. time",
-                     results.total_encoding_plus_decoding_time(serializer=seria1,
-                                                               output='value'),
-                     f"{fmt_serializer(seria2)}'s Σ encod.+decod. time",
-                     results.total_encoding_plus_decoding_time(serializer=seria2,
-                                                               output='value'),
-                     'time',
-                 ),
-                 numbersformat=".3f"
-             )))
+        if total_encoding_time_ratio == 1:
+            text.append(
+                f"{fmt_serializer(seria1)} "
+                f"and {fmt_serializer(seria2)} "
+                "seem to require exactly the same time to encode and decode; ")
+        else:
+            text.append(
+                f"{fmt_serializer(seria1)} "
+                f"is {ratio2phrase(total_encoding_time_ratio, 'slow/fast')} "
+                f"- by a factor of {humanratio(total_encoding_time_ratio):.3f} "
+                "(__note:total_encoding_time_ratio__) - "
+                "than "
+                f"{fmt_serializer(seria2)} "
+                "to encode and decode; ")
+
+            text.notes.append(
+                ("total_encoding_time_ratio",
+                 humanratio(
+                     total_encoding_time_ratio,
+                     explanations=(
+                         f"{fmt_serializer(seria1)}'s Σ encod.+decod. time",
+                         results.total_encoding_plus_decoding_time(serializer=seria1,
+                                                                   output='value'),
+                         f"{fmt_serializer(seria2)}'s Σ encod.+decod. time",
+                         results.total_encoding_plus_decoding_time(serializer=seria2,
+                                                                   output='value'),
+                         'time',
+                     ),
+                     numbersformat=".3f"
+                 )))
 
     # ---- total_encoding_strlen -----------------------------------------
-    total_encoding_strlen_ratio = \
-        results.total_encoding_strlen(serializer=seria1, output='value') \
-        / results.total_encoding_strlen(serializer=seria2,
-                                        output='value')
-
-    if total_encoding_strlen_ratio == 1:
-        text.append(f"{fmt_serializer(seria1)} "
-                    f"and {fmt_serializer(seria2)} "
-                    "seem to produce strings that have exactly the same size; ")
+    if results.total_encoding_strlen(serializer=seria1, output='value') is None or \
+       results.total_encoding_strlen(serializer=seria2, output='value') is None:
+        text.append("no information can be given about the length of "
+                    "encoded strings since at least one serializer "
+                    "returns incoherent informations about this length; ")
     else:
-        text.append("strings produced by "
-                    f"{fmt_serializer(seria1)} "
-                    f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
-                    f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
-                    f"(__note:total_encoding_strlen_ratio__) - "
-                    "than "
-                    f"strings produced by {fmt_serializer(seria2)}; ")
+        total_encoding_strlen_ratio = \
+            results.total_encoding_strlen(serializer=seria1, output='value') \
+            / results.total_encoding_strlen(serializer=seria2,
+                                            output='value')
 
-        text.notes.append(
-            ("total_encoding_strlen_ratio",
-             humanratio(
-                 total_encoding_strlen_ratio,
-                 explanations=(
-                     f"{fmt_serializer(seria1)}'s jsonstring strlen",
-                     results.total_encoding_strlen(serializer=seria1,
-                                                   output='value'),
-                     f"{fmt_serializer(seria2)}'s jsonstring strlen",
-                     results.total_encoding_strlen(serializer=seria2,
-                                                   output='value'),
-                     'string length',
-                 ),
-                 numbersformat="raw",
-             )))
+        if total_encoding_strlen_ratio == 1:
+            text.append(f"{fmt_serializer(seria1)} "
+                        f"and {fmt_serializer(seria2)} "
+                        "seem to produce strings that have exactly the same size; ")
+        else:
+            text.append("strings produced by "
+                        f"{fmt_serializer(seria1)} "
+                        f"are {ratio2phrase(total_encoding_strlen_ratio, 'long/short')} "
+                        f"- by a factor of {humanratio(total_encoding_strlen_ratio):.3f} "
+                        f"(__note:total_encoding_strlen_ratio__) - "
+                        "than "
+                        f"strings produced by {fmt_serializer(seria2)}; ")
+
+            text.notes.append(
+                ("total_encoding_strlen_ratio",
+                 humanratio(
+                     total_encoding_strlen_ratio,
+                     explanations=(
+                         f"{fmt_serializer(seria1)}'s jsonstring strlen",
+                         results.total_encoding_strlen(serializer=seria1,
+                                                       output='value'),
+                         f"{fmt_serializer(seria2)}'s jsonstring strlen",
+                         results.total_encoding_strlen(serializer=seria2,
+                                                       output='value'),
+                         'string length',
+                     ),
+                     numbersformat="raw",
+                 )))
 
     # ---- ratio_reversibility -----------------------------------------------
     ratio_reversibility = \
@@ -1869,8 +1881,13 @@ def report_section_c2c__serializervsserializer(results,
              )))
 
     # ---- total_mem_usage ------------------------------------------------
-    if results.total_mem_usage(serializer=seria2,
-                               output='value') == 0:
+    if results.total_mem_usage(serializer=seria1, output='value') is None or \
+       results.total_mem_usage(serializer=seria2, output='value') is None:
+        text.append("no information can be given about the total amount of time "
+                    "required to encode and decode strings since at least one serializer "
+                    "returns incoherent informations about this amound of time; ")
+    elif results.total_mem_usage(serializer=seria2,
+                                 output='value') == 0:
         if results.total_mem_usage(serializer=seria1,
                                    output='value') == 0:
             # mem_usage==0 for both serializers:
@@ -2159,7 +2176,16 @@ def report_section_graphs(results,
     # ⋅- (str)title       : graph title
     # ⋅- (str)filename    : file name to be written
     for (attribute, fmtstring, value_coeff, unit, title, filename) in GRAPHS_DESCRIPTION:
-        hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
+        if results.hall_without_none_for_attribute(attribute):
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"About to create a new graph '{filename}' ({normpath(filename)}).")
+            hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
+        else:
+            # incoherent data: no graph.
+            msgreport(f"Can't create graph '{filename}' for attribute '{attribute}' since "
+                      "data are not fully available for all serializers.")
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                msgdebug(f"results.hall['{attribute}'] = {results.hall[attribute]}")
 
 
 # STR2REPORTSECTION has two goals:

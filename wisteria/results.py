@@ -40,7 +40,6 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
 from wisteria.serializers_classes import SerializationResults
 from wisteria.utils import strdigest
-from wisteria.reprfmt import fmt_serializer
 from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_classname
@@ -104,8 +103,8 @@ def get_data_selection(cmpdata,
         if config["data selection"]["data selection"] == 'all':
             res = tuple(config["objects"].keys())
         elif config["data selection"]["data selection"] == 'only if yes':
-            res = (data_name for data_name in config["data objects"]
-                   if config["data objects"][data_name])
+            res = tuple(data_name for data_name in config["data objects"]
+                        if config["data objects"][data_name])
         elif config["data selection"]["data selection"].startswith("data set/"):
             res = tuple(config["data sets"][config["data selection"]["data selection"]])
         else:
@@ -305,34 +304,6 @@ def compute_results(config,
                         msgdebug(f"result: {results[serializer][data_name]} "
                                  f"[{fingerprint}]")
 
-            # we can't yet use results.total_encoding_strlen() since .finish_initialization()
-            # has not be called:
-            if sum(results[serializer][dataobj].encoding_strlen
-                   for dataobj in results[serializer]
-                   if results[serializer][dataobj] is not None and
-                   results[serializer][dataobj].encoding_strlen is not None) == 0 and \
-               not wisteria.globs.ARGS.tolerateabsurdvalues:
-                erase_progress_bar()
-                msgerror("(ERRORID043) Absurd value computed "
-                         f"for serializer {fmt_serializer(serializer)} : "
-                         "Σ results[serializer][dataobj].encoding_strlen is 0.")
-                # (pimydoc)exit codes
-                # ⋅*  0: normal exit code
-                # ⋅*  1: normal exit code after --checkup
-                # ⋅*  2: normal exit code after --downloadconfigfile
-                # ⋅*  3: normal exit code after --mymachine
-                # ⋅*  4: normal exit code (no data to handle)
-                # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-                # ⋅* -2: error, ill-formed --cmp string
-                # ⋅* -3: internal error, data can't be loaded
-                # ⋅* -4: internal error, an error occured while computing the results
-                # ⋅* -5: internal error, an error in main()
-                # ⋅* -6: error, ill-formed --output string
-                # ⋅* -7: error, an absurd value has been computed
-                # ⋅* -8: error, missing required module
-                # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-                return None, -7
-
         # (pimydoc)progress bar
         # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
         # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
@@ -358,9 +329,8 @@ def compute_results(config,
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, an absurd value has been computed
-            # ⋅* -8: error, missing required module
-            # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -7: error, missing required module
+            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
             return None, -3
         if results.dataobjs_number == 0:
             msginfo("No data to handle, the program can stop.")
@@ -377,9 +347,8 @@ def compute_results(config,
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, an absurd value has been computed
-            # ⋅* -8: error, missing required module
-            # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -7: error, missing required module
+            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
             return None, 4
 
         return results, None
@@ -399,7 +368,6 @@ def compute_results(config,
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, an absurd value has been computed
-        # ⋅* -8: error, missing required module
-        # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -7: error, missing required module
+        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
         return None, -4

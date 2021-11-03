@@ -71,9 +71,8 @@
     ⋅* -4: internal error, an error occured while computing the results
     ⋅* -5: internal error, an error in main()
     ⋅* -6: error, ill-formed --output string
-    ⋅* -7: error, an absurd value has been computed
-    ⋅* -8: error, missing required module
-    ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    ⋅* -7: error, missing required module
+    ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
 
     ___________________________________________________________________________
 
@@ -299,13 +298,6 @@ PARSER.add_argument(
     "Please notice that --verbosity has no effect upon --report.")
 
 PARSER.add_argument(
-    '--tolerateabsurdvalues',
-    action='store_true',
-    default=False,
-    help="Warning: debug only, not normally to be used. "
-    "If False, stop the program if an absurd value has been computed.")
-
-PARSER.add_argument(
     '--verbosity',
     type=int,
     default=VERBOSITY_NORMAL,
@@ -385,9 +377,8 @@ if MISSING_REQUIRED_MODULES:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, an absurd value has been computed
-    # ⋅* -8: error, missing required module
-    # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -7: error, missing required module
+    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
     sys.exit(-8)
 
 # All the imports are deliberately not placed at the beginning of the file
@@ -562,9 +553,8 @@ else:
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, an absurd value has been computed
-        # ⋅* -8: error, missing required module
-        # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -7: error, missing required module
+        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
         sys.exit(-6)
     wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
@@ -698,9 +688,8 @@ if not check_str2reportsection_keys():
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, an absurd value has been computed
-    # ⋅* -8: error, missing required module
-    # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -7: error, missing required module
+    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
     sys.exit(-9)
 
 
@@ -1228,9 +1217,8 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, an absurd value has been computed
-    # ⋅* -8: error, missing required module
-    # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -7: error, missing required module
+    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
     sys.exit(1)
 
 
@@ -1291,9 +1279,8 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, an absurd value has been computed
-    # ⋅* -8: error, missing required module
-    # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -7: error, missing required module
+    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
     sys.exit(3)
 
 
@@ -1349,9 +1336,8 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅* -4: internal error, an error occured while computing the results
     # ⋅* -5: internal error, an error in main()
     # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, an absurd value has been computed
-    # ⋅* -8: error, missing required module
-    # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -7: error, missing required module
+    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
     sys.exit(2)
 
 
@@ -1415,9 +1401,8 @@ def main():
                 ⋅* -4: internal error, an error occured while computing the results
                 ⋅* -5: internal error, an error in main()
                 ⋅* -6: error, ill-formed --output string
-                ⋅* -7: error, an absurd value has been computed
-                ⋅* -8: error, missing required module
-                ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+                ⋅* -7: error, missing required module
+                ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
     """
     data = wisteria.globs.DATA
     serializers = wisteria.globs.SERIALIZERS
@@ -1525,9 +1510,8 @@ def main():
             # ⋅* -4: internal error, an error occured while computing the results
             # ⋅* -5: internal error, an error in main()
             # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, an absurd value has been computed
-            # ⋅* -8: error, missing required module
-            # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -7: error, missing required module
+            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
             return -2
 
         # =========================================================================
@@ -1585,9 +1569,8 @@ def main():
                 # ⋅* -4: internal error, an error occured while computing the results
                 # ⋅* -5: internal error, an error in main()
                 # ⋅* -6: error, ill-formed --output string
-                # ⋅* -7: error, an absurd value has been computed
-                # ⋅* -8: error, missing required module
-                # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+                # ⋅* -7: error, missing required module
+                # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
                 return -1
 
         # =========================================================================
@@ -1689,9 +1672,8 @@ def main():
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, an absurd value has been computed
-        # ⋅* -8: error, missing required module
-        # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -7: error, missing required module
+        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
         return 0
 
     except WisteriaError as exception:
@@ -1711,9 +1693,8 @@ def main():
         # ⋅* -4: internal error, an error occured while computing the results
         # ⋅* -5: internal error, an error in main()
         # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, an absurd value has been computed
-        # ⋅* -8: error, missing required module
-        # ⋅* -9: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -7: error, missing required module
+        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
         return -5
 
 

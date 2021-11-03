@@ -204,6 +204,28 @@ def serializer_iaswn(action="serialize",
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
+
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
+
     if not _error:
         try:
             _res2 = module.decode(_res)
@@ -317,6 +339,17 @@ def serializer_json(action="serialize",
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
+
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
 
     if not _error:
         try:
@@ -432,6 +465,17 @@ def serializer_jsonpickle(action="serialize",
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
+
     if not _error:
         try:
             _res2 = module.loads(_res)
@@ -545,6 +589,17 @@ def serializer_jsonpickle_keystrue(action="serialize",
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
+
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
 
     if not _error:
         try:
@@ -660,6 +715,17 @@ def serializer_marshal(action="serialize",
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
+
     if not _error:
         try:
             _res2 = module.loads(_res)
@@ -773,6 +839,17 @@ def serializer_pickle(action="serialize",
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
+
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
 
     if not _error:
         try:
@@ -888,6 +965,17 @@ def serializer_pyyaml(action="serialize",
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
+
     if not _error:
         try:
             _res2 = module.load(_res, Loader=module.Loader)
@@ -1002,6 +1090,17 @@ def serializer_simpleion(action="serialize",
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
 
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
+
     if not _error:
         try:
             _res2 = module.loads(_res)
@@ -1115,6 +1214,17 @@ def serializer_yajl(action="serialize",
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
+
+    # incoherent result: if res.encoding_strlen is 0, everything is wrong:
+    if res.encoding_strlen == 0:
+        res.encoding_success = False
+        res.encoding_strlen = None
+        res.encoding_time = None
+        res.decoding_time = None
+        res.decoding_success = False
+        res.reversibility = False
+        res.mem_usage = None
+        return res
 
     if not _error:
         try:

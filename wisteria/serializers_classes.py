@@ -277,6 +277,7 @@ class SerializationResults(dict):
         o  get_overallscore_worstrank(self)
         o  get_serializers_base(self, attribute)
         o  get_serializers_whose_overallscore_rank_is(self, rank)
+        o  hall_without_none_for_attribute(self, attribute)
         o  ratio_decoding_success(self, serializer=None, dataobj=None, output="fmtstr")
         o  ratio_encoding_success(self, serializer=None, dataobj=None, output="fmtstr")
         o  ratio_reversibility(self, serializer=None, dataobj=None, output="fmtstr")
@@ -379,37 +380,79 @@ class SerializationResults(dict):
                                                                      output="value"),
                                          serializer) for serializer in self.serializers),
                                        reverse=True),
-            "encoding_time": sorted(((self.total_encoding_time(serializer=serializer,
-                                                               output="value"),
-                                      serializer) for serializer in self.serializers),
-                                    reverse=False),
             "decoding_success": sorted(((self.ratio_decoding_success(serializer=serializer,
                                                                      output="value"),
                                          serializer) for serializer in self.serializers),
                                        reverse=True),
-            "decoding_time": sorted(((self.total_decoding_time(serializer=serializer,
-                                                               output="value"),
-                                      serializer) for serializer in self.serializers),
-                                    reverse=False),
-            "encoding_strlen": sorted(((self.total_encoding_strlen(serializer=serializer,
-                                                                   output="value"),
-                                        serializer) for serializer in self.serializers),
-                                      reverse=False),
             "reversibility": sorted(((self.ratio_reversibility(serializer=serializer,
                                                                output="value"),
                                       serializer) for serializer in self.serializers),
                                     reverse=True),
-            "encoding_plus_decoding_time": sorted(((self.total_encoding_time(serializer=serializer,
-                                                                             output="value") +
-                                                    self.total_decoding_time(serializer=serializer,
-                                                                             output="value"),
-                                                    serializer) for serializer in self.serializers),
-                                                  reverse=False),
-            "mem_usage": sorted(((self.total_mem_usage(serializer=serializer,
-                                                       output="value"),
-                                  serializer) for serializer in self.serializers),
-                                reverse=False),
             }
+        # we add "encoding_time" only if it makes sense:
+        if not (0 for serializer in self.serializers
+                if isinstance(self.total_encoding_time(serializer=serializer,
+                                                       output="value"), str)):
+            self.hall["encoding_time"] = \
+                sorted(((self.total_encoding_time(serializer=serializer,
+                                                  output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["encoding_time"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
+        # we add "encoding_plus_decoding_time" only if it makes sense:
+        if not (0 for serializer in self.serializers
+                if isinstance(self.total_encoding_plus_decoding_time(serializer=serializer,
+                                                                     output="value"), str)):
+            self.hall["encoding_plus_decoding_time"] = \
+                sorted(((self.total_encoding_plus_decoding_time(serializer=serializer,
+                                                                output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["encoding_plus_decoding_time"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
+        # we add "encoding_strlen" only if it makes sense:
+        if not (0 for serializer in self.serializers
+                if isinstance(self.total_encoding_strlen(serializer=serializer,
+                                                         output="value"), str)):
+            self.hall["encoding_strlen"] = \
+                sorted(((self.total_encoding_strlen(serializer=serializer,
+                                                    output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["encoding_strlen"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
+        # we add "decoding_time" only if it makes sense:
+        if not (0 for serializer in self.serializers
+                if isinstance(self.total_decoding_time(serializer=serializer,
+                                                       output="value"), str)):
+            self.hall["decoding_time"] = \
+                sorted(((self.total_decoding_time(serializer=serializer,
+                                                  output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["decoding_time"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
+        # we add "mem_usage" only if it makes sense:
+        if not (0 for serializer in self.serializers
+                if isinstance(self.total_mem_usage(serializer=serializer,
+                                                   output="value"), str)):
+            self.hall["mem_usage"] = \
+                sorted(((self.total_mem_usage(serializer=serializer,
+                                              output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["mem_usage"] = \
+                tuple((None, serializer) for serializer in self.serializers)
 
         # overall score computing:
         # * if a serializer is #0 (first rank) for a certain attribute,
@@ -640,6 +683,27 @@ class SerializationResults(dict):
         return list(serializer for serializer in self.serializers
                     if self.overallscores[serializer] == score)
 
+    def hall_without_none_for_attribute(self,
+                                        attribute):
+        """
+            SerializationResults.hall_without_none_for_attribute()
+
+            Return True if hall[attribute] doesn't contain any None value.
+
+            ___________________________________________________________________
+
+            ARGUMENT: (str)attribute
+
+            RETURNED VALUE: (bool)True if hall[attribute] doesn't contain any None value.
+        """
+        res = True
+
+        for value, _ in self.hall[attribute]:  # value, serializer
+            if value is None:
+                return False
+
+        return res
+
     def ratio_decoding_success(self,
                                serializer=None,
                                dataobj=None,
@@ -662,7 +726,7 @@ class SerializationResults(dict):
 
             RETURNED VALUE:
                 (output=='fmtstr')a formatted string representing the input argument.
-                (output=='value')a float
+                (output=='value')a float or None if the ratio can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value')
@@ -672,7 +736,7 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_ratio((None, None))
+                return fmt_ratio((None, None)) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -685,7 +749,7 @@ class SerializationResults(dict):
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return fmt_ratio((None, None))
+            return fmt_ratio((None, None)) if output == "fmtstr" else None
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
@@ -720,7 +784,7 @@ class SerializationResults(dict):
 
             RETURNED VALUE:
                 (output=='fmtstr')a formatted string representing the input argument.
-                (output=='value')a float
+                (output=='value')a float or None if the ratio can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ("fmtstr", "value")
@@ -730,7 +794,7 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_ratio((None, None))
+                return fmt_ratio((None, None)) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -743,7 +807,7 @@ class SerializationResults(dict):
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return fmt_ratio((None, None))
+            return fmt_ratio((None, None)) if output == "fmtstr" else None
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
@@ -778,7 +842,7 @@ class SerializationResults(dict):
 
             RETURNED VALUE:
                 (output=='fmtstr')a formatted string representing the input argument.
-                (output=='value')a float
+                (output=='value')a float or None if the ratio can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value')
@@ -788,7 +852,7 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_ratio((None, None))
+                return fmt_ratio((None, None)) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj] is not None and \
@@ -801,7 +865,7 @@ class SerializationResults(dict):
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return fmt_ratio((None, None))
+            return fmt_ratio((None, None)) if output == "fmtstr" else None
 
         for _serializer in self:
             if self[_serializer][dataobj] is not None and \
@@ -818,8 +882,7 @@ class SerializationResults(dict):
     def repr_attr(self,
                   serializer,
                   dataobj,
-                  attribute_name,
-                  output="fmtstr"):
+                  attribute_name):
         """
             SerializationResults.repr_attr()
 
@@ -834,81 +897,71 @@ class SerializationResults(dict):
             o  <str>attribute_name: 'decoding_success', 'decoding_time', 'encoding_strlen',
                                     'encoding_success', 'encoding_time',
                                     'reversibility', 'mem_usage'
-            o  <output>(str): "fmtstr" for a formatted returned string
 
             RETURNED VALUE: a formatted string representing
                             self[serializer][dataobj].<attribute_name>
-                (output=='fmtstr')a formatted string representing the input argument.
         """
         assert serializer is not None
         assert dataobj is not None
         assert attribute_name in ('decoding_success', 'decoding_time', 'encoding_strlen',
                                   'encoding_success', 'encoding_time',
                                   'reversibility', 'mem_usage')
-        assert output in ('fmtstr',)
 
         res = None  # unexpected result !
 
         if attribute_name == "decoding_success":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_boolsuccess(
-                        self[serializer][dataobj].decoding_success)
+            if self[serializer][dataobj] is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_boolsuccess(
+                    self[serializer][dataobj].decoding_success)
 
         if attribute_name == "decoding_time":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_time(
-                        self[serializer][dataobj].decoding_time)
+            if self[serializer][dataobj] is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_time(
+                    self[serializer][dataobj].decoding_time)
 
         if attribute_name == "encoding_strlen":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].encoding_strlen is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_stringlength(
-                        self[serializer][dataobj].encoding_strlen)
+            if self[serializer][dataobj] is None or \
+               self[serializer][dataobj].encoding_strlen is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_stringlength(
+                    self[serializer][dataobj].encoding_strlen)
 
         if attribute_name == "encoding_time":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].encoding_time is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_time(
-                        self[serializer][dataobj].encoding_time)
+            if self[serializer][dataobj] is None or \
+               self[serializer][dataobj].encoding_time is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_time(
+                    self[serializer][dataobj].encoding_time)
 
         if attribute_name == "encoding_success":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].encoding_success is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_boolsuccess(
-                        self[serializer][dataobj].encoding_success)
+            if self[serializer][dataobj] is None or \
+               self[serializer][dataobj].encoding_success is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_boolsuccess(
+                    self[serializer][dataobj].encoding_success)
 
         if attribute_name == "reversibility":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].reversibility is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_boolsuccess(
-                        self[serializer][dataobj].reversibility)
+            if self[serializer][dataobj] is None or \
+               self[serializer][dataobj].reversibility is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_boolsuccess(
+                    self[serializer][dataobj].reversibility)
 
         if attribute_name == "mem_usage":
-            if output == "fmtstr":
-                if self[serializer][dataobj] is None or \
-                   self[serializer][dataobj].mem_usage is None:
-                    res = fmt_nodata()
-                else:
-                    res = fmt_mem_usage(
-                        self[serializer][dataobj].mem_usage)
+            if self[serializer][dataobj] is None or \
+               self[serializer][dataobj].mem_usage is None:
+                res = fmt_nodata()
+            else:
+                res = fmt_mem_usage(
+                    self[serializer][dataobj].mem_usage)
 
         return res
 
@@ -933,7 +986,9 @@ class SerializationResults(dict):
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
 
-            RETURNED VALUE: a formatted string representing the input arguments.
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float or None if the result can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value',)
@@ -943,9 +998,12 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_time(None)
+                return fmt_time(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].encoding_success is False:
+                    return None if output == "value" else fmt_time(None)
+
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].decoding_success:
                     total += self[serializer][_dataobj].decoding_time
@@ -956,7 +1014,7 @@ class SerializationResults(dict):
 
         else:
             if self.dataobjs_number == 0:
-                return fmt_time(None)
+                return fmt_time(None) if output == 'fmtstr' else None
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -993,18 +1051,24 @@ class SerializationResults(dict):
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
 
-            RETURNED VALUE: a formatted string representing the input arguments.
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float or None if the result can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value',)
 
         if output == "value":
+            if self.total_encoding_time(serializer, dataobj, output='value') is None or \
+               self.total_decoding_time(serializer, dataobj, output='value') is None:
+                return None
             return self.total_encoding_time(serializer, dataobj, output) + \
                 self.total_decoding_time(serializer, dataobj, output)
         if output == "fmtstr":
-            return fmt_time(
-                self.total_encoding_time(serializer, dataobj, output='value') +
-                self.total_decoding_time(serializer, dataobj, output='value'))
+            if self.total_encoding_time(serializer, dataobj, output='value') is None or \
+               self.total_decoding_time(serializer, dataobj, output='value') is None:
+                return None
+            return fmt_time(None)
 
         raise WisteriaError("(ERRORID027) Internal error: the result could not be computed. "
                             f"{serializer=}; {dataobj=}; {output=};")
@@ -1030,7 +1094,9 @@ class SerializationResults(dict):
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
 
-            RETURNED VALUE: a formatted string representing the input arguments.
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float or None if the result can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value',)
@@ -1040,9 +1106,12 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_stringlength(None)
+                return fmt_stringlength(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].encoding_success is False:
+                    return fmt_stringlength(None) if output == 'fmtstr' else None
+
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].encoding_strlen:
                     total += self[serializer][_dataobj].encoding_strlen
@@ -1053,7 +1122,7 @@ class SerializationResults(dict):
 
         else:
             if self.dataobjs_number == 0:
-                return fmt_stringlength(None)
+                return fmt_stringlength(None) if output == 'fmtstr' else None
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -1090,8 +1159,10 @@ class SerializationResults(dict):
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
 
-            RETURNED VALUE: a formatted string representing the input argument.
-        """
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float or None if the result can't be computed
+           """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value',)
 
@@ -1100,9 +1171,11 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_time(None)
+                return fmt_time(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].encoding_success is False:
+                    return fmt_time(None)
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].encoding_success:
                     total += self[serializer][_dataobj].encoding_time
@@ -1113,7 +1186,7 @@ class SerializationResults(dict):
 
         else:
             if self.dataobjs_number == 0:
-                res = fmt_time(None)
+                return fmt_time(None) if output == 'fmtstr' else None
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -1150,7 +1223,9 @@ class SerializationResults(dict):
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
 
-            RETURNED VALUE: a formatted string representing the input arguments.
+            RETURNED VALUE:
+                (output=='fmtstr')a formatted string representing the input argument.
+                (output=='value')a float or None if the result can't be computed
         """
         assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value',)
@@ -1160,9 +1235,12 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_mem_usage(None)
+                return fmt_mem_usage(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj].encoding_success is False:
+                    return fmt_mem_usage(None) if output == 'fmtstr' else None
+
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].mem_usage:
                     total += self[serializer][_dataobj].mem_usage
@@ -1173,7 +1251,7 @@ class SerializationResults(dict):
 
         else:
             if self.dataobjs_number == 0:
-                return fmt_mem_usage(None)
+                return fmt_mem_usage(None) if output == 'fmtstr' else None
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
