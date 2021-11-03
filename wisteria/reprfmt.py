@@ -37,7 +37,7 @@
     o  fmt_ratio(inttotal_and_floatratio)
     o  fmt_serializer0(serializer_name)
     o  fmt_serializer(serializer_name)
-    o  fmt_stringlength(int_stringlength)
+    o  fmt_strlen(int_stringlength)
     o  fmt_time(floattime)
     o  fmt_title(title)
 
@@ -290,9 +290,9 @@ def fmt_serializer(serializer_name):
     return f"{fmt_serializer0(serializer_name)}"
 
 
-def fmt_stringlength(int_stringlength):
+def fmt_strlen(int_stringlength):
     """
-        fmt_stringlength()
+        fmt_strlen()
 
         Format the input argument into a string. The input argument is a (int)number
         of characters

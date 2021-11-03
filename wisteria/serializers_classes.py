@@ -36,7 +36,7 @@ from dataclasses import dataclass
 
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.reprfmt import fmt_serializer, fmt_ratio, fmt_time, fmt_nodata
-from wisteria.reprfmt import fmt_stringlength, fmt_boolsuccess, fmt_mem_usage
+from wisteria.reprfmt import fmt_strlen, fmt_boolsuccess, fmt_mem_usage
 from wisteria.msg import msgerror
 
 
@@ -591,7 +591,7 @@ class SerializationResults(dict):
         if attribute == 'encoding_strlen':
             serializer = self.hall[attribute][index][1]
             return f"{fmt_serializer(serializer)} " \
-                f"[{fmt_stringlength(value)}]"
+                f"[{fmt_strlen(value)}]"
 
         if attribute == 'mem_usage':
             serializer = self.hall[attribute][index][1]
@@ -928,7 +928,7 @@ class SerializationResults(dict):
                self[serializer][dataobj].encoding_strlen is None:
                 res = fmt_nodata()
             else:
-                res = fmt_stringlength(
+                res = fmt_strlen(
                     self[serializer][dataobj].encoding_strlen)
 
         if attribute_name == "encoding_time":
@@ -1106,11 +1106,11 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_number == 0:
-                return fmt_stringlength(None) if output == 'fmtstr' else None
+                return fmt_strlen(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
                 if self[serializer][_dataobj].encoding_success is False:
-                    return fmt_stringlength(None) if output == 'fmtstr' else None
+                    return fmt_strlen(None) if output == 'fmtstr' else None
 
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].encoding_strlen:
@@ -1118,11 +1118,11 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = fmt_stringlength(total)
+                res = fmt_strlen(total)
 
         else:
             if self.dataobjs_number == 0:
-                return fmt_stringlength(None) if output == 'fmtstr' else None
+                return fmt_strlen(None) if output == 'fmtstr' else None
 
             for _serializer in self:
                 if self[_serializer][dataobj] is not None and \
@@ -1131,7 +1131,7 @@ class SerializationResults(dict):
             if output == "value":
                 res = total
             elif output == "fmtstr":
-                res = fmt_stringlength(total)
+                res = fmt_strlen(total)
 
         if res is None:
             raise WisteriaError("(ERRORID028) Internal error: the result could not be computed. "

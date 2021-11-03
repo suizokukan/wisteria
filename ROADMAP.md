@@ -52,7 +52,14 @@ What's next ?
 [CURRENT] v. 0.1.8
 * data_object, dataobj_name: c'est le bazar
 
-  
+[DONE] task-249
+
+'fmt_stringlength' > 'fmt_strlen'.
+ 
+    * 'fmt_stringlength' > 'fmt_strlen' (task-249)
+
+    * tests: 6 tests ok out of 6
+
 [DONE] task-248
 
 Improved results functions so that incoherent results are correctly marked 
