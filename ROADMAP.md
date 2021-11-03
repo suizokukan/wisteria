@@ -4,6 +4,11 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
+I] avant d'ajouter un max de serializers/datas:
+
+* wisteria "mainstring"
+* data_object, dataobj_name: c'est le bazar
+* avant chaque _______ : 1 ligne suffit    
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
@@ -15,6 +20,18 @@ What's next ?
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 * encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
+* README.md acceptable
+      + __init__.py
+* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+      chercher si une combinaison donne des résultats vraiment différents des autres
+* anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+      comment signaler cette anomalie ?
+* tests
+        * tester toutes les divisions
+        * sur des ordis très rapides, le temps pourrait être nul.
+
+II] ajout d'un max de serializers/datas
+
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
@@ -28,15 +45,9 @@ What's next ?
         python-cjson (https://pypi.org/project/python-cjson/)
         python-rapidjson (https://pypi.org/project/python-rapidjson/)
         ujson (https://pypi.org/project/ujson/)
-* README.md acceptable
-      + __init__.py
-* tests
-        * tester toutes les divisions
-        * sur des ordis très rapides, le temps pourrait être nul.
-* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
-      chercher si une combinaison donne des résultats vraiment différents des autres
-* anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
-      comment signaler cette anomalie ?
+        
+III] au-delà
+
 * comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
 * comment expliquer que pickle n'utilise pas de mémoire pour pgnreader, mais Iaswn, si ?
 * branche doublecheck
@@ -50,7 +61,14 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.1.8
-* data_object, dataobj_name: c'est le bazar
+
+bug:
+./bin/wisteria --cmp="iaswn vs all(ini)" --report="full" --verbosity=3
+renvoie des données incohérentes (tantôt None, tantôt no data) dans C2a
+Σ Encod.+Decod. Time
+
+bug:
+./bin/wisteria --cmp="iaswn vs pickle(cwc)" --report="C2a;graphs"
 
 [DONE] task-250
 
@@ -146,7 +164,7 @@ Improved doc.
 
 [DONE] task-240
 
--exportreport='md'.
+--exportreport='md'.
 
     * --exportreport='md:myfile.md', defined in exit_handler() (task-240)
     * command line arguments are now sorted in wisteria.py by alphabetical 
