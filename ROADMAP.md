@@ -64,8 +64,21 @@ III] au-delà
 
 * Il manque un report donnant un exemple de ce à quoi ressemble l'encoded string pour un/les sérializers; indiquer de surcroît la lisibilité donnée de cette chaîne.
 
-* fait planter le programme:
-./bin/wisteria --cmp="iaswn vs all(cwc)"
+[DONE] task-252
+
+Bugfix: fixed SerializationResults.finish_initialization(); total_xxx()
+        methods(output='value') return None, not a string if an error
+        occured, hence some lines of code to be changed.
+
+    * bugfix: fixed SerializationResults.finish_initialization(); total_xxx()
+              methods(output='value') return None, not a string if an error
+              occured, hence some lines of code to be changed (task-252)
+    * removed useless `dataobj` argument from 
+      SerializationResults.total_encoding_plus_decoding_time() (task-252)
+    * fixed a minor glitch in ROADMAP.MD in task-251 (task-252)
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-251
 

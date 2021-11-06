@@ -447,8 +447,8 @@ class SerializationResults(dict):
             }
         # we add "encoding_time" only if it makes sense:
         if not tuple(0 for serializer in self.serializers
-                     if isinstance(self.total_encoding_time(serializer=serializer,
-                                                            output="value"), str)):
+                     if self.total_encoding_time(serializer=serializer,
+                                                 output="value") is None):
             self.hall["encoding_time"] = \
                 sorted(((self.total_encoding_time(serializer=serializer,
                                                   output="value"),
@@ -460,8 +460,8 @@ class SerializationResults(dict):
 
         # we add "encoding_plus_decoding_time" only if it makes sense:
         if not tuple(0 for serializer in self.serializers
-                     if isinstance(self.total_encoding_plus_decoding_time(serializer=serializer,
-                                                                          output="value"), str)):
+                     if self.total_encoding_plus_decoding_time(serializer=serializer,
+                                                               output="value") is None):
             self.hall["encoding_plus_decoding_time"] = \
                 sorted(((self.total_encoding_plus_decoding_time(serializer=serializer,
                                                                 output="value"),
@@ -473,8 +473,8 @@ class SerializationResults(dict):
 
         # we add "encoding_strlen" only if it makes sense:
         if not tuple(0 for serializer in self.serializers
-                     if isinstance(self.total_encoding_strlen(serializer=serializer,
-                                                              output="value"), str)):
+                     if self.total_encoding_strlen(serializer=serializer,
+                                                   output="value") is None):
             self.hall["encoding_strlen"] = \
                 sorted(((self.total_encoding_strlen(serializer=serializer,
                                                     output="value"),
@@ -486,8 +486,8 @@ class SerializationResults(dict):
 
         # we add "decoding_time" only if it makes sense:
         if not tuple(0 for serializer in self.serializers
-                     if isinstance(self.total_decoding_time(serializer=serializer,
-                                                            output="value"), str)):
+                     if self.total_decoding_time(serializer=serializer,
+                                                 output="value") is None):
             self.hall["decoding_time"] = \
                 sorted(((self.total_decoding_time(serializer=serializer,
                                                   output="value"),
@@ -499,8 +499,8 @@ class SerializationResults(dict):
 
         # we add "mem_usage" only if it makes sense:
         if not tuple(0 for serializer in self.serializers
-                     if isinstance(self.total_mem_usage(serializer=serializer,
-                                                        output="value"), str)):
+                     if self.total_mem_usage(serializer=serializer,
+                                             output="value") is None):
             self.hall["mem_usage"] = \
                 sorted(((self.total_mem_usage(serializer=serializer,
                                               output="value"),
@@ -1022,7 +1022,7 @@ class SerializationResults(dict):
 
         if serializer is not None:
             if self.serializers_total_number == 0:
-                return fmt_time(None) if output == 'fmtstr' else None
+                return None if output == "value" else fmt_time(None)
 
             for _dataobj in self[serializer]:
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
@@ -1061,21 +1061,17 @@ class SerializationResults(dict):
 
     def total_encoding_plus_decoding_time(self,
                                           serializer=None,
-                                          dataobj=None,
                                           output="fmtstr"):
         """
             SerializationResults.total_encoding_plus_decoding_time()
 
             Compute and format the total encoding + decoding time used by a
-            <serializer> OR by a <dataobj>ect.
+            <serializer>.
 
             _______________________________________________________________
 
             ARGUMENTS:
-            o  <None|str>serializer: if not None, name of the serializer to be used.
-            o  <None|str>dataobj: if not None, name of the data object to be used.
-                BEWARE ! One and only one argument among <serializer> and <dataobj> can be set to
-                         None.
+            o  <str>serializer: name of the serializer to be used.
             o  (str)output: output type and format
                     - "value": raw value (float)
                     - "fmtstr": formatted string (str)
@@ -1084,24 +1080,23 @@ class SerializationResults(dict):
                 (output=='fmtstr')a formatted string representing the input argument.
                 (output=='value')a float or None if the result can't be computed
         """
-        assert serializer is None or dataobj is None
         assert output in ('fmtstr', 'value',)
 
         if output == "value":
-            if self.total_encoding_time(serializer, dataobj, output='value') is None or \
-               self.total_decoding_time(serializer, dataobj, output='value') is None:
+            if self.total_encoding_time(serializer=serializer, output=output) is None or \
+               self.total_decoding_time(serializer=serializer, output=output) is None:
                 return None
-            return self.total_encoding_time(serializer, dataobj, output) + \
-                self.total_decoding_time(serializer, dataobj, output)
+            return self.total_encoding_time(serializer=serializer, output=output) + \
+                self.total_decoding_time(serializer=serializer, output=output)
         if output == "fmtstr":
-            if self.total_encoding_time(serializer, dataobj, output='value') is None or \
-               self.total_decoding_time(serializer, dataobj, output='value') is None:
+            if self.total_encoding_time(serializer=serializer, output='value') is None or \
+               self.total_decoding_time(serializer=serializer, output='value') is None:
                 return None
-            return fmt_time(self.total_encoding_time(serializer, dataobj, output='value') +
-                            self.total_decoding_time(serializer, dataobj, output='value'))
+            return fmt_time(self.total_encoding_time(serializer=serializer, output='value') +
+                            self.total_decoding_time(serializer=serializer, output='value'))
 
         raise WisteriaError("(ERRORID027) Internal error: the result could not be computed. "
-                            f"{serializer=}; {dataobj=}; {output=};")
+                            f"{serializer=}; {output=};")
 
     def total_encoding_strlen(self,
                               serializer=None,
@@ -1212,7 +1207,7 @@ class SerializationResults(dict):
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj].encoding_success is False:
-                    return fmt_time(None)
+                    return fmt_time(None) if output == 'fmtstr' else None
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].encoding_success:
                     total += self[serializer][_dataobj].encoding_time
