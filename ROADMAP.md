@@ -62,7 +62,10 @@ III] au-delà
 
 [CURRENT] v. 0.1.8
 
+* Il manque un report donnant un exemple de ce à quoi ressemble l'encoded string pour un/les sérializers; indiquer de surcroît la lisibilité donnée de cette chaîne.
 
+* fait planter le programme:
+./bin/wisteria --cmp="iaswn vs all(cwc)"
 
 [DONE] task-251
 
