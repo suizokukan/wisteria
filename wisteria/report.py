@@ -620,29 +620,30 @@ def report_section_b1a(results,
     for serializer in results.serializers:
         table.add_row(f"{fmt_serializer(serializer)} :")
         for dataobj in results.dataobjs:
-            if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
-                # everything but debug mode:
-                table.add_row(
-                    "> " + f"{fmt_data(dataobj)}",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time"),
-                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "reversibility"),
-                    results.repr_attr(serializer, dataobj, "mem_usage"),)
-            else:
-                # debug mode:
-                table.add_row(
-                    "> " + f"{fmt_data(dataobj)}",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time"),
-                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "reversibility"),
-                    results.repr_attr(serializer, dataobj, "mem_usage"),
-                    "["+strdigest(serializer+dataobj)+"]")
+            if dataobj in results[serializer]:
+                if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+                    # everything but debug mode:
+                    table.add_row(
+                        "> " + f"{fmt_data(dataobj)}",
+                        results.repr_attr(serializer, dataobj, "encoding_success"),
+                        results.repr_attr(serializer, dataobj, "encoding_time"),
+                        results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                        results.repr_attr(serializer, dataobj, "decoding_success"),
+                        results.repr_attr(serializer, dataobj, "decoding_time"),
+                        results.repr_attr(serializer, dataobj, "reversibility"),
+                        results.repr_attr(serializer, dataobj, "mem_usage"),)
+                else:
+                    # debug mode:
+                    table.add_row(
+                        "> " + f"{fmt_data(dataobj)}",
+                        results.repr_attr(serializer, dataobj, "encoding_success"),
+                        results.repr_attr(serializer, dataobj, "encoding_time"),
+                        results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                        results.repr_attr(serializer, dataobj, "decoding_success"),
+                        results.repr_attr(serializer, dataobj, "decoding_time"),
+                        results.repr_attr(serializer, dataobj, "reversibility"),
+                        results.repr_attr(serializer, dataobj, "mem_usage"),
+                        "["+strdigest(serializer+dataobj)+"]")
 
     msgreport(table)
     msgreport()
@@ -785,7 +786,7 @@ def report_section_b1c(results,
     table.add_column(f"Reversibility (Coverage Rate) (Max={results.dataobjs_number})", width=17)
     table.add_column("memory", width=12)
 
-    for index in range(results.serializers_number):
+    for index in range(results.serializers_total_number):
         table.add_row(
             f"{index+1}",
             f"{results.get_hall('encoding_success', index)}",
@@ -936,30 +937,31 @@ def report_section_b2a(results,
     for dataobj in results.dataobjs:
         table.add_row(f"{fmt_data(dataobj)} :")
         for serializer in results.serializers:
-            if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
-                # everything but debug mode:
-                table.add_row(
-                    "> " + f"{fmt_serializer(serializer)}",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time"),
-                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "reversibility"),
-                    results.repr_attr(serializer, dataobj, "mem_usage")
-                )
-            else:
-                # debug mode:
-                table.add_row(
-                    "> " + f"{fmt_serializer(serializer)}",
-                    results.repr_attr(serializer, dataobj, "encoding_success"),
-                    results.repr_attr(serializer, dataobj, "encoding_time"),
-                    results.repr_attr(serializer, dataobj, "encoding_strlen"),
-                    results.repr_attr(serializer, dataobj, "decoding_success"),
-                    results.repr_attr(serializer, dataobj, "decoding_time"),
-                    results.repr_attr(serializer, dataobj, "reversibility"),
-                    results.repr_attr(serializer, dataobj, "mem_usage"),
-                    "["+strdigest(serializer+dataobj)+"]")
+            if dataobj in results[serializer]:
+                if wisteria.globs.ARGS.verbosity != VERBOSITY_DEBUG:
+                    # everything but debug mode:
+                    table.add_row(
+                        "> " + f"{fmt_serializer(serializer)}",
+                        results.repr_attr(serializer, dataobj, "encoding_success"),
+                        results.repr_attr(serializer, dataobj, "encoding_time"),
+                        results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                        results.repr_attr(serializer, dataobj, "decoding_success"),
+                        results.repr_attr(serializer, dataobj, "decoding_time"),
+                        results.repr_attr(serializer, dataobj, "reversibility"),
+                        results.repr_attr(serializer, dataobj, "mem_usage")
+                    )
+                else:
+                    # debug mode:
+                    table.add_row(
+                        "> " + f"{fmt_serializer(serializer)}",
+                        results.repr_attr(serializer, dataobj, "encoding_success"),
+                        results.repr_attr(serializer, dataobj, "encoding_time"),
+                        results.repr_attr(serializer, dataobj, "encoding_strlen"),
+                        results.repr_attr(serializer, dataobj, "decoding_success"),
+                        results.repr_attr(serializer, dataobj, "decoding_time"),
+                        results.repr_attr(serializer, dataobj, "reversibility"),
+                        results.repr_attr(serializer, dataobj, "mem_usage"),
+                        "["+strdigest(serializer+dataobj)+"]")
     msgreport(table)
     msgreport()
 
@@ -1016,14 +1018,22 @@ def report_section_b2b(results,
         msgreporttitle("(B2b) Full Details: Data Objects")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
-    table.add_column("Data Object", width=28)
-    table.add_column(f"Encod. Ok ? (Max={results.serializers_number})", width=11)
-    table.add_column(f"Σ Encoded Time ({UNITS['time']})", width=11)
-    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})", width=13)
-    table.add_column(f"Decod. Ok ? (Max={results.serializers_number})", width=11)
-    table.add_column(f"Σ Decoded Time ({UNITS['time']})", width=11)
-    table.add_column(f"Reversibility (Coverage Rate) (Max={results.serializers_number})", width=16)
-    table.add_column("Σ memory", width=12)
+    table.add_column("Data Object",
+                     width=28)
+    table.add_column(f"Encod. Ok ? (Max={results.serializers_total_number})",
+                     width=11)
+    table.add_column(f"Σ Encoded Time ({UNITS['time']})",
+                     width=11)
+    table.add_column(f"Σ Encoded Str. Length ({UNITS['string length']})",
+                     width=13)
+    table.add_column(f"Decod. Ok ? (Max={results.serializers_total_number})",
+                     width=11)
+    table.add_column(f"Σ Decoded Time ({UNITS['time']})",
+                     width=11)
+    table.add_column(f"Reversibility (Coverage Rate) (Max={results.serializers_total_number})",
+                     width=16)
+    table.add_column("Σ memory",
+                     width=12)
 
     for dataobj in results.dataobjs:
         table.add_row(
@@ -1101,7 +1111,8 @@ def report_section_c1a(results,
 
         _list = []  # list of the dataobj_name that CAN'T BE HANDLED by <serializer>.
         for dataobj_name in results.dataobjs:
-            if results[serializer][dataobj_name] is not None and \
+            if dataobj_name in results[serializer] and \
+               results[serializer][dataobj_name] is not None and \
                results[serializer][dataobj_name].reversibility:
                 _list.append(dataobj_name)
 
@@ -1116,23 +1127,23 @@ def report_section_c1a(results,
                 f"{fmt_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 "there's no data object "
-                f"among the {len(results.dataobjs)} used data objects "
+                f"among the {results.dataobjs_number} used data objects "
                 f"that serializer {fmt_serializer(serializer)} can handle (0%).")
         elif len(_list) == 1:
             msgreport(
                 f"{fmt_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"{fmt_serializer(serializer)} can handle one data object "
-                f"among {len(results.dataobjs)} "
-                f"({fmt_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"among {results.dataobjs_number} "
+                f"({fmt_percentage(100*len(_list)/results.dataobjs_number)}), namely "
                 f"{fmt_list(_list, fmt_data)} .")
         else:
             msgreport(
                 f"{fmt_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"{fmt_serializer(serializer)} can handle {len(_list)} data objects "
-                f"among {len(results.dataobjs)} "
-                f"({fmt_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"among {results.dataobjs_number} "
+                f"({fmt_percentage(100*len(_list)/results.dataobjs_number)}), namely "
                 f"{fmt_list(_list, fmt_data)} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1222,7 +1233,8 @@ def report_section_c1b(results,
 
         _list = []  # list of the dataobj_name that CAN BE HANDLED by <serializer>.
         for dataobj_name in results.dataobjs:
-            if results[serializer][dataobj_name] is not None and \
+            if dataobj_name in results[serializer] and \
+               results[serializer][dataobj_name] is not None and \
                not results[serializer][dataobj_name].reversibility:
                 _list.append(dataobj_name)
 
@@ -1236,23 +1248,23 @@ def report_section_c1b(results,
             msgreport(f"{fmt_serializer(serializer)}: "
                       f"{cmpdata2phrase(cmpdata)}"
                       "there's no data object "
-                      f"among the {len(results.dataobjs)} used data objects "
+                      f"among the {results.dataobjs_number} used data objects "
                       f"that serializer {fmt_serializer(serializer)} can't handle (0%).")
         elif len(_list) == 1:
             msgreport(
                 f"{fmt_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"{fmt_serializer(serializer)} can't handle one data object "
-                f"among {len(results.dataobjs)} "
-                f"({fmt_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"among {results.dataobjs_number} "
+                f"({fmt_percentage(100*len(_list)/results.dataobjs_number)}), namely "
                 f"{fmt_list(_list, fmt_data)} .")
         else:
             msgreport(
                 f"{fmt_serializer(serializer)}: "
                 f"{cmpdata2phrase(cmpdata)}"
                 f"{fmt_serializer(serializer)} can't handle {len(_list)} data objects "
-                f"among {len(results.dataobjs)} "
-                f"({fmt_percentage(100*len(_list)/len(results.dataobjs))}), namely "
+                f"among {results.dataobjs_number} "
+                f"({fmt_percentage(100*len(_list)/results.dataobjs_number)}), namely "
                 f"{fmt_list(_list, fmt_data)} .")
 
     if "titles;" in wisteria.globs.ARGS.report:
@@ -1416,7 +1428,7 @@ def report_section_c2b(results,
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(C2b) "
                        "Conclusion: Overall Score Based on 4 Comparisons Points "
-                       "(Σ Encoded Str./Σ Encod.+Decod. Time/Coverage Rate/Σ memory)")
+                       "(Σ Encoded Str. Length/Σ Encod.+Decod. Time/Coverage Rate/Σ memory)")
 
     table = rich.table.Table(show_header=True, header_style="bold blue")
     table.add_column("Serializer", width=25)
@@ -1491,11 +1503,11 @@ def report_section_c2c__allvsall(results,
     bests = results.get_overallscore_bestrank()
     if len(bests) == 1:
         text.append(f"{fmt_serializer(bests[0])} is ranked #1 "
-                    f"among {results.serializers_number} serializers, "
+                    f"among {results.serializers_total_number} serializers, "
                     "according to the overall scores (__note:overallscore__).")
     else:
         text.append(f"{fmt_list(bests, fmt_serializer)} "
-                    f"are ranked #1 among {results.serializers_number} serializers, "
+                    f"are ranked #1 among {results.serializers_total_number} serializers, "
                     "according to the overall scores (__note:overallscore__).")
 
     text.append("\nOn the contrary, ")
@@ -1518,13 +1530,13 @@ def report_section_c2c__allvsall(results,
 
     worsts = results.get_overallscore_worstrank()
     if len(worsts) == 1:
-        text.append(f"{fmt_serializer(worsts[0])} is ranked #{results.serializers_number} "
-                    f"among {results.serializers_number} serializers, "
+        text.append(f"{fmt_serializer(worsts[0])} is ranked #{results.serializers_total_number} "
+                    f"among {results.serializers_total_number} serializers, "
                     "according to the overall scores (__note:overallscore__).")
     else:
         text.append(f"{fmt_list(worsts, fmt_serializer)} "
-                    f"are ranked #{results.serializers_number} among "
-                    f"{results.serializers_number} serializers, "
+                    f"are ranked #{results.serializers_total_number} among "
+                    f"{results.serializers_total_number} serializers, "
                     "according to the overall scores (__note:overallscore__).")
 
     text.notes.append(
@@ -1569,7 +1581,7 @@ def report_section_c2c__serializervsall(results,
     score = results.overallscores[serializer]
     text.append(
         f"{fmt_serializer(serializer)} "
-        f"is ranked #{rank+1} among {results.serializers_number} serializers"
+        f"is ranked #{rank+1} among {results.serializers_total_number} serializers"
         f"{(fmt_exaequowith(serializer, results.get_serializers_whose_overallscore_is(score)))}"
         f" (__note:overallscore__)")
     text.append(". ")

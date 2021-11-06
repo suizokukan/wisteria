@@ -50,6 +50,8 @@ import datetime
 import re
 
 from wisteria.aboutproject import __version__, __projectname__
+from wisteria.cwc.cwc_utils import is_a_cwc_name, shorten_cwc_name
+
 import wisteria.globs
 
 
@@ -83,6 +85,8 @@ def fmt_data(data_objectname):
 
         RETURNED VALUE: (str)data_objectname + some text attributes.
     """
+    if is_a_cwc_name(data_objectname):
+        data_objectname = shorten_cwc_name(data_objectname)
     return f"[bold white]{data_objectname}[/bold white]"
 
 

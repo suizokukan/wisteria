@@ -62,13 +62,27 @@ III] au-delà
 
 [CURRENT] v. 0.1.8
 
-bug:
-./bin/wisteria --cmp="iaswn vs all(ini)" --report="full" --verbosity=3
-renvoie des données incohérentes (tantôt None, tantôt no data) dans C2a
-Σ Encod.+Decod. Time
 
-bug:
-./bin/wisteria --cmp="iaswn vs pickle(cwc)" --report="C2a;graphs"
+
+[DONE] task-251
+
+Bugfixes: fixed several bugs preventing consistent results from being displayed.
+        
+    * bugfix: SerializationResults.finish_initialization() initializes now
+      correctly self.dataobjs by browsing all dataobjs from all serializers
+      (task-251)
+    * new entry in pimydoc: dataobjs_number (task-251)
+    * new cwc_utils.py function: are_two_cwc_variants_of_the_same_cwc() (task-251)
+    * new cwc_utils.py function: count_dataobjs_number_without_cwc_variant() (task-251)
+    * new cwc_utils.py function: serializer_is_compatible_with_dataobj() (task-251)
+    * new cwc_utils.py function: shorten_cwc_name() (task-251)
+    * improved documenation (task-251)
+    * removed useless method SerializationResults.get_base() (task-251)
+    * new test: CWCUtils.test_count_dataobjs_number_without_cwc_variant() in a new
+      file, namely tests/cwc_utils__tests.py (task-251)
+
+    * tests: 6 tests ok out of 6
+    * Pylint: 10/10
 
 [DONE] task-250
 

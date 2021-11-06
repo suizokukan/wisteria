@@ -45,6 +45,8 @@
 
     ___________________________________________________________________________
 
+    o  are_two_cwc_variants_of_the_same_cwc(name1, name2)
+    o  count_dataobjs_number_without_cwc_variant(dataobjs)
     o  is_a_cwc_name(data_object_name)
     o  is_this_an_appropriate_module_for_serializer(data_name__module, serializer)
     o  modulefullrealname_to_classname(modulefullrealname)
@@ -52,8 +54,73 @@
     o  modulefullrealname_to_waemodulename(modulefullrealname)
     o  moduleininame_to_modulefullrealname(moduleininame)
     o  select__works_as_expected__function(data_object_name)
+    o  serializer_is_compatible_with_dataobj(serializer, dataobj)
+    o  shorten_cwc_name(cwc_name)
 """
 import wisteria.globs
+
+
+def are_two_cwc_variants_of_the_same_cwc(name1,
+                                         name2):
+    """
+        are_two_cwc_variants_of_the_same_cwc()
+
+        Return True if <name1> and <name2> are two cwc names and if the third element
+        (=name.split(".")[2]) is the same, as in:
+                'wisteria.cwc.pgnreader.default.ChessGames' and
+                'wisteria.cwc.pgnreader.iaswn.ChessGames'
+                ... where name.split(".")[2] is 'pgnreader'
+    """
+    if name1 == name2:
+        return False
+    if not is_a_cwc_name(name1):
+        return False
+    if not is_a_cwc_name(name2):
+        return False
+
+    return name1.split(".")[2] == name2.split(".")[2]
+
+
+def count_dataobjs_number_without_cwc_variant(dataobjs):
+    """
+        count_dataobjs_number_without_cwc_variant()
+
+        Return the number of data objects in <dataobjs> that are not a cwc variant
+        of another data object in <dataobjs>.
+
+        Unittest: CWCUtils.test_count_dataobjs_number_without_cwc_variant().
+
+        if <dataobjs> is something like:
+            {"wisteria.cwc.pgnreader.default.ChessGames": None,
+             "wisteria.cwc.pgnreader.iaswn.ChessGames": None,
+             "wisteria.cwc.pgnreader.xyz.ChessGames": None,
+             "int": None,}      > the method will return 2
+
+        _______________________________________________________________________
+
+        ARGUMENT: (set of str)<dataobjs>, e.g.
+            {'wisteria.cwc.pgnreader.default.ChessGames', 'wisteria.cwc.pgnreader.iaswn.ChessGames'}
+
+        RETURNED VALUE: (int)the number of data objects in <dataobjs> that are not
+                        a cwc variant of another data object in <dataobjs>
+    """
+    cwc_variants = []
+    res = 0
+    for dataobj in dataobjs:
+        if not is_a_cwc_name(dataobj):
+            res += 1
+        else:
+            ok = True
+            for cwc_variant in cwc_variants:
+                if are_two_cwc_variants_of_the_same_cwc(cwc_variant,
+                                                        dataobj):
+                    ok = False
+                    break
+            if ok:
+                res += 1
+                cwc_variants.append(dataobj)
+
+    return res
 
 
 def is_a_cwc_name(data_object_name):
@@ -97,10 +164,10 @@ def is_this_an_appropriate_module_for_serializer(data_name__module,
         is_this_an_appropriate_module_for_serializer()
 
         Return True if <data_name__module> is a module appropriate to <serializer>:
-            e.g. if data_name__strmodule is "cwc.pgnreader.default" and
+            e.g. if data_name__module is "cwc.pgnreader.default" and
                  if SERIALIZERS[serializer].cwc is "default" > True
 
-            e.g. if data_name__strmodule is "cwc.pgnreader.default" and
+            e.g. if data_name__module is "cwc.pgnreader.default" and
                  if SERIALIZERS[serializer].cwc is "iaswn" > False - we skip.
 
 
@@ -285,3 +352,39 @@ def select__works_as_expected__function(data_object_name):
     #               "wisteria.cwc.pgnreader.works_as_expected.works_as_expected
     return getattr(wisteria.globs.MODULES[modulefullrealname_to_waemodulename(data_object_name)],
                    "works_as_expected")
+
+
+def serializer_is_compatible_with_dataobj(serializer,
+                                          dataobj):
+    """
+        serializer_is_compatible_with_dataobj()
+
+        Return True if <serializer> can handle <dataobj>, i.e.
+        (a) if <dataobj> is not a cwc name (since all serializers known how to handle
+            non-cwc dataobjs.
+        (b) if <dataobj> is a cwc name and if <serializer> is compatible with this <dataobj>,
+            e.g. pickle knows how to handle "wisteria.cwc.pgnreader.default.ChessGames",
+                        ... since SERIALIZERS["pickle"].cwc is "default"
+                 iaswn knows how to handle "wisteria.cwc.pgnreader.iaswn.ChessGames",
+                        ... since SERIALIZERS["iaswn"].cwc is "iaswn"
+    """
+    if not is_a_cwc_name(dataobj):
+        return True
+
+    return is_this_an_appropriate_module_for_serializer(
+        modulefullrealname_to_modulerealname(dataobj), serializer)
+
+
+def shorten_cwc_name(cwc_name):
+    """
+        shorten_cwc_name()
+
+        Shorten <cwc_name> by removing a useless prefix.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)cwc_name, the string to be shortened
+
+        RESULT: (str)the shortened string
+    """
+    return "cwc:" + cwc_name[len("wisteria.cwc."):]

@@ -37,7 +37,11 @@ from dataclasses import dataclass
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.reprfmt import fmt_serializer, fmt_ratio, fmt_time, fmt_nodata
 from wisteria.reprfmt import fmt_strlen, fmt_boolsuccess, fmt_mem_usage
-from wisteria.msg import msgerror
+from wisteria.msg import msgerror, msgdebug
+from wisteria.cwc.cwc_utils import count_dataobjs_number_without_cwc_variant
+from wisteria.cwc.cwc_utils import serializer_is_compatible_with_dataobj
+import wisteria.globs
+from wisteria.globs import VERBOSITY_DEBUG
 
 
 @dataclass
@@ -247,8 +251,8 @@ class SerializationResults(dict):
         instance attributes:
 
         o  (list)serializers        : list of str
-        o  (list)dataobjs           : list of str
-        o  (int) serializers_number : =len(self.serializers)
+        o  (set)dataobjs            : set of str
+        o  (int) serializers_total_number : =len(self.serializers)
         o  (int) dataobjs_number    : =len(self.dataobjs)
         o  (dict)hall         : e.g. {'encoding_success' = [(0.24, 'marshal'),
                                                                   (0.22, 'pickle')],
@@ -268,14 +272,12 @@ class SerializationResults(dict):
 
         o  __init__(self)
         o  comparison_inside_hall(self, serializer, attribute)
+        o  count_serializers_compatible_with_dataobj(self, dataobj)
         o  finish_initialization(self)
-        o  get_base(self, attribute)
-        o  get_dataobjs_base(self, attribute)
         o  get_hall(self, attribute, index)
         o  get_overallscore_rank(self, serializer)
         o  get_overallscore_bestrank(self)
         o  get_overallscore_worstrank(self)
-        o  get_serializers_base(self, attribute)
         o  get_serializers_whose_overallscore_rank_is(self, rank)
         o  hall_without_none_for_attribute(self, attribute)
         o  ratio_decoding_success(self, serializer=None, dataobj=None, output="fmtstr")
@@ -296,9 +298,15 @@ class SerializationResults(dict):
 
             ARGUMENTS:
             o  (list)serializers        : list of str
-            o  (list)dataobjs           : list of str
-            o  (int) serializers_number : =len(self.serializers)
-            o  (int) dataobjs_number    : =len(self.dataobjs)
+            o  (list)dataobjs           : set of str
+            o  (int) serializers_total_number : = len(self.serializers)
+            o  (int) dataobjs_number
+               (pimydoc)dataobjs_number
+               ⋅MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
+               ⋅e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+               ⋅      "wisteria.cwc.pgnreader.iaswn.ChessGame"
+               ⋅      ... will be counted as ONE data object.
+               ⋅(class variable initialized in initialization in finish_initialization())
             o  (dict)hall         : e.g. {'encoding_success' = [(0.24, 'marshal'),
                                                                       (0.22, 'pickle')],
                                                 ...
@@ -311,10 +319,25 @@ class SerializationResults(dict):
             o  (dict)overallscores      : overallscores[serializer] = (int)overallscore
         """
         dict.__init__(self)
+
         self.serializers = []
-        self.dataobjs = []
-        self.serializers_number = None
+        self.dataobjs = set()
+
+        # <serializers_total_number>:
+        # self.serializers_total_number = len(self.serializers)
+        # Beware, one serializer may not be compatible with all data objects !
+        # See .count_serializers_compatible_with_dataobj() to solve this problem.
+        # (class variable initialized in initialization in finish_initialization())
+        self.serializers_total_number = None
+
+        # (pimydoc)dataobjs_number
+        # ⋅MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
+        # ⋅e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+        # ⋅      "wisteria.cwc.pgnreader.iaswn.ChessGame"
+        # ⋅      ... will be counted as ONE data object.
+        # ⋅(class variable initialized in initialization in finish_initialization())
         self.dataobjs_number = None
+
         self.hall = None
         self.overallscores = None
 
@@ -342,7 +365,7 @@ class SerializationResults(dict):
         _more = []
 
         before_serializer = False  # will be True when <serializer> will be read in the loop.
-        for index in range(self.serializers_number):
+        for index in range(self.serializers_total_number):
             if self.hall[attribute][index][1] == serializer:
                 before_serializer = True
             elif before_serializer:
@@ -352,12 +375,32 @@ class SerializationResults(dict):
 
         return _less, _more
 
+    def count_serializers_compatible_with_dataobj(self,
+                                                  dataobj):
+        """
+            count_serializers_compatible_with_dataobj()
+
+            Return the number of serializer(s) compatible with <dataobj>.
+
+            ___________________________________________________________________
+
+            ARGUMENT: (str)dataobj
+
+            RETURNED VALUE: (int)the number of serializer(s) compatible with <dataobj>.
+        """
+        res = 0
+        for serializer in self:
+            if serializer_is_compatible_with_dataobj(serializer,
+                                                     dataobj):
+                res += 1
+        return res
+
     def finish_initialization(self):
         """
             SerializationResults.finish_initialization()
 
             Once the initialization of <self> is over, this method must be called to
-            set self.self.serializers, self.dataobjs, self.serializers_number
+            set self.self.serializers, self.dataobjs, self.serializers_total_number
             self.dataobjs_number, self.hall and self.overallscores
 
             ___________________________________________________________________
@@ -365,16 +408,29 @@ class SerializationResults(dict):
             RETURNED VALUE: (bool)success
         """
         self.serializers = sorted(self.keys())
-        self.serializers_number = len(self.serializers)
+        self.serializers_total_number = len(self.serializers)
 
-        if self.serializers_number == 0:
+        if self.serializers_total_number == 0:
             msgerror("(ERRORID016) Incorrect data, there's no serializer.")
             return False
 
-        first_serializer = tuple(self.serializers)[0]
-        self.dataobjs = sorted(self[first_serializer].keys())
-        self.dataobjs_number = len(self.dataobjs)
+        # Some dataobjs are not the same from one serializer to another, which forces us to browse
+        # all dataobjs from all serializers:
+        self.dataobjs = set()
+        for serializer in self.serializers:
+            for dataobj in self[serializer].keys():
+                self.dataobjs.add(dataobj)
 
+        # ---- <self.dataobjs_number> -----------------------------------------
+        # (pimydoc)dataobjs_number
+        # ⋅MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
+        # ⋅e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+        # ⋅      "wisteria.cwc.pgnreader.iaswn.ChessGame"
+        # ⋅      ... will be counted as ONE data object.
+        # ⋅(class variable initialized in initialization in finish_initialization())
+        self.dataobjs_number = count_dataobjs_number_without_cwc_variant(self.dataobjs)
+
+        # ---- <self.hall> ----------------------------------------------------
         self.hall = {
             "encoding_success": sorted(((self.ratio_encoding_success(serializer=serializer,
                                                                      output="value"),
@@ -390,9 +446,9 @@ class SerializationResults(dict):
                                     reverse=True),
             }
         # we add "encoding_time" only if it makes sense:
-        if not (0 for serializer in self.serializers
-                if isinstance(self.total_encoding_time(serializer=serializer,
-                                                       output="value"), str)):
+        if not tuple(0 for serializer in self.serializers
+                     if isinstance(self.total_encoding_time(serializer=serializer,
+                                                            output="value"), str)):
             self.hall["encoding_time"] = \
                 sorted(((self.total_encoding_time(serializer=serializer,
                                                   output="value"),
@@ -403,9 +459,9 @@ class SerializationResults(dict):
                 tuple((None, serializer) for serializer in self.serializers)
 
         # we add "encoding_plus_decoding_time" only if it makes sense:
-        if not (0 for serializer in self.serializers
-                if isinstance(self.total_encoding_plus_decoding_time(serializer=serializer,
-                                                                     output="value"), str)):
+        if not tuple(0 for serializer in self.serializers
+                     if isinstance(self.total_encoding_plus_decoding_time(serializer=serializer,
+                                                                          output="value"), str)):
             self.hall["encoding_plus_decoding_time"] = \
                 sorted(((self.total_encoding_plus_decoding_time(serializer=serializer,
                                                                 output="value"),
@@ -416,9 +472,9 @@ class SerializationResults(dict):
                 tuple((None, serializer) for serializer in self.serializers)
 
         # we add "encoding_strlen" only if it makes sense:
-        if not (0 for serializer in self.serializers
-                if isinstance(self.total_encoding_strlen(serializer=serializer,
-                                                         output="value"), str)):
+        if not tuple(0 for serializer in self.serializers
+                     if isinstance(self.total_encoding_strlen(serializer=serializer,
+                                                              output="value"), str)):
             self.hall["encoding_strlen"] = \
                 sorted(((self.total_encoding_strlen(serializer=serializer,
                                                     output="value"),
@@ -429,9 +485,9 @@ class SerializationResults(dict):
                 tuple((None, serializer) for serializer in self.serializers)
 
         # we add "decoding_time" only if it makes sense:
-        if not (0 for serializer in self.serializers
-                if isinstance(self.total_decoding_time(serializer=serializer,
-                                                       output="value"), str)):
+        if not tuple(0 for serializer in self.serializers
+                     if isinstance(self.total_decoding_time(serializer=serializer,
+                                                            output="value"), str)):
             self.hall["decoding_time"] = \
                 sorted(((self.total_decoding_time(serializer=serializer,
                                                   output="value"),
@@ -442,9 +498,9 @@ class SerializationResults(dict):
                 tuple((None, serializer) for serializer in self.serializers)
 
         # we add "mem_usage" only if it makes sense:
-        if not (0 for serializer in self.serializers
-                if isinstance(self.total_mem_usage(serializer=serializer,
-                                                   output="value"), str)):
+        if not tuple(0 for serializer in self.serializers
+                     if isinstance(self.total_mem_usage(serializer=serializer,
+                                                        output="value"), str)):
             self.hall["mem_usage"] = \
                 sorted(((self.total_mem_usage(serializer=serializer,
                                               output="value"),
@@ -454,11 +510,15 @@ class SerializationResults(dict):
             self.hall["mem_usage"] = \
                 tuple((None, serializer) for serializer in self.serializers)
 
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"hall={self.hall}")
+
+        # ---- self.overallscores ---------------------------------------------
         # overall score computing:
         # * if a serializer is #0 (first rank) for a certain attribute,
-        #   its score increases by results.serializers_number-0.
+        #   its score increases by results.serializers_total_number-0.
         # * if a serializer is #1 (first rank) for a certain attribute,
-        #   its score increases by results.serializers_number-1.
+        #   its score increases by results.serializers_total_number-1.
         # * ...
         self.overallscores = {}
         for serializer in self.serializers:
@@ -469,66 +529,11 @@ class SerializationResults(dict):
                               'reversibility',
                               'mem_usage',
                               ):
-                for index in range(self.serializers_number):
+                for index in range(self.serializers_total_number):
                     if self.hall[attribute][index][1] == serializer:
-                        self.overallscores[serializer] += self.serializers_number-index
+                        self.overallscores[serializer] += self.serializers_total_number-index
 
         return True
-
-    def get_base(self,
-                 attribute):
-        """
-            SerializationResults.get_base()
-
-            Return <serializer, base data object> for attribute <attribute>.
-
-            In other words, get_base() searches the first available couple
-            of <serializer, base data object> which is initialized so that
-            this couple could be a base for the <attribute>.
-
-            ___________________________________________________________________
-
-            ARGUMENT:
-            o  (str)attribute, with only 4 values, namely "encoding_time",
-               "decoding_time", "encoding_strlen" and "mem_usage"
-
-            RETURNED VALUE: (SerializerDataObj), i.e. serializer + dataobj
-        """
-        assert attribute in ("encoding_time", "decoding_time", "encoding_strlen", "mem_usage")
-
-        if attribute == "encoding_time":
-            for serializer in self.serializers:
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       self[serializer][dataobj].encoding_time:
-                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
-            return SerializerDataObj()
-
-        if attribute == "decoding_time":
-            for serializer in self.serializers:
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       self[serializer][dataobj].decoding_time:
-                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
-            return SerializerDataObj()
-
-        if attribute == "encoding_strlen":
-            for serializer in self.serializers:
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       self[serializer][dataobj].encoding_strlen:
-                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
-            return SerializerDataObj()
-
-        if attribute == "mem_usage":
-            for serializer in self.serializers:
-                for dataobj in self.dataobjs:
-                    if self[serializer][dataobj] is not None and \
-                       self[serializer][dataobj].mem_usage:
-                        return SerializerDataObj(serializer=serializer, dataobj=dataobj)
-            return SerializerDataObj()
-
-        return None  # this line should never be executed.
 
     def get_hall(self,
                  attribute,
@@ -551,7 +556,7 @@ class SerializationResults(dict):
                                'encoding_strlen' or
                                'reversibility' or
                                'mem_usage' ?
-            o  (int)index: 0 <= index < len(self.serializers_numbers-1)
+            o  (int)index: 0 <= index < len(self.serializers_total_numbers-1)
 
             RETURNED VALUE: (str)a formatted string describing the result.
         """
@@ -563,8 +568,7 @@ class SerializationResults(dict):
                              'reversibility',
                              'mem_usage')
 
-        serializer = self.hall[attribute][index][1]
-        value = self.hall[attribute][index][0]
+        value, serializer = self.hall[attribute][index]
 
         if attribute == 'encoding_success':
             return f"{fmt_serializer(serializer)} " \
@@ -612,7 +616,7 @@ class SerializationResults(dict):
             ARGUMENT:
             o  (str)serializer
 
-            RETURNED VALUE: (int)rank, 0 <= rank < len(self.serializers_numbers)
+            RETURNED VALUE: (int)rank, 0 <= rank < len(self.serializers_total_numbers)
         """
         _rank = None
 
@@ -735,10 +739,12 @@ class SerializationResults(dict):
 
         # serializer is not None:
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_ratio((None, None)) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].decoding_success:
                     count += 1
@@ -752,13 +758,18 @@ class SerializationResults(dict):
             return fmt_ratio((None, None)) if output == "fmtstr" else None
 
         for _serializer in self:
-            if self[_serializer][dataobj] is not None and \
+            if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                continue
+            if dataobj in self[_serializer] and \
+               self[_serializer][dataobj] is not None and \
                self[_serializer][dataobj].decoding_success:
                 count += 1
+
+        serializers_total_number = self.count_serializers_compatible_with_dataobj(dataobj)
         if output == "fmtstr":
-            return fmt_ratio((count, count/self.serializers_number))
+            return fmt_ratio((count, count/serializers_total_number))
         if output == "value":
-            return count/self.serializers_number
+            return count/serializers_total_number
 
         return None  # this line should never be executed.
 
@@ -793,10 +804,12 @@ class SerializationResults(dict):
 
         # serializer is not None:
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_ratio((None, None)) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].encoding_success:
                     count += 1
@@ -810,13 +823,18 @@ class SerializationResults(dict):
             return fmt_ratio((None, None)) if output == "fmtstr" else None
 
         for _serializer in self:
-            if self[_serializer][dataobj] is not None and \
+            if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                continue
+            if dataobj in self[_serializer] and \
+               self[_serializer][dataobj] is not None and \
                self[_serializer][dataobj].encoding_success:
                 count += 1
+
+        serializers_total_number = self.count_serializers_compatible_with_dataobj(dataobj)
         if output == "fmtstr":
-            return fmt_ratio((count, count/self.serializers_number))
+            return fmt_ratio((count, count/serializers_total_number))
         if output == "value":
-            return count/self.serializers_number
+            return count/serializers_total_number
 
         return None  # this line should never be executed.
 
@@ -851,10 +869,12 @@ class SerializationResults(dict):
 
         # serializer is not None:
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_ratio((None, None)) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj] is not None and \
                    self[serializer][_dataobj].reversibility:
                     count += 1
@@ -868,14 +888,18 @@ class SerializationResults(dict):
             return fmt_ratio((None, None)) if output == "fmtstr" else None
 
         for _serializer in self:
-            if self[_serializer][dataobj] is not None and \
+            if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                continue
+            if dataobj in self[_serializer] and \
+               self[_serializer][dataobj] is not None and \
                self[_serializer][dataobj].reversibility:
                 count += 1
 
+        serializers_total_number = self.count_serializers_compatible_with_dataobj(dataobj)
         if output == "fmtstr":
-            return fmt_ratio((count, count/self.serializers_number))
+            return fmt_ratio((count, count/serializers_total_number))
         if output == "value":
-            return count/self.serializers_number
+            return count/serializers_total_number
 
         return None  # this line should never be executed.
 
@@ -997,10 +1021,12 @@ class SerializationResults(dict):
         total = 0  # total time
 
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj].encoding_success is False:
                     return None if output == "value" else fmt_time(None)
 
@@ -1017,7 +1043,10 @@ class SerializationResults(dict):
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _serializer in self:
-                if self[_serializer][dataobj] is not None and \
+                if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                    continue
+                if dataobj in self[_serializer] and \
+                   self[_serializer][dataobj] is not None and \
                    self[_serializer][dataobj].decoding_success:
                     total += self[_serializer][dataobj].decoding_time
             if output == "value":
@@ -1068,7 +1097,8 @@ class SerializationResults(dict):
             if self.total_encoding_time(serializer, dataobj, output='value') is None or \
                self.total_decoding_time(serializer, dataobj, output='value') is None:
                 return None
-            return fmt_time(None)
+            return fmt_time(self.total_encoding_time(serializer, dataobj, output='value') +
+                            self.total_decoding_time(serializer, dataobj, output='value'))
 
         raise WisteriaError("(ERRORID027) Internal error: the result could not be computed. "
                             f"{serializer=}; {dataobj=}; {output=};")
@@ -1105,10 +1135,12 @@ class SerializationResults(dict):
         total = 0  # total time
 
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_strlen(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj].encoding_success is False:
                     return fmt_strlen(None) if output == 'fmtstr' else None
 
@@ -1125,7 +1157,10 @@ class SerializationResults(dict):
                 return fmt_strlen(None) if output == 'fmtstr' else None
 
             for _serializer in self:
-                if self[_serializer][dataobj] is not None and \
+                if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                    continue
+                if dataobj in self[_serializer] and \
+                   self[_serializer][dataobj] is not None and \
                    self[_serializer][dataobj].encoding_strlen:
                     total += self[_serializer][dataobj].encoding_strlen
             if output == "value":
@@ -1170,10 +1205,12 @@ class SerializationResults(dict):
         total = 0  # total time
 
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj].encoding_success is False:
                     return fmt_time(None)
                 if self[serializer][_dataobj] is not None and \
@@ -1189,7 +1226,10 @@ class SerializationResults(dict):
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _serializer in self:
-                if self[_serializer][dataobj] is not None and \
+                if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                    continue
+                if dataobj in self[_serializer] and \
+                   self[_serializer][dataobj] is not None and \
                    self[_serializer][dataobj].encoding_success:
                     total += self[_serializer][dataobj].encoding_time
             if output == "value":
@@ -1234,10 +1274,12 @@ class SerializationResults(dict):
         total = 0  # total time
 
         if serializer is not None:
-            if self.serializers_number == 0:
+            if self.serializers_total_number == 0:
                 return fmt_mem_usage(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
+                    continue
                 if self[serializer][_dataobj].encoding_success is False:
                     return fmt_mem_usage(None) if output == 'fmtstr' else None
 
@@ -1254,7 +1296,10 @@ class SerializationResults(dict):
                 return fmt_mem_usage(None) if output == 'fmtstr' else None
 
             for _serializer in self:
-                if self[_serializer][dataobj] is not None and \
+                if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
+                    continue
+                if dataobj in self[_serializer] and \
+                   self[_serializer][dataobj] is not None and \
                    self[_serializer][dataobj].mem_usage:
                     total += self[_serializer][dataobj].mem_usage
             if output == "value":

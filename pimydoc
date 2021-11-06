@@ -24,13 +24,14 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)config file format
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
+### (pimydoc)dataobjs_number
 ### (pimydoc)exit codes
 ### (pimydoc)GRAPHS_DESCRIPTION format
 ### (pimydoc)progress bar
 ### (pimydoc)report filename format
 ### (pimydoc)report sections
 ### (pimydoc)works_as_expected arguments and returned value
-
+    
 ### ==========================================================================
 [(pimydoc)--cmp format]
 
@@ -142,6 +143,13 @@ Initialized by data.py::init_data()
 - for third party types, DATA values are the real value:
     e.g. DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
 ###
+### ==========================================================================
+[(pimydoc)dataobjs_number]
+MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
+e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+      "wisteria.cwc.pgnreader.iaswn.ChessGame"
+      ... will be counted as ONE data object.
+(class variable initialized in initialization in finish_initialization())
 ### ==========================================================================
 [(pimydoc)exit codes]
 *  0: normal exit code
