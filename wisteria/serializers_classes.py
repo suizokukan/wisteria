@@ -431,20 +431,47 @@ class SerializationResults(dict):
         self.dataobjs_number = count_dataobjs_number_without_cwc_variant(self.dataobjs)
 
         # ---- <self.hall> ----------------------------------------------------
-        self.hall = {
-            "encoding_success": sorted(((self.ratio_encoding_success(serializer=serializer,
-                                                                     output="value"),
-                                         serializer) for serializer in self.serializers),
-                                       reverse=True),
-            "decoding_success": sorted(((self.ratio_decoding_success(serializer=serializer,
-                                                                     output="value"),
-                                         serializer) for serializer in self.serializers),
-                                       reverse=True),
-            "reversibility": sorted(((self.ratio_reversibility(serializer=serializer,
-                                                               output="value"),
-                                      serializer) for serializer in self.serializers),
-                                    reverse=True),
-            }
+        self.hall = {}
+
+        # we add "encoding_success" only if it makes sens:
+        if not tuple(0 for serializer in self.serializers
+                     if self.ratio_encoding_success(serializer=serializer,
+                                                    output="value") is None):
+            self.hall["encoding_success"] = \
+                sorted(((self.ratio_encoding_success(serializer=serializer,
+                                                     output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["encoding_success"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
+        # we add "decoding_success" only if it makes sens:
+        if not tuple(0 for serializer in self.serializers
+                     if self.ratio_decoding_success(serializer=serializer,
+                                                    output="value") is None):
+            self.hall["decoding_success"] = \
+                sorted(((self.ratio_decoding_success(serializer=serializer,
+                                                     output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["decoding_success"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
+        # we add "reversibility" only if it makes sens:
+        if not tuple(0 for serializer in self.serializers
+                     if self.ratio_reversibility(serializer=serializer,
+                                                 output="value") is None):
+            self.hall["reversibility"] = \
+                sorted(((self.ratio_reversibility(serializer=serializer,
+                                                  output="value"),
+                         serializer) for serializer in self.serializers),
+                       reverse=False)
+        else:
+            self.hall["reversibility"] = \
+                tuple((None, serializer) for serializer in self.serializers)
+
         # we add "encoding_time" only if it makes sense:
         if not tuple(0 for serializer in self.serializers
                      if self.total_encoding_time(serializer=serializer,
@@ -740,9 +767,11 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_total_number == 0:
-                return fmt_ratio((None, None)) if output == "fmtstr" else None
+                return fmt_ratio(None) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_ratio(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj] is not None and \
@@ -755,9 +784,11 @@ class SerializationResults(dict):
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return fmt_ratio((None, None)) if output == "fmtstr" else None
+            return fmt_ratio(None) if output == "fmtstr" else None
 
         for _serializer in self:
+            if self[_serializer][dataobj] is None:
+                return fmt_ratio(None) if output == 'fmtstr' else None
             if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                 continue
             if dataobj in self[_serializer] and \
@@ -805,9 +836,11 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_total_number == 0:
-                return fmt_ratio((None, None)) if output == "fmtstr" else None
+                return fmt_ratio(None) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_ratio(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj] is not None and \
@@ -820,9 +853,11 @@ class SerializationResults(dict):
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return fmt_ratio((None, None)) if output == "fmtstr" else None
+            return fmt_ratio(None) if output == "fmtstr" else None
 
         for _serializer in self:
+            if self[_serializer][dataobj] is None:
+                return fmt_ratio(None) if output == 'fmtstr' else None
             if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                 continue
             if dataobj in self[_serializer] and \
@@ -870,9 +905,11 @@ class SerializationResults(dict):
         # serializer is not None:
         if serializer is not None:
             if self.serializers_total_number == 0:
-                return fmt_ratio((None, None)) if output == "fmtstr" else None
+                return fmt_ratio(None) if output == "fmtstr" else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_ratio(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj] is not None and \
@@ -885,9 +922,11 @@ class SerializationResults(dict):
 
         # dataobj is not None:
         if self.dataobjs_number == 0:
-            return fmt_ratio((None, None)) if output == "fmtstr" else None
+            return fmt_ratio(None) if output == "fmtstr" else None
 
         for _serializer in self:
+            if self[_serializer][dataobj] is None:
+                return fmt_ratio(None) if output == 'fmtstr' else None
             if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                 continue
             if dataobj in self[_serializer] and \
@@ -1025,6 +1064,8 @@ class SerializationResults(dict):
                 return None if output == "value" else fmt_time(None)
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_time(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj].encoding_success is False:
@@ -1043,6 +1084,8 @@ class SerializationResults(dict):
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _serializer in self:
+                if self[_serializer][dataobj] is None:
+                    return fmt_time(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                     continue
                 if dataobj in self[_serializer] and \
@@ -1134,6 +1177,8 @@ class SerializationResults(dict):
                 return fmt_strlen(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_strlen(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj].encoding_success is False:
@@ -1152,6 +1197,8 @@ class SerializationResults(dict):
                 return fmt_strlen(None) if output == 'fmtstr' else None
 
             for _serializer in self:
+                if self[_serializer][dataobj] is None:
+                    return fmt_strlen(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                     continue
                 if dataobj in self[_serializer] and \
@@ -1204,6 +1251,8 @@ class SerializationResults(dict):
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_time(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj].encoding_success is False:
@@ -1221,6 +1270,8 @@ class SerializationResults(dict):
                 return fmt_time(None) if output == 'fmtstr' else None
 
             for _serializer in self:
+                if self[_serializer][dataobj] is None:
+                    return fmt_time(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                     continue
                 if dataobj in self[_serializer] and \
@@ -1273,6 +1324,8 @@ class SerializationResults(dict):
                 return fmt_mem_usage(None) if output == 'fmtstr' else None
 
             for _dataobj in self[serializer]:
+                if self[serializer][_dataobj] is None:
+                    return fmt_mem_usage(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(serializer, _dataobj):
                     continue
                 if self[serializer][_dataobj].encoding_success is False:
@@ -1291,6 +1344,8 @@ class SerializationResults(dict):
                 return fmt_mem_usage(None) if output == 'fmtstr' else None
 
             for _serializer in self:
+                if self[_serializer][dataobj] is None:
+                    return fmt_mem_usage(None) if output == 'fmtstr' else None
                 if not serializer_is_compatible_with_dataobj(_serializer, dataobj):
                     continue
                 if dataobj in self[_serializer] and \

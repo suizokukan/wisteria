@@ -61,9 +61,6 @@
     o  ChessBoard class
     o  ChessGame class
     o  ChessGames class
-
-    o  fill(obj)
-    o  works_as_expected()
 """
 # For this demonstration file, some writing rules are not respected:
 #   pylint: disable=invalid-name

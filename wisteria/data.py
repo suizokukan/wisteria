@@ -41,7 +41,7 @@ import re
 import time
 
 import wisteria.globs
-from wisteria.globs import TMPFILENAME
+from wisteria.globs import TMPFILENAME, CWC_MODULES
 from wisteria.classesexamples.simpleclasses import MetaClass, RegularClass
 from wisteria.classesexamples.simpleclasses import RegularClassInheritedDict
 from wisteria.classesexamples.simpleclasses import RegularClassInheritedList
@@ -234,6 +234,17 @@ def init_data():
 
         "type(str)": str,
         "type(type(str))": type(str),
+
+        # (pimydoc)demonstration_dataobj
+        # ⋅Data object used to show the encoded strings created by the serializers.
+        # ⋅
+        # ⋅The choice of data is very small because all serializers must be able
+        # ⋅to encode it. By example, no None object because of Amazon Ion Python.
+        "demonstration_dataobj": {"key1": "value1",
+                                  "key2": ["1", 2, False, True, ],
+                                  "key3": {"subkey1": "subvalue1", },
+                                  "key4": [[], [[]]],
+                                  },
     }
 
     # -------------------------------------------------------------------------
@@ -256,13 +267,7 @@ def init_data():
     # ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
     # ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
     # ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-    for cwc_moduleininame, cwc_modulefullrealname in (
-            ("wisteria.cwc.pgnreader.default.chessgames",
-             "wisteria.cwc.pgnreader.default.ChessGames"),
-            ("wisteria.cwc.pgnreader.iaswn.chessgames",
-             "wisteria.cwc.pgnreader.iaswn.ChessGames"),
-    ):
-
+    for cwc_moduleininame, cwc_modulefullrealname in CWC_MODULES:
         # main module, like "wisteria.cwc.pgnreader.default.ChessGames"
         if not trytoimport(modulefullrealname_to_modulerealname(cwc_modulefullrealname)):
             raise WisteriaError(

@@ -158,6 +158,7 @@ class ChessGameTags(dict, Iaswn):
                  datadict=None):
         """ChessGameTags.__init__()"""
         dict.__init__(self)
+        Iaswn.__init__(self)
         if datadict:
             for key, value in datadict:
                 self[key] = value
@@ -481,6 +482,7 @@ class ChessBoard(Iaswn):
 
     def __init__(self):
         """ChessBoard.__init__()"""
+        Iaswn.__init__(self)
         self.board = {}  # cf .get_xy(), set_xy()
         self.pieces_status = ChessGameStatus()
 
@@ -885,6 +887,7 @@ class ChessGame(Iaswn):
 
     def __init__(self):
         """ChessGame.__init__()"""
+        Iaswn.__init__(self)
         self.chessgame_tags = ChessGameTags()
         self.board = ChessBoard()
         self.listofmoves = ChessListOfMoves()

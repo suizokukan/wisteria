@@ -217,6 +217,7 @@ def compute_results(config,
             results[serializer] = {}
             for data_name in sorted(_dataobjs):
                 if not is_a_cwc_name(data_name):
+                    # ==== <data_name> is NOT A CWC CLASS =====================
                     fingerprint = strdigest(serializer+data_name)
 
                     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -233,6 +234,7 @@ def compute_results(config,
                         if wisteria.data.works_as_expected(data_name=data_name,
                                                            obj=None) is True else None)
                 else:
+                    # ==== <data_name> is a CWC CLASS =========================
                     # data_name: e.g. "cwc.pgnreader.default.chessgames"
                     #                > "cwc.pgnreader.default.ChessGames"
                     data_name = moduleininame_to_modulefullrealname(data_name)

@@ -253,7 +253,7 @@ def fmt_ratio(inttotal_and_floatratio):
 
         RETURNED VALUE: a formatted string representing the input argument.
     """
-    if inttotal_and_floatratio != (None, None):
+    if inttotal_and_floatratio is not None:
         return f"{inttotal_and_floatratio[0]} " \
             f"({fmt_percentage(100*inttotal_and_floatratio[1])})"
     return fmt_nodata()

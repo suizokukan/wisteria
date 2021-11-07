@@ -114,6 +114,10 @@ def works_as_expected(data_name=None,
         ⋅    (<obj> is None, <data_name> is not None) (bool)<data_name> is known
         ⋅    (<obj> is not None, <data_name> may be None or a str.) <obj> works as expected.
     """
+    if obj is None:
+        # for CWC objects, this case is never reached.
+        return True
+
     if len(obj) != 2:
         return False
     return obj[1].board.human_repr() == \

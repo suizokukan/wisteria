@@ -62,7 +62,34 @@ III] au-delà
 
 [CURRENT] v. 0.1.8
 
-* Il manque un report donnant un exemple de ce à quoi ressemble l'encoded string pour un/les sérializers; indiquer de surcroît la lisibilité donnée de cette chaîne.
+* checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
+* un tableau récapitulatif des fingerprints (dans A1?)
+* créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
+  report: afficher demonstrationobj (virer cwc.simple, trop long à maintenir)
+* indiquer de surcroît la lisibilité donnée de cette chaîne.
+
+[CURRENT] task-253
+
+Various bugfixes, documentation, CWC_MODULES variable.
+
+    * bugfix: cwc/pgnreader/iaswn.py:__init__.py methods now call Iaswn __init__ 
+              (task-253)
+    * bugfix: SerializationResults.finish_initialization() now initializes
+              .hall more wiser since .hall["encoding_success"],
+              .hall["decoding_success"] and .hall["reversibility"] may be
+              not correctly initialized (task-253)
+    * bugfix: improved the way some SerializationResults methods check that the
+              results are coherent (.total_decoding_time(), .total_encoding_time(),
+              .total_mem_usage) (task-253)
+    * fmt_ratio() now accepts None as dumb argument and not (None, None) anymore
+      (task-253)
+    * new globs.py variable, namely `CWC_MODULES`, added in order to add more
+      easily new cwx classes (task-254)
+    * improved README.md: documentation about adding cwc classes (task-253)
+    * new entry in pimydoc: `demonstration_dataobj` (task-253)
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-252
 

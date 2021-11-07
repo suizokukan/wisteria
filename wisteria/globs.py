@@ -67,6 +67,8 @@
     o  DEBUG_CONSOLEWIDTH
 
     o  DEFAULT_EXPORTREPORT_FILENAME
+
+    o  CWC_MODULES
 """
 import re
 
@@ -274,5 +276,31 @@ PLATFORM_SYSTEM = None
 # maximal console width used to display some debug messages:
 DEBUG_CONSOLEWIDTH = 70
 
+
 # default filename for --exportreport
 DEFAULT_EXPORTREPORT_FILENAME = "report.md"
+
+
+# (pimydoc)cwc modules names
+# ⋅
+# ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+# ⋅
+# ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+# ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+# ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
+# ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
+# ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+# ⋅
+# ⋅- `moduleininame` are defined in config file;
+# ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
+# ⋅  data.py:DATA and is made by function
+# ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
+# ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
+# ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
+# ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+CWC_MODULES = (
+    ("wisteria.cwc.pgnreader.default.chessgames",
+     "wisteria.cwc.pgnreader.default.ChessGames"),
+    ("wisteria.cwc.pgnreader.iaswn.chessgames",
+     "wisteria.cwc.pgnreader.iaswn.ChessGames"),
+    )

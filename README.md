@@ -879,6 +879,7 @@ dateutil (https://dateutil.readthedocs.io/en/stable/)
 **Q: How to modify the report (=log) file name ?**
 
 A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.
+
 ```
 (pimydoc)report filename format
 ⋅* either a simple string like 'report.txt'
@@ -892,6 +893,17 @@ A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You m
 ⋅         "report_1635672267.txt"
 ```
 
-**Q: Where is defined in the code the number of graphs?**
+**Where is defined in the code the number of graphs?**
 
-A: globs.py::GRAPHS_DESCRIPTION
+    globs.py::GRAPHS_DESCRIPTION
+
+**How do I add a new cwc class ?**
+
+    - create another directory in wisteria/cwc, by example `wisteria/cwc/newcwc/` . 
+    - A default.py file is required, namely `wisteria/cwc/newcwc/default.py`
+    for all serializers whose 'cwc' attribute is set to 'default'.
+    - Add other .py files (iaswn.py, ...) for other SERIALIZERS[].cwc values 
+    - A `works_as_expected.py` file is required, namely `wisteria/cwc/newcwc/works_as_expected.py`
+    with two functions: initialize() and works_as_expected()
+    - Modify globs.py:CWC_MODULES to add your new classes
+    - Add your classes to wisteria.ini (section `data objects`)
