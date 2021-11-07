@@ -220,6 +220,7 @@ computing the result, which is unpleasant to see.
   - A1      : options used to create reports
   - A2      : list of the serializers to be used
   - A3      : list of the data objects to be used
+  - A4      : list of the planned transcodings
 * B         : full details (raw results)
   - B1      : full details (serializers)
     . B1a   : full details: serializer * data object

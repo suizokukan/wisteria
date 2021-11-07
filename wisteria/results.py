@@ -211,7 +211,7 @@ def compute_results():
             if not is_a_cwc_name(data_name):
                 # ==== <data_name> is NOT A CWC CLASS =========================
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                    msgdebug(f"({transcoding_index}/{planned_transcodings_number}) "
+                    msgdebug(f"({transcoding_index+1}/{planned_transcodings_number}) "
                              "About to call transcoding functions "
                              f"for serializer='{serializer}' "
                              f"and data name='{data_name}' "

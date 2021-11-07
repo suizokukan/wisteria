@@ -36,6 +36,7 @@
     o  report_section_a1(results, s1s2d)
     o  report_section_a2(results, s1s2d)
     o  report_section_a3(results, s1s2d)
+    o  report_section_a4(results, s1s2d)
     o  report_section_b1a(results, s1s2d)
     o  report_section_b1b(results, s1s2d)
     o  report_section_b1c(results, s1s2d)
@@ -390,6 +391,7 @@ def report_section_a1(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -461,6 +463,7 @@ def report_section_a2(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -515,6 +518,7 @@ def report_section_a3(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -559,6 +563,72 @@ def report_section_a3(results,
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
 #   pylint: disable=unused-argument
+def report_section_a4(results,
+                      s1s2d):
+    """
+        report_section_a4()
+
+        Sub-function of report() for report section "A4"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : options used to create reports
+        ⋅  - A2      : list of the serializers to be used
+        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
+                  )
+    """
+    if "titles;" in wisteria.globs.ARGS.report:
+        msgreporttitle("(A4) List of the Planned Transcodings")
+        msgreport()
+
+    # (pimydoc)PLANNED_TRANSCODINGS
+    # ⋅list of str:
+    # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+    # ⋅
+    # ⋅Initialized by results.py:init_planned_transcodings()
+    planned_transcodings_number = len(wisteria.globs.PLANNED_TRANSCODINGS)
+    for (transcoding_index,
+         (serializer,
+          data_name,
+          fingerprint)) in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
+        msgreport(f"- ({transcoding_index+1}/{planned_transcodings_number}) "
+                  f"'{serializer}' x '{data_name}' [{fingerprint}]")
+
+
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+#   pylint: disable=unused-argument
 def report_section_b1a(results,
                        s1s2d):
     """
@@ -570,6 +640,7 @@ def report_section_b1a(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -665,6 +736,7 @@ def report_section_b1b(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -741,6 +813,7 @@ def report_section_b1c(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -818,6 +891,7 @@ def report_section_b1d(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -887,6 +961,7 @@ def report_section_b2a(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -982,6 +1057,7 @@ def report_section_b2b(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1063,6 +1139,7 @@ def report_section_c1a(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1185,6 +1262,7 @@ def report_section_c1b(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1307,6 +1385,7 @@ def report_section_c2a(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1394,6 +1473,7 @@ def report_section_c2b(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1965,6 +2045,7 @@ def report_section_c2c(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2025,6 +2106,7 @@ def report_section_d1a(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2080,6 +2162,7 @@ def report_section_d1b(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2135,6 +2218,7 @@ def report_section_graphs(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2228,6 +2312,7 @@ STR2REPORTSECTION = {
         "A1": (report_section_a1,),
         "A2": (report_section_a2,),
         "A3": (report_section_a3,),
+        "A4": (report_section_a4,),
         "B": (report_section_b1a,
               report_section_b1b,
               report_section_b1c,
@@ -2282,6 +2367,7 @@ def report(results,
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used
         ⋅  - A3      : list of the data objects to be used
+        ⋅  - A4      : list of the planned transcodings
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object

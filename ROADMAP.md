@@ -60,7 +60,6 @@ III] au-delà
 
 [CURRENT] v. 0.1.8
   
-* un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
   report: afficher demonstrationobj
 
@@ -73,6 +72,16 @@ III] au-delà
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
     
+[DONE] task-265
+
+New report, named 'A4', displaying the list of the planned transcodings.
+
+    * new report, named 'A4', displaying the list of the planned transcodings (task-265)
+    * transcoding_index starts by 1 (not 0) when displayed (task-265)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-264
 
 Improved report/debug messages in report_section_graphs().

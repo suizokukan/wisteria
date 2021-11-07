@@ -1680,8 +1680,9 @@ def main():
 
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug("wisteria.globs.PLANNED_TRANSCODINGS:")
-            for index, planned_transcoding in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
-                msgdebug(f"  - #{index}: {planned_transcoding}")
+            for (transcoding_index,
+                 planned_transcoding) in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
+                msgdebug(f"- #{transcoding_index+1}: {planned_transcoding}")
 
         # =========================================================================
         # (C/18.5) main(): results computing
