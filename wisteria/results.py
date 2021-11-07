@@ -212,7 +212,7 @@ def compute_results():
                 # ==== <data_name> is NOT A CWC CLASS =========================
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"({transcoding_index}/{planned_transcodings_number}) "
-                             "About to call transcoding function "
+                             "About to call transcoding functions "
                              f"for serializer='{serializer}' "
                              f"and data name='{data_name}' "
                              f"[{fingerprint}]")
