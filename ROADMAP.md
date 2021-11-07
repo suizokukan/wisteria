@@ -59,8 +59,6 @@ III] au-delà
 ===============================================================================
 
 [CURRENT] v. 0.1.8
-* About to create a new graph 'report1.png'
-  About to create a new graph named 'report1.png'
   
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
@@ -75,6 +73,16 @@ III] au-delà
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
     
+[DONE] task-264
+
+Improved report/debug messages in report_section_graphs().
+
+    * Improved report/debug messages in report_section_graphs():
+      English syntax and filename+normpath(filename) (task-264)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-263
 
 Improved graph drawing when all values are (nearly or exactly) equal to 0.

@@ -2192,14 +2192,14 @@ def report_section_graphs(results,
     for (attribute, fmtstring, value_coeff, unit, title, filename) in GRAPHS_DESCRIPTION:
         if results.hall_without_none_for_attribute(attribute):
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"About to create a new graph '{filename}' ({normpath(filename)}).")
+                msgdebug(f"About to create a new graph named '{filename}' ({normpath(filename)}).")
             hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
         else:
             # incoherent data: no graph.
             msgreport(f"Can't create graph '{filename}' for attribute '{attribute}' since "
                       "data are not fully available for all serializers.")
             if os.path.exists(filename):
-                msgreport(f"About to delete ancient '{filename}' graph.")
+                msgreport(f"About to delete ancient '{filename}' graph ({normpath(filename)}).")
                 os.remove(filename)
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"results.hall['{attribute}'] = {results.hall[attribute]}")
