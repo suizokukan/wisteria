@@ -65,13 +65,6 @@ III] au-delà
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
   report: afficher demonstrationobj
-
-* serializer, data_name, fingerprint in wisteria.globs.PLANNED_TRANSCODINGS
-  >
-  transcoding_index, (serializer, data_name, fingerprint) in wisteria.globs.PLANNED_TRANSCODINGS
-  
-  et afficher transcoding_index dans le msgdebug() de la boucle
-
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
 * généraliser le mot 'transcoding'
@@ -81,6 +74,15 @@ III] au-delà
     atexit
 * si message 'Can't create graph', supprimer un éventuel fichier du même nom
   --neverremoveafile
+  
+[DONE] task-258
+
+Improved debug message displayed while computing.
+
+    * improved debug message displayed while computing (task-258)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
   
 [DONE] task-257
 

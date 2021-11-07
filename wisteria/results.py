@@ -174,6 +174,8 @@ def compute_results():
     try:
         results = SerializationResults()
 
+        planned_transcodings_number = len(wisteria.globs.PLANNED_TRANSCODINGS)
+
         # (pimydoc)progress bar
         # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
         # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
@@ -185,7 +187,7 @@ def compute_results():
         if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
             console = Console()
             progressbar = ProgressBar(width=PROGRESSBAR_LENGTH,
-                                      total=len(wisteria.globs.PLANNED_TRANSCODINGS))
+                                      total=planned_transcodings_number)
             console.show_cursor(False)
             progressbar_index = 0
 
@@ -198,7 +200,8 @@ def compute_results():
         # ⋅    (str)serializer, (str)data_name, (str)fingerprint
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
-        for serializer, data_name, fingerprint in wisteria.globs.PLANNED_TRANSCODINGS:
+        for (transcoding_index,
+             (serializer, data_name, fingerprint)) in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
 
             if serializer not in results:
                 results[serializer] = {}
@@ -206,7 +209,8 @@ def compute_results():
             if not is_a_cwc_name(data_name):
                 # ==== <data_name> is NOT A CWC CLASS =========================
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                    msgdebug("About to call serialize/unserialize function "
+                    msgdebug(f"({transcoding_index}/{planned_transcodings_number}) "
+                             "About to call transcoding function "
                              f"for serializer='{serializer}' "
                              f"and data name='{data_name}' "
                              f"[{fingerprint}]")
