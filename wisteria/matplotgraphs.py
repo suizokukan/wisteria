@@ -115,7 +115,7 @@ def hbar2png(results_hall_attribute,
              fmtstring,
              value_coeff):
     """
-            Create a graph with horizontal bars from <results_hall_attribute> and write in
+            Create a graph with horizontal bars from <results_hall_attribute> and write it in
             <filename>.
 
             Code largely inspired by
@@ -149,7 +149,12 @@ def hbar2png(results_hall_attribute,
     serializers_names = tuple(
         wisteria.globs.SERIALIZERS[item[1]].human_name for item in results_hall_attribute)
 
-    xlim = 0, max(values)*1.2  # = xmin, xmax
+    if len(tuple(0 for value in values if value < 0.001)) == len(values):
+        # A special case: all values are (nearly or exactly) equal to 0,
+        # hence we can't apply the usual rule to set xmax:
+        xlim = 0, 1  # = xmin, xmax
+    else:
+        xlim = 0, max(values)*1.2  # = xmin, xmax
     ylim = -1, length  # = ymin, ymax
 
     fig, axes = pyplot.subplots()

@@ -59,10 +59,9 @@ III] au-delà
 ===============================================================================
 
 [CURRENT] v. 0.1.8
-
-* graph étrange:
-    ./bin/wisteria --cmp="iaswn vs pickle(ini)"  --report="full" --verbosity=3
-
+* About to create a new graph 'report1.png'
+  About to create a new graph named 'report1.png'
+  
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
   report: afficher demonstrationobj
@@ -75,7 +74,17 @@ III] au-delà
   checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
-  
+    
+[DONE] task-263
+
+Improved graph drawing when all values are (nearly or exactly) equal to 0.
+
+    * improved graph drawing when all values are (nearly or exactly) equal to 0
+      (task-263)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-262
 
 If a graph file can't be created and if an ancient file having the same name
