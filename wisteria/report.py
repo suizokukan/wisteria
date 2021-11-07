@@ -53,6 +53,8 @@
 
     o  report(results, s1s2d)
 """
+import os
+
 import rich.table
 from rich.console import Console
 
@@ -2196,6 +2198,9 @@ def report_section_graphs(results,
             # incoherent data: no graph.
             msgreport(f"Can't create graph '{filename}' for attribute '{attribute}' since "
                       "data are not fully available for all serializers.")
+            if os.path.exists(filename):
+                msgreport(f"About to delete ancient '{filename}' graph.")
+                os.remove(filename)
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"results.hall['{attribute}'] = {results.hall[attribute]}")
 

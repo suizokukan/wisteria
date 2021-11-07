@@ -59,6 +59,10 @@ III] au-delà
 ===============================================================================
 
 [CURRENT] v. 0.1.8
+
+* graph étrange:
+    ./bin/wisteria --cmp="iaswn vs pickle(ini)"  --report="full" --verbosity=3
+
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
   report: afficher demonstrationobj
@@ -71,9 +75,20 @@ III] au-delà
   checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
-* si message 'Can't create graph', supprimer un éventuel fichier du même nom
-  --neverremoveafile
   
+[DONE] task-262
+
+If a graph file can't be created and if an ancient file having the same name
+exits, this ancient file is removed to avoid confusing the ancient file with
+the new one that couln't be created.
+
+    * If a graph file can't be created and if an ancient file having the same name
+      exits, this ancient file is removed to avoid confusing the ancient file with
+      the new one that couln't be created (task-262)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-261
 
 SerializationResults.dataobjs is now a sorted list of strings. 
