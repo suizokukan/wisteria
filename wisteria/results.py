@@ -201,7 +201,9 @@ def compute_results():
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
         for (transcoding_index,
-             (serializer, data_name, fingerprint)) in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
+             (serializer,
+              data_name,
+              fingerprint)) in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
 
             if serializer not in results:
                 results[serializer] = {}

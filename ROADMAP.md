@@ -6,7 +6,7 @@ What's next ?
 
 I] avant d'ajouter un max de serializers/datas:
 
-* wisteria "mainstring"
+* wisteria "mainstring": "pickle vs all(ini)++++"
 * data_object, dataobj_name: c'est le bazar
 * avant chaque _______ : 1 ligne suffit    
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
@@ -19,7 +19,6 @@ I] avant d'ajouter un max de serializers/datas:
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
-* encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * README.md acceptable
       + __init__.py
 * --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
@@ -27,8 +26,7 @@ I] avant d'ajouter un max de serializers/datas:
 * anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
       comment signaler cette anomalie ?
 * tests
-        * tester toutes les divisions
-        * sur des ordis très rapides, le temps pourrait être nul.
+        * prendre un jeu de données
 
 II] ajout d'un max de serializers/datas
 
@@ -65,8 +63,10 @@ III] au-delà
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
   report: afficher demonstrationobj
+
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
+  encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers 
   checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
@@ -75,6 +75,25 @@ III] au-delà
 * si message 'Can't create graph', supprimer un éventuel fichier du même nom
   --neverremoveafile
   
+[DONE] task-259
+
+Bugfix: in several SerializationResults methods like ratio_decoding_success()
+        or total_decoding_time() the test:
+            if not serializer_is_compatible_with_dataobj(serializer, dataobj)
+        is now called before the other test:
+            if self[serializer][dataobj] is None
+        in order to discard an error if _dataobj is not in self[serializer].
+
+    * bugfix: in several SerializationResults methods like ratio_decoding_success()
+            or total_decoding_time() the test:
+            if not serializer_is_compatible_with_dataobj(serializer, dataobj)    
+            is now called before the other test:
+                if self[serializer][dataobj] is None
+            in order to discard an error if _dataobj is not in self[serializer] (task-257)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-258
 
 Improved debug message displayed while computing.
