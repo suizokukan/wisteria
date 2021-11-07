@@ -59,11 +59,6 @@ III] au-delà
 ===============================================================================
 
 [CURRENT] v. 0.1.8
-* B2a, B2s: sorted()
-    ./bin/wisteria --cmp="iaswn vs pickle(allbutcwc)"  --report="full" --verbosity=3
-    
-        
-
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
   report: afficher demonstrationobj
@@ -79,6 +74,15 @@ III] au-delà
 * si message 'Can't create graph', supprimer un éventuel fichier du même nom
   --neverremoveafile
   
+[DONE] task-261
+
+SerializationResults.dataobjs is now a sorted list of strings. 
+
+    * SerializationResults.dataobjs is now a sorted list of strings (task-261)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-260
 
 Improved debug message in compute_results().

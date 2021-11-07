@@ -251,7 +251,7 @@ class SerializationResults(dict):
         instance attributes:
 
         o  (list)serializers        : list of str
-        o  (set)dataobjs            : set of str
+        o  (list)dataobjs           : list of str
         o  (int) serializers_total_number : =len(self.serializers)
         o  (int) dataobjs_number    : =len(self.dataobjs)
         o  (dict)hall         : e.g. {'encoding_success' = [(0.24, 'marshal'),
@@ -298,7 +298,7 @@ class SerializationResults(dict):
 
             ARGUMENTS:
             o  (list)serializers        : list of str
-            o  (list)dataobjs           : set of str
+            o  (list)dataobjs           : list of str
             o  (int) serializers_total_number : = len(self.serializers)
             o  (int) dataobjs_number
                (pimydoc)dataobjs_number
@@ -321,7 +321,7 @@ class SerializationResults(dict):
         dict.__init__(self)
 
         self.serializers = []
-        self.dataobjs = set()
+        self.dataobjs = []
 
         # <serializers_total_number>:
         # self.serializers_total_number = len(self.serializers)
@@ -420,6 +420,7 @@ class SerializationResults(dict):
         for serializer in self.serializers:
             for dataobj in self[serializer].keys():
                 self.dataobjs.add(dataobj)
+        self.dataobjs = list(sorted(self.dataobjs))
 
         # ---- <self.dataobjs_number> -----------------------------------------
         # (pimydoc)dataobjs_number
