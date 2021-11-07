@@ -69,6 +69,8 @@
     o  DEFAULT_EXPORTREPORT_FILENAME
 
     o  CWC_MODULES
+
+    o  PLANNED_TRANSCODINGS
 """
 import re
 
@@ -304,3 +306,11 @@ CWC_MODULES = (
     ("wisteria.cwc.pgnreader.iaswn.chessgames",
      "wisteria.cwc.pgnreader.iaswn.ChessGames"),
     )
+
+
+# (pimydoc)PLANNED_TRANSCODINGS
+# ⋅list of str:
+# ⋅    (str)serializer, (str)data_name, (str)fingerprint
+# ⋅
+# ⋅Initialized by results.py:init_planned_transcodings()
+PLANNED_TRANSCODINGS = []

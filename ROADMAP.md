@@ -62,13 +62,49 @@ III] au-delà
 
 [CURRENT] v. 0.1.8
 
-* checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
 * un tableau récapitulatif des fingerprints (dans A1?)
 * créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
-  report: afficher demonstrationobj (virer cwc.simple, trop long à maintenir)
-* indiquer de surcroît la lisibilité donnée de cette chaîne.
+  report: afficher demonstrationobj
 
-[CURRENT] task-253
+* serializer, data_name, fingerprint in wisteria.globs.PLANNED_TRANSCODINGS
+  >
+  transcoding_index, (serializer, data_name, fingerprint) in wisteria.globs.PLANNED_TRANSCODINGS
+  
+  et afficher transcoding_index dans le msgdebug() de la boucle
+
+* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+* indiquer de surcroît la lisibilité donnée de cette chaîne.
+* distinguer les exit codes internes (-100, -101, ...) des autres (-1, -2, ...)
+* généraliser le mot 'transcoding'
+* classer globs.py par ordre alphabétique
+* checkup: vérifier que demonstrationobj est sérialisable par tous les serializers 
+  checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
+* B2a memory > Memory dans le tableau
+* lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
+    atexit
+* si message 'Can't create graph', supprimer un éventuel fichier du même nom
+  --neverremoveafile
+
+[DONE] task-254
+
+Planned transcodings are now stored in PLANNED_TRANSCODINGS instead of
+being set just before the main computes start. It will allow, in the
+future, to replay these transcodings. (task-254)
+
+    * planned transcodings are now stored in PLANNED_TRANSCODINGS instead of
+      being set just before the main computes start. It will allow, in the
+      future, to replay these transcodings. (task-254)
+    * new variable: globs.py:PLANNED_TRANSCODINGS (task-254)
+    * PLANNED_TRANSCODINGS is set by a new function, init_planned_transcodings() 
+      (task-254)
+    * new entry in pimydoc: PLANNED_TRANSCODINGS (task-254)
+    * improved documentation (task-254)
+    * fixed a minor glitch in ROADMAP.md, cf task-253 (task-254)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
+[DONE] task-253
 
 Various bugfixes, documentation, CWC_MODULES variable.
 

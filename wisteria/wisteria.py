@@ -51,8 +51,9 @@
     ⋅       - (C/18.1) main(): debug messages
     ⋅       - (C/18.2) main(): cmp string interpretation
     ⋅       - (C/18.3) main(): config file reading
-    ⋅       - (C/18.4) main(): results computing
-    ⋅       - (C/18.5) main(): report
+    ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+    ⋅       - (C/18.5) main(): results computing
+    ⋅       - (C/18.6) main(): report
     ⋅
     ⋅step D: exit_handler()
     ⋅- (D/01) closing and removing of tempfile
@@ -73,6 +74,7 @@
     ⋅* -6: error, ill-formed --output string
     ⋅* -7: error, missing required module
     ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
 
     ___________________________________________________________________________
 
@@ -120,8 +122,9 @@ import sys
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -176,8 +179,9 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -350,8 +354,9 @@ ARGS = PARSER.parse_args()
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -381,7 +386,8 @@ if MISSING_REQUIRED_MODULES:
     # ⋅* -6: error, ill-formed --output string
     # ⋅* -7: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    sys.exit(-8)
+    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(-7)
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -396,7 +402,7 @@ wisteria.globs.PLATFORM_SYSTEM = platform.system()
 from wisteria.globs import TMPFILENAME  # noqa
 from wisteria.report import report, partial_report__data, partial_report__serializers  # noqa
 from wisteria.report import open_reportfile  # noqa
-from wisteria.results import compute_results  # noqa
+from wisteria.results import init_planned_transcodings, compute_results  # noqa
 from wisteria.utils import trytoimport  # noqa
 import wisteria.serializers  # noqa
 import wisteria.data  # noqa
@@ -439,8 +445,9 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -480,8 +487,9 @@ wisteria.globs.ARGS = ARGS
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -529,8 +537,9 @@ if len(sys.argv) == 1:
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -557,6 +566,7 @@ else:
         # ⋅* -6: error, ill-formed --output string
         # ⋅* -7: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
         sys.exit(-6)
     wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
@@ -604,8 +614,9 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -643,8 +654,9 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -692,7 +704,8 @@ if not check_str2reportsection_keys():
     # ⋅* -6: error, ill-formed --output string
     # ⋅* -7: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    sys.exit(-9)
+    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(-8)
 
 
 # =============================================================================
@@ -726,8 +739,9 @@ if not check_str2reportsection_keys():
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -768,8 +782,9 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -829,8 +844,9 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -968,8 +984,9 @@ atexit.register(exit_handler)
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1009,8 +1026,9 @@ wisteria.serializers.init_serializers()
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1055,8 +1073,9 @@ if not os.path.exists(TMPFILENAME):
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1096,8 +1115,9 @@ wisteria.data.init_data()
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1226,6 +1246,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -6: error, ill-formed --output string
     # ⋅* -7: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(1)
 
 
@@ -1260,8 +1281,9 @@ if wisteria.globs.ARGS.checkup:
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1288,6 +1310,7 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅* -6: error, ill-formed --output string
     # ⋅* -7: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(3)
 
 
@@ -1322,8 +1345,9 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1345,6 +1369,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅* -6: error, ill-formed --output string
     # ⋅* -7: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(2)
 
 
@@ -1379,8 +1404,9 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅       - (C/18.1) main(): debug messages
 # ⋅       - (C/18.2) main(): cmp string interpretation
 # ⋅       - (C/18.3) main(): config file reading
-# ⋅       - (C/18.4) main(): results computing
-# ⋅       - (C/18.5) main(): report
+# ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+# ⋅       - (C/18.5) main(): results computing
+# ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
 # ⋅- (D/01) closing and removing of tempfile
@@ -1410,6 +1436,7 @@ def main():
                 ⋅* -6: error, ill-formed --output string
                 ⋅* -7: error, missing required module
                 ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+                ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
     """
     data = wisteria.globs.DATA
     serializers = wisteria.globs.SERIALIZERS
@@ -1445,8 +1472,9 @@ def main():
     # ⋅       - (C/18.1) main(): debug messages
     # ⋅       - (C/18.2) main(): cmp string interpretation
     # ⋅       - (C/18.3) main(): config file reading
-    # ⋅       - (C/18.4) main(): results computing
-    # ⋅       - (C/18.5) main(): report
+    # ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+    # ⋅       - (C/18.5) main(): results computing
+    # ⋅       - (C/18.6) main(): report
     # ⋅
     # ⋅step D: exit_handler()
     # ⋅- (D/01) closing and removing of tempfile
@@ -1489,8 +1517,9 @@ def main():
         # ⋅       - (C/18.1) main(): debug messages
         # ⋅       - (C/18.2) main(): cmp string interpretation
         # ⋅       - (C/18.3) main(): config file reading
-        # ⋅       - (C/18.4) main(): results computing
-        # ⋅       - (C/18.5) main(): report
+        # ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+        # ⋅       - (C/18.5) main(): results computing
+        # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
         # ⋅- (D/01) closing and removing of tempfile
@@ -1519,6 +1548,7 @@ def main():
             # ⋅* -6: error, ill-formed --output string
             # ⋅* -7: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
             return -2
 
         # =========================================================================
@@ -1552,8 +1582,9 @@ def main():
         # ⋅       - (C/18.1) main(): debug messages
         # ⋅       - (C/18.2) main(): cmp string interpretation
         # ⋅       - (C/18.3) main(): config file reading
-        # ⋅       - (C/18.4) main(): results computing
-        # ⋅       - (C/18.5) main(): report
+        # ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+        # ⋅       - (C/18.5) main(): results computing
+        # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
         # ⋅- (D/01) closing and removing of tempfile
@@ -1578,10 +1609,11 @@ def main():
                 # ⋅* -6: error, ill-formed --output string
                 # ⋅* -7: error, missing required module
                 # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+                # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
                 return -1
 
         # =========================================================================
-        # (C/18.4) main(): results computing
+        # (C/18.4) main(): PLANNED_TRANSCODINGS initialization
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
@@ -1611,23 +1643,48 @@ def main():
         # ⋅       - (C/18.1) main(): debug messages
         # ⋅       - (C/18.2) main(): cmp string interpretation
         # ⋅       - (C/18.3) main(): config file reading
-        # ⋅       - (C/18.4) main(): results computing
-        # ⋅       - (C/18.5) main(): report
+        # ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+        # ⋅       - (C/18.5) main(): results computing
+        # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
         # ⋅- (D/01) closing and removing of tempfile
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) (D/03) exported report
-        compute_results__res = compute_results(config,
-                                               serializer1,
-                                               serializer2,
-                                               cmpdata)
-        if compute_results__res[0] is None:
-            return compute_results__res[1]
-        results = compute_results__res[0]
+
+        # (pimydoc)PLANNED_TRANSCODINGS
+        # ⋅list of str:
+        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅
+        # ⋅Initialized by results.py:init_planned_transcodings()
+        if not init_planned_transcodings(serializer1,
+                                         serializer2,
+                                         cmpdata,
+                                         config):
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅*  3: normal exit code after --mymachine
+            # ⋅*  4: normal exit code (no data to handle)
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: internal error, data can't be loaded
+            # ⋅* -4: internal error, an error occured while computing the results
+            # ⋅* -5: internal error, an error in main()
+            # ⋅* -6: error, ill-formed --output string
+            # ⋅* -7: error, missing required module
+            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+            return -9
+
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug("wisteria.globs.PLANNED_TRANSCODINGS:")
+            for index, planned_transcoding in enumerate(wisteria.globs.PLANNED_TRANSCODINGS):
+                msgdebug(f"  - #{index}: {planned_transcoding}")
 
         # =========================================================================
-        # (C/18.5) main(): report
+        # (C/18.5) main(): results computing
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
@@ -1657,8 +1714,53 @@ def main():
         # ⋅       - (C/18.1) main(): debug messages
         # ⋅       - (C/18.2) main(): cmp string interpretation
         # ⋅       - (C/18.3) main(): config file reading
-        # ⋅       - (C/18.4) main(): results computing
-        # ⋅       - (C/18.5) main(): report
+        # ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+        # ⋅       - (C/18.5) main(): results computing
+        # ⋅       - (C/18.6) main(): report
+        # ⋅
+        # ⋅step D: exit_handler()
+        # ⋅- (D/01) closing and removing of tempfile
+        # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+        # ⋅- (D/03) (D/03) exported report
+        compute_results__res = compute_results()
+        if compute_results__res[0] is None:
+            return compute_results__res[1]
+        results = compute_results__res[0]
+
+        # =========================================================================
+        # (C/18.6) main(): report
+        # =========================================================================
+        # (pimydoc)code structure
+        # ⋅step A: command line arguments, --help message
+        # ⋅- (A/00) minimal imports
+        # ⋅- (A/01) command line parsing
+        # ⋅
+        # ⋅step B: initializations & --checkup
+        # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
+        # ⋅- (B/03) wisteria.globs.ARGS initialization
+        # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
+        # ⋅- (B/05) --output string
+        # ⋅- (B/06) reportfile opening
+        # ⋅- (B/07) msgxxx() functions can be used
+        # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+        # ⋅- (B/09) project name & version
+        # ⋅- (B/10) ARGS.report interpretation
+        # ⋅- (B/11) exit handler installation
+        # ⋅- (B/12) serializers import
+        # ⋅- (B/13) temp file opening
+        # ⋅- (B/14) known data init (to be placed after 'temp file opening')
+        # ⋅- (B/15) checkup
+        # ⋅- (B/16) informations about the current machine
+        # ⋅- (B/17) download default config file
+        # ⋅
+        # ⋅step C: main()
+        # ⋅- (C/18) call to main()
+        # ⋅       - (C/18.1) main(): debug messages
+        # ⋅       - (C/18.2) main(): cmp string interpretation
+        # ⋅       - (C/18.3) main(): config file reading
+        # ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+        # ⋅       - (C/18.5) main(): results computing
+        # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
         # ⋅- (D/01) closing and removing of tempfile
@@ -1681,6 +1783,7 @@ def main():
         # ⋅* -6: error, ill-formed --output string
         # ⋅* -7: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
         return 0
 
     except WisteriaError as exception:
@@ -1702,6 +1805,7 @@ def main():
         # ⋅* -6: error, ill-formed --output string
         # ⋅* -7: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
         return -5
 
 

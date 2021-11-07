@@ -28,11 +28,12 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)demonstration_dataobj
 ### (pimydoc)exit codes
 ### (pimydoc)GRAPHS_DESCRIPTION format
+### (pimydoc)PLANNED_TRANSCODINGS
 ### (pimydoc)progress bar
 ### (pimydoc)report filename format
 ### (pimydoc)report sections
 ### (pimydoc)works_as_expected arguments and returned value
-    
+
 ### ==========================================================================
 [(pimydoc)--cmp format]
 
@@ -90,8 +91,9 @@ step C: main()
        - (C/18.1) main(): debug messages
        - (C/18.2) main(): cmp string interpretation
        - (C/18.3) main(): config file reading
-       - (C/18.4) main(): results computing
-       - (C/18.5) main(): report
+       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+       - (C/18.5) main(): results computing
+       - (C/18.6) main(): report
 
 step D: exit_handler()
 - (D/01) closing and removing of tempfile
@@ -154,7 +156,7 @@ e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
 ### ==========================================================================
 [(pimydoc)demonstration_dataobj]
 Data object used to show the encoded strings created by the serializers.
-    
+
 The choice of data is very small because all serializers must be able
 to encode it. By example, no None object because of Amazon Ion Python.
 ### ==========================================================================
@@ -172,19 +174,26 @@ to encode it. By example, no None object because of Amazon Ion Python.
 * -6: error, ill-formed --output string
 * -7: error, missing required module
 * -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+* -9: internal error, can't initialize PLANNED_TRANSCODINGS    
 ### ==========================================================================
 [(pimydoc)GRAPHS_DESCRIPTION format]
 Use GRAPHS_DESCRIPTION to store the description of each graph created by the
 report; each description is passed to hbar2png(). Note that
 len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
-    
+
 - (str)attribute   : hbar2png will read results.hall[attribute]
-- (str)fmtstring   : format string to be applied to each value when printed 
+- (str)fmtstring   : format string to be applied to each value when printed
                      on the graph; e.g. '{0}' or '{0:.1f}'
 - (int)value_coeff : each value will be multiplied by this number
 - (str)unit        : x unit
 - (str)title       : graph title
 - (str)filename    : file name to be written
+### ===========================================================================
+[(pimydoc)PLANNED_TRANSCODINGS]
+list of str:
+    (str)serializer, (str)data_name, (str)fingerprint
+
+Initialized by results.py:init_planned_transcodings()
 ### ===========================================================================
 [(pimydoc)progress bar]
 A progress bar is displayed only if verbosity is set to 1 (normal).

@@ -28,6 +28,7 @@
     o  get_serializers_selection(serializer1, serializer2)
     o  get_data_selection(cmpdata, config)
     o  compute_results(config, serializer1, serializer2, cmpdata)
+    o  init_planned_transcodings(serializer1, serializer2, cmpdata, config)
 """
 from rich.console import Console
 from rich.progress_bar import ProgressBar
@@ -129,25 +130,13 @@ def get_data_selection(cmpdata,
     return res
 
 
-def compute_results(config,
-                    serializer1,
-                    serializer2,
-                    cmpdata):
+def compute_results():
     """
         compute_results()
 
         Create a SerializationResults object and try to fill it with all
-        required encodings/decodings defined by <serializer1>,
-        <serializer2> and <cmpdata>.
-
+        required encodings/decodings defined by PLANNED_TRANSCODINGS
         _______________________________________________________________________
-
-        ARGUMENTS:
-        o  config               : None if no config file, otherwise the dict
-                                  returned by read_cfgfile().
-        o  (str)serializer1
-        o  (str)serializer2
-        o  (str)cmpdata         : 'all', 'ini', 'cwc' or 'allbutcwc'
 
         RETURNED VALUE:    (SerializationResults, None) if no error occured
                         or (None, (int)exit_code) if an error occured
@@ -183,18 +172,6 @@ def compute_results(config,
             console.show_cursor(True)
 
     try:
-        # ---- serializers selection, data selection --------------------------
-        # serializers and data to be used through the tests:
-        _serializers = get_serializers_selection(serializer1, serializer2)
-        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"serializers to be used are: {_serializers}")
-        _dataobjs = get_data_selection(cmpdata, config)
-        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"data objs to be used are: {_dataobjs}")
-
-        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo("Please wait until all required encodings/decodings have been computed.")
-
         results = SerializationResults()
 
         # (pimydoc)progress bar
@@ -208,103 +185,92 @@ def compute_results(config,
         if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
             console = Console()
             progressbar = ProgressBar(width=PROGRESSBAR_LENGTH,
-                                      total=len(_serializers)*len(_dataobjs))
+                                      total=len(wisteria.globs.PLANNED_TRANSCODINGS))
             console.show_cursor(False)
             progressbar_index = 0
 
         # ---- real work ------------------------------------------------------
-        for serializer in sorted(_serializers):
-            results[serializer] = {}
-            for data_name in sorted(_dataobjs):
-                if not is_a_cwc_name(data_name):
-                    # ==== <data_name> is NOT A CWC CLASS =====================
-                    fingerprint = strdigest(serializer+data_name)
+        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+            msginfo("Please wait until all required encodings/decodings have been computed.")
 
-                    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                        msgdebug("About to call serialize/unserialize function "
-                                 f"for serializer='{serializer}' "
-                                 f"and data name='{data_name}' "
-                                 f"[{fingerprint}]")
+        # (pimydoc)PLANNED_TRANSCODINGS
+        # ⋅list of str:
+        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅
+        # ⋅Initialized by results.py:init_planned_transcodings()
+        for serializer, data_name, fingerprint in wisteria.globs.PLANNED_TRANSCODINGS:
 
-                    results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
-                        action="serialize",
-                        obj=wisteria.globs.DATA[data_name],
-                        fingerprint=fingerprint,
-                        works_as_expected=wisteria.data.works_as_expected
-                        if wisteria.data.works_as_expected(data_name=data_name,
-                                                           obj=None) is True else None)
-                else:
-                    # ==== <data_name> is a CWC CLASS =========================
-                    # data_name: e.g. "cwc.pgnreader.default.chessgames"
-                    #                > "cwc.pgnreader.default.ChessGames"
-                    data_name = moduleininame_to_modulefullrealname(data_name)
-                    # data_name__strmodule: e.g. "cwc.pgnreader.default"
-                    data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
-                    # data_name__strmodule_wae: e.g. "cwc.pgnreader.works_as_expected"
-                    data_name__strwaemodulename = modulefullrealname_to_waemodulename(data_name)
-                    # data_name__strclassname: e.g. "ChessGames"
-                    data_name__strclassname = modulefullrealname_to_classname(data_name)
+            if serializer not in results:
+                results[serializer] = {}
 
-                    # e.g. if data_name__strmodule is "cwc.pgnreader.default" and
-                    #      if SERIALIZERS[serializer].cwc is "default" > True
-                    #
-                    # e.g. if data_name__strmodule is "cwc.pgnreader.default" and
-                    #      if SERIALIZERS[serializer].cwc is "iaswn" > False - we skip.
-                    if not is_this_an_appropriate_module_for_serializer(data_name__strmodule,
-                                                                        serializer):
-                        # we have to skip {serializer, data_name}.
-                        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                            msgdebug(
-                                f"We skip {serializer=} / {data_name=}, "
-                                f"since {data_name=} is a cwc name and "
-                                f"since data name module '{data_name__strmodule}' "
-                                f"doesn't end with SERIALIZERS['{serializer}'].cwc="
-                                f"'{wisteria.globs.SERIALIZERS[serializer].cwc}' .")
-                    else:
-                        # ok, let's compute results for {serializer, data_name}
-                        fingerprint = strdigest(serializer+data_name)
+            if not is_a_cwc_name(data_name):
+                # ==== <data_name> is NOT A CWC CLASS =========================
+                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                    msgdebug("About to call serialize/unserialize function "
+                             f"for serializer='{serializer}' "
+                             f"and data name='{data_name}' "
+                             f"[{fingerprint}]")
 
-                        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                            msgdebug("About to call serialize/unserialize function "
-                                     f"for serializer='{serializer}' "
-                                     f"and (cwc) data name='{data_name}' "
-                                     f"[{fingerprint}]")
-
-                        cwc_object = \
-                            getattr(wisteria.globs.MODULES[data_name__strwaemodulename],
-                                    "initialize")(getattr(
-                                        wisteria.globs.MODULES[data_name__strmodule],
-                                        data_name__strclassname)())
-
-                        results[serializer][data_name] = \
-                            wisteria.globs.SERIALIZERS[serializer].func(
-                                action="serialize",
-                                obj=cwc_object,
-                                fingerprint=fingerprint,
-                                works_as_expected=getattr(
-                                    wisteria.globs.MODULES[data_name__strwaemodulename],
-                                    "works_as_expected"))
-
-                # (pimydoc)progress bar
-                # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
-                # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
-                # ⋅console output is authorized: it's important for scripts calling the
-                # ⋅project from the outside.
-                # ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
-                # ⋅in order to avoid mixing the progress bar with the text displayed while
-                # ⋅computing the result, which is unpleasant to see.
-                if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
-                    progressbar_index += 1
-                    progressbar.update(progressbar_index)
-                    console.print(progressbar)
-                    console.file.write("\r")
+                results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
+                    action="serialize",
+                    obj=wisteria.globs.DATA[data_name],
+                    fingerprint=fingerprint,
+                    works_as_expected=wisteria.data.works_as_expected
+                    if wisteria.data.works_as_expected(data_name=data_name,
+                                                       obj=None) is True else None)
+            else:
+                # ==== <data_name> is a CWC CLASS =============================
+                # data_name: e.g. "cwc.pgnreader.default.chessgames"
+                #                > "cwc.pgnreader.default.ChessGames"
+                data_name = moduleininame_to_modulefullrealname(data_name)
+                # data_name__strmodule: e.g. "cwc.pgnreader.default"
+                data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
+                # data_name__strmodule_wae: e.g. "cwc.pgnreader.works_as_expected"
+                data_name__strwaemodulename = modulefullrealname_to_waemodulename(data_name)
+                # data_name__strclassname: e.g. "ChessGames"
+                data_name__strclassname = modulefullrealname_to_classname(data_name)
 
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                    # is serializer/data_name has been skipped, no results[serializer][data_name],
-                    # hence the following "if" statement:
-                    if data_name in results[serializer]:
-                        msgdebug(f"result: {results[serializer][data_name]} "
-                                 f"[{fingerprint}]")
+                    msgdebug("About to call serialize/unserialize function "
+                             f"for serializer='{serializer}' "
+                             f"and (cwc) data name='{data_name}' "
+                             f"[{fingerprint}]")
+
+                cwc_object = \
+                    getattr(wisteria.globs.MODULES[data_name__strwaemodulename],
+                            "initialize")(getattr(
+                                wisteria.globs.MODULES[data_name__strmodule],
+                                data_name__strclassname)())
+
+                results[serializer][data_name] = \
+                    wisteria.globs.SERIALIZERS[serializer].func(
+                        action="serialize",
+                        obj=cwc_object,
+                        fingerprint=fingerprint,
+                        works_as_expected=getattr(
+                            wisteria.globs.MODULES[data_name__strwaemodulename],
+                            "works_as_expected"))
+
+            # (pimydoc)progress bar
+            # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
+            # ⋅If verbosity is set to 0 (minimal), the progress bar is hidden since no
+            # ⋅console output is authorized: it's important for scripts calling the
+            # ⋅project from the outside.
+            # ⋅If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
+            # ⋅in order to avoid mixing the progress bar with the text displayed while
+            # ⋅computing the result, which is unpleasant to see.
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
+                progressbar_index += 1
+                progressbar.update(progressbar_index)
+                console.print(progressbar)
+                console.file.write("\r")
+
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                # is serializer/data_name has been skipped, no results[serializer][data_name],
+                # hence the following "if" statement:
+                if data_name in results[serializer]:
+                    msgdebug(f"result: {results[serializer][data_name]} "
+                             f"[{fingerprint}]")
 
         # (pimydoc)progress bar
         # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
@@ -333,6 +299,7 @@ def compute_results(config,
             # ⋅* -6: error, ill-formed --output string
             # ⋅* -7: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
             return None, -3
         if results.dataobjs_number == 0:
             msginfo("No data to handle, the program can stop.")
@@ -351,6 +318,7 @@ def compute_results(config,
             # ⋅* -6: error, ill-formed --output string
             # ⋅* -7: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
             return None, 4
 
         return results, None
@@ -372,4 +340,95 @@ def compute_results(config,
         # ⋅* -6: error, ill-formed --output string
         # ⋅* -7: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
         return None, -4
+
+
+def init_planned_transcodings(serializer1,
+                              serializer2,
+                              cmpdata,
+                              config):
+    """
+        init_planned_transcodings()
+
+        Initialize wisteria.globs.PLANNED_TRANSCODINGS.
+
+        (pimydoc)PLANNED_TRANSCODINGS
+        ⋅list of str:
+        ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        ⋅
+        ⋅Initialized by results.py:init_planned_transcodings()
+
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  config               : None if no config file, otherwise the dict
+                                  returned by read_cfgfile().
+        o  (str)serializer1
+        o  (str)serializer2
+        o  (str)cmpdata         : 'all', 'ini', 'cwc' or 'allbutcwc'
+
+        RETURNED VALUE: (bool)success
+    """
+    try:
+        wisteria.globs.PLANNED_TRANSCODINGS = []
+
+        # serializers and data to be used through the tests:
+        serializers = get_serializers_selection(serializer1, serializer2)
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"serializers to be used are: {serializers}")
+        dataobjs = get_data_selection(cmpdata, config)
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"data objs to be used are: {dataobjs}")
+
+        for serializer in sorted(serializers):
+            for dataobj in sorted(dataobjs):
+                fingerprint = strdigest(serializer+dataobj)
+
+                if not is_a_cwc_name(dataobj):
+                    # (pimydoc)PLANNED_TRANSCODINGS
+                    # ⋅list of str:
+                    # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+                    # ⋅
+                    # ⋅Initialized by results.py:init_planned_transcodings()
+                    wisteria.globs.PLANNED_TRANSCODINGS.append((serializer,
+                                                                dataobj,
+                                                                fingerprint))
+                else:
+                    # data_name: e.g. "cwc.pgnreader.default.chessgames"
+                    #                > "cwc.pgnreader.default.ChessGames"
+                    data_name = moduleininame_to_modulefullrealname(dataobj)
+                    # data_name__strmodule: e.g. "cwc.pgnreader.default"
+                    data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
+
+                    # e.g. if data_name__strmodule is "cwc.pgnreader.default" and
+                    #      if SERIALIZERS[serializer].cwc is "default" > True
+                    #
+                    # e.g. if data_name__strmodule is "cwc.pgnreader.default" and
+                    #      if SERIALIZERS[serializer].cwc is "iaswn" > False - we skip.
+                    if not is_this_an_appropriate_module_for_serializer(data_name__strmodule,
+                                                                        serializer):
+                        # we have to skip {serializer, data_name}.
+                        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                            msgdebug(
+                                f"We skip {serializer=} / {data_name=}, "
+                                f"since {data_name=} is a cwc name and "
+                                f"since data name module '{data_name__strmodule}' "
+                                f"doesn't end with SERIALIZERS['{serializer}'].cwc="
+                                f"'{wisteria.globs.SERIALIZERS[serializer].cwc}' .")
+                    else:
+                        # (pimydoc)PLANNED_TRANSCODINGS
+                        # ⋅list of str:
+                        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+                        # ⋅
+                        # ⋅Initialized by results.py:init_planned_transcodings()
+                        wisteria.globs.PLANNED_TRANSCODINGS.append((serializer,
+                                                                    dataobj,
+                                                                    fingerprint))
+
+    except WisteriaError as exception:
+        msgerror(f"(ERRORID041) Can't set PLANNED_TRANSCODINGS since an error occured: {exception}")
+        return False
+
+    return True
