@@ -78,12 +78,20 @@ III] au-delà
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers 
   checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
-* B2a memory > Memory dans le tableau
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
 * si message 'Can't create graph', supprimer un éventuel fichier du même nom
   --neverremoveafile
   
+[DONE] task-256
+
+Improved text readibility in B1a and B2a tables.
+
+    * improved text readibility in B1a and B2a tables (task-256)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-255
 
 Variables in globs.py have been sorted.

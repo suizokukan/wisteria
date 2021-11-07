@@ -613,9 +613,9 @@ def report_section_b1a(results,
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Reversibility ?", width=16)
-    table.add_column("memory", width=12)
+    table.add_column("Memory", width=12)
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        table.add_column("finger print ( serial. + dataobj)", width=9)
+        table.add_column("Fingerprint ( serial. + dataobj)", width=9)
 
     for serializer in results.serializers:
         table.add_row(f"{fmt_serializer(serializer)} :")
@@ -930,9 +930,9 @@ def report_section_b2a(results,
     table.add_column("Decod. Ok ?", width=11)
     table.add_column(f"Decod. Time ({UNITS['time']})", width=11)
     table.add_column("Reversibility ?", width=16)
-    table.add_column("memory", width=12)
+    table.add_column("Memory", width=12)
     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        table.add_column("finger print ( serial. + dataobj)", width=9)
+        table.add_column("Fingerprint ( serial. + dataobj)", width=9)
 
     for dataobj in results.dataobjs:
         table.add_row(f"{fmt_data(dataobj)} :")
