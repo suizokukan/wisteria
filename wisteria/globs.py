@@ -25,71 +25,160 @@
 
     ___________________________________________________________________________
 
-    o  VERBOSITY_MINIMAL
-    o  VERBOSITY_NORMAL
-    o  VERBOSITY_DETAILS
-    o  VERBOSITY_DEBUG
-
     o  ARGS
 
-    o  TIMEITNUMBER
+    o  CWC_MODULES
 
-    o  TMPFILENAME
+    o  DATA
+    o  UNAVAILABLE_DATA
+
+    o  DEBUG_CONSOLEWIDTH
+
+    o  DEFAULT_CONFIGFILE_NAME
+    o  DEFAULT_CONFIGFILE_URL
+
+    o  DEFAULT_EXPORTREPORT_FILENAME
+
+    o  DEFAULT_REPORTFILE_NAME
+
+    o  FILECONSOLE
+    o  FILECONSOLE_FILEOBJECT
+
+    o  MODULES
+
+    o  OUTPUT
+
+    o  PLANNED_TRANSCODINGS
+
+    o  PLATFORM_SYSTEM
+
+    o  PROGRESSBAR_LENGTH
 
     o  REGEX_CMP
     o  REGEX_CMP__HELP
 
     o  REPORT_SHORTCUTS
 
-    o  DEFAULT_CONFIG_FILENAME
-    o  DEFAULTCFGFILE_URL
-
-    o  MODULES
-
     o  SERIALIZERS
-
-    o  DATA
-    o  UNAVAILABLE_DATA
-
-    o  FILECONSOLE_FILEOBJECT
-    o  FILECONSOLE
-
-    o  OUTPUT
-
-    o  PROGRESSBAR_LENGTH
-
-    o  UNITS
-
-    o  DEFAULT_REPORTFILE_NAME
 
     o  STR2REPORTSECTION_KEYS
 
-    o  DEBUG_CONSOLEWIDTH
+    o  TIMEITNUMBER
 
-    o  DEFAULT_EXPORTREPORT_FILENAME
+    o  TMPFILENAME
 
-    o  CWC_MODULES
+    o  UNITS
 
-    o  PLANNED_TRANSCODINGS
+    o  VERBOSITY_MINIMAL
+    o  VERBOSITY_NORMAL
+    o  VERBOSITY_DETAILS
+    o  VERBOSITY_DEBUG
+
+
+
+The following variables depend on previously defined variables,
+hence their location at the end of this list:
+
+    o  GRAPHS_FILENAME
+    o  GRAPHS_DESCRIPTION
 """
 import re
 
-
-# values defined for --verbosity:
-VERBOSITY_MINIMAL = 0
-VERBOSITY_NORMAL = 1
-VERBOSITY_DETAILS = 2
-VERBOSITY_DEBUG = 3
 
 # command line arguments
 # will be set to argparse.ArgumentParser(...).parse_args()
 ARGS = None
 
-# number of times each serializer is called
-TIMEITNUMBER = 1
+# (pimydoc)cwc modules names
+# ⋅
+# ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
+# ⋅
+# ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
+# ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+# ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
+# ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
+# ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+# ⋅
+# ⋅- `moduleininame` are defined in config file;
+# ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
+# ⋅  data.py:DATA and is made by function
+# ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
+# ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
+# ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
+# ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
+CWC_MODULES = (
+    ("wisteria.cwc.pgnreader.default.chessgames",
+     "wisteria.cwc.pgnreader.default.ChessGames"),
+    ("wisteria.cwc.pgnreader.iaswn.chessgames",
+     "wisteria.cwc.pgnreader.iaswn.ChessGames"),
+    )
 
-# temp file default name
-TMPFILENAME = "wisteria.tmp"
+# dict storing all data used by the program.
+#
+# (pimydoc)DATA format
+# ⋅Initialized by data.py::init_data()
+# ⋅
+# ⋅- for Python basic types, DATA values are the real value:
+# ⋅    e.g. DATA["bool/false"] = False
+# ⋅- for cwc modules, DATA keys are the ini name (not the real name)
+# ⋅  and DATA values are the real name:
+# ⋅    e.g. DATA["wisteria.cwc.pgnreader.iaswn.ChessGames"] =
+# ⋅        "wisteria.cwc.pgnreader.iaswn.chessgames"
+# ⋅- for third party types, DATA values are the real value:
+# ⋅    e.g. DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
+DATA = {}
+# dict storing all data that the program can't use.
+#
+# * format: UNAVAILABLE_DATA[(str)data name] = string explaining why it's unavailable
+# * initialized by data.py::init_data()
+UNAVAILABLE_DATA = {}
+
+# maximal console width used to display some debug messages:
+DEBUG_CONSOLEWIDTH = 70
+
+# default name for the config file.
+DEFAULT_CONFIGFILE_NAME = "wisteria.ini"
+# url of the default config file:
+DEFAULT_CONFIGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
+
+# default filename for --exportreport
+DEFAULT_EXPORTREPORT_FILENAME = "report.md"
+
+DEFAULT_REPORTFILE_NAME = "report.txt"
+
+# value: rich.console.Console(file=...)
+FILECONSOLE = None
+# Both variables are initialized by main.py()
+FILECONSOLE_FILEOBJECT = None
+
+# imported serializers modules
+MODULES = {}
+
+# value of the --output argument
+#  initialized by parse_output_argument(--output string)
+# format:
+#        ((bool)success, True if the --output string had been successfully parsed
+#         (bool)output to the console ?,
+#         (bool)output to the reportfile ?,
+#         (str)reportfile open mode = 'a' or 'w',
+#         (str)reportfile name,
+#        )
+OUTPUT = []
+
+# (pimydoc)PLANNED_TRANSCODINGS
+# ⋅list of str:
+# ⋅    (str)serializer, (str)data_name, (str)fingerprint
+# ⋅
+# ⋅Initialized by results.py:init_planned_transcodings()
+PLANNED_TRANSCODINGS = []
+
+# = platform.system()
+PLATFORM_SYSTEM = None
+
+# progress bar length (in characters)
+# 'None' is an accepted value and extends the length of the bar
+# to the entire width of the terminal.
+PROGRESSBAR_LENGTH = None
 
 # (pimydoc)--cmp format
 # ⋅
@@ -139,14 +228,6 @@ REPORT_SHORTCUTS = {
     "none": "",
     }
 
-# default name for the config file.
-DEFAULT_CONFIG_FILENAME = "wisteria.ini"
-# url of the default config file:
-DEFAULTCFGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
-
-# imported serializers modules
-MODULES = {}
-
 # dict storing all serializers used by the program.
 #
 # * format: SERIALIZERS[(str)serializer name] = SerializerData object
@@ -157,78 +238,6 @@ SERIALIZERS = {}
 # * format: UNAVAILABLE_SERIALIZERS[(str)serializer name] = SerializerData object
 # * initialized by serializers.py::init_serializers()
 UNAVAILABLE_SERIALIZERS = {}
-
-# dict storing all data used by the program.
-#
-# (pimydoc)DATA format
-# ⋅Initialized by data.py::init_data()
-# ⋅
-# ⋅- for Python basic types, DATA values are the real value:
-# ⋅    e.g. DATA["bool/false"] = False
-# ⋅- for cwc modules, DATA keys are the ini name (not the real name)
-# ⋅  and DATA values are the real name:
-# ⋅    e.g. DATA["wisteria.cwc.pgnreader.iaswn.ChessGames"] =
-# ⋅        "wisteria.cwc.pgnreader.iaswn.chessgames"
-# ⋅- for third party types, DATA values are the real value:
-# ⋅    e.g. DATA["dateutil(parser.parse)"] = dateutil.parser.parse("2021-03-04")
-DATA = {}
-# dict storing all data that the program can't use.
-#
-# * format: UNAVAILABLE_DATA[(str)data name] = string explaining why it's unavailable
-# * initialized by data.py::init_data()
-UNAVAILABLE_DATA = {}
-
-# Both variables are initialized by main.py()
-FILECONSOLE_FILEOBJECT = None
-#   value: rich.console.Console(file=...)
-FILECONSOLE = None
-
-# value of the --output argument
-#  initialized by parse_output_argument(--output string)
-# format:
-#        ((bool)success, True if the --output string had been successfully parsed
-#         (bool)output to the console ?,
-#         (bool)output to the reportfile ?,
-#         (str)reportfile open mode = 'a' or 'w',
-#         (str)reportfile name,
-#        )
-OUTPUT = []
-
-# progress bar length (in characters)
-# 'None' is an accepted value and extends the length of the bar
-# to the entire width of the terminal.
-PROGRESSBAR_LENGTH = None
-
-# units used in this project
-UNITS = {'time': 'seconds',
-         'string length': 'characters',
-         'memory': 'bytes',
-         }
-
-DEFAULT_REPORTFILE_NAME = "report.txt"
-
-# name of the graphs file
-GRAPHS_FILENAME = "report__SUFFIX__.png"
-# (pimydoc)GRAPHS_DESCRIPTION format
-# ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-# ⋅report; each description is passed to hbar2png(). Note that
-# ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
-# ⋅
-# ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
-# ⋅- (str)fmtstring   : format string to be applied to each value when printed
-# ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
-# ⋅- (int)value_coeff : each value will be multiplied by this number
-# ⋅- (str)unit        : x unit
-# ⋅- (str)title       : graph title
-# ⋅- (str)filename    : file name to be written
-GRAPHS_DESCRIPTION = (('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
-                      GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
-                      ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
-                       GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
-                      ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
-                       GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
-                      ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
-                       GRAPHS_FILENAME.replace("__SUFFIX__", "4")),)
 
 #  globs.py:STR2REPORTSECTION_KEYS should be nothing but STR2REPORTSECTION.keys()
 #
@@ -270,47 +279,52 @@ STR2REPORTSECTION_KEYS = (
     'D1b',
 )
 
+# number of times each serializer is called
+TIMEITNUMBER = 1
 
-# = platform.system()
-PLATFORM_SYSTEM = None
+# temp file default name
+TMPFILENAME = "wisteria.tmp"
+
+# units used in this project
+UNITS = {'time': 'seconds',
+         'string length': 'characters',
+         'memory': 'bytes',
+         }
+
+# values defined for --verbosity:
+VERBOSITY_MINIMAL = 0
+VERBOSITY_NORMAL = 1
+VERBOSITY_DETAILS = 2
+VERBOSITY_DEBUG = 3
 
 
-# maximal console width used to display some debug messages:
-DEBUG_CONSOLEWIDTH = 70
+# =============================================================================
+#
+# The following variables depend on previously defined variables,
+# hence their location at the end of this list.
+#
+# =============================================================================
 
+# name of the graphs file
+GRAPHS_FILENAME = "report__SUFFIX__.png"
 
-# default filename for --exportreport
-DEFAULT_EXPORTREPORT_FILENAME = "report.md"
-
-
-# (pimydoc)cwc modules names
+# (pimydoc)GRAPHS_DESCRIPTION format
+# ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+# ⋅report; each description is passed to hbar2png(). Note that
+# ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
 # ⋅
-# ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
-# ⋅
-# ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
-# ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
-# ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
-# ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
-# ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
-# ⋅
-# ⋅- `moduleininame` are defined in config file;
-# ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
-# ⋅  data.py:DATA and is made by function
-# ⋅  cwc_utils.py:moduleininame_to_modulefullrealname()
-# ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
-# ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
-# ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-CWC_MODULES = (
-    ("wisteria.cwc.pgnreader.default.chessgames",
-     "wisteria.cwc.pgnreader.default.ChessGames"),
-    ("wisteria.cwc.pgnreader.iaswn.chessgames",
-     "wisteria.cwc.pgnreader.iaswn.ChessGames"),
-    )
-
-
-# (pimydoc)PLANNED_TRANSCODINGS
-# ⋅list of str:
-# ⋅    (str)serializer, (str)data_name, (str)fingerprint
-# ⋅
-# ⋅Initialized by results.py:init_planned_transcodings()
-PLANNED_TRANSCODINGS = []
+# ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+# ⋅- (str)fmtstring   : format string to be applied to each value when printed
+# ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
+# ⋅- (int)value_coeff : each value will be multiplied by this number
+# ⋅- (str)unit        : x unit
+# ⋅- (str)title       : graph title
+# ⋅- (str)filename    : file name to be written
+GRAPHS_DESCRIPTION = (('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
+                      GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
+                      ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
+                       GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
+                      ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
+                       GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
+                      ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
+                       GRAPHS_FILENAME.replace("__SUFFIX__", "4")),)

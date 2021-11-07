@@ -143,7 +143,7 @@ from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import REGEX_CMP__HELP
-from wisteria.globs import DEFAULT_CONFIG_FILENAME
+from wisteria.globs import DEFAULT_CONFIGFILE_NAME
 from wisteria.globs import STR2REPORTSECTION_KEYS
 from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 
@@ -198,7 +198,7 @@ PARSER = \
 PARSER.add_argument(
     '--cfgfile',
     action='store',
-    default=DEFAULT_CONFIG_FILENAME,
+    default=DEFAULT_CONFIGFILE_NAME,
     help="Config file to be read.")
 
 PARSER.add_argument(

@@ -76,7 +76,6 @@ III] au-delà
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
 * distinguer les exit codes internes (-100, -101, ...) des autres (-1, -2, ...)
 * généraliser le mot 'transcoding'
-* classer globs.py par ordre alphabétique
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers 
   checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
 * B2a memory > Memory dans le tableau
@@ -84,6 +83,18 @@ III] au-delà
     atexit
 * si message 'Can't create graph', supprimer un éventuel fichier du même nom
   --neverremoveafile
+  
+[DONE] task-255
+
+Variables in globs.py have been sorted.
+
+    * variables in globs.py have been sorted (task-255)
+    * 'DEFAULTCFGFILE_URL' > 'DEFAULT_CONFIGFILE_URL' (task-255)
+    * 'DEFAULT_CONFIG_FILENAME' > 'DEFAULT_CONFIGFILE_NAME'
+    * improved doc. in globs.py (task-255)
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-254
 

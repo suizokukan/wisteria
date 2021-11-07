@@ -34,7 +34,7 @@ import shutil
 import urllib.error
 import urllib.request
 
-from wisteria.globs import DEFAULT_CONFIG_FILENAME, DEFAULTCFGFILE_URL
+from wisteria.globs import DEFAULT_CONFIGFILE_NAME, DEFAULT_CONFIGFILE_URL
 from wisteria.globs import VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.utils import normpath
 from wisteria.msg import msginfo, msgerror, msgdebug
@@ -50,19 +50,19 @@ def downloadconfigfile():
 
         RETURNED VALUE: (bool)success
     """
-    targetname = DEFAULT_CONFIG_FILENAME
+    targetname = DEFAULT_CONFIGFILE_NAME
 
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
-        msginfo(f"Trying to download '{DEFAULTCFGFILE_URL}' "
+        msginfo(f"Trying to download '{DEFAULT_CONFIGFILE_URL}' "
                 f"which will be written as '{targetname}' ('{normpath(targetname)}').")
 
     try:
-        with urllib.request.urlopen(DEFAULTCFGFILE_URL) as response, \
+        with urllib.request.urlopen(DEFAULT_CONFIGFILE_URL) as response, \
              open(targetname, 'wb') as out_file:
             shutil.copyfileobj(response, out_file)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_NORMAL:
-            msginfo(f"Successfully downloaded '{DEFAULTCFGFILE_URL}', "
+            msginfo(f"Successfully downloaded '{DEFAULT_CONFIGFILE_URL}', "
                     f"written as '{targetname}' ('{normpath(targetname)}').")
         return True
 
