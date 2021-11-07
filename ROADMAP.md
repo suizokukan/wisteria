@@ -74,7 +74,6 @@ III] au-delà
 
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
-* distinguer les exit codes internes (-100, -101, ...) des autres (-1, -2, ...)
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers 
   checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
@@ -83,6 +82,17 @@ III] au-delà
 * si message 'Can't create graph', supprimer un éventuel fichier du même nom
   --neverremoveafile
   
+[DONE] task-257
+
+The exit codes numbers have been renumbered to distinguish internal errors 
+(-100, -101, ...) from other errors (-1, -2, ...)
+
+    * the exit codes numbers have been renumbered to distinguish internal errors 
+      (-100, -101, ...) from other errors (-1, -2, ...) (task-257)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-256
 
 Improved text readibility in B1a and B2a tables.

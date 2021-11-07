@@ -293,14 +293,14 @@ def compute_results():
             # ⋅*  4: normal exit code (no data to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            # ⋅* -4: internal error, an error occured while computing the results
-            # ⋅* -5: internal error, an error in main()
-            # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, missing required module
+            # ⋅* -3: error, ill-formed --output string
+            # ⋅* -4: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-            return None, -3
+            # ⋅* -100: internal error, data can't be loaded
+            # ⋅* -101: internal error, an error occured while computing the results
+            # ⋅* -102: internal error, an error occured in main()
+            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return None, -100
         if results.dataobjs_number == 0:
             msginfo("No data to handle, the program can stop.")
 
@@ -312,13 +312,13 @@ def compute_results():
             # ⋅*  4: normal exit code (no data to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            # ⋅* -4: internal error, an error occured while computing the results
-            # ⋅* -5: internal error, an error in main()
-            # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, missing required module
+            # ⋅* -3: error, ill-formed --output string
+            # ⋅* -4: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+            # ⋅* -100: internal error, data can't be loaded
+            # ⋅* -101: internal error, an error occured while computing the results
+            # ⋅* -102: internal error, an error occured in main()
+            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
             return None, 4
 
         return results, None
@@ -334,14 +334,14 @@ def compute_results():
         # ⋅*  4: normal exit code (no data to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: internal error, data can't be loaded
-        # ⋅* -4: internal error, an error occured while computing the results
-        # ⋅* -5: internal error, an error in main()
-        # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, missing required module
+        # ⋅* -3: error, ill-formed --output string
+        # ⋅* -4: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-        return None, -4
+        # ⋅* -100: internal error, data can't be loaded
+        # ⋅* -101: internal error, an error occured while computing the results
+        # ⋅* -102: internal error, an error occured in main()
+        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+        return None, -101
 
 
 def init_planned_transcodings(serializer1,

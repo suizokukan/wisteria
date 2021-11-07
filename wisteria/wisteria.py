@@ -68,13 +68,13 @@
     ⋅*  4: normal exit code (no data to handle)
     ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     ⋅* -2: error, ill-formed --cmp string
-    ⋅* -3: internal error, data can't be loaded
-    ⋅* -4: internal error, an error occured while computing the results
-    ⋅* -5: internal error, an error in main()
-    ⋅* -6: error, ill-formed --output string
-    ⋅* -7: error, missing required module
+    ⋅* -3: error, ill-formed --output string
+    ⋅* -4: error, missing required module
     ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+    ⋅* -100: internal error, data can't be loaded
+    ⋅* -101: internal error, an error occured while computing the results
+    ⋅* -102: internal error, an error occured in main()
+    ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
 
     ___________________________________________________________________________
 
@@ -380,14 +380,14 @@ if MISSING_REQUIRED_MODULES:
     # ⋅*  4: normal exit code (no data to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, missing required module
+    # ⋅* -3: error, ill-formed --output string
+    # ⋅* -4: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(-7)
+    # ⋅* -100: internal error, data can't be loaded
+    # ⋅* -101: internal error, an error occured while computing the results
+    # ⋅* -102: internal error, an error occured in main()
+    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(-4)
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -560,14 +560,14 @@ else:
         # ⋅*  4: normal exit code (no data to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: internal error, data can't be loaded
-        # ⋅* -4: internal error, an error occured while computing the results
-        # ⋅* -5: internal error, an error in main()
-        # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, missing required module
+        # ⋅* -3: error, ill-formed --output string
+        # ⋅* -4: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-        sys.exit(-6)
+        # ⋅* -100: internal error, data can't be loaded
+        # ⋅* -101: internal error, an error occured while computing the results
+        # ⋅* -102: internal error, an error occured in main()
+        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+        sys.exit(-3)
     wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
 
@@ -698,14 +698,14 @@ if not check_str2reportsection_keys():
     # ⋅*  4: normal exit code (no data to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, missing required module
+    # ⋅* -3: error, ill-formed --output string
+    # ⋅* -4: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(-8)
+    # ⋅* -100: internal error, data can't be loaded
+    # ⋅* -101: internal error, an error occured while computing the results
+    # ⋅* -102: internal error, an error occured in main()
+    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(-5)
 
 
 # =============================================================================
@@ -1240,13 +1240,13 @@ if wisteria.globs.ARGS.checkup:
     # ⋅*  4: normal exit code (no data to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, missing required module
+    # ⋅* -3: error, ill-formed --output string
+    # ⋅* -4: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+    # ⋅* -100: internal error, data can't be loaded
+    # ⋅* -101: internal error, an error occured while computing the results
+    # ⋅* -102: internal error, an error occured in main()
+    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(1)
 
 
@@ -1304,13 +1304,13 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅*  4: normal exit code (no data to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, missing required module
+    # ⋅* -3: error, ill-formed --output string
+    # ⋅* -4: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+    # ⋅* -100: internal error, data can't be loaded
+    # ⋅* -101: internal error, an error occured while computing the results
+    # ⋅* -102: internal error, an error occured in main()
+    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(3)
 
 
@@ -1363,13 +1363,13 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅*  4: normal exit code (no data to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: internal error, data can't be loaded
-    # ⋅* -4: internal error, an error occured while computing the results
-    # ⋅* -5: internal error, an error in main()
-    # ⋅* -6: error, ill-formed --output string
-    # ⋅* -7: error, missing required module
+    # ⋅* -3: error, ill-formed --output string
+    # ⋅* -4: error, missing required module
     # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-    # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+    # ⋅* -100: internal error, data can't be loaded
+    # ⋅* -101: internal error, an error occured while computing the results
+    # ⋅* -102: internal error, an error occured in main()
+    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(2)
 
 
@@ -1430,13 +1430,13 @@ def main():
                 ⋅*  4: normal exit code (no data to handle)
                 ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 ⋅* -2: error, ill-formed --cmp string
-                ⋅* -3: internal error, data can't be loaded
-                ⋅* -4: internal error, an error occured while computing the results
-                ⋅* -5: internal error, an error in main()
-                ⋅* -6: error, ill-formed --output string
-                ⋅* -7: error, missing required module
+                ⋅* -3: error, ill-formed --output string
+                ⋅* -4: error, missing required module
                 ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-                ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+                ⋅* -100: internal error, data can't be loaded
+                ⋅* -101: internal error, an error occured while computing the results
+                ⋅* -102: internal error, an error occured in main()
+                ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
     """
     data = wisteria.globs.DATA
     serializers = wisteria.globs.SERIALIZERS
@@ -1542,13 +1542,13 @@ def main():
             # ⋅*  4: normal exit code (no data to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            # ⋅* -4: internal error, an error occured while computing the results
-            # ⋅* -5: internal error, an error in main()
-            # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, missing required module
+            # ⋅* -3: error, ill-formed --output string
+            # ⋅* -4: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+            # ⋅* -100: internal error, data can't be loaded
+            # ⋅* -101: internal error, an error occured while computing the results
+            # ⋅* -102: internal error, an error occured in main()
+            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
             return -2
 
         # =========================================================================
@@ -1603,13 +1603,13 @@ def main():
                 # ⋅*  4: normal exit code (no data to handle)
                 # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 # ⋅* -2: error, ill-formed --cmp string
-                # ⋅* -3: internal error, data can't be loaded
-                # ⋅* -4: internal error, an error occured while computing the results
-                # ⋅* -5: internal error, an error in main()
-                # ⋅* -6: error, ill-formed --output string
-                # ⋅* -7: error, missing required module
+                # ⋅* -3: error, ill-formed --output string
+                # ⋅* -4: error, missing required module
                 # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-                # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+                # ⋅* -100: internal error, data can't be loaded
+                # ⋅* -101: internal error, an error occured while computing the results
+                # ⋅* -102: internal error, an error occured in main()
+                # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
                 return -1
 
         # =========================================================================
@@ -1669,14 +1669,14 @@ def main():
             # ⋅*  4: normal exit code (no data to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: internal error, data can't be loaded
-            # ⋅* -4: internal error, an error occured while computing the results
-            # ⋅* -5: internal error, an error in main()
-            # ⋅* -6: error, ill-formed --output string
-            # ⋅* -7: error, missing required module
+            # ⋅* -3: error, ill-formed --output string
+            # ⋅* -4: error, missing required module
             # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-            # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-            return -9
+            # ⋅* -100: internal error, data can't be loaded
+            # ⋅* -101: internal error, an error occured while computing the results
+            # ⋅* -102: internal error, an error occured in main()
+            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return -103
 
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug("wisteria.globs.PLANNED_TRANSCODINGS:")
@@ -1777,13 +1777,13 @@ def main():
         # ⋅*  4: normal exit code (no data to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: internal error, data can't be loaded
-        # ⋅* -4: internal error, an error occured while computing the results
-        # ⋅* -5: internal error, an error in main()
-        # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, missing required module
+        # ⋅* -3: error, ill-formed --output string
+        # ⋅* -4: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
+        # ⋅* -100: internal error, data can't be loaded
+        # ⋅* -101: internal error, an error occured while computing the results
+        # ⋅* -102: internal error, an error occured in main()
+        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
         return 0
 
     except WisteriaError as exception:
@@ -1799,14 +1799,14 @@ def main():
         # ⋅*  4: normal exit code (no data to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: internal error, data can't be loaded
-        # ⋅* -4: internal error, an error occured while computing the results
-        # ⋅* -5: internal error, an error in main()
-        # ⋅* -6: error, ill-formed --output string
-        # ⋅* -7: error, missing required module
+        # ⋅* -3: error, ill-formed --output string
+        # ⋅* -4: error, missing required module
         # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
-        # ⋅* -9: internal error, can't initialize PLANNED_TRANSCODINGS
-        return -5
+        # ⋅* -100: internal error, data can't be loaded
+        # ⋅* -101: internal error, an error occured while computing the results
+        # ⋅* -102: internal error, an error occured in main()
+        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+        return -102
 
 
 if __name__ == '__main__':
