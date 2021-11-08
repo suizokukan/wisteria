@@ -111,6 +111,11 @@ CWC_MODULES = (
      "wisteria.cwc.pgnreader.default.ChessGames"),
     ("wisteria.cwc.pgnreader.iaswn.chessgames",
      "wisteria.cwc.pgnreader.iaswn.ChessGames"),
+
+    ("wisteria.cwc.simple.default.simpleclass",
+     "wisteria.cwc.simple.default.SimpleClass"),
+    ("wisteria.cwc.simple.iaswn.simpleclass",
+     "wisteria.cwc.simple.iaswn.SimpleClass"),
     )
 
 # dict storing all data used by the program.

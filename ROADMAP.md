@@ -60,8 +60,6 @@ III] au-delà
 
 [CURRENT] v. 0.1.8
 
-* pimydoc sur demonstration object expliquant que l'objet est utilisé en A5
-* cwc.simple
 * (A5) What do the Encoded Strings Look Like? (cwc.simple)
   
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
@@ -73,6 +71,15 @@ III] au-delà
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
     
+[DONE] task-267
+
+New data type: cwc.simple.*.simpleclass .
+
+    * new data type: cwc.simple.*.simpleclass (task-267)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-266
 
 New report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
