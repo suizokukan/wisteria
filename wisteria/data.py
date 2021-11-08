@@ -235,16 +235,17 @@ def init_data():
         "type(str)": str,
         "type(type(str))": type(str),
 
-        # (pimydoc)demonstration_dataobj
-        # ⋅Data object used to show the encoded strings created by the serializers.
+        # (pimydoc)demonstration_dataobj_a5
+        # ⋅Data object used to show the encoded strings created by the serializers,
+        # ⋅see A5 report section.
         # ⋅
         # ⋅The choice of data is very small because all serializers must be able
         # ⋅to encode it. By example, no None object because of Amazon Ion Python.
-        "demonstration_dataobj": {"key1": "value1",
-                                  "key2": ["1", 2, False, True, ],
-                                  "key3": {"subkey1": "subvalue1", },
-                                  "key4": [[], [[]]],
-                                  },
+        "demonstration_dataobj_a5": {"key1": "value1",
+                                     "key2": ["1", 2, False, True, ],
+                                     "key3": {"subkey1": "subvalue1", },
+                                     "key4": [[], [[]]],
+                                     },
     }
 
     # -------------------------------------------------------------------------

@@ -144,7 +144,7 @@ def serializer_iaswn(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -153,6 +153,7 @@ def serializer_iaswn(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'iaswn'
@@ -164,6 +165,15 @@ def serializer_iaswn(action="serialize",
     # -------------------
     if action == "version":
         return module.__version__
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.encode(obj)
+        except module.IaswnError:
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -269,7 +279,7 @@ def serializer_json(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -278,6 +288,7 @@ def serializer_json(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'json'
@@ -289,6 +300,15 @@ def serializer_json(action="serialize",
     # -------------------
     if action == "version":
         return module.__version__
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except TypeError:
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -394,7 +414,7 @@ def serializer_jsonpickle(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -403,6 +423,7 @@ def serializer_jsonpickle(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'jsonpickle'
@@ -414,6 +435,15 @@ def serializer_jsonpickle(action="serialize",
     # -------------------
     if action == "version":
         return module.__version__
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except TypeError:
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -518,7 +548,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -527,6 +557,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'jsonpickle'
@@ -538,6 +569,15 @@ def serializer_jsonpickle_keystrue(action="serialize",
     # -------------------
     if action == "version":
         return module.__version__
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except TypeError:
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -643,7 +683,7 @@ def serializer_marshal(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -652,6 +692,7 @@ def serializer_marshal(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'marshal'
@@ -663,6 +704,15 @@ def serializer_marshal(action="serialize",
     # -------------------
     if action == "version":
         return f"version {module.version}; (Python version) {get_python_version()}"
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except (TypeError, ValueError):
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -768,7 +818,7 @@ def serializer_pickle(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -777,6 +827,7 @@ def serializer_pickle(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'pickle'
@@ -788,6 +839,15 @@ def serializer_pickle(action="serialize",
     # -------------------
     if action == "version":
         return f"(Python version) {get_python_version()}"
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except TypeError:
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -893,7 +953,7 @@ def serializer_pyyaml(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -902,6 +962,7 @@ def serializer_pyyaml(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'pyyaml'
@@ -913,6 +974,15 @@ def serializer_pyyaml(action="serialize",
     # -------------------
     if action == "version":
         return module.__version__
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dump(obj, Dumper=module.Dumper)
+        except (ValueError, TypeError):
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -1018,7 +1088,7 @@ def serializer_simpleion(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -1027,6 +1097,7 @@ def serializer_simpleion(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'simpleion'
@@ -1038,6 +1109,15 @@ def serializer_simpleion(action="serialize",
     # -------------------
     if action == "version":
         return MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name__version].__version__
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except (AssertionError, AttributeError, ValueError, TypeError):
+            return None
 
     # ---------------------
     # action == "serialize"
@@ -1143,7 +1223,7 @@ def serializer_yajl(action="serialize",
         _______________________________________________________________________
 
         ARGUMENTS:
-        o  action           : (str) either "version" either "serialize"
+        o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
@@ -1152,6 +1232,7 @@ def serializer_yajl(action="serialize",
         RETURNED VALUE:
            - None if an error occcured
            - if <action> is (str)"version", return a string.
+           - if <action> is (str)"encode", return the encoded string
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'yajl'
@@ -1163,6 +1244,15 @@ def serializer_yajl(action="serialize",
     # -------------------
     if action == "version":
         return "unknown version"
+
+    # -------------------
+    # action == "encode"
+    # -------------------
+    if action == "encode":
+        try:
+            return module.dumps(obj)
+        except (ValueError, TypeError):
+            return None
 
     # ---------------------
     # action == "serialize"

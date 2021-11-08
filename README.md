@@ -242,7 +242,7 @@ pylintrc
 --------
 
 ```
-max-module-lines=1000 > max-module-lines=2500
+max-module-lines=1000 > max-module-lines=3000
 max-returns=6 > max-returns=10
 max-statements=50 > max-statements=120
 max-locals=15 > max-locals=20

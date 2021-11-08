@@ -59,10 +59,11 @@ III] au-delà
 ===============================================================================
 
 [CURRENT] v. 0.1.8
-  
-* créer un report montrant ce à quoi ressemble l'encoded string pour un/les sérializers
-  report: afficher demonstrationobj
 
+* pimydoc sur demonstration object expliquant que l'objet est utilisé en A5
+* cwc.simple
+* (A5) What do the Encoded Strings Look Like? (cwc.simple)
+  
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
   encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
@@ -72,6 +73,17 @@ III] au-delà
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
     
+[DONE] task-266
+
+New report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
+
+    * new report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
+    * `demonstration_dataobj` > `demonstration_dataobj_a5` (task-266)
+    * (pylintrc) max-module-lines=3000 (task-266)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-265
 
 New report, named 'A4', displaying the list of the planned transcodings.
