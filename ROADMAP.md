@@ -4,58 +4,62 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-I] avant d'ajouter un max de serializers/datas:
-
+[? 0.1.9] petites corrections avant de passer à la suite
 * --skimthedata="no" | "exclude ??? data"
 * Ce message est étonnant:
     The following informations may have been written in the report file
   car le programme sait si les informations seront ou non écrites.
-
 * "can't handle following data objects:"
    >
   "can't handle the following data objects:"  (??? vérifier)
-
-
-* vérifier que l'on peut installer et utiliser Wisteria 0.1.3 sur Windows
-    C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
-
-* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
-* indiquer de surcroît la lisibilité donnée de cette chaîne.
-  encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
-  checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
+  Si c'est le cas, n'afficher ce résultat que si verbosity=3
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
-
-* wisteria "mainstring": "pickle vs all(ini)++++"
 * data_object, dataobj_name: c'est le bazar
 * avant chaque _______ : 1 ligne suffit
-* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-* --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
-      syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
-* bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
-* README.md : %%français > anglais
-* j'aimerais que --cmp="iaswn" ne parle que de iaswn
-* ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
-* ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
-* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
-* extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
-* README.md acceptable
-      + __init__.py
-* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
-      chercher si une combinaison donne des résultats vraiment différents des autres
-* anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
-      comment signaler cette anomalie ?
+* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[? 0.2.0] vrais tests
 * tests
         * prendre un jeu de données
 
-II] ajout d'un max de serializers/datas
+[? 0.2.1] modification du hall of fame
+* indiquer de surcroît la lisibilité donnée de cette chaîne.
+  encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
+* extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 
+[? 0.2.2] terminer --cmp="iaswn+pickle(int+str)"
+? wisteria "mainstring": "pickle vs all(ini)++++"
+? --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
+      syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
+* j'aimerais que --cmp="iaswn" ne parle que de iaswn
+
+[? 0.2.3] améliorer la méthode utilisée (moyenne,)
+* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
+
+[? 0.2.4] classer les serializers (A6+checkup) selon leur coverage rate:
+0: n'arrive pas au niveau 1
+1: arrive à transcoder une sélection de types Python élémentaires
+2: arrive à transcoder cwc.simple
+3: arrive à transcoder cwc.pgnreader
+
+[? 0.2.5] wisteria "xyz"
+* ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
+* ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
+
+[? 0.2.6] avant d'ajouter un max de serializers/datas:
+* bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
+
+[? 0.2.7]
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
     - fonctions wae pour les types de base
+    
+[? 0.2.8]
 * finir de couvrir le plus de serializers possible
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -66,13 +70,20 @@ II] ajout d'un max de serializers/datas
         python-rapidjson (https://pypi.org/project/python-rapidjson/)
         ujson (https://pypi.org/project/ujson/)
         jsons (via pip)
-        jsonweb
-        * https://docs.python.org/3/library/shelve.html#module-shelve
-        xmlrpclib
-          https://stackoverflow.com/questions/32022656/python-cannot-marshal-class-decimal-decimal-objects
+        jsonweb (https://docs.python.org/3/library/shelve.html#module-shelve)
+        xmlrpclib (https://stackoverflow.com/questions/32022656/python-cannot-marshal-class-decimal-decimal-objects)
 
-III] au-delà
+[III] pour écrire à V.S.
+[? 0.2.9]
+* README.md : %%français > anglais
+* README.md acceptable
+      + __init__.py
 
+* vérifier que l'on peut installer et utiliser Wisteria 0.1.3 sur Windows
+    C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
+  cela est important pour la discussion sur l'utilisation de la mémoire sous Linux & sous Windows.
+  
+[III] au-delà
 * comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
 * comment expliquer que pickle n'utilise pas de mémoire pour pgnreader, mais Iaswn, si ?
 * branche doublecheck
@@ -82,6 +93,10 @@ III] au-delà
 * peak memory usage:
     remplacer le vague "memory usage" par "peak memory usage"; mais est-ce vrai sur Windows ?
     https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
+* --meta: comparer avec les différentes versions de --method, graphique montrant ce qui se passe qd on augmente TIMEITNUMBER
+      chercher si une combinaison donne des résultats vraiment différents des autres
+* anomalie statistique: pyyaml a vraiment un problème avec strlong; calculer l'écart par rapport à la moyenne
+      comment signaler cette anomalie ?
 
 ===============================================================================
 
