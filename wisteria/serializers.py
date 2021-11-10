@@ -1351,28 +1351,28 @@ def init_serializers():
                                     human_name="Iaswn"),
                 internet="https://github.com/suizokukan/iaswn",
                 func=serializer_iaswn,
-                cwc="iaswn"),
+                cwc="cwc_iaswn"),
             SerializerData(
                 SerializersDataNMVH(name="json",
                                     module_name="json",
                                     human_name="json"),
                 internet="https://docs.python.org/3/library/json.html",
                 func=serializer_json,
-                cwc="default"),
+                cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="jsonpickle",
                                     module_name="jsonpickle",
                                     human_name="jsonpickle"),
                 internet="https://jsonpickle.github.io/",
                 func=serializer_jsonpickle,
-                cwc="default"),
+                cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="jsonpickle_keystrue",
                                     module_name="jsonpickle",
                                     human_name="jsonpickle(keys=True)"),
                 internet="https://jsonpickle.github.io/",
                 func=serializer_jsonpickle_keystrue,
-                cwc="default",
+                cwc="cwc_default",
                 comment="jsonpickle with keys=True"),
             SerializerData(
                 SerializersDataNMVH(name="marshal",
@@ -1380,21 +1380,21 @@ def init_serializers():
                                     human_name="marshal"),
                 internet="https://docs.python.org/3/library/marshal.html#module-marshal",
                 func=serializer_marshal,
-                cwc="default"),
+                cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="pickle",
                                     module_name="pickle",
                                     human_name="pickle"),
                 internet="https://docs.python.org/3/library/pickle.html",
                 func=serializer_pickle,
-                cwc="default"),
+                cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="pyyaml",
                                     module_name="yaml",
                                     human_name="pyyaml"),
                 internet="https://pyyaml.org/",
                 func=serializer_pyyaml,
-                cwc="default"),
+                cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="simpleion",
                                     module_name="amazon.ion.simpleion",
@@ -1402,7 +1402,7 @@ def init_serializers():
                                     human_name="Amazon Ion Python"),
                 internet="https://github.com/amzn/ion-python",
                 func=serializer_simpleion,
-                cwc="default",
+                cwc="cwc_default",
                 comment="installation tip: `pip install git+https://github.com/amzn/ion-python`"),
             SerializerData(
                 SerializersDataNMVH(name="yajl",
@@ -1410,7 +1410,7 @@ def init_serializers():
                                     human_name="yajl"),
                 internet="https://lloyd.github.io/yajl/",
                 func=serializer_yajl,
-                cwc="default"),
+                cwc="cwc_default"),
             ):
         if trytoimport(serializerdata.module_name):
             # main module:

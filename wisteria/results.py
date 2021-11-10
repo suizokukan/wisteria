@@ -226,10 +226,10 @@ def compute_results():
                                                        obj=None) is True else None)
             else:
                 # ==== <data_name> is a CWC CLASS =============================
-                # data_name: e.g. "cwc.pgnreader.default.chessgames"
-                #                > "cwc.pgnreader.default.ChessGames"
+                # data_name: e.g. "cwc.pgnreader.cwc_default.chessgames"
+                #                > "cwc.pgnreader.cwc_default.ChessGames"
                 data_name = moduleininame_to_modulefullrealname(data_name)
-                # data_name__strmodule: e.g. "cwc.pgnreader.default"
+                # data_name__strmodule: e.g. "cwc.pgnreader.cwc_default"
                 data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
                 # data_name__strmodule_wae: e.g. "cwc.pgnreader.works_as_expected"
                 data_name__strwaemodulename = modulefullrealname_to_waemodulename(data_name)
@@ -402,16 +402,16 @@ def init_planned_transcodings(serializer1,
                                                                 dataobj,
                                                                 fingerprint))
                 else:
-                    # data_name: e.g. "cwc.pgnreader.default.chessgames"
-                    #                > "cwc.pgnreader.default.ChessGames"
+                    # data_name: e.g. "cwc.pgnreader.cwc_default.chessgames"
+                    #                > "cwc.pgnreader.cwc_default.ChessGames"
                     data_name = moduleininame_to_modulefullrealname(dataobj)
-                    # data_name__strmodule: e.g. "cwc.pgnreader.default"
+                    # data_name__strmodule: e.g. "cwc.pgnreader.cwc_default"
                     data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
 
-                    # e.g. if data_name__strmodule is "cwc.pgnreader.default" and
+                    # e.g. if data_name__strmodule is "cwc.pgnreader.cwc_default" and
                     #      if SERIALIZERS[serializer].cwc is "default" > True
                     #
-                    # e.g. if data_name__strmodule is "cwc.pgnreader.default" and
+                    # e.g. if data_name__strmodule is "cwc.pgnreader.cwc_default" and
                     #      if SERIALIZERS[serializer].cwc is "iaswn" > False - we skip.
                     if not is_this_an_appropriate_module_for_serializer(data_name__strmodule,
                                                                         serializer):

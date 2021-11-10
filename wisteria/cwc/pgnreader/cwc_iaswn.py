@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
+    Wisteria project : wisteria/wisteria/cwc/pgnreader/s_iaswn.py
 
     cwc/PGN reader+writer specific to Iaswn serializer. The following types are used:
     - bool, int, str

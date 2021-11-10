@@ -303,7 +303,7 @@ class SerializationResults(dict):
             o  (int) dataobjs_number
                (pimydoc)dataobjs_number
                ⋅MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
-               ⋅e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+               ⋅e.g. "wisteria.cwc.pgnreader.cwc_default.ChessGame" and
                ⋅      "wisteria.cwc.pgnreader.iaswn.ChessGame"
                ⋅      ... will be counted as ONE data object.
                ⋅(class variable initialized in initialization in finish_initialization())
@@ -332,7 +332,7 @@ class SerializationResults(dict):
 
         # (pimydoc)dataobjs_number
         # ⋅MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
-        # ⋅e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+        # ⋅e.g. "wisteria.cwc.pgnreader.cwc_default.ChessGame" and
         # ⋅      "wisteria.cwc.pgnreader.iaswn.ChessGame"
         # ⋅      ... will be counted as ONE data object.
         # ⋅(class variable initialized in initialization in finish_initialization())
@@ -425,7 +425,7 @@ class SerializationResults(dict):
         # ---- <self.dataobjs_number> -----------------------------------------
         # (pimydoc)dataobjs_number
         # ⋅MAY NOT BE len(self.dataobjs) since cwc variants are treated as one dataobject:
-        # ⋅e.g. "wisteria.cwc.pgnreader.default.ChessGame" and
+        # ⋅e.g. "wisteria.cwc.pgnreader.cwc_default.ChessGame" and
         # ⋅      "wisteria.cwc.pgnreader.iaswn.ChessGame"
         # ⋅      ... will be counted as ONE data object.
         # ⋅(class variable initialized in initialization in finish_initialization())

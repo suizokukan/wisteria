@@ -31,9 +31,9 @@ import os
 import os.path
 import unittest
 
-# Pylint is wrong: we can import wisteria.cwc.pgnreader.default.
+# Pylint is wrong: we can import wisteria.cwc.pgnreader.cwc_default.
 #   pylint: disable=import-error, no-name-in-module
-from wisteria.cwc.pgnreader.default import ChessGames
+from wisteria.cwc.pgnreader.cwc_default import ChessGames
 from wisteria.dmfile import DMFile
 
 

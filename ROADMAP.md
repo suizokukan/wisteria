@@ -71,6 +71,15 @@ III] au-delà
 * lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
     atexit
     
+[DONE] task-268
+
+All cwc files' name starts now with the 'cwc_' prefix.
+
+    * all cwc files' name starts now with the 'cwc_' prefix (task-268)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-267
 
 New data type: cwc.simple.*.simpleclass .

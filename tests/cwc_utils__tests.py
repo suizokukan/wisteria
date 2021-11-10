@@ -64,33 +64,33 @@ class CWCUtils(unittest.TestCase):
                          2)
 
         self.assertEqual(count_dataobjs_number_without_cwc_variant(
-            {"wisteria.cwc.pgnreader.default.ChessGames": None,
+            {"wisteria.cwc.pgnreader.cwc_default.ChessGames": None,
              "wisteria.cwc.pgnreader.iaswn.ChessGames": None,
              "int": None, }),
                          2)
 
         self.assertEqual(count_dataobjs_number_without_cwc_variant(
-            {"wisteria.cwc.pgnreader.default.ChessGames": None,
+            {"wisteria.cwc.pgnreader.cwc_default.ChessGames": None,
              "wisteria.cwc.pgnreader.iaswn.ChessGames": None, }),
                          1)
 
         self.assertEqual(count_dataobjs_number_without_cwc_variant(
-            {"wisteria.cwc.pgnreader.default.ChessGames": None,
+            {"wisteria.cwc.pgnreader.cwc_default.ChessGames": None,
              "wisteria.cwc.pgnreader.iaswn.ChessGames": None,
              "wisteria.cwc.pgnreader.xyz.ChessGames": None,
              "int": None, }),
                          2)
 
         self.assertEqual(count_dataobjs_number_without_cwc_variant(
-            {"wisteria.cwc.pgnreader.default.ChessGames": None,
-             "wisteria.cwc.chessplayer.default.ChessGames": None,
+            {"wisteria.cwc.pgnreader.cwc_default.ChessGames": None,
+             "wisteria.cwc.chessplayer.cwc_default.ChessGames": None,
              "wisteria.cwc.pgnreader.iaswn.ChessGames": None,
              "int": None, }),
                          3)
 
         self.assertEqual(count_dataobjs_number_without_cwc_variant(
-            {"wisteria.cwc.pgnreader.default.ChessGames": None,
-             "wisteria.cwc.chessplayer.default.ChessGames": None,
+            {"wisteria.cwc.pgnreader.cwc_default.ChessGames": None,
+             "wisteria.cwc.chessplayer.cwc_default.ChessGames": None,
              "wisteria.cwc.pgnreader.iaswn.ChessGames": None,
              "wisteria.cwc.chessplayer.iaswn.ChessGames": None,
              "int": None, }),

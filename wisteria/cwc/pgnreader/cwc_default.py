@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    Wisteria project : wisteria/wisteria/cwc/pgnreader/default.py
+    Wisteria project : wisteria/wisteria/cwc/pgnreader/s_default.py
 
     Default cwc/PGN reader+writer using only the following types:
     - bool, int, str

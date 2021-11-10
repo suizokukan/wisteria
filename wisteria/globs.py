@@ -93,11 +93,11 @@ ARGS = None
 # ⋅
 # ⋅cwc modules names start with the "wisteria.cwc" string (cf is_a_cwc_name())
 # ⋅
-# ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.default.chessgames"
-# ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.default.ChessGames"
+# ⋅moduleininame        : e.g. "wisteria.cwc.pgnreader.cwc_default.chessgames"
+# ⋅modulefullrealname   : e.g. "wisteria.cwc.pgnreader.cwc_default.ChessGames"
 # ⋅waemodulename        : e.g. "wisteria.cwc.pgnreader.works_as_expected"
 # ⋅classname            : e.g. "ChessGames" (NOT "chessgames")
-# ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.default"
+# ⋅modulerealname       : e.g. "wisteria.cwc.pgnreader.cwc_default"
 # ⋅
 # ⋅- `moduleininame` are defined in config file;
 # ⋅- conversion from `moduleininame` to `modulefullrealname` is defined in
@@ -107,16 +107,16 @@ ARGS = None
 # ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
 # ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
 CWC_MODULES = (
-    ("wisteria.cwc.pgnreader.default.chessgames",
-     "wisteria.cwc.pgnreader.default.ChessGames"),
-    ("wisteria.cwc.pgnreader.iaswn.chessgames",
-     "wisteria.cwc.pgnreader.iaswn.ChessGames"),
+    ("wisteria.cwc.pgnreader.cwc_default.chessgames",
+     "wisteria.cwc.pgnreader.cwc_default.ChessGames"),
+    ("wisteria.cwc.pgnreader.cwc_iaswn.chessgames",
+     "wisteria.cwc.pgnreader.cwc_iaswn.ChessGames"),
 
-    ("wisteria.cwc.simple.default.simpleclass",
-     "wisteria.cwc.simple.default.SimpleClass"),
-    ("wisteria.cwc.simple.iaswn.simpleclass",
-     "wisteria.cwc.simple.iaswn.SimpleClass"),
-    )
+    ("wisteria.cwc.simple.cwc_default.simpleclass",
+     "wisteria.cwc.simple.cwc_default.SimpleClass"),
+    ("wisteria.cwc.simple.cwc_iaswn.simpleclass",
+     "wisteria.cwc.simple.cwc_iaswn.SimpleClass"),
+)
 
 # dict storing all data used by the program.
 #

@@ -19,7 +19,7 @@
 #    along with Wisteria.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 """
-    Wisteria project : wisteria/wisteria/cwc/simple/default.py
+    Wisteria project : wisteria/wisteria/cwc/simple/s_iaswn.py
 
     Default cwc/SimpleClass class, a simple class made of the following types:
     - int
@@ -32,12 +32,10 @@
 
     o  SimpleClass class
 """
+from iaswn.iaswn import Iaswn
 
 
-class SimpleClass:
-    """
-        SimpleClass class
-    """
+class SimpleClass(Iaswn):
     def __eq__(self,
                other):
         """SimpleClass.__eq__()"""
@@ -52,6 +50,7 @@ class SimpleClass:
                  _list=[1, 2, 3],
                  _dict={"key1": "value1"}):
         """SimpleClass.__init__()"""
+        Iaswn.__init__(self)
         self.integer = integer
         self.string = string
         self._list = _list
