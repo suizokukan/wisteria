@@ -6,9 +6,31 @@ What's next ?
 
 I] avant d'ajouter un max de serializers/datas:
 
+* --skimthedata="no" | "exclude ??? data"
+* Ce message est étonnant:
+    The following informations may have been written in the report file
+  car le programme sait si les informations seront ou non écrites.
+
+* "can't handle following data objects:"
+   >
+  "can't handle the following data objects:"  (??? vérifier)
+
+
+* vérifier que l'on peut installer et utiliser Wisteria 0.1.3 sur Windows
+    C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
+
+* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+* indiquer de surcroît la lisibilité donnée de cette chaîne.
+  encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
+* généraliser le mot 'transcoding'
+* checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
+  checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
+* lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
+    atexit
+
 * wisteria "mainstring": "pickle vs all(ini)++++"
 * data_object, dataobj_name: c'est le bazar
-* avant chaque _______ : 1 ligne suffit    
+* avant chaque _______ : 1 ligne suffit
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
@@ -43,7 +65,12 @@ II] ajout d'un max de serializers/datas
         python-cjson (https://pypi.org/project/python-cjson/)
         python-rapidjson (https://pypi.org/project/python-rapidjson/)
         ujson (https://pypi.org/project/ujson/)
-        
+        jsons (via pip)
+        jsonweb
+        * https://docs.python.org/3/library/shelve.html#module-shelve
+        xmlrpclib
+          https://stackoverflow.com/questions/32022656/python-cannot-marshal-class-decimal-decimal-objects
+
 III] au-delà
 
 * comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
@@ -58,19 +85,199 @@ III] au-delà
 
 ===============================================================================
 
-[CURRENT] v. 0.1.8
+[DONE] v. 0.1.8
 
-* (A5) What do the Encoded Strings Look Like? (cwc.simple)
-  
-* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
-* indiquer de surcroît la lisibilité donnée de cette chaîne.
-  encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
-* généraliser le mot 'transcoding'
-* checkup: vérifier que demonstrationobj est sérialisable par tous les serializers 
-  checkup (verbosity=3): est-ce que demonstration_dataobj est connu de tous ?
-* lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
-    atexit
-    
+-  Added a new serializer: 'amazon.ion.simpleion'.
+-  --exportreport='md'.
+-  If --checkup/--downloadconfigfile/--mymachine is set, no graph file is added
+   to the exported report anymore.
+-  fixed minor typos in ROADMAP.md
+-  New report, named 'A4', displaying the list of the planned transcodings.
+-  New report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
+
+
+bugfixes
+
+    * bugfix: hbar2png() draws now correctly xticks numbers (task-238)
+    * bugfix: in exit_handler(), temp file is now closed before being removed
+              (task-244)
+    * bugfix: SerializationResults.finish_initialization() initializes now
+      correctly self.dataobjs by browsing all dataobjs from all serializers
+      (task-251)
+    * bugfix: fixed SerializationResults.finish_initialization(); total_xxx()
+              methods(output='value') return None, not a string if an error
+              occured, hence some lines of code to be changed (task-252)
+    * bugfix: cwc/pgnreader/iaswn.py:__init__.py methods now call Iaswn __init__
+              (task-253)
+    * bugfix: SerializationResults.finish_initialization() now initializes
+              .hall more wiser since .hall["encoding_success"],
+              .hall["decoding_success"] and .hall["reversibility"] may be
+              not correctly initialized (task-253)
+    * bugfix: improved the way some SerializationResults methods check that the
+              results are coherent (.total_decoding_time(), .total_encoding_time(),
+              .total_mem_usage) (task-253)
+    * bugfix: in several SerializationResults methods like ratio_decoding_success()
+            or total_decoding_time() the test:
+            if not serializer_is_compatible_with_dataobj(serializer, dataobj)
+            is now called before the other test:
+                if self[serializer][dataobj] is None
+            in order to discard an error if _dataobj is not in self[serializer] (task-257)
+
+code quality
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
+code structure
+
+    * added a new serializer: 'amazon.ion.simpleion', hence the new
+      serializer_simpleion() function (task-232)
+    * improved exit_handler(): DATA['file descriptor'] is not closed if
+      'file descriptor' isn't in DATA, as it may happen if an error occurs
+      while DATA has not been fully initialized (task-232)
+    * improved code readibilty in serializer_xxx() function; each serializer_xxx()
+      function now starts with a `module = ` statement (task-232)
+    * --exportreport='md:myfile.md', defined in exit_handler() (task-240)
+    * new variable in globs.py: `DEFAULT_EXPORTREPORT_FILENAME` (task-240)
+    * the normal way to open the report file is now `open_reportfile()` (task-240)
+    * new class `SerializersDataNMVH`, used by SerializersData.__init__() (task-242)
+    * new function get_python_version() to factorize some parts of the code.
+    * new entry in pimydoc: dataobjs_number (task-251)
+    * new cwc_utils.py function: are_two_cwc_variants_of_the_same_cwc() (task-251)
+    * new cwc_utils.py function: count_dataobjs_number_without_cwc_variant() (task-251)
+    * new cwc_utils.py function: serializer_is_compatible_with_dataobj() (task-251)
+    * new cwc_utils.py function: shorten_cwc_name() (task-251)
+    * new test: CWCUtils.test_count_dataobjs_number_without_cwc_variant() in a new
+      file, namely tests/cwc_utils__tests.py (task-251)
+    * fmt_ratio() now accepts None as dumb argument and not (None, None) anymore
+      (task-253)
+    * new globs.py variable, namely `CWC_MODULES`, added in order to add more
+      easily new cwx classes (task-254)
+    * planned transcodings are now stored in PLANNED_TRANSCODINGS instead of
+      being set just before the main computes start. It will allow, in the
+      future, to replay these transcodings. (task-254)
+    * new variable: globs.py:PLANNED_TRANSCODINGS (task-254)
+    * PLANNED_TRANSCODINGS is set by a new function, init_planned_transcodings()
+      (task-254)
+    * SerializationResults.dataobjs is now a sorted list of strings (task-261)
+    * new data type: cwc.simple.*.simpleclass (task-267)
+    * all cwc files' name starts now with the 'cwc_' prefix (task-268)
+    * err_codes.sh: max_index=55 (task-236)
+    * pylintrc: max-attributes=9 (task-243)
+    * removed useless method SerializationResults.get_base() (task-251)
+    * removed useless `dataobj` argument from
+      SerializationResults.total_encoding_plus_decoding_time() (task-252)
+    * variables in globs.py have been sorted (task-255)
+    * (pylintrc) max-module-lines=3000 (task-266)
+    * fixed a minor typo in serializers.py: 'konwn' > 'known' (task-233)
+    * fixed a minor typo in serializers.py: 'konwn' > 'known' (task-234)
+    * re-numbered all error codes (task-236)
+    * command line arguments are now sorted in wisteria.py by alphabetical
+      order (task-240)
+    * new class `SerializersDataNMVH`, used by SerializersData.__init__() (task-242)
+    * variables in globs.py have been sorted (task-255)
+    * 'DEFAULTCFGFILE_URL' > 'DEFAULT_CONFIGFILE_URL' (task-255)
+    * 'DEFAULT_CONFIG_FILENAME' > 'DEFAULT_CONFIGFILE_NAME'
+    * the exit codes numbers have been renumbered to distinguish internal errors
+      (-100, -101, ...) from other errors (-1, -2, ...) (task-257)
+
+documentation
+
+    * improved doc. in serializers.py (task-239)
+    * improved doc in report.py (task-240)
+    * new entry in `pimydoc`: `GRAPHS_DESCRIPTION format` (task-241)
+    * improved doc. (task-241)
+    * improved doc. in the code and debug message (task-245)
+    * new entry in pimydoc: dataobjs_number (task-251)
+    * improved documentation (task-251)
+    * fixed a minor glitch in ROADMAP.MD in task-251 (task-252)
+    * improved README.md: documentation about adding cwc classes (task-253)
+    * new entry in pimydoc: `demonstration_dataobj` (task-253)
+    * new entry in pimydoc: PLANNED_TRANSCODINGS (task-254)
+    * improved documentation (task-254)
+    * fixed a minor glitch in ROADMAP.md, cf task-253 (task-254)
+    * improved doc. in globs.py (task-255)
+
+interface, output messages
+
+    * Improved a message in exit_handler(): "Let's close the filenconsole file" >
+      "About to close the console file" (task-235)
+    * improved checkup() message: added the report filename (task-237)
+    * added a debug message in exit_handler() if an expected graph is missing
+      (task-247)
+    * replaced called to print() by called to rprint() (task-247)
+    * improved results functions so that incoherent results are correctly marked
+      as incoherent results. SerializationResults functions have been improved,
+      and report_() functions too. (task-248)
+    * If --checkup/--downloadconfigfile/--mymachine is set, no graph file is
+      added to the exported report anymore (task-250)
+    * improved text readibility in B1a and B2a tables (task-256)
+    * improved debug message displayed while computing (task-258)
+    * improved debug message in compute_results() (task-260)
+    * If a graph file can't be created and if an ancient file having the same name
+      exits, this ancient file is removed to avoid confusing the ancient file with
+      the new one that couln't be created (task-262)
+    * improved graph drawing when all values are (nearly or exactly) equal to 0
+      (task-263)
+    * Improved report/debug messages in report_section_graphs():
+      English syntax and filename+normpath(filename) (task-264)
+    * new report, named 'A4', displaying the list of the planned transcodings (task-265)
+    * transcoding_index starts by 1 (not 0) when displayed (task-265)
+    * new report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
+    * `demonstration_dataobj` > `demonstration_dataobj_a5` (task-266)
+
+task(s)
+
+    task(s) : task-232, task-233, task-234, task-235, task-236, task-237,
+              task-238, task-239, task-240, task-241, task-242, task-243,
+              task-244, task-245, task-246, task-247, task-248, task-249,
+              task-250, task-251, task-252, task-253, task-254, task-255,
+              task-256, task-257, task-258, task-259, task-260, task-261,
+              task-262, task-263, task-264, task-265, task-266, task-267,
+              task-268
+
+version
+
+    * set version to "0.1.8"
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+└── pywin32 *
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.4
+Python 3.9.7 (default, Oct 10 2021, 15:13:22)
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+
 [DONE] task-268
 
 All cwc files' name starts now with the 'cwc_' prefix.
@@ -91,7 +298,7 @@ New data type: cwc.simple.*.simpleclass .
 
 [DONE] task-266
 
-New report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
+New report section, named 'A5 What do the Encoded Strings Look Like?'
 
     * new report section, named 'A5 What do the Encoded Strings Look Like?' (task-266)
     * `demonstration_dataobj` > `demonstration_dataobj_a5` (task-266)
@@ -145,7 +352,7 @@ the new one that couln't be created.
 
 [DONE] task-261
 
-SerializationResults.dataobjs is now a sorted list of strings. 
+SerializationResults.dataobjs is now a sorted list of strings.
 
     * SerializationResults.dataobjs is now a sorted list of strings (task-261)
 
@@ -172,7 +379,7 @@ Bugfix: in several SerializationResults methods like ratio_decoding_success()
 
     * bugfix: in several SerializationResults methods like ratio_decoding_success()
             or total_decoding_time() the test:
-            if not serializer_is_compatible_with_dataobj(serializer, dataobj)    
+            if not serializer_is_compatible_with_dataobj(serializer, dataobj)
             is now called before the other test:
                 if self[serializer][dataobj] is None
             in order to discard an error if _dataobj is not in self[serializer] (task-257)
@@ -188,13 +395,13 @@ Improved debug message displayed while computing.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-  
+
 [DONE] task-257
 
-The exit codes numbers have been renumbered to distinguish internal errors 
+The exit codes numbers have been renumbered to distinguish internal errors
 (-100, -101, ...) from other errors (-1, -2, ...)
 
-    * the exit codes numbers have been renumbered to distinguish internal errors 
+    * the exit codes numbers have been renumbered to distinguish internal errors
       (-100, -101, ...) from other errors (-1, -2, ...) (task-257)
 
     * tests: 7 tests ok out of 7
@@ -217,7 +424,7 @@ Variables in globs.py have been sorted.
     * 'DEFAULTCFGFILE_URL' > 'DEFAULT_CONFIGFILE_URL' (task-255)
     * 'DEFAULT_CONFIG_FILENAME' > 'DEFAULT_CONFIGFILE_NAME'
     * improved doc. in globs.py (task-255)
-    
+
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
 
@@ -231,7 +438,7 @@ future, to replay these transcodings. (task-254)
       being set just before the main computes start. It will allow, in the
       future, to replay these transcodings. (task-254)
     * new variable: globs.py:PLANNED_TRANSCODINGS (task-254)
-    * PLANNED_TRANSCODINGS is set by a new function, init_planned_transcodings() 
+    * PLANNED_TRANSCODINGS is set by a new function, init_planned_transcodings()
       (task-254)
     * new entry in pimydoc: PLANNED_TRANSCODINGS (task-254)
     * improved documentation (task-254)
@@ -239,12 +446,12 @@ future, to replay these transcodings. (task-254)
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-253
 
 Various bugfixes, documentation, CWC_MODULES variable.
 
-    * bugfix: cwc/pgnreader/iaswn.py:__init__.py methods now call Iaswn __init__ 
+    * bugfix: cwc/pgnreader/iaswn.py:__init__.py methods now call Iaswn __init__
               (task-253)
     * bugfix: SerializationResults.finish_initialization() now initializes
               .hall more wiser since .hall["encoding_success"],
@@ -259,7 +466,7 @@ Various bugfixes, documentation, CWC_MODULES variable.
       easily new cwx classes (task-254)
     * improved README.md: documentation about adding cwc classes (task-253)
     * new entry in pimydoc: `demonstration_dataobj` (task-253)
-    
+
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
 
@@ -272,17 +479,17 @@ Bugfix: fixed SerializationResults.finish_initialization(); total_xxx()
     * bugfix: fixed SerializationResults.finish_initialization(); total_xxx()
               methods(output='value') return None, not a string if an error
               occured, hence some lines of code to be changed (task-252)
-    * removed useless `dataobj` argument from 
+    * removed useless `dataobj` argument from
       SerializationResults.total_encoding_plus_decoding_time() (task-252)
     * fixed a minor glitch in ROADMAP.MD in task-251 (task-252)
-    
+
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
 
 [DONE] task-251
 
-Bugfixes: fixed several bugs preventing consistent results from being displayed.
-        
+Bugfixes: fixed several bugs preventing inconsistent results from being displayed.
+
     * bugfix: SerializationResults.finish_initialization() initializes now
       correctly self.dataobjs by browsing all dataobjs from all serializers
       (task-251)
@@ -291,12 +498,12 @@ Bugfixes: fixed several bugs preventing consistent results from being displayed.
     * new cwc_utils.py function: count_dataobjs_number_without_cwc_variant() (task-251)
     * new cwc_utils.py function: serializer_is_compatible_with_dataobj() (task-251)
     * new cwc_utils.py function: shorten_cwc_name() (task-251)
-    * improved documenation (task-251)
+    * improved documentation (task-251)
     * removed useless method SerializationResults.get_base() (task-251)
     * new test: CWCUtils.test_count_dataobjs_number_without_cwc_variant() in a new
       file, namely tests/cwc_utils__tests.py (task-251)
 
-    * tests: 6 tests ok out of 6
+    * tests: 7 tests ok out of 7
     * Pylint: 10/10
 
 [DONE] task-250
@@ -304,7 +511,7 @@ Bugfixes: fixed several bugs preventing consistent results from being displayed.
 If --checkup/--downloadconfigfile/--mymachine is set, no graph file is added
 to the exported report anymore.
 
-    * If --checkup/--downloadconfigfile/--mymachine is set, no graph file is 
+    * If --checkup/--downloadconfigfile/--mymachine is set, no graph file is
       added to the exported report anymore (task-250)
 
     * tests: 6 tests ok out of 6
@@ -313,23 +520,23 @@ to the exported report anymore.
 [DONE] task-249
 
 'fmt_stringlength' > 'fmt_strlen'.
- 
+
     * 'fmt_stringlength' > 'fmt_strlen' (task-249)
 
     * tests: 6 tests ok out of 6
 
 [DONE] task-248
 
-Improved results functions so that incoherent results are correctly marked 
+Improved results functions so that incoherent results are correctly marked
 as incoherent results.
 
-    * improved results functions so that incoherent results are correctly marked 
+    * improved results functions so that incoherent results are correctly marked
       as incoherent results. SerializationResults functions have been improved,
       and report_() functions too. (task-248)
 
     * tests: 6 tests ok out of 6
     * Pylint: 10/10
-  
+
 [DONE] task-247
 
 New function get_python_version() to factorize some parts of the code.
@@ -338,7 +545,7 @@ New function get_python_version() to factorize some parts of the code.
 
     * tests: 6 tests ok out of 6
     * Pylint: 10/10
-  
+
 [DONE] task-246
 
 Added a debug message in exit_handler() if an expected graph is missing.
@@ -383,7 +590,7 @@ Updated pylintrc and README.md (pylintrc: max-attributes=9)
 New class `SerializersDataNMVH`, used by SerializersData.__init__().
 
     * new class `SerializersDataNMVH`, used by SerializersData.__init__() (task-242)
-  
+
 [DONE] task-241
 
 Improved doc.
@@ -396,7 +603,7 @@ Improved doc.
 --exportreport='md'.
 
     * --exportreport='md:myfile.md', defined in exit_handler() (task-240)
-    * command line arguments are now sorted in wisteria.py by alphabetical 
+    * command line arguments are now sorted in wisteria.py by alphabetical
       order (task-240)
     * new variable in globs.py: `DEFAULT_EXPORTREPORT_FILENAME` (task-240)
     * the normal way to open the report file is now `open_reportfile()` (task-240)
@@ -419,22 +626,22 @@ Bugfix: hbar2png() draws now correctly xticks numbers.
 Improved checkup() message: added the report filename.
 
     * improved checkup() message: added the report filename (task-237)
-    
+
 [DONE] task-236
 
 Re-numbered all error codes.
 
     * re-numbered all error codes (task-236)
     * err_codes.sh: max_index=55 (task-236)
-    
+
 [DONE] task-235
 
-Improved a message in exit_handler(): "Let's close the filenconsole file" > 
+Improved a message in exit_handler(): "Let's close the filenconsole file" >
 "About to close the console file".
 
     * Improved a message in exit_handler(): "Let's close the filenconsole file" >
       "About to close the console file" (task-235)
-    
+
 [DONE] task-234
 
 Fixed a minor typo in README.md: 'can be done on you system' > 'can be done on your system'
@@ -476,7 +683,7 @@ code structure
     * updated project dependencies with `poetry update` (task-230)
     * globs.py:REPORTFILE_NAME > globs.py:DEFAULT_REPORTFILE_NAME (task-231)
     * 'logfile' > 'reportfile' everywhere in the code (task-231)
-    
+
 documentation
 
     * new entry in `pimydoc`: `report filename format` (task-231)
@@ -485,12 +692,12 @@ documentation
 task(s):
 
     * task(s): task-229, task-230, task-231
-    
+
 version:
 
     * set version to '0.1.7'
-    
-    
+
+
 ```
 $ poetry show --tree (thanks to ./poetry_show_tree.sh)
 
@@ -519,7 +726,7 @@ website: https://www.shellcheck.net
 * about pylint:
 pylint 2.11.1
 astroid 2.8.4
-Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+Python 3.9.7 (default, Oct 10 2021, 15:13:22)
 [GCC 11.1.0]
 * about pipdeptree:
 2.0.0
@@ -635,7 +842,7 @@ documentation
     * new entry in `pimydoc`: `--cmp format` (task-225)
     * improved documentation in pgn/default.py and in pgn/iaswn.py (task-227)
     * improved ROADMAP.md (0.1.6)
-    
+
 interface
 
     * fixed a typo in partial_report__data() (task-212)
@@ -669,8 +876,8 @@ tasks
 version
 
     * set version to '0.1.6'
-    
-    
+
+
 ```
 $ poetry show --tree (thanks to ./poetry_show_tree.sh)
 
@@ -697,7 +904,7 @@ website: https://www.shellcheck.net
 * about pylint:
 pylint 2.11.1
 astroid 2.8.4
-Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+Python 3.9.7 (default, Oct 10 2021, 15:13:22)
 [GCC 11.1.0]
 * about pipdeptree:
 2.0.0
