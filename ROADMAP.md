@@ -100,6 +100,17 @@ What's next ?
 
 ===============================================================================
 
+[CURRENT] v. 0.1.9
+
+[DONE] task-269
+
+Updated dependencies (`poetry update`).
+
+    * updated dependencies (`poetry update`) (task-269)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] v. 0.1.8
 
 -  Added a new serializer: 'amazon.ion.simpleion'.
