@@ -1163,11 +1163,13 @@ def checkup():
 
     # ---- serializers --------------------------------------------------------
     msgreport()
-    partial_report__serializers()
+    partial_report__serializers(show_all_serializers=True,
+                                show_planned_serializers=False)
 
     # ---- data object --------------------------------------------------------
     msgreport()
-    partial_report__data()
+    partial_report__data(show_all_data=True,
+                         show_planned_data=False)
 
     # checks: are DATA keys written in lower case ?
     errors = []

@@ -102,6 +102,19 @@ What's next ?
 
 [CURRENT] v. 0.1.9
 
+boom: ./bin/wisteria --cmp="iaswn vs pickle(ini)"  --report="full" --verbosity=3
+
+[DONE] task-271
+
+Fixed A2 and A3 report sections which now display only the serializers/data that
+are required by PLANNED_TRANSCODINGS.
+
+    * fixed A2 and A3 report sections which now display only the serializers/data that
+      are required by PLANNED_TRANSCODINGS (task-271)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-270
 
     * new types checked by works_as_expected(): 

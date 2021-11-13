@@ -292,89 +292,162 @@ def ratio2phrase(ratio,
     return expression
 
 
-def partial_report__data():
+def partial_report__data(show_all_data,
+                         show_planned_data):
     """
         partial_report__data()
 
         Display a mini report about data.
+
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  (bool)show_all_data    : if True, all DATA and UNAVAILABLE DATA will be displayed.
+        o  (bool)show_planned_data: if True, all data defined in PLANNED_TRANSCODINGS will be
+                                    displayed.
     """
-    msgreport(
-        f"* {len(wisteria.globs.DATA)} Available Data "
-        f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}:")
-
-    string = []
-    for data_object_name, _ in sorted(wisteria.globs.DATA.items()):  # data_object_name, data_object
-        wae = ""
-        if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            wae_func = select__works_as_expected__function(data_object_name)
-            if wae_func:
-                wae = f"({wae_func.__module__}.{wae_func.__name__}())"
-        string.append(f"{fmt_data(data_object_name)}{wae}")
-    msgreport("; ".join(string))
-
-    if wisteria.globs.UNAVAILABLE_DATA:
-        msgreport()
+    # ---- all DATA/UNAVAILABLE_DATA ------------------------------------------
+    if show_all_data:
         msgreport(
-            f"! {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
-            f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
-        msgreport(
-            "; ".join(
-                f"{fmt_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
-                for dataobject_name, dataobject in sorted(wisteria.globs.UNAVAILABLE_DATA.items())))
+            f"* All {len(wisteria.globs.DATA)} Available Data "
+            f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}:")
 
-    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+        string = []
+        # for data_object_name, data_object in ...
+        for data_object_name, _ in sorted(wisteria.globs.DATA.items()):
+            wae = ""
+            if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+                wae_func = select__works_as_expected__function(data_object_name)
+                if wae_func:
+                    wae = f"({wae_func.__module__}.{wae_func.__name__}())"
+            string.append(f"{fmt_data(data_object_name)}{wae}")
+        msgreport("; ".join(string))
+
+        if wisteria.globs.UNAVAILABLE_DATA:
+            msgreport()
+            msgreport(
+                f"! All {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
+                f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
+            msgreport(
+                "; ".join(
+                    f"{fmt_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+                    for dataobject_name, dataobject in
+                    sorted(wisteria.globs.UNAVAILABLE_DATA.items())))
+
+        # ---- debug message --------------------------------------------------
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            console = Console(width=DEBUG_CONSOLEWIDTH)
+
+            all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
+                                     tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
+            msgdebug(
+                f"All data objects ({len(all_dataobjects)} "
+                f"data obj., unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
+
+            console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
+
+    # ---- only the data defined in PLANNED_TRANSCODINGS ----------------------
+    if show_planned_data:
         console = Console(width=DEBUG_CONSOLEWIDTH)
+        # (pimydoc)PLANNED_TRANSCODINGS
+        # ⋅list of str:
+        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅
+        # ⋅Initialized by results.py:init_planned_transcodings()
+        planned_data_names = set(
+            data_name for _, data_name, _ in wisteria.globs.PLANNED_TRANSCODINGS)
 
-        # ---- data objects ---------------------------------------------------
-        all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
-                                 tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
-        msgdebug(
-            f"All data objects ({len(all_dataobjects)} "
-            f"data obj., unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
+        msgreport(
+            f"* {len(planned_data_names)} Data Types to be Used After Selection:")
 
-        console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
-
-        # ---- serializers ----------------------------------------------------
-        all_serializers = sorted(tuple(wisteria.globs.SERIALIZERS.keys()) +
-                                 tuple(wisteria.globs.UNAVAILABLE_SERIALIZERS.keys()))
-
-        msgdebug(
-            f"All serializers ({len(all_serializers)} seria., "
-            f"unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
-
-        console.print('; '.join(serializer_name for serializer_name in all_serializers))
+        string = []
+        for data_object_name in sorted(planned_data_names):
+            wae = ""
+            if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+                wae_func = select__works_as_expected__function(data_object_name)
+                if wae_func:
+                    wae = f"({wae_func.__module__}.{wae_func.__name__}())"
+            string.append(f"- {fmt_data(data_object_name)}{wae}")
+        msgreport("\n".join(string))
 
 
-def partial_report__serializers():
+def partial_report__serializers(show_all_serializers,
+                                show_planned_serializers):
     """
         partial_report__serializers()
 
         Display a mini report about serializers.
+
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  (bool)show_all_serializers    : if True, all SERIALIZERS and UNAVAILABLE SERIALIZERS
+                                           will be displayed.
+        o  (bool)show_planned_serializers: if True, all serializers defined in PLANNED_TRANSCODINGS
+                                           will be displayed.
     """
-    msgreport(
-        f"* {len(wisteria.globs.SERIALIZERS)} Available "
-        f"{fmt_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
+    if show_all_serializers:
+        msgreport(
+            f"* All {len(wisteria.globs.SERIALIZERS)} Available "
+            f"{fmt_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
 
-    for serializer in wisteria.globs.SERIALIZERS.values():
-        msgreport(f"- {serializer.checkup_repr()}")
-        if serializer.name != serializer.human_name:
-            # please don't use fmt_serializer() with the following line since
-            # we want the raw name of the serializer:
-            msgreport(f"  > use '{serializer.name}' in --cmp string.")
-        if serializer.comment:
-            msgreport(f"  > {serializer.comment}")
+        for serializer in wisteria.globs.SERIALIZERS.values():
+            msgreport(f"- {serializer.checkup_repr()}")
+            if serializer.name != serializer.human_name:
+                # please don't use fmt_serializer() with the following line since
+                # we want the raw name of the serializer:
+                msgreport(f"  > use '{serializer.name}' in --cmp string.")
+            if serializer.comment:
+                msgreport(f"  > {serializer.comment}")
 
-    if wisteria.globs.UNAVAILABLE_SERIALIZERS:
-        msgreport()
+        if wisteria.globs.UNAVAILABLE_SERIALIZERS:
+            msgreport()
+
+            msgreport(
+                f"! {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
+                f"{fmt_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}:")
+            msgreport(
+                "- " +
+                "\n- ".join(f"{fmt_serializer(serializer.name)}, "
+                            f"see {fmt_serializer(serializer.internet)}"
+                            for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
+
+        # ---- debug message ------------------------------------------------------
+        if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            console = Console(width=DEBUG_CONSOLEWIDTH)
+            all_serializers = sorted(tuple(wisteria.globs.SERIALIZERS.keys()) +
+                                     tuple(wisteria.globs.UNAVAILABLE_SERIALIZERS.keys()))
+
+            msgdebug(
+                f"All serializers ({len(all_serializers)} seria., "
+                f"unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
+
+            console.print('; '.join(serializer_name for serializer_name in all_serializers))
+
+    if show_planned_serializers:
+        console = Console(width=DEBUG_CONSOLEWIDTH)
+        # (pimydoc)PLANNED_TRANSCODINGS
+        # ⋅list of str:
+        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅
+        # ⋅Initialized by results.py:init_planned_transcodings()
+        planned_data_serializers = set(
+            serializer for serializer, _, _ in wisteria.globs.PLANNED_TRANSCODINGS)
 
         msgreport(
-            f"! {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
-            f"{fmt_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}:")
-        msgreport(
-            "- " +
-            "\n- ".join(f"{fmt_serializer(serializer.name)}, "
-                        f"see {fmt_serializer(serializer.internet)}"
-                        for serializer in wisteria.globs.UNAVAILABLE_SERIALIZERS.values()))
+            f"* {len(planned_data_serializers)} Serializers to be Used After Selection:")
+
+        for _serializer in planned_data_serializers:
+            serializer = wisteria.globs.SERIALIZERS[_serializer]
+            msgreport(f"- {serializer.checkup_repr()}")
+            if serializer.name != serializer.human_name:
+                # please don't use fmt_serializer() with the following line since
+                # we want the raw name of the serializer:
+                msgreport(f"  > use '{serializer.name}' in --cmp string.")
+            if serializer.comment:
+                msgreport(f"  > {serializer.comment}")
 
 
 # Since all report_() functions have the same signature, it may happen that
@@ -389,8 +462,8 @@ def report_section_a1(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -446,12 +519,6 @@ def report_section_a1(results,
 
     msgreport()
 
-    partial_report__serializers()
-
-    msgreport()
-
-    partial_report__data()
-
 
 def report_section_a2(results,
                       s1s2d):
@@ -462,8 +529,8 @@ def report_section_a2(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -502,7 +569,8 @@ def report_section_a2(results,
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle("(A2) List of Serializers to Be Used")
         msgreport()
-    partial_report__serializers()
+    partial_report__serializers(show_all_serializers=False,
+                                show_planned_serializers=True)
     msgreport()
 
 
@@ -518,8 +586,8 @@ def report_section_a3(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -556,10 +624,11 @@ def report_section_a3(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A3) List of Data Objects to Be Used")
+        msgreporttitle("(A3) List of Data Objects Because they have been Selected:")
         msgreport()
 
-    partial_report__data()
+    partial_report__data(show_all_data=False,
+                         show_planned_data=True)
     msgreport()
 
 
@@ -575,8 +644,8 @@ def report_section_a4(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -642,8 +711,8 @@ def report_section_a5(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -713,8 +782,8 @@ def report_section_b1a(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -810,8 +879,8 @@ def report_section_b1b(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -888,8 +957,8 @@ def report_section_b1c(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -967,8 +1036,8 @@ def report_section_b1d(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -1038,8 +1107,8 @@ def report_section_b2a(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -1135,8 +1204,8 @@ def report_section_b2b(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -1218,8 +1287,8 @@ def report_section_c1a(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -1342,8 +1411,8 @@ def report_section_c1b(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -1466,8 +1535,8 @@ def report_section_c2a(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -1555,8 +1624,8 @@ def report_section_c2b(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -2128,8 +2197,8 @@ def report_section_c2c(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -2190,8 +2259,8 @@ def report_section_d1a(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -2247,8 +2316,8 @@ def report_section_d1b(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -2304,8 +2373,8 @@ def report_section_graphs(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
@@ -2455,8 +2524,8 @@ def report(results,
         (pimydoc)report sections
         ⋅* A         : main informations
         ⋅  - A1      : options used to create reports
-        ⋅  - A2      : list of the serializers to be used
-        ⋅  - A3      : list of the data objects to be used
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
         ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
         ⋅* B         : full details (raw results)
