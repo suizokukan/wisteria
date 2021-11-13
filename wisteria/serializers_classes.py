@@ -1135,7 +1135,7 @@ class SerializationResults(dict):
         if output == "fmtstr":
             if self.total_encoding_time(serializer=serializer, output='value') is None or \
                self.total_decoding_time(serializer=serializer, output='value') is None:
-                return None
+                return fmt_time(None)
             return fmt_time(self.total_encoding_time(serializer=serializer, output='value') +
                             self.total_decoding_time(serializer=serializer, output='value'))
 

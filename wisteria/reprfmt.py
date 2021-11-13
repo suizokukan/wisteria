@@ -70,7 +70,7 @@ def fmt_boolsuccess(bool_success):
     """
     if bool_success is None:
         return fmt_nodata()
-    return "ok" if bool_success else "[red]NOT OK[/red]"
+    return "ok" if bool_success else "[red]not ok[/red]"
 
 
 def fmt_data(data_objectname):

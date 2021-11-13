@@ -271,9 +271,9 @@ def serializer_iaswn(action="serialize",
         except module.IaswnError as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -410,9 +410,9 @@ def serializer_json(action="serialize",
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -548,9 +548,9 @@ def serializer_jsonpickle(action="serialize",
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -687,9 +687,9 @@ def serializer_jsonpickle_keystrue(action="serialize",
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -826,9 +826,9 @@ def serializer_marshal(action="serialize",
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -965,9 +965,9 @@ def serializer_pickle(action="serialize",
         except (TypeError, AttributeError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -1104,9 +1104,9 @@ def serializer_pyyaml(action="serialize",
         except (module.constructor.ConstructorError, ValueError) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -1243,9 +1243,9 @@ def serializer_simpleion(action="serialize",
         except (ValueError,) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:
@@ -1382,9 +1382,9 @@ def serializer_yajl(action="serialize",
         except (ValueError,) as error:
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
-            res = None
+            return res
 
-    if res is not None and res.reversibility is True:
+    if res.reversibility is True:
         if wisteria.globs.PLATFORM_SYSTEM == "Windows":
             res.mem_usage = win_memory() - mem0
         else:

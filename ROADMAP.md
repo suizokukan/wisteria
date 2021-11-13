@@ -102,7 +102,17 @@ What's next ?
 
 [CURRENT] v. 0.1.9
 
-boom: ./bin/wisteria --cmp="iaswn vs pickle(ini)"  --report="full" --verbosity=3
+[DONE] task-272
+
+    * improved fmt_boolsuccess() returned string (task-272)
+    * (bugfix) fixed a bug present in all serializers function; if an error occured
+               while transcoding the source object, None is not returned anymore (task-272)
+    * (bugfix) fixed a bug in SerializationResults.total_encoding_plus_decoding_time():
+               if output == "fmtstr" if an incoherent value is computed, None is no
+               more returned (task-272)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-271
 
