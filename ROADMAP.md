@@ -100,9 +100,101 @@ What's next ?
 
 ===============================================================================
 
-[CURRENT] v. 0.1.9
+[DONE] v. 0.1.9
+
+Fixed A2 and A3 report sections which now display only the serializers/data that
+are required by PLANNED_TRANSCODINGS.
+
+
+bugfixes
+
+    * (bugfix) fixed a bug present in all serializers function; if an error occured
+               while transcoding the source object, None is not returned anymore (task-272)
+    * (bugfix) fixed a bug in SerializationResults.total_encoding_plus_decoding_time():
+               if output == "fmtstr" if an incoherent value is computed, None is no
+               more returned (task-272)
+               
+code quality
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
+code structure
+
+    * new types checked by works_as_expected(): 
+      - collections.defaultdict(int)
+      - collections.defaultdict(list)
+      - collections.defaultdict(none)
+      - collections.defaultdict(set) (task-270)
+    * new signature for works_as_expected() functions, namely
+      works_as_expected(data_name, obj=None) instead of
+      works_as_expected(data_name=None, obj=None) (task-270)
+
+dependencies
+
+    * updated dependencies (`poetry update`) (task-269)
+    
+documentation
+
+    * updated doc. (task-270)
+    * improved messages displayed by serializers (task-270)
+    
+interface
+
+    * fixed A2 and A3 report sections which now display only the serializers/data that
+      are required by PLANNED_TRANSCODINGS (task-271)
+    * improved fmt_boolsuccess() returned string (task-272)
+
+task(s)
+
+    * task(s): task-269, task-270, task-271, task-272
+
+version
+
+    * set version to '0.1.9'
+
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.8.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.12.0 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+└── pywin32 *
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.11
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.7.2
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.7.0
+* about pylint:
+pylint 2.11.1
+astroid 2.8.5
+Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+[GCC 11.1.0]
+* about pipdeptree:
+2.0.0
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-272
+
+Bugfixes.
 
     * improved fmt_boolsuccess() returned string (task-272)
     * (bugfix) fixed a bug present in all serializers function; if an error occured
