@@ -30,24 +30,43 @@
     o  _len(obj)
     o  win_memory()
 
-    o  serializer_iaswn(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_json(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_jsonpickle(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_jsonpickle_keystrue(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_marshal(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_pickle(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_pyyaml(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_simpleion(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
-    o  serializer_yajl(action="serialize", obj=None, fingerprint="",
-       works_as_expected=None)
+    o  serializer_iaswn(action="serialize",
+                        obj=None, obj_data_name=None,
+                        fingerprint="",
+                        works_as_expected=None)
+    o  serializer_json(action="serialize",
+                        obj=None,
+                        obj_data_name=None,
+                        fingerprint="",
+                        works_as_expected=None)
+    o  serializer_jsonpickle(action="serialize",
+                             obj=None, obj_data_name=None,
+                             fingerprint="",
+                             works_as_expected=None)
+    o  serializer_jsonpickle_keystrue(action="serialize",
+                                      obj=None, obj_data_name=None,
+                                      fingerprint="",
+                                      works_as_expected=None)
+    o  serializer_marshal(action="serialize",
+                          obj=None, obj_data_name=None,
+                          fingerprint="",
+                          works_as_expected=None)
+    o  serializer_pickle(action="serialize",
+                         obj=None, obj_data_name=None,
+                         fingerprint="",
+                         works_as_expected=None)
+    o  serializer_pyyaml(action="serialize",
+                         obj=None, obj_data_name=None,
+                         fingerprint="",
+                         works_as_expected=None)
+    o  serializer_simpleion(action="serialize",
+                            obj=None, obj_data_name=None,
+                            fingerprint="",
+                            works_as_expected=None)
+    o  serializer_yajl(action="serialize",
+                       obj=None, obj_data_name=None,
+                       fingerprint="",
+                       works_as_expected=None)
 
     o  init_serializers()
 """
@@ -126,6 +145,7 @@ def win_memory():
 
 def serializer_iaswn(action="serialize",
                      obj=None,
+                     obj_data_name=None,
                      fingerprint="",
                      works_as_expected=None):
     """
@@ -146,6 +166,7 @@ def serializer_iaswn(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -206,8 +227,9 @@ def serializer_iaswn(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except module.IaswnError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -239,7 +261,8 @@ def serializer_iaswn(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -261,6 +284,7 @@ def serializer_iaswn(action="serialize",
 
 def serializer_json(action="serialize",
                     obj=None,
+                    obj_data_name=None,
                     fingerprint="",
                     works_as_expected=None):
     """
@@ -281,6 +305,7 @@ def serializer_json(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -341,8 +366,9 @@ def serializer_json(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -374,7 +400,8 @@ def serializer_json(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -396,6 +423,7 @@ def serializer_json(action="serialize",
 
 def serializer_jsonpickle(action="serialize",
                           obj=None,
+                          obj_data_name=None,
                           fingerprint="",
                           works_as_expected=None):
     """
@@ -416,6 +444,7 @@ def serializer_jsonpickle(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -476,8 +505,9 @@ def serializer_jsonpickle(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -508,7 +538,8 @@ def serializer_jsonpickle(action="serialize",
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -530,6 +561,7 @@ def serializer_jsonpickle(action="serialize",
 
 def serializer_jsonpickle_keystrue(action="serialize",
                                    obj=None,
+                                   obj_data_name=None,
                                    fingerprint="",
                                    works_as_expected=None):
     """
@@ -550,6 +582,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -610,8 +643,9 @@ def serializer_jsonpickle_keystrue(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except TypeError as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -643,7 +677,8 @@ def serializer_jsonpickle_keystrue(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -665,6 +700,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
 
 def serializer_marshal(action="serialize",
                        obj=None,
+                       obj_data_name=None,
                        fingerprint="",
                        works_as_expected=None):
     """
@@ -685,6 +721,7 @@ def serializer_marshal(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -745,8 +782,9 @@ def serializer_marshal(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except (TypeError, ValueError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -778,7 +816,8 @@ def serializer_marshal(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -800,6 +839,7 @@ def serializer_marshal(action="serialize",
 
 def serializer_pickle(action="serialize",
                       obj=None,
+                      obj_data_name=None,
                       fingerprint="",
                       works_as_expected=None):
     """
@@ -820,6 +860,7 @@ def serializer_pickle(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -880,10 +921,11 @@ def serializer_pickle(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
-    except TypeError as error:
+    except (AttributeError, TypeError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
@@ -913,7 +955,8 @@ def serializer_pickle(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -935,6 +978,7 @@ def serializer_pickle(action="serialize",
 
 def serializer_pyyaml(action="serialize",
                       obj=None,
+                      obj_data_name=None,
                       fingerprint="",
                       works_as_expected=None):
     """
@@ -955,6 +999,7 @@ def serializer_pyyaml(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -1015,8 +1060,9 @@ def serializer_pyyaml(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except (ValueError, TypeError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1048,7 +1094,8 @@ def serializer_pyyaml(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -1070,6 +1117,7 @@ def serializer_pyyaml(action="serialize",
 
 def serializer_simpleion(action="serialize",
                          obj=None,
+                         obj_data_name=None,
                          fingerprint="",
                          works_as_expected=None):
     """
@@ -1090,6 +1138,7 @@ def serializer_simpleion(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -1150,8 +1199,9 @@ def serializer_simpleion(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except (AssertionError, AttributeError, ValueError, TypeError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1183,7 +1233,8 @@ def serializer_simpleion(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "
@@ -1205,6 +1256,7 @@ def serializer_simpleion(action="serialize",
 
 def serializer_yajl(action="serialize",
                     obj=None,
+                    obj_data_name=None,
                     fingerprint="",
                     works_as_expected=None):
     """
@@ -1225,6 +1277,7 @@ def serializer_yajl(action="serialize",
         ARGUMENTS:
         o  action           : (str) "version", "serialize" or "encode"
         o  obj              : the object to be serialized
+        o  obj_data_name    : (str) obj type as defined in DATA[]
         o  fingerprint      : a string describing the operation (usefull to debug)
         o  works_as_expected: (None or callable)if not None, will be called to check
                               the reversibility of the de-serialized object.
@@ -1285,8 +1338,9 @@ def serializer_yajl(action="serialize",
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-            msginfo(f"([{fingerprint}] '{module.__name__}' / '{type(obj)}') "
-                    f"encoded string=({type(_res)}) '{_res}'")
+            msginfo(
+                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"encoded string=({type(_res)}) '{_res}'")
 
     except (ValueError, TypeError) as error:
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1318,7 +1372,8 @@ def serializer_yajl(action="serialize",
                 msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
                          f"is {res.reversibility} ({obj=}; {_res2=};)")
             if res.reversibility and works_as_expected:
-                res.reversibility = res.reversibility and works_as_expected(obj=_res2)
+                res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
+                                                                            obj=_res2)
                 if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
                              f"(second part:works_as_expected(_res2)) "

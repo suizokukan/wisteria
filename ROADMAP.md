@@ -4,7 +4,7 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-[? 0.1.9] petites corrections avant de passer à la suite
+[? 0.2.0] petites corrections avant de passer à la suite
 * --skimthedata="no" | "exclude ??? data"
 * Ce message est étonnant:
     The following informations may have been written in the report file
@@ -21,45 +21,45 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
-[? 0.2.0] vrais tests
+[? 0.2.1] vrais tests
 * tests
         * prendre un jeu de données
 
-[? 0.2.1] modification du hall of fame
+[? 0.2.2] modification du hall of fame
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
   encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 
-[? 0.2.2] terminer --cmp="iaswn+pickle(int+str)"
+[? 0.2.3] terminer --cmp="iaswn+pickle(int+str)"
 ? wisteria "mainstring": "pickle vs all(ini)++++"
 ? --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
 
-[? 0.2.3] améliorer la méthode utilisée (moyenne,)
+[? 0.2.4] améliorer la méthode utilisée (moyenne,)
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
-[? 0.2.4] classer les serializers (A6+checkup) selon leur coverage rate:
+[? 0.2.5] classer les serializers (A6+checkup) selon leur coverage rate:
 0: n'arrive pas au niveau 1
 1: arrive à transcoder une sélection de types Python élémentaires
 2: arrive à transcoder cwc.simple
 3: arrive à transcoder cwc.pgnreader
 
-[? 0.2.5] wisteria "xyz"
+[? 0.2.6] wisteria "xyz"
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 
-[? 0.2.6] avant d'ajouter un max de serializers/datas:
+[? 0.2.7] avant d'ajouter un max de serializers/datas:
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 
-[? 0.2.7]
+[? 0.2.8]
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
     - fonctions wae pour les types de base
     
-[? 0.2.8]
+[? 0.2.9]
 * finir de couvrir le plus de serializers possible
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -74,7 +74,7 @@ What's next ?
         xmlrpclib (https://stackoverflow.com/questions/32022656/python-cannot-marshal-class-decimal-decimal-objects)
 
 [III] pour écrire à V.S.
-[? 0.2.9]
+[? 0.3.0]
 * README.md : %%français > anglais
 * README.md acceptable
       + __init__.py
@@ -101,6 +101,22 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.1.9
+
+[DONE] task-270
+
+    * new types checked by works_as_expected(): 
+      - collections.defaultdict(int)
+      - collections.defaultdict(list)
+      - collections.defaultdict(none)
+      - collections.defaultdict(set) (task-270)
+    * new signature for works_as_expected() functions, namely
+      works_as_expected(data_name, obj=None) instead of
+      works_as_expected(data_name=None, obj=None) (task-270)
+    * updated doc. (task-270)
+    * improved messages displayed by serializers (task-270)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-269
 

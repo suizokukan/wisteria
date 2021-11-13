@@ -220,6 +220,7 @@ def compute_results():
                 results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
                     action="serialize",
                     obj=wisteria.globs.DATA[data_name],
+                    obj_data_name=data_name,
                     fingerprint=fingerprint,
                     works_as_expected=wisteria.data.works_as_expected
                     if wisteria.data.works_as_expected(data_name=data_name,
@@ -252,6 +253,7 @@ def compute_results():
                     wisteria.globs.SERIALIZERS[serializer].func(
                         action="serialize",
                         obj=cwc_object,
+                        obj_data_name=data_name,
                         fingerprint=fingerprint,
                         works_as_expected=getattr(
                             wisteria.globs.MODULES[data_name__strwaemodulename],

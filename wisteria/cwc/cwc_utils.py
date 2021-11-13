@@ -99,7 +99,7 @@ def count_dataobjs_number_without_cwc_variant(dataobjs):
         _______________________________________________________________________
 
         ARGUMENT: (set of str)<dataobjs>, e.g.
-            {'wisteria.cwc.pgnreader.cwc_default.ChessGames', 
+            {'wisteria.cwc.pgnreader.cwc_default.ChessGames',
              'wisteria.cwc.pgnreader.iaswn.ChessGames'}
 
         RETURNED VALUE: (int)the number of data objects in <dataobjs> that are not

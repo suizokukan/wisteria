@@ -98,7 +98,7 @@ Ng4+ 48. Kd5 Kxb3 0-1
     return obj
 
 
-def works_as_expected(data_name=None,
+def works_as_expected(data_name,
                       obj=None):
     """
         works_as_expected()
@@ -113,12 +113,12 @@ def works_as_expected(data_name=None,
         ⋅the scope of this function (2) and say if <obj> works as expected.
         ⋅
         ⋅ARGUMENTS:
-        ⋅    o  data_name:   (None or str)data_name of the <obj>ect
+        ⋅    o  data_name:   (str)data_name of the <obj>ect
         ⋅    o  obj:         (None or any object) object to be checked
         ⋅
         ⋅RETURNED VALUE:
-        ⋅    (<obj> is None, <data_name> is not None) (bool)<data_name> is known
-        ⋅    (<obj> is not None, <data_name> may be None or a str.) <obj> works as expected.
+        ⋅    (<obj> is None)     (bool)<data_name> is known
+        ⋅    (<obj> is not None) <obj> works as expected.
     """
     if obj is None:
         # for CWC objects, this case is never reached.

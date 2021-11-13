@@ -26,8 +26,9 @@
 
     ___________________________________________________________________________
 
-    * anyfunc()
-    * init_data()
+    o  anyfunc()
+    o  constant_factory()
+    o  init_data()
 """
 import array
 import calendar
@@ -57,6 +58,15 @@ def anyfunc():
 
         Fake function used by the DATA dict.
     """
+
+
+def constant_factory(value):
+    """
+        constant_factory()
+
+        Used to initialize defaultdict objects
+    """
+    return lambda: value
 
 
 def init_data():
@@ -127,7 +137,11 @@ def init_data():
         "collections.counter(empty)": collections.Counter(),
         "collections.counter": collections.Counter((1, 2)),
         "collections.defaultdict(empty)": collections.defaultdict(),
-        "collections.defaultdict": collections.defaultdict(None, {1: 2}),
+        "collections.defaultdict(func)": collections.defaultdict(constant_factory('<missing>')),
+        "collections.defaultdict(int)": collections.defaultdict(int, {"a": 1, "b": 10}),
+        "collections.defaultdict(list)": collections.defaultdict(list, {1: [2, 3]}),
+        "collections.defaultdict(none)": collections.defaultdict(None, {1: [2, 3]}),
+        "collections.defaultdict(set)": collections.defaultdict(set, {1: set((2, 3))}),
         "collections.deque(empty)": collections.deque(),
         "collections.deque": collections.deque((1, 2)),
         "collections.ordereddict(empty)": collections.OrderedDict(),
@@ -298,7 +312,9 @@ def init_data():
         wisteria.globs.UNAVAILABLE_DATA["dateutil(parser.parse)"] = "missing package: dateutil"
 
 
-def works_as_expected(data_name=None,
+# I don't want to split this function into different parts:
+#   pylint: disable=too-many-return-statements
+def works_as_expected(data_name,
                       obj=None):
     """
         works_as_expected()
@@ -313,12 +329,12 @@ def works_as_expected(data_name=None,
         ⋅the scope of this function (2) and say if <obj> works as expected.
         ⋅
         ⋅ARGUMENTS:
-        ⋅    o  data_name:   (None or str)data_name of the <obj>ect
+        ⋅    o  data_name:   (str)data_name of the <obj>ect
         ⋅    o  obj:         (None or any object) object to be checked
         ⋅
         ⋅RETURNED VALUE:
-        ⋅    (<obj> is None, <data_name> is not None) (bool)<data_name> is known
-        ⋅    (<obj> is not None, <data_name> may be None or a str.) <obj> works as expected.
+        ⋅    (<obj> is None)     (bool)<data_name> is known
+        ⋅    (<obj> is not None) <obj> works as expected.
     """
     if data_name == "list":
         if obj is None:
@@ -333,6 +349,59 @@ def works_as_expected(data_name=None,
         if obj[1] != "2":
             return False
         return True
+
+    # there's no
+    #       if data_name == "collections.defaultdict(func)"
+    # since no serializer can transcode these objects; their validation is
+    # by consequence useless.
+
+    if data_name == "collections.defaultdict(int)":
+        if obj is None:
+            # yes, this data_name is known:
+            return True
+        # <obj> is not None: does <obj> work as expected ?
+        obj.clear()
+        try:
+            obj[555] += 1
+        except KeyError:
+            return False
+        return obj[555] == 1
+
+    if data_name == "collections.defaultdict(list)":
+        if obj is None:
+            # yes, this data_name is known:
+            return True
+        # <obj> is not None: does <obj> work as expected ?
+        obj.clear()
+        try:
+            obj[555].append("555")
+        except KeyError:
+            return False
+        return obj[555] == ["555", ]
+
+    if data_name == "collections.defaultdict(none)":
+        if obj is None:
+            # yes, this data_name is known:
+            return True
+        # <obj> is not None: does <obj> work as expected ?
+        obj.clear()
+        try:
+            obj[555].append("555")
+        except KeyError:
+            return True
+        return False
+
+    if data_name == "collections.defaultdict(set)":
+        if obj is None:
+            # yes, this data_name is known:
+            return True
+        # <obj> is not None: does <obj> work as expected ?
+        obj.clear()
+        try:
+            obj[555].add("555")
+        except KeyError:
+            return False
+        return obj[555] == set(("555",))
 
     # unknown data_name:
     return False

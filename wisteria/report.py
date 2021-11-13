@@ -328,7 +328,6 @@ def partial_report__data():
         # ---- data objects ---------------------------------------------------
         all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
                                  tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
-
         msgdebug(
             f"All data objects ({len(all_dataobjects)} "
             f"data obj., unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
