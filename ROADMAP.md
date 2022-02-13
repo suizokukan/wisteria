@@ -100,6 +100,17 @@ What's next ?
 
 ===============================================================================
 
+[CURRENT] v. 0.2
+
+[DONE] task-273
+
+Code is now compatible with Python3.8
+
+    * in tests.sh, replaced 'python3.9' by 'python3'
+    * in several .py, files, fixed the problem of the multi-lines with statement
+
+    * tests: 7 tests ok out of 7
+
 [DONE] v. 0.1.9
 
 Fixed A2 and A3 report sections which now display only the serializers/data that

@@ -915,8 +915,14 @@ def exit_handler():
                 rprint("(exit_handler/exported report) exported report will be named "
                        f"'{exportreport_filename}' .")
 
-        with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile,
-              open_reportfile(mode="r") as reportfile):
+        # wisteria being a Python3.8+ project, no parenthesized context managers is available.
+        # I can't write:
+        #      with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile, 
+        #           open_reportfile(mode="r") as reportfile) 
+        with \
+            open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile, \
+            open_reportfile(mode="r") as reportfile:
+
             # ---- (1/2) exported report: text --------------------------------
             exportedreportfile.write("```\n")
             for line in reportfile.readlines():

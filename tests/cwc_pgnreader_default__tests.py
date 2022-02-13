@@ -189,9 +189,14 @@ class CWCPgnreader(unittest.TestCase):
                             'game9.pgn',
                             'game10.pgn',
                             'game11.pgn'):
-            with (open(os.path.join("tests", pgnfilename), encoding="utf-8") as src,
-                  DMFile(":tests_tmp1.pgn:") as tmpfile1,   # in-memory file
-                  DMFile(":tests_tmp2.pgn:") as tmpfile2):  # in-memory file
+
+            # wisteria being a Python3.8+ project, no parenthesized context managers is available.
+            # NB: both DMFile-s are in-memory files
+            with \
+                open(os.path.join("tests", pgnfilename), encoding="utf-8") as src, \
+                DMFile(":tests_tmp1.pgn:") as tmpfile1, \
+                DMFile(":tests_tmp2.pgn:") as tmpfile2:
+
                 games = ChessGames()
                 self.assertTrue(games.read_pgn(src))
                 games.write_pgn(tmpfile1)

@@ -20,6 +20,6 @@ fi
 # ==== REAL WORK =============================================================
 echo "WARNING: be patient, these tests may take several minutes on slow machines."
 
-python3.9 -m unittest tests/*.py
+python3 -m unittest tests/*.py
 
 exit 0
