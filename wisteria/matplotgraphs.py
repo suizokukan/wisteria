@@ -32,8 +32,11 @@
     o  gradient_bar(axes, pos_x, pos_y, height=0.4, left=0)
     o  hbar2png(_data, filename, unit, title, fmtstring, value_coeff)
 """
-from matplotlib import pyplot
-import numpy as np
+try:
+    from matplotlib import pyplot
+    import numpy as np
+except ModuleNotFoundError:
+    pass
 
 import wisteria.globs
 

@@ -101,6 +101,46 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2
+* à faire: doc, poetry run ./bin/wisteria --help pour démarrer le programme, ne pas directement
+* avec --checkup, arrêter de mettre en rouge (msgerror) le fait qu'il n'y ait pas de matplotlib
+* quand verbosity==3, arrêter de couper la chaîne de caractères dans
+   ! All 3 Unavailable Data Objects:
+   dateutil(parser.parse)('missing package: dateutil'); cwc:pgnreader.cwc_iaswn.chessgames("this cwc module couldn't be imported[…]); cwc:simple.cwc_iaswn.simpleclass("this cwc module couldn't be 
+imported[…])
+* ! All 1 Unavailable Data Object:
+  >
+  1 Unavailable Data Object(s):
+* msgerror n'est pas correctement formaté; à comparer avec msgwarning qui l'est correctement
+* tester avec --cmp, ce qui n'a pas encore été fait.
+* get_missing_required_modules > get_missing_required_internal_modules
+* (A/00) minimal imports > (A/00) minimal internal imports
+* il reste des TODOs
+
+[DONE] task-274
+
+    * improved error messages for ERRORDID037, ERRORDID038 and ERRORDID039
+    * updated dependencies modules defined in poetry.lock:
+      rich/version = "10.16.2"
+      pywin/version = "303"
+      pygments/version = "2.11.2"
+      psutil/version = "5.9.0"
+    * new function: data.py:check()
+    * improved doc.
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.9.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.16.2 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+└── pywin32 *
+```
+
+    * tests: 7 tests ok out of 7    
 
 [DONE] task-273
 

@@ -135,7 +135,7 @@ DATA = {}
 # dict storing all data that the program can't use.
 #
 # * format: UNAVAILABLE_DATA[(str)data name] = string explaining why it's unavailable
-# * initialized by data.py::init_data()
+# * initialized by data.py::init_data() and updated by data.py::check()
 UNAVAILABLE_DATA = {}
 
 # maximal console width used to display some debug messages:

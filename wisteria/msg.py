@@ -146,7 +146,7 @@ def msgreporttitle(obj=""):
     _message(fmt_title(obj))
 
 
-def warning(obj=""):
+def msgwarning(obj=""):
     """
         msgwarning()
 

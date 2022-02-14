@@ -1158,7 +1158,8 @@ def checkup():
             "you may run this program without it. " \
             "You may download this file using the --downloadconfigfile option."
     else:
-        if read_cfgfile(ARGS.cfgfile) is None:
+        config = read_cfgfile(ARGS.cfgfile)
+        if config is None:
             diagnostic = "  Such a file exists [bold red]but can't be read correctly[/bold red]."
         else:
             diagnostic = "  Such a file exists [bold]and can be read without errors[/bold]."
@@ -1166,6 +1167,10 @@ def checkup():
     msgreport(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
               f"({normpath(ARGS.cfgfile)}), because of the value of --cfgfile. ")
     msgreport(diagnostic)
+    
+    # ---- DATA/UNVAILABLE_DATA checks
+    if not wisteria.data.check(config):
+        msgreport("Config file and installed modules cause at least one error, see lines above.")
 
     # ---- serializers --------------------------------------------------------
     msgreport()
@@ -1619,6 +1624,10 @@ def main():
                 # ⋅* -102: internal error, an error occured in main()
                 # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
                 return -1
+
+            # ---- DATA/UNVAILABLE_DATA checks
+            if not wisteria.data.check(config):
+                return -2  #TODO: quel code erreur ?
 
         # =========================================================================
         # (C/18.4) main(): PLANNED_TRANSCODINGS initialization
