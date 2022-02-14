@@ -109,8 +109,15 @@ imported[…])
   >
   1 Unavailable Data Object(s):
 * il reste des TODOs
-* tout ce qui tourne autour de OUTPUT est mal documenté; reprendre ce qui apparaît dans globs.py
-  et l'injecter avec pimydoc. Confer aussi parse_output_argument
+
+[DONE] task-281
+
+Documentation: OUTPUT format
+
+    * improved documentation: the OUTPUT format is now described
+    * new entry in pimydoc: OUTPUT format
+
+    * tests: 7 tests ok out of 7
 
 [DONE] task-280                        
 
@@ -118,7 +125,7 @@ Improved program message: updated --mute explanations.
 
     * updated --mute explanations.
 
-    * tests: 7 tests ok out of 7    
+    * tests: 7 tests ok out of 7
 
 [DONE] task-279
 

@@ -28,6 +28,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)demonstration_dataobj_a5
 ### (pimydoc)exit codes
 ### (pimydoc)GRAPHS_DESCRIPTION format
+### (pimydoc)OUTPUT format
 ### (pimydoc)PLANNED_TRANSCODINGS
 ### (pimydoc)progress bar
 ### (pimydoc)report filename format
@@ -189,6 +190,13 @@ len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
 - (str)unit        : x unit
 - (str)title       : graph title
 - (str)filename    : file name to be written
+### ===========================================================================
+[(pimydoc)OUTPUT format]
+        ((bool)output to the console ?,
+         (bool)output to the reportfile ?,
+         (str)reportfile open mode = 'a' or 'w',
+         (str)reportfile name,
+        )
 ### ===========================================================================
 [(pimydoc)PLANNED_TRANSCODINGS]
 list of str:

@@ -47,13 +47,14 @@ def parse_output_argument(output_string):
 
         ARGUMENT: (str)output_string, the --output string
 
-        RETURNED VALUE:(
-                        (bool)success, True if the --output string had been successfully parsed
-                        (bool)output to the console ?,
-                        (bool)output to the reportfile ?,
-                        (str)reportfile open mode = 'a' or 'w',
-                        (str)reportfile name,
-                       )
+        RETURNED VALUE: ((bool) parsing_success, OUTPUT elements, see above)
+
+                        (pimydoc)OUTPUT format
+                        ⋅        ((bool)output to the console ?,
+                        ⋅         (bool)output to the reportfile ?,
+                        ⋅         (str)reportfile open mode = 'a' or 'w',
+                        ⋅         (str)reportfile name,
+                        ⋅        )
     """
     success = False
     bool_console = False

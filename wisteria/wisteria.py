@@ -546,10 +546,22 @@ if len(sys.argv) == 1:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
 if wisteria.globs.ARGS.mute:
+    # (pimydoc)OUTPUT format
+    # ⋅        ((bool)output to the console ?,
+    # ⋅         (bool)output to the reportfile ?,
+    # ⋅         (str)reportfile open mode = 'a' or 'w',
+    # ⋅         (str)reportfile name,
+    # ⋅        )
     wisteria.globs.OUTPUT = False, False, "a", DEFAULT_REPORTFILE_NAME
 else:
-    wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
-    if not wisteria.globs.OUTPUT[0]:
+    # (pimydoc)OUTPUT format
+    # ⋅        ((bool)output to the console ?,
+    # ⋅         (bool)output to the reportfile ?,
+    # ⋅         (str)reportfile open mode = 'a' or 'w',
+    # ⋅         (str)reportfile name,
+    # ⋅        )
+    parsing_success, *wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
+    if not parsing_success:
         # no report(=log) available, hence the use of rprint():
         rprint("[bold red]Ill-formed --output string. The program has to stop.[/bold red]")
         # (pimydoc)exit codes
@@ -568,7 +580,6 @@ else:
         # ⋅* -102: internal error, an error occured in main()
         # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
         sys.exit(-3)
-    wisteria.globs.OUTPUT = wisteria.globs.OUTPUT[1:]
 
 
 # =============================================================================

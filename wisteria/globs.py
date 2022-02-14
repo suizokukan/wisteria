@@ -161,13 +161,12 @@ MODULES = {}
 
 # value of the --output argument
 #  initialized by parse_output_argument(--output string)
-# format:
-#        ((bool)success, True if the --output string had been successfully parsed
-#         (bool)output to the console ?,
-#         (bool)output to the reportfile ?,
-#         (str)reportfile open mode = 'a' or 'w',
-#         (str)reportfile name,
-#        )
+# (pimydoc)OUTPUT format
+# ⋅        ((bool)output to the console ?,
+# ⋅         (bool)output to the reportfile ?,
+# ⋅         (str)reportfile open mode = 'a' or 'w',
+# ⋅         (str)reportfile name,
+# ⋅        )
 OUTPUT = []
 
 # (pimydoc)PLANNED_TRANSCODINGS
