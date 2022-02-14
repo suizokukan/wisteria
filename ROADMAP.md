@@ -101,7 +101,6 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2
-* avec --checkup, arrêter de mettre en rouge (msgerror) le fait qu'il n'y ait pas de matplotlib
 * quand verbosity==3, arrêter de couper la chaîne de caractères dans
    ! All 3 Unavailable Data Objects:
    dateutil(parser.parse)('missing package: dateutil'); cwc:pgnreader.cwc_iaswn.chessgames("this cwc module couldn't be imported[…]); cwc:simple.cwc_iaswn.simpleclass("this cwc module couldn't be 
@@ -109,8 +108,17 @@ imported[…])
 * ! All 1 Unavailable Data Object:
   >
   1 Unavailable Data Object(s):
-* get_missing_required_modules > get_missing_required_internal_modules
 * il reste des TODOs
+*   --mute                Warning: debug/profile only, not normally to be used. Prevent any console or file output. If set, set the value of --verbosity to 'minimal', --report to 'none' and --console to
+                        ''. (default: False)
+
+[DONE] task-279
+
+Improved program messages.
+
+    * improved the readibilty of a message displayed by checkup()
+
+    * tests: 7 tests ok out of 7    
 
 [DONE] task-278
 

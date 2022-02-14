@@ -1237,7 +1237,7 @@ def checkup():
             "since [bold]matplotlib[/bold] is installed. "
             f"They would be called {help_graphsfilenames()}.")
     else:
-        msgreport("! [bold red]Graphs could NOT be created[/bold red], "
+        msgreport("! [bold]Graphs could NOT be created[/bold], "
                   "if required, since [bold]matplotlib[/bold] isn't installed; "
                   "see https://matplotlib.org/ .")
     msgreport()
