@@ -105,10 +105,16 @@ What's next ?
    ! All 3 Unavailable Data Objects:
    dateutil(parser.parse)('missing package: dateutil'); cwc:pgnreader.cwc_iaswn.chessgames("this cwc module couldn't be imported[…]); cwc:simple.cwc_iaswn.simpleclass("this cwc module couldn't be 
 imported[…])
-* ! All 1 Unavailable Data Object:
-  >
-  1 Unavailable Data Object(s):
 * il reste des TODOs
+* check_code_quality
+
+[DONE] task-282
+
+Improved program messages in report.py
+
+    * improved several program messages in report.py
+
+    * tests: 7 tests ok out of 7
 
 [DONE] task-281
 

@@ -310,7 +310,7 @@ def partial_report__data(show_all_data,
     # ---- all DATA/UNAVAILABLE_DATA ------------------------------------------
     if show_all_data:
         msgreport(
-            f"* All {len(wisteria.globs.DATA)} Available Data "
+            f"* {len(wisteria.globs.DATA)} Available Data "
             f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}:")
 
         string = []
@@ -327,7 +327,7 @@ def partial_report__data(show_all_data,
         if wisteria.globs.UNAVAILABLE_DATA:
             msgreport()
             msgreport(
-                f"! All {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
+                f"! {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
                 f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
             msgreport(
                 "; ".join(
@@ -342,7 +342,7 @@ def partial_report__data(show_all_data,
             all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
                                      tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
             msgdebug(
-                f"All data objects ({len(all_dataobjects)} "
+                f"data objects ({len(all_dataobjects)} "
                 f"data obj., unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
 
             console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
@@ -390,7 +390,7 @@ def partial_report__serializers(show_all_serializers,
     """
     if show_all_serializers:
         msgreport(
-            f"* All {len(wisteria.globs.SERIALIZERS)} Available "
+            f"* {len(wisteria.globs.SERIALIZERS)} Available "
             f"{fmt_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
 
         for serializer in wisteria.globs.SERIALIZERS.values():
@@ -421,7 +421,7 @@ def partial_report__serializers(show_all_serializers,
                                      tuple(wisteria.globs.UNAVAILABLE_SERIALIZERS.keys()))
 
             msgdebug(
-                f"All serializers ({len(all_serializers)} seria., "
+                f"({len(all_serializers)} serializers, "
                 f"unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
 
             console.print('; '.join(serializer_name for serializer_name in all_serializers))
