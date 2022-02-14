@@ -26,8 +26,11 @@
     ___________________________________________________________________________
 
     o  fmt_boolsuccess(bool_success)
+    o  fmt_debug(msg)    
+    o  fmt_critical(msg)    
     o  fmt_data(data_objectname)
     o  fmt_error(msg)
+    o  fmt_info(msg)    
     o  fmt_list(listitems)
     o  fmt_mem_usage(bytesnumber)
     o  fmt_nodata(string)
@@ -35,11 +38,14 @@
     o  fmt_percentage(percentage)
     o  fmt_projectversion(add_timestamp=False)
     o  fmt_ratio(inttotal_and_floatratio)
+    o  fmt_report(msg)        
+    o  fmt_reporttitle(msg)    
     o  fmt_serializer0(serializer_name)
     o  fmt_serializer(serializer_name)
     o  fmt_strlen(int_stringlength)
     o  fmt_time(floattime)
     o  fmt_title(title)
+    o  fmt_warning(title)
 
     o  fmt_exaequowith(item, listitems, func=fmt_serializer,
                           prefix=", [i]ex aequo[/i] with ")
@@ -73,6 +79,21 @@ def fmt_boolsuccess(bool_success):
     return "ok" if bool_success else "[red]not ok[/red]"
 
 
+def fmt_critical(msg):
+    """
+        fmt_critical()
+
+        Format the representation of (str)msg
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)msg
+
+        RETURNED VALUE: (str)msg + some text attributes.
+    """
+    return f"!!! {msg}"
+
+
 def fmt_data(data_objectname):
     """
         fmt_data()
@@ -88,6 +109,20 @@ def fmt_data(data_objectname):
     if is_a_cwc_name(data_objectname):
         data_objectname = shorten_cwc_name(data_objectname)
     return f"[bold white]{data_objectname}[/bold white]"
+
+def fmt_debug(msg):
+    """
+        fmt_debug()
+
+        Format the representation of (str)msg
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)msg
+
+        RETURNED VALUE: (str)msg + some text attributes.
+    """
+    return f"@ {msg}"
 
 
 def fmt_error(msg):
@@ -105,6 +140,20 @@ def fmt_error(msg):
     return re.sub(r"\(ERRORID[\d]+\)",
                   lambda re_match: f"[bold red]{re_match.group()}[/bold red]",
                   msg)
+
+def fmt_info(msg):
+    """
+        fmt_info()
+
+        Format the representation of (str)msg
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)msg
+
+        RETURNED VALUE: (str)msg + some text attributes.
+    """
+    return f"> {msg}"
 
 
 def fmt_list(listitems, func=None):
@@ -259,6 +308,36 @@ def fmt_ratio(inttotal_and_floatratio):
     return fmt_nodata()
 
 
+def fmt_report(msg):
+    """
+        fmt_report()
+
+        Format the representation of (str)msg
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)msg
+
+        RETURNED VALUE: (str)msg + some text attributes.
+    """
+    return msg    
+
+
+def fmt_reporttitle(msg):
+    """
+        fmt_reporttitle()
+
+        Format the representation of (str)msg
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)msg
+
+        RETURNED VALUE: (str)msg + some text attributes.
+    """
+    return msg    
+
+
 def fmt_serializer0(serializer_name):
     """
         fmt_serializer0()
@@ -348,7 +427,23 @@ def fmt_title(title):
     return f"[bold white on blue]{title}[/bold white on blue]"
 
 
-# function defined here since it depends from fmt_list().
+def fmt_warning(msg):
+    """
+        fmt_warning()
+
+        Format the representation of (str)title.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)title
+
+        RETURNED VALUE: (str)title + some text attributes.
+    """
+    return f"! {msg}"    
+
+
+# DO NOT MOVE THIS FUNCTION ABOVE:
+#   function defined here since it depends from fmt_list().
 def fmt_exaequowith(item,
                     listitems,
                     func=fmt_serializer,
@@ -380,6 +475,8 @@ def fmt_exaequowith(item,
     return prefix + fmt_list(listitems, func)
 
 
+# DO NOT MOVE THIS FUNCTION ABOVE:
+#   function defined here since it depends from fmt_list().
 def fmt_exaequowith_hall(results,
                          item_number,
                          attribute,
@@ -418,3 +515,4 @@ def fmt_exaequowith_hall(results,
         return ""
     listitems.remove(serializer)
     return prefix + fmt_list(listitems, func)
+

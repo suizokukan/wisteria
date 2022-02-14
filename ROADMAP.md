@@ -4,7 +4,7 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-[? 0.2.0] petites corrections avant de passer à la suite
+[? 0.2.1] petites corrections avant de passer à la suite
 * --skimthedata="no" | "exclude ??? data"
 * Ce message est étonnant:
     The following informations may have been written in the report file
@@ -21,45 +21,45 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
-[? 0.2.1] vrais tests
+[? 0.2.2] vrais tests
 * tests
         * prendre un jeu de données
 
-[? 0.2.2] modification du hall of fame
+[? 0.2.3] modification du hall of fame
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
   encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 
-[? 0.2.3] terminer --cmp="iaswn+pickle(int+str)"
+[? 0.2.4] terminer --cmp="iaswn+pickle(int+str)"
 ? wisteria "mainstring": "pickle vs all(ini)++++"
 ? --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
 
-[? 0.2.4] améliorer la méthode utilisée (moyenne,)
+[? 0.2.5] améliorer la méthode utilisée (moyenne,)
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
-[? 0.2.5] classer les serializers (A6+checkup) selon leur coverage rate:
+[? 0.2.6] classer les serializers (A6+checkup) selon leur coverage rate:
 0: n'arrive pas au niveau 1
 1: arrive à transcoder une sélection de types Python élémentaires
 2: arrive à transcoder cwc.simple
 3: arrive à transcoder cwc.pgnreader
 
-[? 0.2.6] wisteria "xyz"
+[? 0.2.7] wisteria "xyz"
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 
-[? 0.2.7] avant d'ajouter un max de serializers/datas:
+[? 0.2.8] avant d'ajouter un max de serializers/datas:
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 
-[? 0.2.8]
+[? 0.2.9]
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
     - fonctions wae pour les types de base
     
-[? 0.2.9]
+[? 0.3]
 * finir de couvrir le plus de serializers possible
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -74,7 +74,7 @@ What's next ?
         xmlrpclib (https://stackoverflow.com/questions/32022656/python-cannot-marshal-class-decimal-decimal-objects)
 
 [III] pour écrire à V.S.
-[? 0.3.0]
+[? 0.3.1]
 * README.md : %%français > anglais
 * README.md acceptable
       + __init__.py
@@ -101,7 +101,6 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2
-* à faire: doc, poetry run ./bin/wisteria --help pour démarrer le programme, ne pas directement
 * avec --checkup, arrêter de mettre en rouge (msgerror) le fait qu'il n'y ait pas de matplotlib
 * quand verbosity==3, arrêter de couper la chaîne de caractères dans
    ! All 3 Unavailable Data Objects:
@@ -110,19 +109,31 @@ imported[…])
 * ! All 1 Unavailable Data Object:
   >
   1 Unavailable Data Object(s):
-* msgerror n'est pas correctement formaté; à comparer avec msgwarning qui l'est correctement
-* tester avec --cmp, ce qui n'a pas encore été fait.
 * get_missing_required_modules > get_missing_required_internal_modules
 * (A/00) minimal imports > (A/00) minimal internal imports
 * il reste des TODOs
 
+[DONE] task-276
+
+Added new fmt_xxx() functions.
+
+    * added new fmt_xxx() functions
+    * improved documentation
+
+    * tests: 7 tests ok out of 7    
+
 [DONE] task-275
+
+Documentation.
 
     * improved README.md
 
     * tests: 7 tests ok out of 7    
 
 [DONE] task-274
+
+New function: data.py:check()
+Updated dependencies modules defined in poetry.lock
 
     * improved error messages for ERRORDID037, ERRORDID038 and ERRORDID039
     * updated dependencies modules defined in poetry.lock:

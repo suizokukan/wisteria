@@ -46,7 +46,7 @@
 """
 from rich import print as rprint
 
-from wisteria.reprfmt import fmt_title, fmt_error
+from wisteria.reprfmt import fmt_reporttitle, fmt_error, fmt_critical, fmt_debug, fmt_info, fmt_report, fmt_warning
 import wisteria.globs
 
 
@@ -76,7 +76,9 @@ def msgcritical(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
-    _message("!!! "+str(obj))
+    if isinstance(obj, str):
+        obj = fmt_critical(obj)    
+    _message(obj)
 
 
 def msgdebug(obj=""):
@@ -89,7 +91,9 @@ def msgdebug(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
-    _message("@ "+str(obj))
+    if isinstance(obj, str):
+        obj = fmt_debug(obj)    
+    _message(obj)
 
 
 def msgerror(obj=""):
@@ -117,7 +121,9 @@ def msginfo(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
-    _message("> "+str(obj))
+    if isinstance(obj, str):
+        obj = fmt_info(obj)    
+    _message(obj)
 
 
 def msgreport(obj=""):
@@ -130,6 +136,8 @@ def msgreport(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
+    if isinstance(obj, str):
+        obj = fmt_report(obj)    
     _message(obj)
 
 
@@ -143,7 +151,9 @@ def msgreporttitle(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the log file.
     """
-    _message(fmt_title(obj))
+    if isinstance(obj, str):
+        obj = fmt_reporttitle(obj)    
+    _message(obj)
 
 
 def msgwarning(obj=""):
@@ -156,4 +166,6 @@ def msgwarning(obj=""):
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
     """
-    _message("! "+str(obj))
+    if isinstance(obj, str):
+        obj = fmt_warning(obj)    
+    _message(obj)
