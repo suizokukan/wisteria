@@ -116,6 +116,12 @@ imported[…])
 * (A/00) minimal imports > (A/00) minimal internal imports
 * il reste des TODOs
 
+[DONE] task-275
+
+    * improved README.md
+
+    * tests: 7 tests ok out of 7    
+
 [DONE] task-274
 
     * improved error messages for ERRORDID037, ERRORDID038 and ERRORDID039
