@@ -109,8 +109,16 @@ imported[…])
   >
   1 Unavailable Data Object(s):
 * il reste des TODOs
-*   --mute                Warning: debug/profile only, not normally to be used. Prevent any console or file output. If set, set the value of --verbosity to 'minimal', --report to 'none' and --console to
-                        ''. (default: False)
+* tout ce qui tourne autour de OUTPUT est mal documenté; reprendre ce qui apparaît dans globs.py
+  et l'injecter avec pimydoc. Confer aussi parse_output_argument
+
+[DONE] task-280                        
+
+Improved program message: updated --mute explanations.
+
+    * updated --mute explanations.
+
+    * tests: 7 tests ok out of 7    
 
 [DONE] task-279
 

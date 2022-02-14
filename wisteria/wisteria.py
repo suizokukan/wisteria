@@ -244,8 +244,8 @@ PARSER.add_argument(
     default=False,
     help="Warning: debug/profile only, not normally to be used. "
     "Prevent any console or file output. "
-    "If set, set the value of --verbosity to 'minimal', "
-    "--report to 'none' and --console to ''.")
+    "If set, set the value of --verbosity to 'minimal' and "
+    "--report to 'none'.")
 
 # MEMOVERUSEPARSER.add_argument(
 # MEMOVERUSE    '--memoveruse',
