@@ -112,6 +112,14 @@ imported[…])
 * get_missing_required_modules > get_missing_required_internal_modules
 * il reste des TODOs
 
+[DONE] task-278
+
+Improved code readibilty: get_missing_required_modules > get_missing_required_internal_modules
+
+    * get_missing_required_modules > get_missing_required_internal_modules
+    
+    * tests: 7 tests ok out of 7    
+
 [DONE] task-277
 
 Documentation.

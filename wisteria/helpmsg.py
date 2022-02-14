@@ -28,7 +28,7 @@
     o  help_graphsfilenames()
 """
 from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
-from wisteria.utils import normpath, get_missing_required_modules, get_python_version
+from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 
 
 def help_helpcommandlineargument():
@@ -39,7 +39,7 @@ def help_helpcommandlineargument():
         give some advice; if all required packages ARE NOT installed,
         give the list of the missing packages.
     """
-    missing_modules = get_missing_required_modules()
+    missing_modules = get_missing_required_internal_modules()
 
     if not missing_modules:
         return 'Try $ wisteria --checkup then $ wisteria --cmp="pickle against marshal". ' \

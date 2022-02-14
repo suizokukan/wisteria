@@ -363,9 +363,9 @@ ARGS = PARSER.parse_args()
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
 
-from wisteria.utils import get_missing_required_modules  # noqa
+from wisteria.utils import get_missing_required_internal_modules  # noqa
 from wisteria.reprfmt import fmt_projectversion  # noqa
-MISSING_REQUIRED_MODULES = get_missing_required_modules()
+MISSING_REQUIRED_MODULES = get_missing_required_internal_modules()
 if MISSING_REQUIRED_MODULES:
     print(fmt_projectversion(add_timestamp=True))
     print("The program can't be executed. "

@@ -27,7 +27,7 @@
 
     ___________________________________________________________________________
 
-    o  get_missing_required_modules()
+    o  get_missing_required_internal_modules()
     o  get_python_version()
     o  normpath(path)
     o  shortenedstr(string, maximallength)
@@ -45,9 +45,9 @@ import sys
 import wisteria.globs
 
 
-def get_missing_required_modules():
+def get_missing_required_internal_modules():
     """
-        get_missing_required_modules()
+        get_missing_required_internal_modules()
 
         Return a list of the missing required modules.
         No debug message here since this function belongs to the 'A' step of the
