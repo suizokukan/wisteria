@@ -65,7 +65,7 @@ NB: globs.py::REGEX_CMP defines exactly the expected format
 ### ==========================================================================
 [(pimydoc)code structure]
 step A: command line arguments, --help message
-- (A/00) minimal imports
+- (A/00) minimal internal imports
 - (A/01) command line parsing
 
 step B: initializations & --checkup

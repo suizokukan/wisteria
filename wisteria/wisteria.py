@@ -25,7 +25,7 @@
 
     (pimydoc)code structure
     ⋅step A: command line arguments, --help message
-    ⋅- (A/00) minimal imports
+    ⋅- (A/00) minimal internal imports
     ⋅- (A/01) command line parsing
     ⋅
     ⋅step B: initializations & --checkup
@@ -92,11 +92,11 @@ import os.path
 import sys
 
 # =============================================================================
-# (A/00) minimal imports
+# (A/00) minimal internal imports
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -153,7 +153,7 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -328,7 +328,7 @@ ARGS = PARSER.parse_args()
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -419,7 +419,7 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -461,7 +461,7 @@ wisteria.globs.ARGS = ARGS
 # ====================================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -511,7 +511,7 @@ if len(sys.argv) == 1:
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -588,7 +588,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -628,7 +628,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -713,7 +713,7 @@ if not check_str2reportsection_keys():
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -756,7 +756,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -818,7 +818,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -964,7 +964,7 @@ atexit.register(exit_handler)
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1006,7 +1006,7 @@ wisteria.serializers.init_serializers()
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1053,7 +1053,7 @@ if not os.path.exists(TMPFILENAME):
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1095,7 +1095,7 @@ wisteria.data.init_data()
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1268,7 +1268,7 @@ if wisteria.globs.ARGS.checkup:
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1332,7 +1332,7 @@ if wisteria.globs.ARGS.mymachine:
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1391,7 +1391,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
-# ⋅- (A/00) minimal imports
+# ⋅- (A/00) minimal internal imports
 # ⋅- (A/01) command line parsing
 # ⋅
 # ⋅step B: initializations & --checkup
@@ -1459,7 +1459,7 @@ def main():
     # =========================================================================
     # (pimydoc)code structure
     # ⋅step A: command line arguments, --help message
-    # ⋅- (A/00) minimal imports
+    # ⋅- (A/00) minimal internal imports
     # ⋅- (A/01) command line parsing
     # ⋅
     # ⋅step B: initializations & --checkup
@@ -1504,7 +1504,7 @@ def main():
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
-        # ⋅- (A/00) minimal imports
+        # ⋅- (A/00) minimal internal imports
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
@@ -1569,7 +1569,7 @@ def main():
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
-        # ⋅- (A/00) minimal imports
+        # ⋅- (A/00) minimal internal imports
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
@@ -1634,7 +1634,7 @@ def main():
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
-        # ⋅- (A/00) minimal imports
+        # ⋅- (A/00) minimal internal imports
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
@@ -1706,7 +1706,7 @@ def main():
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
-        # ⋅- (A/00) minimal imports
+        # ⋅- (A/00) minimal internal imports
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup
@@ -1750,7 +1750,7 @@ def main():
         # =========================================================================
         # (pimydoc)code structure
         # ⋅step A: command line arguments, --help message
-        # ⋅- (A/00) minimal imports
+        # ⋅- (A/00) minimal internal imports
         # ⋅- (A/01) command line parsing
         # ⋅
         # ⋅step B: initializations & --checkup

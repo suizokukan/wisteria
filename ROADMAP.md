@@ -110,8 +110,15 @@ imported[…])
   >
   1 Unavailable Data Object(s):
 * get_missing_required_modules > get_missing_required_internal_modules
-* (A/00) minimal imports > (A/00) minimal internal imports
 * il reste des TODOs
+
+[DONE] task-277
+
+Documentation.
+
+    * Improved doc: (A/00) minimal imports > (A/00) minimal internal imports
+
+    * tests: 7 tests ok out of 7    
 
 [DONE] task-276
 
