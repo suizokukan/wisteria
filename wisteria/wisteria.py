@@ -70,7 +70,7 @@
     ⋅* -2: error, ill-formed --cmp string
     ⋅* -3: error, ill-formed --output string
     ⋅* -4: error, missing required module
-    ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    ⋅* -5: error: an inconsistency between the data has been detected
     ⋅* -100: internal error, data can't be loaded
     ⋅* -101: internal error, an error occured while computing the results
     ⋅* -102: internal error, an error occured in main()
@@ -382,7 +382,7 @@ if MISSING_REQUIRED_MODULES:
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
     # ⋅* -4: error, missing required module
-    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -5: error: an inconsistency between the data has been detected
     # ⋅* -100: internal error, data can't be loaded
     # ⋅* -101: internal error, an error occured while computing the results
     # ⋅* -102: internal error, an error occured in main()
@@ -560,8 +560,8 @@ else:
     # ⋅         (str)reportfile open mode = 'a' or 'w',
     # ⋅         (str)reportfile name,
     # ⋅        )
-    parsing_success, *wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
-    if not parsing_success:
+    PARSING_SUCCESS, *wisteria.globs.OUTPUT = parse_output_argument(wisteria.globs.ARGS.output)
+    if not PARSING_SUCCESS:
         # no report(=log) available, hence the use of rprint():
         rprint("[bold red]Ill-formed --output string. The program has to stop.[/bold red]")
         # (pimydoc)exit codes
@@ -574,7 +574,7 @@ else:
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
         # ⋅* -4: error, missing required module
-        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -5: error: an inconsistency between the data has been detected
         # ⋅* -100: internal error, data can't be loaded
         # ⋅* -101: internal error, an error occured while computing the results
         # ⋅* -102: internal error, an error occured in main()
@@ -711,7 +711,7 @@ if not check_str2reportsection_keys():
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
     # ⋅* -4: error, missing required module
-    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -5: error: an inconsistency between the data has been detected
     # ⋅* -100: internal error, data can't be loaded
     # ⋅* -101: internal error, an error occured while computing the results
     # ⋅* -102: internal error, an error occured in main()
@@ -1266,7 +1266,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
     # ⋅* -4: error, missing required module
-    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -5: error: an inconsistency between the data has been detected
     # ⋅* -100: internal error, data can't be loaded
     # ⋅* -101: internal error, an error occured while computing the results
     # ⋅* -102: internal error, an error occured in main()
@@ -1330,7 +1330,7 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
     # ⋅* -4: error, missing required module
-    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -5: error: an inconsistency between the data has been detected
     # ⋅* -100: internal error, data can't be loaded
     # ⋅* -101: internal error, an error occured while computing the results
     # ⋅* -102: internal error, an error occured in main()
@@ -1389,7 +1389,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
     # ⋅* -4: error, missing required module
-    # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+    # ⋅* -5: error: an inconsistency between the data has been detected
     # ⋅* -100: internal error, data can't be loaded
     # ⋅* -101: internal error, an error occured while computing the results
     # ⋅* -102: internal error, an error occured in main()
@@ -1456,7 +1456,7 @@ def main():
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: error, ill-formed --output string
                 ⋅* -4: error, missing required module
-                ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+                ⋅* -5: error: an inconsistency between the data has been detected
                 ⋅* -100: internal error, data can't be loaded
                 ⋅* -101: internal error, an error occured while computing the results
                 ⋅* -102: internal error, an error occured in main()
@@ -1568,7 +1568,7 @@ def main():
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
             # ⋅* -4: error, missing required module
-            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -5: error: an inconsistency between the data has been detected
             # ⋅* -100: internal error, data can't be loaded
             # ⋅* -101: internal error, an error occured while computing the results
             # ⋅* -102: internal error, an error occured in main()
@@ -1629,7 +1629,7 @@ def main():
                 # ⋅* -2: error, ill-formed --cmp string
                 # ⋅* -3: error, ill-formed --output string
                 # ⋅* -4: error, missing required module
-                # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+                # ⋅* -5: error: an inconsistency between the data has been detected
                 # ⋅* -100: internal error, data can't be loaded
                 # ⋅* -101: internal error, an error occured while computing the results
                 # ⋅* -102: internal error, an error occured in main()
@@ -1638,7 +1638,22 @@ def main():
 
             # ---- DATA/UNVAILABLE_DATA checks
             if not wisteria.data.check(config):
-                return -2  #TODO: quel code erreur ?
+                # (pimydoc)exit codes
+                # ⋅*  0: normal exit code
+                # ⋅*  1: normal exit code after --checkup
+                # ⋅*  2: normal exit code after --downloadconfigfile
+                # ⋅*  3: normal exit code after --mymachine
+                # ⋅*  4: normal exit code (no data to handle)
+                # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+                # ⋅* -2: error, ill-formed --cmp string
+                # ⋅* -3: error, ill-formed --output string
+                # ⋅* -4: error, missing required module
+                # ⋅* -5: error: an inconsistency between the data has been detected
+                # ⋅* -100: internal error, data can't be loaded
+                # ⋅* -101: internal error, an error occured while computing the results
+                # ⋅* -102: internal error, an error occured in main()
+                # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+                return -5
 
         # =========================================================================
         # (C/18.4) main(): PLANNED_TRANSCODINGS initialization
@@ -1699,7 +1714,7 @@ def main():
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
             # ⋅* -4: error, missing required module
-            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -5: error: an inconsistency between the data has been detected
             # ⋅* -100: internal error, data can't be loaded
             # ⋅* -101: internal error, an error occured while computing the results
             # ⋅* -102: internal error, an error occured in main()
@@ -1808,7 +1823,7 @@ def main():
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
         # ⋅* -4: error, missing required module
-        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -5: error: an inconsistency between the data has been detected
         # ⋅* -100: internal error, data can't be loaded
         # ⋅* -101: internal error, an error occured while computing the results
         # ⋅* -102: internal error, an error occured in main()
@@ -1830,7 +1845,7 @@ def main():
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
         # ⋅* -4: error, missing required module
-        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -5: error: an inconsistency between the data has been detected
         # ⋅* -100: internal error, data can't be loaded
         # ⋅* -101: internal error, an error occured while computing the results
         # ⋅* -102: internal error, an error occured in main()

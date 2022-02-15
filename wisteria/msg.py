@@ -46,7 +46,8 @@
 """
 from rich import print as rprint
 
-from wisteria.reprfmt import fmt_reporttitle, fmt_error, fmt_critical, fmt_debug, fmt_info, fmt_report, fmt_warning
+from wisteria.reprfmt import fmt_reporttitle, fmt_error, fmt_critical, fmt_debug, fmt_info
+from wisteria.reprfmt import fmt_report, fmt_warning
 import wisteria.globs
 
 

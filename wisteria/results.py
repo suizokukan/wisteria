@@ -303,7 +303,7 @@ def compute_results():
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
             # ⋅* -4: error, missing required module
-            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -5: error: an inconsistency between the data has been detected
             # ⋅* -100: internal error, data can't be loaded
             # ⋅* -101: internal error, an error occured while computing the results
             # ⋅* -102: internal error, an error occured in main()
@@ -322,7 +322,7 @@ def compute_results():
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
             # ⋅* -4: error, missing required module
-            # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+            # ⋅* -5: error: an inconsistency between the data has been detected
             # ⋅* -100: internal error, data can't be loaded
             # ⋅* -101: internal error, an error occured while computing the results
             # ⋅* -102: internal error, an error occured in main()
@@ -344,7 +344,7 @@ def compute_results():
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
         # ⋅* -4: error, missing required module
-        # ⋅* -8: error, STR2REPORTSECTION_KEYS and STR2REPORTSECTION don't match
+        # ⋅* -5: error: an inconsistency between the data has been detected
         # ⋅* -100: internal error, data can't be loaded
         # ⋅* -101: internal error, an error occured while computing the results
         # ⋅* -102: internal error, an error occured in main()

@@ -108,6 +108,20 @@ imported[…])
 * il reste des TODOs
 * check_code_quality
 
+[DONE] task-284
+
+no more TODOs. Minor improvements to code readibility.
+
+    * exit code -8 has been removed
+    * exit code -5 has been added
+    * improved documentation
+    * fixed a too long line in msg.py
+    * minor improvement in reprfmt.py: added missing blank lines
+    * minor improvement in wisteria.py: parsing_success > PARSING_SUCCESS
+      (variable used outside a function)
+
+    * tests: 7 tests ok out of 7
+
 [DONE] task-283
 
 No more trailing spaces.

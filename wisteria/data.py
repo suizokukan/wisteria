@@ -27,6 +27,7 @@
     ___________________________________________________________________________
 
     o  anyfunc()
+    o  check(config)
     o  constant_factory()
     o  init_data()
     o  init_data__update_from_cfgfile_settings(config)
@@ -63,17 +64,28 @@ def anyfunc():
         Fake function used by the DATA dict.
     """
 
+
 def check(config):
     """
-    Check DATA/UNAVAILABLE_DATA consistency
-    TODO
+        check()
 
-    cette fonction est appelée après un appel à read_cfgfile()
+        Check DATA/UNAVAILABLE_DATA consistency:
+        o check #1:
+          are all DATA/UNAVAILABLE_DATA keys defined in the configuration file, and vice-versa ?
+
+        This function should be called after a call to read_cfgfile().
+
+        ________________________________________________________________________
+
+        ARGUMENT: (dict)config, the value returned by read_cfgfile()
+
+        RETURNED VALUE: (bool)ok
+                        If an error is detected, msgerror() will be called and the returned
+                        value will be False.
     """
     res_ok = True
 
-    # check 1/1
-    #
+    # check #1:
     # are all DATA/UNAVAILABLE_DATA keys defined in the
     # configuration file, and vice-versa ?
     for dataobject_name in wisteria.globs.DATA:

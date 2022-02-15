@@ -110,6 +110,7 @@ def fmt_data(data_objectname):
         data_objectname = shorten_cwc_name(data_objectname)
     return f"[bold white]{data_objectname}[/bold white]"
 
+
 def fmt_debug(msg):
     """
         fmt_debug()
@@ -140,6 +141,7 @@ def fmt_error(msg):
     return re.sub(r"\(ERRORID[\d]+\)",
                   lambda re_match: f"[bold red]{re_match.group()}[/bold red]",
                   msg)
+
 
 def fmt_info(msg):
     """
