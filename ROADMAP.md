@@ -108,6 +108,14 @@ imported[…])
 * il reste des TODOs
 * check_code_quality
 
+[DONE] task-283
+
+No more trailing spaces.
+
+    * no more trailing spaces
+
+    * tests: 7 tests ok out of 7
+
 [DONE] task-282
 
 Improved program messages in report.py

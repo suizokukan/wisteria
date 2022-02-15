@@ -26,11 +26,11 @@
     ___________________________________________________________________________
 
     o  fmt_boolsuccess(bool_success)
-    o  fmt_debug(msg)    
-    o  fmt_critical(msg)    
+    o  fmt_debug(msg)
+    o  fmt_critical(msg)
     o  fmt_data(data_objectname)
     o  fmt_error(msg)
-    o  fmt_info(msg)    
+    o  fmt_info(msg)
     o  fmt_list(listitems)
     o  fmt_mem_usage(bytesnumber)
     o  fmt_nodata(string)
@@ -38,8 +38,8 @@
     o  fmt_percentage(percentage)
     o  fmt_projectversion(add_timestamp=False)
     o  fmt_ratio(inttotal_and_floatratio)
-    o  fmt_report(msg)        
-    o  fmt_reporttitle(msg)    
+    o  fmt_report(msg)
+    o  fmt_reporttitle(msg)
     o  fmt_serializer0(serializer_name)
     o  fmt_serializer(serializer_name)
     o  fmt_strlen(int_stringlength)
@@ -320,7 +320,7 @@ def fmt_report(msg):
 
         RETURNED VALUE: (str)msg + some text attributes.
     """
-    return msg    
+    return msg
 
 
 def fmt_reporttitle(msg):
@@ -335,7 +335,7 @@ def fmt_reporttitle(msg):
 
         RETURNED VALUE: (str)msg + some text attributes.
     """
-    return msg    
+    return msg
 
 
 def fmt_serializer0(serializer_name):
@@ -439,7 +439,7 @@ def fmt_warning(msg):
 
         RETURNED VALUE: (str)title + some text attributes.
     """
-    return f"! {msg}"    
+    return f"! {msg}"
 
 
 # DO NOT MOVE THIS FUNCTION ABOVE:
@@ -515,4 +515,3 @@ def fmt_exaequowith_hall(results,
         return ""
     listitems.remove(serializer)
     return prefix + fmt_list(listitems, func)
-

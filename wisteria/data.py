@@ -83,9 +83,10 @@ def check(config):
                       "but is not defined in the configuration file.")
     for dataobject_name in wisteria.globs.UNAVAILABLE_DATA:
         if dataobject_name not in config['data objects']:
-            res_ok = False            
-            msgerror(f"(ERRORID038) '{dataobject_name}' is defined as a wisteria.globs.UNAVAILABLE_DATA key "
-                      "but is not defined in the configuration file.")
+            res_ok = False
+            msgerror(f"(ERRORID038) '{dataobject_name}' is defined as "
+                     "a wisteria.globs.UNAVAILABLE_DATA key "
+                     "but is not defined in the configuration file.")
     for dataobject_name in config['data objects']:
         if dataobject_name not in tuple(wisteria.globs.DATA.keys()) + \
            tuple(wisteria.globs.UNAVAILABLE_DATA.keys()):
@@ -93,8 +94,9 @@ def check(config):
                 msginfo(f"cwc data object '{dataobject_name}' must be skipped. "
                         "This is normally not a problem: "
                         "it just means that a module has not be installed. "
-                        "By example, if the Iaswn serializer has not been installed you can't use the "
-                        " 'wisteria.cwc.pgnreader.cwc_iaswn.chessgames' data object.")
+                        "By example, if the Iaswn serializer has not been installed "
+                        "you can't use the "
+                        "'wisteria.cwc.pgnreader.cwc_iaswn.chessgames' data object.")
                 # res_ok is NOT set to False: this situation is indeed normal.
                 wisteria.globs.UNAVAILABLE_DATA[dataobject_name] = \
                 "this cwc module couldn't be imported: " \
@@ -104,7 +106,8 @@ def check(config):
             else:
                 res_ok = False
                 msgerror(f"(ERRORID039) '{dataobject_name}' is defined as a data key "
-                          "in the configuration file but is not defined as a wisteria.globs.DATA key "
+                          "in the configuration file "
+                          "but is not defined as a wisteria.globs.DATA key "
                           "or as a wisteria.globs.UNAVAILABLE_DATA key.")
     return res_ok
 
@@ -332,13 +335,15 @@ def init_data():
     # ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
     # ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
     for cwc_moduleininame, cwc_modulefullrealname in CWC_MODULES:
-        # cwc_modulefullrealname: main module, like "wisteria.cwc.pgnreader.cwc_default.ChessGames"        
+        # cwc_modulefullrealname: main module, like "wisteria.cwc.pgnreader.cwc_default.ChessGames"
         if not trytoimport(modulefullrealname_to_modulerealname(cwc_modulefullrealname)):
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"cwc module '{cwc_moduleininame}' ('{cwc_modulefullrealname}') "
                 "is defined in wisteria.globs.CWC_MODULES "
-                "but must be skipped (=added to wisteria.glob.UNAVAILABmsgdebugLE_DATA) since module "
-                f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' can't be imported.")                
+                "but must be skipped (=added to wisteria.glob.UNAVAILABmsgdebugLE_DATA) "
+                "since module "
+                f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' "
+                "can't be imported.")
         else:
             wisteria.globs.DATA[cwc_moduleininame] = cwc_modulefullrealname
 

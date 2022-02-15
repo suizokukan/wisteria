@@ -928,8 +928,8 @@ def exit_handler():
 
         # wisteria being a Python3.8+ project, no parenthesized context managers is available.
         # I can't write:
-        #      with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile, 
-        #           open_reportfile(mode="r") as reportfile) 
+        #      with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile,
+        #           open_reportfile(mode="r") as reportfile)
         with \
             open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile, \
             open_reportfile(mode="r") as reportfile:
@@ -1178,7 +1178,7 @@ def checkup():
     msgreport(f"  With current arguments, configuration file would be '{ARGS.cfgfile}' "
               f"({normpath(ARGS.cfgfile)}), because of the value of --cfgfile. ")
     msgreport(diagnostic)
-    
+
     # ---- DATA/UNVAILABLE_DATA checks
     if not wisteria.data.check(config):
         msgreport("Config file and installed modules cause at least one error, see lines above.")
