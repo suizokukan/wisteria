@@ -102,6 +102,15 @@ What's next ?
 
 [CURRENT] v. 0.2.1
 
+[DONE] task-289
+
+Improved report title appearance.
+
+    * improved report title appearance: modified fmt_reporttitle()
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-288
 
 Documentation: improved help message for --verbosity option.

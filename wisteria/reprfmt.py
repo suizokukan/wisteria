@@ -337,7 +337,7 @@ def fmt_reporttitle(msg):
 
         RETURNED VALUE: (str)msg + some text attributes.
     """
-    return msg
+    return f"[bold black on yellow]{msg}[/bold black on yellow]"
 
 
 def fmt_serializer0(serializer_name):
