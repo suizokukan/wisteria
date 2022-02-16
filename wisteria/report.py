@@ -329,9 +329,15 @@ def partial_report__data(show_all_data,
             msgreport(
                 f"! {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
                 f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
+
+            # why maximallength=300 ?
+            # Some error messages (see UNAVAILABLE_DATA structure)
+            # are important and must be readable; on the other side
+            # some objects may have a huge representation and must be cut.
             msgreport(
                 "; ".join(
-                    f"{fmt_data(dataobject_name)}({shortenedstr(repr(dataobject))})"
+                    f"{fmt_data(dataobject_name)}"
+                    f"({shortenedstr(repr(dataobject), maximallength=300)})"
                     for dataobject_name, dataobject in
                     sorted(wisteria.globs.UNAVAILABLE_DATA.items())))
 

@@ -101,12 +101,18 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2
-* quand verbosity==3, arrêter de couper la chaîne de caractères dans
-   ! All 3 Unavailable Data Objects:
-   dateutil(parser.parse)('missing package: dateutil'); cwc:pgnreader.cwc_iaswn.chessgames("this cwc module couldn't be imported[…]); cwc:simple.cwc_iaswn.simpleclass("this cwc module couldn't be 
-imported[…])
-* il reste des TODOs
-* check_code_quality
+* doc: installer/réinstaller poetry:     alkhinoos@alkhinoos2 ~/wisteria (main)> curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+
+[DONE] task-286
+
+Improved a message displayed by partial_report__data().
+
+    * improved a message displayed by partial_report__data():
+      some error messages must not be cut, hence `maximallength=300`
+      added to the call to shortenedstr().
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-285
 
