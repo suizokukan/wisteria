@@ -108,6 +108,15 @@ imported[…])
 * il reste des TODOs
 * check_code_quality
 
+[DONE] task-285
+
+Pylint & co. : minor improvements to code readibility
+
+    * Pylint & co. : minor improvements to code readibility
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-284
 
 no more TODOs. Minor improvements to code readibility.

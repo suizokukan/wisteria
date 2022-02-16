@@ -92,7 +92,7 @@ def check(config):
         if dataobject_name not in config['data objects']:
             res_ok = False
             msgerror(f"(ERRORID037) '{dataobject_name}' is defined as a wisteria.globs.DATA key "
-                      "but is not defined in the configuration file.")
+                     "but is not defined in the configuration file.")
     for dataobject_name in wisteria.globs.UNAVAILABLE_DATA:
         if dataobject_name not in config['data objects']:
             res_ok = False
@@ -100,8 +100,8 @@ def check(config):
                      "a wisteria.globs.UNAVAILABLE_DATA key "
                      "but is not defined in the configuration file.")
     for dataobject_name in config['data objects']:
-        if dataobject_name not in tuple(wisteria.globs.DATA.keys()) + \
-           tuple(wisteria.globs.UNAVAILABLE_DATA.keys()):
+        if dataobject_name not in wisteria.globs.DATA and \
+           dataobject_name not in wisteria.globs.UNAVAILABLE_DATA:
             if is_a_cwc_name(dataobject_name):
                 msginfo(f"cwc data object '{dataobject_name}' must be skipped. "
                         "This is normally not a problem: "
@@ -111,16 +111,17 @@ def check(config):
                         "'wisteria.cwc.pgnreader.cwc_iaswn.chessgames' data object.")
                 # res_ok is NOT set to False: this situation is indeed normal.
                 wisteria.globs.UNAVAILABLE_DATA[dataobject_name] = \
-                "this cwc module couldn't be imported: " \
-                "normally it's just because a module has not been installed. " \
-                "By example, if the Iaswn serializer has not been installed you can't use the "
-                "'wisteria.cwc.pgnreader.cwc_iaswn.chessgames' data object."
+                    "this cwc module couldn't be imported: " \
+                    "normally it's just because a module has not been installed. " \
+                    "By example, if the Iaswn serializer has not been installed " \
+                    "you can't use the " \
+                    "'wisteria.cwc.pgnreader.cwc_iaswn.chessgames' data object."
             else:
                 res_ok = False
                 msgerror(f"(ERRORID039) '{dataobject_name}' is defined as a data key "
-                          "in the configuration file "
-                          "but is not defined as a wisteria.globs.DATA key "
-                          "or as a wisteria.globs.UNAVAILABLE_DATA key.")
+                         "in the configuration file "
+                         "but is not defined as a wisteria.globs.DATA key "
+                         "or as a wisteria.globs.UNAVAILABLE_DATA key.")
     return res_ok
 
 
@@ -351,11 +352,11 @@ def init_data():
         if not trytoimport(modulefullrealname_to_modulerealname(cwc_modulefullrealname)):
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"cwc module '{cwc_moduleininame}' ('{cwc_modulefullrealname}') "
-                "is defined in wisteria.globs.CWC_MODULES "
-                "but must be skipped (=added to wisteria.glob.UNAVAILABmsgdebugLE_DATA) "
-                "since module "
-                f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' "
-                "can't be imported.")
+                         "is defined in wisteria.globs.CWC_MODULES "
+                         "but must be skipped (=added to wisteria.glob.UNAVAILABmsgdebugLE_DATA) "
+                         "since module "
+                         f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' "
+                         "can't be imported.")
         else:
             wisteria.globs.DATA[cwc_moduleininame] = cwc_modulefullrealname
 

@@ -195,7 +195,7 @@ class CWCPgnreader(unittest.TestCase):
             with \
                 open(os.path.join("tests", pgnfilename), encoding="utf-8") as src, \
                 DMFile(":tests_tmp1.pgn:") as tmpfile1, \
-                DMFile(":tests_tmp2.pgn:") as tmpfile2:
+                DMFile(":tests_tmp2.pgn:") as tmpfile2:  # noqa
 
                 games = ChessGames()
                 self.assertTrue(games.read_pgn(src))

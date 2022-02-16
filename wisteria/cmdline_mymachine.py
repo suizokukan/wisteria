@@ -29,8 +29,8 @@
 """
 import platform
 
-import psutil
-import cpuinfo
+import psutil  # pylint: disable=import-error
+import cpuinfo  # pylint: disable=import-error
 
 from wisteria.msg import msgreport
 

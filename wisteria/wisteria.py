@@ -932,7 +932,7 @@ def exit_handler():
         #           open_reportfile(mode="r") as reportfile)
         with \
             open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile, \
-            open_reportfile(mode="r") as reportfile:
+            open_reportfile(mode="r") as reportfile:  # noqa
 
             # ---- (1/2) exported report: text --------------------------------
             exportedreportfile.write("```\n")
