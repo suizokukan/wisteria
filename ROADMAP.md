@@ -100,7 +100,85 @@ What's next ?
 
 ===============================================================================
 
-[CURRENT] v. 0.2
+[DONE] v. 0.2
+
+Code has been cleaned up and is fully compatible with Python3.8 .
+
+code quality
+
+    * No more trailing spaces (task-283)
+    * no more TODOs. Minor improvements to code readibility. (task-284)
+    * Pylint & co. : minor improvements to code readibility
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
+code structure
+
+    * Code is now compatible with Python3.8 (task-273)
+    * New function: data.py:check() (task-274)
+    * Added new fmt_xxx() functions (task-276)
+    * Improved code readibilty: get_missing_required_modules > get_missing_required_internal_modules (task-278)
+
+documentation
+
+    * Improved documentation (task-275, task-277, task-281, task-287)    
+
+dependencies
+
+    * Updated dependencies modules defined in poetry.lock (task-274)
+
+interface
+
+    * Improved program messages (task-279, task-280)
+    * Improved program messages in report.py (task-282)
+    * Improved a message displayed by partial_report__data() (task-286)
+
+task(s)
+
+    * task(s): task-273, task-274, task-275, task-276, task-277,
+               task-278, task-279, task-280, task-281, task-282,
+               task-283, task-284, task-285, task-286, task-287,
+version
+
+    * set version to '0.2'
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.9.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.16.2 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+|-- colorama >=0.4.0,<0.5.0
+|-- commonmark >=0.9.0,<0.10.0
+`-- pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+`-- pywin32 *
+```
+
+```
+$ check_tools.sh
+
+./check_tools.sh
+* about poetry:
+Poetry version 1.1.13
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.8.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.8.0
+* about pylint:
+pylint 2.12.2
+astroid 2.9.3
+Python 3.10.2 (main, Jan 15 2022, 19:56:27) [GCC 11.1.0]
+* about pipdeptree:
+./check_tools.sh: line 30: pipdeptree: command not found
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```    
 
 [DONE] task-287
 
