@@ -1156,10 +1156,24 @@ def checkup():
     # ---- Project name & version, time stamp ---------------------------------
     msgreport(fmt_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {get_python_version()}")
-    msgreport("The following informations may have been written in the report file "
-              f"('{wisteria.globs.FILECONSOLE_FILEOBJECT.name}') "
-              "depending of the parameters you passed to the script. "
-              "--verbosity value [b]has an effect[/b] upon the displayed informations.")
+
+    # (pimydoc)OUTPUT format
+    # ⋅        ((bool)output to the console ?,
+    # ⋅         (bool)output to the reportfile ?,
+    # ⋅         (str)reportfile open mode = 'a' or 'w',
+    # ⋅         (str)reportfile name,
+    # ⋅        )
+    if wisteria.globs.OUTPUT[1]:
+        msgreport("The following informations are written in the report file "
+                  f"('{wisteria.globs.FILECONSOLE_FILEOBJECT.name}', "
+                  f"namely {normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}): "
+                  "see the --output argument for more informations about this file. "
+                  "--verbosity value [b]has an effect[/b] upon the displayed informations.")
+    else:
+        msgreport("The following informations ARE NOT written in the report file "
+                  f"('{wisteria.globs.FILECONSOLE_FILEOBJECT.name}', "
+                  "namely {normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}): "
+                  "see the --output argument for more informations about this file. ")
     msgreport()
 
     # ---- configuration file -------------------------------------------------

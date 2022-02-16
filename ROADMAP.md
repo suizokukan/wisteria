@@ -4,23 +4,6 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-[? 0.2.1] petites corrections avant de passer à la suite
-* --skimthedata="no" | "exclude ??? data"
-* Ce message est étonnant:
-    The following informations may have been written in the report file
-  car le programme sait si les informations seront ou non écrites.
-* "can't handle following data objects:"
-   >
-  "can't handle the following data objects:"  (??? vérifier)
-* généraliser le mot 'transcoding'
-* checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
-  Si c'est le cas, n'afficher ce résultat que si verbosity=3
-* lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
-    atexit
-* data_object, dataobj_name: c'est le bazar
-* avant chaque _______ : 1 ligne suffit
-* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
-
 [? 0.2.2] vrais tests
 * tests
         * prendre un jeu de données
@@ -101,7 +84,36 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
+[? 0.2.1] petites corrections avant de passer à la suite
+* --skimthedata="no" | "exclude ??? data"
+* Ce message est étonnant:
+    The following informations may have been written in the report file
+  car le programme sait si les informations seront ou non écrites.
+* "can't handle following data objects:"
+   >
+  "can't handle the following data objects:"  (??? vérifier)
+* généraliser le mot 'transcoding'
+* checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
+  Si c'est le cas, n'afficher ce résultat que si verbosity=3
+* lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
+    atexit
+* data_object, dataobj_name: c'est le bazar
+* avant chaque _______ : 1 ligne suffit
+* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-291
+
+Improved checkup message: the value of wisteria.globs.OUTPUT[1] is now taken
+in account.
+
+    * improved checkup message: the value of wisteria.globs.OUTPUT[1] is now taken
+      in account. The dubious sentence:
+        "The following informations may have been written in the report file"
+      is now replaced by a more precise one.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+        
 [DONE] task-290
 
 Renumbered the error codes, some were duplicates or missing.
