@@ -84,22 +84,41 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-[? 0.2.1] petites corrections avant de passer à la suite
+* (D/03) (D/03) exported report > (D/03) exported report 
 * --skimthedata="no" | "exclude ??? data"
-* Ce message est étonnant:
-    The following informations may have been written in the report file
-  car le programme sait si les informations seront ou non écrites.
 * "can't handle following data objects:"
    >
   "can't handle the following data objects:"  (??? vérifier)
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
   Si c'est le cas, n'afficher ce résultat que si verbosity=3
-* lorsque le programme plante (ou s'arrête après un CTRL+Z), le curseur de la console est modifiée; rétablir le cuseur normal via
-    atexit
 * data_object, dataobj_name: c'est le bazar
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+* no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
+  > no msgxxx() function here since we have just close wisteria.globs.FILECONSOLE_FILEOBJECT
+* the next rprint() will overwrite the spaces that are about
+  >
+  the next call to RICHCONSOLE.print() will overwrite the spaces that are about
+
+[DONE] task-292
+
+Improved report aspect by using rich.rule() function.
+
+    * updated documentation: added "(D/04) reset console cursor" string
+      to pimydoc "code structure" section.
+    * new global variable: wisteria.globs.RICHCONSOLE
+    * fixed a problem with the console cursor:
+      When the program is abruptly stopped, it was possible that the terminal
+      cursor did not appear anymore; to solve this problem, when the programs stops,
+      the console cursor is shown through a call to .show_cursor(True); this
+      function is called in exit_handler().
+    * added a new argument to _message(), namely "rule=False", allowing to
+      _message() to call either rich.print() either rich.rule()
+    * msgreporttitle() now calls _message(obj, rule=True)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
 
 [DONE] task-291
 

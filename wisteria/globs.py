@@ -59,6 +59,8 @@
 
     o  REPORT_SHORTCUTS
 
+    o  RICHCONSOLE
+
     o  SERIALIZERS
 
     o  STR2REPORTSECTION_KEYS
@@ -231,6 +233,9 @@ REPORT_SHORTCUTS = {
     "minimal": "C2c;graphs;",
     "none": "",
     }
+
+# value: None or rich.console.Console()
+RICHCONSOLE = None
 
 # dict storing all serializers used by the program.
 #

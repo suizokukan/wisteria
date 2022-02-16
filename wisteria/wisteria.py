@@ -32,7 +32,7 @@
     ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
     ⋅- (B/03) wisteria.globs.ARGS initialization
     ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-    ⋅- (B/05) --output string
+    ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
     ⋅- (B/06) reportfile opening
     ⋅- (B/07) msgxxx() functions can be used
     ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -59,6 +59,7 @@
     ⋅- (D/01) closing and removing of tempfile
     ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
     ⋅- (D/03) (D/03) exported report
+    ⋅- (D/04) reset console cursor
 
     (pimydoc)exit codes
     ⋅*  0: normal exit code
@@ -103,7 +104,7 @@ import sys
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -130,6 +131,7 @@ import sys
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -160,7 +162,7 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -187,6 +189,7 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 PARSER = \
     argparse.ArgumentParser(
         description='Comparisons of different Python serializers. '
@@ -335,7 +338,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -362,6 +365,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 
 from wisteria.utils import get_missing_required_internal_modules  # noqa
 from wisteria.reprfmt import fmt_projectversion  # noqa
@@ -426,7 +430,7 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -453,6 +457,7 @@ from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 wisteria.globs.ARGS = ARGS
 
 
@@ -468,7 +473,7 @@ wisteria.globs.ARGS = ARGS
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -495,8 +500,10 @@ wisteria.globs.ARGS = ARGS
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 # a special case: if no argument has been given, we modify the output
 if len(sys.argv) == 1:
+    # no RICHCONSOLE for the moment, hence the call to rprint().
     rprint(
         f"[bold]No argument was passed to {__projectname__}: "
         "by default, "
@@ -507,7 +514,7 @@ if len(sys.argv) == 1:
 
 
 # =============================================================================
-# (B/05) --output string
+# (B/05) --output string/OUTPUT+RICHCONSOLE init
 # =============================================================================
 # (pimydoc)code structure
 # ⋅step A: command line arguments, --help message
@@ -518,7 +525,7 @@ if len(sys.argv) == 1:
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -545,6 +552,7 @@ if len(sys.argv) == 1:
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 if wisteria.globs.ARGS.mute:
     # (pimydoc)OUTPUT format
     # ⋅        ((bool)output to the console ?,
@@ -581,6 +589,9 @@ else:
         # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
         sys.exit(-3)
 
+    # By default, wisteria.globs.RICHCONSOLE is set to None.
+    if wisteria.globs.OUTPUT[0]:
+        wisteria.globs.RICHCONSOLE = rich.console.Console()
 
 # =============================================================================
 # (B/06) reportfile opening
@@ -606,7 +617,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -633,6 +644,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 
 # =============================================================================
 # (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -646,7 +658,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -673,6 +685,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 def check_str2reportsection_keys():
     """
         check_str2reportsection_keys()
@@ -731,7 +744,7 @@ if not check_str2reportsection_keys():
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -758,6 +771,7 @@ if not check_str2reportsection_keys():
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(fmt_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {get_python_version()}")
@@ -774,7 +788,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -801,6 +815,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 if wisteria.globs.ARGS.mute:
     wisteria.globs.ARGS.report = ""
     wisteria.globs.ARGS.verbosity = VERBOSITY_MINIMAL
@@ -836,7 +851,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -863,6 +878,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 def exit_handler():
     """
         exit_handler()
@@ -966,6 +982,12 @@ def exit_handler():
                         exportedreportfile.write(f"![{title}]({filename})\n")
                         exportedreportfile.write("\n")
 
+    # =============================================================================
+    # (D/04) reset console cursor
+    # =============================================================================
+    if wisteria.globs.RICHCONSOLE is not None:
+        wisteria.globs.RICHCONSOLE.show_cursor(True)
+
 
 atexit.register(exit_handler)
 
@@ -982,7 +1004,7 @@ atexit.register(exit_handler)
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1009,6 +1031,7 @@ atexit.register(exit_handler)
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 wisteria.serializers.init_serializers()
 
 
@@ -1024,7 +1047,7 @@ wisteria.serializers.init_serializers()
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1051,6 +1074,7 @@ wisteria.serializers.init_serializers()
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
@@ -1071,7 +1095,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1098,6 +1122,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 wisteria.data.init_data()
 
 
@@ -1113,7 +1138,7 @@ wisteria.data.init_data()
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1140,6 +1165,7 @@ wisteria.data.init_data()
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 def checkup():
     """
         checkup()
@@ -1300,7 +1326,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1327,6 +1353,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
     if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
@@ -1364,7 +1391,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1391,6 +1418,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()
     # (pimydoc)exit codes
@@ -1423,7 +1451,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-# ⋅- (B/05) --output string
+# ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
 # ⋅- (B/06) reportfile opening
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1450,6 +1478,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (D/01) closing and removing of tempfile
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) (D/03) exported report
+# ⋅- (D/04) reset console cursor
 def main():
     """
         main()
@@ -1491,7 +1520,7 @@ def main():
     # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
     # ⋅- (B/03) wisteria.globs.ARGS initialization
     # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-    # ⋅- (B/05) --output string
+    # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
     # ⋅- (B/06) reportfile opening
     # ⋅- (B/07) msgxxx() functions can be used
     # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1518,6 +1547,7 @@ def main():
     # ⋅- (D/01) closing and removing of tempfile
     # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
     # ⋅- (D/03) (D/03) exported report
+    # ⋅- (D/04) reset console cursor
     if ARGS.verbosity == VERBOSITY_DEBUG:
         msgdebug(f"known data: {list(data.keys())}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1536,7 +1566,7 @@ def main():
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-        # ⋅- (B/05) --output string
+        # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
         # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1563,6 +1593,7 @@ def main():
         # ⋅- (D/01) closing and removing of tempfile
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) (D/03) exported report
+        # ⋅- (D/04) reset console cursor
         success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"Result of the call to read_cmpstring('{ARGS.cmp}'): "
@@ -1601,7 +1632,7 @@ def main():
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-        # ⋅- (B/05) --output string
+        # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
         # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1628,6 +1659,7 @@ def main():
         # ⋅- (D/01) closing and removing of tempfile
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) (D/03) exported report
+        # ⋅- (D/04) reset console cursor
         config = None
         if cmpdata == 'ini':
             config = read_cfgfile(ARGS.cfgfile)
@@ -1681,7 +1713,7 @@ def main():
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-        # ⋅- (B/05) --output string
+        # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
         # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1708,6 +1740,7 @@ def main():
         # ⋅- (D/01) closing and removing of tempfile
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) (D/03) exported report
+        # ⋅- (D/04) reset console cursor
 
         # (pimydoc)PLANNED_TRANSCODINGS
         # ⋅list of str:
@@ -1753,7 +1786,7 @@ def main():
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-        # ⋅- (B/05) --output string
+        # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
         # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1780,6 +1813,7 @@ def main():
         # ⋅- (D/01) closing and removing of tempfile
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) (D/03) exported report
+        # ⋅- (D/04) reset console cursor
         compute_results__res = compute_results()
         if compute_results__res[0] is None:
             return compute_results__res[1]
@@ -1797,7 +1831,7 @@ def main():
         # ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-        # ⋅- (B/05) --output string
+        # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
         # ⋅- (B/06) reportfile opening
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -1824,6 +1858,7 @@ def main():
         # ⋅- (D/01) closing and removing of tempfile
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) (D/03) exported report
+        # ⋅- (D/04) reset console cursor
         report(results,
                (serializer1, serializer2, cmpdata))
 

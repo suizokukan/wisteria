@@ -73,7 +73,7 @@ step B: initializations & --checkup
 - (B/02) normal imports & PLATFORM_SYSTEM initialization
 - (B/03) wisteria.globs.ARGS initialization
 - (B/04) a special case: if no argument has been given, we explicit the default values
-- (B/05) --output string
+- (B/05) --output string/OUTPUT+RICHCONSOLE init
 - (B/06) reportfile opening
 - (B/07) msgxxx() functions can be used
 - (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -100,6 +100,7 @@ step D: exit_handler()
 - (D/01) closing and removing of tempfile
 - (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 - (D/03) (D/03) exported report
+- (D/04) reset console cursor    
 ### ==========================================================================
 [(pimydoc)config file format]
 

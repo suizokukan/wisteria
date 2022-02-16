@@ -35,7 +35,7 @@
              msgdebug(...)
     ___________________________________________________________________________
 
-    o  _message(obj)
+    o  _message(obj, rule=True)
     o  msgcritical(obj="")
     o  msgdebug(obj="")
     o  msgerror(obj="")
@@ -44,14 +44,12 @@
     o  msgreporttitle(obj="")
     o  msgwarning(obj="")
 """
-from rich import print as rprint
-
 from wisteria.reprfmt import fmt_reporttitle, fmt_error, fmt_critical, fmt_debug, fmt_info
 from wisteria.reprfmt import fmt_report, fmt_warning
 import wisteria.globs
 
 
-def _message(obj):
+def _message(obj, rule=False):
     """
         _message()
 
@@ -59,10 +57,18 @@ def _message(obj):
 
         _______________________________________________________________________
 
-        ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file
+        ARGUMENTS:
+        o  obj, the object to be displayed/written in the report (=log) file
+        o  (bool)rule: if True, wisteria.globs.RICHCONSOLE.rule will be called instead
+                       of wisteria.globs.RICHCONSOLE.print()
+
+                        see https://rich.readthedocs.io/en/stable/reference/rule.html
     """
     if wisteria.globs.OUTPUT[0]:
-        rprint(obj)
+        if not rule:
+            wisteria.globs.RICHCONSOLE.print(obj)
+        else:
+            wisteria.globs.RICHCONSOLE.rule(obj)
     if wisteria.globs.OUTPUT[1]:
         wisteria.globs.FILECONSOLE.print(obj)
 
@@ -154,7 +160,7 @@ def msgreporttitle(obj=""):
     """
     if isinstance(obj, str):
         obj = fmt_reporttitle(obj)
-    _message(obj)
+    _message(obj, rule=True)
 
 
 def msgwarning(obj=""):

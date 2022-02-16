@@ -89,6 +89,7 @@ def parse_output_argument(output_string):
             output_string = output_string.replace("=", "")
             output_string = output_string.replace(reportfile_name, "")
             if not reportfile_name:
+                # no RICHCONSOLE for the moment, hence the call to rprint().
                 rprint("(ERRORID014) Ill-formed --output string: empty reportfile name.")
                 return False, None, None, None, None
 
@@ -118,6 +119,7 @@ def parse_output_argument(output_string):
     if output_string.strip() == "":
         success = True
     else:
+        # no RICHCONSOLE for the moment, hence the call to rprint().
         rprint(f"(ERRORID019) Ill-formed --output string: what is '{output_string}' ?.")
         return False, None, None, None, None
 
