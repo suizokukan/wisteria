@@ -161,7 +161,7 @@ def compute_results():
         """
         if wisteria.globs.ARGS.verbosity == VERBOSITY_NORMAL:
             # the following lines make the progress bar disappear.
-            # the next rprint() will overwrite the spaces that are about
+            # the next call to RICHCONSOLE.print() will overwrite the spaces that are about
             # to be added:
             if PROGRESSBAR_LENGTH is None:
                 console.file.write(" "*console.width)

@@ -99,7 +99,7 @@ step C: main()
 step D: exit_handler()
 - (D/01) closing and removing of tempfile
 - (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-- (D/03) (D/03) exported report
+- (D/03) exported report
 - (D/04) reset console cursor    
 ### ==========================================================================
 [(pimydoc)config file format]

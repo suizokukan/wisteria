@@ -84,23 +84,25 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* (D/03) (D/03) exported report > (D/03) exported report 
 * --skimthedata="no" | "exclude ??? data"
-* "can't handle following data objects:"
-   >
-  "can't handle the following data objects:"  (??? vérifier)
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
   Si c'est le cas, n'afficher ce résultat que si verbosity=3
 * data_object, dataobj_name: c'est le bazar
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
-* no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
-  > no msgxxx() function here since we have just close wisteria.globs.FILECONSOLE_FILEOBJECT
-* the next rprint() will overwrite the spaces that are about
-  >
-  the next call to RICHCONSOLE.print() will overwrite the spaces that are about
 
+[DONE] task-293
+
+Minor improvements in messages, comments and documentation.
+
+    * slightly improved a message in report_section_b1d()
+    * slightly improved pimydoc "code structure" section
+    * slightly improved a comment in compute_results():erase_progress_bar()
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+            
 [DONE] task-292
 
 Improved report aspect by using rich.rule() function.

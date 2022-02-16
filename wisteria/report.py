@@ -1095,7 +1095,7 @@ def report_section_b1d(results,
         else:
             msgreport(f"* ({fmt_serializer(serializer)}) "
                       f"Serializer {fmt_serializer(serializer)} "
-                      "can't handle following data objects:")
+                      "can't handle the following data objects:")
             for dataobj in _list:
                 msgreport(f"  - {fmt_data(dataobj)}")
     msgreport()
