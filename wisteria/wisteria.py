@@ -312,7 +312,7 @@ PARSER.add_argument(
              VERBOSITY_DETAILS,
              VERBOSITY_DEBUG),
     help="Verbosity level: 0(=minimal), 1(=normal), 2(=normal+details), 3(=debug). "
-    "Please notice that --verbosity has no effect upon --report.")
+    "Please notice that --verbosity has no effect upon --report. See also the --mute argument.")
 
 PARSER.add_argument(
     '--version', '-v',

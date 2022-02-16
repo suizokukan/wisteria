@@ -102,6 +102,15 @@ What's next ?
 
 [CURRENT] v. 0.2.1
 
+[DONE] task-288
+
+Documentation: improved help message for --verbosity option.
+
+    * documentation: improved help message for --verbosity option.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] v. 0.2
 
 Code has been cleaned up and is fully compatible with Python3.8 .
