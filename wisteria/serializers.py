@@ -1311,7 +1311,7 @@ def serializer_yajl(action="serialize",
     # action == "serialize"
     # ---------------------
     if action != "serialize":
-        raise WisteriaError(f"(ERRORID051) Unknown 'action' keyword '{action}'.")
+        raise WisteriaError(f"(ERRORID047) Unknown 'action' keyword '{action}'.")
 
     # MEMOVERUSE# ---- --memoveruse ? -----------------------------------------------------
     # MEMOVERUSEif 'Python' in wisteria.globs.ARGS.memoveruse:

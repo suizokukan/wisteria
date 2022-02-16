@@ -1229,7 +1229,7 @@ def checkup():
                           "as a DATA key but also as an UNAVAILABLE_DATA key.")
     for object_data_name in wisteria.globs.DATA:
         if object_data_name in wisteria.globs.UNAVAILABLE_DATA:
-            errors.append(f"(ERRORID041) '{object_data_name}' is defined "
+            errors.append(f"(ERRORID043) '{object_data_name}' is defined "
                           "as a DATA key but also as an UNAVAILABLE_DATA key.")
 
     if errors:

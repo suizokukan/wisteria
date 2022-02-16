@@ -102,6 +102,17 @@ What's next ?
 
 [CURRENT] v. 0.2.1
 
+[DONE] task-290
+
+Renumbered the error codes, some were duplicates or missing.
+
+    * renumbered the error codes, some were duplicates or missing:
+      - serializers.py ERRORID051 > ERRORID047
+      - wisteria.py ERRORID041 > ERRORID043
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+
 [DONE] task-289
 
 Improved report title appearance.
