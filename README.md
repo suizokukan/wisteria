@@ -95,9 +95,9 @@ After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ w
 
 ## [1] installation
 
-### installation with pip (best method, if possible)
+### installation with pip
 
-Ideally — if `$ python3 --version` is Python3.8+ — you may write:
+If `$ python3 --version` is Python3.8+ — you may write:
 
 ```
 $ pip install wisteria
@@ -124,7 +124,7 @@ $ wisteria --checkup
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
 ```
 
-### installation with git/poetry/a compiled version of Python3.8.11 (not so bad, if your python3 isn't Python3.8+)
+### installation with git/poetry/a compiled version of Python3.8.11 (if your python3 isn't Python3.8+)
 
 Feel free to choose another Python's version and another directory where to compile Python. Code below for Debian systems:
 
@@ -154,7 +154,7 @@ Feel free to choose another Python's version and another directory where to comp
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
 ```
 
-### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies (as a last resort)
+### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies
 
 Feel free to choose another Python's version and another directory where to compile Python. Code below for Debian systems:
 

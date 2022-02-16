@@ -101,8 +101,16 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2
-* doc: installer/réinstaller poetry:     alkhinoos@alkhinoos2 ~/wisteria (main)> curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 
+[DONE] task-287
+
+Improved documentation.
+
+    * improved documentation in README.md (installation section)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-286
 
 Improved a message displayed by partial_report__data().
