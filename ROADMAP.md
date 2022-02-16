@@ -100,6 +100,8 @@ What's next ?
 
 ===============================================================================
 
+[CURRENT] v. 0.2.1
+
 [DONE] v. 0.2
 
 Code has been cleaned up and is fully compatible with Python3.8 .
