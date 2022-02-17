@@ -92,6 +92,16 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-299
+
+Improved README.md (installation)
+
+    * improved README.md (installation)
+    * updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+        
 [DONE] task-298
 
 Improved doc. in docstrings, sorted functions alphabetically.

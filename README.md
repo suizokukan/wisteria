@@ -87,7 +87,7 @@ After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ w
 
 ## [0.1] What about the name ?
 
-`Wisteria` is the project's name; package name is `wisteria` for Python, [pipy](https://pypi.org/project/iaswn/) and Poetry.
+`Wisteria` is the project's name; package name is `wisteria` for Python, [pipy](https://pypi.org/project/wisteria/) and Poetry.
 
 `Wisteria` is the name of the beautiful flowers under which some of the code was written.
 
@@ -122,6 +122,11 @@ $ wisteria --checkup
 
     $ ~/.poetry/bin/poetry run ./bin/wisteria --help
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
+
+    Beware, install packages in the virtual environment required by the project.
+    By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
+    
+    $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn
 ```
 
 ### installation with git/poetry/a compiled version of Python3.8.11 (if your python3 isn't Python3.8+)
@@ -152,6 +157,11 @@ Feel free to choose another Python's version and another directory where to comp
 
     $ ~/.poetry/bin/poetry run ./bin/wisteria --help
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
+
+    Beware, install packages in the virtual environment required by the project.
+    By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
+    
+    $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn    
 ```
 
 ### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies
@@ -167,6 +177,11 @@ Feel free to choose another Python's version and another directory where to comp
 
     $ ./venv/bin/python ./bin/wisteria --help
     $ ./venv/bin/python ./bin/wisteria --checkup
+
+    Beware, install packages in the virtual environment required by the project.
+    By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
+    
+    $ ./venv/bin/python -m pip install iaswn    
 ```
 
 On Windows systems, don't forget to install [WMI](https://pypi.org/project/WMI/) package too.
