@@ -92,6 +92,15 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-294
+
+Updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`.
+
+    * updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+
 [DONE] task-293
 
 Minor improvements in messages, comments and documentation.
