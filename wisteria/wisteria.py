@@ -202,7 +202,8 @@ PARSER.add_argument(
     '--cfgfile',
     action='store',
     default=DEFAULT_CONFIGFILE_NAME,
-    help="Config file to be read.")
+    help="Config file to be read. Use --downloadconfigfile "
+         "to download the default config file.")
 
 PARSER.add_argument(
     '--checkup',
@@ -220,7 +221,7 @@ PARSER.add_argument(
 PARSER.add_argument(
     '--downloadconfigfile',
     action='store_true',
-    help="Download default config file and exit.")
+    help="Download default config file and exit. See --cfgfile to use a specific config file.")
 
 PARSER.add_argument(
     '--exportreport',
