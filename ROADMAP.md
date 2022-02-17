@@ -92,6 +92,17 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-295
+
+Fixed a bug in report.py: A4 and A5 sections are now correctly defined
+in the STR2REPORTSECTION variable.
+
+    * Fixed a bug in report.py: A4 and A5 sections are now correctly
+      defined in the STR2REPORTSECTION variable. 
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+    
 [DONE] task-294
 
 Updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`.
