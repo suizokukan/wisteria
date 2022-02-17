@@ -2473,7 +2473,7 @@ STR2REPORTSECTION = {
         "A": (report_section_a1,
               report_section_a2,
               report_section_a3,
-              report_section_a4,              
+              report_section_a4,
               report_section_a5,),
         "A1": (report_section_a1,),
         "A2": (report_section_a2,),

@@ -92,6 +92,15 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-297
+
+Removed useless space in reports.py .
+
+    * removed useless space in reports.py .
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+
 [DONE] task-296
 
 Improved help message for --cfgfile and --downloadconfigfile options.
