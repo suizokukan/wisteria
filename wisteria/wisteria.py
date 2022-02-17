@@ -79,6 +79,7 @@
 
     ___________________________________________________________________________
 
+    o  check_str2reportsection_keys()
     o  exit_handler()
     o  checkup()
     o  main()

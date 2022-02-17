@@ -25,9 +25,9 @@
 
     ___________________________________________________________________________
 
+    o  compute_results(config, serializer1, serializer2, cmpdata)
     o  get_serializers_selection(serializer1, serializer2)
     o  get_data_selection(cmpdata, config)
-    o  compute_results(config, serializer1, serializer2, cmpdata)
     o  init_planned_transcodings(serializer1, serializer2, cmpdata, config)
 """
 from rich.console import Console
@@ -46,88 +46,6 @@ from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_classname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.cwc.cwc_utils import modulefullrealname_to_waemodulename
-
-
-def get_serializers_selection(serializer1,
-                              serializer2):
-    """
-        get_serializers_selection()
-
-        Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer2>.
-
-        _______________________________________________________________________
-
-        ARGUMENTS:
-        o    <serializer1> : value returned by read_cmpstring()
-        o    <serializer2> : value returned by read_cmpstring()
-
-        RETURNED VALUE: a tuple of str, i.e. all serializers defined by (str)<serializer1>,
-                        (str)<serializer2>
-    """
-    res = set()
-
-    if serializer1 == 'all':
-        for serializer in wisteria.globs.SERIALIZERS:
-            res.add(serializer)
-    else:
-        res.add(serializer1)
-
-    if serializer2 == 'all':
-        for serializer in wisteria.globs.SERIALIZERS:
-            res.add(serializer)
-    else:
-        res.add(serializer2)
-
-    return tuple(res)
-
-
-def get_data_selection(cmpdata,
-                       config):
-    """
-        get_data_selection()
-
-        Return a tuple of the data objects names selected by the <config>.
-
-        _______________________________________________________________________
-
-        ARGUMENTS:
-        o  cmpdata: (str)'all', 'ini', 'cwc' or 'allbutcwc'
-        o  config:  (dict) dict returned by read_cfgfile()
-
-        RETURNED VALUE: (tuple) a tuple of (str)data keys
-    """
-    res = []
-
-    if cmpdata == 'all':
-        res = tuple(wisteria.globs.DATA.keys())
-    elif cmpdata == 'ini':
-        if config["data selection"]["data selection"] == 'all':
-            res = tuple(config["objects"].keys())
-        elif config["data selection"]["data selection"] == 'only if yes':
-            res = tuple(data_name for data_name in config["data objects"]
-                        if config["data objects"][data_name])
-        elif config["data selection"]["data selection"].startswith("data set/"):
-            res = tuple(config["data sets"][config["data selection"]["data selection"]])
-        else:
-            raise WisteriaError(
-                "(ERRORID020) "
-                "Can't understand a value given to \\[data selection]'data selection': "
-                f"what is '{config['data selection']['data selection']}' ? "
-                "Known values are 'all', 'ini' and 'data set/xxx' "
-                "where xxx is a string.")
-    elif cmpdata == 'cwc':
-        res = tuple(data_name for data_name in wisteria.globs.DATA
-                    if is_a_cwc_name(data_name))
-    elif cmpdata == 'allbutcwc':
-        res = tuple(data_name for data_name in wisteria.globs.DATA
-                    if not is_a_cwc_name(data_name))
-    else:
-        raise WisteriaError(
-            "(ERRORID021) Can't understand a value given to the 'data' part in --cmp: "
-            f"what is '{cmpdata}' ? "
-            "Known values are 'all', 'cwc' and 'ini'. ")
-
-    return res
 
 
 def compute_results():
@@ -350,6 +268,88 @@ def compute_results():
         # ⋅* -102: internal error, an error occured in main()
         # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
         return None, -101
+
+
+def get_serializers_selection(serializer1,
+                              serializer2):
+    """
+        get_serializers_selection()
+
+        Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer2>.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o    <serializer1> : value returned by read_cmpstring()
+        o    <serializer2> : value returned by read_cmpstring()
+
+        RETURNED VALUE: a tuple of str, i.e. all serializers defined by (str)<serializer1>,
+                        (str)<serializer2>
+    """
+    res = set()
+
+    if serializer1 == 'all':
+        for serializer in wisteria.globs.SERIALIZERS:
+            res.add(serializer)
+    else:
+        res.add(serializer1)
+
+    if serializer2 == 'all':
+        for serializer in wisteria.globs.SERIALIZERS:
+            res.add(serializer)
+    else:
+        res.add(serializer2)
+
+    return tuple(res)
+
+
+def get_data_selection(cmpdata,
+                       config):
+    """
+        get_data_selection()
+
+        Return a tuple of the data objects names selected by the <config>.
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  cmpdata: (str)'all', 'ini', 'cwc' or 'allbutcwc'
+        o  config:  (dict) dict returned by read_cfgfile()
+
+        RETURNED VALUE: (tuple) a tuple of (str)data keys
+    """
+    res = []
+
+    if cmpdata == 'all':
+        res = tuple(wisteria.globs.DATA.keys())
+    elif cmpdata == 'ini':
+        if config["data selection"]["data selection"] == 'all':
+            res = tuple(config["objects"].keys())
+        elif config["data selection"]["data selection"] == 'only if yes':
+            res = tuple(data_name for data_name in config["data objects"]
+                        if config["data objects"][data_name])
+        elif config["data selection"]["data selection"].startswith("data set/"):
+            res = tuple(config["data sets"][config["data selection"]["data selection"]])
+        else:
+            raise WisteriaError(
+                "(ERRORID020) "
+                "Can't understand a value given to \\[data selection]'data selection': "
+                f"what is '{config['data selection']['data selection']}' ? "
+                "Known values are 'all', 'ini' and 'data set/xxx' "
+                "where xxx is a string.")
+    elif cmpdata == 'cwc':
+        res = tuple(data_name for data_name in wisteria.globs.DATA
+                    if is_a_cwc_name(data_name))
+    elif cmpdata == 'allbutcwc':
+        res = tuple(data_name for data_name in wisteria.globs.DATA
+                    if not is_a_cwc_name(data_name))
+    else:
+        raise WisteriaError(
+            "(ERRORID021) Can't understand a value given to the 'data' part in --cmp: "
+            f"what is '{cmpdata}' ? "
+            "Known values are 'all', 'cwc' and 'ini'. ")
+
+    return res
 
 
 def init_planned_transcodings(serializer1,

@@ -31,6 +31,7 @@
     o  get_python_version()
     o  normpath(path)
     o  shortenedstr(string, maximallength)
+    o  strdigest(string)
     o  trytoimport(module_name)
 """
 # BEWARE! Please use only verby basic imports since this file is used in

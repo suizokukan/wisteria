@@ -30,7 +30,6 @@
     o  check(config)
     o  constant_factory()
     o  init_data()
-    o  init_data__update_from_cfgfile_settings(config)
     o  works_as_expected(data_name, obj=None)
 """
 import array

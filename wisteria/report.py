@@ -25,8 +25,8 @@
 
     ___________________________________________________________________________
 
-    o  humanratio(ratio)
     o  cmpdata2phrase(cmpdata)
+    o  humanratio(ratio)
     o  open_reportfile(mode=None)
     o  ratio2phrase(ratio, base_string)
 
@@ -48,6 +48,9 @@
     o  report_section_c1b(results, s1s2d)
     o  report_section_c2a(results, s1s2d)
     o  report_section_c2b(results, s1s2d)
+    o  report_section_c2c__allvsall(results, s1s2d)
+    o  report_section_c2c__serializervsall(results, s1s2d)
+    o  report_section_c2c__serializervsserializer(results, s1s2d)
     o  report_section_c2c(results, s1s2d)
     o  report_section_d1a(results, s1s2d)
     o  report_section_d1b(results, s1s2d)
@@ -76,6 +79,34 @@ from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 from wisteria.matplotgraphs import hbar2png
 from wisteria.cwc.cwc_utils import select__works_as_expected__function
+
+
+def cmpdata2phrase(cmpdata):
+    """
+        cmpdata2phrase()
+
+        Convert <cmpdata> to a phrase describing <cmpdata>.
+
+        _______________________________________________________________________
+
+        ARGUMENT: (str)<cmpdata>: 'all', 'ini', 'cwc' or 'allbutcwc'
+
+        RETURNED VALUE: (str)a string describing <cmpdata>
+    """
+    assert cmpdata in ('all', 'ini', 'cwc', 'allbutcwc')
+
+    if cmpdata == 'all':
+        return "According to the tests " \
+            "carried out on all data, "
+    if cmpdata == 'ini':
+        return "According to the tests " \
+            "carried out on the data defined in the configuration file, "
+    if cmpdata == 'allbutcwc':
+        return "According to the tests " \
+            "carried out on all data but cwc data, "
+    # cmpdata == 'cwc'
+    return "According to the tests " \
+        "conducted on data of the 'comparing what is comparable' type, "
 
 
 def humanratio(ratio,
@@ -151,34 +182,6 @@ def humanratio(ratio,
             f"{ratio2_str} * {ratio:.3f} = {numbersfmt(ratio2)} {unit_str} * {ratio:.3f} " \
             f"= {ratio1_str} = {numbersfmt(ratio1)} {unit_str}"
     return res
-
-
-def cmpdata2phrase(cmpdata):
-    """
-        cmpdata2phrase()
-
-        Convert <cmpdata> to a phrase describing <cmpdata>.
-
-        _______________________________________________________________________
-
-        ARGUMENT: (str)<cmpdata>: 'all', 'ini', 'cwc' or 'allbutcwc'
-
-        RETURNED VALUE: (str)a string describing <cmpdata>
-    """
-    assert cmpdata in ('all', 'ini', 'cwc', 'allbutcwc')
-
-    if cmpdata == 'all':
-        return "According to the tests " \
-            "carried out on all data, "
-    if cmpdata == 'ini':
-        return "According to the tests " \
-            "carried out on the data defined in the configuration file, "
-    if cmpdata == 'allbutcwc':
-        return "According to the tests " \
-            "carried out on all data but cwc data, "
-    # cmpdata == 'cwc'
-    return "According to the tests " \
-        "conducted on data of the 'comparing what is comparable' type, "
 
 
 def open_reportfile(mode=None):

@@ -25,6 +25,7 @@
 
     ___________________________________________________________________________
 
+    o  help_helpcommandlineargument()
     o  help_graphsfilenames()
 """
 from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
