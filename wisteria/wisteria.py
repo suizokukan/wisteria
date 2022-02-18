@@ -76,7 +76,6 @@
     ⋅* -101: internal error, an error occured while computing the results
     ⋅* -102: internal error, an error occured in main()
     ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-
     ___________________________________________________________________________
 
     o  check_str2reportsection_keys()
@@ -694,7 +693,6 @@ def check_str2reportsection_keys():
 
         Check that all keys in STR2REPORTSECTION_KEYS are defined
         in STR2REPORTSECTION, and vice-versa.
-
         _______________________________________________________________________
 
         RETURNED VALUE: (bool)True if all keys are well defined.
@@ -1487,7 +1485,6 @@ def main():
 
         Main entrypoint in the project. This method is called when Wisteria is called from outside,
         e.g. by the command line.
-
         _______________________________________________________________________
 
         RETURNED VALUE:

@@ -25,8 +25,6 @@
 
     Use DMFile to open on disk and in-memory files. You may use DMFile objects
     with Python 'with' statement.
-
-
     ___________________________________________________________________________
 
     o  DMFile class
@@ -40,7 +38,6 @@ class DMFile:
 
         Disk/in-memory file. Very simple class allowing to open in-memory and on disk
         files.
-
         _______________________________________________________________________
 
         o  __enter__(self)

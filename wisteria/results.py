@@ -276,7 +276,6 @@ def get_serializers_selection(serializer1,
         get_serializers_selection()
 
         Return a tuple of all serializers defined by (str)<serializer1>, (str)<serializer2>.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -309,7 +308,6 @@ def get_data_selection(cmpdata,
         get_data_selection()
 
         Return a tuple of the data objects names selected by the <config>.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -366,8 +364,6 @@ def init_planned_transcodings(serializer1,
         ⋅    (str)serializer, (str)data_name, (str)fingerprint
         ⋅
         ⋅Initialized by results.py:init_planned_transcodings()
-
-
         _______________________________________________________________________
 
         ARGUMENTS:

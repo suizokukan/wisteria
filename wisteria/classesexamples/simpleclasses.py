@@ -22,8 +22,6 @@
     Wisteria project : wisteria/classesexamples/simpleclasses.py
 
     Some extremely simple classes.
-
-
     ___________________________________________________________________________
 
     o  MetaClass class

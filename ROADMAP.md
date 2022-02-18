@@ -84,6 +84,8 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
+* writingconventions.md
+* classes.md
 * --skimthedata="no" | "exclude ??? data"
 * généraliser le mot 'transcoding'
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
@@ -92,6 +94,15 @@ What's next ?
 * avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-300
+
+Improved code readibility by removing useless blank lines.
+
+    * improved code readibility by removing useless blank lines.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+        
 [DONE] task-299
 
 Improved README.md (installation)

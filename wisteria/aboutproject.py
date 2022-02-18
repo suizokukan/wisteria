@@ -22,16 +22,14 @@
     Wisteria project : wisteria/aboutproject.py
 
     Global constants defining the project : version number, author, license, etc.
-
     ___________________________________________________________________________
 
-
-   o __author__      : (str) project's initial author
-   o __email__       : (str) project's official email
-   o __license__     : (str) project's license
-   o __location__    : (str) project's official site
-   o __projectname__ : (str) Official project's name
-   o __version__     : (str) project's version
+    o __author__      : (str) project's initial author
+    o __email__       : (str) project's official email
+    o __license__     : (str) project's license
+    o __location__    : (str) project's official site
+    o __projectname__ : (str) Official project's name
+    o __version__     : (str) project's version
                        To propagate the project's version across all the
                        project, see the propagate_versionnumber.py script.
 """

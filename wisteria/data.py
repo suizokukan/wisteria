@@ -22,8 +22,6 @@
     Wisteria project : wisteria/data.py
 
     All objects used as data by serializers are stored in the DATA dict.
-
-
     ___________________________________________________________________________
 
     o  anyfunc()
@@ -73,7 +71,6 @@ def check(config):
           are all DATA/UNAVAILABLE_DATA keys defined in the configuration file, and vice-versa ?
 
         This function should be called after a call to read_cfgfile().
-
         ________________________________________________________________________
 
         ARGUMENT: (dict)config, the value returned by read_cfgfile()
@@ -392,8 +389,6 @@ def works_as_expected(data_name,
         works_as_expected()
 
         works_as_expected() function for basic types defined DATA/UNAVAILABLE_DATA.
-
-
         _______________________________________________________________________
 
         (pimydoc)works_as_expected arguments and returned value

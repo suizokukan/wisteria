@@ -27,7 +27,6 @@
     - list
     - dict
         Note that dicts have only non string keys.
-
     ___________________________________________________________________________
 
     o  SimpleClass class

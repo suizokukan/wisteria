@@ -25,7 +25,6 @@
 
     Code largely inspired by
         https://matplotlib.org/stable/gallery/lines_bars_and_markers/gradient_bar.html
-
     ___________________________________________________________________________
 
     o  gradient_image(axes, extent, direction=0.5, cmap_range=(0, 1), **kwargs)
@@ -53,7 +52,6 @@ def gradient_image(axes,
 
             Code largely inspired by
                 https://matplotlib.org/stable/gallery/lines_bars_and_markers/gradient_bar.html
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -93,7 +91,6 @@ def gradient_bar(axes,
 
             Code largely inspired by
                 https://matplotlib.org/stable/gallery/lines_bars_and_markers/gradient_bar.html
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -123,7 +120,6 @@ def hbar2png(results_hall_attribute,
 
             Code largely inspired by
                 https://matplotlib.org/stable/gallery/lines_bars_and_markers/gradient_bar.html
-
             ___________________________________________________________________
 
             ARGUMENTS:

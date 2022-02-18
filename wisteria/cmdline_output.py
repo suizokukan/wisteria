@@ -24,7 +24,6 @@
     Just the parsing of the --output argument. No msgxxx() method here since
     at this stage of the program no msgxxx() methods have not yet be
     initialized.
-
     ___________________________________________________________________________
 
     o  parse_output_argument(output_string)
@@ -42,7 +41,6 @@ def parse_output_argument(output_string):
         parse_output_argument()
 
         Parse the --output string <output_string>.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)output_string, the --output string

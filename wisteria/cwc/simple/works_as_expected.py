@@ -22,8 +22,6 @@
     Wisteria project : wisteria/cwc/simple/works_as_expected.py
 
     initialize() and works_as_expected() functions for all cwc/simple/ classes.
-
-
     ___________________________________________________________________________
 
     o  initialize(obj)
@@ -34,7 +32,6 @@
 def initialize(obj):
     """
         initialize() function
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be initialized
@@ -50,8 +47,6 @@ def works_as_expected(data_name,
         works_as_expected()
 
         works_as_expected() function for basic types defined DATA/UNAVAILABLE_DATA.
-
-
         _______________________________________________________________________
 
         (pimydoc)works_as_expected arguments and returned value

@@ -22,7 +22,6 @@
     Wisteria project : wisteria/globs.py
 
     Global definitions.
-
     ___________________________________________________________________________
 
     o  ARGS

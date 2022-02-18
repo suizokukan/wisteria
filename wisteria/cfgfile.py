@@ -22,7 +22,6 @@
     Wisteria project : wisteria/cfgfile.py
 
     Config file reading & downloading.
-
     ___________________________________________________________________________
 
     o  downloadconfigfile()
@@ -76,7 +75,6 @@ def read_cfgfile(filename):
         read_cfgfile()
 
         Read the configuration file <filename>, return the corresponding dict.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)filename, the file to be read.

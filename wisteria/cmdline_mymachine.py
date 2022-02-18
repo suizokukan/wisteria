@@ -22,7 +22,6 @@
     Wisteria project : wisteria/cmdline_mymachine.py
 
     Display informations about the current machine.
-
     ___________________________________________________________________________
 
     o  mymachine(detailslevel=1)
@@ -45,7 +44,6 @@ def mymachine(detailslevel=1):
         - platform
         - psutil        (external package, to be displayed)
         - py-cpuinfo    (external package, to be displayed)
-
         _______________________________________________________________________
 
         ARGUMENT: (int)detailslevel:

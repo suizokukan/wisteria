@@ -24,7 +24,6 @@
     All known serializers are defined here, in the SERIALIZERS dict. Each serializer
     has its own serializer_xxx function.
     A reference to each module imported is added in the MODULES dict.
-
     ___________________________________________________________________________
 
     o  _len(obj)
@@ -113,7 +112,6 @@ def _len(obj):
         _len()
 
         Return the length of <obj>
-
         _______________________________________________________________________
 
         ARGUMENT: (bytes|str)<obj>
@@ -130,7 +128,6 @@ def win_memory():
         win_memory()
 
         Compute using WMI the quantity of memory used by the current process.
-
         _______________________________________________________________________
 
         RETURNED VALUE: (int)the number of bytes used by the current process.
@@ -160,7 +157,6 @@ def serializer_iaswn(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -299,7 +295,6 @@ def serializer_json(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -438,7 +433,6 @@ def serializer_jsonpickle(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -576,7 +570,6 @@ def serializer_jsonpickle_keystrue(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -715,7 +708,6 @@ def serializer_marshal(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -854,7 +846,6 @@ def serializer_pickle(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -993,7 +984,6 @@ def serializer_pyyaml(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1132,7 +1122,6 @@ def serializer_simpleion(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1271,7 +1260,6 @@ def serializer_yajl(action="serialize",
           is raised. If an internal error happpens, a WisteriaError exception is raised.
 
         This function assumes that the concerned module has already be imported.
-
         _______________________________________________________________________
 
         ARGUMENTS:

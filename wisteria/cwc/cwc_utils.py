@@ -41,8 +41,6 @@
     ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
     ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
     ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
     ___________________________________________________________________________
 
     o  are_two_cwc_variants_of_the_same_cwc(name1, name2)
@@ -95,7 +93,6 @@ def count_dataobjs_number_without_cwc_variant(dataobjs):
              "wisteria.cwc.pgnreader.iaswn.ChessGames": None,
              "wisteria.cwc.pgnreader.xyz.ChessGames": None,
              "int": None,}      > the method will return 2
-
         _______________________________________________________________________
 
         ARGUMENT: (set of str)<dataobjs>, e.g.
@@ -148,8 +145,6 @@ def is_a_cwc_name(data_object_name):
         ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
         ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
         ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
         _______________________________________________________________________
 
         ARGUMENT: (str)data_object_name, the string to be checked.
@@ -189,8 +184,6 @@ def is_this_an_appropriate_module_for_serializer(data_name__module,
         ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
         ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
         ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -228,8 +221,6 @@ def modulefullrealname_to_classname(modulefullrealname):
         ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
         ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
         ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
         _______________________________________________________________________
 
         ARGUMENT: (str)modulefullrealname, the module full real name to be converted
@@ -263,8 +254,6 @@ def modulefullrealname_to_modulerealname(modulefullrealname):
         ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
         ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
         ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
         _______________________________________________________________________
 
         ARGUMENT: (str)modulefullrealname, the module full real name to be converted
@@ -281,7 +270,6 @@ def modulefullrealname_to_waemodulename(modulefullrealname):
         Convert module full real name into a wae('works as expected') module name, something like:
                 "wisteria.cwc.pgnreader.cwc_default.ChessGames" >
                         "wisteria.cwc.pgnreader.works_as_expected"
-
         _______________________________________________________________________
 
         ARGUMENT: (str)modulefullrealname, the module full real name to be converted
@@ -319,8 +307,6 @@ def moduleininame_to_modulefullrealname(moduleininame):
         ⋅- conversion from `modulefullrealname` to `modulerealname` is made by
         ⋅  function cwc_utils.py:modulefullrealname_to_modulerealname()
         ⋅- DATA keys (for cwc modules) use `moduleininame`, NOT `modulefullrealname`
-
-
         _______________________________________________________________________
 
         ARGUMENT: (str)moduleininame, the module ini name to be converted
@@ -335,8 +321,6 @@ def select__works_as_expected__function(data_object_name):
         select__works_as_expected__function()
 
         Return a "works_as_expected" function apppropriate to <data_object_name>.
-
-
         _______________________________________________________________________
 
         ARGUMENT: (str)<data_object_name>
@@ -361,13 +345,21 @@ def serializer_is_compatible_with_dataobj(serializer,
         serializer_is_compatible_with_dataobj()
 
         Return True if <serializer> can handle <dataobj>, i.e.
-        (a) if <dataobj> is not a cwc name (since all serializers known how to handle
-            non-cwc dataobjs.
+        (a) if <dataobj> is not a cwc name (since all serializers know how to handle
+            non-cwc dataobjs).
         (b) if <dataobj> is a cwc name and if <serializer> is compatible with this <dataobj>,
             e.g. pickle knows how to handle "wisteria.cwc.pgnreader.cwc_default.ChessGames",
                         ... since SERIALIZERS["pickle"].cwc is "default"
                  iaswn knows how to handle "wisteria.cwc.pgnreader.iaswn.ChessGames",
                         ... since SERIALIZERS["iaswn"].cwc is "iaswn"
+
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  (str)serializer
+        o  (str)dataobj
+
+        RETURNED VALUE: (bool)
     """
     if not is_a_cwc_name(dataobj):
         return True
@@ -381,7 +373,6 @@ def shorten_cwc_name(cwc_name):
         shorten_cwc_name()
 
         Shorten <cwc_name> by removing a useless prefix.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)cwc_name, the string to be shortened

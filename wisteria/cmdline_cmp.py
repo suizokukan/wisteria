@@ -22,7 +22,6 @@
     Wisteria project : wisteria/cmdline_cmp.py
 
     Just the parsing of the --cmp argument.
-
     ___________________________________________________________________________
 
     o  read_cmpstring(cmpstring)
@@ -40,7 +39,6 @@ def read_cmpstring(cmpstring):
         read_cmpstring()
 
         Return a simpler representation of (str)<cmpstring>.
-
 
         (pimydoc)--cmp format
         ⋅
@@ -69,8 +67,6 @@ def read_cmpstring(cmpstring):
         ⋅                              string is used as help message by the
         ⋅                              command line --help argument.
         ⋅
-
-
         _______________________________________________________________________
 
         ARGUMENT: (str)cmpstring, the source string to be read.

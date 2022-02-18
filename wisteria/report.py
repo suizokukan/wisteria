@@ -22,7 +22,6 @@
     Wisteria project : wisteria/report.py
 
     Functions that print the report, especially report().
-
     ___________________________________________________________________________
 
     o  cmpdata2phrase(cmpdata)
@@ -86,7 +85,6 @@ def cmpdata2phrase(cmpdata):
         cmpdata2phrase()
 
         Convert <cmpdata> to a phrase describing <cmpdata>.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)<cmpdata>: 'all', 'ini', 'cwc' or 'allbutcwc'
@@ -124,7 +122,6 @@ def humanratio(ratio,
 
         Use <numbersformat> to modify the appearance of numbers in the explanation.
         Please note all ratios computed are not affected by <numbersformat>.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -190,7 +187,6 @@ def open_reportfile(mode=None):
 
         Open the report file, as defined in wisteria.globs.OUTPUT.
         Note that this file is closed by exit_handler().
-
         _______________________________________________________________________
 
         ARGUMENT: (None|str)mode: 'r', 'w'... if None, will be wisteria.globs.OUTPUT[2]
@@ -209,7 +205,6 @@ def ratio2phrase(ratio,
 
         Convert a (float)<ratio> (e.g. 0.5, 2, 4...) to an adverbial phrase
         like "much slower".
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -301,8 +296,6 @@ def partial_report__data(show_all_data,
         partial_report__data()
 
         Display a mini report about data.
-
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -387,8 +380,6 @@ def partial_report__serializers(show_all_serializers,
         partial_report__serializers()
 
         Display a mini report about serializers.
-
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -817,7 +808,6 @@ def report_section_b1a(results,
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
         ⋅* graphs    : graphic visualizations
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -914,7 +904,6 @@ def report_section_b1b(results,
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
         ⋅* graphs    : graphic visualizations
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -992,7 +981,6 @@ def report_section_b1c(results,
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
         ⋅* graphs    : graphic visualizations
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1071,7 +1059,6 @@ def report_section_b1d(results,
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
         ⋅* graphs    : graphic visualizations
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1142,7 +1129,6 @@ def report_section_b2a(results,
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
         ⋅* graphs    : graphic visualizations
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1239,7 +1225,6 @@ def report_section_b2b(results,
         ⋅    . D1a   : informations about the machine (no extensive details)
         ⋅    . D1b   : informations about the machine (extensive details)
         ⋅* graphs    : graphic visualizations
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1463,7 +1448,6 @@ def report_section_c1b(results,
             show()
 
             Print the message for serializer (str)<serializer> and for <cmpdata>.
-
             ___________________________________________________________________
 
             ARGUMENTS:
@@ -1714,7 +1698,6 @@ def report_section_c2c__allvsall(results,
 
         Sub-function of report_section_c2c() in the case where
         seria1==seria2=='all'.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -1800,7 +1783,6 @@ def report_section_c2c__serializervsall(results,
 
         Sub-function of report_section_c2c() in the case where
         seria1!='all' and where seria2=='all'.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -2002,7 +1984,6 @@ def report_section_c2c__serializervsserializer(results,
 
         Sub-function of report_section_c2c() in the case where
         seria1 and seria2 !='all'.
-
         _______________________________________________________________________
 
         ARGUMENTS:

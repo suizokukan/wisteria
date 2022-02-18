@@ -22,8 +22,6 @@
     Wisteria project : wisteria/serializers_classes.py
 
     All classes required to handle serializers.
-
-
     ___________________________________________________________________________
 
     o  SerializersDataNMVH class
@@ -62,7 +60,6 @@ class SerializerData:
         SerializerData class
 
         SerializerData are used to store infos. about serializers in the SERIALIZERS dict.
-
         _______________________________________________________________________
 
         instance attributes:
@@ -94,7 +91,6 @@ class SerializerData:
                  comment=None):
         """
             SerializerData.__init__()
-
             ___________________________________________________________________
 
             ARGUMENTS:
@@ -121,7 +117,6 @@ class SerializerData:
             SerializerData.__repr__()
 
             For the check up output, see .checkup_repr().
-
             ___________________________________________________________________
 
             RETURNED VALUE: (str)a basic representation of <self>.
@@ -137,7 +132,6 @@ class SerializerData:
             SerializerData.checkup_repr()
 
             Does the same as .__repr__() but for the check up output.
-
             ___________________________________________________________________
 
             RETURNED VALUE: (str)a basic representation of <self>.
@@ -151,7 +145,6 @@ class SerializerData:
             SerializerData.simple_repr()
 
             Does the same as .__repr__() but for a simple output.
-
             ___________________________________________________________________
 
             RETURNED VALUE: (str)a basic representation of <self>.
@@ -166,7 +159,6 @@ class SerializerDataObj:
         SerializerDataObj class
 
         Nothing but an easy way to store (serializer, dataobj)
-
         _______________________________________________________________________
 
         methods:
@@ -185,7 +177,6 @@ class SerializationResult:
         SerializationResult class
 
         Class used to store tests results in a SerializationResults object.
-
         _______________________________________________________________________
 
         instance attributes:
@@ -205,7 +196,6 @@ class SerializationResult:
     def __init__(self):
         """
             SerializationResult.__init__()
-
             ___________________________________________________________________
 
             ARGUMENTS:
@@ -245,7 +235,6 @@ class SerializationResults(dict):
                 SerializationResults[(str)serializer][(str)dataobj] = SerializationResult object
 
         Do not forget to call .finish_initialization() once you have finished initializing <self>.
-
         _______________________________________________________________________
 
         instance attributes:
@@ -351,7 +340,6 @@ class SerializationResults(dict):
             (=placed before <serializer>) and the less well placed
             serializers than <serializer> (=placed after <serializer>)
             in relation to <attribute>.
-
             ___________________________________________________________________
 
             ARGUMENTS:
@@ -381,7 +369,6 @@ class SerializationResults(dict):
             count_serializers_compatible_with_dataobj()
 
             Return the number of serializer(s) compatible with <dataobj>.
-
             ___________________________________________________________________
 
             ARGUMENT: (str)dataobj
@@ -402,7 +389,6 @@ class SerializationResults(dict):
             Once the initialization of <self> is over, this method must be called to
             set self.self.serializers, self.dataobjs, self.serializers_total_number
             self.dataobjs_number, self.hall and self.overallscores
-
             ___________________________________________________________________
 
             RETURNED VALUE: (bool)success
@@ -573,7 +559,6 @@ class SerializationResults(dict):
             for a given <attribute> and an <index>.
             In other words, answer the question: which serializer is number
             #<index> for a given <attribute> ?
-
             ___________________________________________________________________
 
             ARGUMENT:
@@ -638,7 +623,6 @@ class SerializationResults(dict):
             SerializationResults.get_overallscore_rank()
 
             Return the (int)rank of <serializer> among 'overall scores'.
-
             ___________________________________________________________________
 
             ARGUMENT:
@@ -664,7 +648,6 @@ class SerializationResults(dict):
             Return the list of the serializers with the best score
             among "overall scores". There's maybe more than one serializer
             having the highest score, hence the returned list.
-
             ___________________________________________________________________
 
             RETURNED VALUE: (list)list of (str)serializers
@@ -685,7 +668,6 @@ class SerializationResults(dict):
             Return the list of the serializers with the worst score
             among "overall scores". There's maybe more than one serializer
             having the worst score, hence the returned list.
-
             ___________________________________________________________________
 
             RETURNED VALUE: (list)list of (str)serializers
@@ -705,7 +687,6 @@ class SerializationResults(dict):
             SerializationResults.get_serializers_whose_overallscore_is()
 
             Return a list of all serializers whose overallscore is <score>.
-
             ___________________________________________________________________
 
             ARGUMENT: (int)score
@@ -721,7 +702,6 @@ class SerializationResults(dict):
             SerializationResults.hall_without_none_for_attribute()
 
             Return True if hall[attribute] doesn't contain any None value.
-
             ___________________________________________________________________
 
             ARGUMENT: (str)attribute
@@ -745,7 +725,6 @@ class SerializationResults(dict):
 
             Compute and format the ratio of decoding success for a <serializer>
             OR for a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -814,7 +793,6 @@ class SerializationResults(dict):
 
             Compute and format the ratio of encoding success for a <serializer>
             OR for a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -883,7 +861,6 @@ class SerializationResults(dict):
 
             Compute and/or format the ratio of reversibility success for a <serializer>
             OR for a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -951,7 +928,6 @@ class SerializationResults(dict):
             SerializationResults.repr_attr()
 
             Format the value stored into self[serializer][dataobj].<attribute_name>.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -1038,7 +1014,6 @@ class SerializationResults(dict):
 
             Compute and format the total decoding time used by a <serializer>
             OR by a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -1111,7 +1086,6 @@ class SerializationResults(dict):
 
             Compute and format the total encoding + decoding time used by a
             <serializer>.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -1151,7 +1125,6 @@ class SerializationResults(dict):
 
             Compute and format the total encoding string length created by a <serializer>
             OR for a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -1225,7 +1198,6 @@ class SerializationResults(dict):
 
             Compute and format the total decoding time used by a <serializer>
             OR by a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:
@@ -1298,7 +1270,6 @@ class SerializationResults(dict):
 
             Compute and format the total mem usage created by a <serializer>
             OR for a <dataobj>ect.
-
             _______________________________________________________________
 
             ARGUMENTS:

@@ -23,7 +23,6 @@
 
     Definition of the WisteriaError class, the unique error class that should be
     raised by the project.
-
     ___________________________________________________________________________
 
     o  WisteriaError

@@ -54,7 +54,6 @@ def _message(obj, rule=False):
         _message()
 
         Internal function: displays and/or writes <obj> in the report (=log) file.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -78,7 +77,6 @@ def msgcritical(obj=""):
         msgcritical()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.critical() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
@@ -93,7 +91,6 @@ def msgdebug(obj=""):
         msgcritical()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.debug() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
@@ -108,7 +105,6 @@ def msgerror(obj=""):
         msgerror()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.error() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
@@ -123,7 +119,6 @@ def msginfo(obj=""):
         msginfo()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.info() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
@@ -138,7 +133,6 @@ def msgreport(obj=""):
         msgreport()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.info() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.
@@ -153,7 +147,6 @@ def msgreporttitle(obj=""):
         msgreporttitle()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.info() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the log file.
@@ -168,7 +161,6 @@ def msgwarning(obj=""):
         msgwarning()
 
         Display and/or write <obj> in the report (=log) file; to be used like log.warning() .
-
         _______________________________________________________________________
 
         ARGUMENT: <obj>, the object to be displayed/written in the report (=log) file.

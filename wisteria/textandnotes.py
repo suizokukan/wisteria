@@ -24,7 +24,6 @@
     With the TextAndNotes class, add bunch of text that may contains notes;
     these notes are added with a special syntax (__note:XXXXX__) and are
     automatically numbered and added at the end of the final text.
-
     ___________________________________________________________________________
 
     o  TextAndNotes class
@@ -52,7 +51,6 @@ class TextAndNotes(list):
                         "First line with a note(¹)"
                         ""
                         "(¹) This is a footnote about first line."
-
         _______________________________________________________________________
 
         class attributes:
@@ -120,7 +118,6 @@ class TextAndNotes(list):
             TextAndNotes.output()
 
             Return the text and the notes with the expected formatting.
-
             ___________________________________________________________________
 
             RETURNED VALUE: (str)the text and the notes with the expected formatting.
@@ -129,7 +126,6 @@ class TextAndNotes(list):
             """
                 Replace the full note name (__note:XXX__) by its symbol
                 e.g. "(__note:overallscore__)" > (¹)
-
                 _______________________________________________________________
 
                 ARGUMENT: (re.Match)match, a full note like __note:mynote__

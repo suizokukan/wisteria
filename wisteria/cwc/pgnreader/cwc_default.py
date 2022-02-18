@@ -41,8 +41,6 @@
 
     A PGN viewer allowing to show giant games (cf tests/game5.pgn) may be find at:
             https://fr.chesstempo.com/pgn-viewer/
-
-
     ___________________________________________________________________________
 
     o  COLOR_NOCOLOR, COLOR_WHITE, COLOR_BLACK
@@ -125,8 +123,6 @@ class ChessGameTags(dict):
             [White "Fischer, Robert J."]
             [Black "Spassky, Boris V."]
             [Result "1/2-1/2"]
-
-
         _______________________________________________________________________
 
         o  __eq__(self, other)
@@ -140,7 +136,6 @@ class ChessGameTags(dict):
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessGamesTags)other, the object compared to self
@@ -166,7 +161,6 @@ class ChessGameTags(dict):
 class ChessPiece:
     """
         ChessPiece class
-
         _______________________________________________________________________
 
         o  piece2unicode/unicode2piece
@@ -224,8 +218,6 @@ class ChessPiece:
 class ChessMove:
     """
         ChessMove class
-
-
         _______________________________________________________________________
 
         o  (int)movetype, e.g. MOVETYPE_SINGLE
@@ -252,7 +244,6 @@ class ChessMove:
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessMove)other, the object compared to self
@@ -279,8 +270,6 @@ class ChessListOfMoves(list):
         ChessListOfMoves class
 
         A list of ((int)doublemove_number, (int)self.next_player, (ChessMove)move)
-
-
         _______________________________________________________________________
 
         o  (int)next_player
@@ -301,7 +290,6 @@ class ChessListOfMoves(list):
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessListOfMoves)other, the object compared to self
@@ -341,8 +329,6 @@ class ChessListOfMoves(list):
 class ChessGameStatus:
     """
         ChessGameStatus class
-
-
         _______________________________________________________________________
 
         o  (bool)game_is_over
@@ -365,7 +351,6 @@ class ChessGameStatus:
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessGameStatus)other, the object compared to self
@@ -391,7 +376,7 @@ class ChessGameStatus:
             ChessGameStatus.update_from_pgn_string()
 
             Beware ! if you modify this method, please update
-                    ChessGame.regex_pgn_listofmoves['game_result']
+                     ChessGame.regex_pgn_listofmoves['game_result']
         """
         if status_string == "1/2-1/2":
             self.game_is_over = True
@@ -415,8 +400,6 @@ class ChessGameStatus:
 class ChessBoard:
     """
         ChessBoard class
-
-
         _______________________________________________________________________
 
         o  moves_descr
@@ -464,7 +447,6 @@ class ChessBoard:
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessBoard)other, the object compared to self
@@ -775,8 +757,6 @@ class ChessBoard:
 class ChessGame:
     """
         ChessGame class
-
-
         _______________________________________________________________________
 
         o  regex_pgn_tags
@@ -865,7 +845,6 @@ class ChessGame:
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessGame)other, the object compared to self
@@ -1266,8 +1245,6 @@ class ChessGame:
 class ChessGames(list):
     """
         ChessGames class
-
-
         _______________________________________________________________________
 
         o  __eq__(self, other)
@@ -1281,7 +1258,6 @@ class ChessGames(list):
 
             Stricly speaking, not required to read/write PGN files but required
             to check that everything "works as expected" (see cwc validation).
-
             ___________________________________________________________________
 
             ARGUMENT: (ChessGames)other, the object compared to self

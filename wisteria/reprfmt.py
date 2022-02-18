@@ -67,7 +67,6 @@ def fmt_boolsuccess(bool_success):
 
         Format the input argument into a string. The input argument is a (bool)success.
             ex: False > "NOT OK"
-
         _______________________________________________________________
 
         ARGUMENT: (bool)bool_success
@@ -84,7 +83,6 @@ def fmt_critical(msg):
         fmt_critical()
 
         Format the representation of (str)msg
-
         _______________________________________________________________________
 
         ARGUMENT: (str)msg
@@ -99,7 +97,6 @@ def fmt_data(data_objectname):
         fmt_data()
 
         Format the representation of (str)data_objectname.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)data_objectname
@@ -116,7 +113,6 @@ def fmt_debug(msg):
         fmt_debug()
 
         Format the representation of (str)msg
-
         _______________________________________________________________________
 
         ARGUMENT: (str)msg
@@ -131,7 +127,6 @@ def fmt_error(msg):
         fmt_error()
 
         Format the representation of (str)msg
-
         _______________________________________________________________________
 
         ARGUMENT: (str)msg
@@ -148,7 +143,6 @@ def fmt_info(msg):
         fmt_info()
 
         Format the representation of (str)msg
-
         _______________________________________________________________________
 
         ARGUMENT: (str)msg
@@ -167,7 +161,6 @@ def fmt_list(listitems, func=None):
         https://www.grammar-monster.com/lessons/commas_the_Oxford_comma.htm)
 
         If <func> is not None, apply <func> to each item in <listitems>.
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -191,7 +184,6 @@ def fmt_mem_usage(bytesnumber):
         fmt_mem_usage()
 
         Format the representation of (int)bytesnumber.
-
         _______________________________________________________________________
 
         ARGUMENT: (int)bytesnumber
@@ -218,7 +210,6 @@ def fmt_nodata(string=None):
         fmt_nodata()
 
         Return a string with rich text attribute saying that no data is available.
-
         _______________________________________________________________________
 
         ARGUMENT:(None or str)if string is None, a default string ("no data")
@@ -238,7 +229,6 @@ def fmt_nounplural(string,
         fmt_nounplural()
 
         Return string with a final -s if <number> is greater than one.
-
         _______________________________________________________________________
 
         o  (str)string, a string ending with a word to which a final s may be added
@@ -256,7 +246,6 @@ def fmt_percentage(percentage):
         fmt_percentage()
 
         Format the representation of (float)percentage.
-
         _______________________________________________________________________
 
         ARGUMENT: (float)percentage
@@ -276,7 +265,6 @@ def fmt_projectversion(add_timestamp=False):
         PLEASE DO NOT ADD RICH ATTRIBUTES TO THE RETURNED STRING
         since this function is called by wisteria.py with a simple
         print() statement.
-
         _______________________________________________________________
 
         ARGUMENT: (bool)add_timestamp, if True, add the current timestamp
@@ -297,7 +285,6 @@ def fmt_ratio(inttotal_and_floatratio):
         Format the input argument into a string. The input argument is an absolute
         (int)number and a (float)fraction, its ratio.
             ex: (3, 0.5) > "3 (50 %)"
-
         _______________________________________________________________
 
         ARGUMENT: (None|(int, float))inttotal_and_floatratio
@@ -315,7 +302,6 @@ def fmt_report(msg):
         fmt_report()
 
         Format the representation of (str)msg
-
         _______________________________________________________________________
 
         ARGUMENT: (str)msg
@@ -330,7 +316,6 @@ def fmt_reporttitle(msg):
         fmt_reporttitle()
 
         Format the representation of (str)msg
-
         _______________________________________________________________________
 
         ARGUMENT: (str)msg
@@ -345,7 +330,6 @@ def fmt_serializer0(serializer_name):
         fmt_serializer0()
 
         Format the representation of (str)serializer_name.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)serializer_name
@@ -363,7 +347,6 @@ def fmt_serializer(serializer_name):
 
         Format the representation of (str)serializer_name; if possible, replace it by its
         .human_name.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)serializer_name
@@ -419,7 +402,6 @@ def fmt_title(title):
         fmt_title()
 
         Format the representation of (str)title.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)title
@@ -434,7 +416,6 @@ def fmt_warning(msg):
         fmt_warning()
 
         Format the representation of (str)title.
-
         _______________________________________________________________________
 
         ARGUMENT: (str)title
@@ -460,7 +441,6 @@ def fmt_exaequowith(item,
                 listitems=['a', 'b', 'c'], items="b".
         This function will return:
                 <prefix>(~"ex aequo") + "a and c".
-
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -495,8 +475,6 @@ def fmt_exaequowith_hall(results,
         and if results.hall[attribute][item_number][1]=="a", the returned
         string will be:
                 <prefix>(~"ex aequo") + "a and c".
-
-
         _______________________________________________________________________
 
         ARGUMENTS:

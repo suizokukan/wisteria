@@ -21,10 +21,9 @@
 """
     Wisteria project : wisteria/utils.py
 
-    BEWARE! Please use only verby basic imports since this file is used in
+    BEWARE! Please use only very basic imports since this file is used in
     "step A" section of the program, where no third-party libraries may
     be used.
-
     ___________________________________________________________________________
 
     o  get_missing_required_internal_modules()
@@ -53,7 +52,6 @@ def get_missing_required_internal_modules():
         Return a list of the missing required modules.
         No debug message here since this function belongs to the 'A' step of the
         program.
-
         _______________________________________________________________________
 
         RETURNED VALUE: (list of str) a list of the missing required modules.
@@ -80,7 +78,6 @@ def normpath(path):
 
         Return a human-readable (e.g. "~" -> "/home/myhome/") normalized
         version of a file path.
-
         ________________________________________________________________________
 
         PARAMETER : (str)path
@@ -98,7 +95,6 @@ def shortenedstr(string,
     """
         This function reduces a <string> so that the maximum length of the returned
         string is equal to <maximallength>.
-
         ________________________________________________________________________
 
         PARAMETERS:
@@ -128,7 +124,6 @@ def strdigest(string):
         strdigest()
 
         Return the formatted fingerprint of <string>.
-
         _______________________________________________________________________
 
         ARGUMENT:
@@ -144,8 +139,6 @@ def trytoimport(module_name):
         trytoimport()
 
         Try to import <module_name> module.
-
-
         _______________________________________________________________________
 
         ARGUMENT:

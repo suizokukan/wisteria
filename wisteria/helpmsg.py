@@ -22,7 +22,6 @@
     Wisteria project : wisteria/helpmsg.py
 
     Some help messages
-
     ___________________________________________________________________________
 
     o  help_helpcommandlineargument()
@@ -62,7 +61,6 @@ def help_graphsfilenames():
 
         Return a message describing where graphs files would be written
         on disk.
-
         _______________________________________________________________________
 
         RETURNED VALUE: (str)an help message
