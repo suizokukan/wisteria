@@ -96,6 +96,17 @@ What's next ?
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-303
+
+Improved several report messages by adding a comma after a
+", namely ..." phrase.
+
+    * Improved several report messages by adding a comma after a
+      ", namely ..." phrase.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+
 [DONE] task-302
 
     * improved message returned by report_section_c2c__allvsall()

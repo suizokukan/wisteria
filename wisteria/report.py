@@ -1838,7 +1838,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"There are {len(_less)} serializers"
                     ", namely "
-                    f"{fmt_list(_less, fmt_serializer)} "
+                    f"{fmt_list(_less, fmt_serializer)}, "
                     f"that produce longer strings than {fmt_serializer(serializer)} ")
 
             subtext.append("and ")
@@ -1855,7 +1855,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"there are {len(_more)} serializers"
                     ", namely "
-                    f"{fmt_list(_more, fmt_serializer)} "
+                    f"{fmt_list(_more, fmt_serializer)}, "
                     f"that produce shorter strings than {fmt_serializer(serializer)}")
 
             subtext.append(". ")
@@ -1873,7 +1873,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"There are {len(_less)} serializers"
                     ", namely "
-                    f"{fmt_list(_less, fmt_serializer)} "
+                    f"{fmt_list(_less, fmt_serializer)}, "
                     f"that are slower than {fmt_serializer(serializer)} ")
 
             subtext.append("and ")
@@ -1890,7 +1890,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"there are {len(_more)} serializers"
                     ", namely "
-                    f"{fmt_list(_more, fmt_serializer)} "
+                    f"{fmt_list(_more, fmt_serializer)}, "
                     f"that are faster than {fmt_serializer(serializer)}")
 
             subtext.append(". ")
@@ -1910,7 +1910,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"There are {len(_less)} serializers"
                     ", namely "
-                    f"{fmt_list(_less, fmt_serializer)} "
+                    f"{fmt_list(_less, fmt_serializer)}, "
                     f"that are worse than {fmt_serializer(serializer)} "
                     "when it comes to data coverage ")
 
@@ -1930,7 +1930,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"there are {len(_more)} serializers"
                     ", namely "
-                    f"{fmt_list(_more, fmt_serializer)} "
+                    f"{fmt_list(_more, fmt_serializer)}, "
                     f"that are better than {fmt_serializer(serializer)} "
                     "when it comes to data coverage")
 
@@ -1949,7 +1949,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"There are {len(_less)} serializers"
                     ", namely "
-                    f"{fmt_list(_less, fmt_serializer)} "
+                    f"{fmt_list(_less, fmt_serializer)}, "
                     f"that consume more memory than {fmt_serializer(serializer)} ")
 
             subtext.append("and ")
@@ -1966,7 +1966,7 @@ def report_section_c2c__serializervsall(results,
                 subtext.append(
                     f"there are {len(_more)} serializers"
                     ", namely "
-                    f"{fmt_list(_more, fmt_serializer)} "
+                    f"{fmt_list(_more, fmt_serializer)}, "
                     f"that consume less memory than {fmt_serializer(serializer)}")
 
             subtext.append(".")
