@@ -84,12 +84,10 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* si aucun data défini, étranger erreur disant qu'aucun sérializer n'est
-défini.
 * --checkup: avec la config actuelle, X serializers et Y dataobjects seraient
 utilisés, soient X*Y combinaisons à tester
-   * il manque int_big / int_verybig
-   * Init file '...' has been read. > Config file '...' has been read.
+* il manque int_big / int_verybig
+* Init file '...' has been read. > Config file '...' has been read.
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * report: data:lcm
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
