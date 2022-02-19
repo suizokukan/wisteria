@@ -282,7 +282,6 @@ class SerializationResults(dict):
     def __init__(self):
         """
             SerializationResults.__init__()
-
             ___________________________________________________________________
 
             ARGUMENTS:
