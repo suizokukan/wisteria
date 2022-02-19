@@ -87,7 +87,6 @@ What's next ?
 * --checkup: avec la config actuelle, X serializers et Y dataobjects seraient
 utilisés, soient X*Y combinaisons à tester
 * il manque int_big / int_verybig
-* Init file '...' has been read. > Config file '...' has been read.
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * report: data:lcm
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
@@ -97,6 +96,17 @@ utilisés, soient X*Y combinaisons à tester
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[DONE] task-312
+
+Improved message displayed by read_cfgfile() and removed useless lines
+of code.
+
+    * Improved message displayed by read_cfgfile() and removed useless lines
+of code.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-311
 

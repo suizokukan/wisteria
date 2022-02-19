@@ -180,9 +180,6 @@ def read_cfgfile(filename):
     # details/debug messages
     # ----------------------
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-        msginfo(f"Init file '{filename}' ({normpath(filename)}) has been read.")
-
-    if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-        msgdebug(f"Successfully read '{filename}' ({normpath(filename)}) as a config file.")
+        msginfo(f"Configuration file '{filename}' ({normpath(filename)}) has been read.")
 
     return res
