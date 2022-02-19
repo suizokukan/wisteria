@@ -94,6 +94,19 @@ What's next ?
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-310
+
+Serializer's number and data objs number is now checked at
+step (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+
+    * serializer's number and data objs number is now checked at
+      step (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+    * new exit code: 5
+    * documentation: updated pimydoc
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-309
 
 Removed useless spaces in wisteria.ini, ROADMAP.md and README.md.

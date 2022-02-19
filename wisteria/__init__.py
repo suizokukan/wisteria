@@ -282,8 +282,7 @@ You want only graphs:
   | (pimydoc)--cmp format
   | ⋅
   | ⋅(I) serializers
-  | ⋅Test one serializer alone(1) or one serializer against another serializer(
-2) or
+  | ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
   | ⋅a serializer against all serializers(3) or all serializers(4) together.
   | ⋅
   | ⋅    (1) --cmp="jsonpickle(cwc)"
@@ -292,10 +291,8 @@ You want only graphs:
   | ⋅    (4) --cmp="all vs all (cwc)"
   | ⋅
   | ⋅(II) data types:
-  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all
-data types
-  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all d
-ata types(d).
+  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
   | ⋅
   | ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
   | ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
@@ -309,6 +306,9 @@ ata types(d).
   | ⋅                              string is used as help message by the
   | ⋅                              command line --help argument.
   | ⋅
+2) or
+data types
+ata types(d).
   |
 
 pylintrc

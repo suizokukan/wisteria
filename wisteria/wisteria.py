@@ -67,6 +67,7 @@
     ⋅*  2: normal exit code after --downloadconfigfile
     ⋅*  3: normal exit code after --mymachine
     ⋅*  4: normal exit code (no data to handle)
+    ⋅*  5: normal exit code (no serializer to handle)
     ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     ⋅* -2: error, ill-formed --cmp string
     ⋅* -3: error, ill-formed --output string
@@ -383,6 +384,7 @@ if MISSING_REQUIRED_MODULES:
     # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅*  3: normal exit code after --mymachine
     # ⋅*  4: normal exit code (no data to handle)
+    # ⋅*  5: normal exit code (no serializer to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
@@ -412,7 +414,7 @@ from wisteria.utils import trytoimport  # noqa
 import wisteria.serializers  # noqa
 import wisteria.data  # noqa
 from wisteria.wisteriaerror import WisteriaError  # noqa
-from wisteria.msg import msginfo, msgerror, msgdebug, msgreport  # noqa
+from wisteria.msg import msginfo, msgwarning, msgerror, msgdebug, msgreport  # noqa
 from wisteria.cmdline_output import parse_output_argument  # noqa
 from wisteria.cmdline_cmp import read_cmpstring  # noqa
 from wisteria.cmdline_mymachine import mymachine  # noqa
@@ -579,6 +581,7 @@ else:
         # ⋅*  2: normal exit code after --downloadconfigfile
         # ⋅*  3: normal exit code after --mymachine
         # ⋅*  4: normal exit code (no data to handle)
+        # ⋅*  5: normal exit code (no serializer to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
@@ -720,6 +723,7 @@ if not check_str2reportsection_keys():
     # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅*  3: normal exit code after --mymachine
     # ⋅*  4: normal exit code (no data to handle)
+    # ⋅*  5: normal exit code (no serializer to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
@@ -1328,6 +1332,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅*  3: normal exit code after --mymachine
     # ⋅*  4: normal exit code (no data to handle)
+    # ⋅*  5: normal exit code (no serializer to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
@@ -1393,6 +1398,7 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅*  3: normal exit code after --mymachine
     # ⋅*  4: normal exit code (no data to handle)
+    # ⋅*  5: normal exit code (no serializer to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
@@ -1453,6 +1459,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅*  2: normal exit code after --downloadconfigfile
     # ⋅*  3: normal exit code after --mymachine
     # ⋅*  4: normal exit code (no data to handle)
+    # ⋅*  5: normal exit code (no serializer to handle)
     # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
     # ⋅* -2: error, ill-formed --cmp string
     # ⋅* -3: error, ill-formed --output string
@@ -1520,6 +1527,7 @@ def main():
                 ⋅*  2: normal exit code after --downloadconfigfile
                 ⋅*  3: normal exit code after --mymachine
                 ⋅*  4: normal exit code (no data to handle)
+                ⋅*  5: normal exit code (no serializer to handle)
                 ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 ⋅* -2: error, ill-formed --cmp string
                 ⋅* -3: error, ill-formed --output string
@@ -1634,6 +1642,7 @@ def main():
             # ⋅*  2: normal exit code after --downloadconfigfile
             # ⋅*  3: normal exit code after --mymachine
             # ⋅*  4: normal exit code (no data to handle)
+            # ⋅*  5: normal exit code (no serializer to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
@@ -1696,6 +1705,7 @@ def main():
                 # ⋅*  2: normal exit code after --downloadconfigfile
                 # ⋅*  3: normal exit code after --mymachine
                 # ⋅*  4: normal exit code (no data to handle)
+                # ⋅*  5: normal exit code (no serializer to handle)
                 # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 # ⋅* -2: error, ill-formed --cmp string
                 # ⋅* -3: error, ill-formed --output string
@@ -1715,6 +1725,7 @@ def main():
                 # ⋅*  2: normal exit code after --downloadconfigfile
                 # ⋅*  3: normal exit code after --mymachine
                 # ⋅*  4: normal exit code (no data to handle)
+                # ⋅*  5: normal exit code (no serializer to handle)
                 # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
                 # ⋅* -2: error, ill-formed --cmp string
                 # ⋅* -3: error, ill-formed --output string
@@ -1772,16 +1783,22 @@ def main():
         # ⋅    (str)serializer, (str)data_name, (str)fingerprint
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
-        if not init_planned_transcodings(serializer1,
-                                         serializer2,
-                                         cmpdata,
-                                         config):
+        RES_INITPLANNED_TRANSCODINGS = \
+            init_planned_transcodings(serializer1,
+                                      serializer2,
+                                      cmpdata,
+                                      config)
+
+        # RES_INITPLANNED_TRANSCODINGS: (bool)success, serializer number, data number
+        #  see init_planned_transcodings().
+        if not RES_INITPLANNED_TRANSCODINGS[0]:
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
             # ⋅*  2: normal exit code after --downloadconfigfile
             # ⋅*  3: normal exit code after --mymachine
             # ⋅*  4: normal exit code (no data to handle)
+            # ⋅*  5: normal exit code (no serializer to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
@@ -1792,6 +1809,45 @@ def main():
             # ⋅* -102: internal error, an error occured in main()
             # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
             return -103
+
+        if RES_INITPLANNED_TRANSCODINGS[1] == 0:
+            msgwarning("No serializer to be used. The program can stop here.")
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅*  3: normal exit code after --mymachine
+            # ⋅*  4: normal exit code (no data to handle)
+            # ⋅*  5: normal exit code (no serializer to handle)
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: error, ill-formed --output string
+            # ⋅* -4: error, missing required module
+            # ⋅* -5: error: an inconsistency between the data has been detected
+            # ⋅* -100: internal error, data can't be loaded
+            # ⋅* -101: internal error, an error occured while computing the results
+            # ⋅* -102: internal error, an error occured in main()
+            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return 5
+        if RES_INITPLANNED_TRANSCODINGS[2] == 0:
+            msgwarning("No data to be used. The program can stop here.")
+            # (pimydoc)exit codes
+            # ⋅*  0: normal exit code
+            # ⋅*  1: normal exit code after --checkup
+            # ⋅*  2: normal exit code after --downloadconfigfile
+            # ⋅*  3: normal exit code after --mymachine
+            # ⋅*  4: normal exit code (no data to handle)
+            # ⋅*  5: normal exit code (no serializer to handle)
+            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅* -2: error, ill-formed --cmp string
+            # ⋅* -3: error, ill-formed --output string
+            # ⋅* -4: error, missing required module
+            # ⋅* -5: error: an inconsistency between the data has been detected
+            # ⋅* -100: internal error, data can't be loaded
+            # ⋅* -101: internal error, an error occured while computing the results
+            # ⋅* -102: internal error, an error occured in main()
+            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return 4
 
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug("wisteria.globs.PLANNED_TRANSCODINGS:")
@@ -1893,6 +1949,7 @@ def main():
         # ⋅*  2: normal exit code after --downloadconfigfile
         # ⋅*  3: normal exit code after --mymachine
         # ⋅*  4: normal exit code (no data to handle)
+        # ⋅*  5: normal exit code (no serializer to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
@@ -1915,6 +1972,7 @@ def main():
         # ⋅*  2: normal exit code after --downloadconfigfile
         # ⋅*  3: normal exit code after --mymachine
         # ⋅*  4: normal exit code (no data to handle)
+        # ⋅*  5: normal exit code (no serializer to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string

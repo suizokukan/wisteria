@@ -217,6 +217,7 @@ def compute_results():
             # ⋅*  2: normal exit code after --downloadconfigfile
             # ⋅*  3: normal exit code after --mymachine
             # ⋅*  4: normal exit code (no data to handle)
+            # ⋅*  5: normal exit code (no serializer to handle)
             # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
             # ⋅* -2: error, ill-formed --cmp string
             # ⋅* -3: error, ill-formed --output string
@@ -227,25 +228,6 @@ def compute_results():
             # ⋅* -102: internal error, an error occured in main()
             # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
             return None, -100
-        if results.dataobjs_number == 0:
-            msginfo("No data to handle, the program can stop.")
-
-            # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅*  3: normal exit code after --mymachine
-            # ⋅*  4: normal exit code (no data to handle)
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: error, ill-formed --output string
-            # ⋅* -4: error, missing required module
-            # ⋅* -5: error: an inconsistency between the data has been detected
-            # ⋅* -100: internal error, data can't be loaded
-            # ⋅* -101: internal error, an error occured while computing the results
-            # ⋅* -102: internal error, an error occured in main()
-            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-            return None, 4
 
         return results, None
 
@@ -258,6 +240,7 @@ def compute_results():
         # ⋅*  2: normal exit code after --downloadconfigfile
         # ⋅*  3: normal exit code after --mymachine
         # ⋅*  4: normal exit code (no data to handle)
+        # ⋅*  5: normal exit code (no serializer to handle)
         # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
         # ⋅* -2: error, ill-formed --cmp string
         # ⋅* -3: error, ill-formed --output string
@@ -373,7 +356,9 @@ def init_planned_transcodings(serializer1,
         o  (str)serializer2
         o  (str)cmpdata         : 'all', 'ini', 'cwc' or 'allbutcwc'
 
-        RETURNED VALUE: (bool)success
+        RETURNED VALUE: (bool)success, (int)len(serializers), (int)len(dataobjs)
+                        True may be returned even if len(serializers)==0 or if
+                        len(dataobjs)==0.
     """
     try:
         wisteria.globs.PLANNED_TRANSCODINGS = []
@@ -433,6 +418,6 @@ def init_planned_transcodings(serializer1,
 
     except WisteriaError as exception:
         msgerror(f"(ERRORID041) Can't set PLANNED_TRANSCODINGS since an error occured: {exception}")
-        return False
+        return False, len(serializers), len(dataobjs)
 
-    return True
+    return True, len(serializers), len(dataobjs)
