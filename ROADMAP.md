@@ -91,11 +91,18 @@ What's next ?
 * classes.md
 * --skimthedata="no" | "exclude ??? data"
 * généraliser le mot 'transcoding'
-* checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
-  Si c'est le cas, n'afficher ce résultat que si verbosity=3
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-307
+
+Documentation.
+
+    * documentation.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+    
 [DONE] task-306
 
 Renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
