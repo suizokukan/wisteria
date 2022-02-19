@@ -137,8 +137,8 @@ def fmt_error(msg):
         RETURNED VALUE: (str)msg + some text attributes.
     """
     return re.sub(r"\(ERRORID[\d]+\)",
-                  lambda re_match: f"[bold red]{re_match.group()}[/bold red]",
-                  msg)
+                  lambda re_match: f"[bold white on red]{re_match.group()}[/bold white on red]",
+                  f"[bold white on red]{msg}[/bold white on red]")
 
 
 def fmt_info(msg):
@@ -425,7 +425,7 @@ def fmt_warning(msg):
 
         RETURNED VALUE: (str)title + some text attributes.
     """
-    return f"! {msg}"
+    return f"[bold yellow on magenta]{msg}[/bold yellow on magenta]"
 
 
 # DO NOT MOVE THIS FUNCTION ABOVE:

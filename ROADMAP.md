@@ -84,6 +84,12 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
+* si aucun data défini, étranger erreur disant qu'aucun sérializer n'est
+défini.
+* --checkup: avec la config actuelle, X serializers et Y dataobjects seraient
+utilisés, soient X*Y combinaisons à tester
+   * il manque int_big / int_verybig
+   * Init file '...' has been read. > Config file '...' has been read.
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * report: data:lcm
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
@@ -93,6 +99,16 @@ What's next ?
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[DONE] task-311
+
+Improved warning and error readibility
+
+    * improved warning and error readibility: modified
+      fmt_warning() and fmt_error().
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-310
 
