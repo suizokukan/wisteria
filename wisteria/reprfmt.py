@@ -48,9 +48,12 @@
     o  fmt_warning(title)
 
     o  fmt_exaequowith(item, listitems, func=fmt_serializer,
-                          prefix=", [i]ex aequo[/i] with ")
+                       prefix=" - [i]ex aequo[/i] with ",
+                       suffix=" -")
     o  fmt_exaequowith_hall(results, item_number, attribute, func=fmt_serializer,
-                               prefix=", [i]ex aequo[/i] with ")
+                       prefix=" - [i]ex aequo[/i] with ",
+                       suffix=" -")
+
 """
 import datetime
 import re
@@ -430,7 +433,8 @@ def fmt_warning(msg):
 def fmt_exaequowith(item,
                     listitems,
                     func=fmt_serializer,
-                    prefix=", [i]ex aequo[/i] with "):
+                    prefix=" - [i]ex aequo[/i] with ",
+                    suffix=" -"):
     """
         fmt_exaequowith()
 
@@ -447,14 +451,20 @@ def fmt_exaequowith(item,
         o  (str)           item
         o  (list of str)   listitems
         o  (callable)      func        , callable that will be called upon each <item>.
-        o  (str)           prefix      , string that will be added before the result
+        o  (str)           prefix      : string that will be added before the result
+                                         if the returned list is not empty.
+        o  (str)           suffix      : string that will be added after the result
+                                         if the returned list is not empty.
 
         RETURNED VALUE: (str)
     """
     if len(listitems) == 1:
         return ""
     listitems.remove(item)
-    return prefix + fmt_list(listitems, func)
+
+    if fmt_list(listitems, func):
+        return prefix + fmt_list(listitems, func) + suffix
+    return ""
 
 
 # DO NOT MOVE THIS FUNCTION ABOVE:
@@ -463,7 +473,8 @@ def fmt_exaequowith_hall(results,
                          item_number,
                          attribute,
                          func=fmt_serializer,
-                         prefix=", [i]ex aequo[/i] with "):
+                         prefix=" - [i]ex aequo[/i] with ",
+                         suffix=" -"):
     """
         fmt_exaequowith_hall()
 
@@ -474,7 +485,7 @@ def fmt_exaequowith_hall(results,
         By example, if all serializers whose score is 15 are ['a', 'b', 'c']
         and if results.hall[attribute][item_number][1]=="a", the returned
         string will be:
-                <prefix>(~"ex aequo") + "a and c".
+                <prefix>(~"ex aequo") + "a and c"<suffix>
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -484,8 +495,11 @@ def fmt_exaequowith_hall(results,
                                                         results.hall[attribute][item_number]
         o  (str)                  attribute   : in order to work on
                                                         results.hall[attribute][item_number]
-        o  (callable)             func        , callable that will be called upon each <item>.
-        o  (str)                  prefix      , string that will be added before the result
+        o  (callable)             func        : callable that will be called upon each <item>.
+        o  (str)                  prefix      : string that will be added before the result
+                                                if the returned list is not empty.
+        o  (str)                  suffix      : string that will be added after the result
+                                                if the returned list is not empty.
 
         RETURNED VALUE: (str)
     """
@@ -494,4 +508,7 @@ def fmt_exaequowith_hall(results,
     if len(listitems) == 1:
         return ""
     listitems.remove(serializer)
-    return prefix + fmt_list(listitems, func)
+
+    if listitems:
+        return prefix + fmt_list(listitems, func) + suffix
+    return ""

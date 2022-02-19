@@ -96,6 +96,17 @@ What's next ?
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-302
+
+    * improved message returned by report_section_c2c__allvsall()
+    * modified fmt_exaequowith() and fmt_exaequowith_hall(): a new
+      argument (`suffix`) allows to add a suffix. The `prefix` and
+      the `suffix` are added only if the returned list is not empty.
+    * updated documentation.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
+    
 [DONE] task-301
 
 Documentation.

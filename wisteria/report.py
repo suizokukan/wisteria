@@ -1715,11 +1715,11 @@ def report_section_c2c__allvsall(results,
     text.append(cmpdata2phrase(cmpdata))
 
     text.append(f"{fmt_serializer(results.hall['encoding_plus_decoding_time'][0][1])}"
-                f"{(fmt_exaequowith_hall(results, 0, 'encoding_plus_decoding_time'))}"
-                " is the quickest to encode/decode, ")
+                f"{fmt_exaequowith_hall(results, 0, 'encoding_plus_decoding_time')}"
+                " is the quickest to encode/decode. ")
     text.append(f"{fmt_serializer(results.hall['encoding_strlen'][0][1])}"
                 f"{(fmt_exaequowith_hall(results, 0, 'encoding_strlen'))}"
-                " produces the shortest strings, ")
+                " produces the shortest strings. ")
     text.append(f"{fmt_serializer(results.hall['reversibility'][0][1])}"
                 f"{(fmt_exaequowith_hall(results, 0, 'reversibility'))}"
                 " has the best coverage ")
