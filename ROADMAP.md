@@ -84,6 +84,9 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
+* et si on travaille juste sur le temps ? la mémoire > report spécifique
+* report: data:lcm
+* --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
 * writingconventions.md
 * classes.md
 * --skimthedata="no" | "exclude ??? data"
@@ -91,8 +94,14 @@ What's next ?
 * checkup: vérifier que demonstrationobj est sérialisable par tous les serializers
   Si c'est le cas, n'afficher ce résultat que si verbosity=3
 * data_object, dataobj_name: c'est le bazar
-* avant chaque _______ : 1 ligne suffit
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[DONE] task-301
+
+Documentation.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
 
 [DONE] task-300
 
