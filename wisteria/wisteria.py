@@ -1279,6 +1279,32 @@ def checkup():
         for error in errors:
             msgerror(error)
 
+    # checks: do all serializers know how to serialize demonstration_dataobj_a5 ?
+    check_ok = True
+    data_name = "demonstration_dataobj_a5"
+    for serializer in wisteria.globs.SERIALIZERS:
+        res = wisteria.globs.SERIALIZERS[serializer].func(
+            action="serialize",
+            obj=wisteria.globs.DATA[data_name],
+            obj_data_name=data_name,
+            fingerprint=None,
+            works_as_expected=wisteria.data.works_as_expected
+            if wisteria.data.works_as_expected(data_name=data_name,
+                                               obj=None) is True else None)
+        if not res.reversibility:
+            check_ok = False
+            msgerror("(ERRORID051) An error occured: "
+                     f"the serializer named '{serializer}' "
+                     "doesn't how to encode/decode demonstration data object, "
+                     f"namely {wisteria.globs.DATA[data_name]} .")
+
+    if check_ok and \
+       wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+        msgreport()
+        msgreport(f"As expected, all known serializers, namely {tuple(wisteria.globs.SERIALIZERS)} "
+                  "know how to encode/decode demonstration data object, namely "
+                  f"{wisteria.globs.DATA[data_name]} .")
+
     msgreport()
 
     # ---- graphs -------------------------------------------------------------
