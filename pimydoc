@@ -25,7 +25,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
 ### (pimydoc)dataobjs_number
-### (pimydoc)demonstration_dataobj_a5
+### (pimydoc)demonstration_dataobj
 ### (pimydoc)exit codes
 ### (pimydoc)GRAPHS_DESCRIPTION format
 ### (pimydoc)OUTPUT format
@@ -156,7 +156,7 @@ e.g. "wisteria.cwc.pgnreader.cwc_default.ChessGame" and
       ... will be counted as ONE data object.
 (class variable initialized in initialization in finish_initialization())
 ### ==========================================================================
-[(pimydoc)demonstration_dataobj_a5]
+[(pimydoc)demonstration_dataobj]
 Data object used to show the encoded strings created by the serializers,
 see A5 report section.
 
@@ -231,7 +231,7 @@ computing the result, which is unpleasant to see.
   - A2      : list of the serializers to be used because they have been selected
   - A3      : list of the data objects to be used because they have been selected
   - A4      : list of the planned transcodings
-  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
 * B         : full details (raw results)
   - B1      : full details (serializers)
     . B1a   : full details: serializer * data object

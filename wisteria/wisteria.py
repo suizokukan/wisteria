@@ -1279,9 +1279,9 @@ def checkup():
         for error in errors:
             msgerror(error)
 
-    # check: do all serializers know how to serialize demonstration_dataobj_a5 ?
+    # check: do all serializers know how to serialize demonstration_dataobj ?
     check_ok = True
-    data_name = "demonstration_dataobj_a5"
+    data_name = "demonstration_dataobj"
     for serializer in wisteria.globs.SERIALIZERS:
         res = wisteria.globs.SERIALIZERS[serializer].func(
             action="serialize",

@@ -84,7 +84,6 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* 'demonstration_dataobj_a5' > 'demonstration_dataobj'
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * report: data:lcm
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
@@ -96,6 +95,15 @@ What's next ?
   Si c'est le cas, n'afficher ce résultat que si verbosity=3
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[DONE] task-306
+
+Renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
+
+    * renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
 
 [DONE] task-305
 

@@ -465,7 +465,7 @@ def report_section_a1(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -532,7 +532,7 @@ def report_section_a2(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -589,7 +589,7 @@ def report_section_a3(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -647,7 +647,7 @@ def report_section_a4(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -714,7 +714,7 @@ def report_section_a5(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -750,7 +750,7 @@ def report_section_a5(results,
     """
     if "titles;" in wisteria.globs.ARGS.report:
         msgreporttitle(
-            "(A5) What do the Encoded Strings Look Like? (basic types/demonstration_dataobj_a5)")
+            "(A5) What do the Encoded Strings Look Like? (basic types/demonstration_dataobj)")
         msgreport("")
 
     msgreport("Please note that, in this report section, "
@@ -759,13 +759,13 @@ def report_section_a5(results,
               "is independent of the data object(s) you choosed to transcode.[/bold]")
     msgreport()
 
-    demonstration_dataobj_a5 = wisteria.globs.DATA["demonstration_dataobj_a5"]
-    msgreport("- raw demonstration object ('demonstration_dataobj_a5') is")
-    msgreport(f"{demonstration_dataobj_a5}")
+    demonstration_dataobj = wisteria.globs.DATA["demonstration_dataobj"]
+    msgreport("- raw demonstration object ('demonstration_dataobj') is")
+    msgreport(f"{demonstration_dataobj}")
 
     for serializer in results.serializers:
         encoded_string = wisteria.globs.SERIALIZERS[serializer].func(action="encode",
-                                                                     obj=demonstration_dataobj_a5)
+                                                                     obj=demonstration_dataobj)
         msgreport(f"- encoded string created by {fmt_serializer(serializer)}:")
         msgreport(encoded_string)
 
@@ -785,7 +785,7 @@ def report_section_b1a(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -881,7 +881,7 @@ def report_section_b1b(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -958,7 +958,7 @@ def report_section_b1c(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1036,7 +1036,7 @@ def report_section_b1d(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1106,7 +1106,7 @@ def report_section_b2a(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1202,7 +1202,7 @@ def report_section_b2b(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1284,7 +1284,7 @@ def report_section_c1a(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1408,7 +1408,7 @@ def report_section_c1b(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1531,7 +1531,7 @@ def report_section_c2a(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -1620,7 +1620,7 @@ def report_section_c2b(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2190,7 +2190,7 @@ def report_section_c2c(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2252,7 +2252,7 @@ def report_section_d1a(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2309,7 +2309,7 @@ def report_section_d1b(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2366,7 +2366,7 @@ def report_section_graphs(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
@@ -2519,7 +2519,7 @@ def report(results,
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
         ⋅  - A4      : list of the planned transcodings
-        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj_a5)
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
         ⋅* B         : full details (raw results)
         ⋅  - B1      : full details (serializers)
         ⋅    . B1a   : full details: serializer * data object
