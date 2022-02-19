@@ -84,7 +84,6 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* checks: in checkup()
 * 'demonstration_dataobj_a5' > 'demonstration_dataobj'
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * report: data:lcm
@@ -97,6 +96,15 @@ What's next ?
   Si c'est le cas, n'afficher ce résultat que si verbosity=3
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[DONE] task-305
+
+Improved documentation in checkup(), fixed typos.
+
+    * improved documentation in checkup(), fixed typos.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10      
 
 [DONE] task-304
 

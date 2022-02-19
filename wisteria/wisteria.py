@@ -1233,7 +1233,7 @@ def checkup():
     partial_report__data(show_all_data=True,
                          show_planned_data=False)
 
-    # checks: are DATA keys written in lower case ?
+    # check: are DATA keys written in lower case ?
     errors = []
     for object_data_name in wisteria.globs.DATA:
         if object_data_name.lower() != object_data_name:
@@ -1247,7 +1247,7 @@ def checkup():
         for error in errors:
             msgerror(error)
 
-    # checks: are UNAVAILABLE_DATA keys written in lower case ?
+    # check: are UNAVAILABLE_DATA keys written in lower case ?
     errors = []
     for object_data_name in wisteria.globs.UNAVAILABLE_DATA:
         if object_data_name.lower() != object_data_name:
@@ -1261,7 +1261,7 @@ def checkup():
         for error in errors:
             msgerror(error)
 
-    # checks: is a key defined in DATA also defined in UNAVAILABLE_DATA ?
+    # check: is a key defined in DATA also defined in UNAVAILABLE_DATA ?
     errors = []
     for object_data_name in wisteria.globs.UNAVAILABLE_DATA:
         if object_data_name in wisteria.globs.DATA:
@@ -1279,7 +1279,7 @@ def checkup():
         for error in errors:
             msgerror(error)
 
-    # checks: do all serializers know how to serialize demonstration_dataobj_a5 ?
+    # check: do all serializers know how to serialize demonstration_dataobj_a5 ?
     check_ok = True
     data_name = "demonstration_dataobj_a5"
     for serializer in wisteria.globs.SERIALIZERS:
