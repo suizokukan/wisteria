@@ -8,7 +8,7 @@ Please notice that --verbosity has no effect upon --report.
   Leaving the report aside, strictly nothing on screen: no progress bar, no messages.
   Even if verbosity is set to 0, this has no effect on --checkup or on --mymachine
 * --verbosity=1 (normal)
-  You'll see the report (see --report), a progress bar and a normal amount of messages.  
+  You'll see the report (see --report), a progress bar and a normal amount of messages.
   Messages displayed by --checkup and by --mymachine have a normal quantity of text.
 * --verbosity=2 (details)
   You'll see the report (see --report); no progress bar, more details (encoded string are shown).
@@ -19,13 +19,13 @@ Please notice that --verbosity has no effect upon --report.
 
 results: pipeline
    obj > encoded string > decoded string > _res2
-   
+
    * obj == _res2 ?
      * if obj == _res2:
            if <obj> is a cwc module > is works_as_expected(_res2) True ?
            if <obj> isn't a cwc module and if data.works_as_expected > data.works_as_expected(obj)
-           
-           
+
+
 Report filename format
 ```
 (pimydoc)report filename format
@@ -125,7 +125,7 @@ $ wisteria --checkup
 
     Beware, install packages in the virtual environment required by the project.
     By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
-    
+
     $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn
 ```
 
@@ -160,8 +160,8 @@ Feel free to choose another Python's version and another directory where to comp
 
     Beware, install packages in the virtual environment required by the project.
     By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
-    
-    $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn    
+
+    $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn
 ```
 
 ### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies
@@ -180,8 +180,8 @@ Feel free to choose another Python's version and another directory where to comp
 
     Beware, install packages in the virtual environment required by the project.
     By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
-    
-    $ ./venv/bin/python -m pip install iaswn    
+
+    $ ./venv/bin/python -m pip install iaswn
 ```
 
 On Windows systems, don't forget to install [WMI](https://pypi.org/project/WMI/) package too.
@@ -932,10 +932,10 @@ A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You m
 
 **How do I add a new cwc class ?**
 
-    - create another directory in wisteria/cwc, by example `wisteria/cwc/newcwc/` . 
+    - create another directory in wisteria/cwc, by example `wisteria/cwc/newcwc/` .
     - A default.py file is required, namely `wisteria/cwc/newcwc/default.py`
     for all serializers whose 'cwc' attribute is set to 'default'.
-    - Add other .py files (iaswn.py, ...) for other SERIALIZERS[].cwc values 
+    - Add other .py files (iaswn.py, ...) for other SERIALIZERS[].cwc values
     - A `works_as_expected.py` file is required, namely `wisteria/cwc/newcwc/works_as_expected.py`
     with two functions: initialize() and works_as_expected()
     - Modify globs.py:CWC_MODULES to add your new classes

@@ -41,7 +41,7 @@ What's next ?
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
     - fonctions wae pour les types de base
-    
+
 [? 0.3]
 * finir de couvrir le plus de serializers possible
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
@@ -65,7 +65,7 @@ What's next ?
 * vérifier que l'on peut installer et utiliser Wisteria 0.1.3 sur Windows
     C:\Users\Poste 1\AppData\Local\Programs\Python\Python39\python39.exe
   cela est important pour la discussion sur l'utilisation de la mémoire sous Linux & sous Windows.
-  
+
 [III] au-delà
 * comment expliquer les différences d'utilisation de la mémoire entre Win+Linux ?
 * comment expliquer que pickle n'utilise pas de mémoire pour pgnreader, mais Iaswn, si ?
@@ -94,6 +94,15 @@ What's next ?
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-309
+
+Removed useless spaces in wisteria.ini, ROADMAP.md and README.md.
+
+    * removed useless spaces in wisteria.ini, ROADMAP.md and README.md.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-308
 
 Documentation.
@@ -102,8 +111,8 @@ Documentation.
       SerializationResults.__init__()
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-    
+    * Pylint: 10/10
+
 [DONE] task-307
 
 Documentation.
@@ -111,8 +120,8 @@ Documentation.
     * documentation.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-    
+    * Pylint: 10/10
+
 [DONE] task-306
 
 Renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
@@ -120,7 +129,7 @@ Renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
     * renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-305
 
@@ -129,7 +138,7 @@ Improved documentation in checkup(), fixed typos.
     * improved documentation in checkup(), fixed typos.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-304
 
@@ -140,8 +149,8 @@ serialize demonstration_dataobj_a5 ?
       serialize demonstration_dataobj_a5 ?
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-    
+    * Pylint: 10/10
+
 [DONE] task-303
 
 Improved several report messages by adding a comma after a
@@ -151,7 +160,7 @@ Improved several report messages by adding a comma after a
       ", namely ..." phrase.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-302
 
@@ -162,14 +171,14 @@ Improved several report messages by adding a comma after a
     * updated documentation.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-    
+    * Pylint: 10/10
+
 [DONE] task-301
 
 Documentation.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-300
 
@@ -178,18 +187,18 @@ Improved code readibility by removing useless blank lines.
     * improved code readibility by removing useless blank lines.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-        
+    * Pylint: 10/10
+
 [DONE] task-299
 
 Improved README.md (installation)
 
     * improved README.md (installation)
     * updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`
-    
+
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-        
+    * Pylint: 10/10
+
 [DONE] task-298
 
 Improved doc. in docstrings, sorted functions alphabetically.
@@ -197,8 +206,8 @@ Improved doc. in docstrings, sorted functions alphabetically.
     * improved doc. in docstrings, sorted functions alphabetically.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-    
+    * Pylint: 10/10
+
 [DONE] task-297
 
 Removed useless space in reports.py .
@@ -206,7 +215,7 @@ Removed useless space in reports.py .
     * removed useless space in reports.py .
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-296
 
@@ -214,7 +223,7 @@ Improved help message for --cfgfile and --downloadconfigfile options.
 
     * improved help message for --cfgfile and --downloadconfigfile
       options.
-    
+
     * tests: 7 tests ok out of 7
 
 [DONE] task-295
@@ -223,11 +232,11 @@ Fixed a bug in report.py: A4 and A5 sections are now correctly defined
 in the STR2REPORTSECTION variable.
 
     * Fixed a bug in report.py: A4 and A5 sections are now correctly
-      defined in the STR2REPORTSECTION variable. 
+      defined in the STR2REPORTSECTION variable.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-    
+    * Pylint: 10/10
+
 [DONE] task-294
 
 Updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`.
@@ -235,7 +244,7 @@ Updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`.
     * updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-293
 
@@ -246,8 +255,8 @@ Minor improvements in messages, comments and documentation.
     * slightly improved a comment in compute_results():erase_progress_bar()
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-            
+    * Pylint: 10/10
+
 [DONE] task-292
 
 Improved report aspect by using rich.rule() function.
@@ -265,7 +274,7 @@ Improved report aspect by using rich.rule() function.
     * msgreporttitle() now calls _message(obj, rule=True)
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-291
 
@@ -278,8 +287,8 @@ in account.
       is now replaced by a more precise one.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
-        
+    * Pylint: 10/10
+
 [DONE] task-290
 
 Renumbered the error codes, some were duplicates or missing.
@@ -287,9 +296,9 @@ Renumbered the error codes, some were duplicates or missing.
     * renumbered the error codes, some were duplicates or missing:
       - serializers.py ERRORID051 > ERRORID047
       - wisteria.py ERRORID041 > ERRORID043
-    
+
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10      
+    * Pylint: 10/10
 
 [DONE] task-289
 
@@ -299,7 +308,7 @@ Improved report title appearance.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-288
 
 Documentation: improved help message for --verbosity option.
@@ -330,7 +339,7 @@ code structure
 
 documentation
 
-    * Improved documentation (task-275, task-277, task-281, task-287)    
+    * Improved documentation (task-275, task-277, task-281, task-287)
 
 dependencies
 
@@ -387,7 +396,7 @@ Python 3.10.2 (main, Jan 15 2022, 19:56:27) [GCC 11.1.0]
 Pimydoc v. 0.2.9
 * about readmemd2txt:
 readmemd2txt: 0.0.5
-```    
+```
 
 [DONE] task-287
 
@@ -397,7 +406,7 @@ Improved documentation.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-286
 
 Improved a message displayed by partial_report__data().
@@ -417,7 +426,7 @@ Pylint & co. : minor improvements to code readibility
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-284
 
 no more TODOs. Minor improvements to code readibility.
@@ -457,7 +466,7 @@ Documentation: OUTPUT format
 
     * tests: 7 tests ok out of 7
 
-[DONE] task-280                        
+[DONE] task-280
 
 Improved program message: updated --mute explanations.
 
@@ -471,15 +480,15 @@ Improved program messages.
 
     * improved the readibilty of a message displayed by checkup()
 
-    * tests: 7 tests ok out of 7    
+    * tests: 7 tests ok out of 7
 
 [DONE] task-278
 
 Improved code readibilty: get_missing_required_modules > get_missing_required_internal_modules
 
     * get_missing_required_modules > get_missing_required_internal_modules
-    
-    * tests: 7 tests ok out of 7    
+
+    * tests: 7 tests ok out of 7
 
 [DONE] task-277
 
@@ -487,7 +496,7 @@ Documentation.
 
     * Improved doc: (A/00) minimal imports > (A/00) minimal internal imports
 
-    * tests: 7 tests ok out of 7    
+    * tests: 7 tests ok out of 7
 
 [DONE] task-276
 
@@ -496,7 +505,7 @@ Added new fmt_xxx() functions.
     * added new fmt_xxx() functions
     * improved documentation
 
-    * tests: 7 tests ok out of 7    
+    * tests: 7 tests ok out of 7
 
 [DONE] task-275
 
@@ -504,7 +513,7 @@ Documentation.
 
     * improved README.md
 
-    * tests: 7 tests ok out of 7    
+    * tests: 7 tests ok out of 7
 
 [DONE] task-274
 
@@ -533,7 +542,7 @@ wmi 1.5.1 Windows Management Instrumentation
 └── pywin32 *
 ```
 
-    * tests: 7 tests ok out of 7    
+    * tests: 7 tests ok out of 7
 
 [DONE] task-273
 
@@ -557,7 +566,7 @@ bugfixes
     * (bugfix) fixed a bug in SerializationResults.total_encoding_plus_decoding_time():
                if output == "fmtstr" if an incoherent value is computed, None is no
                more returned (task-272)
-               
+
 code quality
 
     * tests: 7 tests ok out of 7
@@ -565,7 +574,7 @@ code quality
 
 code structure
 
-    * new types checked by works_as_expected(): 
+    * new types checked by works_as_expected():
       - collections.defaultdict(int)
       - collections.defaultdict(list)
       - collections.defaultdict(none)
@@ -577,12 +586,12 @@ code structure
 dependencies
 
     * updated dependencies (`poetry update`) (task-269)
-    
+
 documentation
 
     * updated doc. (task-270)
     * improved messages displayed by serializers (task-270)
-    
+
 interface
 
     * fixed A2 and A3 report sections which now display only the serializers/data that
@@ -626,7 +635,7 @@ website: https://www.shellcheck.net
 * about pylint:
 pylint 2.11.1
 astroid 2.8.5
-Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+Python 3.9.7 (default, Oct 10 2021, 15:13:22)
 [GCC 11.1.0]
 * about pipdeptree:
 2.0.0
@@ -663,7 +672,7 @@ are required by PLANNED_TRANSCODINGS.
 
 [DONE] task-270
 
-    * new types checked by works_as_expected(): 
+    * new types checked by works_as_expected():
       - collections.defaultdict(int)
       - collections.defaultdict(list)
       - collections.defaultdict(none)
@@ -1752,22 +1761,22 @@ wisteria/cwc/pgnreader/default.py
 
 code structure
 
-    * wisteria/cwc/pgnreader/default.py 
+    * wisteria/cwc/pgnreader/default.py
       (task-190, task-191, task-192, task-194, task-195, task-196, task-197, task-198,
        task-200, task-201, task-203, task-205, task-206, task-207, task-209)
     * tests; new directories: tests/, wisteria/cwc/pgnreader; new script: tests.sh
       (task-193, task-199, task-202, task-204, task-208)
-    * codesearch.py: uncomment some lines in order to search in tests/ too 
+    * codesearch.py: uncomment some lines in order to search in tests/ too
       (task-208)
 
 code quality
 
     * tests: 6 tests ok out of 6.
     * Pylint: 10/10
-    
+
 tasks
 
-    * task(s): task-191, task-192, task-193, task-194, task-195, task-196, task-197, 
+    * task(s): task-191, task-192, task-193, task-194, task-195, task-196, task-197,
                task-198, task-199, task-200, task-201, task-202, task-203, task-204,
                task-205, task-206, task-207, task-208, task-209
 
@@ -1802,7 +1811,7 @@ website: https://www.shellcheck.net
 * about pylint:
 pylint 2.11.1
 astroid 2.8.3
-Python 3.9.7 (default, Oct 10 2021, 15:13:22) 
+Python 3.9.7 (default, Oct 10 2021, 15:13:22)
 [GCC 11.1.0]
 * about pipdeptree:
 2.0.0
@@ -1825,10 +1834,10 @@ readmemd2txt: 0.0.5
 
 (cwc_default.py): reduced test numbers from 12 to 6.
 
-    * (cwc_default.py): improved tests (added comparison to the value of 
+    * (cwc_default.py): improved tests (added comparison to the value of
                         human_repr() in one test) (task-208)
     * (cwc_default.py): reduced test numbers from 12 to 6 (task-208)
-    * codesearch.py: uncomment some lines in order to search in tests/ too 
+    * codesearch.py: uncomment some lines in order to search in tests/ too
       (task-208)
 
     * tests: 6 tests ok out of 6.
@@ -1893,7 +1902,7 @@ readmemd2txt: 0.0.5
     * (cwc_default.py): bugfix in ChessGame.write_pgn__listofmoves():
       duplicated final line
       (task-202)
-    
+
     * tests: 22 tests ok out of 22.
 
 [DONE] task-201
@@ -1915,7 +1924,7 @@ readmemd2txt: 0.0.5
     * (cwc_default.py): Removed useless .pieces attribute from ChessGameStatus
       (task-200)
     * fixed a typo in ROADMAP.md about task-199
-    
+
     * tests: 11 tests ok out of 11.
     * Pylint: 10/10
 
@@ -1936,12 +1945,12 @@ readmemd2txt: 0.0.5
 [DONE] task-198
 
 (cwc_default.py) 'get_unicode' > 'human_repr' (task-198);
-                 removed useless ChessPlayer class and 
+                 removed useless ChessPlayer class and
                  .white_player/.black_player attributes
                  from ChessGame.
 
     * (cwc_default.py) 'get_unicode' > 'human_repr' (task-198);
-                       removed useless ChessPlayer class and 
+                       removed useless ChessPlayer class and
                        .white_player/.black_player attributes
                        from ChessGame (task-198)
 
@@ -1961,7 +1970,7 @@ readmemd2txt: 0.0.5
 
 (cwc_default.py): no more NotImplemetedError; docstrings; no more ChessResult class
 
-    * (cwc_default.py): no more NotImplemetedError; docstrings; 
+    * (cwc_default.py): no more NotImplemetedError; docstrings;
                         no more ChessResult class (task-196)
     * tests: 9 tests ok out of 9.
 
@@ -2023,14 +2032,14 @@ Graphs with gradients, bugfix & documentation.
 bugs:
 
     * bugfix: modified the way 'wmi' is required in pyproject.toml (task-185)
-    
+
 code quality
 
     * Pylint: 10/10
 
 interface
 
-    * improved message displayed when there's no command line argument 
+    * improved message displayed when there's no command line argument
       (task-186)
     * graphs with gradients (task-187) thanks to a new file, matplotgraphs.py.
       (task-187)
@@ -2043,7 +2052,7 @@ interface
 tasks:
 
     * task(s): task-185, task-186, task-187, task-188
-    
+
 version
 
     * set version to 0.1.3
@@ -2093,7 +2102,7 @@ Documentation.
     * improved poetry_show_tree.sh: version "poetry_show_tree.sh v.7/2021-10-14"
       This version adds backquotes to format the text to be correctly displayed by GitHub.
       (task-188)
-    
+
     * Pylint: 10/10
 
 [DONE] task-187
@@ -2109,7 +2118,7 @@ Graphs with gradients.
 
 Improved message displayed when there's no command line argument.
 
-    * improved message displayed when there's no command line argument 
+    * improved message displayed when there's no command line argument
       (task-186)
 
     * Pylint: 10/10
@@ -2119,7 +2128,7 @@ Improved message displayed when there's no command line argument.
 Bugfix: modified the way 'wmi' is required in pyproject.toml.
 
     * bugfix: modified the way 'wmi' is required in pyproject.toml (task-185)
-    
+
     * set version to '0.1.4rc2'
 
     * Pylint: 10/10
@@ -2143,7 +2152,7 @@ bugs:
       (task-176)
     * fixed a minor bug in report(): removed useless f- prefix before a string
       (task-180)
-  
+
 code quality
 
     * added a blank line at the end of the A1, D1a and D1b report sections (task-173)
@@ -2176,7 +2185,7 @@ code structure
     * 'aspect_' > '_fmt' and wisteria/reportaspect.py > wisteria/reprfmt.py
       (task-183)
     * added `wim` as a dependency for Windows systems (task-184)
-    
+
 documentation
 
     * improved SerializationResults docstring (task-167)
@@ -2201,7 +2210,7 @@ command line
     * improved help message for --cfgfile command line argument (task-179)
     * fixed --tolerateabsurdvalues definition ('store' > 'store_true'),
       thus improving --help display (task-179)
-    
+
 interface
 
     * improved graph title in report_section_graphs(): "Speed" > "Slowness"
@@ -2228,7 +2237,7 @@ tasks:
                task-171, task-172, task-173, task-174, task-175, task-176,
                task-177, task-178, task-179, task-180, task-181, task-182,
                task-183, task-184
-               
+
 version
 
     * set version to 0.1.3
