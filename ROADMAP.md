@@ -92,6 +92,8 @@ What's next ?
 
 ===============================================================================
 
+[CURRENT] v. 0.2.2
+
 [DONE] v. 0.2.1
 
 * Added another check to checkup(): do all serializers know how to
