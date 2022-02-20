@@ -93,7 +93,7 @@ TABLE OF CONTENTS
 
 [0] the project in a few words
 
-Use Wisteria to compare two serializers like pickle or json: which one is faster? Which one uses th
+Use Wisteria to compare two serializers like pickle, json or Django serializers: which one is faster? Which one uses th
 e least amount of memory? Which one produces the shortest strings? Which one ha
 s the best coverage rate?
 
