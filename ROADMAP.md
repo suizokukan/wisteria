@@ -84,11 +84,9 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* --checkup: avec la config actuelle, X serializers et Y dataobjects seraient
-utilisés, soient X*Y combinaisons à tester
+* bug avec --checkup et --verbosity=2/3
 * il manque int_big / int_verybig
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
-* report: data:lcm
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
 * writingconventions.md
 * classes.md
@@ -96,6 +94,17 @@ utilisés, soient X*Y combinaisons à tester
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
+
+[DONE] task-313
+
+--checkup now display data:lcm, the object data names that can be
+(/can't) fully transcoded.
+
+    * --checkup now display data:lcm, the object data names that can be
+      (/can't) fully transcoded.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-312
 

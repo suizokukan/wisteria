@@ -370,7 +370,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (D/04) reset console cursor
 
 from wisteria.utils import get_missing_required_internal_modules  # noqa
-from wisteria.reprfmt import fmt_projectversion  # noqa
+from wisteria.reprfmt import fmt_projectversion, fmt_nounplural  # noqa
 MISSING_REQUIRED_MODULES = get_missing_required_internal_modules()
 if MISSING_REQUIRED_MODULES:
     print(fmt_projectversion(add_timestamp=True))
@@ -1307,9 +1307,38 @@ def checkup():
         msgreport()
         msgreport(f"As expected, all known serializers, namely {tuple(wisteria.globs.SERIALIZERS)} "
                   "know how to encode/decode demonstration data object, namely "
-                  f"{wisteria.globs.DATA[data_name]} .")
+                  f"{'; '.join(wisteria.globs.DATA[data_name])} .")
 
     msgreport()
+
+    # ---- less common multiple / data objects than can be fully transcoded  --
+    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+        data_name_to_be_discarded = []
+        data_name_to_be_kept = []
+        for serializer in wisteria.globs.SERIALIZERS:
+            for data_name in wisteria.globs.DATA:
+                res = wisteria.globs.SERIALIZERS[serializer].func(
+                    action="serialize",
+                    obj=wisteria.globs.DATA[data_name],
+                    obj_data_name=data_name,
+                    fingerprint=None,
+                    works_as_expected=wisteria.data.works_as_expected
+                    if wisteria.data.works_as_expected(data_name=data_name,
+                                                       obj=None) is True else None)
+                if not res.reversibility:
+                    data_name_to_be_discarded.append(data_name)
+                else:
+                    data_name_to_be_kept.append(data_name)
+        msgreport(f"* {len(data_name_to_be_discarded)} "
+                  f"Data {fmt_nounplural('Object', len(data_name_to_be_discarded))} "
+                  "can't be fully transcoded:")
+        msgreport(f"{'; '.join(data_name_to_be_discarded)}")
+        msgreport()
+        msgreport(f"* {len(data_name_to_be_kept)} "
+                  f"Data {fmt_nounplural('Object', len(data_name_to_be_kept))} "
+                  "can be fully transcoded (=data less common multiple):")
+        msgreport(f"{'; '.join(data_name_to_be_kept)}")
+        msgreport()
 
     # ---- graphs -------------------------------------------------------------
     if trytoimport("matplotlib.pyplot"):
