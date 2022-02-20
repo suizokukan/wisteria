@@ -1333,12 +1333,12 @@ def checkup():
                     data_name_to_be_kept.append(data_name)
         msgreport(f"* {len(data_name_to_be_discarded)} "
                   f"Data {fmt_nounplural('Object', len(data_name_to_be_discarded))} "
-                  "can't be fully transcoded:")
+                  "could not be fully transcoded, if required:")
         msgreport(f"{'; '.join(data_name_to_be_discarded)}")
         msgreport()
         msgreport(f"* {len(data_name_to_be_kept)} "
                   f"Data {fmt_nounplural('Object', len(data_name_to_be_kept))} "
-                  "can be fully transcoded (=data less common multiple):")
+                  "could be fully transcoded, if required (=data less common multiple):")
         msgreport(f"{'; '.join(data_name_to_be_kept)}")
         msgreport()
 
