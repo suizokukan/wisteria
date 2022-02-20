@@ -84,7 +84,6 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* bug avec --checkup et --verbosity=2/3
 * il manque int_big / int_verybig
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
@@ -93,8 +92,38 @@ What's next ?
 * --skimthedata="no" | "exclude ??? data"
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
-* "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-315
+
+Added new data objects, namely:
+        "int_0": 0,
+        "int_1": 1,
+        "int_0xffff": 0xFFFF,
+        "int_0xffffffff": 0xFFFFFFFF,
+        "int_0xffffffffffffffff": 0xFFFFFFFFFFFFFFFF,
+        "int_0xffffffffffffffffffffffffffffffff": 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+        "int_-1": -1,
+        "int_-0xffff": -0xFFFF,
+        "int_-0xffffffff": -0xFFFFFFFF,
+        "int_-0xffffffffffffffff": -0xFFFFFFFFFFFFFFFF,
+        "int_-0xffffffffffffffffffffffffffffffff": -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+
+    * added new data objects, namely:
+        "int_0": 0,
+        "int_1": 1,
+        "int_0xffff": 0xFFFF,
+        "int_0xffffffff": 0xFFFFFFFF,
+        "int_0xffffffffffffffff": 0xFFFFFFFFFFFFFFFF,
+        "int_0xffffffffffffffffffffffffffffffff": 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+        "int_-1": -1,
+        "int_-0xffff": -0xFFFF,
+        "int_-0xffffffff": -0xFFFFFFFF,
+        "int_-0xffffffffffffffff": -0xFFFFFFFFFFFFFFFF,
+        "int_-0xffffffffffffffffffffffffffffffff": -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,    
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-314
 
 serializer_xxx() functions have now a new parameter, namely `strictmute`
