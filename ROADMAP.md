@@ -95,6 +95,19 @@ What's next ?
 * data_object, dataobj_name: c'est le bazar
 * "str(long)": "abhg12234"*10000, > "str(long)": "abhg12234"*1000
 
+[DONE] task-314
+
+serializer_xxx() functions have now a new parameter, namely `strictmute`
+to prevent any message display. This parameter is set to True in
+rare occasions (see checkup()).
+
+    * serializer_xxx() functions have now a new parameter, namely
+      `strictmute` to prevent any message display. This parameter
+      is set to True in rare occasions (see checkup()).
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-313
 
 --checkup now display data:lcm, the object data names that can be

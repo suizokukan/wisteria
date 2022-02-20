@@ -1292,6 +1292,7 @@ def checkup():
             obj=wisteria.globs.DATA[data_name],
             obj_data_name=data_name,
             fingerprint=None,
+            strictmute=True,
             works_as_expected=wisteria.data.works_as_expected
             if wisteria.data.works_as_expected(data_name=data_name,
                                                obj=None) is True else None)
@@ -1322,6 +1323,7 @@ def checkup():
                     obj=wisteria.globs.DATA[data_name],
                     obj_data_name=data_name,
                     fingerprint=None,
+                    strictmute=True,
                     works_as_expected=wisteria.data.works_as_expected
                     if wisteria.data.works_as_expected(data_name=data_name,
                                                        obj=None) is True else None)

@@ -298,7 +298,7 @@ def init_data():
 
         "str": "abc",
         "str(empty)": "",
-        "str(long)": "abhg12234"*10000,
+        "str(long)": "abhg12234"*1000,
         "str(non ascii characters)": "êł¹@"+chr(0x1234)+chr(0x12345),
 
         "time(time.time)": time.time(),
