@@ -93,6 +93,17 @@ What's next ?
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
 
+[DONE] task-316
+
+Fixed a bug in checkup() preventing to see the demonstration object
+in a message.
+
+    * fixed a bug in checkup() preventing to see the demonstration object
+      in a message
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-315
 
 Added new data objects, namely:

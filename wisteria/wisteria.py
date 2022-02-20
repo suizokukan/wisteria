@@ -1308,7 +1308,7 @@ def checkup():
         msgreport()
         msgreport(f"As expected, all known serializers, namely {tuple(wisteria.globs.SERIALIZERS)} "
                   "know how to encode/decode demonstration data object, namely "
-                  f"{'; '.join(wisteria.globs.DATA[data_name])} .")
+                  f"{wisteria.globs.DATA[data_name]} .")
 
     msgreport()
 
