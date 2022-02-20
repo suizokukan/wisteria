@@ -84,7 +84,6 @@ What's next ?
 ===============================================================================
 
 [CURRENT] v. 0.2.1
-* il manque int_big / int_verybig
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
 * --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
 * writingconventions.md
@@ -92,6 +91,15 @@ What's next ?
 * --skimthedata="no" | "exclude ??? data"
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
+
+[DONE] task-318
+
+Improved README.md.
+
+    * improved README.md
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-317
 

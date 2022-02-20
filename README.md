@@ -81,7 +81,7 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
 
 # [0] the project in a few words
 
-Use `Wisteria` to compare two serializers: which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
+Use `Wisteria` to compare two serializers (like [pickle](https://docs.python.org/3/library/pickle.html) or [json](https://docs.python.org/3/library/json.html)): which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
 
 After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 
