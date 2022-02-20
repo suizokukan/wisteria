@@ -305,9 +305,9 @@ def partial_report__data(show_all_data,
     """
     # ---- all DATA/UNAVAILABLE_DATA ------------------------------------------
     if show_all_data:
-        msgreport(
-            f"* {len(wisteria.globs.DATA)} Available Data "
-            f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}:")
+        msgreporttitle(
+            f"{len(wisteria.globs.DATA)} Available Data "
+            f"{fmt_nounplural('Object', len(wisteria.globs.DATA))}")
 
         string = []
         # for data_object_name, data_object in ...
@@ -322,9 +322,9 @@ def partial_report__data(show_all_data,
 
         if wisteria.globs.UNAVAILABLE_DATA:
             msgreport()
-            msgreport(
-                f"! {len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
-                f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}:")
+            msgreporttitle(
+                f"{len(wisteria.globs.UNAVAILABLE_DATA)} Unavailable Data "
+                f"{fmt_nounplural('Object', len(wisteria.globs.UNAVAILABLE_DATA))}")
 
             # why maximallength=300 ?
             # Some error messages (see UNAVAILABLE_DATA structure)
@@ -344,10 +344,12 @@ def partial_report__data(show_all_data,
             all_dataobjects = sorted(tuple(wisteria.globs.DATA.keys()) +
                                      tuple(wisteria.globs.UNAVAILABLE_DATA.keys()))
             msgdebug(
-                f"data objects ({len(all_dataobjects)} "
+                f"all data objects ({len(all_dataobjects)} "
                 f"data obj., unvailable+available/console width={DEBUG_CONSOLEWIDTH}):")
 
             console.print('; '.join(data_object_name for data_object_name in all_dataobjects))
+
+        msgreport()
 
     # ---- only the data defined in PLANNED_TRANSCODINGS ----------------------
     if show_planned_data:
@@ -360,8 +362,8 @@ def partial_report__data(show_all_data,
         planned_data_names = set(
             data_name for _, data_name, _ in wisteria.globs.PLANNED_TRANSCODINGS)
 
-        msgreport(
-            f"* {len(planned_data_names)} Data Types to be Used After Selection:")
+        msgreporttitle(
+            f"{len(planned_data_names)} Data Types to be Used After Selection")
 
         string = []
         for data_object_name in sorted(planned_data_names):
@@ -389,9 +391,9 @@ def partial_report__serializers(show_all_serializers,
                                            will be displayed.
     """
     if show_all_serializers:
-        msgreport(
-            f"* {len(wisteria.globs.SERIALIZERS)} Available "
-            f"{fmt_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}:")
+        msgreporttitle(
+            f"{len(wisteria.globs.SERIALIZERS)} Available "
+            f"{fmt_nounplural('Serializer', len(wisteria.globs.SERIALIZERS))}")
 
         for serializer in wisteria.globs.SERIALIZERS.values():
             msgreport(f"- {serializer.checkup_repr()}")
@@ -405,9 +407,9 @@ def partial_report__serializers(show_all_serializers,
         if wisteria.globs.UNAVAILABLE_SERIALIZERS:
             msgreport()
 
-            msgreport(
-                f"! {len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
-                f"{fmt_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}:")
+            msgreporttitle(
+                f"{len(wisteria.globs.UNAVAILABLE_SERIALIZERS)} Unavailable "
+                f"{fmt_nounplural('Serializer', len(wisteria.globs.UNAVAILABLE_SERIALIZERS))}")
             msgreport(
                 "- " +
                 "\n- ".join(f"{fmt_serializer(serializer.name)}, "
@@ -436,8 +438,8 @@ def partial_report__serializers(show_all_serializers,
         planned_data_serializers = set(
             serializer for serializer, _, _ in wisteria.globs.PLANNED_TRANSCODINGS)
 
-        msgreport(
-            f"* {len(planned_data_serializers)} Serializers to be Used After Selection:")
+        msgreporttitle(
+            f"{len(planned_data_serializers)} Serializers to be Used After Selection")
 
         for _serializer in planned_data_serializers:
             serializer = wisteria.globs.SERIALIZERS[_serializer]
@@ -624,7 +626,7 @@ def report_section_a3(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A3) List of Data Objects Because they have been Selected:")
+        msgreporttitle("(A3) List of Data Objects Because they have been Selected")
         msgreport()
 
     partial_report__data(show_all_data=False,

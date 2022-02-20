@@ -414,7 +414,7 @@ from wisteria.utils import trytoimport  # noqa
 import wisteria.serializers  # noqa
 import wisteria.data  # noqa
 from wisteria.wisteriaerror import WisteriaError  # noqa
-from wisteria.msg import msginfo, msgwarning, msgerror, msgdebug, msgreport  # noqa
+from wisteria.msg import msginfo, msgwarning, msgerror, msgdebug, msgreport, msgreporttitle # noqa
 from wisteria.cmdline_output import parse_output_argument  # noqa
 from wisteria.cmdline_cmp import read_cmpstring  # noqa
 from wisteria.cmdline_mymachine import mymachine  # noqa
@@ -1207,7 +1207,7 @@ def checkup():
     msgreport()
 
     # ---- configuration file -------------------------------------------------
-    msgreport("* Config file:")
+    msgreporttitle("Config file")
     if not os.path.exists(ARGS.cfgfile):
         diagnostic = "  [red]Such a file doesn't exist[/red] but " \
             "you may run this program without it. " \
@@ -1305,7 +1305,7 @@ def checkup():
 
     if check_ok and \
        wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
-        msgreport()
+        msgreporttitle("Do all known serializers know how to transcode demonstration data object ?")
         msgreport(f"As expected, all known serializers, namely {tuple(wisteria.globs.SERIALIZERS)} "
                   "know how to encode/decode demonstration data object, namely "
                   f"{wisteria.globs.DATA[data_name]} .")
@@ -1314,6 +1314,7 @@ def checkup():
 
     # ---- less common multiple / data objects than can be fully transcoded  --
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
+        msgreporttitle("What data object(s) could be transcoded, if required ?")
         data_name_to_be_discarded = []
         data_name_to_be_kept = []
         for serializer in wisteria.globs.SERIALIZERS:
@@ -1343,6 +1344,7 @@ def checkup():
         msgreport()
 
     # ---- graphs -------------------------------------------------------------
+    msgreporttitle("graphs")
     if trytoimport("matplotlib.pyplot"):
         msgreport(
             "* Graphs could be created, if required, "

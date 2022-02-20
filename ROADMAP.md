@@ -94,6 +94,17 @@ What's next ?
 
 [CURRENT] v. 0.2.2
 
+[DONE] task-322
+
+Improved checkup display by using msgreporttitle() instead of
+msgreport() for titles.
+
+    * improved checkup display by using msgreporttitle() instead of
+      msgreport() for titles.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] v. 0.2.1
 
 * Added another check to checkup(): do all serializers know how to
