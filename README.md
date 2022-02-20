@@ -97,7 +97,7 @@ After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ w
 
 ### installation with pip
 
-If `$ python3 --version` is Python3.8+ — you may write:
+If `$ python3 --version` is [Python3.8+](https://www.python.org/downloads/release/python-380/) — you may write:
 
 ```
 $ pip install wisteria
