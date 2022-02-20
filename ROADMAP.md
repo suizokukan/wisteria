@@ -4,45 +4,54 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-[? 0.2.2] vrais tests
+[0.2.2]
+* et si on travaille juste sur le temps ? la mémoire > report spécifique
+* --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
+* writingconventions.md
+* classes.md
+* --skimthedata="no" | "exclude ??? data"
+* généraliser le mot 'transcoding'
+* data_object, dataobj_name: c'est le bazar
+
+[? 0.2.3] vrais tests
 * tests
         * prendre un jeu de données
 
-[? 0.2.3] modification du hall of fame
+[? 0.2.4] modification du hall of fame
 * indiquer de surcroît la lisibilité donnée de cette chaîne.
   encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
 * extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
 
-[? 0.2.4] terminer --cmp="iaswn+pickle(int+str)"
+[? 0.2.5] terminer --cmp="iaswn+pickle(int+str)"
 ? wisteria "mainstring": "pickle vs all(ini)++++"
 ? --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
 
-[? 0.2.5] améliorer la méthode utilisée (moyenne,)
+[? 0.2.6] améliorer la méthode utilisée (moyenne,)
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
-[? 0.2.6] classer les serializers (A6+checkup) selon leur coverage rate:
+[? 0.2.7] classer les serializers (A6+checkup) selon leur coverage rate:
 0: n'arrive pas au niveau 1
 1: arrive à transcoder une sélection de types Python élémentaires
 2: arrive à transcoder cwc.simple
 3: arrive à transcoder cwc.pgnreader
 
-[? 0.2.7] wisteria "xyz"
+[? 0.2.8] wisteria "xyz"
 * ce serait bien si... on pouvait utiliser Wisteria depuis la console Python; quid des arguments de la ligne de commande ?
 * ce serait bien si... tous les arguments de la ligne de commande étaient définissables depuis le fichier de configuration.
 
-[? 0.2.8] avant d'ajouter un max de serializers/datas:
+[? 0.2.9] avant d'ajouter un max de serializers/datas:
 * bestof : ??? > ne pas mettre overallscore dans les rapports sauf pour 'halloffame'
 
-[? 0.2.9]
+[? 0.3]
 * finir de couvrir le plus de datas possible:
     - third-party à ajouter, en particulier panda+numpy
     - écrire les adaptations spécifiques pour cwc
     - fonctions wae pour les types de base
 
-[? 0.3]
+[? 0.3.1]
 * finir de couvrir le plus de serializers possible
         https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
         xdrlib (https://docs.python.org/3/library/xdrlib.html)
@@ -57,7 +66,7 @@ What's next ?
         xmlrpclib (https://stackoverflow.com/questions/32022656/python-cannot-marshal-class-decimal-decimal-objects)
 
 [III] pour écrire à V.S.
-[? 0.3.1]
+[? 0.3.2]
 * README.md : %%français > anglais
 * README.md acceptable
       + __init__.py
@@ -83,14 +92,196 @@ What's next ?
 
 ===============================================================================
 
-[CURRENT] v. 0.2.1
-* et si on travaille juste sur le temps ? la mémoire > report spécifique
-* --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
-* writingconventions.md
-* classes.md
-* --skimthedata="no" | "exclude ??? data"
-* généraliser le mot 'transcoding'
-* data_object, dataobj_name: c'est le bazar
+[DONE] v. 0.2.1
+
+* Added another check to checkup(): do all serializers know how to
+serialize demonstration_dataobj_a5 ?
+* --checkup now display data:lcm, the object data names that can be
+(/can't) fully transcoded.
+* Added new data objects, namely:
+        "int_0": 0,
+        "int_1": 1,
+        "int_0xffff": 0xFFFF,
+        "int_0xffffffff": 0xFFFFFFFF,
+        "int_0xffffffffffffffff": 0xFFFFFFFFFFFFFFFF,
+        "int_0xffffffffffffffffffffffffffffffff": 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+        "int_-1": -1,
+        "int_-0xffff": -0xFFFF,
+        "int_-0xffffffff": -0xFFFFFFFF,
+        "int_-0xffffffffffffffff": -0xFFFFFFFFFFFFFFFF,
+        "int_-0xffffffffffffffffffffffffffffffff": -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+* Various minor improvements: doc., code readibility, bugfixes
+
+
+bugfixes:
+
+    * fixed a problem with the console cursor:
+      When the program is abruptly stopped, it was possible that the terminal
+      cursor did not appear anymore; to solve this problem, when the programs stops,
+      the console cursor is shown through a call to .show_cursor(True); this
+      function is called in exit_handler().
+      (task-292)
+    * Fixed a bug in report.py: A4 and A5 sections are now correctly
+      defined in the STR2REPORTSECTION variable.
+      (task-295)
+    * fixed a bug in checkup() preventing to see the demonstration object
+      in a message
+      (task-316)
+
+code readibility and code quality
+
+    * removed useless space in reports.py .
+      (task-297)
+    * improved code readibility by removing useless blank lines.
+      (task-300)
+    * removed useless spaces in wisteria.ini, ROADMAP.md and README.md.
+      (task-309)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
+code structure
+
+    * renumbered the error codes, some were duplicates or missing:
+      - serializers.py ERRORID051 > ERRORID047
+      - wisteria.py ERRORID041 > ERRORID043
+      (task-290)
+    * new global variable: wisteria.globs.RICHCONSOLE
+      (task-292)
+    * added a new argument to _message(), namely "rule=False", allowing to
+      _message() to call either rich.print() either rich.rule()
+      (task-292)
+    * msgreporttitle() now calls _message(obj, rule=True)
+      (task-292)
+    * improved message returned by report_section_c2c__allvsall()
+      (task-302)
+    * modified fmt_exaequowith() and fmt_exaequowith_hall(): a new
+      argument (`suffix`) allows to add a suffix. The `prefix` and
+      the `suffix` are added only if the returned list is not empty.
+      (task-302)
+    * Added another check to checkup(): do all serializers know how to
+      serialize demonstration_dataobj_a5 ?
+      (task-304)
+    * renamed 'demonstration_dataobj_a5': 'demonstration_dataobj'
+      (task-306)
+    * serializer's number and data objs number is now checked at
+      step (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+      (task-310)
+    * new exit code: 5
+      (task-310)
+    * serializer_xxx() functions have now a new parameter, namely
+      `strictmute` to prevent any message display. This parameter
+      is set to True in rare occasions (see checkup()).
+      (task-314)
+    * added new data objects, namely:
+        "int_0": 0,
+        "int_1": 1,
+        "int_0xffff": 0xFFFF,
+        "int_0xffffffff": 0xFFFFFFFF,
+        "int_0xffffffffffffffff": 0xFFFFFFFFFFFFFFFF,
+        "int_0xffffffffffffffffffffffffffffffff": 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+        "int_-1": -1,
+        "int_-0xffff": -0xFFFF,
+        "int_-0xffffffff": -0xFFFFFFFF,
+        "int_-0xffffffffffffffff": -0xFFFFFFFFFFFFFFFF,
+        "int_-0xffffffffffffffffffffffffffffffff": -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
+      (task-315)
+
+documentation
+
+    * updated documentation: added "(D/04) reset console cursor" string
+      to pimydoc "code structure" section.
+      (task-292)
+    * slightly improved pimydoc "code structure" section
+      (task-293)
+    * slightly improved a comment in compute_results():erase_progress_bar()
+      (task-293)
+    * updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`
+      (task-294)
+    * improved doc. in docstrings, sorted functions alphabetically.
+      (task-298)
+    * improved README.md (installation)
+      (task-299)
+    * updated wisteria/__init__.py thanks to `readmemd2txt --pyinitfile`
+      (task-299)
+    * documentation
+      (task-301, task-302, task-307, task-308)
+    * improved documentation in checkup(), fixed typos.
+      (task-305)
+    * documentation: updated pimydoc
+      (task-310)
+    * improved README.md
+      (task-318, task-319, task-321)
+
+interface
+
+    * documentation: improved help message for --verbosity option
+      (task-288)
+    * improved report title appearance: modified fmt_reporttitle()
+      (task-289)
+    * improved checkup message: the value of wisteria.globs.OUTPUT[1] is now taken
+      in account. The dubious sentence:
+        "The following informations may have been written in the report file"
+      is now replaced by a more precise one.
+      (task-291)
+    * slightly improved a message in report_section_b1d()
+      (task-293)
+    * improved help message for --cfgfile and --downloadconfigfile
+      options.
+      (task-296)
+    * improved several report messages by adding a comma after a
+      ", namely ..." phrase.
+      (task-303)
+    * improved warning and error readibility: modified
+      fmt_warning() and fmt_error().
+      (task-311)
+    * improved message displayed by read_cfgfile() and removed useless lines
+of code.
+      (task-312)
+    * --checkup now display data:lcm, the object data names that can be
+      (/can't) fully transcoded.
+      (task-312)
+    * improved messages displayed by checkup
+      (task-317)
+
+tasks
+
+    * task(s): task-288, task-289, task-290, task-291, task-292,
+               task-293, task-294, task-295, task-296, task-297,
+               task-298, task-299, task-300, task-301, task-302,
+               task-303, task-304, task-305, task-306, task-307,
+               task-308, task-309, task-310, task-311, task-312,
+               task-313, task-314, task-315, task-316, task-317,
+               task-318, task-319, task-320, task-321
+
+version
+
+    * set version to '0.2.1'
+
+```
+$ check_tools.sh
+
+./check_tools.sh
+* about poetry:
+Poetry version 1.1.13
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.8.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.8.0
+* about pylint:
+pylint 2.12.2
+astroid 2.9.3
+Python 3.10.2 (main, Jan 15 2022, 19:56:27) [GCC 11.1.0]
+* about pipdeptree:
+./check_tools.sh: line 30: pipdeptree: command not found
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
 
 [DONE] task-321
 
@@ -118,7 +309,7 @@ Improved README.md.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-318
 
 Improved README.md.
@@ -136,7 +327,7 @@ Improved messages displayed by checkup.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-316
 
 Fixed a bug in checkup() preventing to see the demonstration object
@@ -174,11 +365,11 @@ Added new data objects, namely:
         "int_-0xffff": -0xFFFF,
         "int_-0xffffffff": -0xFFFFFFFF,
         "int_-0xffffffffffffffff": -0xFFFFFFFFFFFFFFFF,
-        "int_-0xffffffffffffffffffffffffffffffff": -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,    
+        "int_-0xffffffffffffffffffffffffffffffff": -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-314
 
 serializer_xxx() functions have now a new parameter, namely `strictmute`
@@ -208,7 +399,7 @@ rare occasions (see checkup()).
 Improved message displayed by read_cfgfile() and removed useless lines
 of code.
 
-    * Improved message displayed by read_cfgfile() and removed useless lines
+    * improved message displayed by read_cfgfile() and removed useless lines
 of code.
 
     * tests: 7 tests ok out of 7
@@ -299,7 +490,7 @@ serialize demonstration_dataobj_a5 ?
 Improved several report messages by adding a comma after a
 ", namely ..." phrase.
 
-    * Improved several report messages by adding a comma after a
+    * improved several report messages by adding a comma after a
       ", namely ..." phrase.
 
     * tests: 7 tests ok out of 7
@@ -456,7 +647,7 @@ Improved report title appearance.
 
 Documentation: improved help message for --verbosity option.
 
-    * documentation: improved help message for --verbosity option.
+    * documentation: improved help message for --verbosity option
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
