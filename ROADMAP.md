@@ -92,6 +92,15 @@ What's next ?
 * généraliser le mot 'transcoding'
 * data_object, dataobj_name: c'est le bazar
 
+[DONE] task-320
+
+Improved README.md.
+
+    * improved README.md
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-319
 
 Improved README.md.

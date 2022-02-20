@@ -87,7 +87,7 @@ After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ w
 
 ## [0.1] What about the name ?
 
-`Wisteria` is the project's name; package name is `wisteria` for Python, [pipy](https://pypi.org/project/wisteria/) and Poetry.
+`Wisteria` is the project's name; package name is `wisteria` for [Python](https://www.python.org/downloads/release/python-380/), [pipy](https://pypi.org/project/wisteria/) and [Poetry](https://python-poetry.org/).
 
 `Wisteria` is the name of the beautiful flowers under which some of the code was written.
 
