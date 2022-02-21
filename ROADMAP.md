@@ -94,6 +94,16 @@ What's next ?
 
 [CURRENT] v. 0.2.2
 
+[DONE] task-323
+
+New file, `classes.md`, where all class definitions appear.
+
+    * new file, `classes.md`, where all class definitions appear.
+    * updated README.md
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-322
 
 Improved checkup display by using msgreporttitle() instead of
