@@ -94,6 +94,15 @@ What's next ?
 
 [CURRENT] v. 0.2.2
 
+[DONE] task-324
+
+Improved README.md.
+
+    * improved README.md
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-323
 
 New file, `classes.md`, where all class definitions appear.

@@ -941,7 +941,7 @@ A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You m
     - Modify globs.py:CWC_MODULES to add your new classes
     - Add your classes to wisteria.ini (section `data objects`)
 
-# [3] if you want to read/test/modify the code]
+# [3] if you want to read/test/modify the code
 
 ## [3.0] classes hierarchy
 
