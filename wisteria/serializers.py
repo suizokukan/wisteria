@@ -144,7 +144,7 @@ def func_serialize(serializer,
     """
         func_serialize()
 
-        Just a wrapper around .func(action="serialize")
+        Just a wrapper around .transcodefunc(action="serialize")
         _______________________________________________________________________
 
         ARGUMENTS:
@@ -156,7 +156,7 @@ def func_serialize(serializer,
     """
     # ==== <data_name> is NOT A CWC CLASS =====================================
     if not is_a_cwc_name(data_name):
-        return wisteria.globs.SERIALIZERS[serializer].func(
+        return wisteria.globs.SERIALIZERS[serializer].transcodefunc(
             action="serialize",
             obj=wisteria.globs.DATA[data_name],
             obj_data_name=data_name,
@@ -182,7 +182,7 @@ def func_serialize(serializer,
                     wisteria.globs.MODULES[data_name__strmodule],
                     data_name__strclassname)())
 
-    return wisteria.globs.SERIALIZERS[serializer].func(
+    return wisteria.globs.SERIALIZERS[serializer].transcodefunc(
         action="serialize",
         obj=cwc_object,
         obj_data_name=data_name,
@@ -1478,28 +1478,28 @@ def init_serializers():
                                     module_name="iaswn",
                                     human_name="Iaswn"),
                 internet="https://github.com/suizokukan/iaswn",
-                func=serializer_iaswn,
+                transcodefunc=serializer_iaswn,
                 cwc="cwc_iaswn"),
             SerializerData(
                 SerializersDataNMVH(name="json",
                                     module_name="json",
                                     human_name="json"),
                 internet="https://docs.python.org/3/library/json.html",
-                func=serializer_json,
+                transcodefunc=serializer_json,
                 cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="jsonpickle",
                                     module_name="jsonpickle",
                                     human_name="jsonpickle"),
                 internet="https://jsonpickle.github.io/",
-                func=serializer_jsonpickle,
+                transcodefunc=serializer_jsonpickle,
                 cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="jsonpickle_keystrue",
                                     module_name="jsonpickle",
                                     human_name="jsonpickle(keys=True)"),
                 internet="https://jsonpickle.github.io/",
-                func=serializer_jsonpickle_keystrue,
+                transcodefunc=serializer_jsonpickle_keystrue,
                 cwc="cwc_default",
                 comment="jsonpickle with keys=True"),
             SerializerData(
@@ -1507,21 +1507,21 @@ def init_serializers():
                                     module_name="marshal",
                                     human_name="marshal"),
                 internet="https://docs.python.org/3/library/marshal.html#module-marshal",
-                func=serializer_marshal,
+                transcodefunc=serializer_marshal,
                 cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="pickle",
                                     module_name="pickle",
                                     human_name="pickle"),
                 internet="https://docs.python.org/3/library/pickle.html",
-                func=serializer_pickle,
+                transcodefunc=serializer_pickle,
                 cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="pyyaml",
                                     module_name="yaml",
                                     human_name="pyyaml"),
                 internet="https://pyyaml.org/",
-                func=serializer_pyyaml,
+                transcodefunc=serializer_pyyaml,
                 cwc="cwc_default"),
             SerializerData(
                 SerializersDataNMVH(name="simpleion",
@@ -1529,7 +1529,7 @@ def init_serializers():
                                     module_name__version="amazon.ion",
                                     human_name="Amazon Ion Python"),
                 internet="https://github.com/amzn/ion-python",
-                func=serializer_simpleion,
+                transcodefunc=serializer_simpleion,
                 cwc="cwc_default",
                 comment="installation tip: `pip install git+https://github.com/amzn/ion-python`"),
             SerializerData(
@@ -1537,7 +1537,7 @@ def init_serializers():
                                     module_name="yajl",
                                     human_name="yajl"),
                 internet="https://lloyd.github.io/yajl/",
-                func=serializer_yajl,
+                transcodefunc=serializer_yajl,
                 cwc="cwc_default"),
             ):
         if trytoimport(serializerdata.module_name):
@@ -1559,7 +1559,8 @@ def init_serializers():
                     msgdebug("Successfully imported "
                              f"'{serializerdata.module_name__version}' module.")
 
-            wisteria.globs.SERIALIZERS[serializerdata.name].version = serializerdata.func("version")
+            wisteria.globs.SERIALIZERS[serializerdata.name].version = \
+                serializerdata.transcodefunc("version")
         else:
             wisteria.globs.UNAVAILABLE_SERIALIZERS[serializerdata.name] = serializerdata
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:

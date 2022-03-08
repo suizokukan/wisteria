@@ -69,7 +69,7 @@ class SerializerData:
         o  (str)human_name
         o  (str)internet
         o  (str)version
-        o  (callable)func           : function to be called to use this serializer
+        o  (callable)transcodefunc  : function to be called to use this serializer
         o  (str)cwc                 : name of the module in cwc/xxx/
         o  (None|str)comment        : human-readable comment
         o  (str)module_name__version: will be <module_name> if __init__() doesn't set it.
@@ -78,7 +78,7 @@ class SerializerData:
 
         o  __init__(self,
                     name, module_name, human_name,
-                    internet, func, cwc, comment=None, module_name__version=None)
+                    internet, transcodefunc, cwc, comment=None, module_name__version=None)
         o  __repr__(self)
         o  checkup_repr(self)
         o  simple_repr(self)
@@ -86,7 +86,7 @@ class SerializerData:
     def __init__(self,
                  serializersdata_nmvh,
                  internet,
-                 func,
+                 transcodefunc,
                  cwc,
                  comment=None):
         """
@@ -97,7 +97,7 @@ class SerializerData:
             o  (SerializersDataNVMH)serializersdata_nmvh
             o  (str)internet
             o  (str)version
-            o  (callable)func                : function to be called to use this serializer
+            o  (callable)transcodefunc       : function to be called to use this serializer
             o  (str)cwc                      : name of the module in cwc/xxx/
             o  (None|str)comment             : human-readable comment
         """
@@ -106,7 +106,7 @@ class SerializerData:
         self.human_name = serializersdata_nmvh.human_name
         self.internet = internet
         self.version = None
-        self.func = func
+        self.transcodefunc = transcodefunc
         self.cwc = cwc
         self.comment = comment
         self.module_name__version = serializersdata_nmvh.module_name__version \

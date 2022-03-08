@@ -95,7 +95,12 @@ What's next ?
 [CURRENT] v. 0.2.2
 
 * vérifier la qualité du code avec pylint.
-* func > transcodefunc + func_serialize() > transcodefunc_serialize()
+
+[DONE] task-326
+
+    * renamed transcode function `func` > `transcodefunc`
+
+    * tests: 7 tests ok out of 7
 
 [DONE] task-325
 

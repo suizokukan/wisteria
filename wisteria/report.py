@@ -766,8 +766,9 @@ def report_section_a5(results,
     msgreport(f"{demonstration_dataobj}")
 
     for serializer in results.serializers:
-        encoded_string = wisteria.globs.SERIALIZERS[serializer].func(action="encode",
-                                                                     obj=demonstration_dataobj)
+        encoded_string = wisteria.globs.SERIALIZERS[serializer].transcodefunc(
+            action="encode",
+            obj=demonstration_dataobj)
         msgreport(f"- encoded string created by {fmt_serializer(serializer)}:")
         msgreport(encoded_string)
 
