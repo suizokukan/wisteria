@@ -96,6 +96,14 @@ What's next ?
 
 * vérifier la qualité du code avec pylint.
 
+[DONE] task-327
+
+Slightly improved code readibility in init_planned_transcodings() .
+
+    * Slightly improved code readibility in init_planned_transcodings() .
+
+    * tests: 7 tests ok out of 7
+
 [DONE] task-326
 
     * renamed transcode function `func` > `transcodefunc`

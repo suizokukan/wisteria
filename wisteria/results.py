@@ -331,7 +331,9 @@ def init_planned_transcodings(serializer1,
                         True may be returned even if len(serializers)==0 or if
                         len(dataobjs)==0.
     """
-    parse_filterstr_ok, data_to_be_discarded, serializers_to_be_discarded = parse_filterstr(filterstr)
+    (parse_filterstr_ok,
+     data_to_be_discarded,
+     serializers_to_be_discarded) = parse_filterstr(filterstr)
 
     if not parse_filterstr_ok:
         msgerror("(ERRORID052) Can't set PLANNED_TRANSCODINGS "
