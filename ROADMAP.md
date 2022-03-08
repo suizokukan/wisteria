@@ -96,6 +96,14 @@ What's next ?
 
 * vérifier la qualité du code avec pylint.
 
+[DONE] task-329
+
+Improved help message for --checkup option.
+
+    * improved help message for --checkup option.
+
+    * tests: 7 tests ok out of 7
+
 [DONE] task-328
 
 Results returned by parse_filterstr() are now sorted.

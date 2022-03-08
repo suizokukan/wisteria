@@ -210,7 +210,7 @@ PARSER.add_argument(
     '--checkup',
     action='store_true',
     default=False,
-    help="Show installed serializers, try to read current config file and exit. "
+    help="Show available serializers and data objects, try to read current config file and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
 PARSER.add_argument(
