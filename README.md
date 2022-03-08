@@ -218,6 +218,10 @@ You want to compare all serializers between them:
 
     $ wisteria --cmp="all vs all"
 
+You want to compare 2 serializers, e.g. `json` and `pickle` but only with the data objects that can transcoded by both serializers:
+
+    $ wisteria --cmp="json vs pickle" --filter="data:oktrans_only"
+
 ## [2.1] with CLI and with Python interpreter
 
 You may use Wisteria on the command line or with a Python interpreter:

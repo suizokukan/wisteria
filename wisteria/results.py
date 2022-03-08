@@ -28,7 +28,7 @@
     o  compute_results(config, serializer1, serializer2, cmpdata)
     o  get_serializers_selection(serializer1, serializer2)
     o  get_data_selection(cmpdata, config)
-    o  init_planned_transcodings(serializer1, serializer2, cmpdata, config)
+    o  init_planned_transcodings(serializer1, serializer2, cmpdata, config, filterstr)
 """
 from rich.console import Console
 from rich.progress_bar import ProgressBar
@@ -39,6 +39,7 @@ from wisteria.globs import VERBOSITY_NORMAL, VERBOSITY_DEBUG, VERBOSITY_DETAILS
 from wisteria.globs import PROGRESSBAR_LENGTH
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
+from wisteria.serializers import func_serialize
 from wisteria.serializers_classes import SerializationResults
 from wisteria.utils import strdigest
 from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrealname
@@ -46,6 +47,8 @@ from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_classname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.cwc.cwc_utils import modulefullrealname_to_waemodulename
+from wisteria.filterstr import parse_filterstr
+from wisteria.reprfmt import fmt_nounplural
 
 
 def compute_results():
@@ -126,56 +129,21 @@ def compute_results():
             if serializer not in results:
                 results[serializer] = {}
 
-            if not is_a_cwc_name(data_name):
-                # ==== <data_name> is NOT A CWC CLASS =========================
-                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+            if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                if not is_a_cwc_name(data_name):
                     msgdebug(f"({transcoding_index+1}/{planned_transcodings_number}) "
                              "About to call transcoding functions "
                              f"for serializer='{serializer}' "
                              f"and data name='{data_name}' "
                              f"[{fingerprint}]")
-
-                results[serializer][data_name] = wisteria.globs.SERIALIZERS[serializer].func(
-                    action="serialize",
-                    obj=wisteria.globs.DATA[data_name],
-                    obj_data_name=data_name,
-                    fingerprint=fingerprint,
-                    works_as_expected=wisteria.data.works_as_expected
-                    if wisteria.data.works_as_expected(data_name=data_name,
-                                                       obj=None) is True else None)
-            else:
-                # ==== <data_name> is a CWC CLASS =============================
-                # data_name: e.g. "cwc.pgnreader.cwc_default.chessgames"
-                #                > "cwc.pgnreader.cwc_default.ChessGames"
-                data_name = moduleininame_to_modulefullrealname(data_name)
-                # data_name__strmodule: e.g. "cwc.pgnreader.cwc_default"
-                data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
-                # data_name__strmodule_wae: e.g. "cwc.pgnreader.works_as_expected"
-                data_name__strwaemodulename = modulefullrealname_to_waemodulename(data_name)
-                # data_name__strclassname: e.g. "ChessGames"
-                data_name__strclassname = modulefullrealname_to_classname(data_name)
-
-                if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
+                else:
                     msgdebug("About to call serialize/unserialize function "
                              f"for serializer='{serializer}' "
                              f"and (cwc) data name='{data_name}' "
                              f"[{fingerprint}]")
-
-                cwc_object = \
-                    getattr(wisteria.globs.MODULES[data_name__strwaemodulename],
-                            "initialize")(getattr(
-                                wisteria.globs.MODULES[data_name__strmodule],
-                                data_name__strclassname)())
-
-                results[serializer][data_name] = \
-                    wisteria.globs.SERIALIZERS[serializer].func(
-                        action="serialize",
-                        obj=cwc_object,
-                        obj_data_name=data_name,
-                        fingerprint=fingerprint,
-                        works_as_expected=getattr(
-                            wisteria.globs.MODULES[data_name__strwaemodulename],
-                            "works_as_expected"))
+            results[serializer][data_name] = func_serialize(serializer,
+                                                            data_name,
+                                                            fingerprint)
 
             # (pimydoc)progress bar
             # ⋅A progress bar is displayed only if verbosity is set to 1 (normal).
@@ -336,7 +304,8 @@ def get_data_selection(cmpdata,
 def init_planned_transcodings(serializer1,
                               serializer2,
                               cmpdata,
-                              config):
+                              config,
+                              filterstr):
     """
         init_planned_transcodings()
 
@@ -356,10 +325,35 @@ def init_planned_transcodings(serializer1,
         o  (str)serializer2
         o  (str)cmpdata         : 'all', 'ini', 'cwc' or 'allbutcwc'
 
+        o  (str)filterstr       : ARGS.filter
+
         RETURNED VALUE: (bool)success, (int)len(serializers), (int)len(dataobjs)
                         True may be returned even if len(serializers)==0 or if
                         len(dataobjs)==0.
     """
+    parse_filterstr_ok, data_to_be_discarded, serializers_to_be_discarded = parse_filterstr(filterstr)
+
+    if not parse_filterstr_ok:
+        msgerror("(ERRORID052) Can't set PLANNED_TRANSCODINGS "
+                 "since an error occured while parsing the filter string.")
+        return False, None, None
+
+    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS or \
+       data_to_be_discarded:
+        msginfo(
+            f"Because of the filter value (namely '{filterstr}'), "
+            f"{len(data_to_be_discarded)} "
+            f"discarded data {fmt_nounplural('object', len(data_to_be_discarded))}: ")
+        msginfo("; ".join(data_to_be_discarded))
+
+    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS or \
+       serializers_to_be_discarded:
+        msginfo(
+            f"Because of the filter value (namely '{filterstr}'), "
+            f"{len(serializers_to_be_discarded)} "
+            f"discarded serializer {fmt_nounplural('object', len(serializers_to_be_discarded))}: ")
+        msginfo("; ".join(serializers_to_be_discarded))
+
     try:
         wisteria.globs.PLANNED_TRANSCODINGS = []
 
@@ -368,11 +362,12 @@ def init_planned_transcodings(serializer1,
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"serializers to be used are: {serializers}")
         dataobjs = get_data_selection(cmpdata, config)
+
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"data objs to be used are: {dataobjs}")
 
-        for serializer in sorted(serializers):
-            for dataobj in sorted(dataobjs):
+        for serializer in sorted(set(serializers)-set(serializers_to_be_discarded)):
+            for dataobj in sorted(set(dataobjs)-set(data_to_be_discarded)):
                 fingerprint = strdigest(serializer+dataobj)
 
                 if not is_a_cwc_name(dataobj):

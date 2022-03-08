@@ -244,6 +244,14 @@ PARSER.add_argument(
     help="Show this help message and exit.")
 
 PARSER.add_argument(
+    '--filter',
+    action='store',
+    default="",
+    help="Filter out the data or the serializers to be used. "
+    "format: empty string if no filter, "
+    "'data:oktrans_only' to only keep the objects that can be successfully transcoded")
+
+PARSER.add_argument(
     '--mute',
     action='store_true',
     default=False,
@@ -419,6 +427,7 @@ from wisteria.cmdline_output import parse_output_argument  # noqa
 from wisteria.cmdline_cmp import read_cmpstring  # noqa
 from wisteria.cmdline_mymachine import mymachine  # noqa
 from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
+from wisteria.serializers import func_serialize  # noqa
 
 
 # =============================================================================
@@ -1287,15 +1296,7 @@ def checkup():
     check_ok = True
     data_name = "demonstration_dataobj"
     for serializer in wisteria.globs.SERIALIZERS:
-        res = wisteria.globs.SERIALIZERS[serializer].func(
-            action="serialize",
-            obj=wisteria.globs.DATA[data_name],
-            obj_data_name=data_name,
-            fingerprint=None,
-            strictmute=True,
-            works_as_expected=wisteria.data.works_as_expected
-            if wisteria.data.works_as_expected(data_name=data_name,
-                                               obj=None) is True else None)
+        res = func_serialize(serializer=serializer, data_name=data_name)
         if not res.reversibility:
             check_ok = False
             msgerror("(ERRORID051) An error occured: "
@@ -1319,15 +1320,7 @@ def checkup():
         data_name_to_be_kept = []
         for serializer in wisteria.globs.SERIALIZERS:
             for data_name in wisteria.globs.DATA:
-                res = wisteria.globs.SERIALIZERS[serializer].func(
-                    action="serialize",
-                    obj=wisteria.globs.DATA[data_name],
-                    obj_data_name=data_name,
-                    fingerprint=None,
-                    strictmute=True,
-                    works_as_expected=wisteria.data.works_as_expected
-                    if wisteria.data.works_as_expected(data_name=data_name,
-                                                       obj=None) is True else None)
+                res = func_serialize(serializer=serializer, data_name=data_name)
                 if not res.reversibility:
                     data_name_to_be_discarded.append(data_name)
                 else:
@@ -1820,7 +1813,8 @@ def main():
             init_planned_transcodings(serializer1,
                                       serializer2,
                                       cmpdata,
-                                      config)
+                                      config,
+                                      ARGS.filter)
 
         # RES_INITPLANNED_TRANSCODINGS: (bool)success, serializer number, data number
         #  see init_planned_transcodings().

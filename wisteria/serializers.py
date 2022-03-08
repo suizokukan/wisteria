@@ -27,6 +27,7 @@
     ___________________________________________________________________________
 
     o  _len(obj)
+    o  func_serialize(serializer, data_name, fingerprint=None)
     o  win_memory()
 
     o  serializer_iaswn(action="serialize",
@@ -107,6 +108,11 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import trytoimport, get_python_version
 from wisteria.serializers_classes import SerializersDataNMVH, SerializerData, SerializationResult
 from wisteria.msg import msgdebug, msginfo
+from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrealname
+from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
+from wisteria.cwc.cwc_utils import modulefullrealname_to_classname
+from wisteria.cwc.cwc_utils import modulefullrealname_to_waemodulename
+
 
 # MEMOVERUSE# --memoveruse C++ module:
 # MEMOVERUSEcppyy.include("memoveruse_cpp/memoveruse_cpp.h")
@@ -130,6 +136,60 @@ def _len(obj):
     if isinstance(obj, str):
         return len(bytes(obj, "utf-8"))
     return len(obj)
+
+
+def func_serialize(serializer,
+                   data_name,
+                   fingerprint=None):
+    """
+        func_serialize()
+
+        Just a wrapper around .func(action="serialize")
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  (str)     serializer
+        o  (str)     data_name
+        o  (None|str)fingerprint
+
+        RETURNED VALUE: serialized object corresponding to <data_name>.
+    """
+    # ==== <data_name> is NOT A CWC CLASS =====================================
+    if not is_a_cwc_name(data_name):
+        return wisteria.globs.SERIALIZERS[serializer].func(
+            action="serialize",
+            obj=wisteria.globs.DATA[data_name],
+            obj_data_name=data_name,
+            fingerprint=fingerprint,
+            works_as_expected=wisteria.data.works_as_expected
+            if wisteria.data.works_as_expected(data_name=data_name,
+                                               obj=None) is True else None)
+
+    # ==== <data_name> is a CWC CLASS =========================================
+    # data_name: e.g. "cwc.pgnreader.cwc_default.chessgames"
+    #                > "cwc.pgnreader.cwc_default.ChessGames"
+    data_name = moduleininame_to_modulefullrealname(data_name)
+    # data_name__strmodule: e.g. "cwc.pgnreader.cwc_default"
+    data_name__strmodule = modulefullrealname_to_modulerealname(data_name)
+    # data_name__strmodule_wae: e.g. "cwc.pgnreader.works_as_expected"
+    data_name__strwaemodulename = modulefullrealname_to_waemodulename(data_name)
+    # data_name__strclassname: e.g. "ChessGames"
+    data_name__strclassname = modulefullrealname_to_classname(data_name)
+
+    cwc_object = \
+        getattr(wisteria.globs.MODULES[data_name__strwaemodulename],
+                "initialize")(getattr(
+                    wisteria.globs.MODULES[data_name__strmodule],
+                    data_name__strclassname)())
+
+    return wisteria.globs.SERIALIZERS[serializer].func(
+        action="serialize",
+        obj=cwc_object,
+        obj_data_name=data_name,
+        fingerprint=fingerprint,
+        works_as_expected=getattr(
+            wisteria.globs.MODULES[data_name__strwaemodulename],
+            "works_as_expected"))
 
 
 def win_memory():
@@ -325,7 +385,6 @@ def serializer_json(action="serialize",
            - if <action> is (str)"serialize", return a SerializationResult object.
     """
     serializer_name = 'json'
-
     module = MODULES[wisteria.globs.SERIALIZERS[serializer_name].module_name]
 
     # -------------------
@@ -425,7 +484,6 @@ def serializer_json(action="serialize",
             res.mem_usage = win_memory() - mem0
         else:
             res.mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - mem0
-
     return res
 
 

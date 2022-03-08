@@ -328,10 +328,9 @@ def init_data():
         # ⋅The choice of data is very small because all serializers must be able
         # ⋅to encode it. By example, no None object because of Amazon Ion Python.
         "demonstration_dataobj": {"key1": "value1",
-                                     "key2": ["1", 2, False, True, ],
-                                     "key3": {"subkey1": "subvalue1", },
-                                     "key4": [[], [[]]],
-                                     },
+                                  "key2": ["1", 2, False, True, ],
+                                  "key3": {"subkey1": "subvalue1", },
+                                  "key4": [[], [[]]],},
     }
 
     # -------------------------------------------------------------------------
@@ -360,7 +359,7 @@ def init_data():
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"cwc module '{cwc_moduleininame}' ('{cwc_modulefullrealname}') "
                          "is defined in wisteria.globs.CWC_MODULES "
-                         "but must be skipped (=added to wisteria.glob.UNAVAILABmsgdebugLE_DATA) "
+                         "but must be skipped (=added to wisteria.glob.UNAVAILABLE_DATA) "
                          "since module "
                          f"'{modulefullrealname_to_modulerealname(cwc_modulefullrealname)}' "
                          "can't be imported.")

@@ -94,6 +94,19 @@ What's next ?
 
 [CURRENT] v. 0.2.2
 
+* vérifier la qualité du code avec pylint.
+* func > transcodefunc + func_serialize() > transcodefunc_serialize()
+
+[DONE] task-325
+
+--filter option with "data=oktrans_only" keyword.
+
+    * --filter option: empty string or "data=oktrans_only" keyword
+    * new file: filterstr.py
+    * new function: serializers.py::func_serialize is a wrapper around
+      `.func(action="serialize")`
+    * updated documentation
+
 [DONE] task-324
 
 Improved README.md.

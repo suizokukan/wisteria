@@ -27,6 +27,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)dataobjs_number
 ### (pimydoc)demonstration_dataobj
 ### (pimydoc)exit codes
+### (pimydoc)filterstr
 ### (pimydoc)GRAPHS_DESCRIPTION format
 ### (pimydoc)OUTPUT format
 ### (pimydoc)PLANNED_TRANSCODINGS
@@ -178,7 +179,15 @@ to encode it. By example, no None object because of Amazon Ion Python.
 * -100: internal error, data can't be loaded
 * -101: internal error, an error occured while computing the results
 * -102: internal error, an error occured in main()
-* -103: internal error, can't initialize PLANNED_TRANSCODINGS    
+* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+### ==========================================================================
+[(pimydoc)filterstr]
+A filter string should be parsed by filterstr.py::parse_filterstr() .
+
+filterstr format:
+o  empty string        : no filter
+o  'data:oktrans_only' : only the objects that can be successfully
+                         transcoded are used
 ### ==========================================================================
 [(pimydoc)GRAPHS_DESCRIPTION format]
 Use GRAPHS_DESCRIPTION to store the description of each graph created by the
