@@ -69,4 +69,4 @@ def parse_filterstr(filterstr):
     else:
         return False, None, None
 
-    return True, data_to_be_discarded, serializers_to_be_discarded
+    return True, sorted(data_to_be_discarded), sorted(serializers_to_be_discarded)

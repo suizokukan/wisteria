@@ -96,6 +96,14 @@ What's next ?
 
 * vérifier la qualité du code avec pylint.
 
+[DONE] task-328
+
+Results returned by parse_filterstr() are now sorted.
+
+    * results returned by parse_filterstr() are now sorted
+
+    * tests: 7 tests ok out of 7
+
 [DONE] task-327
 
 Slightly improved code readibility in init_planned_transcodings() .
