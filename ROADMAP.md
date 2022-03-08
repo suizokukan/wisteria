@@ -6,12 +6,7 @@ What's next ?
 
 [0.2.2]
 * et si on travaille juste sur le temps ? la mémoire > report spécifique
-* --filter="data:lcm": afficher le nombre de données utilisées et lesquelles
 * writingconventions.md
-* classes.md
-* --skimthedata="no" | "exclude ??? data"
-* généraliser le mot 'transcoding'
-* data_object, dataobj_name: c'est le bazar
 
 [? 0.2.3] vrais tests
 * tests
@@ -94,7 +89,18 @@ What's next ?
 
 [CURRENT] v. 0.2.2
 
+* encode/decode > transcode
 * vérifier la qualité du code avec pylint.
+
+[DONE] task-330
+
+Improved code readibility: 'dataobj_name' > 'data_name' as everywhere else in
+the code.
+
+    * improved code readibility: 'dataobj_name' > 'data_name' as everywhere else in
+      the code.
+
+    * tests: 7 tests ok out of 7
 
 [DONE] task-329
 

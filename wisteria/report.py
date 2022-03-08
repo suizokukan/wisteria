@@ -1336,12 +1336,12 @@ def report_section_c1a(results,
         """
         data = wisteria.globs.DATA
 
-        _list = []  # list of the dataobj_name that CAN'T BE HANDLED by <serializer>.
-        for dataobj_name in results.dataobjs:
-            if dataobj_name in results[serializer] and \
-               results[serializer][dataobj_name] is not None and \
-               results[serializer][dataobj_name].reversibility:
-                _list.append(dataobj_name)
+        _list = []  # list of the data_name that CAN'T BE HANDLED by <serializer>.
+        for data_name in results.dataobjs:
+            if data_name in results[serializer] and \
+               results[serializer][data_name] is not None and \
+               results[serializer][data_name].reversibility:
+                _list.append(data_name)
 
         if not data:
             msgreport(
@@ -1459,12 +1459,12 @@ def report_section_c1b(results,
         """
         data = wisteria.globs.DATA
 
-        _list = []  # list of the dataobj_name that CAN BE HANDLED by <serializer>.
-        for dataobj_name in results.dataobjs:
-            if dataobj_name in results[serializer] and \
-               results[serializer][dataobj_name] is not None and \
-               not results[serializer][dataobj_name].reversibility:
-                _list.append(dataobj_name)
+        _list = []  # list of the data_name that CAN BE HANDLED by <serializer>.
+        for data_name in results.dataobjs:
+            if data_name in results[serializer] and \
+               results[serializer][data_name] is not None and \
+               not results[serializer][data_name].reversibility:
+                _list.append(data_name)
 
         if not data:
             msgreport(
