@@ -1,45 +1,3 @@
-WORK IN PROGRESS, NOT TO BE USED !
-
-TODO:
-verbosity level
-Please notice that --verbosity has no effect upon --report.
-* --verbosity=0 (minimal)
-  You'll just see the report (see --report).
-  Leaving the report aside, strictly nothing on screen: no progress bar, no messages.
-  Even if verbosity is set to 0, this has no effect on --checkup or on --mymachine
-* --verbosity=1 (normal)
-  You'll see the report (see --report), a progress bar and a normal amount of messages.
-  Messages displayed by --checkup and by --mymachine have a normal quantity of text.
-* --verbosity=2 (details)
-  You'll see the report (see --report); no progress bar, more details (encoded string are shown).
-  Messages displayed by --checkup and by --mymachine have an increased quantity of text.
-* --verbosity=3 (debug)
-  You'll see the report (see --report) and a maximal amount of messages.
-  Messages displayed by --checkup and by --mymachine have a maximal quantity of text.
-
-results: pipeline
-   obj > encoded string > decoded string > _res2
-
-   * obj == _res2 ?
-     * if obj == _res2:
-           if <obj> is a cwc module > is works_as_expected(_res2) True ?
-           if <obj> isn't a cwc module and if data.works_as_expected > data.works_as_expected(obj)
-
-
-Report filename format
-```
-(pimydoc)report filename format
-⋅* either a simple string like 'report.txt'
-⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
-⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
-⋅  e.g. "report_DATETIME.txt" would become something like
-⋅       "report_2021-12-31.23.59.59.txt"
-⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
-⋅  be replaced by str(int(time.time()))
-⋅    e.g. "report_DATETIME.txt" would become something like
-⋅         "report_1635672267.txt"
-```
-
 # Wisteria
 
 Use [Wisteria](#01-what-about-the-name-) to compare different Python serializers.
@@ -83,7 +41,7 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
 
 Use `Wisteria` to compare serializers like [pickle](https://docs.python.org/3/library/pickle.html), [json](https://docs.python.org/3/library/json.html) or [Django serializers](https://www.django-rest-framework.org/api-guide/serializers/) : which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
 
-After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle against marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
+After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle vs marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 
 ## [0.1] What about the name ?
 
@@ -236,14 +194,35 @@ You want as much informations as possible:
 
     --report="full+"
 
-You want %%le moins d'informations possible:
-
+You want as little informations as possible:
+    
     --report="minimal"
 
 You want only graphs:
 
     --report="graphs"
 
+In addition to the console you want to use a specific report file name (opened in 'write' mode):
+
+    --output="console;reportfile/w=myreportfile.any"
+
+No console: you juste want to use a specific report file name (opened in 'append' mode):
+
+    --output="reportfile/a=myreportfile.any"
+
+In addition to the console you want to use a specific report file name (opened in 'write' mode)
+that contain the special DATETIME string (replaced by "%Y-%m-%d.%H.%M.%S"):
+
+    --output="console;reportfile/w=myreportfile_DATETIME.any"
+
+    which will be create a file named (e.g.) `myreportfile_2021-12-31.23.59.59`
+
+In addition to the console you want to use a specific report file name (opened in 'write' mode)
+that contain the special TIMESTAMP string (replaced by int(time.time())):
+
+    --output="console;reportfile/w=myreportfile_TIMESTAMP.any"
+
+    which will be create a file named (e.g.) `myreportfile_1635672267.any`
 
 ```
 (pimydoc)--cmp format

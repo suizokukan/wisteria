@@ -296,7 +296,7 @@ PARSER.add_argument(
     "Instead of 'reportfile' "
     "you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode). "
     "You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name "
-    "in order to add a timestamp in the filename."
+    "in order to add a timestamp in the filename. "
     "Instead of 'reportfile' "
     "you may specify 'reportfile=myreportfile'. "
     f"Combinations like 'reportfile/w={DEFAULT_REPORTFILE_NAME}' are accepted. "

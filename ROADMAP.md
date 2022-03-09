@@ -3,10 +3,8 @@ Wisteria's roadmap & todos
 
 ===============================================================================
 What's next ?
-
-[0.2.2]
-* et si on travaille juste sur le temps ? la mémoire > report spécifique
-* writingconventions.md
+??? et si on travaille juste sur le temps ? la mémoire > report spécifique
+??? writingconventions.md
 
 [? 0.2.3] vrais tests
 * tests
@@ -89,9 +87,15 @@ What's next ?
 
 [CURRENT] v. 0.2.2
 
-* encode/decode > transcode
-* vérifier la qualité du code avec pylint.
+[DONE] task-332
 
+Documentation.
+
+    * documentation
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+            
 [DONE] task-331
 
 Fixed minor glitches in the code with the help of Pylint.
