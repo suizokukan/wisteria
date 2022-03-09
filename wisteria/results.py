@@ -44,9 +44,7 @@ from wisteria.serializers_classes import SerializationResults
 from wisteria.utils import strdigest
 from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
-from wisteria.cwc.cwc_utils import modulefullrealname_to_classname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
-from wisteria.cwc.cwc_utils import modulefullrealname_to_waemodulename
 from wisteria.filterstr import parse_filterstr
 from wisteria.reprfmt import fmt_nounplural
 

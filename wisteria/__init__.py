@@ -93,9 +93,9 @@ TABLE OF CONTENTS
 
 [0] the project in a few words
 
-Use Wisteria to compare two serializers like pickle, json or Django serializers: which one is faster? Which one uses th
-e least amount of memory? Which one produces the shortest strings? Which one ha
-s the best coverage rate?
+Use Wisteria to compare serializers like pickle, json or Django serializers : w
+hich one is faster? Which one uses the least amount of memory? Which one produc
+es the shortest strings? Which one has the best coverage rate?
 
 After installing Wisteria, try $ wisteria --help and $ wisteria --checkup to se
 e what can be done on your system; then execute a simple comparison like $ wist
@@ -255,7 +255,8 @@ You want to compare all serializers between them:
 
     $ wisteria --cmp="all vs all"
 
-You want to compare 2 serializers, e.g. `json` and `pickle` but only with the data objects that can transcoded by both serializers:
+You want to compare 2 serializers, e.g. json and pickle but only with the data
+objects that can transcoded by both serializers:
 
     $ wisteria --cmp="json vs pickle" --filter="data:oktrans_only"
 
@@ -286,7 +287,8 @@ You want only graphs:
   | (pimydoc)--cmp format
   | ⋅
   | ⋅(I) serializers
-  | ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+  | ⋅Test one serializer alone(1) or one serializer against another serializer(
+2) or
   | ⋅a serializer against all serializers(3) or all serializers(4) together.
   | ⋅
   | ⋅    (1) --cmp="jsonpickle(cwc)"
@@ -295,8 +297,10 @@ You want only graphs:
   | ⋅    (4) --cmp="all vs all (cwc)"
   | ⋅
   | ⋅(II) data types:
-  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
-  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all
+data types
+  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all d
+ata types(d).
   | ⋅
   | ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
   | ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
@@ -310,9 +314,6 @@ You want only graphs:
   | ⋅                              string is used as help message by the
   | ⋅                              command line --help argument.
   | ⋅
-2) or
-data types
-ata types(d).
   |
 
 pylintrc
@@ -990,5 +991,10 @@ _as_expected.py
     with two functions: initialize() and works_as_expected()
     - Modify globs.py:CWC_MODULES to add your new classes
     - Add your classes to wisteria.ini (section data objects)
+
+[3] if you want to read/test/modify the code
+
+[3.0] classes hierarchy
+
+See classes.md.
 """
-from wisteria.aboutproject import __version__, __projectname__

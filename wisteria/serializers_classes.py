@@ -125,7 +125,7 @@ class SerializerData:
         return f"{self.name=}; {self.module_name=}; {self.module_name__version=}; " \
             f"{self.human_name=}; " \
             f"{self.internet=}; " \
-            f"{self.version=}; {self.func=}; {self.cwc=}; {self.comment=}"
+            f"{self.version=}; {self.transcodefunc=}; {self.cwc=}; {self.comment=}"
 
     def checkup_repr(self):
         """

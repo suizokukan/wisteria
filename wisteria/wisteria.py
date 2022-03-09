@@ -422,7 +422,7 @@ from wisteria.utils import trytoimport  # noqa
 import wisteria.serializers  # noqa
 import wisteria.data  # noqa
 from wisteria.wisteriaerror import WisteriaError  # noqa
-from wisteria.msg import msginfo, msgwarning, msgerror, msgdebug, msgreport, msgreporttitle # noqa
+from wisteria.msg import msginfo, msgwarning, msgerror, msgdebug, msgreport, msgreporttitle  # noqa
 from wisteria.cmdline_output import parse_output_argument  # noqa
 from wisteria.cmdline_cmp import read_cmpstring  # noqa
 from wisteria.cmdline_mymachine import mymachine  # noqa
@@ -1809,16 +1809,16 @@ def main():
         # ⋅    (str)serializer, (str)data_name, (str)fingerprint
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
-        RES_INITPLANNED_TRANSCODINGS = \
+        res_initplanned_transcodings = \
             init_planned_transcodings(serializer1,
                                       serializer2,
                                       cmpdata,
                                       config,
                                       ARGS.filter)
 
-        # RES_INITPLANNED_TRANSCODINGS: (bool)success, serializer number, data number
+        # res_initplanned_transcodings: (bool)success, serializer number, data number
         #  see init_planned_transcodings().
-        if not RES_INITPLANNED_TRANSCODINGS[0]:
+        if not res_initplanned_transcodings[0]:
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
             # ⋅*  1: normal exit code after --checkup
@@ -1837,7 +1837,7 @@ def main():
             # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
             return -103
 
-        if RES_INITPLANNED_TRANSCODINGS[1] == 0:
+        if res_initplanned_transcodings[1] == 0:
             msgwarning("No serializer to be used. The program can stop here.")
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code
@@ -1856,7 +1856,7 @@ def main():
             # ⋅* -102: internal error, an error occured in main()
             # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
             return 5
-        if RES_INITPLANNED_TRANSCODINGS[2] == 0:
+        if res_initplanned_transcodings[2] == 0:
             msgwarning("No data to be used. The program can stop here.")
             # (pimydoc)exit codes
             # ⋅*  0: normal exit code

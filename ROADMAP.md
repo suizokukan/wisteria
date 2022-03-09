@@ -92,6 +92,15 @@ What's next ?
 * encode/decode > transcode
 * vérifier la qualité du code avec pylint.
 
+[DONE] task-331
+
+Fixed minor glitches in the code with the help of Pylint.
+
+    * fixed minor glitches in the code with the help of Pylint.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-330
 
 Improved code readibility: 'dataobj_name' > 'data_name' as everywhere else in
