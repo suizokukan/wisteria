@@ -85,17 +85,105 @@ What's next ?
 
 ===============================================================================
 
-[CURRENT] v. 0.2.2
+[DONE] v. 0.2.2
+* --filter option with "data=oktrans_only" keyword.
+* various minor improvements (interface, doc, code readibility)
 
+code readibility and code quality
+
+    * Slightly improved code readibility in init_planned_transcodings() .
+      (task-327)
+    * improved code readibility: 'dataobj_name' > 'data_name' as everywhere else in
+      the code.
+      (task-330)
+    * fixed minor glitches in the code with the help of Pylint.
+      (task-331)
+
+code structure
+
+    * renamed transcode function `func` > `transcodefunc`
+      (task-326)
+    * results returned by parse_filterstr() are now sorted
+      (task-328)
+
+documentation
+
+    * new file, `classes.md`, where all class definitions appear.
+      (task-323)
+    * updated README.md
+      (task-323)
+    * improved README.md
+      (task-324)
+    * documentation
+      (task-332)
+
+interface:
+
+    * improved checkup display by using msgreporttitle() instead of
+      msgreport() for titles.
+      (task-322)
+    * --filter option with "data=oktrans_only" keyword.
+      (task-325)
+    * improved help message for --checkup option.
+      (task-329)
+
+tasks:
+
+    * task-322, task-323, task-324, task-325, task-326,
+      task-327, task-328, task-329, task-330, task-331,
+      task-332
+
+version
+
+    * set version to '0.2.2'
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.9.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.16.2 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+├── colorama >=0.4.0,<0.5.0
+├── commonmark >=0.9.0,<0.10.0
+└── pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+└── pywin32 *
+```
+
+```
+$ check_tools.sh
+
+*  about poetry:
+Poetry version 1.1.13
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.8.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.8.0
+* about pylint:
+PYLINTHOME is now '/home/alkhinoos/.cache/pylint' but obsolescent '/home/alkhinoos/.pylint.d' is found; you can safely remove the latter
+pylint 2.12.2
+astroid 2.9.3
+Python 3.10.2 (main, Jan 15 2022, 19:56:27) [GCC 11.1.0]
+* about pipdeptree:
+./check_tools.sh: line 30: pipdeptree: command not found
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+    
 [DONE] task-332
 
 Documentation.
 
     * documentation
-    
+
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-            
+
 [DONE] task-331
 
 Fixed minor glitches in the code with the help of Pylint.
@@ -104,7 +192,7 @@ Fixed minor glitches in the code with the help of Pylint.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-330
 
 Improved code readibility: 'dataobj_name' > 'data_name' as everywhere else in
@@ -163,7 +251,7 @@ Improved README.md.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-323
 
 New file, `classes.md`, where all class definitions appear.
