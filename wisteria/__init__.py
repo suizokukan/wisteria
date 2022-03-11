@@ -98,10 +98,9 @@ er/get-poetry.py | python -
   |
   |     Beware, install packages in the virtual environment required by the pro
 ject.
-  |     By example, if you want to install Iaswn for wisteria:
+  |     By example, if you want to install yajl for wisteria:
   |
-  |     $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install
-iaswn
+  |     $ poetry run pip install yajl
   |
 
 installation with git/poetry/a compiled version of Python3.8.11 (if your python
@@ -138,10 +137,9 @@ er/get-poetry.py | python -
   |
   |     Beware, install packages in the virtual environment required by the pro
 ject.
-  |     By example, if you want to install Iaswn for wisteria:
+  |     By example, if you want to install yajl for wisteria:
   |
-  |     $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install
-iaswn
+  |     $ poetry run pip install yajl
   |
 
 installation with git/venv/a compiled version of Python3.8.11/manually added de

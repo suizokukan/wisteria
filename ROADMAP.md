@@ -85,6 +85,17 @@ What's next ?
 
 ===============================================================================
 
+[CURRENT] v. 0.2.3
+
+[DONE] task-333
+
+Improved doc. (installation guide in README.md)
+
+    * improved doc. (installation guide in README.md)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] v. 0.2.2
 * --filter option with "data=oktrans_only" keyword.
 * various minor improvements (interface, doc, code readibility)
@@ -174,7 +185,7 @@ Pimydoc v. 0.2.9
 * about readmemd2txt:
 readmemd2txt: 0.0.5
 ```
-    
+
 [DONE] task-332
 
 Documentation.

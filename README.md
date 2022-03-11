@@ -82,9 +82,9 @@ $ wisteria --checkup
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
 
     Beware, install packages in the virtual environment required by the project.
-    By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
+    By example, if you want to install [yajl](https://lloyd.github.io/yajl/) for wisteria:
 
-    $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn
+    $ poetry run pip install yajl
 ```
 
 ### installation with git/poetry/a compiled version of Python3.8.11 (if your python3 isn't Python3.8+)
@@ -117,9 +117,9 @@ Feel free to choose another Python's version and another directory where to comp
     $ ~/.poetry/bin/poetry run ./bin/wisteria --checkup
 
     Beware, install packages in the virtual environment required by the project.
-    By example, if you want to install [Iaswn](https://pypi.org/project/iaswn/) for wisteria:
+    By example, if you want to install [yajl](https://lloyd.github.io/yajl/) for wisteria:
 
-    $ ./.cache/pypoetry/virtualenvs/wisteria-xyz/bin/python -m pip install iaswn
+    $ poetry run pip install yajl
 ```
 
 ### installation with git/venv/a compiled version of Python3.8.11/manually added dependencies
@@ -195,7 +195,7 @@ You want as much informations as possible:
     --report="full+"
 
 You want as little informations as possible:
-    
+
     --report="minimal"
 
 You want only graphs:
