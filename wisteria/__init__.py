@@ -181,9 +181,9 @@ he WMI package, automatically added by poetry and pip.
 
 [2.0] overview
 
-Wisteria compares serializers based on 4 criteria: (1) speed of encoding and
-decoding, (2) length of encoded string, (3) memory footprint of transcoding,
-(4) ability to encode/decode different data types.
+Wisteria compares serializers based on 4 criteria: (1) speed of encoding and de
+coding, (2) length of encoded string, (3) memory footprint of transcoding, (4)
+ability to encode/decode different data types.
 
 You want to know what serializers can be compared:
 
@@ -322,20 +322,20 @@ list taken from https://docs.python.org/3/library/stdtypes.html (last update: 2
 Truth Value Testing/Boolean Operations — and, or, not/Comparisons
 
 * bool
-        > "bool/false": False,
-        > "bool/true": True,
+        (known by Wisteria as) "bool/false": False,
+        (known by Wisteria as) "bool/true": True,
 
 Numeric Types — int, float, complex
 
 * int
-        > "int": 1
+        (known by Wisteria as) "int": 1
 
 * float
-        > "float": 1.1
-        > "float(nan)": float('nan')
+        (known by Wisteria as) "float": 1.1
+        (known by Wisteria as) "float(nan)": float('nan')
 
 * complex
-        > "complex": 1+2j
+        (known by Wisteria as) "complex": 1+2j
 
 Iterator Types
 (NOTHING)
@@ -344,89 +344,100 @@ Sequence Types — list, tuple, range
 
 * lists
 
-        > "list": ["1", "2", ]
-        > "list(empty)": []
-        > "list(+sublists)": ["1", "2", ["3", ["4", ]]]
+        (known by Wisteria as) "list": ["1", "2", ]
+        (known by Wisteria as) "list(empty)": []
+        (known by Wisteria as) "list(+sublists)": ["1", "2", ["3", ["4", ]]]
 
 * tuples
 
-        > "tuple": ("1", "2",)
-        > "tuple(empty)": ()
-        > "tuple(+subtuples)": ("1", "2", ("3", ("4",)))
+        (known by Wisteria as) "tuple": ("1", "2",)
+        (known by Wisteria as) "tuple(empty)": ()
+        (known by Wisteria as) "tuple(+subtuples)": ("1", "2", ("3", ("4",)))
 
 * ranges
 
-        > "range": range(1000)
-        > "range(empty)": range(0)
+        (known by Wisteria as) "range": range(1000)
+        (known by Wisteria as) "range(empty)": range(0)
 
 Text Sequence Type — str
 
-        > "str": "abc"
-        > "str(empty)": ""
-        > "str(long)": "abhg12234"*10000
-        > "str(non ascii characters)": "êł¹@"+chr(0x1234)+chr(0x12345)
+        (known by Wisteria as) "str": "abc"
+        (known by Wisteria as) "str(empty)": ""
+        (known by Wisteria as) "str(long)": "abhg12234"*10000
+        (known by Wisteria as) "str(non ascii characters)": "êł¹@"+chr(0x1234)+
+chr(0x12345)
 
 Binary Sequence Types — bytes, bytearray, memoryview
 
 * bytes
 
-        > "bytes": b"123"
-        > "bytes(empty)": b""
+        (known by Wisteria as) "bytes": b"123"
+        (known by Wisteria as) "bytes(empty)": b""
 
 * bytearray
 
-        > "bytearray": bytearray(b"123")
-        > "bytearray(empty)": bytearray()
+        (known by Wisteria as) "bytearray": bytearray(b"123")
+        (known by Wisteria as) "bytearray(empty)": bytearray()
 
 * memoryview
 
-        > "memoryview": memoryview(b"123")
+        (known by Wisteria as) "memoryview": memoryview(b"123")
 
 Set Types — set, frozenset
 
 * set
 
-        > "set": set(("1", "2",))
-        > "set(empty)": set()
+        (known by Wisteria as) "set": set(("1", "2",))
+        (known by Wisteria as) "set(empty)": set()
 
 * frozenset
 
-        > "frozenset": frozenset(("1", "2",))
-        > "frozenset(empty)": frozenset()
+        (known by Wisteria as) "frozenset": frozenset(("1", "2",))
+        (known by Wisteria as) "frozenset(empty)": frozenset()
 
 Mapping Types — dict
 
 * dict
 
-        > "dict(keys/bool)": {False: "False", True: "True"}
-        > "dict(keys/float)": {1.1: "value1.1", 2.2: "value2.2"}
-        > "dict(keys/int)": {0: "value0", 1: "value1", 2: "value2"}
-        > "dict(keys/str)": {"key1": "value1", "key2": "value2"}
-        > "dict(keys/str+subdicts)": {"key1": "value1", "key2": "value2", "key3
-": {"key4": "key4", }}
+        (known by Wisteria as) "dict(keys/bool)": {False: "False", True: "True"
+}
+        (known by Wisteria as) "dict(keys/float)": {1.1: "value1.1", 2.2: "valu
+e2.2"}
+        (known by Wisteria as) "dict(keys/int)": {0: "value0", 1: "value1", 2:
+"value2"}
+        (known by Wisteria as) "dict(keys/str)": {"key1": "value1", "key2": "va
+lue2"}
+        (known by Wisteria as) "dict(keys/str+subdicts)": {"key1": "value1", "k
+ey2": "value2", "key3": {"key4": "key4", }}
 
 Modules
 
-        > "imported module": re
-        > "imported module(class)": re.Pattern
-        > "imported module(function)": re.sub
+        (known by Wisteria as) "imported module": re
+        (known by Wisteria as) "imported module(class)": re.Pattern
+        (known by Wisteria as) "imported module(function)": re.sub
 
 Classes and Class Instances
 
-        > "metaclass": MetaClass()
-        > "regularclass": RegularClass()
-        > "regularclass(async_method)": RegularClass.async_method
-        > "regularclass(class_method)": RegularClass.class_method
-        > "regularclass(generator)": RegularClass.generator
-        > "regularclass(method)": RegularClass.method
-        > "regularclass(static_method)": RegularClass.static_method
-        > "regularclassinheriteddict": RegularClassInheritedDict()
-        > "regularclassinheritedlist": RegularClassInheritedList()
+        (known by Wisteria as) "metaclass": MetaClass()
+        (known by Wisteria as) "regularclass": RegularClass()
+        (known by Wisteria as) "regularclass(async_method)": RegularClass.async
+_method
+        (known by Wisteria as) "regularclass(class_method)": RegularClass.class
+_method
+        (known by Wisteria as) "regularclass(generator)": RegularClass.generato
+r
+        (known by Wisteria as) "regularclass(method)": RegularClass.method
+        (known by Wisteria as) "regularclass(static_method)": RegularClass.stat
+ic_method
+        (known by Wisteria as) "regularclassinheriteddict": RegularClassInherit
+edDict()
+        (known by Wisteria as) "regularclassinheritedlist": RegularClassInherit
+edList()
 
 Functions
 
-        > "function": anyfunc
-        > "function(python)": print
+        (known by Wisteria as) "function": anyfunc
+        (known by Wisteria as) "function(python)": print
 
 Methods
 (NOTHING)
@@ -436,19 +447,19 @@ Code Objects
 
 Type Objects
 
-        > "type(str)": str
-        > "type(type(str))": type(str)
+        (known by Wisteria as) "type(str)": str
+        (known by Wisteria as) "type(type(str))": type(str)
 
 The Ellipsis Object
 (NOTHING)
 
 The NotImplemented Object
 
-        > "notimplemented": NotImplemented
+        (known by Wisteria as) "notimplemented": NotImplemented
 
 The Null Object
 
-        > "none": None,
+        (known by Wisteria as) "none": None,
 
 Boolean Values
 (see above)
@@ -462,11 +473,12 @@ Special Attributes
 
 file descriptor
 
-        > "file descriptor": open(TMPFILENAME, encoding="utf-8")
+        (known by Wisteria as) "file descriptor": open(TMPFILENAME, encoding="u
+tf-8")
 
 Python exceptions
 
-        > "pythonexception typeerror": TypeError
+        (known by Wisteria as) "pythonexception typeerror": TypeError
 
 Python Modules coverage
 -----------------------
@@ -484,32 +496,33 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         * aifc
         * argparse
         * array
-        > "array(b)":  array.array('b', (-1, 2)),
-        > "array(b/empty)": array.array('b'),
-        > "array(b_unsigned)": array.array('b', (1, 2)),
-        > "array(b_unsigned/empty)": array.array('B'),
-        > "array(u)": array.array('u', 'hello \u2641'),
-        > "array(u/empty)": array.array('u'),
-        > "array(h)": array.array('h', (-1, 2)),
-        > "array(h/empty)": array.array('h'),
-        > "array(h_unsigned)": array.array('H', (1, 2)),
-        > "array(h_unsigned/empty)": array.array('H'),
-        > "array(i)": array.array('i', (-1, 2)),
-        > "array(i/empty)": array.array('i'),
-        > "array(i_unsigned)": array.array('I', (1, 2)),
-        > "array(i_unsigned/empty)": array.array('I'),
-        > "array(l)": array.array('l', [-1, 2, 3, 4, 5]),
-        > "array(l/empty)": array.array('l'),
-        > "array(l_unsigned)": array.array('L', (1, 2)),
-        > "array(l_unsigned/empty)": array.array('L'),
-        > "array(q)": array.array('q', (-1, 2)),
-        > "array(q/empty)": array.array('q'),
-        > "array(q_unsigned)": array.array('Q', (1, 2)),
-        > "array(q_unsigned/empty)": array.array('Q'),
-        > "array(f)": array.array('f', (1.3, float('nan'))),
-        > "array(f/empty)": array.array('f'),
-        > "array(d)": array.array('d', [1.0, 2.0, 3.14]),
-        > "array(d/empty)": array.array('d'),
+        (known by Wisteria as) "array(b)":  array.array('b', (-1, 2)),
+        (known by Wisteria as) "array(b/empty)": array.array('b'),
+        (known by Wisteria as) "array(b_unsigned)": array.array('b', (1, 2)),
+        (known by Wisteria as) "array(b_unsigned/empty)": array.array('B'),
+        (known by Wisteria as) "array(u)": array.array('u', 'hello \u2641'),
+        (known by Wisteria as) "array(u/empty)": array.array('u'),
+        (known by Wisteria as) "array(h)": array.array('h', (-1, 2)),
+        (known by Wisteria as) "array(h/empty)": array.array('h'),
+        (known by Wisteria as) "array(h_unsigned)": array.array('H', (1, 2)),
+        (known by Wisteria as) "array(h_unsigned/empty)": array.array('H'),
+        (known by Wisteria as) "array(i)": array.array('i', (-1, 2)),
+        (known by Wisteria as) "array(i/empty)": array.array('i'),
+        (known by Wisteria as) "array(i_unsigned)": array.array('I', (1, 2)),
+        (known by Wisteria as) "array(i_unsigned/empty)": array.array('I'),
+        (known by Wisteria as) "array(l)": array.array('l', [-1, 2, 3, 4, 5]),
+        (known by Wisteria as) "array(l/empty)": array.array('l'),
+        (known by Wisteria as) "array(l_unsigned)": array.array('L', (1, 2)),
+        (known by Wisteria as) "array(l_unsigned/empty)": array.array('L'),
+        (known by Wisteria as) "array(q)": array.array('q', (-1, 2)),
+        (known by Wisteria as) "array(q/empty)": array.array('q'),
+        (known by Wisteria as) "array(q_unsigned)": array.array('Q', (1, 2)),
+        (known by Wisteria as) "array(q_unsigned/empty)": array.array('Q'),
+        (known by Wisteria as) "array(f)": array.array('f', (1.3, float('nan'))
+),
+        (known by Wisteria as) "array(f/empty)": array.array('f'),
+        (known by Wisteria as) "array(d)": array.array('d', [1.0, 2.0, 3.14]),
+        (known by Wisteria as) "array(d/empty)": array.array('d'),
         * ast
         * asynchat
         * asyncio
@@ -528,7 +541,7 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
 
         (c)
         * calendar
-        > "calendar(calendar(3))": calendar.Calendar(3)
+        (known by Wisteria as) "calendar(calendar(3))": calendar.Calendar(3)
 
         * cgi
         * cgitb
@@ -539,16 +552,24 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         * codecs
         * codeop
         * collections
-        > "collections.chainmap(empty)": collections.ChainMap()
-        > "collections.chainmap": collections.ChainMap({1: 2}, {2: 3})
-        > "collections.counter(empty)": collections.Counter()
-        > "collections.counter": collections.Counter((1, 2))
-        > "collections.defaultdict(empty)": collections.defaultdict()
-        > "collections.defaultdict": collections.defaultdict(None, {1: 2})
-        > "collections.deque(empty)": collections.deque()
-        > "collections.deque": collections.deque((1, 2))
-        > "collections.ordereddict(empty)": collections.OrderedDict()
-        > "collections.ordereddict": collections.OrderedDict({1: 2})
+        (known by Wisteria as) "collections.chainmap(empty)": collections.Chain
+Map()
+        (known by Wisteria as) "collections.chainmap": collections.ChainMap({1:
+ 2}, {2: 3})
+        (known by Wisteria as) "collections.counter(empty)": collections.Counte
+r()
+        (known by Wisteria as) "collections.counter": collections.Counter((1, 2
+))
+        (known by Wisteria as) "collections.defaultdict(empty)": collections.de
+faultdict()
+        (known by Wisteria as) "collections.defaultdict": collections.defaultdi
+ct(None, {1: 2})
+        (known by Wisteria as) "collections.deque(empty)": collections.deque()
+        (known by Wisteria as) "collections.deque": collections.deque((1, 2))
+        (known by Wisteria as) "collections.ordereddict(empty)": collections.Or
+deredDict()
+        (known by Wisteria as) "collections.ordereddict": collections.OrderedDi
+ct({1: 2})
       * collections.abc
         * colorsys
         * compileall
@@ -571,19 +592,23 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         (d)
         * dataclasses
         * datetime
-        > "datetime(datetime.datetime)": datetime.datetime(2001, 12, 1)
-        > "datetime(datetime.timedelta)":
+        (known by Wisteria as) "datetime(datetime.datetime)": datetime.datetime
+(2001, 12, 1)
+        (known by Wisteria as) "datetime(datetime.timedelta)":
              datetime.datetime(2001, 12, 1) - datetime.datetime(2000, 12, 1)
         * dbm
       * dbm.dumb
       * dbm.gnu
       * dbm.ndbm
         * decimal
-        > "decimal(0.5)": decimal.Decimal(0.5)
-        > "decimal(1/7)": decimal.Decimal(1) / decimal.Decimal(7)
-        > "decimal(nan)": decimal.Decimal('NaN')
-        > "decimal(-infinity)": decimal.Decimal("-Infinity")
-        > "decimal(+infinity)": decimal.Decimal("+Infinity")
+        (known by Wisteria as) "decimal(0.5)": decimal.Decimal(0.5)
+        (known by Wisteria as) "decimal(1/7)": decimal.Decimal(1) / decimal.Dec
+imal(7)
+        (known by Wisteria as) "decimal(nan)": decimal.Decimal('NaN')
+        (known by Wisteria as) "decimal(-infinity)": decimal.Decimal("-Infinity
+")
+        (known by Wisteria as) "decimal(+infinity)": decimal.Decimal("+Infinity
+")
         * difflib
         * dis
         * distutils
@@ -704,8 +729,9 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
           * importlib.util
         * inspect
         * io
-        > "io.string": io.StringIO()
-        > "io.string(empty)": io.StringIO().write("string")
+        (known by Wisteria as) "io.string": io.StringIO()
+        (known by Wisteria as) "io.string(empty)": io.StringIO().write("string"
+)
         * ipaddress
         * itertools
 
@@ -747,10 +773,10 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         * nis
         * nntplib
         * numbers
-        > "numbers(complex)": numbers.Complex
-        > "numbers(integral)": numbers.Integral
-        > "numbers(numbers)": numbers.Number()
-        > "numbers(real)": numbers.Real
+        (known by Wisteria as) "numbers(complex)": numbers.Complex
+        (known by Wisteria as) "numbers(integral)": numbers.Integral
+        (known by Wisteria as) "numbers(numbers)": numbers.Number()
+        (known by Wisteria as) "numbers(real)": numbers.Real
 
         (o)
         * operator
@@ -787,10 +813,10 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         (r)
         * random
         * re
-        > "re.match": re.match(".*", "abc")
-        > "re.match(+flags)": re.match(".*", "abc", re.M)
-        > "re.pattern(bytes)": re.compile(".*")
-        > "re.pattern(str)": re.compile(b".*")
+        (known by Wisteria as) "re.match": re.match(".*", "abc")
+        (known by Wisteria as) "re.match(+flags)": re.match(".*", "abc", re.M)
+        (known by Wisteria as) "re.pattern(bytes)": re.compile(".*")
+        (known by Wisteria as) "re.pattern(str)": re.compile(b".*")
 
         * readline
         * reprlib
@@ -843,7 +869,7 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         * textwrap
         * threading
         * time
-        > "time(time.time)": time.time()
+        (known by Wisteria as) "time(time.time)": time.time()
         * timeit
         * tkinter
       * tkinter.colorchooser
@@ -927,7 +953,8 @@ Third-party Modules coverage
 
 dateutil (https://dateutil.readthedocs.io/en/stable/)
 
-        > "dateutil(parser.parse)": dateutil.parser.parse("2021-03-04")
+        (known by Wisteria as) "dateutil(parser.parse)": dateutil.parser.parse(
+"2021-03-04")
 
 
 [4] FAQ

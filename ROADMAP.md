@@ -87,6 +87,17 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-337
+
+fixed issue #8: in README.md, make it clear that Wisteria can use certain
+                types of data.
+
+    * fixed issue #8: in README.md, make it clear that Wisteria can use certain
+      types of data.
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-336
 
 fixed issue #7: bug in in serializer_yajl(): SystemError wasn't catched.
