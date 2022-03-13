@@ -156,7 +156,7 @@ Please note that installation on Windows systems requires the installation of th
 
 ## [2.0] overview
 
-`Wisteria` compares serializers %%en se basant sur 4 critères: rapidité de l'encodage/décodage, longueur de la chaîne encodée, empreinte mémoire de l'encodage et du décodage, capacité à encoder/décoder différents types de données.
+`Wisteria` compares serializers based on 4 criteria: (1) speed of encoding and decoding, (2) length of encoded string, (3) memory footprint of transcoding, (4) ability to encode/decode different data types.
 
 You want to know what serializers can be compared:
 

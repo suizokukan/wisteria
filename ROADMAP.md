@@ -87,6 +87,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-335
+
+fixed issue #2: improved doc in README.md (no more %%).
+
+    * fixed issue #2: improved doc in README.md (no more %%).
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-334
 
 fixed issue #9: improved documentation in README.md ("not yet to be used !")
