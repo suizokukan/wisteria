@@ -3,27 +3,20 @@ Wisteria's roadmap & todos
 
 ===============================================================================
 What's next ?
-??? et si on travaille juste sur le temps ? la mémoire > report spécifique
-??? writingconventions.md
 
-[? 0.2.3] vrais tests
+[? 0.2.4] améliorer la méthode utilisée (moyenne,)
+* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
+
+[? 0.2.5] vrais tests
 * tests
         * prendre un jeu de données
 
-[? 0.2.4] modification du hall of fame
-* indiquer de surcroît la lisibilité donnée de cette chaîne.
-  encodedstring illisibility: 0=not readable, 1=readable but with difficulty, 2=very readable
-* extrawork: 0=no extrawork, 1=minimal (Iaswn), 2=maximal
-
-[? 0.2.5] terminer --cmp="iaswn+pickle(int+str)"
+[? 0.2.6] terminer --cmp="iaswn+pickle(int+str)"
 ? wisteria "mainstring": "pickle vs all(ini)++++"
 ? --cmp="iaswn vs json+pickle(array(q))" / liste des serializers dans le .ini (?)
       syntaxe de cmp string: 'others' ("iaswn vs others")  > l'indiquer dans README.md
 * j'aimerais que --cmp="iaswn" ne parle que de iaswn
-
-[? 0.2.6] améliorer la méthode utilisée (moyenne,)
-* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
 [? 0.2.7] classer les serializers (A6+checkup) selon leur coverage rate:
 0: n'arrive pas au niveau 1
