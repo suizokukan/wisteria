@@ -87,6 +87,17 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-338
+
+Updated ROADMAP.md: the list of data objects defining the 'int' type is now
+complete.        
+
+    * Updated ROADMAP.md: the list of data objects defining the 'int' type is
+      now complete.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+        
 [DONE] task-337
 
 fixed issue #8: in README.md, make it clear that Wisteria can use certain

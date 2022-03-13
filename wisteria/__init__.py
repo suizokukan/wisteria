@@ -328,7 +328,20 @@ Truth Value Testing/Boolean Operations — and, or, not/Comparisons
 Numeric Types — int, float, complex
 
 * int
-        (known by Wisteria as) "int": 1
+        (known by Wisteria as) "int": 123
+        (known by Wisteria as) "int_0": 0
+        (known by Wisteria as) "int_1": 1
+        (known by Wisteria as) "int_0xffff": 0xffff
+        (known by Wisteria as) "int_0xffffffff": 0xffffffff
+        (known by Wisteria as) "int_0xffffffffffffffff": 0xffffffffffffffff
+        (known by Wisteria as) "int_0xffffffffffffffffffffffffffffffff": 0xffff
+ffffffffffffffffffffffffffff
+        (known by Wisteria as) "int_-1": -1
+        (known by Wisteria as) "int_-0xffff": -0xffff
+        (known by Wisteria as) "int_-0xffffffff": -0xffffffff
+        (known by Wisteria as) "int_-0xffffffffffffffff": -0xffffffffffffffff
+        (known by Wisteria as) "int_-0xffffffffffffffffffffffffffffffff": -0xff
+ffffffffffffffffffffffffffffff
 
 * float
         (known by Wisteria as) "float": 1.1
