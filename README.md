@@ -286,12 +286,14 @@ list taken from https://docs.python.org/3/library/stdtypes.html (last update: 20
 Truth Value Testing/Boolean Operations — and, or, not/Comparisons
 
 * bool
+
         (known by Wisteria as) "bool/false": False,
         (known by Wisteria as) "bool/true": True,
 
 Numeric Types — int, float, complex
 
 * int
+
         (known by Wisteria as) "int": 123
         (known by Wisteria as) "int_0": 0
         (known by Wisteria as) "int_1": 1
@@ -304,16 +306,19 @@ Numeric Types — int, float, complex
         (known by Wisteria as) "int_-0xffffffff": -0xffffffff
         (known by Wisteria as) "int_-0xffffffffffffffff": -0xffffffffffffffff
         (known by Wisteria as) "int_-0xffffffffffffffffffffffffffffffff": -0xffffffffffffffffffffffffffffffff
-        
+
 * float
+
         (known by Wisteria as) "float": 1.1
         (known by Wisteria as) "float(nan)": float('nan')
 
 * complex
+
         (known by Wisteria as) "complex": 1+2j
 
 Iterator Types
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 Sequence Types — list, tuple, range
 
@@ -403,10 +408,12 @@ Functions
         (known by Wisteria as) "function(python)": print
 
 Methods
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 Code Objects
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 Type Objects
 
@@ -414,7 +421,8 @@ Type Objects
         (known by Wisteria as) "type(type(str))": type(str)
 
 The Ellipsis Object
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 The NotImplemented Object
 
@@ -425,14 +433,18 @@ The Null Object
         (known by Wisteria as) "none": None,
 
 Boolean Values
-(see above)
+
+        (see above)
 
 Internal Objects
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
+
 stack frame objects, traceback objects, and slice objects
 
 Special Attributes
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 file descriptor
 
@@ -448,15 +460,15 @@ Python Modules coverage
 list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10-05)
 
     (_)
-	* __future__
-	* __main__
-	* _thread
+    * __future__
+    * __main__
+    * _thread
 
-	(a)
-	* abc
-	* aifc
-	* argparse
-	* array
+    (a)
+    * abc
+    * aifc
+    * argparse
+    * array
         (known by Wisteria as) "array(b)":  array.array('b', (-1, 2)),
         (known by Wisteria as) "array(b/empty)": array.array('b'),
         (known by Wisteria as) "array(b_unsigned)": array.array('b', (1, 2)),
@@ -483,35 +495,35 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10
         (known by Wisteria as) "array(f/empty)": array.array('f'),
         (known by Wisteria as) "array(d)": array.array('d', [1.0, 2.0, 3.14]),
         (known by Wisteria as) "array(d/empty)": array.array('d'),
-	* ast
-	* asynchat
-	* asyncio
-	* asyncore
-	* atexit
-	* audioop
+    * ast
+    * asynchat
+    * asyncio
+    * asyncore
+    * atexit
+    * audioop
 
-	(b)
-	* base64
-	* bdb
-	* binascii
-	* binhex
-	* bisect
-	* builtins
-	* bz2
+    (b)
+    * base64
+    * bdb
+    * binascii
+    * binhex
+    * bisect
+    * builtins
+    * bz2
 
-	(c)
-	* calendar
+    (c)
+    * calendar
         (known by Wisteria as) "calendar(calendar(3))": calendar.Calendar(3)
 
-	* cgi
-	* cgitb
-	* chunk
-	* cmath
-	* cmd
-	* code
-	* codecs
-	* codeop
- 	* collections
+    * cgi
+    * cgitb
+    * chunk
+    * cmath
+    * cmd
+    * code
+    * codecs
+    * codeop
+    * collections
         (known by Wisteria as) "collections.chainmap(empty)": collections.ChainMap()
         (known by Wisteria as) "collections.chainmap": collections.ChainMap({1: 2}, {2: 3})
         (known by Wisteria as) "collections.counter(empty)": collections.Counter()
@@ -523,377 +535,377 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-10
         (known by Wisteria as) "collections.ordereddict(empty)": collections.OrderedDict()
         (known by Wisteria as) "collections.ordereddict": collections.OrderedDict({1: 2})
       * collections.abc
-	* colorsys
-	* compileall
-  	* concurrent
+    * colorsys
+    * compileall
+    * concurrent
       * concurrent.futures
-	* configparser
-	* contextlib
-	* contextvars
-	* copy
-	* copyreg
-	* cProfile
-	* crypt
-	* csv
-	* ctypes
-  	* curses
-	  * curses.ascii
+    * configparser
+    * contextlib
+    * contextvars
+    * copy
+    * copyreg
+    * cProfile
+    * crypt
+    * csv
+    * ctypes
+    * curses
+      * curses.ascii
       * curses.panel
       * curses.textpad
 
-	(d)
-	* dataclasses
-	* datetime
+    (d)
+    * dataclasses
+    * datetime
         (known by Wisteria as) "datetime(datetime.datetime)": datetime.datetime(2001, 12, 1)
         (known by Wisteria as) "datetime(datetime.timedelta)":
              datetime.datetime(2001, 12, 1) - datetime.datetime(2000, 12, 1)
- 	* dbm
+    * dbm
       * dbm.dumb
       * dbm.gnu
       * dbm.ndbm
-	* decimal
+    * decimal
         (known by Wisteria as) "decimal(0.5)": decimal.Decimal(0.5)
         (known by Wisteria as) "decimal(1/7)": decimal.Decimal(1) / decimal.Decimal(7)
         (known by Wisteria as) "decimal(nan)": decimal.Decimal('NaN')
         (known by Wisteria as) "decimal(-infinity)": decimal.Decimal("-Infinity")
         (known by Wisteria as) "decimal(+infinity)": decimal.Decimal("+Infinity")
-	* difflib
-	* dis
- 	* distutils
+    * difflib
+    * dis
+    * distutils
       * distutils.archive_util
       * distutils.bcppcompiler
       * distutils.ccompiler
       * distutils.cmd
       * distutils.cmd
-	  * distutils.command
-	  * distutils.command.bdist
-	  * distutils.command.bdist_dumb
-	  * distutils.command.bdist_msi
-	  * distutils.command.bdist_packager
-	  * distutils.command.bdist_rpm
-	  * distutils.command.bdist_wininst
-	  * distutils.command.build	Build
-	  * distutils.command.build_clib
-	  * distutils.command.build_ext
-	  * distutils.command.build_py
-	  * distutils.command.build_scripts
-	  * distutils.command.check
-	  * distutils.command.clean
-	  * distutils.command.config
-	  * distutils.command.install
-	  * distutils.command.install_data
-	  * distutils.command.install_headers
-	  * distutils.command.install_lib
-	  * distutils.command.install_scripts
-	  * distutils.command.register
-	  * distutils.command.sdist
-	  * distutils.core
-	  * distutils.cygwinccompiler
-	  * distutils.debug
-	  * distutils.dep_util
-	  * distutils.dir_util
-	  * distutils.dist
-	  * distutils.errors
-	  * distutils.extension
-	  * distutils.fancy_getopt
-	  * distutils.file_util
-	  * distutils.filelist
-	  * distutils.log
-	  * distutils.msvccompiler
-	  * distutils.spawn
-	  * distutils.sysconfig
-	  * distutils.text_file
-	  * distutils.unixccompiler
-	  * distutils.util
-	  * distutils.version
-	* doctest
+      * distutils.command
+      * distutils.command.bdist
+      * distutils.command.bdist_dumb
+      * distutils.command.bdist_msi
+      * distutils.command.bdist_packager
+      * distutils.command.bdist_rpm
+      * distutils.command.bdist_wininst
+      * distutils.command.build Build
+      * distutils.command.build_clib
+      * distutils.command.build_ext
+      * distutils.command.build_py
+      * distutils.command.build_scripts
+      * distutils.command.check
+      * distutils.command.clean
+      * distutils.command.config
+      * distutils.command.install
+      * distutils.command.install_data
+      * distutils.command.install_headers
+      * distutils.command.install_lib
+      * distutils.command.install_scripts
+      * distutils.command.register
+      * distutils.command.sdist
+      * distutils.core
+      * distutils.cygwinccompiler
+      * distutils.debug
+      * distutils.dep_util
+      * distutils.dir_util
+      * distutils.dist
+      * distutils.errors
+      * distutils.extension
+      * distutils.fancy_getopt
+      * distutils.file_util
+      * distutils.filelist
+      * distutils.log
+      * distutils.msvccompiler
+      * distutils.spawn
+      * distutils.sysconfig
+      * distutils.text_file
+      * distutils.unixccompiler
+      * distutils.util
+      * distutils.version
+    * doctest
 
-	(e)
-  	* email
+    (e)
+    * email
       * email.charset
-	  * email.contentmanager
-	  * email.encoders
-	  * email.errors
-	  * email.generator
-	  * email.header
-	  * email.headerregistry
-	  * email.iterators
-	  * email.message
-	  * email.mime
-	  * email.parser
-	  * email.policy
-	  * email.utils
- 	* encodings
+      * email.contentmanager
+      * email.encoders
+      * email.errors
+      * email.generator
+      * email.header
+      * email.headerregistry
+      * email.iterators
+      * email.message
+      * email.mime
+      * email.parser
+      * email.policy
+      * email.utils
+    * encodings
       * encodings.idna
-	  * encodings.mbcs
-	  * encodings.utf_8_sig
-	* ensurepip
-	* enum
-	* errno
+      * encodings.mbcs
+      * encodings.utf_8_sig
+    * ensurepip
+    * enum
+    * errno
 
-	(f)
-	* faulthandler
-	* fcntl
-	* filecmp
-	* fileinput
-	* fnmatch
-	* formatter
-	* fractions
-	* ftplib
-	* functools
+    (f)
+    * faulthandler
+    * fcntl
+    * filecmp
+    * fileinput
+    * fnmatch
+    * formatter
+    * fractions
+    * ftplib
+    * functools
 
-	(g)
-	* gc
-	* getopt
-	* getpass
-	* gettext
-	* glob
-	* graphlib
-	* grp
-	* gzip
+    (g)
+    * gc
+    * getopt
+    * getpass
+    * gettext
+    * glob
+    * graphlib
+    * grp
+    * gzip
 
-	(h)
-	* hashlib
-	* heapq
-	* hmac
- 	* html
+    (h)
+    * hashlib
+    * heapq
+    * hmac
+    * html
       * html.entities
-	  * html.parser
- 	* http
- 	  * http.client
-	  * http.cookiejar
-	  * http.cookies
-	  * http.server
+      * html.parser
+    * http
+      * http.client
+      * http.cookiejar
+      * http.cookies
+      * http.server
 
-	(i)
-	* imaplib
-	* imghdr
-	* imp
- 	* importlib
+    (i)
+    * imaplib
+    * imghdr
+    * imp
+    * importlib
       * importlib.abc
-	  * importlib.machinery
-	  * importlib.metadata
-	  * importlib.resources
-	  * importlib.util
-	* inspect
-	* io
+      * importlib.machinery
+      * importlib.metadata
+      * importlib.resources
+      * importlib.util
+    * inspect
+    * io
         (known by Wisteria as) "io.string": io.StringIO()
         (known by Wisteria as) "io.string(empty)": io.StringIO().write("string")
-	* ipaddress
-	* itertools
+    * ipaddress
+    * itertools
 
-	(j)
- 	* json
+    (j)
+    * json
       * json.tool
 
-	(k)
-	* keyword
+    (k)
+    * keyword
 
-	(l)
-	* lib2to3
-	* linecache
-	* locale
- 	* logging
+    (l)
+    * lib2to3
+    * linecache
+    * locale
+    * logging
       * logging.config
-	  * logging.handlers
-	* lzma
+      * logging.handlers
+    * lzma
 
-	(m)
-	* mailbox
-	* mailcap
-	* marshal
-	* math
-	* mimetypes
-	* mmap
-	* modulefinder
-	* msilib
-	* msvcrt
- 	* multiprocessing	Process-based parallelism.
+    (m)
+    * mailbox
+    * mailcap
+    * marshal
+    * math
+    * mimetypes
+    * mmap
+    * modulefinder
+    * msilib
+    * msvcrt
+    * multiprocessing   Process-based parallelism.
       * multiprocessing.connection
-	  * multiprocessing.dummy
-	  * multiprocessing.managers
-	  * multiprocessing.pool
-	  * multiprocessing.shared_memory
+      * multiprocessing.dummy
+      * multiprocessing.managers
+      * multiprocessing.pool
+      * multiprocessing.shared_memory
 
-	(n)
-	* netrc
-	* nis
-	* nntplib
-	* numbers
+    (n)
+    * netrc
+    * nis
+    * nntplib
+    * numbers
         (known by Wisteria as) "numbers(complex)": numbers.Complex
         (known by Wisteria as) "numbers(integral)": numbers.Integral
         (known by Wisteria as) "numbers(numbers)": numbers.Number()
         (known by Wisteria as) "numbers(real)": numbers.Real
 
-	(o)
-	* operator
-	* optparse
- 	* os
+    (o)
+    * operator
+    * optparse
+    * os
       * os.path
-	* ossaudiodev
+    * ossaudiodev
 
-	(p)
-	* parser
-	* pathlib
-	* pdb
-	* pickle
-	* pickletools
-	* pipes
-	* pkgutil
-	* platform
-	* plistlib
-	* poplib
-	* posix
-	* pprint
-	* profile
-	* pstats
-	* pty
-	* pwd
-	* py_compile
-	* pyclbr
-	* pydoc
+    (p)
+    * parser
+    * pathlib
+    * pdb
+    * pickle
+    * pickletools
+    * pipes
+    * pkgutil
+    * platform
+    * plistlib
+    * poplib
+    * posix
+    * pprint
+    * profile
+    * pstats
+    * pty
+    * pwd
+    * py_compile
+    * pyclbr
+    * pydoc
 
-	(q)
-	* queue
-	* quopri
+    (q)
+    * queue
+    * quopri
 
-	(r)
-	* random
-	* re
+    (r)
+    * random
+    * re
         (known by Wisteria as) "re.match": re.match(".*", "abc")
         (known by Wisteria as) "re.match(+flags)": re.match(".*", "abc", re.M)
         (known by Wisteria as) "re.pattern(bytes)": re.compile(".*")
         (known by Wisteria as) "re.pattern(str)": re.compile(b".*")
 
-	* readline
-	* reprlib
-	* resource
-	* rlcompleter
-	* runpy
+    * readline
+    * reprlib
+    * resource
+    * rlcompleter
+    * runpy
 
-	(s)
-	* sched
-	* secrets
-	* select
-	* selectors
-	* shelve
-	* shlex
-	* shutil
-	* signal
-	* site
-	* smtpd
-	* smtplib
-	* sndhdr
-	* socket
-	* socketserver
-	* spwd
-	* sqlite3
-	* ssl
-	* stat
-	* statistics
-	* string
-	* stringprep
-	* struct
-	* subprocess
-	* sunau
-	* symbol
-	* symtable
-	* sys
-	* sysconfig
-	* syslog
+    (s)
+    * sched
+    * secrets
+    * select
+    * selectors
+    * shelve
+    * shlex
+    * shutil
+    * signal
+    * site
+    * smtpd
+    * smtplib
+    * sndhdr
+    * socket
+    * socketserver
+    * spwd
+    * sqlite3
+    * ssl
+    * stat
+    * statistics
+    * string
+    * stringprep
+    * struct
+    * subprocess
+    * sunau
+    * symbol
+    * symtable
+    * sys
+    * sysconfig
+    * syslog
 
-	(t)
-	* tabnanny
-	* tarfile
-	* telnetlib
-	* tempfile
-	* termios
- 	* test
+    (t)
+    * tabnanny
+    * tarfile
+    * telnetlib
+    * tempfile
+    * termios
+    * test
       * test.support .
-	  * test.support.bytecode_helper
-	  * test.support.script_helper
-	  * test.support.socket_helper
-	* textwrap
-	* threading
-	* time
+      * test.support.bytecode_helper
+      * test.support.script_helper
+      * test.support.socket_helper
+    * textwrap
+    * threading
+    * time
         (known by Wisteria as) "time(time.time)": time.time()
-	* timeit
- 	* tkinter
+    * timeit
+    * tkinter
       * tkinter.colorchooser
-	  * tkinter.commondialog
-	  * tkinter.dnd
-	  * tkinter.filedialog
-	  * tkinter.font
-	  * tkinter.messagebox
-	  * tkinter.scrolledtext
-	  * tkinter.simpledialog
-	  * tkinter.tix
-	  * tkinter.ttk
-	* token
-	* tokenize
-	* trace
-	* traceback
-	* tracemalloc
-	* tty
-	* turtle
-	* turtledemo
-	* types
-	* typing
+      * tkinter.commondialog
+      * tkinter.dnd
+      * tkinter.filedialog
+      * tkinter.font
+      * tkinter.messagebox
+      * tkinter.scrolledtext
+      * tkinter.simpledialog
+      * tkinter.tix
+      * tkinter.ttk
+    * token
+    * tokenize
+    * trace
+    * traceback
+    * tracemalloc
+    * tty
+    * turtle
+    * turtledemo
+    * types
+    * typing
 
-	(u)
-	* unicodedata
- 	* unittest
+    (u)
+    * unicodedata
+    * unittest
       *    unittest.mock
- 	* urllib
+    * urllib
       * urllib.error
-	  * urllib.parse
-	  * urllib.request
-	  * urllib.response
-	  * urllib.robotparser
-	* uu
-	* uuid
+      * urllib.parse
+      * urllib.request
+      * urllib.response
+      * urllib.robotparser
+    * uu
+    * uuid
 
-	(v)
-	* venv
+    (v)
+    * venv
 
-	(w)
-	* warnings
-	* wave
-	* weakref
-	* webbrowser
-	* winreg
-	* winsound
- 	* wsgiref
+    (w)
+    * warnings
+    * wave
+    * weakref
+    * webbrowser
+    * winreg
+    * winsound
+    * wsgiref
       * wsgiref.handlers
-	  * wsgiref.headers
-	  * wsgiref.simple_server
-	  * wsgiref.util
-	  * wsgiref.validate
+      * wsgiref.headers
+      * wsgiref.simple_server
+      * wsgiref.util
+      * wsgiref.validate
 
-	(x)
-	* xdrlib
- 	* xml
-      * xml.dom	Document
-	  * xml.dom.minidom
-	  * xml.dom.pulldom
-	  * xml.etree.ElementTree
-	  * xml.parsers.expat
-	  * xml.parsers.expat.errors
-	  * xml.parsers.expat.model
-	  * xml.sax	Package
-	  * xml.sax.handler
-	  * xml.sax.saxutils
-	  * xml.sax.xmlreader
- 	* xmlrpc
-   	  * xmlrpc.client
-   	  * xmlrpc.server
+    (x)
+    * xdrlib
+    * xml
+      * xml.dom Document
+      * xml.dom.minidom
+      * xml.dom.pulldom
+      * xml.etree.ElementTree
+      * xml.parsers.expat
+      * xml.parsers.expat.errors
+      * xml.parsers.expat.model
+      * xml.sax Package
+      * xml.sax.handler
+      * xml.sax.saxutils
+      * xml.sax.xmlreader
+    * xmlrpc
+      * xmlrpc.client
+      * xmlrpc.server
 
-	(z)
-	* zipapp
-	* zipfile
-	* zipimport
-	* zlib
-	* zoneinfo
+    (z)
+    * zipapp
+    * zipfile
+    * zipimport
+    * zlib
+    * zoneinfo
 
 Third-party Modules coverage
 ----------------------------

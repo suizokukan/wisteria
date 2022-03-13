@@ -87,6 +87,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-340
+
+Fixed issue #11: (doc)README.md "Built-in Types coverage" to be rewritten
+
+    * fixed issue #11: (doc)README.md "Built-in Types coverage" to be rewritten
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-339
 
 Fixed issue #3: new file codingconventions.md
