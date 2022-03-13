@@ -942,3 +942,7 @@ A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You m
 ## [3.0] classes hierarchy
 
 See [classes.md](classes.md).
+
+## [3.3] coding conventions.
+
+See [codingconventions.md](codingconventions.md).

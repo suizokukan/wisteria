@@ -87,6 +87,16 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-339
+
+Fixed issue #3: new file codingconventions.md
+
+    * fixed issue #3: new file codingconventions.md
+    * updated README.md about coding conventions
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-338
 
 Updated ROADMAP.md: the list of data objects defining the 'int' type is now

@@ -1012,4 +1012,8 @@ _as_expected.py
 [3.0] classes hierarchy
 
 See classes.md.
+
+[3.3] coding conventions.
+
+See codingconventions.md.
 """
