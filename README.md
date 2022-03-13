@@ -1,5 +1,7 @@
 # Wisteria
 
+NOT YET TO BE USED. PLEASE WAIT UNTIL VERSION NUMBER 0.3 !
+
 Use [Wisteria](#01-what-about-the-name-) to compare different Python serializers.
 
 This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.8+ project, available on Linux/MacOSX/Windows systems.

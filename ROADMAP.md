@@ -87,6 +87,16 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-334
+
+fixed issue #9: improved documentation in README.md ("not yet to be used !")
+
+    * fixed issue #9: improved documentation in README.md
+      ("not yet to be used !")
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-333
 
 Improved doc. (installation guide in README.md)

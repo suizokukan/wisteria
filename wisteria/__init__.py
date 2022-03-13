@@ -3,6 +3,8 @@ Text automatically generated from 'README.md' .
 
 Wisteria
 
+NOT YET TO BE USED. PLEASE WAIT UNTIL VERSION NUMBER 0.3 !
+
 Use Wisteria to compare different Python serializers.
 
 This is a CLI/GPLv3/Python 3.8+ project, available on Linux/MacOSX/Windows syst
