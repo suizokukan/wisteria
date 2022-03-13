@@ -87,6 +87,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-336
+
+fixed issue #7: bug in in serializer_yajl(): SystemError wasn't catched.
+
+    * fixed issue #7: bug in in serializer_yajl(): SystemError wasn't catched.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-335
 
 fixed issue #2: improved doc in README.md (no more %%).

@@ -1415,7 +1415,7 @@ def serializer_yajl(action="serialize",
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(_res)}) '{_res}'")
 
-    except (ValueError, TypeError) as error:
+    except (ValueError, TypeError, SystemError) as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"[{fingerprint}] '{module}': encoding failed ({error})")
         _error = True
