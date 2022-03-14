@@ -1452,7 +1452,7 @@ def serializer_yajl(action="serialize",
                              f"(second part:works_as_expected(_res2)) "
                              f"is {res.reversibility}.")
 
-        except (ValueError,) as error:
+        except (ValueError, SystemError) as error:
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"[{fingerprint}] '{module}': decoding failed ({error})")
             return res

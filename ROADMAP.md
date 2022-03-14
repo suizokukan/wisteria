@@ -80,6 +80,16 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-341
+
+Fixed issue #13:  serializer_yajl(): SystemError has to be catched twice
+
+    * Fixed issue #13: in serializer_yajl(), SystemError has to be catched
+      twice; otherwise an exception may be raised
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-340
 
 Fixed issue #11: (doc)README.md "Built-in Types coverage" to be rewritten
