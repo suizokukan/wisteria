@@ -80,6 +80,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-345
+
+Updated wisteria/__init__.py
+
+    * updated wisteria/__init__.py
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-344
 
 Fixed issue #6: improved message in report_section_a5().

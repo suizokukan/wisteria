@@ -25,22 +25,23 @@ TABLE OF CONTENTS
   - [2.2] more about command line arguments
 - [3] if you want to read/test/modify the code
   - [3.0] classes hierarchy
-  - [3.1] checks and tests
-    - [3.1.1] check_tools
-    - [3.1.2] launch the tests
-    - [3.1.3] check code quality
-    - [3.1.4] check pip conflicts
-    - [3.1.5] search all errors/warnings codes
-    - [3.1.6] automatically generate the main __init__py file
-  - [3.2] code quality
-    - [3.2.1] code quality matters
-      - [3.2.1.1] about pylint and pylintrc
-    - [3.2.2] how to read and write documentation
-      - [3.2.2.1] about markdown files
-    - [3.2.3] before committing
-  - [3.3] coding conventions
-  - [3.4] errors and warnings
-  - [3.5] git and poetry workflow
+  - [3.1] exit codes
+  - [3.2] checks and tests
+    - [3.2.1] check_tools
+    - [3.2.2] launch the tests
+    - [3.2.3] check code quality
+    - [3.2.4] check pip conflicts
+    - [3.2.5] search all errors/warnings codes
+    - [3.2.6] automatically generate the main __init__py file
+  - [3.3] code quality
+    - [3.3.1] code quality matters
+      - [3.3.1.1] about pylint and pylintrc
+    - [3.3.2] how to read and write documentation
+      - [3.3.2.1] about markdown files
+    - [3.3.3] before committing
+  - [3.4] coding conventions
+  - [3.5] errors and warnings
+  - [3.6] git and poetry workflow
 - [4] FAQ
 
 [0] the project in a few words
@@ -262,7 +263,8 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
   | (pimydoc)--cmp format
   | ⋅
   | ⋅(I) serializers
-  | ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+  | ⋅Test one serializer alone(1) or one serializer against another serializer(
+2) or
   | ⋅a serializer against all serializers(3) or all serializers(4) together.
   | ⋅
   | ⋅    (1) --cmp="jsonpickle(cwc)"
@@ -271,8 +273,10 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
   | ⋅    (4) --cmp="all vs all (cwc)"
   | ⋅
   | ⋅(II) data types:
-  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
-  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all
+data types
+  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all d
+ata types(d).
   | ⋅
   | ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
   | ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
@@ -286,9 +290,6 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
   | ⋅                              string is used as help message by the
   | ⋅                              command line --help argument.
   | ⋅
-2) or
-data types
-ata types(d).
   |
 
 pylintrc
@@ -322,12 +323,14 @@ list taken from https://docs.python.org/3/library/stdtypes.html (last update: 2
 Truth Value Testing/Boolean Operations — and, or, not/Comparisons
 
 * bool
+
         (known by Wisteria as) "bool/false": False,
         (known by Wisteria as) "bool/true": True,
 
 Numeric Types — int, float, complex
 
 * int
+
         (known by Wisteria as) "int": 123
         (known by Wisteria as) "int_0": 0
         (known by Wisteria as) "int_1": 1
@@ -344,14 +347,17 @@ ffffffffffffffffffffffffffff
 ffffffffffffffffffffffffffffff
 
 * float
+
         (known by Wisteria as) "float": 1.1
         (known by Wisteria as) "float(nan)": float('nan')
 
 * complex
+
         (known by Wisteria as) "complex": 1+2j
 
 Iterator Types
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 Sequence Types — list, tuple, range
 
@@ -453,10 +459,12 @@ Functions
         (known by Wisteria as) "function(python)": print
 
 Methods
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 Code Objects
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 Type Objects
 
@@ -464,7 +472,8 @@ Type Objects
         (known by Wisteria as) "type(type(str))": type(str)
 
 The Ellipsis Object
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 The NotImplemented Object
 
@@ -475,14 +484,18 @@ The Null Object
         (known by Wisteria as) "none": None,
 
 Boolean Values
-(see above)
+
+        (see above)
 
 Internal Objects
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
+
 stack frame objects, traceback objects, and slice objects
 
 Special Attributes
-(NOTHING)
+
+        (UNKNOWN TO Wisteria)
 
 file descriptor
 
@@ -500,15 +513,15 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
 0-05)
 
     (_)
-        * __future__
-        * __main__
-        * _thread
+    * __future__
+    * __main__
+    * _thread
 
-        (a)
-        * abc
-        * aifc
-        * argparse
-        * array
+    (a)
+    * abc
+    * aifc
+    * argparse
+    * array
         (known by Wisteria as) "array(b)":  array.array('b', (-1, 2)),
         (known by Wisteria as) "array(b/empty)": array.array('b'),
         (known by Wisteria as) "array(b_unsigned)": array.array('b', (1, 2)),
@@ -536,35 +549,35 @@ list taken from https://docs.python.org/3/py-modindex.html (last update: 2021-1
         (known by Wisteria as) "array(f/empty)": array.array('f'),
         (known by Wisteria as) "array(d)": array.array('d', [1.0, 2.0, 3.14]),
         (known by Wisteria as) "array(d/empty)": array.array('d'),
-        * ast
-        * asynchat
-        * asyncio
-        * asyncore
-        * atexit
-        * audioop
+    * ast
+    * asynchat
+    * asyncio
+    * asyncore
+    * atexit
+    * audioop
 
-        (b)
-        * base64
-        * bdb
-        * binascii
-        * binhex
-        * bisect
-        * builtins
-        * bz2
+    (b)
+    * base64
+    * bdb
+    * binascii
+    * binhex
+    * bisect
+    * builtins
+    * bz2
 
-        (c)
-        * calendar
+    (c)
+    * calendar
         (known by Wisteria as) "calendar(calendar(3))": calendar.Calendar(3)
 
-        * cgi
-        * cgitb
-        * chunk
-        * cmath
-        * cmd
-        * code
-        * codecs
-        * codeop
-        * collections
+    * cgi
+    * cgitb
+    * chunk
+    * cmath
+    * cmd
+    * code
+    * codecs
+    * codeop
+    * collections
         (known by Wisteria as) "collections.chainmap(empty)": collections.Chain
 Map()
         (known by Wisteria as) "collections.chainmap": collections.ChainMap({1:
@@ -584,36 +597,36 @@ deredDict()
         (known by Wisteria as) "collections.ordereddict": collections.OrderedDi
 ct({1: 2})
       * collections.abc
-        * colorsys
-        * compileall
-        * concurrent
+    * colorsys
+    * compileall
+    * concurrent
       * concurrent.futures
-        * configparser
-        * contextlib
-        * contextvars
-        * copy
-        * copyreg
-        * cProfile
-        * crypt
-        * csv
-        * ctypes
-        * curses
-          * curses.ascii
+    * configparser
+    * contextlib
+    * contextvars
+    * copy
+    * copyreg
+    * cProfile
+    * crypt
+    * csv
+    * ctypes
+    * curses
+      * curses.ascii
       * curses.panel
       * curses.textpad
 
-        (d)
-        * dataclasses
-        * datetime
+    (d)
+    * dataclasses
+    * datetime
         (known by Wisteria as) "datetime(datetime.datetime)": datetime.datetime
 (2001, 12, 1)
         (known by Wisteria as) "datetime(datetime.timedelta)":
              datetime.datetime(2001, 12, 1) - datetime.datetime(2000, 12, 1)
-        * dbm
+    * dbm
       * dbm.dumb
       * dbm.gnu
       * dbm.ndbm
-        * decimal
+    * decimal
         (known by Wisteria as) "decimal(0.5)": decimal.Decimal(0.5)
         (known by Wisteria as) "decimal(1/7)": decimal.Decimal(1) / decimal.Dec
 imal(7)
@@ -622,344 +635,344 @@ imal(7)
 ")
         (known by Wisteria as) "decimal(+infinity)": decimal.Decimal("+Infinity
 ")
-        * difflib
-        * dis
-        * distutils
+    * difflib
+    * dis
+    * distutils
       * distutils.archive_util
       * distutils.bcppcompiler
       * distutils.ccompiler
       * distutils.cmd
       * distutils.cmd
-          * distutils.command
-          * distutils.command.bdist
-          * distutils.command.bdist_dumb
-          * distutils.command.bdist_msi
-          * distutils.command.bdist_packager
-          * distutils.command.bdist_rpm
-          * distutils.command.bdist_wininst
-          * distutils.command.build     Build
-          * distutils.command.build_clib
-          * distutils.command.build_ext
-          * distutils.command.build_py
-          * distutils.command.build_scripts
-          * distutils.command.check
-          * distutils.command.clean
-          * distutils.command.config
-          * distutils.command.install
-          * distutils.command.install_data
-          * distutils.command.install_headers
-          * distutils.command.install_lib
-          * distutils.command.install_scripts
-          * distutils.command.register
-          * distutils.command.sdist
-          * distutils.core
-          * distutils.cygwinccompiler
-          * distutils.debug
-          * distutils.dep_util
-          * distutils.dir_util
-          * distutils.dist
-          * distutils.errors
-          * distutils.extension
-          * distutils.fancy_getopt
-          * distutils.file_util
-          * distutils.filelist
-          * distutils.log
-          * distutils.msvccompiler
-          * distutils.spawn
-          * distutils.sysconfig
-          * distutils.text_file
-          * distutils.unixccompiler
-          * distutils.util
-          * distutils.version
-        * doctest
+      * distutils.command
+      * distutils.command.bdist
+      * distutils.command.bdist_dumb
+      * distutils.command.bdist_msi
+      * distutils.command.bdist_packager
+      * distutils.command.bdist_rpm
+      * distutils.command.bdist_wininst
+      * distutils.command.build Build
+      * distutils.command.build_clib
+      * distutils.command.build_ext
+      * distutils.command.build_py
+      * distutils.command.build_scripts
+      * distutils.command.check
+      * distutils.command.clean
+      * distutils.command.config
+      * distutils.command.install
+      * distutils.command.install_data
+      * distutils.command.install_headers
+      * distutils.command.install_lib
+      * distutils.command.install_scripts
+      * distutils.command.register
+      * distutils.command.sdist
+      * distutils.core
+      * distutils.cygwinccompiler
+      * distutils.debug
+      * distutils.dep_util
+      * distutils.dir_util
+      * distutils.dist
+      * distutils.errors
+      * distutils.extension
+      * distutils.fancy_getopt
+      * distutils.file_util
+      * distutils.filelist
+      * distutils.log
+      * distutils.msvccompiler
+      * distutils.spawn
+      * distutils.sysconfig
+      * distutils.text_file
+      * distutils.unixccompiler
+      * distutils.util
+      * distutils.version
+    * doctest
 
-        (e)
-        * email
+    (e)
+    * email
       * email.charset
-          * email.contentmanager
-          * email.encoders
-          * email.errors
-          * email.generator
-          * email.header
-          * email.headerregistry
-          * email.iterators
-          * email.message
-          * email.mime
-          * email.parser
-          * email.policy
-          * email.utils
-        * encodings
+      * email.contentmanager
+      * email.encoders
+      * email.errors
+      * email.generator
+      * email.header
+      * email.headerregistry
+      * email.iterators
+      * email.message
+      * email.mime
+      * email.parser
+      * email.policy
+      * email.utils
+    * encodings
       * encodings.idna
-          * encodings.mbcs
-          * encodings.utf_8_sig
-        * ensurepip
-        * enum
-        * errno
+      * encodings.mbcs
+      * encodings.utf_8_sig
+    * ensurepip
+    * enum
+    * errno
 
-        (f)
-        * faulthandler
-        * fcntl
-        * filecmp
-        * fileinput
-        * fnmatch
-        * formatter
-        * fractions
-        * ftplib
-        * functools
+    (f)
+    * faulthandler
+    * fcntl
+    * filecmp
+    * fileinput
+    * fnmatch
+    * formatter
+    * fractions
+    * ftplib
+    * functools
 
-        (g)
-        * gc
-        * getopt
-        * getpass
-        * gettext
-        * glob
-        * graphlib
-        * grp
-        * gzip
+    (g)
+    * gc
+    * getopt
+    * getpass
+    * gettext
+    * glob
+    * graphlib
+    * grp
+    * gzip
 
-        (h)
-        * hashlib
-        * heapq
-        * hmac
-        * html
+    (h)
+    * hashlib
+    * heapq
+    * hmac
+    * html
       * html.entities
-          * html.parser
-        * http
-          * http.client
-          * http.cookiejar
-          * http.cookies
-          * http.server
+      * html.parser
+    * http
+      * http.client
+      * http.cookiejar
+      * http.cookies
+      * http.server
 
-        (i)
-        * imaplib
-        * imghdr
-        * imp
-        * importlib
+    (i)
+    * imaplib
+    * imghdr
+    * imp
+    * importlib
       * importlib.abc
-          * importlib.machinery
-          * importlib.metadata
-          * importlib.resources
-          * importlib.util
-        * inspect
-        * io
+      * importlib.machinery
+      * importlib.metadata
+      * importlib.resources
+      * importlib.util
+    * inspect
+    * io
         (known by Wisteria as) "io.string": io.StringIO()
         (known by Wisteria as) "io.string(empty)": io.StringIO().write("string"
 )
-        * ipaddress
-        * itertools
+    * ipaddress
+    * itertools
 
-        (j)
-        * json
+    (j)
+    * json
       * json.tool
 
-        (k)
-        * keyword
+    (k)
+    * keyword
 
-        (l)
-        * lib2to3
-        * linecache
-        * locale
-        * logging
+    (l)
+    * lib2to3
+    * linecache
+    * locale
+    * logging
       * logging.config
-          * logging.handlers
-        * lzma
+      * logging.handlers
+    * lzma
 
-        (m)
-        * mailbox
-        * mailcap
-        * marshal
-        * math
-        * mimetypes
-        * mmap
-        * modulefinder
-        * msilib
-        * msvcrt
-        * multiprocessing       Process-based parallelism.
+    (m)
+    * mailbox
+    * mailcap
+    * marshal
+    * math
+    * mimetypes
+    * mmap
+    * modulefinder
+    * msilib
+    * msvcrt
+    * multiprocessing   Process-based parallelism.
       * multiprocessing.connection
-          * multiprocessing.dummy
-          * multiprocessing.managers
-          * multiprocessing.pool
-          * multiprocessing.shared_memory
+      * multiprocessing.dummy
+      * multiprocessing.managers
+      * multiprocessing.pool
+      * multiprocessing.shared_memory
 
-        (n)
-        * netrc
-        * nis
-        * nntplib
-        * numbers
+    (n)
+    * netrc
+    * nis
+    * nntplib
+    * numbers
         (known by Wisteria as) "numbers(complex)": numbers.Complex
         (known by Wisteria as) "numbers(integral)": numbers.Integral
         (known by Wisteria as) "numbers(numbers)": numbers.Number()
         (known by Wisteria as) "numbers(real)": numbers.Real
 
-        (o)
-        * operator
-        * optparse
-        * os
+    (o)
+    * operator
+    * optparse
+    * os
       * os.path
-        * ossaudiodev
+    * ossaudiodev
 
-        (p)
-        * parser
-        * pathlib
-        * pdb
-        * pickle
-        * pickletools
-        * pipes
-        * pkgutil
-        * platform
-        * plistlib
-        * poplib
-        * posix
-        * pprint
-        * profile
-        * pstats
-        * pty
-        * pwd
-        * py_compile
-        * pyclbr
-        * pydoc
+    (p)
+    * parser
+    * pathlib
+    * pdb
+    * pickle
+    * pickletools
+    * pipes
+    * pkgutil
+    * platform
+    * plistlib
+    * poplib
+    * posix
+    * pprint
+    * profile
+    * pstats
+    * pty
+    * pwd
+    * py_compile
+    * pyclbr
+    * pydoc
 
-        (q)
-        * queue
-        * quopri
+    (q)
+    * queue
+    * quopri
 
-        (r)
-        * random
-        * re
+    (r)
+    * random
+    * re
         (known by Wisteria as) "re.match": re.match(".*", "abc")
         (known by Wisteria as) "re.match(+flags)": re.match(".*", "abc", re.M)
         (known by Wisteria as) "re.pattern(bytes)": re.compile(".*")
         (known by Wisteria as) "re.pattern(str)": re.compile(b".*")
 
-        * readline
-        * reprlib
-        * resource
-        * rlcompleter
-        * runpy
+    * readline
+    * reprlib
+    * resource
+    * rlcompleter
+    * runpy
 
-        (s)
-        * sched
-        * secrets
-        * select
-        * selectors
-        * shelve
-        * shlex
-        * shutil
-        * signal
-        * site
-        * smtpd
-        * smtplib
-        * sndhdr
-        * socket
-        * socketserver
-        * spwd
-        * sqlite3
-        * ssl
-        * stat
-        * statistics
-        * string
-        * stringprep
-        * struct
-        * subprocess
-        * sunau
-        * symbol
-        * symtable
-        * sys
-        * sysconfig
-        * syslog
+    (s)
+    * sched
+    * secrets
+    * select
+    * selectors
+    * shelve
+    * shlex
+    * shutil
+    * signal
+    * site
+    * smtpd
+    * smtplib
+    * sndhdr
+    * socket
+    * socketserver
+    * spwd
+    * sqlite3
+    * ssl
+    * stat
+    * statistics
+    * string
+    * stringprep
+    * struct
+    * subprocess
+    * sunau
+    * symbol
+    * symtable
+    * sys
+    * sysconfig
+    * syslog
 
-        (t)
-        * tabnanny
-        * tarfile
-        * telnetlib
-        * tempfile
-        * termios
-        * test
+    (t)
+    * tabnanny
+    * tarfile
+    * telnetlib
+    * tempfile
+    * termios
+    * test
       * test.support .
-          * test.support.bytecode_helper
-          * test.support.script_helper
-          * test.support.socket_helper
-        * textwrap
-        * threading
-        * time
+      * test.support.bytecode_helper
+      * test.support.script_helper
+      * test.support.socket_helper
+    * textwrap
+    * threading
+    * time
         (known by Wisteria as) "time(time.time)": time.time()
-        * timeit
-        * tkinter
+    * timeit
+    * tkinter
       * tkinter.colorchooser
-          * tkinter.commondialog
-          * tkinter.dnd
-          * tkinter.filedialog
-          * tkinter.font
-          * tkinter.messagebox
-          * tkinter.scrolledtext
-          * tkinter.simpledialog
-          * tkinter.tix
-          * tkinter.ttk
-        * token
-        * tokenize
-        * trace
-        * traceback
-        * tracemalloc
-        * tty
-        * turtle
-        * turtledemo
-        * types
-        * typing
+      * tkinter.commondialog
+      * tkinter.dnd
+      * tkinter.filedialog
+      * tkinter.font
+      * tkinter.messagebox
+      * tkinter.scrolledtext
+      * tkinter.simpledialog
+      * tkinter.tix
+      * tkinter.ttk
+    * token
+    * tokenize
+    * trace
+    * traceback
+    * tracemalloc
+    * tty
+    * turtle
+    * turtledemo
+    * types
+    * typing
 
-        (u)
-        * unicodedata
-        * unittest
+    (u)
+    * unicodedata
+    * unittest
       *    unittest.mock
-        * urllib
+    * urllib
       * urllib.error
-          * urllib.parse
-          * urllib.request
-          * urllib.response
-          * urllib.robotparser
-        * uu
-        * uuid
+      * urllib.parse
+      * urllib.request
+      * urllib.response
+      * urllib.robotparser
+    * uu
+    * uuid
 
-        (v)
-        * venv
+    (v)
+    * venv
 
-        (w)
-        * warnings
-        * wave
-        * weakref
-        * webbrowser
-        * winreg
-        * winsound
-        * wsgiref
+    (w)
+    * warnings
+    * wave
+    * weakref
+    * webbrowser
+    * winreg
+    * winsound
+    * wsgiref
       * wsgiref.handlers
-          * wsgiref.headers
-          * wsgiref.simple_server
-          * wsgiref.util
-          * wsgiref.validate
+      * wsgiref.headers
+      * wsgiref.simple_server
+      * wsgiref.util
+      * wsgiref.validate
 
-        (x)
-        * xdrlib
-        * xml
+    (x)
+    * xdrlib
+    * xml
       * xml.dom Document
-          * xml.dom.minidom
-          * xml.dom.pulldom
-          * xml.etree.ElementTree
-          * xml.parsers.expat
-          * xml.parsers.expat.errors
-          * xml.parsers.expat.model
-          * xml.sax     Package
-          * xml.sax.handler
-          * xml.sax.saxutils
-          * xml.sax.xmlreader
-        * xmlrpc
-          * xmlrpc.client
-          * xmlrpc.server
+      * xml.dom.minidom
+      * xml.dom.pulldom
+      * xml.etree.ElementTree
+      * xml.parsers.expat
+      * xml.parsers.expat.errors
+      * xml.parsers.expat.model
+      * xml.sax Package
+      * xml.sax.handler
+      * xml.sax.saxutils
+      * xml.sax.xmlreader
+    * xmlrpc
+      * xmlrpc.client
+      * xmlrpc.server
 
-        (z)
-        * zipapp
-        * zipfile
-        * zipimport
-        * zlib
-        * zoneinfo
+    (z)
+    * zipapp
+    * zipfile
+    * zipimport
+    * zlib
+    * zoneinfo
 
 Third-party Modules coverage
 ----------------------------
@@ -1013,7 +1026,34 @@ _as_expected.py
 
 See classes.md.
 
-[3.3] coding conventions.
+[3.1] exit codes
+
+(pimydoc)exit codes
+⋅These exit codes try to take into account the standards, in particular this
+⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+⋅
+⋅Please note that os constants like os.EX_OK as defined in Python doc
+⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+⋅used for this project; these constants are only defined for Linux systems
+⋅and this project aims Windows/OSX systems.
+⋅
+⋅*    0: normal exit code
+⋅*       normal exit code after --checkup
+⋅*       normal exit code after --downloadconfigfile
+⋅*       normal exit code after --mymachine
+⋅*       normal exit code (no data to handle)
+⋅*       normal exit code (no serializer to handle)
+⋅*    1: error, given config file can't be read (missing or ill-formed file)
+⋅*    2: error, ill-formed --cmp string
+⋅*    3: error, ill-formed --output string
+⋅*    4: error, missing required module
+⋅*    5: error: an inconsistency between the data has been detected
+⋅*  100: internal error, data can't be loaded
+⋅*  101: internal error, an error occured while computing the results
+⋅*  102: internal error, an error occured in main()
+⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+
+[3.4] coding conventions.
 
 See codingconventions.md.
 """
