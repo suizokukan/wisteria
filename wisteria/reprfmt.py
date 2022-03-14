@@ -428,7 +428,7 @@ def fmt_warning(msg):
 
         RETURNED VALUE: (str)title + some text attributes.
     """
-    return f"[bold yellow on magenta]{msg}[/bold yellow on magenta]"
+    return f"[bold white on magenta]{msg}[/bold white on magenta]"
 
 
 # DO NOT MOVE THIS FUNCTION ABOVE:

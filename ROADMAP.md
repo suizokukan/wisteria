@@ -80,6 +80,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-353
+
+Fixed issue #24: msgwarning() messages can't be read due to wrong colors choice
+
+    * fixed issue #24: msgwarning() messages can't be read due to wrong colors choice
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-352
 
 Modified help_cmdline_xxx() functions so that ancient `replacements` argument
