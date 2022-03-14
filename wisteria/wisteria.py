@@ -1333,8 +1333,12 @@ def checkup():
             check_ok = False
             msgerror("(ERRORID051) An error occured: "
                      f"the serializer named '{serializer}' "
-                     "doesn't how to encode/decode demonstration data object, "
-                     f"namely {wisteria.globs.DATA[data_name]} .")
+                     "doesn't how to transcode the demonstration data object, "
+                     f"namely {wisteria.globs.DATA[data_name]} ."
+                     "This is absolutely abnormal: "
+                     "the demonstration data object should always be able to be transcoded."
+                     "So there is a serious problem with this serializer, "
+                     "you may have to uninstall it.")
 
     if check_ok and \
        wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:

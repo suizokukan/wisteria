@@ -80,6 +80,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-343
+
+Fixed issue #14: improved error message ERRORID051.
+
+    * fixed issue #14: improved error message ERRORID051
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-342
 
 Renumbered the exit codes taking into account the standards, in particular this
