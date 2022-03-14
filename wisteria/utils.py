@@ -112,8 +112,10 @@ def pimydocstr2str(source,
             source = source.replace(before, after)
 
     # let's empty lines and lines containing the pimydoc header:
-    return "\n".join(line.lstrip()[len("⋅"):] for line in source.split("\n")
-                     if line.strip() and '(pimydoc)' not in line.strip())
+    #   NB: we use chr(0x22C5) instead of the real character to avoid pimydoc
+    #       modifies this line
+    return "\n".join(line.lstrip()[len(chr(0x22C5)):] for line in source.split("\n")
+                     if line.strip() and '('+'pimy'+'doc'+')' not in line.strip())
 
 
 def shortenedstr(string,

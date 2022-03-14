@@ -14,6 +14,12 @@ if README.md has been modified:
 if the version number (defined in wisteria/aboutproject.py) has been modified:
 `$ ./propagate_versionnumber.py`
 
+pimydoc and its forbidden character
+-----------------------------------
+A large part of the doc relies on `pimydoc` which uses a special
+character that must never appear in the code. Use chr(0x22C5) instead.
+
+
 functions/methods
 -----------------
 

@@ -80,7 +80,23 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
-[DONE] task-355    
+[DONE] task-356
+
+Fixed issue #26: the program raised an error when --exportreport wasn't specified.
+
+    * fixed issue #26: the program raised an error when --exportreport wasn't
+      specified.
+    * improved documentation linked to --exportreport, in the source code and
+      in pimydoc
+    * fixed a bug in pimydocstr2str(): the real character used by pimydoc and
+      defined in the `pimydoc` can't directly appear in the source code.
+    * updated codingconventions.md and the pimydoc file about the problem of
+      the pimydoc's special character
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
+[DONE] task-355
 
 Fixed issue #25: missing msginfo("About --exportreport") in wisteria.py (in D01)
 
@@ -88,7 +104,7 @@ Fixed issue #25: missing msginfo("About --exportreport") in wisteria.py (in D01)
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-354
 
 Fixed issue #21: improved pimydocstr2str() so that messages are now much more
@@ -98,8 +114,8 @@ readable.
       readable.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10    
-        
+    * Pylint: 10/10
+
 [DONE] task-353
 
 Fixed issue #24: msgwarning() messages can't be read due to wrong colors choice
@@ -108,19 +124,19 @@ Fixed issue #24: msgwarning() messages can't be read due to wrong colors choice
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-352
 
 Modified help_cmdline_xxx() functions so that ancient `replacements` argument
 is not required anymore.
-Fixed issue #23 which is not necessary.    
+Fixed issue #23 which is not necessary.
 
     * modified help_cmdline_xxx() functions so that ancient `replacements` argument
       is not required anymore.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-351
 
 issue #22: code structure (D01, D02, D03, D04) to be modified.

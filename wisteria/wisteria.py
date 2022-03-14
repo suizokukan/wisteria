@@ -235,6 +235,17 @@ PARSER.add_argument(
     action='store_true',
     help="Download default config file and exit. See --cfgfile to use a specific config file.")
 
+# (pimydoc)command line help for --exportreport(full version)
+# ⋅Export report by creating a new file in which
+# ⋅both report text and graphics are put together.
+# ⋅- default value: "no export", i.e. no exported report file
+# ⋅- otherwise 'md' is the only value or the only acceptable start string
+# ⋅  since md format is the only known format for exported report;
+# ⋅  you may add the exported report filename after '=',
+# ⋅  e.g. 'md=myfile.md';
+# ⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+# ⋅  Please note that graphs will not be added to the exported file if
+# ⋅  --checkup/--downloadconfigfile/--mymachine is set.
 PARSER.add_argument(
     '--exportreport',
     action='store',
@@ -934,8 +945,22 @@ def exit_handler():
     """
     # =============================================================================
     # (D/01) exported report
+    #
+    # (pimydoc)command line help for --exportreport(full version)
+    # ⋅Export report by creating a new file in which
+    # ⋅both report text and graphics are put together.
+    # ⋅- default value: "no export", i.e. no exported report file
+    # ⋅- otherwise 'md' is the only value or the only acceptable start string
+    # ⋅  since md format is the only known format for exported report;
+    # ⋅  you may add the exported report filename after '=',
+    # ⋅  e.g. 'md=myfile.md';
+    # ⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+    # ⋅  Please note that graphs will not be added to the exported file if
+    # ⋅  --checkup/--downloadconfigfile/--mymachine is set.
     # =============================================================================
-    if wisteria.globs.ARGS.exportreport.startswith("md"):
+    if wisteria.globs.ARGS.exportreport == "no export":
+        pass
+    elif wisteria.globs.ARGS.exportreport.startswith("md"):
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug("(exit_handler/exported report) about to create 'md' exported report.")
 
