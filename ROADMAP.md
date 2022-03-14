@@ -80,6 +80,64 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-342
+
+Renumbered the exit codes taking into account the standards, in particular this
+one: https://docs.python.org/3/library/sys.html#sys.exit
+
+    * renumbered the exit codes taking into account the standards, in particular
+      this one: https://docs.python.org/3/library/sys.html#sys.exit
+
+      *  0: normal exit code
+       > 0
+
+      *  1: normal exit code after --checkup
+       > 0
+
+      *  2: normal exit code after --downloadconfigfile
+       > 0
+
+      *  3: normal exit code after --mymachine
+       > 0
+
+      *  4: normal exit code (no data to handle)
+       > 0
+
+      *  5: normal exit code (no serializer to handle)
+       > 0
+
+      * -1: error, given config file can't be read (missing or ill-formed file)
+       > 1
+
+      * -2: error, ill-formed --cmp string
+       > 2
+
+      * -3: error, ill-formed --output string
+       > 3
+
+      * -4: error, missing required module
+       > 4
+
+      * -5: error: an inconsistency between the data has been detected
+       > 5
+
+      * -100: internal error, data can't be loaded
+       > 100
+
+      * -101: internal error, an error occured while computing the results
+       > 101
+
+      * -102: internal error, an error occured in main()
+       > 102
+
+      * -103: internal error, can't initialize PLANNED_TRANSCODINGS
+       > 103
+
+    * updated doc about exit codes
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-341
 
 Fixed issue #13:  serializer_yajl(): SystemError has to be catched twice

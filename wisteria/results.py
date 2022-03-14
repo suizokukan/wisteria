@@ -178,22 +178,30 @@ def compute_results():
             msgerror("(ERRORID015) Incorrect data, the program has to stop.")
 
             # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅*  3: normal exit code after --mymachine
-            # ⋅*  4: normal exit code (no data to handle)
-            # ⋅*  5: normal exit code (no serializer to handle)
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: error, ill-formed --output string
-            # ⋅* -4: error, missing required module
-            # ⋅* -5: error: an inconsistency between the data has been detected
-            # ⋅* -100: internal error, data can't be loaded
-            # ⋅* -101: internal error, an error occured while computing the results
-            # ⋅* -102: internal error, an error occured in main()
-            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-            return None, -100
+            # ⋅These exit codes try to take into account the standards, in particular this
+            # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+            # ⋅
+            # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+            # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+            # ⋅used for this project; these constants are only defined for Linux systems
+            # ⋅and this project aims Windows/OSX systems.
+            # ⋅
+            # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --checkup
+            # ⋅*       normal exit code after --downloadconfigfile
+            # ⋅*       normal exit code after --mymachine
+            # ⋅*       normal exit code (no data to handle)
+            # ⋅*       normal exit code (no serializer to handle)
+            # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅*    2: error, ill-formed --cmp string
+            # ⋅*    3: error, ill-formed --output string
+            # ⋅*    4: error, missing required module
+            # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*  100: internal error, data can't be loaded
+            # ⋅*  101: internal error, an error occured while computing the results
+            # ⋅*  102: internal error, an error occured in main()
+            # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return None, 100
 
         return results, None
 
@@ -201,22 +209,30 @@ def compute_results():
         msgerror(f"An error occured: {exception}")
 
         # (pimydoc)exit codes
-        # ⋅*  0: normal exit code
-        # ⋅*  1: normal exit code after --checkup
-        # ⋅*  2: normal exit code after --downloadconfigfile
-        # ⋅*  3: normal exit code after --mymachine
-        # ⋅*  4: normal exit code (no data to handle)
-        # ⋅*  5: normal exit code (no serializer to handle)
-        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-        # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: error, ill-formed --output string
-        # ⋅* -4: error, missing required module
-        # ⋅* -5: error: an inconsistency between the data has been detected
-        # ⋅* -100: internal error, data can't be loaded
-        # ⋅* -101: internal error, an error occured while computing the results
-        # ⋅* -102: internal error, an error occured in main()
-        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-        return None, -101
+        # ⋅These exit codes try to take into account the standards, in particular this
+        # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+        # ⋅
+        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+        # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+        # ⋅used for this project; these constants are only defined for Linux systems
+        # ⋅and this project aims Windows/OSX systems.
+        # ⋅
+        # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --checkup
+        # ⋅*       normal exit code after --downloadconfigfile
+        # ⋅*       normal exit code after --mymachine
+        # ⋅*       normal exit code (no data to handle)
+        # ⋅*       normal exit code (no serializer to handle)
+        # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅*    2: error, ill-formed --cmp string
+        # ⋅*    3: error, ill-formed --output string
+        # ⋅*    4: error, missing required module
+        # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*  100: internal error, data can't be loaded
+        # ⋅*  101: internal error, an error occured while computing the results
+        # ⋅*  102: internal error, an error occured in main()
+        # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+        return None, 101
 
 
 def get_serializers_selection(serializer1,

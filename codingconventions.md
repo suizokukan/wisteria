@@ -141,3 +141,46 @@ $ check_tools.sh
 
 * about poetry: [...]
 ```
+
+exit codes
+----------
+
+(pimydoc)exit codes
+⋅These exit codes try to take into account the standards, in particular this
+⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+⋅
+⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+⋅used for this project; these constants are only defined for Linux systems
+⋅and this project aims Windows/OSX systems.
+⋅
+⋅*    0: normal exit code
+⋅*       normal exit code after --checkup
+⋅*       normal exit code after --downloadconfigfile
+⋅*       normal exit code after --mymachine
+⋅*       normal exit code (no data to handle)
+⋅*       normal exit code (no serializer to handle)
+⋅*    1: error, given config file can't be read (missing or ill-formed file)
+⋅*    2: error, ill-formed --cmp string
+⋅*    3: error, ill-formed --output string
+⋅*    4: error, missing required module
+⋅*    5: error: an inconsistency between the data has been detected
+⋅*  100: internal error, data can't be loaded
+⋅*  101: internal error, an error occured while computing the results
+⋅*  102: internal error, an error occured in main()
+⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+*    0: normal exit code
+*       normal exit code after --checkup
+*       normal exit code after --downloadconfigfile
+*       normal exit code after --mymachine
+*       normal exit code (no data to handle)
+*       normal exit code (no serializer to handle)
+*    1: error, given config file can't be read (missing or ill-formed file)
+*    2: error, ill-formed --cmp string
+*    3: error, ill-formed --output string
+*    4: error, missing required module
+*    5: error: an inconsistency between the data has been detected
+*  100: internal error, data can't be loaded
+*  101: internal error, an error occured while computing the results
+*  102: internal error, an error occured in main()
+*  103: internal error, can't initialize PLANNED_TRANSCODINGS

@@ -62,21 +62,29 @@
     ⋅- (D/04) reset console cursor
 
     (pimydoc)exit codes
-    ⋅*  0: normal exit code
-    ⋅*  1: normal exit code after --checkup
-    ⋅*  2: normal exit code after --downloadconfigfile
-    ⋅*  3: normal exit code after --mymachine
-    ⋅*  4: normal exit code (no data to handle)
-    ⋅*  5: normal exit code (no serializer to handle)
-    ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    ⋅* -2: error, ill-formed --cmp string
-    ⋅* -3: error, ill-formed --output string
-    ⋅* -4: error, missing required module
-    ⋅* -5: error: an inconsistency between the data has been detected
-    ⋅* -100: internal error, data can't be loaded
-    ⋅* -101: internal error, an error occured while computing the results
-    ⋅* -102: internal error, an error occured in main()
-    ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+    ⋅These exit codes try to take into account the standards, in particular this
+    ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    ⋅
+    ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    ⋅used for this project; these constants are only defined for Linux systems
+    ⋅and this project aims Windows/OSX systems.
+    ⋅
+    ⋅*    0: normal exit code
+    ⋅*       normal exit code after --checkup
+    ⋅*       normal exit code after --downloadconfigfile
+    ⋅*       normal exit code after --mymachine
+    ⋅*       normal exit code (no data to handle)
+    ⋅*       normal exit code (no serializer to handle)
+    ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    ⋅*    2: error, ill-formed --cmp string
+    ⋅*    3: error, ill-formed --output string
+    ⋅*    4: error, missing required module
+    ⋅*    5: error: an inconsistency between the data has been detected
+    ⋅*  100: internal error, data can't be loaded
+    ⋅*  101: internal error, an error occured while computing the results
+    ⋅*  102: internal error, an error occured in main()
+    ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
     ___________________________________________________________________________
 
     o  check_str2reportsection_keys()
@@ -387,22 +395,30 @@ if MISSING_REQUIRED_MODULES:
           " and ".join(MISSING_REQUIRED_MODULES),
           ".")
     # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅*  4: normal exit code (no data to handle)
-    # ⋅*  5: normal exit code (no serializer to handle)
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: error, ill-formed --output string
-    # ⋅* -4: error, missing required module
-    # ⋅* -5: error: an inconsistency between the data has been detected
-    # ⋅* -100: internal error, data can't be loaded
-    # ⋅* -101: internal error, an error occured while computing the results
-    # ⋅* -102: internal error, an error occured in main()
-    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(-4)
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(4)
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -585,22 +601,30 @@ else:
         # no report(=log) available, hence the use of rprint():
         rprint("[bold red]Ill-formed --output string. The program has to stop.[/bold red]")
         # (pimydoc)exit codes
-        # ⋅*  0: normal exit code
-        # ⋅*  1: normal exit code after --checkup
-        # ⋅*  2: normal exit code after --downloadconfigfile
-        # ⋅*  3: normal exit code after --mymachine
-        # ⋅*  4: normal exit code (no data to handle)
-        # ⋅*  5: normal exit code (no serializer to handle)
-        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-        # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: error, ill-formed --output string
-        # ⋅* -4: error, missing required module
-        # ⋅* -5: error: an inconsistency between the data has been detected
-        # ⋅* -100: internal error, data can't be loaded
-        # ⋅* -101: internal error, an error occured while computing the results
-        # ⋅* -102: internal error, an error occured in main()
-        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-        sys.exit(-3)
+        # ⋅These exit codes try to take into account the standards, in particular this
+        # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+        # ⋅
+        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+        # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+        # ⋅used for this project; these constants are only defined for Linux systems
+        # ⋅and this project aims Windows/OSX systems.
+        # ⋅
+        # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --checkup
+        # ⋅*       normal exit code after --downloadconfigfile
+        # ⋅*       normal exit code after --mymachine
+        # ⋅*       normal exit code (no data to handle)
+        # ⋅*       normal exit code (no serializer to handle)
+        # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅*    2: error, ill-formed --cmp string
+        # ⋅*    3: error, ill-formed --output string
+        # ⋅*    4: error, missing required module
+        # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*  100: internal error, data can't be loaded
+        # ⋅*  101: internal error, an error occured while computing the results
+        # ⋅*  102: internal error, an error occured in main()
+        # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+        sys.exit(3)
 
     # By default, wisteria.globs.RICHCONSOLE is set to None.
     if wisteria.globs.OUTPUT[0]:
@@ -727,22 +751,30 @@ def check_str2reportsection_keys():
 
 if not check_str2reportsection_keys():
     # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅*  4: normal exit code (no data to handle)
-    # ⋅*  5: normal exit code (no serializer to handle)
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: error, ill-formed --output string
-    # ⋅* -4: error, missing required module
-    # ⋅* -5: error: an inconsistency between the data has been detected
-    # ⋅* -100: internal error, data can't be loaded
-    # ⋅* -101: internal error, an error occured while computing the results
-    # ⋅* -102: internal error, an error occured in main()
-    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(-5)
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(5)
 
 
 # =============================================================================
@@ -1353,22 +1385,30 @@ def checkup():
 if wisteria.globs.ARGS.checkup:
     checkup()
     # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅*  4: normal exit code (no data to handle)
-    # ⋅*  5: normal exit code (no serializer to handle)
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: error, ill-formed --output string
-    # ⋅* -4: error, missing required module
-    # ⋅* -5: error: an inconsistency between the data has been detected
-    # ⋅* -100: internal error, data can't be loaded
-    # ⋅* -101: internal error, an error occured while computing the results
-    # ⋅* -102: internal error, an error occured in main()
-    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(1)
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(0)
 
 
 # =============================================================================
@@ -1419,22 +1459,30 @@ if wisteria.globs.ARGS.mymachine:
     else:
         mymachine(detailslevel=2)
     # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅*  4: normal exit code (no data to handle)
-    # ⋅*  5: normal exit code (no serializer to handle)
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: error, ill-formed --output string
-    # ⋅* -4: error, missing required module
-    # ⋅* -5: error: an inconsistency between the data has been detected
-    # ⋅* -100: internal error, data can't be loaded
-    # ⋅* -101: internal error, an error occured while computing the results
-    # ⋅* -102: internal error, an error occured in main()
-    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(3)
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(0)
 
 
 # =============================================================================
@@ -1480,22 +1528,30 @@ if wisteria.globs.ARGS.mymachine:
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()
     # (pimydoc)exit codes
-    # ⋅*  0: normal exit code
-    # ⋅*  1: normal exit code after --checkup
-    # ⋅*  2: normal exit code after --downloadconfigfile
-    # ⋅*  3: normal exit code after --mymachine
-    # ⋅*  4: normal exit code (no data to handle)
-    # ⋅*  5: normal exit code (no serializer to handle)
-    # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-    # ⋅* -2: error, ill-formed --cmp string
-    # ⋅* -3: error, ill-formed --output string
-    # ⋅* -4: error, missing required module
-    # ⋅* -5: error: an inconsistency between the data has been detected
-    # ⋅* -100: internal error, data can't be loaded
-    # ⋅* -101: internal error, an error occured while computing the results
-    # ⋅* -102: internal error, an error occured in main()
-    # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-    sys.exit(2)
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(0)
 
 
 # =============================================================================
@@ -1548,21 +1604,29 @@ def main():
 
         RETURNED VALUE:
                 (pimydoc)exit codes
-                ⋅*  0: normal exit code
-                ⋅*  1: normal exit code after --checkup
-                ⋅*  2: normal exit code after --downloadconfigfile
-                ⋅*  3: normal exit code after --mymachine
-                ⋅*  4: normal exit code (no data to handle)
-                ⋅*  5: normal exit code (no serializer to handle)
-                ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-                ⋅* -2: error, ill-formed --cmp string
-                ⋅* -3: error, ill-formed --output string
-                ⋅* -4: error, missing required module
-                ⋅* -5: error: an inconsistency between the data has been detected
-                ⋅* -100: internal error, data can't be loaded
-                ⋅* -101: internal error, an error occured while computing the results
-                ⋅* -102: internal error, an error occured in main()
-                ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+                ⋅These exit codes try to take into account the standards, in particular this
+                ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+                ⋅
+                ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+                ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+                ⋅used for this project; these constants are only defined for Linux systems
+                ⋅and this project aims Windows/OSX systems.
+                ⋅
+                ⋅*    0: normal exit code
+                ⋅*       normal exit code after --checkup
+                ⋅*       normal exit code after --downloadconfigfile
+                ⋅*       normal exit code after --mymachine
+                ⋅*       normal exit code (no data to handle)
+                ⋅*       normal exit code (no serializer to handle)
+                ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+                ⋅*    2: error, ill-formed --cmp string
+                ⋅*    3: error, ill-formed --output string
+                ⋅*    4: error, missing required module
+                ⋅*    5: error: an inconsistency between the data has been detected
+                ⋅*  100: internal error, data can't be loaded
+                ⋅*  101: internal error, an error occured while computing the results
+                ⋅*  102: internal error, an error occured in main()
+                ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
     """
     data = wisteria.globs.DATA
     serializers = wisteria.globs.SERIALIZERS
@@ -1663,22 +1727,30 @@ def main():
                      f"while reading --cmp string '{ARGS.cmp}'.")
 
             # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅*  3: normal exit code after --mymachine
-            # ⋅*  4: normal exit code (no data to handle)
-            # ⋅*  5: normal exit code (no serializer to handle)
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: error, ill-formed --output string
-            # ⋅* -4: error, missing required module
-            # ⋅* -5: error: an inconsistency between the data has been detected
-            # ⋅* -100: internal error, data can't be loaded
-            # ⋅* -101: internal error, an error occured while computing the results
-            # ⋅* -102: internal error, an error occured in main()
-            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-            return -2
+            # ⋅These exit codes try to take into account the standards, in particular this
+            # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+            # ⋅
+            # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+            # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+            # ⋅used for this project; these constants are only defined for Linux systems
+            # ⋅and this project aims Windows/OSX systems.
+            # ⋅
+            # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --checkup
+            # ⋅*       normal exit code after --downloadconfigfile
+            # ⋅*       normal exit code after --mymachine
+            # ⋅*       normal exit code (no data to handle)
+            # ⋅*       normal exit code (no serializer to handle)
+            # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅*    2: error, ill-formed --cmp string
+            # ⋅*    3: error, ill-formed --output string
+            # ⋅*    4: error, missing required module
+            # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*  100: internal error, data can't be loaded
+            # ⋅*  101: internal error, an error occured while computing the results
+            # ⋅*  102: internal error, an error occured in main()
+            # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return 2
 
         # =========================================================================
         # (C/18.3) main(): config file reading
@@ -1726,42 +1798,58 @@ def main():
 
             if config is None:
                 # (pimydoc)exit codes
-                # ⋅*  0: normal exit code
-                # ⋅*  1: normal exit code after --checkup
-                # ⋅*  2: normal exit code after --downloadconfigfile
-                # ⋅*  3: normal exit code after --mymachine
-                # ⋅*  4: normal exit code (no data to handle)
-                # ⋅*  5: normal exit code (no serializer to handle)
-                # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-                # ⋅* -2: error, ill-formed --cmp string
-                # ⋅* -3: error, ill-formed --output string
-                # ⋅* -4: error, missing required module
-                # ⋅* -5: error: an inconsistency between the data has been detected
-                # ⋅* -100: internal error, data can't be loaded
-                # ⋅* -101: internal error, an error occured while computing the results
-                # ⋅* -102: internal error, an error occured in main()
-                # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-                return -1
+                # ⋅These exit codes try to take into account the standards, in particular this
+                # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+                # ⋅
+                # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+                # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+                # ⋅used for this project; these constants are only defined for Linux systems
+                # ⋅and this project aims Windows/OSX systems.
+                # ⋅
+                # ⋅*    0: normal exit code
+                # ⋅*       normal exit code after --checkup
+                # ⋅*       normal exit code after --downloadconfigfile
+                # ⋅*       normal exit code after --mymachine
+                # ⋅*       normal exit code (no data to handle)
+                # ⋅*       normal exit code (no serializer to handle)
+                # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+                # ⋅*    2: error, ill-formed --cmp string
+                # ⋅*    3: error, ill-formed --output string
+                # ⋅*    4: error, missing required module
+                # ⋅*    5: error: an inconsistency between the data has been detected
+                # ⋅*  100: internal error, data can't be loaded
+                # ⋅*  101: internal error, an error occured while computing the results
+                # ⋅*  102: internal error, an error occured in main()
+                # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+                return 1
 
             # ---- DATA/UNVAILABLE_DATA checks
             if not wisteria.data.check(config):
                 # (pimydoc)exit codes
-                # ⋅*  0: normal exit code
-                # ⋅*  1: normal exit code after --checkup
-                # ⋅*  2: normal exit code after --downloadconfigfile
-                # ⋅*  3: normal exit code after --mymachine
-                # ⋅*  4: normal exit code (no data to handle)
-                # ⋅*  5: normal exit code (no serializer to handle)
-                # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-                # ⋅* -2: error, ill-formed --cmp string
-                # ⋅* -3: error, ill-formed --output string
-                # ⋅* -4: error, missing required module
-                # ⋅* -5: error: an inconsistency between the data has been detected
-                # ⋅* -100: internal error, data can't be loaded
-                # ⋅* -101: internal error, an error occured while computing the results
-                # ⋅* -102: internal error, an error occured in main()
-                # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-                return -5
+                # ⋅These exit codes try to take into account the standards, in particular this
+                # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+                # ⋅
+                # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+                # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+                # ⋅used for this project; these constants are only defined for Linux systems
+                # ⋅and this project aims Windows/OSX systems.
+                # ⋅
+                # ⋅*    0: normal exit code
+                # ⋅*       normal exit code after --checkup
+                # ⋅*       normal exit code after --downloadconfigfile
+                # ⋅*       normal exit code after --mymachine
+                # ⋅*       normal exit code (no data to handle)
+                # ⋅*       normal exit code (no serializer to handle)
+                # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+                # ⋅*    2: error, ill-formed --cmp string
+                # ⋅*    3: error, ill-formed --output string
+                # ⋅*    4: error, missing required module
+                # ⋅*    5: error: an inconsistency between the data has been detected
+                # ⋅*  100: internal error, data can't be loaded
+                # ⋅*  101: internal error, an error occured while computing the results
+                # ⋅*  102: internal error, an error occured in main()
+                # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+                return 5
 
         # =========================================================================
         # (C/18.4) main(): PLANNED_TRANSCODINGS initialization
@@ -1820,61 +1908,85 @@ def main():
         #  see init_planned_transcodings().
         if not res_initplanned_transcodings[0]:
             # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅*  3: normal exit code after --mymachine
-            # ⋅*  4: normal exit code (no data to handle)
-            # ⋅*  5: normal exit code (no serializer to handle)
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: error, ill-formed --output string
-            # ⋅* -4: error, missing required module
-            # ⋅* -5: error: an inconsistency between the data has been detected
-            # ⋅* -100: internal error, data can't be loaded
-            # ⋅* -101: internal error, an error occured while computing the results
-            # ⋅* -102: internal error, an error occured in main()
-            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-            return -103
+            # ⋅These exit codes try to take into account the standards, in particular this
+            # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+            # ⋅
+            # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+            # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+            # ⋅used for this project; these constants are only defined for Linux systems
+            # ⋅and this project aims Windows/OSX systems.
+            # ⋅
+            # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --checkup
+            # ⋅*       normal exit code after --downloadconfigfile
+            # ⋅*       normal exit code after --mymachine
+            # ⋅*       normal exit code (no data to handle)
+            # ⋅*       normal exit code (no serializer to handle)
+            # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅*    2: error, ill-formed --cmp string
+            # ⋅*    3: error, ill-formed --output string
+            # ⋅*    4: error, missing required module
+            # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*  100: internal error, data can't be loaded
+            # ⋅*  101: internal error, an error occured while computing the results
+            # ⋅*  102: internal error, an error occured in main()
+            # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return 103
 
         if res_initplanned_transcodings[1] == 0:
             msgwarning("No serializer to be used. The program can stop here.")
             # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅*  3: normal exit code after --mymachine
-            # ⋅*  4: normal exit code (no data to handle)
-            # ⋅*  5: normal exit code (no serializer to handle)
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: error, ill-formed --output string
-            # ⋅* -4: error, missing required module
-            # ⋅* -5: error: an inconsistency between the data has been detected
-            # ⋅* -100: internal error, data can't be loaded
-            # ⋅* -101: internal error, an error occured while computing the results
-            # ⋅* -102: internal error, an error occured in main()
-            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-            return 5
+            # ⋅These exit codes try to take into account the standards, in particular this
+            # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+            # ⋅
+            # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+            # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+            # ⋅used for this project; these constants are only defined for Linux systems
+            # ⋅and this project aims Windows/OSX systems.
+            # ⋅
+            # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --checkup
+            # ⋅*       normal exit code after --downloadconfigfile
+            # ⋅*       normal exit code after --mymachine
+            # ⋅*       normal exit code (no data to handle)
+            # ⋅*       normal exit code (no serializer to handle)
+            # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅*    2: error, ill-formed --cmp string
+            # ⋅*    3: error, ill-formed --output string
+            # ⋅*    4: error, missing required module
+            # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*  100: internal error, data can't be loaded
+            # ⋅*  101: internal error, an error occured while computing the results
+            # ⋅*  102: internal error, an error occured in main()
+            # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return 0
         if res_initplanned_transcodings[2] == 0:
             msgwarning("No data to be used. The program can stop here.")
             # (pimydoc)exit codes
-            # ⋅*  0: normal exit code
-            # ⋅*  1: normal exit code after --checkup
-            # ⋅*  2: normal exit code after --downloadconfigfile
-            # ⋅*  3: normal exit code after --mymachine
-            # ⋅*  4: normal exit code (no data to handle)
-            # ⋅*  5: normal exit code (no serializer to handle)
-            # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-            # ⋅* -2: error, ill-formed --cmp string
-            # ⋅* -3: error, ill-formed --output string
-            # ⋅* -4: error, missing required module
-            # ⋅* -5: error: an inconsistency between the data has been detected
-            # ⋅* -100: internal error, data can't be loaded
-            # ⋅* -101: internal error, an error occured while computing the results
-            # ⋅* -102: internal error, an error occured in main()
-            # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-            return 4
+            # ⋅These exit codes try to take into account the standards, in particular this
+            # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+            # ⋅
+            # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+            # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+            # ⋅used for this project; these constants are only defined for Linux systems
+            # ⋅and this project aims Windows/OSX systems.
+            # ⋅
+            # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --checkup
+            # ⋅*       normal exit code after --downloadconfigfile
+            # ⋅*       normal exit code after --mymachine
+            # ⋅*       normal exit code (no data to handle)
+            # ⋅*       normal exit code (no serializer to handle)
+            # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+            # ⋅*    2: error, ill-formed --cmp string
+            # ⋅*    3: error, ill-formed --output string
+            # ⋅*    4: error, missing required module
+            # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*  100: internal error, data can't be loaded
+            # ⋅*  101: internal error, an error occured while computing the results
+            # ⋅*  102: internal error, an error occured in main()
+            # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+            return 0
 
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug("wisteria.globs.PLANNED_TRANSCODINGS:")
@@ -1971,21 +2083,29 @@ def main():
                (serializer1, serializer2, cmpdata))
 
         # (pimydoc)exit codes
-        # ⋅*  0: normal exit code
-        # ⋅*  1: normal exit code after --checkup
-        # ⋅*  2: normal exit code after --downloadconfigfile
-        # ⋅*  3: normal exit code after --mymachine
-        # ⋅*  4: normal exit code (no data to handle)
-        # ⋅*  5: normal exit code (no serializer to handle)
-        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-        # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: error, ill-formed --output string
-        # ⋅* -4: error, missing required module
-        # ⋅* -5: error: an inconsistency between the data has been detected
-        # ⋅* -100: internal error, data can't be loaded
-        # ⋅* -101: internal error, an error occured while computing the results
-        # ⋅* -102: internal error, an error occured in main()
-        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
+        # ⋅These exit codes try to take into account the standards, in particular this
+        # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+        # ⋅
+        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+        # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+        # ⋅used for this project; these constants are only defined for Linux systems
+        # ⋅and this project aims Windows/OSX systems.
+        # ⋅
+        # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --checkup
+        # ⋅*       normal exit code after --downloadconfigfile
+        # ⋅*       normal exit code after --mymachine
+        # ⋅*       normal exit code (no data to handle)
+        # ⋅*       normal exit code (no serializer to handle)
+        # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅*    2: error, ill-formed --cmp string
+        # ⋅*    3: error, ill-formed --output string
+        # ⋅*    4: error, missing required module
+        # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*  100: internal error, data can't be loaded
+        # ⋅*  101: internal error, an error occured while computing the results
+        # ⋅*  102: internal error, an error occured in main()
+        # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
         return 0
 
     except WisteriaError as exception:
@@ -1994,22 +2114,30 @@ def main():
         msgerror(str(exception))
 
         # (pimydoc)exit codes
-        # ⋅*  0: normal exit code
-        # ⋅*  1: normal exit code after --checkup
-        # ⋅*  2: normal exit code after --downloadconfigfile
-        # ⋅*  3: normal exit code after --mymachine
-        # ⋅*  4: normal exit code (no data to handle)
-        # ⋅*  5: normal exit code (no serializer to handle)
-        # ⋅* -1: error, given config file can't be read (missing or ill-formed file)
-        # ⋅* -2: error, ill-formed --cmp string
-        # ⋅* -3: error, ill-formed --output string
-        # ⋅* -4: error, missing required module
-        # ⋅* -5: error: an inconsistency between the data has been detected
-        # ⋅* -100: internal error, data can't be loaded
-        # ⋅* -101: internal error, an error occured while computing the results
-        # ⋅* -102: internal error, an error occured in main()
-        # ⋅* -103: internal error, can't initialize PLANNED_TRANSCODINGS
-        return -102
+        # ⋅These exit codes try to take into account the standards, in particular this
+        # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+        # ⋅
+        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+        # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+        # ⋅used for this project; these constants are only defined for Linux systems
+        # ⋅and this project aims Windows/OSX systems.
+        # ⋅
+        # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --checkup
+        # ⋅*       normal exit code after --downloadconfigfile
+        # ⋅*       normal exit code after --mymachine
+        # ⋅*       normal exit code (no data to handle)
+        # ⋅*       normal exit code (no serializer to handle)
+        # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+        # ⋅*    2: error, ill-formed --cmp string
+        # ⋅*    3: error, ill-formed --output string
+        # ⋅*    4: error, missing required module
+        # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*  100: internal error, data can't be loaded
+        # ⋅*  101: internal error, an error occured while computing the results
+        # ⋅*  102: internal error, an error occured in main()
+        # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+        return 102
 
 
 if __name__ == '__main__':
