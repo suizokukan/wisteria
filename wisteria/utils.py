@@ -111,9 +111,9 @@ def pimydocstr2str(source,
         for before, after in replacements.items():
             source = source.replace(before, after)
 
-    # let's remove the first line, e.g.
-    #    "(pimy doc)doc title"
-    return "\n".join(line for line in source.split("\n") if line.strip())
+    # let's empty lines and lines containing the pimydoc header:
+    return "\n".join(line.lstrip()[len("⋅"):] for line in source.split("\n")
+                     if line.strip() and '(pimydoc)' not in line.strip())
 
 
 def shortenedstr(string,
