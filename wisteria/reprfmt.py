@@ -92,7 +92,8 @@ def fmt_critical(msg):
 
         RETURNED VALUE: (str)msg + some text attributes.
     """
-    return f"!!! {msg}"
+    # let's add a character at the very beginning of each line in <msg>:
+    return "\n".join("!!! "+line for line in msg.split("\n"))
 
 
 def fmt_data(data_objectname):
@@ -122,7 +123,9 @@ def fmt_debug(msg):
 
         RETURNED VALUE: (str)msg + some text attributes.
     """
-    return f"@ {msg}"
+    # let's add a character at the very beginning of each line in <msg>:
+    return "\n".join("@ "+line for line in msg.split("\n"))
+
 
 
 def fmt_error(msg):
@@ -152,7 +155,8 @@ def fmt_info(msg):
 
         RETURNED VALUE: (str)msg + some text attributes.
     """
-    return f"> {msg}"
+    # let's add a character at the very beginning of each line in <msg>:
+    return "\n".join("> "+line for line in msg.split("\n"))
 
 
 def fmt_list(listitems, func=None):

@@ -80,6 +80,19 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-347
+
+Fixed a bug in reprfmt.py::fmt_[critical|debug|info]: the special character
+(@, !!! or >) is now added at the beginning of each line of the message,
+and not only the first one.
+
+    * Fixed a bug in reprfmt.py::fmt_[critical|debug|info]: the special character
+      (@, !!! or >) is now added at the beginning of each line of the message,
+      and not only the first one.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-346
 
 Fixed issue #12: no clear error message when --filter value can't be parsed.
