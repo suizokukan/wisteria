@@ -56,9 +56,9 @@
     ⋅       - (C/18.6) main(): report
     ⋅
     ⋅step D: exit_handler()
-    ⋅- (D/01) closing and removing of tempfile
-    ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-    ⋅- (D/03) exported report
+    ⋅- (D/01) exported report
+    ⋅- (D/02) closing and removing of tempfile
+    ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
     ⋅- (D/04) reset console cursor
     ⋅
 
@@ -138,9 +138,9 @@ import sys
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 
@@ -197,9 +197,9 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 PARSER = \
@@ -375,9 +375,9 @@ ARGS = PARSER.parse_args()
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 
@@ -478,9 +478,9 @@ from wisteria.serializers import func_serialize  # noqa
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 wisteria.globs.ARGS = ARGS
@@ -522,9 +522,9 @@ wisteria.globs.ARGS = ARGS
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 # a special case: if no argument has been given, we modify the output
@@ -575,9 +575,9 @@ if len(sys.argv) == 1:
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 if wisteria.globs.ARGS.mute:
@@ -677,9 +677,9 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 
@@ -719,9 +719,9 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 def check_str2reportsection_keys():
@@ -814,9 +814,9 @@ if not check_str2reportsection_keys():
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
@@ -859,9 +859,9 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 if wisteria.globs.ARGS.mute:
@@ -923,9 +923,9 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 def exit_handler():
@@ -935,61 +935,24 @@ def exit_handler():
         Remove the tmp file if it exists and close the file console file object.
     """
     # =============================================================================
-    # (D/01) closing and removing of tempfile
+    # (D/01) exported report
     # =============================================================================
-    # it may happen that wisteria.globs.DATA has not been fully
-    # initialized, hence the first part of the 'if':
-    if 'file descriptor' in wisteria.globs.DATA and \
-       not wisteria.globs.DATA['file descriptor'].closed:
-        if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) About to close the wisteria.globs.DATA['file descriptor'] "
-                     "file descriptor"
-                     f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
-        wisteria.globs.DATA['file descriptor'].close()
-
-    if os.path.exists(wisteria.globs.TMPFILENAME):
-        if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) About to remove the temp file "
-                     f"'{wisteria.globs.TMPFILENAME}' "
-                     f"('{normpath(wisteria.globs.TMPFILENAME)}')")
-
-        # The "PermissionError" exception may be raised on Windows system:
-        try:
-            os.remove(wisteria.globs.TMPFILENAME)
-        except PermissionError:
-            pass
-
-    # =============================================================================
-    # (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-    # =============================================================================
-    # this file should be the last one to be closed if we want to use msgxxx() methods:
-    if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
-        if ARGS.verbosity == VERBOSITY_DEBUG:
-            msgdebug(f"(exit_handler) About to close the console file "
-                     f"'{wisteria.globs.FILECONSOLE_FILEOBJECT.name}' "
-                     f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
-        wisteria.globs.FILECONSOLE_FILEOBJECT.close()
-
-    # =============================================================================
-    # (D/03) exported report
-    # =============================================================================
-    # no msgxxx() function here since we have just closed wisteria.globs.FILECONSOLE_FILEOBJECT
-    # so we use rprint() instead.
     if wisteria.globs.ARGS.exportreport.startswith("md"):
         if ARGS.verbosity == VERBOSITY_DEBUG:
-            rprint("(exit_handler/exported report) about to create 'md' exported report.")
+            msgdebug("(exit_handler/exported report) about to create 'md' exported report.")
 
         if "=" not in wisteria.globs.ARGS.exportreport:
             exportreport_filename = DEFAULT_EXPORTREPORT_FILENAME
             if ARGS.verbosity == VERBOSITY_DEBUG:
-                rprint("(exit_handler/exported report) exported report will be named, by default, "
-                       f"'{exportreport_filename}' .")
+                msgdebug(
+                    "(exit_handler/exported report) exported report will be named, by default, "
+                    f"'{exportreport_filename}' .")
         else:
             exportreport_filename = \
                 wisteria.globs.ARGS.exportreport[wisteria.globs.ARGS.exportreport.index("=")+1:]
             if ARGS.verbosity == VERBOSITY_DEBUG:
-                rprint("(exit_handler/exported report) exported report will be named "
-                       f"'{exportreport_filename}' .")
+                msgdebug("(exit_handler/exported report) exported report will be named "
+                         f"'{exportreport_filename}' .")
 
         # wisteria being a Python3.8+ project, no parenthesized context managers is available.
         # I can't write:
@@ -1024,16 +987,54 @@ def exit_handler():
                 # ⋅- (str)filename    : file name to be written
                 for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
                     if not os.path.exists(filename):
-                        rprint("(exit_handler/exported report) "
-                               f"Didn't add '{filename}' to exported report file "
-                               "since this file doesn't exist.")
+                        msgwarning("(exit_handler/exported report) "
+                                   f"Didn't add '{filename}' to exported report file "
+                                   "since this file doesn't exist.")
                     else:
                         exportedreportfile.write(f"![{title}]({filename})\n")
                         exportedreportfile.write("\n")
     else:
-        print("(ERRORID050) An error occured "
-              f"while reading --exportreport string '{ARGS.exportreport}'.")
-        print(help_cmdline_exportreport(details=True))
+        msgerror("(ERRORID050) An error occured "
+                 f"while reading --exportreport string '{ARGS.exportreport}'.")
+        msginfo(help_cmdline_exportreport(
+            details=True,
+            replacements={"DEFAULT_EXPORTREPORT_FILENAME": DEFAULT_EXPORTREPORT_FILENAME}))
+
+    # =============================================================================
+    # (D/02) closing and removing of tempfile
+    # =============================================================================
+    # it may happen that wisteria.globs.DATA has not been fully
+    # initialized, hence the first part of the 'if':
+    if 'file descriptor' in wisteria.globs.DATA and \
+       not wisteria.globs.DATA['file descriptor'].closed:
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) About to close the wisteria.globs.DATA['file descriptor'] "
+                     "file descriptor"
+                     f"('{normpath(wisteria.globs.DATA['file descriptor'].name)}').")
+        wisteria.globs.DATA['file descriptor'].close()
+
+    if os.path.exists(wisteria.globs.TMPFILENAME):
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) About to remove the temp file "
+                     f"'{wisteria.globs.TMPFILENAME}' "
+                     f"('{normpath(wisteria.globs.TMPFILENAME)}')")
+
+        # The "PermissionError" exception may be raised on Windows system:
+        try:
+            os.remove(wisteria.globs.TMPFILENAME)
+        except PermissionError:
+            pass
+
+    # =============================================================================
+    # (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+    # =============================================================================
+    # this file should be the last one to be closed if we want to use msgxxx() methods:
+    if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
+        if ARGS.verbosity == VERBOSITY_DEBUG:
+            msgdebug(f"(exit_handler) About to close the console file "
+                     f"'{wisteria.globs.FILECONSOLE_FILEOBJECT.name}' "
+                     f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
+        wisteria.globs.FILECONSOLE_FILEOBJECT.close()
 
     # =============================================================================
     # (D/04) reset console cursor
@@ -1081,9 +1082,9 @@ atexit.register(exit_handler)
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 wisteria.serializers.init_serializers()
@@ -1125,9 +1126,9 @@ wisteria.serializers.init_serializers()
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 
@@ -1174,9 +1175,9 @@ if not os.path.exists(TMPFILENAME):
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 wisteria.data.init_data()
@@ -1218,9 +1219,9 @@ wisteria.data.init_data()
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 def checkup():
@@ -1463,9 +1464,9 @@ if wisteria.globs.ARGS.checkup:
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 if wisteria.globs.ARGS.mymachine:
@@ -1538,9 +1539,9 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 if wisteria.globs.ARGS.downloadconfigfile:
@@ -1608,9 +1609,9 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅       - (C/18.6) main(): report
 # ⋅
 # ⋅step D: exit_handler()
-# ⋅- (D/01) closing and removing of tempfile
-# ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-# ⋅- (D/03) exported report
+# ⋅- (D/01) exported report
+# ⋅- (D/02) closing and removing of tempfile
+# ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/04) reset console cursor
 # ⋅
 def main():
@@ -1686,9 +1687,9 @@ def main():
     # ⋅       - (C/18.6) main(): report
     # ⋅
     # ⋅step D: exit_handler()
-    # ⋅- (D/01) closing and removing of tempfile
-    # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-    # ⋅- (D/03) exported report
+    # ⋅- (D/01) exported report
+    # ⋅- (D/02) closing and removing of tempfile
+    # ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
     # ⋅- (D/04) reset console cursor
     # ⋅
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1733,9 +1734,9 @@ def main():
         # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
-        # ⋅- (D/01) closing and removing of tempfile
-        # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-        # ⋅- (D/03) exported report
+        # ⋅- (D/01) exported report
+        # ⋅- (D/02) closing and removing of tempfile
+        # ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/04) reset console cursor
         # ⋅
         success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
@@ -1809,9 +1810,9 @@ def main():
         # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
-        # ⋅- (D/01) closing and removing of tempfile
-        # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-        # ⋅- (D/03) exported report
+        # ⋅- (D/01) exported report
+        # ⋅- (D/02) closing and removing of tempfile
+        # ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/04) reset console cursor
         # ⋅
         config = None
@@ -1909,9 +1910,9 @@ def main():
         # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
-        # ⋅- (D/01) closing and removing of tempfile
-        # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-        # ⋅- (D/03) exported report
+        # ⋅- (D/01) exported report
+        # ⋅- (D/02) closing and removing of tempfile
+        # ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/04) reset console cursor
         # ⋅
 
@@ -2053,9 +2054,9 @@ def main():
         # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
-        # ⋅- (D/01) closing and removing of tempfile
-        # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-        # ⋅- (D/03) exported report
+        # ⋅- (D/01) exported report
+        # ⋅- (D/02) closing and removing of tempfile
+        # ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/04) reset console cursor
         # ⋅
         compute_results__res = compute_results()
@@ -2099,9 +2100,9 @@ def main():
         # ⋅       - (C/18.6) main(): report
         # ⋅
         # ⋅step D: exit_handler()
-        # ⋅- (D/01) closing and removing of tempfile
-        # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
-        # ⋅- (D/03) exported report
+        # ⋅- (D/01) exported report
+        # ⋅- (D/02) closing and removing of tempfile
+        # ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/04) reset console cursor
         # ⋅
         report(results,

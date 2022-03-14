@@ -33,6 +33,7 @@ from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 from wisteria.utils import pimydocstr2str
 
+
 def help_cmdline_exportreport(details=False,
                               replacements=None):
     """

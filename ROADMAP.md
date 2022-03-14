@@ -80,6 +80,18 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[CURRENT] task-351
+
+issue #22: code structure (D01, D02, D03, D04) to be modified.
+Current D03 becomes D01 to prevent calls to rprint().
+
+    * issue #22: code structure (D01, D02, D03, D04) to be modified.
+      Current D03 becomes D01 to prevent calls to rprint().
+    * added a missing blank line in helpmsg.py
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-350
 
 Fixed issue #15: error message when --exportreport is not correctly used.
@@ -91,7 +103,7 @@ Fixed issue #15: error message when --exportreport is not correctly used.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-349
 
 Fixed issue #17: new report section (B3) giving the encoded string for every
@@ -103,7 +115,7 @@ data object.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-348
 
 Fixed issue #20: improved report titles A2 and A3.
@@ -113,7 +125,7 @@ Fixed issue #20: improved report titles A2 and A3.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-347
 
 Fixed a bug in reprfmt.py::fmt_[critical|debug|info]: the special character
@@ -126,7 +138,7 @@ and not only the first one.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-346
 
 Fixed issue #12: no clear error message when --filter value can't be parsed.
@@ -136,12 +148,12 @@ Fixed issue #12: no clear error message when --filter value can't be parsed.
     * command line argument --filter definition depends on a call to
       help_cmdline_filter(details=False)
     * new pimydoc sections:
-      - "command line help for --filter(short version)"    
+      - "command line help for --filter(short version)"
       - "command line help for --filter(full version)"
-    
+
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-345
 
 Updated wisteria/__init__.py
@@ -150,7 +162,7 @@ Updated wisteria/__init__.py
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-344
 
 Fixed issue #6: improved message in report_section_a5().
