@@ -21,6 +21,7 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### ==========================================================================
 ### (pimydoc)--cmp format
 ### (pimydoc)code structure
+### (pimydoc)command line help for --exportreport(short version)
 ### (pimydoc)command line help for --filter(full version)
 ### (pimydoc)command line help for --filter(short version)
 ### (pimydoc)config file format
@@ -104,7 +105,30 @@ step D: exit_handler()
 - (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 - (D/03) exported report
 - (D/04) reset console cursor
-### ==========================================================================    
+
+### ===========================================================================
+[(pimydoc)command line help for --exportreport(full version)]
+Export report by creating a new file in which
+both report text and graphics are put together.
+'md' is the only value or the only acceptable start string
+since md format is the only known format for exported report;
+you may add the exported report filename after '=',
+e.g. 'md=myfile.md';
+otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+Please note that graphs will not be added to the exported file if
+--checkup/--downloadconfigfile/--mymachine is set.
+### ===========================================================================
+[(pimydoc)command line help for --exportreport(short version)]
+Export report by creating a new file in which
+both report text and graphics are put together.
+'md' is the only value or the only acceptable start string
+since md format is the only known format for exported report;
+you may add the exported report filename after '=',
+e.g. 'md=myfile.md';
+otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+Please note that graphs will not be added to the exported file if
+--checkup/--downloadconfigfile/--mymachine is set.
+### ==========================================================================
 [(pimydoc)command line help for --filter(full version)]
 The --filter argument allows to select only some serializers or
 data objects. Currently only two values are accepted:
@@ -112,7 +136,7 @@ data objects. Currently only two values are accepted:
   used;
 * either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
   only the objects that can be successfully transcoded are kept;
-### ==========================================================================    
+### ==========================================================================
 [(pimydoc)command line help for --filter(short version)]
 Filter out the data or the serializers to be used.
 format: either empty string if no filter,

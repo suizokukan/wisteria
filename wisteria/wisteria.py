@@ -60,6 +60,7 @@
     ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
     ⋅- (D/03) exported report
     ⋅- (D/04) reset console cursor
+    ⋅
 
     (pimydoc)exit codes
     ⋅These exit codes try to take into account the standards, in particular this
@@ -141,6 +142,7 @@ import sys
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 
 # All the imports are deliberately not placed at the beginning of the file
 # so that the --help message may be printed even if all required packages are
@@ -150,7 +152,7 @@ import sys
 from wisteria.utils import normpath, get_python_version
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_helpcommandlineargument
-from wisteria.helpmsg import help_cmdline_filter
+from wisteria.helpmsg import help_cmdline_filter, help_cmdline_exportreport
 from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
@@ -199,6 +201,7 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 PARSER = \
     argparse.ArgumentParser(
         description='Comparisons of different Python serializers. '
@@ -236,15 +239,9 @@ PARSER.add_argument(
     '--exportreport',
     action='store',
     default='no export',
-    help="Export report by creating a new file in which "
-    "both report text and graphics are put together. "
-    "'md' is the only value or the only acceptable start string "
-    "since md format is the only known format for exported report; "
-    "you may add the exported report filename after '=', "
-    "e.g. 'md=myfile.md'; "
-    f"otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
-    "Please note that graphs will not be added to the exported file if "
-    "--checkup/--downloadconfigfile/--mymachine is set. ")
+    help=help_cmdline_exportreport(
+        details=False,
+        replacements={"DEFAULT_EXPORTREPORT_FILENAME": DEFAULT_EXPORTREPORT_FILENAME}))
 
 PARSER.add_argument(
     '--help', '-h',
@@ -382,6 +379,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 
 from wisteria.utils import get_missing_required_internal_modules  # noqa
 from wisteria.reprfmt import fmt_projectversion, fmt_nounplural  # noqa
@@ -484,6 +482,7 @@ from wisteria.serializers import func_serialize  # noqa
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 wisteria.globs.ARGS = ARGS
 
 
@@ -527,6 +526,7 @@ wisteria.globs.ARGS = ARGS
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 # a special case: if no argument has been given, we modify the output
 if len(sys.argv) == 1:
     # no RICHCONSOLE for the moment, hence the call to rprint().
@@ -579,6 +579,7 @@ if len(sys.argv) == 1:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 if wisteria.globs.ARGS.mute:
     # (pimydoc)OUTPUT format
     # ⋅        ((bool)output to the console ?,
@@ -680,6 +681,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 
 # =============================================================================
 # (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
@@ -721,6 +723,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 def check_str2reportsection_keys():
     """
         check_str2reportsection_keys()
@@ -815,6 +818,7 @@ if not check_str2reportsection_keys():
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
     msginfo(fmt_projectversion(add_timestamp=True))
     msgreport(f"Running on Python {get_python_version()}")
@@ -859,6 +863,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 if wisteria.globs.ARGS.mute:
     wisteria.globs.ARGS.report = ""
     wisteria.globs.ARGS.verbosity = VERBOSITY_MINIMAL
@@ -922,6 +927,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 def exit_handler():
     """
         exit_handler()
@@ -1024,6 +1030,10 @@ def exit_handler():
                     else:
                         exportedreportfile.write(f"![{title}]({filename})\n")
                         exportedreportfile.write("\n")
+    else:
+        print("(ERRORID050) An error occured "
+              f"while reading --exportreport string '{ARGS.exportreport}'.")
+        print(help_cmdline_exportreport(details=True))
 
     # =============================================================================
     # (D/04) reset console cursor
@@ -1075,6 +1085,7 @@ atexit.register(exit_handler)
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 wisteria.serializers.init_serializers()
 
 
@@ -1118,6 +1129,7 @@ wisteria.serializers.init_serializers()
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 
 # Such a file is required to create file descriptor objects.
 # The temp. file will be removed at the end of the program.
@@ -1166,6 +1178,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 wisteria.data.init_data()
 
 
@@ -1209,6 +1222,7 @@ wisteria.data.init_data()
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 def checkup():
     """
         checkup()
@@ -1453,6 +1467,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
     if wisteria.globs.ARGS.verbosity < VERBOSITY_DETAILS:
@@ -1527,6 +1542,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()
     # (pimydoc)exit codes
@@ -1596,6 +1612,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 # ⋅- (D/03) exported report
 # ⋅- (D/04) reset console cursor
+# ⋅
 def main():
     """
         main()
@@ -1673,6 +1690,7 @@ def main():
     # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
     # ⋅- (D/03) exported report
     # ⋅- (D/04) reset console cursor
+    # ⋅
     if ARGS.verbosity == VERBOSITY_DEBUG:
         msgdebug(f"known data: {list(data.keys())}")
     if ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1719,6 +1737,7 @@ def main():
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) exported report
         # ⋅- (D/04) reset console cursor
+        # ⋅
         success, serializer1, serializer2, cmpdata = read_cmpstring(ARGS.cmp)
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"Result of the call to read_cmpstring('{ARGS.cmp}'): "
@@ -1794,6 +1813,7 @@ def main():
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) exported report
         # ⋅- (D/04) reset console cursor
+        # ⋅
         config = None
         if cmpdata == 'ini':
             config = read_cfgfile(ARGS.cfgfile)
@@ -1893,6 +1913,7 @@ def main():
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) exported report
         # ⋅- (D/04) reset console cursor
+        # ⋅
 
         # (pimydoc)PLANNED_TRANSCODINGS
         # ⋅list of str:
@@ -2036,6 +2057,7 @@ def main():
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) exported report
         # ⋅- (D/04) reset console cursor
+        # ⋅
         compute_results__res = compute_results()
         if compute_results__res[0] is None:
             return compute_results__res[1]
@@ -2081,6 +2103,7 @@ def main():
         # ⋅- (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
         # ⋅- (D/03) exported report
         # ⋅- (D/04) reset console cursor
+        # ⋅
         report(results,
                (serializer1, serializer2, cmpdata))
 

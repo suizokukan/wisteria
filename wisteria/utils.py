@@ -29,7 +29,7 @@
     o  get_missing_required_internal_modules()
     o  get_python_version()
     o  normpath(path)
-    o  pimydocstr2str(source)
+    o  pimydocstr2str(source, replacements=None)
     o  shortenedstr(string, maximallength)
     o  strdigest(string)
     o  trytoimport(module_name)
@@ -91,17 +91,26 @@ def normpath(path):
     return res
 
 
-def pimydocstr2str(source):
+def pimydocstr2str(source,
+                   replacements=None):
     """
         pimydocstr2str()
 
         Convert the pimydoc string <source> into a simple Python string.
+        Replace in <source> each value found in <replacements> by the
+        corresponding key.
         _______________________________________________________________________
 
-        PARAMETER:      (str)the pimydoc string
+        PARAMETERS:
+        o  (str)the pimydoc string
+        o  (None|dict str:str) replacements
 
         RETURNED VALUE: (str)a simple Python string
     """
+    if replacements:
+        for before, after in replacements.items():
+            source = source.replace(before, after)
+
     # let's remove the first line, e.g.
     #    "(pimy doc)doc title"
     return "\n".join(line for line in source.split("\n") if line.strip())

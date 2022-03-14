@@ -24,6 +24,7 @@
     Some help messages
     ___________________________________________________________________________
 
+    o  help_cmdline_exportreport(details=False, replacements=None)
     o  help_cmdline_filter(details=False)
     o  help_helpcommandlineargument()
     o  help_graphsfilenames()
@@ -31,6 +32,39 @@
 from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 from wisteria.utils import pimydocstr2str
+
+def help_cmdline_exportreport(details=False,
+                              replacements=None):
+    """
+        help_cmdline_exportreport()
+
+        Return help messages for the command line option "--filter".
+    """
+    if not details:
+        return pimydocstr2str("""
+        (pimydoc)command line help for --exportreport(short version)
+        ⋅Export report by creating a new file in which
+        ⋅both report text and graphics are put together.
+        ⋅'md' is the only value or the only acceptable start string
+        ⋅since md format is the only known format for exported report;
+        ⋅you may add the exported report filename after '=',
+        ⋅e.g. 'md=myfile.md';
+        ⋅otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+        ⋅Please note that graphs will not be added to the exported file if
+        ⋅--checkup/--downloadconfigfile/--mymachine is set.
+        """, replacements)
+    return pimydocstr2str("""
+    (pimydoc)command line help for --exportreport(full version)
+    ⋅Export report by creating a new file in which
+    ⋅both report text and graphics are put together.
+    ⋅'md' is the only value or the only acceptable start string
+    ⋅since md format is the only known format for exported report;
+    ⋅you may add the exported report filename after '=',
+    ⋅e.g. 'md=myfile.md';
+    ⋅otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+    ⋅Please note that graphs will not be added to the exported file if
+    ⋅--checkup/--downloadconfigfile/--mymachine is set.
+    """, replacements)
 
 
 def help_cmdline_filter(details=False):

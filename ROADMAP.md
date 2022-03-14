@@ -80,6 +80,18 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-350
+
+Fixed issue #15: error message when --exportreport is not correctly used.
+
+    * pimydocstr2str() has a new argument (`replacements`) to allow
+      string substitutions in the message
+    * command line argument --exportreport definition now depends on a call to
+      help_cmdline_exportreport(details=False)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-349
 
 Fixed issue #17: new report section (B3) giving the encoded string for every
