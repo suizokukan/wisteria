@@ -762,7 +762,7 @@ def report_section_a5(results,
     msgreport()
 
     demonstration_dataobj = wisteria.globs.DATA["demonstration_dataobj"]
-    msgreport("- raw demonstration object ('demonstration_dataobj') is")
+    msgreport("- raw demonstration object (as seen by Python, i.e. 'demonstration_dataobj') is ")
     msgreport(f"{demonstration_dataobj}")
 
     for serializer in results.serializers:
