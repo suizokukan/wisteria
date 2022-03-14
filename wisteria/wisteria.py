@@ -239,9 +239,7 @@ PARSER.add_argument(
     '--exportreport',
     action='store',
     default='no export',
-    help=help_cmdline_exportreport(
-        details=False,
-        replacements={"DEFAULT_EXPORTREPORT_FILENAME": DEFAULT_EXPORTREPORT_FILENAME}))
+    help=help_cmdline_exportreport(details=False))
 
 PARSER.add_argument(
     '--help', '-h',
@@ -996,9 +994,7 @@ def exit_handler():
     else:
         msgerror("(ERRORID050) An error occured "
                  f"while reading --exportreport string '{ARGS.exportreport}'.")
-        msginfo(help_cmdline_exportreport(
-            details=True,
-            replacements={"DEFAULT_EXPORTREPORT_FILENAME": DEFAULT_EXPORTREPORT_FILENAME}))
+        msginfo(help_cmdline_exportreport(details=True))
 
     # =============================================================================
     # (D/02) closing and removing of tempfile

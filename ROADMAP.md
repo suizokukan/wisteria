@@ -80,7 +80,19 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
-[CURRENT] task-351
+[DONE] task-352
+
+Modified help_cmdline_xxx() functions so that ancient `replacements` argument
+is not required anymore.
+Fixed issue #23 which is not necessary.    
+
+    * modified help_cmdline_xxx() functions so that ancient `replacements` argument
+      is not required anymore.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
+[DONE] task-351
 
 issue #22: code structure (D01, D02, D03, D04) to be modified.
 Current D03 becomes D01 to prevent calls to rprint().

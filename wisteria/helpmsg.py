@@ -24,22 +24,26 @@
     Some help messages
     ___________________________________________________________________________
 
-    o  help_cmdline_exportreport(details=False, replacements=None)
+    o  help_cmdline_exportreport(details=False)
     o  help_cmdline_filter(details=False)
     o  help_helpcommandlineargument()
     o  help_graphsfilenames()
 """
-from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
+from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME, DEFAULT_EXPORTREPORT_FILENAME
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 from wisteria.utils import pimydocstr2str
 
 
-def help_cmdline_exportreport(details=False,
-                              replacements=None):
+def help_cmdline_exportreport(details=False):
     """
         help_cmdline_exportreport()
 
         Return help messages for the command line option "--filter".
+        _______________________________________________________________________
+
+        ARGUMENT: (bool)details, True if a full help string has to be returned
+
+        RETURNED VALUE: (str)help message
     """
     if not details:
         return pimydocstr2str("""
@@ -50,10 +54,10 @@ def help_cmdline_exportreport(details=False,
         ⋅since md format is the only known format for exported report;
         ⋅you may add the exported report filename after '=',
         ⋅e.g. 'md=myfile.md';
-        ⋅otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+        ⋅otherwise the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
         ⋅Please note that graphs will not be added to the exported file if
         ⋅--checkup/--downloadconfigfile/--mymachine is set.
-        """, replacements)
+        """.replace("DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
     return pimydocstr2str("""
     (pimydoc)command line help for --exportreport(full version)
     ⋅Export report by creating a new file in which
@@ -62,10 +66,10 @@ def help_cmdline_exportreport(details=False,
     ⋅since md format is the only known format for exported report;
     ⋅you may add the exported report filename after '=',
     ⋅e.g. 'md=myfile.md';
-    ⋅otherwise the default filename is '{DEFAULT_EXPORTREPORT_FILENAME}' . "
+    ⋅otherwise the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
     ⋅Please note that graphs will not be added to the exported file if
     ⋅--checkup/--downloadconfigfile/--mymachine is set.
-    """, replacements)
+    """.replace("DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
 
 
 def help_cmdline_filter(details=False):
@@ -73,6 +77,11 @@ def help_cmdline_filter(details=False):
         help_cmdline_filter()
 
         Return help messages for the command line option "--filter".
+        _______________________________________________________________________
+
+        ARGUMENT: (bool)details, True if a full help string has to be returned
+
+        RETURNED VALUE: (str)help message
     """
     if not details:
         return pimydocstr2str("""
