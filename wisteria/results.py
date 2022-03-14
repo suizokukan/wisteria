@@ -47,6 +47,7 @@ from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.filterstr import parse_filterstr
 from wisteria.reprfmt import fmt_nounplural
+from wisteria.helpmsg import help_cmdline_filter
 
 
 def compute_results():
@@ -352,6 +353,8 @@ def init_planned_transcodings(serializer1,
     if not parse_filterstr_ok:
         msgerror("(ERRORID052) Can't set PLANNED_TRANSCODINGS "
                  "since an error occured while parsing the filter string.")
+        msginfo("About --filter:")
+        msginfo(help_cmdline_filter(details=True))
         return False, None, None
 
     if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS or \

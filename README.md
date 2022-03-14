@@ -228,6 +228,16 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
     which will be create a file named (e.g.) `myreportfile_1635672267.any`
 
 ```
+(pimydoc)command line help for --filter(full version)    
+⋅The --filter argument allows to select only some serializers or
+⋅data objects. Currently only two values are accepted:
+⋅* either a null string (--filter=""): all serializers/data objects are
+⋅  used;
+⋅* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
+⋅  only the objects that can be successfully transcoded are kept;
+```
+
+```
 (pimydoc)--cmp format
 ⋅
 ⋅(I) serializers

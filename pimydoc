@@ -21,6 +21,8 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### ==========================================================================
 ### (pimydoc)--cmp format
 ### (pimydoc)code structure
+### (pimydoc)command line help for --filter(full version)
+### (pimydoc)command line help for --filter(short version)
 ### (pimydoc)config file format
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
@@ -101,7 +103,21 @@ step D: exit_handler()
 - (D/01) closing and removing of tempfile
 - (D/02) closing wisteria.globs.FILECONSOLE_FILEOBJECT
 - (D/03) exported report
-- (D/04) reset console cursor    
+- (D/04) reset console cursor
+### ==========================================================================    
+[(pimydoc)command line help for --filter(full version)]
+The --filter argument allows to select only some serializers or
+data objects. Currently only two values are accepted:
+* either a null string (--filter=""): all serializers/data objects are
+  used;
+* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
+  only the objects that can be successfully transcoded are kept;
+### ==========================================================================    
+[(pimydoc)command line help for --filter(short version)]
+Filter out the data or the serializers to be used.
+format: either empty string if no filter,
+either 'data:oktrans_only' to only keep the objects that can be successfully
+transcoded
 ### ==========================================================================
 [(pimydoc)config file format]
 

@@ -150,6 +150,7 @@ import sys
 from wisteria.utils import normpath, get_python_version
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_helpcommandlineargument
+from wisteria.helpmsg import help_cmdline_filter
 from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
@@ -157,7 +158,6 @@ from wisteria.globs import REGEX_CMP__HELP
 from wisteria.globs import DEFAULT_CONFIGFILE_NAME
 from wisteria.globs import STR2REPORTSECTION_KEYS
 from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
-
 
 # =============================================================================
 # (A/01) command line parsing
@@ -255,9 +255,7 @@ PARSER.add_argument(
     '--filter',
     action='store',
     default="",
-    help="Filter out the data or the serializers to be used. "
-    "format: empty string if no filter, "
-    "'data:oktrans_only' to only keep the objects that can be successfully transcoded")
+    help=help_cmdline_filter(details=False))
 
 PARSER.add_argument(
     '--mute',

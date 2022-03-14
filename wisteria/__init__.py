@@ -263,8 +263,7 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
   | (pimydoc)--cmp format
   | ⋅
   | ⋅(I) serializers
-  | ⋅Test one serializer alone(1) or one serializer against another serializer(
-2) or
+  | ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
   | ⋅a serializer against all serializers(3) or all serializers(4) together.
   | ⋅
   | ⋅    (1) --cmp="jsonpickle(cwc)"
@@ -273,10 +272,8 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
   | ⋅    (4) --cmp="all vs all (cwc)"
   | ⋅
   | ⋅(II) data types:
-  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all
-data types
-  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all d
-ata types(d).
+  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
   | ⋅
   | ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
   | ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
@@ -290,6 +287,9 @@ ata types(d).
   | ⋅                              string is used as help message by the
   | ⋅                              command line --help argument.
   | ⋅
+2) or
+data types
+ata types(d).
   |
 
 pylintrc
@@ -1032,7 +1032,7 @@ See classes.md.
 ⋅These exit codes try to take into account the standards, in particular this
 ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
 ⋅
-⋅Please note that os constants like os.EX_OK as defined in Python doc
+⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
 ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
 ⋅used for this project; these constants are only defined for Linux systems
 ⋅and this project aims Windows/OSX systems.

@@ -80,6 +80,21 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-346
+
+Fixed issue #12: no clear error message when --filter value can't be parsed.
+
+    * fixed issue #12: no clear error message when --filter value can't be parsed
+    * new function in helpmsg.py named `help_cmdline_filter`
+    * command line argument --filter definition depends on a call to
+      help_cmdline_filter(details=False)
+    * new pimydoc sections:
+      - "command line help for --filter(short version)"    
+      - "command line help for --filter(full version)"
+    
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-345
 
 Updated wisteria/__init__.py

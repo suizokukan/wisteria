@@ -24,11 +24,38 @@
     Some help messages
     ___________________________________________________________________________
 
+    o  help_cmdline_filter(details=False)
     o  help_helpcommandlineargument()
     o  help_graphsfilenames()
 """
 from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
+from wisteria.utils import pimydocstr2str
+
+
+def help_cmdline_filter(details=False):
+    """
+        help_cmdline_filter()
+
+        Return help messages for the command line option "--filter".
+    """
+    if not details:
+        return pimydocstr2str("""
+        (pimydoc)command line help for --filter(short version)
+        ⋅Filter out the data or the serializers to be used.
+        ⋅format: either empty string if no filter,
+        ⋅either 'data:oktrans_only' to only keep the objects that can be successfully
+        ⋅transcoded
+        """)
+    return pimydocstr2str("""
+           (pimydoc)command line help for --filter(full version)
+           ⋅The --filter argument allows to select only some serializers or
+           ⋅data objects. Currently only two values are accepted:
+           ⋅* either a null string (--filter=""): all serializers/data objects are
+           ⋅  used;
+           ⋅* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
+           ⋅  only the objects that can be successfully transcoded are kept;
+           """)
 
 
 def help_helpcommandlineargument():

@@ -29,6 +29,7 @@
     o  get_missing_required_internal_modules()
     o  get_python_version()
     o  normpath(path)
+    o  pimydocstr2str(source)
     o  shortenedstr(string, maximallength)
     o  strdigest(string)
     o  trytoimport(module_name)
@@ -88,6 +89,22 @@ def normpath(path):
     if res == ".":
         res = os.getcwd()
     return res
+
+
+def pimydocstr2str(source):
+    """
+        pimydocstr2str()
+
+        Convert the pimydoc string <source> into a simple Python string.
+        _______________________________________________________________________
+
+        PARAMETER:      (str)the pimydoc string
+
+        RETURNED VALUE: (str)a simple Python string
+    """
+    # let's remove the first line, e.g.
+    #    "(pimy doc)doc title"
+    return "\n".join(line for line in source.split("\n") if line.strip())
 
 
 def shortenedstr(string,
