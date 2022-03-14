@@ -80,6 +80,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-355    
+
+Fixed issue #25: missing msginfo("About --exportreport") in wisteria.py (in D01)
+
+    * Fixed issue #25: missing msginfo("About --exportreport") in wisteria.py (in D01)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-354
 
 Fixed issue #21: improved pimydocstr2str() so that messages are now much more
@@ -89,8 +98,8 @@ readable.
       readable.
 
     * tests: 7 tests ok out of 7
-    * Pylint: 10/10
-    
+    * Pylint: 10/10    
+        
 [DONE] task-353
 
 Fixed issue #24: msgwarning() messages can't be read due to wrong colors choice

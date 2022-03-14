@@ -994,6 +994,7 @@ def exit_handler():
     else:
         msgerror("(ERRORID050) An error occured "
                  f"while reading --exportreport string '{ARGS.exportreport}'.")
+        msginfo("About --exportreport:")
         msginfo(help_cmdline_exportreport(details=True))
 
     # =============================================================================
