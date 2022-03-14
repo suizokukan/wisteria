@@ -275,6 +275,7 @@ STR2REPORTSECTION_KEYS = (
     'B2',
     'B2a',
     'B2b',
+    'B3',
     'C',
     'C1',
     'C1a',

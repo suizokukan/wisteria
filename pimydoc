@@ -275,6 +275,7 @@ computing the result, which is unpleasant to see.
   - B2      : full details (data objects)
     . B2a   : full details: data object * serializer
     . B2b   : full details: data objects
+  - B3      : encoded string of all data objects and of all serializers
 * C         : conclusions
   - C1      : conclusion: data objects handled/not handled by the serializer(s)
     . C1a   : conclusion: data objects handled by the serializer(s)

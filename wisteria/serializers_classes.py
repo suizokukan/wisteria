@@ -180,13 +180,14 @@ class SerializationResult:
         _______________________________________________________________________
 
         instance attributes:
-        o  (bool)  encoding_success
-        o  (float) encoding_time
-        o  (int)   encoding_strlen
-        o  (bool)  decoding_success
-        o  (float) decoding_time
-        o  (bool)  reversibility
-        o  (int)   mem_usage
+        o  (str|bytes)   encoded_object
+        o  (bool)        encoding_success
+        o  (float)       encoding_time
+        o  (int)         encoding_strlen
+        o  (bool)        decoding_success
+        o  (float)       decoding_time
+        o  (bool)        reversibility
+        o  (int)         mem_usage
 
         methods:
 
@@ -200,14 +201,16 @@ class SerializationResult:
 
             ARGUMENTS:
 
-            o  (bool)  encoding_success
-            o  (float) encoding_time
-            o  (int)   encoding_strlen
-            o  (bool)  decoding_success
-            o  (float) decoding_time
-            o  (bool)  reversibility
-            o  (int)   mem_usage
+            o  (str|bytes) encoded_object
+            o  (bool)      encoding_success
+            o  (float)     encoding_time
+            o  (int)       encoding_strlen
+            o  (bool)      decoding_success
+            o  (float)     decoding_time
+            o  (bool)      reversibility
+            o  (int)       mem_usage
         """
+        self.encoded_object = None
         self.encoding_success = False
         self.encoding_time = None
         self.encoding_strlen = None
@@ -220,7 +223,8 @@ class SerializationResult:
         """
             SerializationResult.__repr__()
         """
-        return f"{self.encoding_success=}; {self.encoding_time=}; {self.encoding_strlen=}; " \
+        return f"{self.encoded_object=}; {self.encoding_success=}; {self.encoding_time=}; " \
+            "{self.encoding_strlen=}; " \
             f"{self.decoding_success=}; {self.decoding_time=}; {self.reversibility=}; " \
             f"{self.mem_usage=}"
 

@@ -80,6 +80,18 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-349
+
+Fixed issue #17: new report section (B3) giving the encoded string for every
+data object.
+
+    * Fixed issue #17: new report section (B3) giving the encoded string for
+      every data object.
+    * Updated documentation in README.md and pimydoc about B3 section
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-348
 
 Fixed issue #20: improved report titles A2 and A3.

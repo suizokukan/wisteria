@@ -227,6 +227,10 @@ that contain the special TIMESTAMP string (replaced by int(time.time())):
 
     which will be create a file named (e.g.) `myreportfile_1635672267.any`
 
+You just want to see what the encoded string look like:
+
+    --cmp="all" --report="titles;B3"
+
 ```
 (pimydoc)command line help for --filter(full version)    
 ⋅The --filter argument allows to select only some serializers or

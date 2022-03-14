@@ -43,6 +43,7 @@
     o  report_section_b1d(results, s1s2d)
     o  report_section_b2a(results, s1s2d)
     o  report_section_b2b(results, s1s2d)
+    o  report_section_b3(results, s1s2d)
     o  report_section_c1a(results, s1s2d)
     o  report_section_c1b(results, s1s2d)
     o  report_section_c2a(results, s1s2d)
@@ -477,6 +478,7 @@ def report_section_a1(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -544,6 +546,7 @@ def report_section_a2(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -601,6 +604,7 @@ def report_section_a3(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -659,6 +663,7 @@ def report_section_a4(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -726,6 +731,7 @@ def report_section_a5(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -798,6 +804,7 @@ def report_section_b1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -894,6 +901,7 @@ def report_section_b1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -971,6 +979,7 @@ def report_section_b1c(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1049,6 +1058,7 @@ def report_section_b1d(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1119,6 +1129,7 @@ def report_section_b2a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1215,6 +1226,7 @@ def report_section_b2b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1275,6 +1287,76 @@ def report_section_b2b(results,
     msgreport()
 
 
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+#   pylint: disable=unused-argument
+def report_section_b3(results,
+                      s1s2d):
+    """
+        report_section_b3()
+
+        Sub-function of report() for report section "B2b"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A1      : options used to create reports
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
+        ⋅  - A4      : list of the planned transcodings
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
+                  )
+    """
+    if "titles;" in wisteria.globs.ARGS.report:
+        msgreporttitle("(B3) Encoded String for all Data Objects, for all Serializers")
+
+    for (serializer,
+         data_name,
+         fingerprint) in wisteria.globs.PLANNED_TRANSCODINGS:
+        msgreport(f"o  '{serializer}' x '{data_name}' [{fingerprint}]")
+
+        if serializer not in results or \
+           data_name not in results[serializer]:
+            msgreport("   o  NOT COMPUTED")
+        elif not results[serializer][data_name].encoding_success:
+            msgreport("   o  this object could not be successfully encoded")
+        else:
+            msgreport(f"   o  type: {type(results[serializer][data_name].encoded_object).__name__}")
+            msgreport(f"   o  len:  {len(results[serializer][data_name].encoded_object)}")
+            msgreport(f"   o  repr: {repr(results[serializer][data_name].encoded_object)}")
+        msgreport()
+
+
 def report_section_c1a(results,
                        s1s2d):
     """
@@ -1297,6 +1379,7 @@ def report_section_c1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1421,6 +1504,7 @@ def report_section_c1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1544,6 +1628,7 @@ def report_section_c2a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -1633,6 +1718,7 @@ def report_section_c2b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -2203,6 +2289,7 @@ def report_section_c2c(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -2265,6 +2352,7 @@ def report_section_d1a(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -2322,6 +2410,7 @@ def report_section_d1b(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -2379,6 +2468,7 @@ def report_section_graphs(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
@@ -2472,7 +2562,8 @@ STR2REPORTSECTION = {
               report_section_b1c,
               report_section_b1d,
               report_section_b2a,
-              report_section_b2b,),
+              report_section_b2b,
+              report_section_b3,),
         "B1": (report_section_b1a,
                report_section_b1b,
                report_section_b1c,
@@ -2485,6 +2576,7 @@ STR2REPORTSECTION = {
                report_section_b2b,),
         "B2a": (report_section_b2a,),
         "B2b": (report_section_b2b,),
+        "B3": (report_section_b3,),
         "C": (report_section_c1a,
               report_section_c1b,
               report_section_c2a,
@@ -2532,6 +2624,7 @@ def report(results,
         ⋅  - B2      : full details (data objects)
         ⋅    . B2a   : full details: data object * serializer
         ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
         ⋅* C         : conclusions
         ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
         ⋅    . C1a   : conclusion: data objects handled by the serializer(s)

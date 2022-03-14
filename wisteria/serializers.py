@@ -286,17 +286,17 @@ def serializer_iaswn(action="serialize",
 
     _error = False
     try:
-        _res = module.encode(obj)
+        res.encoded_object = module.encode(obj)
         _timeit = timeit.Timer('module.encode(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except module.IaswnError as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -316,23 +316,23 @@ def serializer_iaswn(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.decode(_res)
+            _decodedobj = module.decode(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.decode(_res)",
+            _timeit = timeit.Timer("module.decode(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except module.IaswnError as error:
@@ -425,17 +425,17 @@ def serializer_json(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj)
+        res.encoded_object = module.dumps(obj)
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except TypeError as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -455,23 +455,23 @@ def serializer_json(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res)
+            _decodedobj = module.loads(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (TypeError, AttributeError) as error:
@@ -564,17 +564,17 @@ def serializer_jsonpickle(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj)
+        res.encoded_object = module.dumps(obj)
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except TypeError as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -594,22 +594,22 @@ def serializer_jsonpickle(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res)
+            _decodedobj = module.loads(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (TypeError, AttributeError) as error:
@@ -703,17 +703,17 @@ def serializer_jsonpickle_keystrue(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj, keys=True)
+        res.encoded_object = module.dumps(obj, keys=True)
         _timeit = timeit.Timer('module.dumps(obj, keys=True)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except TypeError as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -733,23 +733,23 @@ def serializer_jsonpickle_keystrue(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res, keys=True)
+            _decodedobj = module.loads(res.encoded_object, keys=True)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res, keys=True)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object, keys=True)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (TypeError, AttributeError) as error:
@@ -843,17 +843,17 @@ def serializer_marshal(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj)
+        res.encoded_object = module.dumps(obj)
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (TypeError, ValueError) as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -873,23 +873,23 @@ def serializer_marshal(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res)
+            _decodedobj = module.loads(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (TypeError, AttributeError) as error:
@@ -983,17 +983,17 @@ def serializer_pickle(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj)
+        res.encoded_object = module.dumps(obj)
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (AttributeError, TypeError) as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1013,23 +1013,23 @@ def serializer_pickle(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res)
+            _decodedobj = module.loads(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (TypeError, AttributeError) as error:
@@ -1123,17 +1123,17 @@ def serializer_pyyaml(action="serialize",
 
     _error = False
     try:
-        _res = module.dump(obj, Dumper=module.Dumper)
+        res.encoded_object = module.dump(obj, Dumper=module.Dumper)
         _timeit = timeit.Timer('module.dump(obj, Dumper=module.Dumper)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (ValueError, TypeError) as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1153,23 +1153,23 @@ def serializer_pyyaml(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.load(_res, Loader=module.Loader)
+            _decodedobj = module.load(res.encoded_object, Loader=module.Loader)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.load(_res, Loader=module.Loader)",
+            _timeit = timeit.Timer("module.load(res.encoded_object, Loader=module.Loader)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (module.constructor.ConstructorError, ValueError) as error:
@@ -1263,17 +1263,17 @@ def serializer_simpleion(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj)
+        res.encoded_object = module.dumps(obj)
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (AssertionError, AttributeError, ValueError, TypeError) as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1293,23 +1293,23 @@ def serializer_simpleion(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res)
+            _decodedobj = module.loads(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (ValueError,) as error:
@@ -1403,17 +1403,17 @@ def serializer_yajl(action="serialize",
 
     _error = False
     try:
-        _res = module.dumps(obj)
+        res.encoded_object = module.dumps(obj)
         _timeit = timeit.Timer('module.dumps(obj)',
                                globals=locals())
         res.encoding_success = True
-        res.encoding_strlen = _len(_res)
+        res.encoding_strlen = _len(res.encoded_object)
         res.encoding_time = _timeit.timeit(TIMEITNUMBER)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
                 f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
-                f"encoded string=({type(_res)}) '{_res}'")
+                f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (ValueError, TypeError, SystemError) as error:
         if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
@@ -1433,23 +1433,23 @@ def serializer_yajl(action="serialize",
 
     if not _error:
         try:
-            _res2 = module.loads(_res)
+            _decodedobj = module.loads(res.encoded_object)
             res.decoding_success = True  # True because not exception was raised.
-            _timeit = timeit.Timer("module.loads(_res)",
+            _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
             res.decoding_time = _timeit.timeit(TIMEITNUMBER)
 
-            if obj == _res2:
+            if obj == _decodedobj:
                 res.reversibility = True
             if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _res2) "
-                         f"is {res.reversibility} ({obj=}; {_res2=};)")
+                msgdebug(f"[{fingerprint}] res.reversibility (first part:obj == _decodedobj) "
+                         f"is {res.reversibility} ({obj=}; {_decodedobj=};)")
             if res.reversibility and works_as_expected:
                 res.reversibility = res.reversibility and works_as_expected(data_name=obj_data_name,
-                                                                            obj=_res2)
+                                                                            obj=_decodedobj)
                 if not strictmute and wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                     msgdebug(f"[{fingerprint}] res.reversibility "
-                             f"(second part:works_as_expected(_res2)) "
+                             f"(second part:works_as_expected(_decodedobj)) "
                              f"is {res.reversibility}.")
 
         except (ValueError, SystemError) as error:
