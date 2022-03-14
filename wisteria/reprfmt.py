@@ -127,7 +127,6 @@ def fmt_debug(msg):
     return "\n".join("@ "+line for line in msg.split("\n"))
 
 
-
 def fmt_error(msg):
     """
         fmt_error()

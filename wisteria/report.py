@@ -569,7 +569,7 @@ def report_section_a2(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A2) List of Serializers to Be Used")
+        msgreporttitle("(A2) List of Serializers to Be Used Because they have been Selected")
         msgreport()
     partial_report__serializers(show_all_serializers=False,
                                 show_planned_serializers=True)
@@ -626,7 +626,7 @@ def report_section_a3(results,
                   )
     """
     if "titles;" in wisteria.globs.ARGS.report:
-        msgreporttitle("(A3) List of Data Objects Because they have been Selected")
+        msgreporttitle("(A3) List of Data Objects to Be Used Because they have been Selected")
         msgreport()
 
     partial_report__data(show_all_data=False,

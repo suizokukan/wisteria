@@ -80,6 +80,16 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-348
+
+Fixed issue #20: improved report titles A2 and A3.
+
+    * fixed issue #20: improved report titles A2 and A3.
+    * fixed extra blank line in reprfmt.py
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-347
 
 Fixed a bug in reprfmt.py::fmt_[critical|debug|info]: the special character
