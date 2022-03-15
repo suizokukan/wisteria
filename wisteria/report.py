@@ -68,7 +68,6 @@ from wisteria.globs import UNITS
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import DEBUG_CONSOLEWIDTH
-from wisteria.globs import GRAPHS_DESCRIPTION
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
@@ -79,6 +78,7 @@ from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
 from wisteria.matplotgraphs import hbar2png
 from wisteria.cwc.cwc_utils import select__works_as_expected__function
+from wisteria.helpmsg import help_cmdline_output
 
 
 def cmpdata2phrase(cmpdata):
@@ -192,11 +192,25 @@ def open_reportfile(mode=None):
 
         ARGUMENT: (None|str)mode: 'r', 'w'... if None, will be wisteria.globs.OUTPUT[2]
 
-        RETURNED RESULT: the report file descriptor
+        RETURNED RESULT: (the report file descriptor or None if an error occured,
+                          the (str)path to the report file or None if an error occured)
     """
-    if mode is None:
-        mode = wisteria.globs.OUTPUT[2]
-    return open(wisteria.globs.OUTPUT[3], mode, encoding="utf-8")
+    try:
+        if mode is None:
+            mode = wisteria.globs.OUTPUT[2]
+        # pylint: disable=consider-using-with
+        #  this object will be closed by exit_handler()
+        obj = open(wisteria.globs.OUTPUT[3], mode, encoding="utf-8")
+        return obj, os.path.dirname(obj.name)
+    except FileNotFoundError as err:
+        # a special case: we can't use here msgerror() since there's no report file.
+        print(f"(ERRORID053) Can't open/create report file '{wisteria.globs.OUTPUT[3]}' "
+              f"('{normpath(wisteria.globs.OUTPUT[3])}')"
+              f" with opening mode='{mode}'; "
+              f"error message is: {err} .")
+        print("About --ouptput:")
+        print(help_cmdline_output(details=True))
+        return None, None
 
 
 def ratio2phrase(ratio,
@@ -2546,7 +2560,12 @@ def report_section_graphs(results,
     # ⋅- (str)unit        : x unit
     # ⋅- (str)title       : graph title
     # ⋅- (str)filename    : file name to be written
-    for (attribute, fmtstring, value_coeff, unit, title, filename) in GRAPHS_DESCRIPTION:
+    for (attribute,
+         fmtstring,
+         value_coeff,
+         unit,
+         title,
+         filename) in wisteria.globs.GRAPHS_DESCRIPTION:
         if results.hall_without_none_for_attribute(attribute):
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"About to create a new graph named '{filename}' ({normpath(filename)}).")

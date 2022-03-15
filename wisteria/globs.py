@@ -36,10 +36,6 @@
     o  DEFAULT_CONFIGFILE_NAME
     o  DEFAULT_CONFIGFILE_URL
 
-    o  DEFAULT_EXPORTREPORT_FILENAME
-
-    o  DEFAULT_REPORTFILE_NAME
-
     o  FILECONSOLE
     o  FILECONSOLE_FILEOBJECT
 
@@ -55,6 +51,8 @@
 
     o  REGEX_CMP
     o  REGEX_CMP__HELP
+
+    o  REPORTFILE_PATH
 
     o  REPORT_SHORTCUTS
 
@@ -76,13 +74,23 @@
     o  VERBOSITY_DEBUG
 
 
-
 The following variables depend on previously defined variables,
 hence their location at the end of this list:
 
+    o  DEFAULT_EXPORTREPORT_FILENAME
+           (initialized by get_default_exportreport_filename())
+    o  DEFAULT_REPORTFILE_NAME
+           (initialized by get_default_reportfile_name())
     o  GRAPHS_FILENAME
+           (initialized by get_graphs_filename())
     o  GRAPHS_DESCRIPTION
+           (initialized by get_graphs_description())
+
+
+    Function used to create exportreport file name:
+    o  get_exportreport_filename(basename)
 """
+import os.path
 import re
 
 
@@ -146,11 +154,6 @@ DEBUG_CONSOLEWIDTH = 70
 DEFAULT_CONFIGFILE_NAME = "wisteria.ini"
 # url of the default config file:
 DEFAULT_CONFIGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
-
-# default filename for --exportreport
-DEFAULT_EXPORTREPORT_FILENAME = "report.md"
-
-DEFAULT_REPORTFILE_NAME = "report.txt"
 
 # value: rich.console.Console(file=...)
 FILECONSOLE = None
@@ -218,6 +221,9 @@ REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"(\s*\((?P<cmpdata>all|cwc|allbutcwc|ini)\))?\s*$")
 # string used by --help
 REGEX_CMP__HELP = "all|serializer1[vs all|serializer2][(cwc|allbutcwc|ini|all)]"
+
+# File to report path
+REPORTFILE_PATH = "."
 
 # REPORT_SHORTCUTS has two goals:
 # (1) it translates a simple, human-readable string into a list of section parts
@@ -315,9 +321,95 @@ VERBOSITY_DEBUG = 3
 # hence their location at the end of this list.
 #
 # =============================================================================
+def get_default_exportreport_filename():
+    """
+        get_default_exportreport_filename()
 
-# name of the graphs file
-GRAPHS_FILENAME = "report__SUFFIX__.png"
+        Return the value expected for DEFAULT_EXPORTREPORT_FILENAME
+        _______________________________________________________________________
+
+        RETURNED VALUE: (str)a value for DEFAULT_EXPORTREPORT_FILENAME
+    """
+    return os.path.join(REPORTFILE_PATH, "exportreport.md")
+
+
+def get_default_reportfile_name():
+    """
+        get_default_reportfile_name()
+
+        Return the value expected for DEFAULT_REPORTFILE_NAME
+        _______________________________________________________________________
+
+        RETURNED VALUE: (str)a value for DEFAULT_REPORTFILE_NAME
+    """
+    return os.path.join(REPORTFILE_PATH, "report.txt")
+
+
+def get_exportreport_filename(basename):
+    """
+        get_exportreport_filename()
+
+        Return the value expected for the exportreport file.
+        _______________________________________________________________________
+
+        PARAMETER: (str)the basename of the exportreport file.
+
+        RETURNED VALUE: (str)a value for exportreport file.
+    """
+    return os.path.join(REPORTFILE_PATH,
+                        basename)
+
+
+def get_graphs_filename():
+    """
+        get_graphs_filename()
+
+        Return the value expected for GRAPHS_FILENAME
+        _______________________________________________________________________
+
+        RETURNED VALUE: (str)a value for GRAPHS_FILENAME
+    """
+    return os.path.join(REPORTFILE_PATH, "report__SUFFIX__.png")
+
+
+def get_graphs_description():
+    """
+        get_graphs_description()
+
+        Return the value expected for GRAPHS_DESCRIPTION
+        _______________________________________________________________________
+
+        RETURNED VALUE: (tupl)a value for GRAPHS_DESCRIPTION
+
+            (pimydoc)GRAPHS_DESCRIPTION format
+            ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+            ⋅report; each description is passed to hbar2png(). Note that
+            ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
+            ⋅
+            ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+            ⋅- (str)fmtstring   : format string to be applied to each value when printed
+            ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
+            ⋅- (int)value_coeff : each value will be multiplied by this number
+            ⋅- (str)unit        : x unit
+            ⋅- (str)title       : graph title
+            ⋅- (str)filename    : file name to be written
+    """
+    return (('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
+            ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
+            ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
+            ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
+             GRAPHS_FILENAME.replace("__SUFFIX__", "4")),)
+
+
+DEFAULT_EXPORTREPORT_FILENAME = get_default_exportreport_filename()
+DEFAULT_REPORTFILE_NAME = get_default_reportfile_name()
+
+# generic name for graphs filenames:
+#   'generic' since this string contains a '__SUFFIX__' substring to be replaced.
+GRAPHS_FILENAME = get_graphs_filename()
 
 # (pimydoc)GRAPHS_DESCRIPTION format
 # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
@@ -331,11 +423,4 @@ GRAPHS_FILENAME = "report__SUFFIX__.png"
 # ⋅- (str)unit        : x unit
 # ⋅- (str)title       : graph title
 # ⋅- (str)filename    : file name to be written
-GRAPHS_DESCRIPTION = (('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
-                      GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
-                      ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
-                       GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
-                      ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
-                       GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
-                      ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
-                       GRAPHS_FILENAME.replace("__SUFFIX__", "4")),)
+GRAPHS_DESCRIPTION = get_graphs_description()

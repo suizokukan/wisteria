@@ -80,6 +80,32 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-358
+
+Fixed issue #16: --output should define the target path for report files.
+REPORTFILE_PATH is initialized from --output 'reportfile=path/myreportfile'
+
+    * fixed issue #16: --output should define the target path for report files.
+      REPORTFILE_PATH is initialized from --output 'reportfile=path/myreportfile'
+    * new constants in globs.py: REPORTFILE_PATH, GRAPHS_FILENAME, GRAPHS_DESCRIPTION
+    * new functions in globs.py:
+        - get_default_exportreport_filename()
+        - get_default_reportfile_name()
+        - get_exportreport_filename()
+        - get_graphs_filename()
+        - get_graphs_description()
+    * --output help message is now based on a call to
+      help_cmdline_output().
+    * new function in helpmsg.py: help_cmdline_output()
+    * modified open_reportfile() which now returns a tuple of 2 values
+      (opened object, path to this object) and which catch the FileNotFoundError
+      exception
+    * new exit code (#6)
+    * updated documentation (pimydoc, README.md, __init__.py)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-357
 
     * fixed issue #10 (`incoherent C2c`) and issue #5 (`seems to consume memory`)

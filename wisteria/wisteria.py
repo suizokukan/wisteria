@@ -33,7 +33,7 @@
     ⋅- (B/03) wisteria.globs.ARGS initialization
     ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
     ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-    ⋅- (B/06) reportfile opening
+    ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
     ⋅- (B/07) msgxxx() functions can be used
     ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
     ⋅- (B/09) project name & version
@@ -82,6 +82,7 @@
     ⋅*    3: error, ill-formed --output string
     ⋅*    4: error, missing required module
     ⋅*    5: error: an inconsistency between the data has been detected
+    ⋅*    6: error: can't open/create report file
     ⋅*  100: internal error, data can't be loaded
     ⋅*  101: internal error, an error occured while computing the results
     ⋅*  102: internal error, an error occured in main()
@@ -115,7 +116,7 @@ import sys
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -152,14 +153,13 @@ import sys
 from wisteria.utils import normpath, get_python_version
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_helpcommandlineargument
-from wisteria.helpmsg import help_cmdline_filter, help_cmdline_exportreport
+from wisteria.helpmsg import help_cmdline_filter, help_cmdline_exportreport, help_cmdline_output
 from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import REGEX_CMP__HELP
 from wisteria.globs import DEFAULT_CONFIGFILE_NAME
 from wisteria.globs import STR2REPORTSECTION_KEYS
-from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 
 # =============================================================================
 # (A/01) command line parsing
@@ -174,7 +174,7 @@ from wisteria.globs import GRAPHS_DESCRIPTION, DEFAULT_EXPORTREPORT_FILENAME
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -290,29 +290,31 @@ PARSER.add_argument(
     help="Display informations about the current machine and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
-# (pimydoc)report filename format
-# ⋅* either a simple string like 'report.txt'
-# ⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
-# ⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
-# ⋅  e.g. "report_DATETIME.txt" would become something like
-# ⋅       "report_2021-12-31.23.59.59.txt"
-# ⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
-# ⋅  be replaced by str(int(time.time()))
+# (pimydoc)command line help for --output(full version)
+# ⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+# ⋅
+# ⋅* 'console':
+# ⋅  - 'console' : if you want to write output messages to the console
+# ⋅
+# ⋅* 'reportfile='
+# ⋅  - either a simple string like 'report.txt'
+# ⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+# ⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
 # ⋅    e.g. "report_DATETIME.txt" would become something like
-# ⋅         "report_1635672267.txt"
+# ⋅         "report_2021-12-31.23.59.59.txt"
+# ⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+# ⋅    be replaced by str(int(time.time()))
+# ⋅      e.g. "report_DATETIME.txt" would become something like
+# ⋅           "report_1635672267.txt"
+# ⋅
+# ⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+# ⋅exist you can't write:
+# ⋅     --output="console;reportfile/w=path/myreportfile"
 PARSER.add_argument(
     '--output',
     action='store',
     default=f'console;reportfile/w={DEFAULT_REPORTFILE_NAME}',
-    help="Values are 'console' or 'reportfile' or 'console;reportfile'. "
-    "Instead of 'reportfile' "
-    "you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode). "
-    "You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name "
-    "in order to add a timestamp in the filename. "
-    "Instead of 'reportfile' "
-    "you may specify 'reportfile=myreportfile'. "
-    f"Combinations like 'reportfile/w={DEFAULT_REPORTFILE_NAME}' are accepted. "
-    "See by example the default value.")
+    help=help_cmdline_output())
 
 PARSER.add_argument(
     '--report',
@@ -361,7 +363,7 @@ ARGS = PARSER.parse_args()
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -419,6 +421,7 @@ if MISSING_REQUIRED_MODULES:
     # ⋅*    3: error, ill-formed --output string
     # ⋅*    4: error, missing required module
     # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
     # ⋅*  100: internal error, data can't be loaded
     # ⋅*  101: internal error, an error occured while computing the results
     # ⋅*  102: internal error, an error occured in main()
@@ -449,6 +452,9 @@ from wisteria.cmdline_cmp import read_cmpstring  # noqa
 from wisteria.cmdline_mymachine import mymachine  # noqa
 from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
 from wisteria.serializers import func_serialize  # noqa
+from wisteria.globs import get_graphs_filename, get_graphs_description  # noqa
+from wisteria.globs import get_exportreport_filename, get_default_exportreport_filename  # noqa
+from wisteria.globs import get_default_reportfile_name  # noqa
 
 
 # =============================================================================
@@ -464,7 +470,7 @@ from wisteria.serializers import func_serialize  # noqa
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -508,7 +514,7 @@ wisteria.globs.ARGS = ARGS
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -561,7 +567,7 @@ if len(sys.argv) == 1:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -628,6 +634,7 @@ else:
         # ⋅*    3: error, ill-formed --output string
         # ⋅*    4: error, missing required module
         # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*    6: error: can't open/create report file
         # ⋅*  100: internal error, data can't be loaded
         # ⋅*  101: internal error, an error occured while computing the results
         # ⋅*  102: internal error, an error occured in main()
@@ -639,14 +646,49 @@ else:
         wisteria.globs.RICHCONSOLE = rich.console.Console()
 
 # =============================================================================
-# (B/06) reportfile opening
+# (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # =============================================================================
 # It would be great to use something like:
 #   with open(...) as wisteria.globs.FILECONSOLE_FILEOBJECT:
 # but it's not possible here. Please notice that we check the closing of this
 # file in exit handler.
 #   pylint: disable=consider-using-with
-wisteria.globs.FILECONSOLE_FILEOBJECT = open_reportfile()
+wisteria.globs.FILECONSOLE_FILEOBJECT, wisteria.globs.REPORTFILE_PATH = open_reportfile()
+# what follows depends on wisteria.globs.REPORTFILE_PATH:
+wisteria.globs.DEFAULT_REPORTFILE_NAME = get_default_reportfile_name()
+wisteria.globs.GRAPHS_FILENAME = get_graphs_filename()
+wisteria.globs.GRAPHS_DESCRIPTION = get_graphs_description()
+wisteria.globs.DEFAULT_EXPORTREPORT_FILENAME = get_default_exportreport_filename()
+
+
+if wisteria.globs.FILECONSOLE_FILEOBJECT is None:
+    # (pimydoc)exit codes
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(6)
+
 wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOLE_FILEOBJECT)
 
 
@@ -663,7 +705,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -705,7 +747,7 @@ wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOL
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -780,6 +822,7 @@ if not check_str2reportsection_keys():
     # ⋅*    3: error, ill-formed --output string
     # ⋅*    4: error, missing required module
     # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
     # ⋅*  100: internal error, data can't be loaded
     # ⋅*  101: internal error, an error occured while computing the results
     # ⋅*  102: internal error, an error occured in main()
@@ -800,7 +843,7 @@ if not check_str2reportsection_keys():
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -845,7 +888,7 @@ if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -909,7 +952,7 @@ if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -958,33 +1001,32 @@ def exit_handler():
     # ⋅  Please note that graphs will not be added to the exported file if
     # ⋅  --checkup/--downloadconfigfile/--mymachine is set.
     # =============================================================================
-    if wisteria.globs.ARGS.exportreport == "no export":
+    exportreport = wisteria.globs.ARGS.exportreport
+    if exportreport == "no export":
         pass
-    elif wisteria.globs.ARGS.exportreport.startswith("md"):
+    elif exportreport.startswith("md"):
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug("(exit_handler/exported report) about to create 'md' exported report.")
 
-        if "=" not in wisteria.globs.ARGS.exportreport:
-            exportreport_filename = DEFAULT_EXPORTREPORT_FILENAME
+        if "=" not in exportreport:
+            # ---- default name for the exportreport file ----
+            exportreport_filename = wisteria.globs.DEFAULT_EXPORTREPORT_FILENAME
             if ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(
                     "(exit_handler/exported report) exported report will be named, by default, "
                     f"'{exportreport_filename}' .")
         else:
+            # ---- name as read in ARGS.exportreport ----
             exportreport_filename = \
-                wisteria.globs.ARGS.exportreport[wisteria.globs.ARGS.exportreport.index("=")+1:]
+                get_exportreport_filename(basename=exportreport[exportreport.index("=")+1:])
+
             if ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug("(exit_handler/exported report) exported report will be named "
                          f"'{exportreport_filename}' .")
 
-        # wisteria being a Python3.8+ project, no parenthesized context managers is available.
-        # I can't write:
-        #      with (open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile,
-        #           open_reportfile(mode="r") as reportfile)
-        with \
-            open(exportreport_filename, "w", encoding="utf-8") as exportedreportfile, \
-            open_reportfile(mode="r") as reportfile:  # noqa
-
+        exportedreportfile = open(exportreport_filename, "w", encoding="utf-8")
+        reportfile = open_reportfile(mode="r")[0]  # open_reportfile() returns (object, path)
+        with exportedreportfile, reportfile:
             # ---- (1/2) exported report: text --------------------------------
             exportedreportfile.write("```\n")
             for line in reportfile.readlines():
@@ -1008,7 +1050,7 @@ def exit_handler():
                 # ⋅- (str)unit        : x unit
                 # ⋅- (str)title       : graph title
                 # ⋅- (str)filename    : file name to be written
-                for _, _, _, _, title, filename in GRAPHS_DESCRIPTION:
+                for _, _, _, _, title, filename in wisteria.globs.GRAPHS_DESCRIPTION:
                     if not os.path.exists(filename):
                         msgwarning("(exit_handler/exported report) "
                                    f"Didn't add '{filename}' to exported report file "
@@ -1081,7 +1123,7 @@ atexit.register(exit_handler)
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1125,7 +1167,7 @@ wisteria.serializers.init_serializers()
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1174,7 +1216,7 @@ if not os.path.exists(TMPFILENAME):
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1218,7 +1260,7 @@ wisteria.data.init_data()
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1443,6 +1485,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅*    3: error, ill-formed --output string
     # ⋅*    4: error, missing required module
     # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
     # ⋅*  100: internal error, data can't be loaded
     # ⋅*  101: internal error, an error occured while computing the results
     # ⋅*  102: internal error, an error occured in main()
@@ -1463,7 +1506,7 @@ if wisteria.globs.ARGS.checkup:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1518,6 +1561,7 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅*    3: error, ill-formed --output string
     # ⋅*    4: error, missing required module
     # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
     # ⋅*  100: internal error, data can't be loaded
     # ⋅*  101: internal error, an error occured while computing the results
     # ⋅*  102: internal error, an error occured in main()
@@ -1538,7 +1582,7 @@ if wisteria.globs.ARGS.mymachine:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1588,6 +1632,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅*    3: error, ill-formed --output string
     # ⋅*    4: error, missing required module
     # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
     # ⋅*  100: internal error, data can't be loaded
     # ⋅*  101: internal error, an error occured while computing the results
     # ⋅*  102: internal error, an error occured in main()
@@ -1608,7 +1653,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
 # ⋅- (B/03) wisteria.globs.ARGS initialization
 # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
 # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-# ⋅- (B/06) reportfile opening
+# ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # ⋅- (B/07) msgxxx() functions can be used
 # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 # ⋅- (B/09) project name & version
@@ -1665,6 +1710,7 @@ def main():
                 ⋅*    3: error, ill-formed --output string
                 ⋅*    4: error, missing required module
                 ⋅*    5: error: an inconsistency between the data has been detected
+                ⋅*    6: error: can't open/create report file
                 ⋅*  100: internal error, data can't be loaded
                 ⋅*  101: internal error, an error occured while computing the results
                 ⋅*  102: internal error, an error occured in main()
@@ -1686,7 +1732,7 @@ def main():
     # ⋅- (B/03) wisteria.globs.ARGS initialization
     # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
     # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-    # ⋅- (B/06) reportfile opening
+    # ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
     # ⋅- (B/07) msgxxx() functions can be used
     # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
     # ⋅- (B/09) project name & version
@@ -1733,7 +1779,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-        # ⋅- (B/06) reportfile opening
+        # ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -1790,6 +1836,7 @@ def main():
             # ⋅*    3: error, ill-formed --output string
             # ⋅*    4: error, missing required module
             # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*    6: error: can't open/create report file
             # ⋅*  100: internal error, data can't be loaded
             # ⋅*  101: internal error, an error occured while computing the results
             # ⋅*  102: internal error, an error occured in main()
@@ -1809,7 +1856,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-        # ⋅- (B/06) reportfile opening
+        # ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -1862,6 +1909,7 @@ def main():
                 # ⋅*    3: error, ill-formed --output string
                 # ⋅*    4: error, missing required module
                 # ⋅*    5: error: an inconsistency between the data has been detected
+                # ⋅*    6: error: can't open/create report file
                 # ⋅*  100: internal error, data can't be loaded
                 # ⋅*  101: internal error, an error occured while computing the results
                 # ⋅*  102: internal error, an error occured in main()
@@ -1890,6 +1938,7 @@ def main():
                 # ⋅*    3: error, ill-formed --output string
                 # ⋅*    4: error, missing required module
                 # ⋅*    5: error: an inconsistency between the data has been detected
+                # ⋅*    6: error: can't open/create report file
                 # ⋅*  100: internal error, data can't be loaded
                 # ⋅*  101: internal error, an error occured while computing the results
                 # ⋅*  102: internal error, an error occured in main()
@@ -1909,7 +1958,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-        # ⋅- (B/06) reportfile opening
+        # ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -1973,6 +2022,7 @@ def main():
             # ⋅*    3: error, ill-formed --output string
             # ⋅*    4: error, missing required module
             # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*    6: error: can't open/create report file
             # ⋅*  100: internal error, data can't be loaded
             # ⋅*  101: internal error, an error occured while computing the results
             # ⋅*  102: internal error, an error occured in main()
@@ -2001,6 +2051,7 @@ def main():
             # ⋅*    3: error, ill-formed --output string
             # ⋅*    4: error, missing required module
             # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*    6: error: can't open/create report file
             # ⋅*  100: internal error, data can't be loaded
             # ⋅*  101: internal error, an error occured while computing the results
             # ⋅*  102: internal error, an error occured in main()
@@ -2028,6 +2079,7 @@ def main():
             # ⋅*    3: error, ill-formed --output string
             # ⋅*    4: error, missing required module
             # ⋅*    5: error: an inconsistency between the data has been detected
+            # ⋅*    6: error: can't open/create report file
             # ⋅*  100: internal error, data can't be loaded
             # ⋅*  101: internal error, an error occured while computing the results
             # ⋅*  102: internal error, an error occured in main()
@@ -2053,7 +2105,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-        # ⋅- (B/06) reportfile opening
+        # ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -2099,7 +2151,7 @@ def main():
         # ⋅- (B/03) wisteria.globs.ARGS initialization
         # ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
         # ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-        # ⋅- (B/06) reportfile opening
+        # ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
         # ⋅- (B/07) msgxxx() functions can be used
         # ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
         # ⋅- (B/09) project name & version
@@ -2150,6 +2202,7 @@ def main():
         # ⋅*    3: error, ill-formed --output string
         # ⋅*    4: error, missing required module
         # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*    6: error: can't open/create report file
         # ⋅*  100: internal error, data can't be loaded
         # ⋅*  101: internal error, an error occured while computing the results
         # ⋅*  102: internal error, an error occured in main()
@@ -2181,6 +2234,7 @@ def main():
         # ⋅*    3: error, ill-formed --output string
         # ⋅*    4: error, missing required module
         # ⋅*    5: error: an inconsistency between the data has been detected
+        # ⋅*    6: error: can't open/create report file
         # ⋅*  100: internal error, data can't be loaded
         # ⋅*  101: internal error, an error occured while computing the results
         # ⋅*  102: internal error, an error occured in main()

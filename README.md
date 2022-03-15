@@ -232,13 +232,50 @@ You just want to see what the encoded string look like:
     --cmp="all" --report="titles;B3"
 
 ```
-(pimydoc)command line help for --filter(full version)    
+(pimydoc)command line help for --exportreport(full version)
+⋅Export report by creating a new file in which
+⋅both report text and graphics are put together.
+⋅- default value: "no export", i.e. no exported report file
+⋅- otherwise 'md' is the only value or the only acceptable start string
+⋅  since md format is the only known format for exported report;
+⋅  you may add the exported report filename after '=',
+⋅  e.g. 'md=myfile.md';
+⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+⋅  Please note that graphs will not be added to the exported file if
+⋅  --checkup/--downloadconfigfile/--mymachine is set.
+```
+
+```
+(pimydoc)command line help for --filter(full version)
 ⋅The --filter argument allows to select only some serializers or
 ⋅data objects. Currently only two values are accepted:
 ⋅* either a null string (--filter=""): all serializers/data objects are
 ⋅  used;
 ⋅* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
 ⋅  only the objects that can be successfully transcoded are kept;
+```
+
+```
+(pimydoc)command line help for --output(full version)
+⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+⋅
+⋅* 'console':
+⋅  - 'console' : if you want to write output messages to the console
+⋅
+⋅* 'reportfile='
+⋅  - either a simple string like 'report.txt'
+⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+⋅    e.g. "report_DATETIME.txt" would become something like
+⋅         "report_2021-12-31.23.59.59.txt"
+⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+⋅    be replaced by str(int(time.time()))
+⋅      e.g. "report_DATETIME.txt" would become something like
+⋅           "report_1635672267.txt"
+⋅
+⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+⋅exist you can't write:
+⋅     --output="console;reportfile/w=path/myreportfile"
 ```
 
 ```
@@ -937,16 +974,26 @@ dateutil (https://dateutil.readthedocs.io/en/stable/)
 A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.
 
 ```
-(pimydoc)report filename format
-⋅* either a simple string like 'report.txt'
-⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
-⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
-⋅  e.g. "report_DATETIME.txt" would become something like
-⋅       "report_2021-12-31.23.59.59.txt"
-⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
-⋅  be replaced by str(int(time.time()))
+(pimydoc)command line help for --output(full version)
+⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+⋅
+⋅* 'console':
+⋅  - 'console' : if you want to write output messages to the console
+⋅
+⋅* 'reportfile='
+⋅  - either a simple string like 'report.txt'
+⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
 ⋅    e.g. "report_DATETIME.txt" would become something like
-⋅         "report_1635672267.txt"
+⋅         "report_2021-12-31.23.59.59.txt"
+⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+⋅    be replaced by str(int(time.time()))
+⋅      e.g. "report_DATETIME.txt" would become something like
+⋅           "report_1635672267.txt"
+⋅
+⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+⋅exist you can't write:
+⋅     --output="console;reportfile/w=path/myreportfile"
 ```
 
 **Where is defined in the code the number of graphs?**
@@ -992,6 +1039,7 @@ See [classes.md](classes.md).
 ⋅*    3: error, ill-formed --output string
 ⋅*    4: error, missing required module
 ⋅*    5: error: an inconsistency between the data has been detected
+⋅*    6: error: can't open/create report file
 ⋅*  100: internal error, data can't be loaded
 ⋅*  101: internal error, an error occured while computing the results
 ⋅*  102: internal error, an error occured in main()

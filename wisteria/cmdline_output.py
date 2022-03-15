@@ -94,16 +94,26 @@ def parse_output_argument(output_string):
             # Should we replace special strings 'TIMESTAMP'/'DATETIME' (in <reportfile_name>)
             # by the expected string ?
             #
-            # (pimydoc)report filename format
-            # ⋅* either a simple string like 'report.txt'
-            # ⋅* either a string containing 'DATETIME'; in this case, 'DATETIME' will
-            # ⋅  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
-            # ⋅  e.g. "report_DATETIME.txt" would become something like
-            # ⋅       "report_2021-12-31.23.59.59.txt"
-            # ⋅* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
-            # ⋅  be replaced by str(int(time.time()))
+            # (pimydoc)command line help for --output(full version)
+            # ⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+            # ⋅
+            # ⋅* 'console':
+            # ⋅  - 'console' : if you want to write output messages to the console
+            # ⋅
+            # ⋅* 'reportfile='
+            # ⋅  - either a simple string like 'report.txt'
+            # ⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+            # ⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
             # ⋅    e.g. "report_DATETIME.txt" would become something like
-            # ⋅         "report_1635672267.txt"
+            # ⋅         "report_2021-12-31.23.59.59.txt"
+            # ⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+            # ⋅    be replaced by str(int(time.time()))
+            # ⋅      e.g. "report_DATETIME.txt" would become something like
+            # ⋅           "report_1635672267.txt"
+            # ⋅
+            # ⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+            # ⋅exist you can't write:
+            # ⋅     --output="console;reportfile/w=path/myreportfile"
             if 'DATETIME' in reportfile_name:
                 reportfile_name = reportfile_name.replace(
                     'DATETIME',

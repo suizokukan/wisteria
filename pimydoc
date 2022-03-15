@@ -24,8 +24,11 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)--cmp format
 ### (pimydoc)code structure
 ### (pimydoc)command line help for --exportreport(short version)
-### (pimydoc)command line help for --filter(full version)
+### (pimydoc)command line help for --exportreport(full version)
 ### (pimydoc)command line help for --filter(short version)
+### (pimydoc)command line help for --filter(full version)
+### (pimydoc)command line help for --output(short version)
+### (pimydoc)command line help for --output(full version)    
 ### (pimydoc)config file format
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
@@ -37,7 +40,6 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)OUTPUT format
 ### (pimydoc)PLANNED_TRANSCODINGS
 ### (pimydoc)progress bar
-### (pimydoc)report filename format
 ### (pimydoc)report sections
 ### (pimydoc)works_as_expected arguments and returned value
 
@@ -80,7 +82,7 @@ step B: initializations & --checkup
 - (B/03) wisteria.globs.ARGS initialization
 - (B/04) a special case: if no argument has been given, we explicit the default values
 - (B/05) --output string/OUTPUT+RICHCONSOLE init
-- (B/06) reportfile opening
+- (B/06) reportfile opening: update REPORTFILE_PATH & co.
 - (B/07) msgxxx() functions can be used
 - (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
 - (B/09) project name & version
@@ -129,6 +131,7 @@ both report text and graphics are put together.
   since md format;
   e.g. 'md=myfile.md';
   otherwise the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+### ===========================================================================    
 [(pimydoc)command line help for --filter(full version)]
 The --filter argument allows to select only some serializers or
 data objects. Currently only two values are accepted:
@@ -142,6 +145,38 @@ Filter out the data or the serializers to be used.
 format: either empty string if no filter,
 either 'data:oktrans_only' to only keep the objects that can be successfully
 transcoded
+### ==========================================================================
+[(pimydoc)command line help for --output(short version)]
+Values are 'console' or 'reportfile' or 'console;reportfile'.
+Instead of 'reportfile'
+you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode).
+You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name
+in order to add a timestamp in the filename.
+Instead of 'reportfile'
+you may specify 'reportfile=myreportfile'.
+Combinations like 'reportfile/w=DEFAULT_REPORTFILE_NAME' are accepted.
+See by example the default value.    
+### ==========================================================================    
+[(pimydoc)command line help for --output(full version)]
+A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+
+* 'console':
+  - 'console' : if you want to write output messages to the console
+
+* 'reportfile='
+  - either a simple string like 'report.txt'
+  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+    e.g. "report_DATETIME.txt" would become something like
+         "report_2021-12-31.23.59.59.txt"
+  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+    be replaced by str(int(time.time()))
+      e.g. "report_DATETIME.txt" would become something like
+           "report_1635672267.txt"
+
+BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+exist you can't write:
+     --output="console;reportfile/w=path/myreportfile"    
 ### ==========================================================================
 [(pimydoc)config file format]
 
@@ -224,6 +259,7 @@ and this project aims Windows/OSX systems.
 *    3: error, ill-formed --output string
 *    4: error, missing required module
 *    5: error: an inconsistency between the data has been detected
+*    6: error: can't open/create report file
 *  100: internal error, data can't be loaded
 *  101: internal error, an error occured while computing the results
 *  102: internal error, an error occured in main()
@@ -271,17 +307,6 @@ project from the outside.
 If verbosity is set to 2 (details) or 3 (debug), the progress bar is hidden
 in order to avoid mixing the progress bar with the text displayed while
 computing the result, which is unpleasant to see.
-### ==========================================================================
-[(pimydoc)report filename format]
-* either a simple string like 'report.txt'
-* either a string containing 'DATETIME'; in this case, 'DATETIME' will
-  be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
-  e.g. "report_DATETIME.txt" would become something like
-       "report_2021-12-31.23.59.59.txt"
-* either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
-  be replaced by str(int(time.time()))
-    e.g. "report_DATETIME.txt" would become something like
-         "report_1635672267.txt"
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations

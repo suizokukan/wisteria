@@ -26,10 +26,14 @@
 
     o  help_cmdline_exportreport(details=False)
     o  help_cmdline_filter(details=False)
+    o  help_cmdline_output(details=False)
     o  help_helpcommandlineargument()
     o  help_graphsfilenames()
 """
+import os.path
+
 from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME, DEFAULT_EXPORTREPORT_FILENAME
+from wisteria.globs import REPORTFILE_PATH
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 from wisteria.utils import pimydocstr2str
 
@@ -101,6 +105,54 @@ def help_cmdline_filter(details=False):
            """)
 
 
+def help_cmdline_output(details=False):
+    """
+        help_cmdline_output()
+
+        Return help messages for the command line option "--output".
+        _______________________________________________________________________
+
+        ARGUMENT: (bool)details, True if a full help string has to be returned
+
+        RETURNED VALUE: (str)help message
+    """
+    if not details:
+        return pimydocstr2str("""
+        (pimydoc)command line help for --output(short version)
+        ⋅Values are 'console' or 'reportfile' or 'console;reportfile'.
+        ⋅Instead of 'reportfile'
+        ⋅you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode).
+        ⋅You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name
+        ⋅in order to add a timestamp in the filename.
+        ⋅Instead of 'reportfile'
+        ⋅you may specify 'reportfile=myreportfile'.
+        ⋅Combinations like 'reportfile/w=DEFAULT_REPORTFILE_NAME' are accepted.
+        ⋅See by example the default value.
+        """.replace("DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
+    return pimydocstr2str("""
+           (pimydoc)command line help for --output(full version)
+           ⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+           ⋅
+           ⋅* 'console':
+           ⋅  - 'console' : if you want to write output messages to the console
+           ⋅
+           ⋅* 'reportfile='
+           ⋅  - either a simple string like 'report.txt'
+           ⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+           ⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+           ⋅    e.g. "report_DATETIME.txt" would become something like
+           ⋅         "report_2021-12-31.23.59.59.txt"
+           ⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+           ⋅    be replaced by str(int(time.time()))
+           ⋅      e.g. "report_DATETIME.txt" would become something like
+           ⋅           "report_1635672267.txt"
+           ⋅
+           ⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+           ⋅exist you can't write:
+           ⋅     --output="console;reportfile/w=path/myreportfile"
+           """.replace("DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
+
+
 def help_helpcommandlineargument():
     """
         help_helpcommandlineargument()
@@ -135,8 +187,12 @@ def help_graphsfilenames():
 
         RETURNED VALUE: (str)an help message
     """
-    return f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '1')}' " \
-        f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '1'))}), " \
-        f"'{GRAPHS_FILENAME.replace('__SUFFIX__', '2')}' " \
-        f"({normpath(GRAPHS_FILENAME.replace('__SUFFIX__', '2'))}), " \
+    file1 = os.path.join(REPORTFILE_PATH,
+                         GRAPHS_FILENAME.replace('__SUFFIX__', '1'))
+    file2 = os.path.join(REPORTFILE_PATH,
+                         GRAPHS_FILENAME.replace('__SUFFIX__', '2'))
+    return f"'{file1}' " \
+        f"({normpath(file1)}), " \
+        f"'{file2}' " \
+        f"({file2}), " \
         "and so on"

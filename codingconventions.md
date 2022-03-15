@@ -171,6 +171,7 @@ exit codes
 ⋅*    3: error, ill-formed --output string
 ⋅*    4: error, missing required module
 ⋅*    5: error: an inconsistency between the data has been detected
+⋅*    6: error: can't open/create report file
 ⋅*  100: internal error, data can't be loaded
 ⋅*  101: internal error, an error occured while computing the results
 ⋅*  102: internal error, an error occured in main()
