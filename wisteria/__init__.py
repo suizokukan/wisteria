@@ -24,7 +24,7 @@ TABLE OF CONTENTS
   - [2.1] with CLI and with Python interpreter
   - [2.2] more about command line arguments
 - [3] if you want to read/test/modify the code
-  - [3.0] classes hierarchy
+  - [3.0] classes hierarchy and code structure
   - [3.1] exit codes
   - [3.2] checks and tests
     - [3.2.1] check_tools
@@ -1082,10 +1082,14 @@ _as_expected.py
     - Add your classes to wisteria.ini (section data objects)
 
 [3] if you want to read/test/modify the code
-
-[3.0] classes hierarchy
+g
+[3.0] classes hierarchy and code structure
 
 See classes.md.
+
+  |
+  | (pimydoc)code structure
+  |
 
 [3.1] exit codes
 

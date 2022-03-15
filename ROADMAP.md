@@ -80,6 +80,17 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-359
+
+Fixed issue #37: remove code structure duplicate from wisteria.py
+Remove useless duplicated doc; improved doc in README.md/__init__.py
+
+    * fixed issue #37: remove code structure duplicate from wisteria.py
+      remove useless duplicated doc; improved doc in README.md/__init__.py
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-358
 
 Fixed issue #16: --output should define the target path for report files.

@@ -20,7 +20,7 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
   - [2.1] [with CLI and with Python interpreter](#21-with-cli-and-with-python-interpreter)
   - [2.2] [more about command line arguments](#22-more-about-command-line-arguments)
 - [3] [if you want to read/test/modify the code](#3-if-you-want-to-readtestmodify-the-code)
-  - [3.0] [classes hierarchy](#30-classes-hierarchy)
+  - [3.0] [classes hierarchy and code structure](#30-classes-hierarchy-and-code-structure)
   - [3.1] [exit codes](#31-exit-codes)
   - [3.2] [checks and tests](#31-checks-and-tests)
     - [3.2.1] [check_tools](#311-check_tools)
@@ -1012,10 +1012,14 @@ A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You m
     - Add your classes to wisteria.ini (section `data objects`)
 
 # [3] if you want to read/test/modify the code
-
-## [3.0] classes hierarchy
+g
+## [3.0] classes hierarchy and code structure
 
 See [classes.md](classes.md).
+
+```
+(pimydoc)code structure
+```
 
 ## [3.1] exit codes
 
