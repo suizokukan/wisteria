@@ -80,6 +80,16 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-361
+
+Fixed issue #29: "duplicate: ERRORID050"
+
+    * fixed issue #29: "duplicate: ERRORID050"
+      error ERRORID050 in exit_handler() is now ERRORID054
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-360
 
 Fixed issue #36: (typo in doc)no parenthesized context managers is available.
