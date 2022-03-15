@@ -190,7 +190,7 @@ class CWCPgnreader(unittest.TestCase):
                             'game10.pgn',
                             'game11.pgn'):
 
-            # wisteria being a Python3.8+ project, no parenthesized context managers is available.
+            # wisteria being a Python3.8+ project, no parenthesized context manager is available.
             # NB: both DMFile-s are in-memory files
             with \
                 open(os.path.join("tests", pgnfilename), encoding="utf-8") as src, \

@@ -80,6 +80,16 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-360
+
+Fixed issue #36: (typo in doc)no parenthesized context managers is available.
+
+    * fixed issue #36: "(typo in doc)no parenthesized context managers is available"
+      in tests/cwc_pgnreader_default__tests.py
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-359
 
 Fixed issue #37: remove code structure duplicate from wisteria.py
