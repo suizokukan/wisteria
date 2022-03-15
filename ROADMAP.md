@@ -80,6 +80,19 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-357
+
+    * fixed issue #10 (`incoherent C2c`) and issue #5 (`seems to consume memory`)
+      by rewriting report_section_c2c__serializervsall() and
+      report_section_c2c__allvsall(). Both functions now relie on a subfunction,
+      named `explicit()` that creates the expected phrases and sentences.
+    * added a missing blank in a message from report_section_c2c__allvsall()
+    * fixed issue #28: no more TODOs in the code by improving the doc of
+      SerializationResults.are_all_serializers_equal_in_the_hall()
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-356
 
 Fixed issue #26: the program raised an error when --exportreport wasn't specified.

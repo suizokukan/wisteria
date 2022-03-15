@@ -1798,24 +1798,78 @@ def report_section_c2c__allvsall(results,
                     (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
                   )
     """
+    def explicit(attribute,
+                 meaning):
+        """
+            explicit()
+
+            Using results.hall[], create sentences like:
+            - "pickle is the slowest to encode/decode"
+                (attribute='encoding_plus_decoding_time', meaning='-')
+            - "pickle is the quickest to encode/decode"
+                (attribute='encoding_plus_decoding_time', meaning='+')
+            - "all serializers are equal when it comes to encoding/decoding time"
+                (attribute='encoding_plus_decoding_time'; special case: equality)
+            ___________________________________________________________________
+
+            ARGUMENTS:
+            o  (str)attribute:  'mem_usage',
+                                'reversibility',
+                                'encoding_strlen',
+                                'encoding_plus_decoding_time'
+            o  (str)meaning:    '+' or '-'
+
+            RETURNED VALUE: (str)a phrase
+        """
+        if attribute == 'mem_usage':
+            string_equality = 'all serializers are equal when it comes to memory consumption'
+            if meaning == '-':
+                string_champion = 'uses the most memory'
+            elif meaning == '+':
+                string_champion = 'uses the least memory'
+        elif attribute == 'reversibility':
+            string_equality = 'all serializers are equal when it comes to data coverage'
+            if meaning == '-':
+                string_champion = 'has the worst coverage'
+            elif meaning == '+':
+                string_champion = 'has the best coverage'
+        elif attribute == 'encoding_strlen':
+            string_equality = 'all serializers are equal when it comes to encoded string length'
+            if meaning == '-':
+                string_champion = 'produces the longest strings'
+            elif meaning == '+':
+                string_champion = 'produces the shortest strings'
+        elif attribute == 'encoding_plus_decoding_time':
+            string_equality = 'all serializers are equal when it comes to encoding/decoding time'
+            if meaning == '-':
+                string_champion = 'is the slowest to encode/decode'
+            elif meaning == '+':
+                string_champion = 'is the quickest to encode/decode'
+
+        equality = results.are_all_serializers_equal_in_the_hall(attribute)
+        # ---- not equality ? ----
+        if not equality:
+            # if the meaning is positive (meaning == '+') we work with the first index;
+            # if the meaning is negative (meaning == '-') we work with the last index:
+            index = {'+': 0,
+                     '-': -1}[meaning]
+
+            return f"{fmt_serializer(results.hall[attribute][index][1])}" \
+                f"{(fmt_exaequowith_hall(results, index, attribute))}" \
+                f" {string_champion}"
+
+        # ---- equality ? ----
+        return string_equality
+
     _, _, cmpdata = s1s2d  # seria1, seria2, cmpdata
 
     text = TextAndNotes()
     text.append(cmpdata2phrase(cmpdata))
 
-    text.append(f"{fmt_serializer(results.hall['encoding_plus_decoding_time'][0][1])}"
-                f"{fmt_exaequowith_hall(results, 0, 'encoding_plus_decoding_time')}"
-                " is the quickest to encode/decode. ")
-    text.append(f"{fmt_serializer(results.hall['encoding_strlen'][0][1])}"
-                f"{(fmt_exaequowith_hall(results, 0, 'encoding_strlen'))}"
-                " produces the shortest strings. ")
-    text.append(f"{fmt_serializer(results.hall['reversibility'][0][1])}"
-                f"{(fmt_exaequowith_hall(results, 0, 'reversibility'))}"
-                " has the best coverage ")
-    text.append(
-        f"and {fmt_serializer(results.hall['mem_usage'][0][1])}"
-        f"{(fmt_exaequowith_hall(results, 0, 'mem_usage'))}"
-        " uses the least memory. ")
+    text.append(f"{explicit('encoding_plus_decoding_time', '+')}, ")
+    text.append(f"{explicit('encoding_strlen', '+')}, ")
+    text.append(f"{explicit('reversibility', '+')} ")
+    text.append(f"and {explicit('mem_usage', '+')}. ")
 
     bests = results.get_overallscore_bestrank()
     if len(bests) == 1:
@@ -1828,22 +1882,10 @@ def report_section_c2c__allvsall(results,
                     "according to the overall scores (__note:overallscore__).")
 
     text.append("\nOn the contrary, ")
-    text.append(
-        f"{fmt_serializer(results.hall['encoding_plus_decoding_time'][-1][1])}"
-        f"{(fmt_exaequowith_hall(results, -1, 'encoding_plus_decoding_time'))}"
-        "is the slowest to encode/decode, ")
-    text.append(
-        f"{fmt_serializer(results.hall['encoding_strlen'][-1][1])}"
-        f"{(fmt_exaequowith_hall(results, -1, 'encoding_strlen'))}"
-        " produces the longest strings, ")
-    text.append(
-        f"{fmt_serializer(results.hall['reversibility'][-1][1])}"
-        f"{(fmt_exaequowith_hall(results, -1, 'reversibility'))}"
-        " has the worst coverage ")
-    text.append(
-        f"and {fmt_serializer(results.hall['mem_usage'][-1][1])}"
-        f"{(fmt_exaequowith_hall(results, -1, 'mem_usage'))}"
-        " uses the most memory. ")
+    text.append(f"{explicit('encoding_plus_decoding_time', '-')}, ")
+    text.append(f"{explicit('encoding_strlen', '-')}, ")
+    text.append(f"{explicit('reversibility', '-')} ")
+    text.append(f"and {explicit('mem_usage', '-')}. ")
 
     worsts = results.get_overallscore_worstrank()
     if len(worsts) == 1:
@@ -1906,161 +1948,151 @@ def report_section_c2c__serializervsall(results,
         ("overallscore",
          "a rank based on 4 comparisons points: "
          "Σ jsonstr.len./Σ encod.+decod. time/Coverage Rate/Σ memory"))
+
+    def explicit(attribute):
+        """
+            explicit()
+
+            Using results.hall[], create strings like:
+            - "There's no serializer that is worse than pickle when it comes to data coverage."
+                (attribute='reversibility')
+            - "All serializers are equal when it comes to memory consumption."
+                (attribute='mem_usage')
+            ___________________________________________________________________
+
+            ARGUMENTS:
+            o  (str)attribute:  'mem_usage',
+                                'reversibility',
+                                'encoding_strlen',
+                                'encoding_plus_decoding_time'
+
+            RETURNED VALUE: (str)a sentence
+        """
+        _less, _more = results.comparison_inside_hall(serializer, attribute)
+        equality = results.are_all_serializers_equal_in_the_hall(attribute)
+
+        if equality:
+            if attribute == 'mem_usage':
+                string = 'All serializers are equal when it comes to memory consumption.'
+            elif attribute == "reversibility":
+                string = 'All serializers are equal when it comes to data coverage.'
+            elif attribute == "encoding_strlen":
+                string = 'All serializers are equal when it comes to encoded string length.'
+
+        elif attribute == "mem_usage":
+            if not _less:
+                string = "There's no serializer that consumes more memory than " \
+                        f"{fmt_serializer(serializer)} "
+            elif len(_less) == 1:
+                string = f"Only {fmt_serializer(_less[0])} consumes more memory than " \
+                         f"{fmt_serializer(serializer)} "
+            else:
+                string = f"There are {len(_less)} serializers" \
+                          ", namely " \
+                         f"{fmt_list(_less, fmt_serializer)}, " \
+                         f"that consume more memory than {fmt_serializer(serializer)} "
+
+            if not _more:
+                string += "and there's no serializer that consumes less memory than " \
+                          f"{fmt_serializer(serializer)}."
+            elif len(_more) == 1:
+                string += f"and only {fmt_serializer(_more[0])} consumes less memory than " \
+                          f"{fmt_serializer(serializer)}."
+            else:
+                string += f"and there are {len(_more)} serializers" \
+                           ", namely " \
+                          f"{fmt_list(_more, fmt_serializer)}, " \
+                          f"that consume less memory than {fmt_serializer(serializer)}."
+
+        elif attribute == "reversibility":
+            if not _less:
+                string = "There's no serializer that is worse than " \
+                        f"{fmt_serializer(serializer)} " \
+                         "when it comes to data coverage."
+            elif len(_less) == 1:
+                string = f"Only {fmt_serializer(_less[0])} is worse than " \
+                         f"{fmt_serializer(serializer)} " \
+                         "when it comes to data coverage."
+            else:
+                string = f"There are {len(_less)} serializers" \
+                          ", namely " \
+                         f"{fmt_list(_less, fmt_serializer)}, " \
+                         f"that are worse than {fmt_serializer(serializer)} " \
+                         "when it comes to data coverage."
+
+            if not _more:
+                string += "and there's no serializer that is better than " \
+                          f"{fmt_serializer(serializer)}." \
+                          "when it comes to data coverage."
+            elif len(_more) == 1:
+                string += f"and only {fmt_serializer(_more[0])} is better than " \
+                          f"{fmt_serializer(serializer)}." \
+                          "when it comes to data coverage."
+            else:
+                string += f"and there are {len(_more)} serializers" \
+                           ", namely " \
+                          f"{fmt_list(_more, fmt_serializer)}, " \
+                          f"are better than {fmt_serializer(serializer)}." \
+                          "when it comes to data coverage."
+
+        elif attribute == "encoding_strlen":
+            if not _less:
+                string = "There's no serializer that produces longer strings than " \
+                        f"{fmt_serializer(serializer)} "
+            elif len(_less) == 1:
+                string = f"Only {fmt_serializer(_less[0])} is produces longer strings than " \
+                         f"{fmt_serializer(serializer)} "
+            else:
+                string = f"There are {len(_less)} serializers" \
+                          ", namely " \
+                         f"{fmt_list(_less, fmt_serializer)}, " \
+                         f"that produce longer strings than {fmt_serializer(serializer)} "
+
+            if not _more:
+                string += "and there's no serializer that produces shorter strings than " \
+                          f"{fmt_serializer(serializer)}."
+            elif len(_more) == 1:
+                string += f"and only {fmt_serializer(_more[0])} produces shorter strings than " \
+                          f"{fmt_serializer(serializer)}."
+            else:
+                string += f"and there are {len(_more)} serializers" \
+                           ", namely " \
+                          f"{fmt_list(_more, fmt_serializer)}, " \
+                          f"that produces shorter strings than {fmt_serializer(serializer)}."
+
+        elif attribute == "encoding_plus_decoding_time":
+            if not _less:
+                string = "There's no serializer slower than " \
+                        f"{fmt_serializer(serializer)} "
+            elif len(_less) == 1:
+                string = f"Only {fmt_serializer(_less[0])} is slower than " \
+                         f"{fmt_serializer(serializer)} "
+            else:
+                string = f"There are {len(_less)} serializers" \
+                          ", namely " \
+                         f"{fmt_list(_less, fmt_serializer)}, " \
+                         f"that are slower than {fmt_serializer(serializer)} "
+
+            if not _more:
+                string += "and there's no serializer that is faster than " \
+                          f"{fmt_serializer(serializer)}."
+            elif len(_more) == 1:
+                string += f"and only {fmt_serializer(_more[0])} is faster than " \
+                          f"{fmt_serializer(serializer)}."
+            else:
+                string += f"and there are {len(_more)} serializers" \
+                           ", namely " \
+                          f"{fmt_list(_more, fmt_serializer)}, " \
+                          f"that is faster than {fmt_serializer(serializer)}."
+
+        return string
+
     for attribute in ("encoding_strlen",
                       "encoding_plus_decoding_time",
                       "reversibility",
                       "mem_usage",
                       ):
-        subtext = []
-        _less, _more = results.comparison_inside_hall(serializer, attribute)
-
-        if attribute == "encoding_strlen":
-            if not _less:
-                subtext.append(
-                    "There's no serializer that produces longer strings than "
-                    f"{fmt_serializer(serializer)} ")
-            elif len(_less) == 1:
-                subtext.append(
-                    f"Only {fmt_serializer(_less[0])} produces longer string than "
-                    f"{fmt_serializer(serializer)} ")
-            else:
-                subtext.append(
-                    f"There are {len(_less)} serializers"
-                    ", namely "
-                    f"{fmt_list(_less, fmt_serializer)}, "
-                    f"that produce longer strings than {fmt_serializer(serializer)} ")
-
-            subtext.append("and ")
-
-            if not _more:
-                subtext.append(
-                    "there's no serializer that produces shorter strings than "
-                    f"{fmt_serializer(serializer)}")
-            elif len(_more) == 1:
-                subtext.append(
-                    f"only {fmt_serializer(_more[0])} produces shorter string than "
-                    f"{fmt_serializer(serializer)}")
-            else:
-                subtext.append(
-                    f"there are {len(_more)} serializers"
-                    ", namely "
-                    f"{fmt_list(_more, fmt_serializer)}, "
-                    f"that produce shorter strings than {fmt_serializer(serializer)}")
-
-            subtext.append(". ")
-
-        elif attribute == "encoding_plus_decoding_time":
-            if not _less:
-                subtext.append(
-                    "There's no serializer slower than "
-                    f"{fmt_serializer(serializer)} ")
-            elif len(_less) == 1:
-                subtext.append(
-                    f"Only {fmt_serializer(_less[0])} is slower than "
-                    f"{fmt_serializer(serializer)} ")
-            else:
-                subtext.append(
-                    f"There are {len(_less)} serializers"
-                    ", namely "
-                    f"{fmt_list(_less, fmt_serializer)}, "
-                    f"that are slower than {fmt_serializer(serializer)} ")
-
-            subtext.append("and ")
-
-            if not _more:
-                subtext.append(
-                    "there's no serializer that is faster than "
-                    f"{fmt_serializer(serializer)}")
-            elif len(_more) == 1:
-                subtext.append(
-                    f"only {fmt_serializer(_more[0])} is faster than "
-                    f"{fmt_serializer(serializer)}")
-            else:
-                subtext.append(
-                    f"there are {len(_more)} serializers"
-                    ", namely "
-                    f"{fmt_list(_more, fmt_serializer)}, "
-                    f"that are faster than {fmt_serializer(serializer)}")
-
-            subtext.append(". ")
-
-        elif attribute == "reversibility":
-            if not _less:
-                subtext.append(
-                    "There's no serializer worse than "
-                    f"{fmt_serializer(serializer)} "
-                    "when it comes to data coverage ")
-            elif len(_less) == 1:
-                subtext.append(
-                    f"Only {fmt_serializer(_less[0])} is worse than "
-                    f"{fmt_serializer(serializer)} "
-                    "when it comes to data coverage ")
-            else:
-                subtext.append(
-                    f"There are {len(_less)} serializers"
-                    ", namely "
-                    f"{fmt_list(_less, fmt_serializer)}, "
-                    f"that are worse than {fmt_serializer(serializer)} "
-                    "when it comes to data coverage ")
-
-            subtext.append("and ")
-
-            if not _more:
-                subtext.append(
-                    "there's no serializer better than "
-                    f"{fmt_serializer(serializer)} "
-                    "when it comes to data coverage")
-            elif len(_more) == 1:
-                subtext.append(
-                    f"only {fmt_serializer(_more[0])} is better than "
-                    f"{fmt_serializer(serializer)} "
-                    "when it comes to data coverage")
-            else:
-                subtext.append(
-                    f"there are {len(_more)} serializers"
-                    ", namely "
-                    f"{fmt_list(_more, fmt_serializer)}, "
-                    f"that are better than {fmt_serializer(serializer)} "
-                    "when it comes to data coverage")
-
-            subtext.append(". ")
-
-        elif attribute == "mem_usage":
-            if not _less:
-                subtext.append(
-                    "There's no serializer that consumes more memory than "
-                    f"{fmt_serializer(serializer)} ")
-            elif len(_less) == 1:
-                subtext.append(
-                    f"Only {fmt_serializer(_less[0])} consumes more memory than "
-                    f"{fmt_serializer(serializer)} ")
-            else:
-                subtext.append(
-                    f"There are {len(_less)} serializers"
-                    ", namely "
-                    f"{fmt_list(_less, fmt_serializer)}, "
-                    f"that consume more memory than {fmt_serializer(serializer)} ")
-
-            subtext.append("and ")
-
-            if not _more:
-                subtext.append(
-                    "there's no serializer that consumes less memory than "
-                    f"{fmt_serializer(serializer)}")
-            elif len(_more) == 1:
-                subtext.append(
-                    f"only {fmt_serializer(_more[0])} consumes less memory than "
-                    f"{fmt_serializer(serializer)}")
-            else:
-                subtext.append(
-                    f"there are {len(_more)} serializers"
-                    ", namely "
-                    f"{fmt_list(_more, fmt_serializer)}, "
-                    f"that consume less memory than {fmt_serializer(serializer)}")
-
-            subtext.append(".")
-
-        text.append("".join(subtext))
+        text.append(explicit(attribute)+" ")
 
     msgreport(text.output())
     msgreport()

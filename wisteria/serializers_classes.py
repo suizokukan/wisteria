@@ -264,6 +264,7 @@ class SerializationResults(dict):
         methods:
 
         o  __init__(self)
+        o  are_all_serializers_equal_in_the_hall(self, attribute)
         o  comparison_inside_hall(self, serializer, attribute)
         o  count_serializers_compatible_with_dataobj(self, dataobj)
         o  finish_initialization(self)
@@ -332,6 +333,31 @@ class SerializationResults(dict):
 
         self.hall = None
         self.overallscores = None
+
+    def are_all_serializers_equal_in_the_hall(self,
+                                              attribute):
+        """
+            SerializationResults.are_all_serializers_equal_in_the_hall()
+
+            Return True if all the serializers have the same result in hall for <attribute>,
+            i.e. if all self.hall[attribute][][0] values are equal.
+            ___________________________________________________________________
+
+            ARGUMENT: (str)attribute, by example 'reversibility'
+
+            RETURNED VALUE: (bool)True if all self.hall[attribute][][0] values are equal.
+        """
+        res = True
+        score = None
+        for index in range(self.serializers_total_number):
+            if score is None:
+                # first initialization:
+                score = self.hall[attribute][index][0]
+            else:
+                if self.hall[attribute][index][0] != score:
+                    res = False
+                    break
+        return res
 
     def comparison_inside_hall(self,
                                serializer,
