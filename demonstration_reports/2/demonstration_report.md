@@ -1,46 +1,17 @@
 ```
-> Because of the filter value (namely 'data:oktrans_only'), 265 discarded data objects: 
-> array(b); array(b); array(b); array(b/empty); array(b/empty); array(b/empty); array(b_unsigned); array(b_unsigned); array(b_unsigned); array(b_unsigned/empty); array(b_unsigned/empty); 
-array(b_unsigned/empty); array(d); array(d); array(d); array(d/empty); array(d/empty); array(d/empty); array(f); array(f); array(f); array(f); array(f/empty); array(f/empty); array(f/empty); array(h); 
-array(h); array(h); array(h/empty); array(h/empty); array(h/empty); array(h_unsigned); array(h_unsigned); array(h_unsigned); array(h_unsigned/empty); array(h_unsigned/empty); array(h_unsigned/empty); 
-array(i); array(i); array(i); array(i/empty); array(i/empty); array(i/empty); array(i_unsigned); array(i_unsigned); array(i_unsigned); array(i_unsigned/empty); array(i_unsigned/empty); 
-array(i_unsigned/empty); array(l); array(l); array(l); array(l/empty); array(l/empty); array(l/empty); array(l_unsigned); array(l_unsigned); array(l_unsigned); array(l_unsigned/empty); 
-array(l_unsigned/empty); array(l_unsigned/empty); array(q); array(q); array(q); array(q/empty); array(q/empty); array(q/empty); array(q_unsigned); array(q_unsigned); array(q_unsigned); 
-array(q_unsigned/empty); array(q_unsigned/empty); array(q_unsigned/empty); array(u); array(u); array(u); array(u/empty); array(u/empty); array(u/empty); bytearray; bytearray; bytearray(empty); 
-bytearray(empty); bytes; bytes(empty); calendar(calendar(3)); calendar(calendar(3)); calendar(calendar(3)); calendar(calendar(3)); collections.chainmap; collections.chainmap; collections.chainmap; 
-collections.chainmap(empty); collections.chainmap(empty); collections.chainmap(empty); collections.counter; collections.counter; collections.counter; collections.counter(empty); collections.counter(empty); 
-collections.defaultdict(empty); collections.defaultdict(func); collections.defaultdict(func); collections.defaultdict(func); collections.defaultdict(int); collections.defaultdict(int); 
-collections.defaultdict(list); collections.defaultdict(list); collections.defaultdict(none); collections.defaultdict(none); collections.defaultdict(set); collections.defaultdict(set); collections.deque; 
-collections.deque; collections.deque; collections.deque(empty); collections.deque(empty); collections.deque(empty); collections.ordereddict; collections.ordereddict; collections.ordereddict; 
-collections.ordereddict(empty); collections.ordereddict(empty); complex; datetime(datetime.datetime); datetime(datetime.datetime); datetime(datetime.datetime); datetime(datetime.timedelta); 
-datetime(datetime.timedelta); datetime(datetime.timedelta); dateutil(parser.parse); dateutil(parser.parse); dateutil(parser.parse); decimal(+infinity); decimal(+infinity); decimal(-infinity); 
-decimal(-infinity); decimal(0.5); decimal(0.5); decimal(1/7); decimal(1/7); decimal(nan); decimal(nan); decimal(nan); decimal(nan); dict(keys/bool); dict(keys/float); dict(keys/int); file descriptor; file 
-descriptor; file descriptor; file descriptor; float(nan); float(nan); float(nan); float(nan); frozenset; frozenset(empty); function; function; function(python); function(python); hashlib(hashlib.sha1); 
-hashlib(hashlib.sha1); hashlib(hashlib.sha1); hashlib(hashlib.sha1); hashlib(hashlib.sha224); hashlib(hashlib.sha224); hashlib(hashlib.sha224); hashlib(hashlib.sha224); hashlib(hashlib.sha256); 
-hashlib(hashlib.sha256); hashlib(hashlib.sha256); hashlib(hashlib.sha256); hashlib(hashlib.sha384); hashlib(hashlib.sha384); hashlib(hashlib.sha384); hashlib(hashlib.sha384); hashlib(hashlib.sha512); 
-hashlib(hashlib.sha512); hashlib(hashlib.sha512); hashlib(hashlib.sha512); imported module; imported module; imported module; imported module; imported module(class); imported module(class); imported 
-module(function); imported module(function); io.string; io.string; io.string; io.string; memoryview; memoryview; memoryview; notimplemented; notimplemented; numbers(complex); numbers(complex); 
-numbers(integral); numbers(integral); numbers(numbers); numbers(numbers); numbers(numbers); numbers(numbers); numbers(real); numbers(real); pythonexception typeerror; pythonexception typeerror; range; range;
-range(empty); range(empty); re.match; re.match; re.match; re.match; re.match(+flags); re.match(+flags); re.match(+flags); re.match(+flags); re.pattern(bytes); re.pattern(bytes); re.pattern(str); 
-re.pattern(str); regularclass; regularclass; regularclass; regularclass(async_method); regularclass(async_method); regularclass(class_method); regularclass(class_method); regularclass(generator); 
-regularclass(generator); regularclass(method); regularclass(method); regularclass(static_method); regularclass(static_method); regularclassinheriteddict; regularclassinheriteddict; regularclassinheriteddict;
-regularclassinheritedlist; regularclassinheritedlist; regularclassinheritedlist; set; set(empty); tuple; tuple(+subtuples); tuple(empty); type(str); type(str); type(type(str)); type(type(str)); 
-wisteria.cwc.pgnreader.cwc_default.chessgames; wisteria.cwc.pgnreader.cwc_default.chessgames; wisteria.cwc.pgnreader.cwc_default.chessgames; wisteria.cwc.pgnreader.cwc_iaswn.chessgames; 
-wisteria.cwc.pgnreader.cwc_iaswn.chessgames; wisteria.cwc.simple.cwc_default.simpleclass; wisteria.cwc.simple.cwc_default.simpleclass; wisteria.cwc.simple.cwc_default.simpleclass; 
-wisteria.cwc.simple.cwc_iaswn.simpleclass; wisteria.cwc.simple.cwc_iaswn.simpleclass
 (B1b) Full Details: Serializers
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
 ┃ Serializer                   ┃ Encod. Ok ? ┃ Σ Encoded   ┃ Σ Encoded     ┃ Decod. Ok ? ┃ Σ Decoded   ┃ Reversibility ?  ┃ Σ memory     ┃
 ┃                              ┃ (Max=29)    ┃ Time        ┃ Str. Length   ┃ (Max=29)    ┃ Time        ┃ (Max=29)         ┃              ┃
 ┃                              ┃             ┃ (seconds)   ┃ (characters)  ┃             ┃ (seconds)   ┃                  ┃              ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
-│ Iaswn                        │ 29          │ 0.000461    │ 9459          │ 29          │ 0.000470    │ 29 (100.00%)     │ 0 byte       │
+│ Iaswn                        │ 29          │ 0.000433    │ 9460          │ 29          │ 0.000451    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ json                         │ 29          │ 0.000227    │ 9482          │ 29          │ 0.000203    │ 29 (100.00%)     │ 0 byte       │
+│ json                         │ 29          │ 0.000213    │ 9483          │ 29          │ 0.000208    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ marshal                      │ 29          │ 0.000047    │ 9399          │ 29          │ 0.000043    │ 29 (100.00%)     │ 0 byte       │
+│ marshal                      │ 29          │ 0.000045    │ 9399          │ 29          │ 0.000043    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ pickle                       │ 29          │ 0.000083    │ 9637          │ 29          │ 0.000060    │ 29 (100.00%)     │ 0 byte       │
+│ pickle                       │ 29          │ 0.000078    │ 9637          │ 29          │ 0.000062    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
 └──────────────────────────────┴─────────────┴─────────────┴───────────────┴─────────────┴─────────────┴──────────────────┴──────────────┘
 
@@ -73,10 +44,10 @@ pickle: According to the tests carried out on all data, there's no data object a
 ┃                           ┃ (characters)     ┃                  ┃ (Max=29)         ┃              ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
 │ -                         │ -                │ -                │ -                │              │
-│ Iaswn                     │ 9459             │ 0.000931         │ 29 (100.00%)     │ 0 byte       │
-│ json                      │ 9482             │ 0.000430         │ 29 (100.00%)     │ 0 byte       │
-│ marshal                   │ 9399             │ 0.000089         │ 29 (100.00%)     │ 0 byte       │
-│ pickle                    │ 9637             │ 0.000143         │ 29 (100.00%)     │ 0 byte       │
+│ Iaswn                     │ 9460             │ 0.000884         │ 29 (100.00%)     │ 0 byte       │
+│ json                      │ 9483             │ 0.000421         │ 29 (100.00%)     │ 0 byte       │
+│ marshal                   │ 9399             │ 0.000088         │ 29 (100.00%)     │ 0 byte       │
+│ pickle                    │ 9637             │ 0.000140         │ 29 (100.00%)     │ 0 byte       │
 └───────────────────────────┴──────────────────┴──────────────────┴──────────────────┴──────────────┘
 
 (C2b) Conclusion: Overall Score Based on 4 Comparisons Points (Σ Encoded Str. Length/Σ Encod.+Decod. Time/Coverage Rate/Σ memory)

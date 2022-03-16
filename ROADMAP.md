@@ -80,6 +80,15 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-371
+
+Updated demonstration reports after task-370.
+
+    * Updated demonstration reports after task-370.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-370
 
 Fixed issue #42 : A1 report section now shows --filter value.
