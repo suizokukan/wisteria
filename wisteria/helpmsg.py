@@ -58,8 +58,8 @@ def help_cmdline_exportreport(details=False):
         ⋅- otherwise 'md' is the only value or the only acceptable start string
         ⋅  since md format;
         ⋅  e.g. 'md=myfile.md';
-        ⋅  otherwise the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
-        """.replace("DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
+        ⋅  otherwise the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
+        """.replace("$DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
     return pimydocstr2str("""
     (pimydoc)command line help for --exportreport(full version)
     ⋅Export report by creating a new file in which
@@ -69,10 +69,10 @@ def help_cmdline_exportreport(details=False):
     ⋅  since md format is the only known format for exported report;
     ⋅  you may add the exported report filename after '=',
     ⋅  e.g. 'md=myfile.md';
-    ⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+    ⋅  the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
     ⋅  Please note that graphs will not be added to the exported file if
     ⋅  --checkup/--downloadconfigfile/--mymachine is set.
-    """.replace("DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
+    """.replace("$DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
 
 
 def help_cmdline_filter(details=False):
@@ -126,9 +126,9 @@ def help_cmdline_output(details=False):
         ⋅in order to add a timestamp in the filename.
         ⋅Instead of 'reportfile'
         ⋅you may specify 'reportfile=myreportfile'.
-        ⋅Combinations like 'reportfile/w=DEFAULT_REPORTFILE_NAME' are accepted.
+        ⋅Combinations like 'reportfile/w=$DEFAULT_REPORTFILE_NAME' are accepted.
         ⋅See by example the default value.
-        """.replace("DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
+        """.replace("$DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
     return pimydocstr2str("""
            (pimydoc)command line help for --output(full version)
            ⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
@@ -150,7 +150,7 @@ def help_cmdline_output(details=False):
            ⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
            ⋅exist you can't write:
            ⋅     --output="console;reportfile/w=path/myreportfile"
-           """.replace("DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
+           """.replace("$DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
 
 
 def help_helpcommandlineargument():

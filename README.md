@@ -246,7 +246,7 @@ You just want to see what the encoded string look like:
 ⋅  since md format is the only known format for exported report;
 ⋅  you may add the exported report filename after '=',
 ⋅  e.g. 'md=myfile.md';
-⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+⋅  the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
 ⋅  Please note that graphs will not be added to the exported file if
 ⋅  --checkup/--downloadconfigfile/--mymachine is set.
 ```
@@ -1025,6 +1025,43 @@ See [classes.md](classes.md).
 
 ```
 (pimydoc)code structure
+⋅step A: command line arguments, --help message
+⋅- (A/00) minimal internal imports
+⋅- (A/01) command line parsing
+⋅
+⋅step B: initializations & --checkup
+⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
+⋅- (B/03) wisteria.globs.ARGS initialization
+⋅- (B/04) a special case: if no argument has been given, we explicit the default values
+⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
+⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
+⋅- (B/07) msgxxx() functions can be used
+⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+⋅- (B/09) project name & version
+⋅- (B/10) ARGS.report interpretation
+⋅- (B/11) exit handler installation
+⋅- (B/12) serializers import
+⋅- (B/13) temp file opening
+⋅- (B/14) known data init (to be placed after 'temp file opening')
+⋅- (B/15) checkup
+⋅- (B/16) informations about the current machine
+⋅- (B/17) download default config file
+⋅
+⋅step C: main()
+⋅- (C/18) call to main()
+⋅       - (C/18.1) main(): debug messages
+⋅       - (C/18.2) main(): cmp string interpretation
+⋅       - (C/18.3) main(): config file reading
+⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+⋅       - (C/18.5) main(): results computing
+⋅       - (C/18.6) main(): report
+⋅
+⋅step D: exit_handler()
+⋅- (D/01) exported report
+⋅- (D/02) closing and removing of tempfile
+⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+⋅- (D/04) reset console cursor
+⋅
 ```
 
 ## [3.1] exit codes

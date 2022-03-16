@@ -119,7 +119,7 @@ both report text and graphics are put together.
   since md format is the only known format for exported report;
   you may add the exported report filename after '=',
   e.g. 'md=myfile.md';
-  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+  the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
   Please note that graphs will not be added to the exported file if
   --checkup/--downloadconfigfile/--mymachine is set.
 ### ===========================================================================
@@ -130,7 +130,7 @@ both report text and graphics are put together.
 - otherwise 'md' is the only value or the only acceptable start string
   since md format;
   e.g. 'md=myfile.md';
-  otherwise the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+  otherwise the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
 ### ===========================================================================    
 [(pimydoc)command line help for --filter(full version)]
 The --filter argument allows to select only some serializers or
@@ -154,7 +154,7 @@ You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name
 in order to add a timestamp in the filename.
 Instead of 'reportfile'
 you may specify 'reportfile=myreportfile'.
-Combinations like 'reportfile/w=DEFAULT_REPORTFILE_NAME' are accepted.
+Combinations like 'reportfile/w=$DEFAULT_REPORTFILE_NAME' are accepted.
 See by example the default value.    
 ### ==========================================================================    
 [(pimydoc)command line help for --output(full version)]

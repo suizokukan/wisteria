@@ -166,7 +166,7 @@ PARSER.add_argument(
 # ⋅  since md format is the only known format for exported report;
 # ⋅  you may add the exported report filename after '=',
 # ⋅  e.g. 'md=myfile.md';
-# ⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+# ⋅  the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
 # ⋅  Please note that graphs will not be added to the exported file if
 # ⋅  --checkup/--downloadconfigfile/--mymachine is set.
 PARSER.add_argument(
@@ -577,7 +577,7 @@ def exit_handler():
     # ⋅  since md format is the only known format for exported report;
     # ⋅  you may add the exported report filename after '=',
     # ⋅  e.g. 'md=myfile.md';
-    # ⋅  the default filename is 'DEFAULT_EXPORTREPORT_FILENAME' . "
+    # ⋅  the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
     # ⋅  Please note that graphs will not be added to the exported file if
     # ⋅  --checkup/--downloadconfigfile/--mymachine is set.
     # =============================================================================
