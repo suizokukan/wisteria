@@ -50,6 +50,13 @@ Use Wisteria to compare serializers like pickle, json or Django serializers : w
 hich one is faster? Which one uses the least amount of memory? Which one produc
 es the shortest strings? Which one has the best coverage rate?
 
+You may have a look at some reports already computed by this script:
+
+* By example, how does pickle compare to his competitors? ?
+* How to classify serializers' weaknesses and strengths? ?
+* Regarding the boolean values, what do the strings encoded by the different se
+rializers look like? ?
+
 After installing Wisteria, try $ wisteria --help and $ wisteria --checkup to se
 e what can be done on your system; then execute a simple comparison like $ wist
 eria --cmp="pickle vs marshal". Have fun discovering the rest of the possibilit

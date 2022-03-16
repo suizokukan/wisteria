@@ -80,6 +80,19 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-362
+
+Fixed issue #4: "report examples".
+The script `create_demonstration_reports.sh` create different reports
+in the subdirectory `demonstration_reports`.
+
+    * Fixed issue #4: "report examples".
+      The script `create_demonstration_reports.sh` create different reports
+      in the subdirectory `demonstration_reports`.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-361
 
 Fixed issue #29: "duplicate: ERRORID050"

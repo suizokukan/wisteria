@@ -44,6 +44,12 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
 
 Use `Wisteria` to compare serializers like [pickle](https://docs.python.org/3/library/pickle.html), [json](https://docs.python.org/3/library/json.html) or [Django serializers](https://www.django-rest-framework.org/api-guide/serializers/) : which one is faster? Which one uses the least amount of memory? Which one produces the shortest strings? Which one has the best coverage rate?
 
+You may have a look at some reports already computed [by this script](create_demonstration_reports.sh):
+
+* By example, [how does `pickle` compare to his competitors?](demonstration_reports/1/demonstration_report.md) ?
+* [How to classify serializers' weaknesses and strengths?](demonstration_reports/2/demonstration_report.md) ?
+* [Regarding the boolean values, what do the strings encoded by the different serializers look like?](demonstration_reports/3/demonstration_report.md) ?        
+
 After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle vs marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 
 ## [0.1] What about the name ?
