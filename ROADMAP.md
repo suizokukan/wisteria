@@ -80,6 +80,17 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-368
+
+Fixed issue #31: add documentation explaining why rprint() is not used
+instead of print; use rprint() whereever it was possible.
+
+    * Fixed issue #31: add documentation explaining why rprint() is not used
+      instead of print; use rprint() whereever it was possible.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-367
 
 Fixed issue #30: strings to be replaced in pimydoc file have now a special

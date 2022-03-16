@@ -62,6 +62,7 @@ import os
 
 import rich.table
 from rich.console import Console
+from rich import print as rprint
 
 import wisteria.globs
 from wisteria.globs import UNITS
@@ -204,12 +205,12 @@ def open_reportfile(mode=None):
         return obj, os.path.dirname(obj.name)
     except FileNotFoundError as err:
         # a special case: we can't use here msgerror() since there's no report file.
-        print(f"(ERRORID053) Can't open/create report file '{wisteria.globs.OUTPUT[3]}' "
-              f"('{normpath(wisteria.globs.OUTPUT[3])}')"
-              f" with opening mode='{mode}'; "
-              f"error message is: {err} .")
-        print("About --ouptput:")
-        print(help_cmdline_output(details=True))
+        rprint(f"(ERRORID053) Can't open/create report file '{wisteria.globs.OUTPUT[3]}' "
+               f"('{normpath(wisteria.globs.OUTPUT[3])}')"
+               f" with opening mode='{mode}'; "
+               f"error message is: {err} .")
+        rprint("About --ouptput:")
+        rprint(help_cmdline_output(details=True))
         return None, None
 
 

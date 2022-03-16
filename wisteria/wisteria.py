@@ -280,6 +280,8 @@ from wisteria.utils import get_missing_required_internal_modules  # noqa
 from wisteria.reprfmt import fmt_projectversion, fmt_nounplural  # noqa
 MISSING_REQUIRED_MODULES = get_missing_required_internal_modules()
 if MISSING_REQUIRED_MODULES:
+    # Please note that we don't use rprint() here since rich module has not
+    # been yet imported.
     print(fmt_projectversion(add_timestamp=True))
     print("The program can't be executed. "
           "At least one required module is missing, namely",
