@@ -36,8 +36,8 @@
     o  DEFAULT_CONFIGFILE_NAME
     o  DEFAULT_CONFIGFILE_URL
 
-    o  FILECONSOLE
-    o  FILECONSOLE_FILEOBJECT
+    o  RICHFILECONSOLE
+    o  RICHFILECONSOLE_FILEOBJECT
 
     o  MODULES
 
@@ -81,7 +81,7 @@ hence their location at the end of this list:
            (initialized by get_default_exportreport_filename())
     o  DEFAULT_REPORTFILE_NAME
            (initialized by get_default_reportfile_name())
-    o  GRAPHS_FILENAME
+    o  GRAPHS_GENERIC_FILENAME
            (initialized by get_graphs_filename())
     o  GRAPHS_DESCRIPTION
            (initialized by get_graphs_description())
@@ -156,9 +156,9 @@ DEFAULT_CONFIGFILE_NAME = "wisteria.ini"
 DEFAULT_CONFIGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
 
 # value: rich.console.Console(file=...)
-FILECONSOLE = None
+RICHFILECONSOLE = None
 # Both variables are initialized by main.py()
-FILECONSOLE_FILEOBJECT = None
+RICHFILECONSOLE_FILEOBJECT = None
 
 # imported serializers modules
 MODULES = {}
@@ -364,10 +364,10 @@ def get_graphs_filename():
     """
         get_graphs_filename()
 
-        Return the value expected for GRAPHS_FILENAME
+        Return the value expected for GRAPHS_GENERIC_FILENAME
         _______________________________________________________________________
 
-        RETURNED VALUE: (str)a value for GRAPHS_FILENAME
+        RETURNED VALUE: (str)a value for GRAPHS_GENERIC_FILENAME
     """
     return os.path.join(REPORTFILE_PATH, "report__SUFFIX__.png")
 
@@ -395,13 +395,13 @@ def get_graphs_description():
             ⋅- (str)filename    : file name to be written
     """
     return (('encoding_time', "{0:.3f}", 1, UNITS['time'], 'Slowness',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "1")),
+             GRAPHS_GENERIC_FILENAME.replace("__SUFFIX__", "1")),
             ('mem_usage', "{0}", 1, UNITS['memory'], 'Memory Usage',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "2")),
+             GRAPHS_GENERIC_FILENAME.replace("__SUFFIX__", "2")),
             ('encoding_strlen', "{0}", 1, UNITS['string length'], 'Encoded String Length',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "3")),
+             GRAPHS_GENERIC_FILENAME.replace("__SUFFIX__", "3")),
             ('reversibility', "{0:.1f}", 100, "%", 'Coverage data (Reversibility)',
-             GRAPHS_FILENAME.replace("__SUFFIX__", "4")),)
+             GRAPHS_GENERIC_FILENAME.replace("__SUFFIX__", "4")),)
 
 
 DEFAULT_EXPORTREPORT_FILENAME = get_default_exportreport_filename()
@@ -409,7 +409,7 @@ DEFAULT_REPORTFILE_NAME = get_default_reportfile_name()
 
 # generic name for graphs filenames:
 #   'generic' since this string contains a '__SUFFIX__' substring to be replaced.
-GRAPHS_FILENAME = get_graphs_filename()
+GRAPHS_GENERIC_FILENAME = get_graphs_filename()
 
 # (pimydoc)GRAPHS_DESCRIPTION format
 # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the

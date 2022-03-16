@@ -69,7 +69,7 @@ def _message(obj, rule=False):
         else:
             wisteria.globs.RICHCONSOLE.rule(obj)
     if wisteria.globs.OUTPUT[1]:
-        wisteria.globs.FILECONSOLE.print(obj)
+        wisteria.globs.RICHFILECONSOLE.print(obj)
 
 
 def msgcritical(obj=""):

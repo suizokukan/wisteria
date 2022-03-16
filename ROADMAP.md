@@ -78,7 +78,24 @@ What's next ?
 
 ===============================================================================
 
-[CURRENT] v. 0.2.3
+[DONE] v. 0.2.3
+
+[DONE] task-369
+
+Fixed issue #32, issue #33 and issue #34.
+For the sake of clarity renamed some globs.py constants:
+  - FILECONSOLE > RICHFILECONSOLE
+  - FILECONSOLE_FILEOBJECT > RICHFILECONSOLE_FILEOBJECT
+  - GRAPHS_FILENAME > GRAPHS_GENERIC_FILENAME
+
+    * Fixed issue #32, issue #33 and issue #34.
+      For the sake of clarity renamed some globs.py constants:
+      - FILECONSOLE > RICHFILECONSOLE
+      - FILECONSOLE_FILEOBJECT > RICHFILECONSOLE_FILEOBJECT
+      - GRAPHS_FILENAME > GRAPHS_GENERIC_FILENAME
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] task-368
 

@@ -32,7 +32,8 @@
 """
 import os.path
 
-from wisteria.globs import GRAPHS_FILENAME, DEFAULT_REPORTFILE_NAME, DEFAULT_EXPORTREPORT_FILENAME
+from wisteria.globs import GRAPHS_GENERIC_FILENAME, DEFAULT_REPORTFILE_NAME
+from wisteria.globs import DEFAULT_EXPORTREPORT_FILENAME
 from wisteria.globs import REPORTFILE_PATH
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 from wisteria.utils import pimydocstr2str
@@ -188,9 +189,9 @@ def help_graphsfilenames():
         RETURNED VALUE: (str)an help message
     """
     file1 = os.path.join(REPORTFILE_PATH,
-                         GRAPHS_FILENAME.replace('__SUFFIX__', '1'))
+                         GRAPHS_GENERIC_FILENAME.replace('__SUFFIX__', '1'))
     file2 = os.path.join(REPORTFILE_PATH,
-                         GRAPHS_FILENAME.replace('__SUFFIX__', '2'))
+                         GRAPHS_GENERIC_FILENAME.replace('__SUFFIX__', '2'))
     return f"'{file1}' " \
         f"({normpath(file1)}), " \
         f"'{file2}' " \

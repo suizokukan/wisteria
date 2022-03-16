@@ -58,7 +58,7 @@
     ⋅step D: exit_handler()
     ⋅- (D/01) exported report
     ⋅- (D/02) closing and removing of tempfile
-    ⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+    ⋅- (D/03) closing wisteria.globs.RICHFILECONSOLE_FILEOBJECT
     ⋅- (D/04) reset console cursor
     ⋅
 
@@ -421,19 +421,19 @@ else:
 # (B/06) reportfile opening: update REPORTFILE_PATH & co.
 # =============================================================================
 # It would be great to use something like:
-#   with open(...) as wisteria.globs.FILECONSOLE_FILEOBJECT:
+#   with open(...) as wisteria.globs.RICHFILECONSOLE_FILEOBJECT:
 # but it's not possible here. Please notice that we check the closing of this
 # file in exit handler.
 #   pylint: disable=consider-using-with
-wisteria.globs.FILECONSOLE_FILEOBJECT, wisteria.globs.REPORTFILE_PATH = open_reportfile()
+wisteria.globs.RICHFILECONSOLE_FILEOBJECT, wisteria.globs.REPORTFILE_PATH = open_reportfile()
 # what follows depends on wisteria.globs.REPORTFILE_PATH:
 wisteria.globs.DEFAULT_REPORTFILE_NAME = get_default_reportfile_name()
-wisteria.globs.GRAPHS_FILENAME = get_graphs_filename()
+wisteria.globs.GRAPHS_GENERIC_FILENAME = get_graphs_filename()
 wisteria.globs.GRAPHS_DESCRIPTION = get_graphs_description()
 wisteria.globs.DEFAULT_EXPORTREPORT_FILENAME = get_default_exportreport_filename()
 
 
-if wisteria.globs.FILECONSOLE_FILEOBJECT is None:
+if wisteria.globs.RICHFILECONSOLE_FILEOBJECT is None:
     # (pimydoc)exit codes
     # ⋅These exit codes try to take into account the standards, in particular this
     # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
@@ -461,7 +461,8 @@ if wisteria.globs.FILECONSOLE_FILEOBJECT is None:
     # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
     sys.exit(6)
 
-wisteria.globs.FILECONSOLE = rich.console.Console(file=wisteria.globs.FILECONSOLE_FILEOBJECT)
+wisteria.globs.RICHFILECONSOLE = \
+    rich.console.Console(file=wisteria.globs.RICHFILECONSOLE_FILEOBJECT)
 
 
 # =============================================================================
@@ -681,15 +682,15 @@ def exit_handler():
             pass
 
     # =============================================================================
-    # (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+    # (D/03) closing wisteria.globs.RICHFILECONSOLE_FILEOBJECT
     # =============================================================================
     # this file should be the last one to be closed if we want to use msgxxx() methods:
-    if not wisteria.globs.FILECONSOLE_FILEOBJECT.closed:
+    if not wisteria.globs.RICHFILECONSOLE_FILEOBJECT.closed:
         if ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"(exit_handler) About to close the console file "
-                     f"'{wisteria.globs.FILECONSOLE_FILEOBJECT.name}' "
-                     f"('{normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}').")
-        wisteria.globs.FILECONSOLE_FILEOBJECT.close()
+                     f"'{wisteria.globs.RICHFILECONSOLE_FILEOBJECT.name}' "
+                     f"('{normpath(wisteria.globs.RICHFILECONSOLE_FILEOBJECT.name)}').")
+        wisteria.globs.RICHFILECONSOLE_FILEOBJECT.close()
 
     # =============================================================================
     # (D/04) reset console cursor
@@ -751,14 +752,14 @@ def checkup():
     # ⋅        )
     if wisteria.globs.OUTPUT[1]:
         msgreport("The following informations are written in the report file "
-                  f"('{wisteria.globs.FILECONSOLE_FILEOBJECT.name}', "
-                  f"namely {normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}): "
+                  f"('{wisteria.globs.RICHFILECONSOLE_FILEOBJECT.name}', "
+                  f"namely {normpath(wisteria.globs.RICHFILECONSOLE_FILEOBJECT.name)}): "
                   "see the --output argument for more informations about this file. "
                   "--verbosity value [b]has an effect[/b] upon the displayed informations.")
     else:
         msgreport("The following informations ARE NOT written in the report file "
-                  f"('{wisteria.globs.FILECONSOLE_FILEOBJECT.name}', "
-                  "namely {normpath(wisteria.globs.FILECONSOLE_FILEOBJECT.name)}): "
+                  f"('{wisteria.globs.RICHFILECONSOLE_FILEOBJECT.name}', "
+                  "namely {normpath(wisteria.globs.RICHFILECONSOLE_FILEOBJECT.name)}): "
                   "see the --output argument for more informations about this file. ")
     msgreport()
 

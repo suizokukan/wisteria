@@ -1059,7 +1059,7 @@ See [classes.md](classes.md).
 ⋅step D: exit_handler()
 ⋅- (D/01) exported report
 ⋅- (D/02) closing and removing of tempfile
-⋅- (D/03) closing wisteria.globs.FILECONSOLE_FILEOBJECT
+⋅- (D/03) closing wisteria.globs.RICHFILECONSOLE_FILEOBJECT
 ⋅- (D/04) reset console cursor
 ⋅
 ```
