@@ -80,6 +80,15 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-366
+
+Fixed issue #40: in err_codes.sh, max_index is now set to 60 .
+
+    * Fixed issue #40: in err_codes.sh, max_index is now set to 60 .
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-365
 
 Fixed issue #41: improve create_demonstration_reports.sh
