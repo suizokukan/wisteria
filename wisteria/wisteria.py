@@ -604,42 +604,49 @@ def exit_handler():
                 msgdebug("(exit_handler/exported report) exported report will be named "
                          f"'{exportreport_filename}' .")
 
-        exportedreportfile = open(exportreport_filename, "w", encoding="utf-8")
-        reportfile = open_reportfile(mode="r")[0]  # open_reportfile() returns (object, path)
-        with exportedreportfile, reportfile:
-            # ---- (1/2) exported report: text --------------------------------
-            exportedreportfile.write("```\n")
-            for line in reportfile.readlines():
-                exportedreportfile.write(line)
-            exportedreportfile.write("```\n")
-            exportedreportfile.write("\n")
+        try:
+            exportedreportfile = open(exportreport_filename, "w", encoding="utf-8")
+            reportfile = open_reportfile(mode="r")[0]  # open_reportfile() returns (object, path)
+            with exportedreportfile, reportfile:
+                # ---- (1/2) exported report: text ----------------------------
+                exportedreportfile.write("```\n")
+                for line in reportfile.readlines():
+                    exportedreportfile.write(line)
+                exportedreportfile.write("```\n")
+                exportedreportfile.write("\n")
 
-            # ---- (2/2) exported report: graphs ------------------------------
-            if not wisteria.globs.ARGS.mymachine and \
-               not wisteria.globs.ARGS.checkup and \
-               not wisteria.globs.ARGS.downloadconfigfile:
-                # (pimydoc)GRAPHS_DESCRIPTION format
-                # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-                # ⋅report; each description is passed to hbar2png(). Note that
-                # ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
-                # ⋅
-                # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
-                # ⋅- (str)fmtstring   : format string to be applied to each value when printed
-                # ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
-                # ⋅- (int)value_coeff : each value will be multiplied by this number
-                # ⋅- (str)unit        : x unit
-                # ⋅- (str)title       : graph title
-                # ⋅- (str)filename    : file name to be written
-                for _, _, _, _, title, filename in wisteria.globs.GRAPHS_DESCRIPTION:
-                    if not os.path.exists(filename):
-                        msgwarning("(exit_handler/exported report) "
-                                   f"Didn't add '{filename}' to exported report file "
-                                   "since this file doesn't exist.")
-                    else:
-                        # we use os.path.basename(filename) and not filename directly
-                        # since the given path is relative.
-                        exportedreportfile.write(f"![{title}]({os.path.basename(filename)})\n")
-                        exportedreportfile.write("\n")
+                # ---- (2/2) exported report: graphs --------------------------
+                if not wisteria.globs.ARGS.mymachine and \
+                   not wisteria.globs.ARGS.checkup and \
+                   not wisteria.globs.ARGS.downloadconfigfile:
+                    # (pimydoc)GRAPHS_DESCRIPTION format
+                    # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
+                    # ⋅report; each description is passed to hbar2png(). Note that
+                    # ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
+                    # ⋅
+                    # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+                    # ⋅- (str)fmtstring   : format string to be applied to each value when printed
+                    # ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
+                    # ⋅- (int)value_coeff : each value will be multiplied by this number
+                    # ⋅- (str)unit        : x unit
+                    # ⋅- (str)title       : graph title
+                    # ⋅- (str)filename    : file name to be written
+                    for _, _, _, _, title, filename in wisteria.globs.GRAPHS_DESCRIPTION:
+                        if not os.path.exists(filename):
+                            msgwarning("(exit_handler/exported report) "
+                                       f"Didn't add '{filename}' to exported report file "
+                                       "since this file doesn't exist.")
+                        else:
+                            # we use os.path.basename(filename) and not filename directly
+                            # since the given path is relative.
+                            exportedreportfile.write(f"![{title}]({os.path.basename(filename)})\n")
+                            exportedreportfile.write("\n")
+        except FileNotFoundError as err:
+            msgerror("(ERRORID055) "
+                     "Can't find a way to the exported report filename "
+                     f"'{exportreport_filename}' ('{normpath(exportreport_filename)}') :"
+                     "the path is unreachable; "
+                     f"Python error is: {err} .")
     else:
         msgerror("(ERRORID054) An error occured "
                  f"while reading --exportreport string '{ARGS.exportreport}'.")
