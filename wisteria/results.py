@@ -115,8 +115,10 @@ def compute_results():
             msginfo("Please wait until all required encodings/decodings have been computed.")
 
         # (pimydoc)PLANNED_TRANSCODINGS
-        # ⋅list of str:
-        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅a list:
+        # ⋅    - (str)serializer,
+        # ⋅    - (int)len(serializers)
+        # ⋅    - (int)len(dataobjs)
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
         for (transcoding_index,
@@ -331,8 +333,10 @@ def init_planned_transcodings(serializer1,
         - wisteria.globs.DISCARDED_DATA
 
         (pimydoc)PLANNED_TRANSCODINGS
-        ⋅list of str:
-        ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        ⋅a list:
+        ⋅    - (str)serializer,
+        ⋅    - (int)len(serializers)
+        ⋅    - (int)len(dataobjs)
         ⋅
         ⋅Initialized by results.py:init_planned_transcodings()
         _______________________________________________________________________
@@ -382,8 +386,10 @@ def init_planned_transcodings(serializer1,
 
                 if not is_a_cwc_name(dataobj):
                     # (pimydoc)PLANNED_TRANSCODINGS
-                    # ⋅list of str:
-                    # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+                    # ⋅a list:
+                    # ⋅    - (str)serializer,
+                    # ⋅    - (int)len(serializers)
+                    # ⋅    - (int)len(dataobjs)
                     # ⋅
                     # ⋅Initialized by results.py:init_planned_transcodings()
                     wisteria.globs.PLANNED_TRANSCODINGS.append((serializer,
@@ -413,8 +419,10 @@ def init_planned_transcodings(serializer1,
                                 f"'{wisteria.globs.SERIALIZERS[serializer].cwc}' .")
                     else:
                         # (pimydoc)PLANNED_TRANSCODINGS
-                        # ⋅list of str:
-                        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+                        # ⋅a list:
+                        # ⋅    - (str)serializer,
+                        # ⋅    - (int)len(serializers)
+                        # ⋅    - (int)len(dataobjs)
                         # ⋅
                         # ⋅Initialized by results.py:init_planned_transcodings()
                         wisteria.globs.PLANNED_TRANSCODINGS.append((serializer,

@@ -57,7 +57,6 @@ def help_cmdline_exportreport(details=False):
         ⋅both report text and graphics are put together.
         ⋅- default value: "no export", i.e. no exported report file
         ⋅- otherwise 'md' is the only value or the only acceptable start string
-        ⋅  since md format;
         ⋅  e.g. 'md=myfile.md';
         ⋅  otherwise the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
         """.replace("$DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
@@ -70,6 +69,7 @@ def help_cmdline_exportreport(details=False):
     ⋅  since md format is the only known format for exported report;
     ⋅  you may add the exported report filename after '=',
     ⋅  e.g. 'md=myfile.md';
+    ⋅       'md' (in this case the default file name will be used)
     ⋅  the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
     ⋅  Please note that graphs will not be added to the exported file if
     ⋅  --checkup/--downloadconfigfile/--mymachine is set.

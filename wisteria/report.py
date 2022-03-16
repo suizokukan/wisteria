@@ -371,8 +371,10 @@ def partial_report__data(show_all_data,
     if show_planned_data:
         console = Console(width=DEBUG_CONSOLEWIDTH)
         # (pimydoc)PLANNED_TRANSCODINGS
-        # ⋅list of str:
-        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅a list:
+        # ⋅    - (str)serializer,
+        # ⋅    - (int)len(serializers)
+        # ⋅    - (int)len(dataobjs)
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
         planned_data_names = set(
@@ -447,8 +449,10 @@ def partial_report__serializers(show_all_serializers,
     if show_planned_serializers:
         console = Console(width=DEBUG_CONSOLEWIDTH)
         # (pimydoc)PLANNED_TRANSCODINGS
-        # ⋅list of str:
-        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+        # ⋅a list:
+        # ⋅    - (str)serializer,
+        # ⋅    - (int)len(serializers)
+        # ⋅    - (int)len(dataobjs)
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
         planned_data_serializers = set(
@@ -735,8 +739,10 @@ def report_section_a4(results,
         msgreport()
 
     # (pimydoc)PLANNED_TRANSCODINGS
-    # ⋅list of str:
-    # ⋅    (str)serializer, (str)data_name, (str)fingerprint
+    # ⋅a list:
+    # ⋅    - (str)serializer,
+    # ⋅    - (int)len(serializers)
+    # ⋅    - (int)len(dataobjs)
     # ⋅
     # ⋅Initialized by results.py:init_planned_transcodings()
     planned_transcodings_number = len(wisteria.globs.PLANNED_TRANSCODINGS)

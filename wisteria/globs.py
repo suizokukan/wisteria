@@ -181,8 +181,10 @@ MODULES = {}
 OUTPUT = []
 
 # (pimydoc)PLANNED_TRANSCODINGS
-# ⋅list of str:
-# ⋅    (str)serializer, (str)data_name, (str)fingerprint
+# ⋅a list:
+# ⋅    - (str)serializer,
+# ⋅    - (int)len(serializers)
+# ⋅    - (int)len(dataobjs)
 # ⋅
 # ⋅Initialized by results.py:init_planned_transcodings()
 PLANNED_TRANSCODINGS = []
