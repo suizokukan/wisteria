@@ -636,7 +636,9 @@ def exit_handler():
                                    f"Didn't add '{filename}' to exported report file "
                                    "since this file doesn't exist.")
                     else:
-                        exportedreportfile.write(f"![{title}]({filename})\n")
+                        # we use os.path.basename(filename) and not filename directly
+                        # since the given path is relative.
+                        exportedreportfile.write(f"![{title}]({os.path.basename(filename)})\n")
                         exportedreportfile.write("\n")
     else:
         msgerror("(ERRORID054) An error occured "

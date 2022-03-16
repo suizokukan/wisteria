@@ -34,13 +34,13 @@ wisteria.cwc.simple.cwc_iaswn.simpleclass; wisteria.cwc.simple.cwc_iaswn.simplec
 ┃                              ┃ (Max=29)    ┃ Time        ┃ Str. Length   ┃ (Max=29)    ┃ Time        ┃ (Max=29)         ┃              ┃
 ┃                              ┃             ┃ (seconds)   ┃ (characters)  ┃             ┃ (seconds)   ┃                  ┃              ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
-│ Iaswn                        │ 29          │ 0.000452    │ 9460          │ 29          │ 0.000471    │ 29 (100.00%)     │ 0 byte       │
+│ Iaswn                        │ 29          │ 0.000436    │ 9459          │ 29          │ 0.000472    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ json                         │ 29          │ 0.000228    │ 9483          │ 29          │ 0.000212    │ 29 (100.00%)     │ 0 byte       │
+│ json                         │ 29          │ 0.000237    │ 9482          │ 29          │ 0.000210    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ marshal                      │ 29          │ 0.000045    │ 9399          │ 29          │ 0.000042    │ 29 (100.00%)     │ 0 byte       │
+│ marshal                      │ 29          │ 0.000053    │ 9399          │ 29          │ 0.000045    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ pickle                       │ 29          │ 0.000075    │ 9637          │ 29          │ 0.000061    │ 29 (100.00%)     │ 0 byte       │
+│ pickle                       │ 29          │ 0.000084    │ 9637          │ 29          │ 0.000062    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
 └──────────────────────────────┴─────────────┴─────────────┴───────────────┴─────────────┴─────────────┴──────────────────┴──────────────┘
 
@@ -76,11 +76,11 @@ marshal: According to the tests carried out on all data, there's no data object 
 ┃                           ┃ Length           ┃ Time (seconds)   ┃ (Coverage Rate)  ┃              ┃
 ┃                           ┃ (characters)     ┃                  ┃ (Max=29)         ┃              ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
-│ pickle                    │ 9637             │ 0.000137         │ 29 (100.00%)     │ 0 byte       │
+│ pickle                    │ 9637             │ 0.000146         │ 29 (100.00%)     │ 0 byte       │
 │ -                         │ -                │ -                │ -                │              │
-│ Iaswn                     │ 9460             │ 0.000924         │ 29 (100.00%)     │ 0 byte       │
-│ json                      │ 9483             │ 0.000440         │ 29 (100.00%)     │ 0 byte       │
-│ marshal                   │ 9399             │ 0.000087         │ 29 (100.00%)     │ 0 byte       │
+│ Iaswn                     │ 9459             │ 0.000908         │ 29 (100.00%)     │ 0 byte       │
+│ json                      │ 9482             │ 0.000447         │ 29 (100.00%)     │ 0 byte       │
+│ marshal                   │ 9399             │ 0.000098         │ 29 (100.00%)     │ 0 byte       │
 └───────────────────────────┴──────────────────┴──────────────────┴──────────────────┴──────────────┘
 
 (C2b) Conclusion: Overall Score Based on 4 Comparisons Points (Σ Encoded Str. Length/Σ Encod.+Decod. Time/Coverage Rate/Σ memory)
@@ -104,11 +104,11 @@ comes to data coverage. All serializers are equal when it comes to memory consum
 
 ```
 
-![Slowness](demonstration_reports/1/report1.png)
+![Slowness](report1.png)
 
-![Memory Usage](demonstration_reports/1/report2.png)
+![Memory Usage](report2.png)
 
-![Encoded String Length](demonstration_reports/1/report3.png)
+![Encoded String Length](report3.png)
 
-![Coverage data (Reversibility)](demonstration_reports/1/report4.png)
+![Coverage data (Reversibility)](report4.png)
 

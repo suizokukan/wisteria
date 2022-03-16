@@ -80,6 +80,21 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-363
+
+Fixed issue #39: Wrong path to images in demonstration reports
+Modified exported report creation (in exit_handler()) so that
+the basename (not the full name anymore) of the images is now
+given.
+
+    * Fixed issue #39: Wrong path to images in demonstration reports
+      Modified exported report creation (in exit_handler()) so that
+      the basename (not the full name anymore) of the images is now
+      given.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-362
 
 Fixed issue #4: "report examples".
@@ -102,7 +117,7 @@ Fixed issue #29: "duplicate: ERRORID050"
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-360
 
 Fixed issue #36: (typo in doc)no parenthesized context managers is available.
@@ -112,7 +127,7 @@ Fixed issue #36: (typo in doc)no parenthesized context managers is available.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-359
 
 Fixed issue #37: remove code structure duplicate from wisteria.py
@@ -123,7 +138,7 @@ Remove useless duplicated doc; improved doc in README.md/__init__.py
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-358
 
 Fixed issue #16: --output should define the target path for report files.
@@ -162,7 +177,7 @@ REPORTFILE_PATH is initialized from --output 'reportfile=path/myreportfile'
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-356
 
 Fixed issue #26: the program raised an error when --exportreport wasn't specified.
