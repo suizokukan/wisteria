@@ -80,17 +80,30 @@ What's next ?
 
 [CURRENT] v. 0.2.3
 
+[DONE] task-365
+
+Fixed issue #41: improve create_demonstration_reports.sh
+Added "console;" to --output to help people trying to use the project:
+otherwise no message is written to the console.
+
+    * Fixed issue #41: improve create_demonstration_reports.sh
+      Added "console;" to --output to help people trying to use the project:
+      otherwise no message is written to the console.
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-364
 
 Fixed issue #38: FileNotFoundError is now catched when creating the exported
-report.    
+report.
 
     * Fixed issue #38: FileNotFoundError is now catched when creating the
       exported report.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-        
+
 [DONE] task-363
 
 Fixed issue #39: Wrong path to images in demonstration reports
