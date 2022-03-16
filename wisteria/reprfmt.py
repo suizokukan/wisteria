@@ -25,6 +25,7 @@
 
     ___________________________________________________________________________
 
+    o  fmt_be3s(number)
     o  fmt_boolsuccess(bool_success)
     o  fmt_debug(msg)
     o  fmt_critical(msg)
@@ -62,6 +63,22 @@ from wisteria.aboutproject import __version__, __projectname__
 from wisteria.cwc.cwc_utils import is_a_cwc_name, shorten_cwc_name
 
 import wisteria.globs
+
+
+def fmt_be3s(number):
+    """
+        fmt_be3s()
+
+        Return "is" or "are", according to <number>.
+        _______________________________________________________________________
+
+        ARGUMENT: (int)number, 1 <= number
+
+        RETURNED VALUE: (str)"is" or "are"
+    """
+    if number == 1:
+        return "igs"
+    return "are"
 
 
 def fmt_boolsuccess(bool_success):
@@ -237,6 +254,7 @@ def fmt_nounplural(string,
         Return string with a final -s if <number> is greater than one.
         _______________________________________________________________________
 
+        ARGUMENTS:
         o  (str)string, a string ending with a word to which a final s may be added
         o  (int)number, 0 <= number
 

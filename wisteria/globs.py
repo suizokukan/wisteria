@@ -36,6 +36,9 @@
     o  DEFAULT_CONFIGFILE_NAME
     o  DEFAULT_CONFIGFILE_URL
 
+    o  DISCARDED_DATA
+    o  DISCARDED_SERIALIZERS
+
     o  RICHFILECONSOLE
     o  RICHFILECONSOLE_FILEOBJECT
 
@@ -154,6 +157,10 @@ DEBUG_CONSOLEWIDTH = 70
 DEFAULT_CONFIGFILE_NAME = "wisteria.ini"
 # url of the default config file:
 DEFAULT_CONFIGFILE_URL = "https://raw.githubusercontent.com/suizokukan/wisteria/main/wisteria.ini"
+
+# initialized by init_planned_transcodings():
+DISCARDED_DATA = []
+DISCARDED_SERIALIZERS = []
 
 # value: rich.console.Console(file=...)
 RICHFILECONSOLE = None

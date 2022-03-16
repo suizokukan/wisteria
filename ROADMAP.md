@@ -80,6 +80,23 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-370
+
+Fixed issue #42 : A1 report section now shows --filter value.
+Fixed issue #27 : discarded serializers are now displayed in A2 report section,
+                  discarded data objects are now displayed in A3 report section,
+
+    * Fixed issue #42 : A1 report section now shows --filter value.
+      Fixed issue #27 : discarded serializers are now displayed in A2 report
+                        section,
+                        discarded data objects are now displayed in A3 report
+                        section.
+    * new format function `fmt_be3s`
+    * fixed minor doc. problem for fmt_nounplural()
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
 [DONE] task-369
 
 Fixed issue #32, issue #33 and issue #34.

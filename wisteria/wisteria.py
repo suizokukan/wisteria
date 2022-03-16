@@ -1159,11 +1159,6 @@ def main():
         # =========================================================================
         # (C/18.4) main(): PLANNED_TRANSCODINGS initialization
         # =========================================================================
-        # (pimydoc)PLANNED_TRANSCODINGS
-        # ⋅list of str:
-        # ⋅    (str)serializer, (str)data_name, (str)fingerprint
-        # ⋅
-        # ⋅Initialized by results.py:init_planned_transcodings()
         res_initplanned_transcodings = \
             init_planned_transcodings(serializer1,
                                       serializer2,
@@ -1171,8 +1166,6 @@ def main():
                                       config,
                                       ARGS.filter)
 
-        # res_initplanned_transcodings: (bool)success, serializer number, data number
-        #  see init_planned_transcodings().
         if not res_initplanned_transcodings[0]:
             # (pimydoc)exit codes
             # ⋅These exit codes try to take into account the standards, in particular this

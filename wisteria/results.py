@@ -46,7 +46,6 @@ from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrea
 from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.filterstr import parse_filterstr
-from wisteria.reprfmt import fmt_nounplural
 from wisteria.helpmsg import help_cmdline_filter
 
 
@@ -326,7 +325,10 @@ def init_planned_transcodings(serializer1,
     """
         init_planned_transcodings()
 
-        Initialize wisteria.globs.PLANNED_TRANSCODINGS.
+        Initialize:
+        - wisteria.globs.PLANNED_TRANSCODINGS
+        - wisteria.globs.DISCARDED_SERIALIZERS
+        - wisteria.globs.DISCARDED_DATA
 
         (pimydoc)PLANNED_TRANSCODINGS
         ⋅list of str:
@@ -344,13 +346,16 @@ def init_planned_transcodings(serializer1,
 
         o  (str)filterstr       : ARGS.filter
 
-        RETURNED VALUE: (bool)success, (int)len(serializers), (int)len(dataobjs)
-                        True may be returned even if len(serializers)==0 or if
-                        len(dataobjs)==0.
+        RETURNED VALUE: ((bool)success,
+                         (int)len(serializers),
+                         (int)len(dataobjs))
+
+                        NB: about (bool)success: True may be returned even if len(serializers)==0 or
+                            if len(dataobjs)==0.
     """
     (parse_filterstr_ok,
-     data_to_be_discarded,
-     serializers_to_be_discarded) = parse_filterstr(filterstr)
+     wisteria.globs.DISCARDED_DATA,
+     wisteria.globs.DISCARDED_SERIALIZERS) = parse_filterstr(filterstr)
 
     if not parse_filterstr_ok:
         msgerror("(ERRORID052) Can't set PLANNED_TRANSCODINGS "
@@ -358,22 +363,6 @@ def init_planned_transcodings(serializer1,
         msginfo("About --filter:")
         msginfo(help_cmdline_filter(details=True))
         return False, None, None
-
-    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS or \
-       data_to_be_discarded:
-        msginfo(
-            f"Because of the filter value (namely '{filterstr}'), "
-            f"{len(data_to_be_discarded)} "
-            f"discarded data {fmt_nounplural('object', len(data_to_be_discarded))}: ")
-        msginfo("; ".join(data_to_be_discarded))
-
-    if wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS or \
-       serializers_to_be_discarded:
-        msginfo(
-            f"Because of the filter value (namely '{filterstr}'), "
-            f"{len(serializers_to_be_discarded)} "
-            f"discarded serializer {fmt_nounplural('object', len(serializers_to_be_discarded))}: ")
-        msginfo("; ".join(serializers_to_be_discarded))
 
     try:
         wisteria.globs.PLANNED_TRANSCODINGS = []
@@ -387,8 +376,8 @@ def init_planned_transcodings(serializer1,
         if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
             msgdebug(f"data objs to be used are: {dataobjs}")
 
-        for serializer in sorted(set(serializers)-set(serializers_to_be_discarded)):
-            for dataobj in sorted(set(dataobjs)-set(data_to_be_discarded)):
+        for serializer in sorted(set(serializers)-set(wisteria.globs.DISCARDED_SERIALIZERS)):
+            for dataobj in sorted(set(dataobjs)-set(wisteria.globs.DISCARDED_DATA)):
                 fingerprint = strdigest(serializer+dataobj)
 
                 if not is_a_cwc_name(dataobj):

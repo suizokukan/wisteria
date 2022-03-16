@@ -73,7 +73,7 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import shortenedstr, strdigest, trytoimport, normpath
 from wisteria.msg import msgreport, msgreporttitle, msgdebug, msgerror
 from wisteria.reprfmt import fmt_serializer, fmt_data, fmt_percentage, fmt_list
-from wisteria.reprfmt import fmt_nounplural, fmt_mem_usage
+from wisteria.reprfmt import fmt_nounplural, fmt_mem_usage, fmt_be3s
 from wisteria.reprfmt import fmt_exaequowith, fmt_exaequowith_hall, fmt_projectversion
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
@@ -535,6 +535,9 @@ def report_section_a1(results,
     msgreport(
             "* --report = "
             f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
+    msgreport(
+            "* --filter = "
+            f"'[italic]{wisteria.globs.ARGS.filter}[/italic]'")
 
     msgreport()
 
@@ -591,6 +594,18 @@ def report_section_a2(results,
         msgreport()
     partial_report__serializers(show_all_serializers=False,
                                 show_planned_serializers=True)
+
+    msgreport()
+
+    if wisteria.globs.DISCARDED_SERIALIZERS:
+        msgreporttitle(
+            f"Because of the filter value, "
+            f"There {fmt_be3s(len(wisteria.globs.DISCARDED_SERIALIZERS))} "
+            f"{len(wisteria.globs.DISCARDED_SERIALIZERS)} "
+            "discarded "
+            f"{fmt_nounplural('serializer', len(wisteria.globs.DISCARDED_SERIALIZERS))}")
+        msgreport("; ".join(wisteria.globs.DISCARDED_SERIALIZERS))
+
     msgreport()
 
 
@@ -650,6 +665,18 @@ def report_section_a3(results,
 
     partial_report__data(show_all_data=False,
                          show_planned_data=True)
+
+    msgreport()
+
+    if wisteria.globs.DISCARDED_DATA:
+        msgreporttitle(
+            f"Because of the filter value, "
+            f"There {fmt_be3s(len(wisteria.globs.DISCARDED_DATA))} "
+            f"{len(wisteria.globs.DISCARDED_DATA)} "
+            "discarded "
+            f"{fmt_nounplural('data object', len(wisteria.globs.DISCARDED_DATA))}")
+        msgreport("; ".join(wisteria.globs.DISCARDED_DATA))
+
     msgreport()
 
 
