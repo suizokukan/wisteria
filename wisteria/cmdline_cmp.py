@@ -40,7 +40,8 @@ def read_cmpstring(cmpstring):
 
         Return a simpler representation of (str)<cmpstring>.
 
-        (pimydoc)--cmp format
+        (pimydoc)command line help for --cmp(full version)
+        ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
         ⋅
         ⋅(I) serializers
         ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
@@ -66,7 +67,6 @@ def read_cmpstring(cmpstring):
         ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
         ⋅                              string is used as help message by the
         ⋅                              command line --help argument.
-        ⋅
         _______________________________________________________________________
 
         ARGUMENT: (str)cmpstring, the source string to be read.

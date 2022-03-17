@@ -72,6 +72,7 @@
     ⋅and this project aims Windows/OSX systems.
     ⋅
     ⋅*    0: normal exit code
+    ⋅*       normal exit code after --help/--help2
     ⋅*       normal exit code after --checkup
     ⋅*       normal exit code after --downloadconfigfile
     ⋅*       normal exit code after --mymachine
@@ -115,12 +116,13 @@ from wisteria.utils import normpath, get_python_version
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_helpcommandlineargument
 from wisteria.helpmsg import help_cmdline_filter, help_cmdline_exportreport, help_cmdline_output
+from wisteria.helpmsg import help_cmdline_cmp, help_cmdline_report
 from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
-from wisteria.globs import REGEX_CMP__HELP
 from wisteria.globs import DEFAULT_CONFIGFILE_NAME
 from wisteria.globs import STR2REPORTSECTION_KEYS
+
 
 # =============================================================================
 # (A/01) command line parsing
@@ -147,11 +149,38 @@ PARSER.add_argument(
     help="Show available serializers and data objects, try to read current config file and exit. "
     "Use --verbosity to change the quantity of displayed informations.")
 
+# (pimydoc)command line help for --cmp(full version)
+# ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+# ⋅
+# ⋅(I) serializers
+# ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+# ⋅a serializer against all serializers(3) or all serializers(4) together.
+# ⋅
+# ⋅    (1) --cmp="jsonpickle(cwc)"
+# ⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
+# ⋅    (3) --cmp="jsonpickle vs all (cwc)"
+# ⋅    (4) --cmp="all vs all (cwc)"
+# ⋅
+# ⋅(II) data types:
+# ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+# ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+# ⋅
+# ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
+# ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
+# ⋅    (c) --cmp="jsonpickle vs pickle (ini)"
+# ⋅    (d) --cmp="jsonpickle vs pickle (all)"
+# ⋅
+# ⋅NB: You may use 'vs' as well as 'against', as if:
+# ⋅    --cmp="jsonpickle vs pickle (cwc)"
+# ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
+# ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
+# ⋅                              string is used as help message by the
+# ⋅                              command line --help argument.
 PARSER.add_argument(
     '--cmp',
     action='store',
     default="all vs all",
-    help=f"Comparisons details. Expected syntax: '{REGEX_CMP__HELP}'.")
+    help=help_cmdline_cmp(details=False))
 
 PARSER.add_argument(
     '--downloadconfigfile',
@@ -176,16 +205,28 @@ PARSER.add_argument(
     default='no export',
     help=help_cmdline_exportreport(details=False))
 
-PARSER.add_argument(
-    '--help', '-h',
-    action='help',
-    help="Show this help message and exit.")
-
+# (pimydoc)command line help for --filter(full version)
+# ⋅The --filter argument allows to select only some serializers or
+# ⋅data objects. Currently only two values are accepted:
+# ⋅* either a null string (--filter=""): all serializers/data objects are
+# ⋅  used;
+# ⋅* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
+# ⋅  only the objects that can be successfully transcoded are kept;
 PARSER.add_argument(
     '--filter',
     action='store',
     default="",
     help=help_cmdline_filter(details=False))
+
+PARSER.add_argument(
+    '--help', '-h',
+    action='help',
+    help="Show this help message and exit. Try --help2 too.")
+
+PARSER.add_argument(
+    '--help2',
+    action='store_true',
+    help="Show detailed help messages about some command line arguments and exit.")
 
 PARSER.add_argument(
     '--mute',
@@ -238,21 +279,24 @@ PARSER.add_argument(
     '--output',
     action='store',
     default=f'console;reportfile/w={DEFAULT_REPORTFILE_NAME}',
-    help=help_cmdline_output())
+    help=help_cmdline_output(details=False))
 
+# (pimydoc)command line help for --report(full version)
+# ⋅Report format:
+# ⋅you may use one of the special keywords ($REPORT_SHORTCUTS_KEYS)
+# ⋅or a list of section parts, e.g. 'A1;B1a;'.
+# ⋅You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...)
+# ⋅or like 'B1' (=B1a+B1b+B1c).
+# ⋅Accepted section parts are
+# ⋅$STR2REPORTSECTION_KEYS .
+# ⋅More informations in the documentation.
+# ⋅Please notice that --verbosity has no effect upon --report.
+# ⋅See --help2 for more informations.
 PARSER.add_argument(
     '--report',
     action='store',
     default="glance",
-    help=f"Report format: "
-    f"you may use one of the special keywords {tuple(REPORT_SHORTCUTS.keys())} "
-    "or a list of section parts, e.g. 'A1;B1a;'. "
-    "You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...) "
-    "or like 'B1' (=B1a+B1b+B1c). "
-    "Accepted section parts are "
-    f"{STR2REPORTSECTION_KEYS} . "
-    "More informations in the documentation. "
-    "Please notice that --verbosity has no effect upon --report.")
+    help=help_cmdline_report(details=False))
 
 PARSER.add_argument(
     '--verbosity',
@@ -273,6 +317,54 @@ PARSER.add_argument(
 
 ARGS = PARSER.parse_args()
 
+
+if ARGS.help2:
+    print("============")
+    print("About --cmp:")
+    print("============")
+    print(help_cmdline_cmp(details=True))
+    print()
+    print("=====================")
+    print("About --exportreport:")
+    print("=====================")
+    print(help_cmdline_exportreport(details=True))
+    print()
+    print("===============")
+    print("About --filter:")
+    print("===============")
+    print(help_cmdline_filter(details=True))
+    print()
+    print("===============")
+    print("About --output:")
+    print("===============")
+    print(help_cmdline_output(details=True))
+    # (pimydoc)exit codes
+    # ⋅These exit codes try to take into account the standards, in particular this
+    # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+    # ⋅
+    # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+    # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+    # ⋅used for this project; these constants are only defined for Linux systems
+    # ⋅and this project aims Windows/OSX systems.
+    # ⋅
+    # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
+    # ⋅*       normal exit code after --checkup
+    # ⋅*       normal exit code after --downloadconfigfile
+    # ⋅*       normal exit code after --mymachine
+    # ⋅*       normal exit code (no data to handle)
+    # ⋅*       normal exit code (no serializer to handle)
+    # ⋅*    1: error, given config file can't be read (missing or ill-formed file)
+    # ⋅*    2: error, ill-formed --cmp string
+    # ⋅*    3: error, ill-formed --output string
+    # ⋅*    4: error, missing required module
+    # ⋅*    5: error: an inconsistency between the data has been detected
+    # ⋅*    6: error: can't open/create report file
+    # ⋅*  100: internal error, data can't be loaded
+    # ⋅*  101: internal error, an error occured while computing the results
+    # ⋅*  102: internal error, an error occured in main()
+    # ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+    sys.exit(0)
 
 # =============================================================================
 # (B/02) normal imports & PLATFORM_SYSTEM initialization
@@ -298,6 +390,7 @@ if MISSING_REQUIRED_MODULES:
     # ⋅and this project aims Windows/OSX systems.
     # ⋅
     # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
     # ⋅*       normal exit code after --checkup
     # ⋅*       normal exit code after --downloadconfigfile
     # ⋅*       normal exit code after --mymachine
@@ -397,6 +490,7 @@ else:
         # ⋅and this project aims Windows/OSX systems.
         # ⋅
         # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --help/--help2
         # ⋅*       normal exit code after --checkup
         # ⋅*       normal exit code after --downloadconfigfile
         # ⋅*       normal exit code after --mymachine
@@ -445,6 +539,7 @@ if wisteria.globs.RICHFILECONSOLE_FILEOBJECT is None:
     # ⋅and this project aims Windows/OSX systems.
     # ⋅
     # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
     # ⋅*       normal exit code after --checkup
     # ⋅*       normal exit code after --downloadconfigfile
     # ⋅*       normal exit code after --mymachine
@@ -510,6 +605,7 @@ if not check_str2reportsection_keys():
     # ⋅and this project aims Windows/OSX systems.
     # ⋅
     # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
     # ⋅*       normal exit code after --checkup
     # ⋅*       normal exit code after --downloadconfigfile
     # ⋅*       normal exit code after --mymachine
@@ -917,6 +1013,7 @@ if wisteria.globs.ARGS.checkup:
     # ⋅and this project aims Windows/OSX systems.
     # ⋅
     # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
     # ⋅*       normal exit code after --checkup
     # ⋅*       normal exit code after --downloadconfigfile
     # ⋅*       normal exit code after --mymachine
@@ -955,6 +1052,7 @@ if wisteria.globs.ARGS.mymachine:
     # ⋅and this project aims Windows/OSX systems.
     # ⋅
     # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
     # ⋅*       normal exit code after --checkup
     # ⋅*       normal exit code after --downloadconfigfile
     # ⋅*       normal exit code after --mymachine
@@ -988,6 +1086,7 @@ if wisteria.globs.ARGS.downloadconfigfile:
     # ⋅and this project aims Windows/OSX systems.
     # ⋅
     # ⋅*    0: normal exit code
+    # ⋅*       normal exit code after --help/--help2
     # ⋅*       normal exit code after --checkup
     # ⋅*       normal exit code after --downloadconfigfile
     # ⋅*       normal exit code after --mymachine
@@ -1028,6 +1127,7 @@ def main():
                 ⋅and this project aims Windows/OSX systems.
                 ⋅
                 ⋅*    0: normal exit code
+                ⋅*       normal exit code after --help/--help2
                 ⋅*       normal exit code after --checkup
                 ⋅*       normal exit code after --downloadconfigfile
                 ⋅*       normal exit code after --mymachine
@@ -1078,6 +1178,7 @@ def main():
             # ⋅and this project aims Windows/OSX systems.
             # ⋅
             # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --help/--help2
             # ⋅*       normal exit code after --checkup
             # ⋅*       normal exit code after --downloadconfigfile
             # ⋅*       normal exit code after --mymachine
@@ -1113,6 +1214,7 @@ def main():
                 # ⋅and this project aims Windows/OSX systems.
                 # ⋅
                 # ⋅*    0: normal exit code
+                # ⋅*       normal exit code after --help/--help2
                 # ⋅*       normal exit code after --checkup
                 # ⋅*       normal exit code after --downloadconfigfile
                 # ⋅*       normal exit code after --mymachine
@@ -1142,6 +1244,7 @@ def main():
                 # ⋅and this project aims Windows/OSX systems.
                 # ⋅
                 # ⋅*    0: normal exit code
+                # ⋅*       normal exit code after --help/--help2
                 # ⋅*       normal exit code after --checkup
                 # ⋅*       normal exit code after --downloadconfigfile
                 # ⋅*       normal exit code after --mymachine
@@ -1180,6 +1283,7 @@ def main():
             # ⋅and this project aims Windows/OSX systems.
             # ⋅
             # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --help/--help2
             # ⋅*       normal exit code after --checkup
             # ⋅*       normal exit code after --downloadconfigfile
             # ⋅*       normal exit code after --mymachine
@@ -1209,6 +1313,7 @@ def main():
             # ⋅and this project aims Windows/OSX systems.
             # ⋅
             # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --help/--help2
             # ⋅*       normal exit code after --checkup
             # ⋅*       normal exit code after --downloadconfigfile
             # ⋅*       normal exit code after --mymachine
@@ -1237,6 +1342,7 @@ def main():
             # ⋅and this project aims Windows/OSX systems.
             # ⋅
             # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --help/--help2
             # ⋅*       normal exit code after --checkup
             # ⋅*       normal exit code after --downloadconfigfile
             # ⋅*       normal exit code after --mymachine
@@ -1284,6 +1390,7 @@ def main():
         # ⋅and this project aims Windows/OSX systems.
         # ⋅
         # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --help/--help2
         # ⋅*       normal exit code after --checkup
         # ⋅*       normal exit code after --downloadconfigfile
         # ⋅*       normal exit code after --mymachine
@@ -1316,6 +1423,7 @@ def main():
         # ⋅and this project aims Windows/OSX systems.
         # ⋅
         # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --help/--help2
         # ⋅*       normal exit code after --checkup
         # ⋅*       normal exit code after --downloadconfigfile
         # ⋅*       normal exit code after --mymachine

@@ -80,6 +80,22 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-373
+
+Fixed issue #18: detailed help for command line can be reached
+thanks to the new --help2 argument.
+
+    * Fixed issue #18: detailed help for command line can be reached
+      thanks to the new --help2 argument.
+    * new help functions: help_cmdline_cmp(), help_cmdline_report()
+    * improved documentation in wisteria.py describing the command
+      line arguments
+    * new entries in pimydoc:
+      - "command line help for --cmp(full version)"
+      - "command line help for --cmp(short version)"
+      - "command line help for --report(full version)"
+      - "command line help for --report(short version)"
+
 [DONE] task-372
 
 Fixed issue #35: improved doc for --exportreport.

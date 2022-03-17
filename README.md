@@ -286,7 +286,8 @@ You just want to see what the encoded string look like:
 ```
 
 ```
-(pimydoc)--cmp format
+(pimydoc)command line help for --cmp(full version)
+⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
 ⋅
 ⋅(I) serializers
 ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
@@ -312,7 +313,6 @@ You just want to see what the encoded string look like:
 ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
 ⋅                              string is used as help message by the
 ⋅                              command line --help argument.
-⋅
 ```
 
 pylintrc
@@ -1077,6 +1077,7 @@ See [classes.md](classes.md).
 ⋅and this project aims Windows/OSX systems.
 ⋅
 ⋅*    0: normal exit code
+⋅*       normal exit code after --help/--help2
 ⋅*       normal exit code after --checkup
 ⋅*       normal exit code after --downloadconfigfile
 ⋅*       normal exit code after --mymachine

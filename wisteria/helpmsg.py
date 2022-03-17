@@ -24,9 +24,11 @@
     Some help messages
     ___________________________________________________________________________
 
+    o  help_cmdline_cmp(details=False)
     o  help_cmdline_exportreport(details=False)
     o  help_cmdline_filter(details=False)
     o  help_cmdline_output(details=False)
+    o  help_cmdline_report(details=False)
     o  help_helpcommandlineargument()
     o  help_graphsfilenames()
 """
@@ -35,8 +37,59 @@ import os.path
 from wisteria.globs import GRAPHS_GENERIC_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.globs import DEFAULT_EXPORTREPORT_FILENAME
 from wisteria.globs import REPORTFILE_PATH
+from wisteria.globs import REGEX_CMP__HELP
+from wisteria.globs import REPORT_SHORTCUTS
+from wisteria.globs import STR2REPORTSECTION_KEYS
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
 from wisteria.utils import pimydocstr2str
+
+
+def help_cmdline_cmp(details=False):
+    """
+        help_cmdline_cmd()
+
+        Return help messages for the command line option "--cmp".
+        _______________________________________________________________________
+
+        ARGUMENT: (bool)details, True if a full help string has to be returned
+
+        RETURNED VALUE: (str)help message
+    """
+    if not details:
+        return pimydocstr2str("""
+        (pimydoc)command line help for --cmp(short version)
+        ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+        ⋅See --help2 for more informations.
+        """.replace("$REGEX_CMP__HELP", REGEX_CMP__HELP))
+    return pimydocstr2str("""
+    (pimydoc)command line help for --cmp(full version)
+    ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+    ⋅
+    ⋅(I) serializers
+    ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+    ⋅a serializer against all serializers(3) or all serializers(4) together.
+    ⋅
+    ⋅    (1) --cmp="jsonpickle(cwc)"
+    ⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
+    ⋅    (3) --cmp="jsonpickle vs all (cwc)"
+    ⋅    (4) --cmp="all vs all (cwc)"
+    ⋅
+    ⋅(II) data types:
+    ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+    ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+    ⋅
+    ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
+    ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
+    ⋅    (c) --cmp="jsonpickle vs pickle (ini)"
+    ⋅    (d) --cmp="jsonpickle vs pickle (all)"
+    ⋅
+    ⋅NB: You may use 'vs' as well as 'against', as if:
+    ⋅    --cmp="jsonpickle vs pickle (cwc)"
+    ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
+    ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
+    ⋅                              string is used as help message by the
+    ⋅                              command line --help argument.
+    """.replace("$REGEX_CMP__HELP", REGEX_CMP__HELP))
 
 
 def help_cmdline_exportreport(details=False):
@@ -59,6 +112,7 @@ def help_cmdline_exportreport(details=False):
         ⋅- otherwise 'md' is the only value or the only acceptable start string
         ⋅  e.g. 'md=myfile.md';
         ⋅  otherwise the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
+        ⋅See --help2 for more informations.
         """.replace("$DEFAULT_EXPORTREPORT_FILENAME", DEFAULT_EXPORTREPORT_FILENAME))
     return pimydocstr2str("""
     (pimydoc)command line help for --exportreport(full version)
@@ -94,6 +148,7 @@ def help_cmdline_filter(details=False):
         ⋅format: either empty string if no filter,
         ⋅either 'data:oktrans_only' to only keep the objects that can be successfully
         ⋅transcoded
+        ⋅See --help2 for more informations.
         """)
     return pimydocstr2str("""
            (pimydoc)command line help for --filter(full version)
@@ -129,6 +184,7 @@ def help_cmdline_output(details=False):
         ⋅you may specify 'reportfile=myreportfile'.
         ⋅Combinations like 'reportfile/w=$DEFAULT_REPORTFILE_NAME' are accepted.
         ⋅See by example the default value.
+        ⋅See --help2 for more informations.
         """.replace("$DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
     return pimydocstr2str("""
            (pimydoc)command line help for --output(full version)
@@ -152,6 +208,50 @@ def help_cmdline_output(details=False):
            ⋅exist you can't write:
            ⋅     --output="console;reportfile/w=path/myreportfile"
            """.replace("$DEFAULT_REPORTFILE_NAME", DEFAULT_REPORTFILE_NAME))
+
+
+def help_cmdline_report(details=False):
+    """
+        help_cmdline_report()
+
+        Return help messages for the command line option "--report".
+        _______________________________________________________________________
+
+        ARGUMENT: (bool)details, True if a full help string has to be returned
+
+        RETURNED VALUE: (str)help message
+    """
+    if not details:
+        return pimydocstr2str("""
+        (pimydoc)command line help for --report(short version)
+        ⋅Report format:
+        ⋅you may use one of the special keywords ($REPORT_SHORTCUTS_KEYS)
+        ⋅or a list of section parts, e.g. 'A1;B1a;'.
+        ⋅You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...)
+        ⋅or like 'B1' (=B1a+B1b+B1c).
+        ⋅Accepted section parts are
+        ⋅$STR2REPORTSECTION_KEYS .
+        ⋅More informations in the documentation.
+        ⋅Please notice that --verbosity has no effect upon --report.
+        ⋅See --help2 for more informations.
+        """.replace(
+            "$REPORT_SHORTCUTS_KEYS", str(tuple(REPORT_SHORTCUTS.keys()))).replace(
+                "$STR2REPORTSECTION_KEYS", str(STR2REPORTSECTION_KEYS)))
+    return pimydocstr2str("""
+           (pimydoc)command line help for --report(full version)
+           ⋅Report format:
+           ⋅you may use one of the special keywords ($REPORT_SHORTCUTS_KEYS)
+           ⋅or a list of section parts, e.g. 'A1;B1a;'.
+           ⋅You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...)
+           ⋅or like 'B1' (=B1a+B1b+B1c).
+           ⋅Accepted section parts are
+           ⋅$STR2REPORTSECTION_KEYS .
+           ⋅More informations in the documentation.
+           ⋅Please notice that --verbosity has no effect upon --report.
+           ⋅See --help2 for more informations.
+        """.replace(
+            "$REPORT_SHORTCUTS_KEYS", str(tuple(REPORT_SHORTCUTS.keys()))).replace(
+                "$STR2REPORTSECTION_KEYS", str(STR2REPORTSECTION_KEYS)))
 
 
 def help_helpcommandlineargument():

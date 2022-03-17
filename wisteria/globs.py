@@ -197,7 +197,8 @@ PLATFORM_SYSTEM = None
 # to the entire width of the terminal.
 PROGRESSBAR_LENGTH = None
 
-# (pimydoc)--cmp format
+# (pimydoc)command line help for --cmp(full version)
+# ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
 # ⋅
 # ⋅(I) serializers
 # ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
@@ -223,7 +224,6 @@ PROGRESSBAR_LENGTH = None
 # ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
 # ⋅                              string is used as help message by the
 # ⋅                              command line --help argument.
-# ⋅
 # regex used to parse the --cmp argument string
 REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?"

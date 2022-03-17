@@ -23,12 +23,16 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### ==========================================================================
 ### (pimydoc)--cmp format
 ### (pimydoc)code structure
-### (pimydoc)command line help for --exportreport(short version)
+### (pimydoc)command line help for --cmp(full version)
+### (pimydoc)command line help for --cmp(short version)
 ### (pimydoc)command line help for --exportreport(full version)
-### (pimydoc)command line help for --filter(short version)
+### (pimydoc)command line help for --exportreport(short version)
 ### (pimydoc)command line help for --filter(full version)
+### (pimydoc)command line help for --filter(short version)
+### (pimydoc)command line help for --output(full version)
 ### (pimydoc)command line help for --output(short version)
-### (pimydoc)command line help for --output(full version)    
+### (pimydoc)command line help for --report(full version)
+### (pimydoc)command line help for --report(short version)
 ### (pimydoc)config file format
 ### (pimydoc)cwc modules names
 ### (pimydoc)DATA format
@@ -42,34 +46,6 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)progress bar
 ### (pimydoc)report sections
 ### (pimydoc)works_as_expected arguments and returned value
-
-### ==========================================================================
-[(pimydoc)--cmp format]
-
-(I) serializers
-Test one serializer alone(1) or one serializer against another serializer(2) or
-a serializer against all serializers(3) or all serializers(4) together.
-
-    (1) --cmp="jsonpickle(cwc)"
-    (2) --cmp="jsonpickle vs pickle (cwc)"
-    (3) --cmp="jsonpickle vs all (cwc)"
-    (4) --cmp="all vs all (cwc)"
-
-(II) data types:
-Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
-but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
-
-    (a) --cmp="jsonpickle vs pickle (cwc)"
-    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
-    (c) --cmp="jsonpickle vs pickle (ini)"
-    (d) --cmp="jsonpickle vs pickle (all)"
-
-NB: You may use 'vs' as well as 'against', as if:
-    --cmp="jsonpickle vs pickle (cwc)"
-NB: globs.py::REGEX_CMP defines exactly the expected format
-    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
-                              string is used as help message by the
-                              command line --help argument.
 
 ### ==========================================================================
 [(pimydoc)code structure]
@@ -111,6 +87,38 @@ step D: exit_handler()
 - (D/04) reset console cursor
 
 ### ===========================================================================
+[(pimydoc)command line help for --cmp(full version)]
+Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+
+(I) serializers
+Test one serializer alone(1) or one serializer against another serializer(2) or
+a serializer against all serializers(3) or all serializers(4) together.
+
+    (1) --cmp="jsonpickle(cwc)"
+    (2) --cmp="jsonpickle vs pickle (cwc)"
+    (3) --cmp="jsonpickle vs all (cwc)"
+    (4) --cmp="all vs all (cwc)"
+
+(II) data types:
+Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+
+    (a) --cmp="jsonpickle vs pickle (cwc)"
+    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
+    (c) --cmp="jsonpickle vs pickle (ini)"
+    (d) --cmp="jsonpickle vs pickle (all)"
+
+NB: You may use 'vs' as well as 'against', as if:
+    --cmp="jsonpickle vs pickle (cwc)"
+NB: globs.py::REGEX_CMP defines exactly the expected format
+    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
+                              string is used as help message by the
+                              command line --help argument.
+### ===========================================================================
+[(pimydoc)command line help for --cmp(short version)]
+Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+See --help2 for more informations.
+### ===========================================================================
 [(pimydoc)command line help for --exportreport(full version)]
 Export report by creating a new file in which
 both report text and graphics are put together.
@@ -131,6 +139,7 @@ both report text and graphics are put together.
 - otherwise 'md' is the only value or the only acceptable start string
   e.g. 'md=myfile.md';
   otherwise the default filename is '$DEFAULT_EXPORTREPORT_FILENAME' . "
+See --help2 for more informations.
 ### ===========================================================================    
 [(pimydoc)command line help for --filter(full version)]
 The --filter argument allows to select only some serializers or
@@ -145,17 +154,7 @@ Filter out the data or the serializers to be used.
 format: either empty string if no filter,
 either 'data:oktrans_only' to only keep the objects that can be successfully
 transcoded
-### ==========================================================================
-[(pimydoc)command line help for --output(short version)]
-Values are 'console' or 'reportfile' or 'console;reportfile'.
-Instead of 'reportfile'
-you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode).
-You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name
-in order to add a timestamp in the filename.
-Instead of 'reportfile'
-you may specify 'reportfile=myreportfile'.
-Combinations like 'reportfile/w=$DEFAULT_REPORTFILE_NAME' are accepted.
-See by example the default value.    
+See --help2 for more informations.
 ### ==========================================================================    
 [(pimydoc)command line help for --output(full version)]
 A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
@@ -176,7 +175,43 @@ A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
 
 BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
 exist you can't write:
-     --output="console;reportfile/w=path/myreportfile"    
+     --output="console;reportfile/w=path/myreportfile"
+### ==========================================================================
+[(pimydoc)command line help for --output(short version)]
+Values are 'console' or 'reportfile' or 'console;reportfile'.
+Instead of 'reportfile'
+you may specify 'reportfile/a' (append mode) or 'reportfile/w' (write mode).
+You may add special strings 'TIMESTAMP' or 'DATETIME' to report file name
+in order to add a timestamp in the filename.
+Instead of 'reportfile'
+you may specify 'reportfile=myreportfile'.
+Combinations like 'reportfile/w=$DEFAULT_REPORTFILE_NAME' are accepted.
+See by example the default value.
+See --help2 for more informations.
+### ==========================================================================
+[(pimydoc)command line help for --report(full version)]
+Report format:
+you may use one of the special keywords ($REPORT_SHORTCUTS_KEYS)
+or a list of section parts, e.g. 'A1;B1a;'.
+You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...)
+or like 'B1' (=B1a+B1b+B1c).
+Accepted section parts are
+$STR2REPORTSECTION_KEYS .
+More informations in the documentation.
+Please notice that --verbosity has no effect upon --report.
+See --help2 for more informations.
+### ==========================================================================
+[(pimydoc)command line help for --report(short version)]
+Report format:
+you may use one of the special keywords ($REPORT_SHORTCUTS_KEYS)
+or a list of section parts, e.g. 'A1;B1a;'.
+You may use shorter strings like 'B' (=B1+B2, i.e. B1a+B1b...+B2a+B2b...)
+or like 'B1' (=B1a+B1b+B1c).
+Accepted section parts are
+$STR2REPORTSECTION_KEYS .
+More informations in the documentation.
+Please notice that --verbosity has no effect upon --report.
+See --help2 for more informations.
 ### ==========================================================================
 [(pimydoc)config file format]
 
@@ -249,6 +284,7 @@ used for this project; these constants are only defined for Linux systems
 and this project aims Windows/OSX systems.
 
 *    0: normal exit code
+*       normal exit code after --help/--help2
 *       normal exit code after --checkup
 *       normal exit code after --downloadconfigfile
 *       normal exit code after --mymachine

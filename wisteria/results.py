@@ -189,6 +189,7 @@ def compute_results():
             # ⋅and this project aims Windows/OSX systems.
             # ⋅
             # ⋅*    0: normal exit code
+            # ⋅*       normal exit code after --help/--help2
             # ⋅*       normal exit code after --checkup
             # ⋅*       normal exit code after --downloadconfigfile
             # ⋅*       normal exit code after --mymachine
@@ -221,6 +222,7 @@ def compute_results():
         # ⋅and this project aims Windows/OSX systems.
         # ⋅
         # ⋅*    0: normal exit code
+        # ⋅*       normal exit code after --help/--help2
         # ⋅*       normal exit code after --checkup
         # ⋅*       normal exit code after --downloadconfigfile
         # ⋅*       normal exit code after --mymachine
