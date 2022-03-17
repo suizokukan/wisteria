@@ -288,12 +288,10 @@ def help_graphsfilenames():
 
         RETURNED VALUE: (str)an help message
     """
-    file1 = os.path.join(REPORTFILE_PATH,
-                         GRAPHS_GENERIC_FILENAME.replace('__SUFFIX__', '1'))
-    file2 = os.path.join(REPORTFILE_PATH,
-                         GRAPHS_GENERIC_FILENAME.replace('__SUFFIX__', '2'))
+    file1 = os.path.join(GRAPHS_GENERIC_FILENAME.replace('__SUFFIX__', '1'))
+    file2 = os.path.join(GRAPHS_GENERIC_FILENAME.replace('__SUFFIX__', '2'))
     return f"'{file1}' " \
-        f"({normpath(file1)}), " \
+        f"({normpath(os.path.basename(file1))}), " \
         f"'{file2}' " \
-        f"({file2}), " \
+        f"({normpath(os.path.basename(file2))}), " \
         "and so on"

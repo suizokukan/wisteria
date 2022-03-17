@@ -80,6 +80,14 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-374
+
+Fixed issue #44: improved help_graphsfilenames() so that graphs filenames
+are correctly returned.
+
+    * Fixed issue #44: improved help_graphsfilenames() so that graphs filenames
+      are correctly returned.
+
 [DONE] task-373
 
 Fixed issue #18: detailed help for command line can be reached
