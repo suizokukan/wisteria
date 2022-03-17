@@ -1,4 +1,4 @@
-Wisteria / coding conventions (v. 1)
+Wisteria / coding conventions (v. 2)
 ====================================
 
 before pushing
@@ -84,7 +84,7 @@ serialize demonstration_dataobj_a5 ?
 (/can't) fully transcoded.
 
 
-bugfixes:
+bugfixes
 
     * fixed a problem with the console cursor:
       When the program is abruptly stopped, it was possible that the terminal

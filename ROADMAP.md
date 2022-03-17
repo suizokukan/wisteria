@@ -80,6 +80,338 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+--help2, create_demonstration_reports.sh and demonstration_reports/ directory.
+A lot of bugs have been fixed, doc. has been improved.
+
+
+bugfixes
+
+    * fixed issue #7: bug in in serializer_yajl(): SystemError wasn't catched.
+      (task-336)
+    * Fixed issue #13: in serializer_yajl(), SystemError has to be catched
+      twice; otherwise an exception may be raised
+      (task-341)
+    * Fixed a bug in reprfmt.py::fmt_[critical|debug|info]: the special character
+      (@, !!! or >) is now added at the beginning of each line of the message,
+      and not only the first one.
+      (task-347)
+    * fixed issue #26: the program raised an error when --exportreport wasn't
+      specified.
+      (task-356)
+    * fixed a bug in pimydocstr2str(): the real character used by pimydoc and
+      defined in the `pimydoc` can't directly appear in the source code.
+      (task-356)
+    * Fixed issue #39: Wrong path to images in demonstration reports
+      Modified exported report creation (in exit_handler()) so that
+      the basename (not the full name anymore) of the images is now
+      given.
+      (task-363)
+    * Fixed issue #38: FileNotFoundError is now catched when creating the
+      exported report.
+      (task-364)
+    * Fixed issue #44: improved help_graphsfilenames() so that graphs filenames
+      are correctly returned.
+      (task-374)
+    * Fixed a minor bug in cmdline_cmp.py: added a required import
+      (task-377)
+
+code readibility and code quality
+
+    * fixed extra blank line in reprfmt.py
+      (task-348)
+    * added a missing blank line in helpmsg.py
+      (task-351)
+    * added a missing blank in a message from report_section_c2c__allvsall()
+      (task-357)
+    * fixed issue #28: no more TODOs in the code by improving the doc of
+      SerializationResults.are_all_serializers_equal_in_the_hall()
+      (task-357)
+    * Fixed issue #32, issue #33 and issue #34.
+      For the sake of clarity renamed some globs.py constants:
+      - FILECONSOLE > RICHFILECONSOLE
+      - FILECONSOLE_FILEOBJECT > RICHFILECONSOLE_FILEOBJECT
+      - GRAPHS_FILENAME > GRAPHS_GENERIC_FILENAME
+      (task-369)
+    * renamed 'help_helpcommandlineargument()' as
+      'help_cmdline_helpdescription()' to improved code
+      readibility.
+      (task-375)
+    * removed useless import helpmsg.py
+      (task-377)
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+
+code structure
+
+    * renumbered the exit codes taking into account the standards, in particular
+      this one: https://docs.python.org/3/library/sys.html#sys.exit
+      *  0: normal exit code
+       > 0
+      *  1: normal exit code after --checkup
+       > 0
+      *  2: normal exit code after --downloadconfigfile
+       > 0
+      *  3: normal exit code after --mymachine
+       > 0
+      *  4: normal exit code (no data to handle)
+       > 0
+      *  5: normal exit code (no serializer to handle)
+       > 0
+      * -1: error, given config file can't be read (missing or ill-formed file)
+       > 1
+      * -2: error, ill-formed --cmp string
+       > 2
+      * -3: error, ill-formed --output string
+       > 3
+      * -4: error, missing required module
+       > 4
+      * -5: error: an inconsistency between the data has been detected
+       > 5
+      * -100: internal error, data can't be loaded
+       > 100
+      * -101: internal error, an error occured while computing the results
+       > 101
+      * -102: internal error, an error occured in main()
+       > 102
+      * -103: internal error, can't initialize PLANNED_TRANSCODINGS
+       > 103
+      (task-342)
+    * new function in helpmsg.py named `help_cmdline_filter`
+      (task-346)
+    * command line argument --filter definition depends on a call to
+      help_cmdline_filter(details=False)
+      (task-346)
+    * pimydocstr2str() has a new argument (`replacements`) to allow
+      string substitutions in the message
+      (task-350)
+    * command line argument --exportreport definition now depends on a call to
+      help_cmdline_exportreport(details=False)
+      (task-350)
+    * issue #22: code structure (D01, D02, D03, D04) to be modified.
+      Current D03 becomes D01 to prevent calls to rprint().
+      (task-351)
+    * modified help_cmdline_xxx() functions so that ancient `replacements` argument
+      is not required anymore.
+      (task-352)
+    * fixed issue #10 (`incoherent C2c`) and issue #5 (`seems to consume memory`)
+      by rewriting report_section_c2c__serializervsall() and
+      report_section_c2c__allvsall(). Both functions now relie on a subfunction,
+      named `explicit()` that creates the expected phrases and sentences.
+      (task-357)
+    * fixed issue #16: --output should define the target path for report files.
+      REPORTFILE_PATH is initialized from --output 'reportfile=path/myreportfile'
+      (task-358)
+    * new constants in globs.py: REPORTFILE_PATH, GRAPHS_FILENAME, GRAPHS_DESCRIPTION
+      (task-358)
+    * new functions in globs.py:
+        - get_default_exportreport_filename()
+        - get_default_reportfile_name()
+        - get_exportreport_filename()
+        - get_graphs_filename()
+        - get_graphs_description()
+      (task-358)
+    * --output help message is now based on a call to
+      help_cmdline_output().
+      (task-358)
+    * new function in helpmsg.py: help_cmdline_output()
+      (task-358)
+    * modified open_reportfile() which now returns a tuple of 2 values
+      (opened object, path to this object) and which catch the FileNotFoundError
+      exception
+      (task-358)
+    * new exit code (#6)
+      (task-358)
+    * fixed issue #29: "duplicate: ERRORID050"
+      error ERRORID050 in exit_handler() is now ERRORID054
+      (task-361)
+    * Fixed issue #4: "report examples".
+      The script `create_demonstration_reports.sh` create different reports
+      in the subdirectory `demonstration_reports`.
+      (task-362)
+    * Fixed issue #41: improve create_demonstration_reports.sh
+      Added "console;" to --output to help people trying to use the project:
+      otherwise no message is written to the console.
+      (task-365)
+    * Fixed issue #40: in err_codes.sh, max_index is now set to 60 .
+      (task-366)
+    * Fixed issue #30: strings to be replaced in pimydoc file have now a special
+      prefix '$'; such strings will be replaced help_cmdline_xxx() functions.
+      This prefix has been added to improve code readibility.
+      (task-367)
+    * new format function `fmt_be3s`
+      (task-370)
+    * new help functions: help_cmdline_cmp(), help_cmdline_report()
+      (task-373)
+    * removed useless globs.py::REGEX_CMP__HELP
+      (task-375)
+    * Fixed issue #1: check that it's still possible to ship a new pip
+      version. Current version is 0.2.3pre1 .
+      (task-376)
+
+documentation
+
+    * improved doc. (installation guide in README.md)
+      (task-333)
+    * fixed issue #9: improved documentation in README.md
+      ("not yet to be used !")
+      (task-334)
+    * fixed issue #2: improved doc in README.md (no more %%).
+      (task-335)
+    * fixed issue #8: in README.md, make it clear that Wisteria can use certain
+      types of data.
+      (task-337)
+    * Updated ROADMAP.md: the list of data objects defining the 'int' type is
+      now complete.
+      (task-338)
+    * fixed issue #3: new file codingconventions.md
+      (task-339)
+    * updated README.md about coding conventions
+      (task-339)
+    * fixed issue #11: (doc)README.md "Built-in Types coverage" to be rewritten
+      (task-340)
+    * updated doc about exit codes
+      (task-342)
+    * updated wisteria/__init__.py
+      (task-345)
+    * new pimydoc sections:
+      - "command line help for --filter(short version)"
+      - "command line help for --filter(full version)"
+      (task-346)
+    * Updated documentation in README.md and pimydoc about B3 section
+      (task-349)
+    * improved documentation linked to --exportreport, in the source code and
+      in pimydoc
+      (task-356)
+    * updated codingconventions.md and the pimydoc file about the problem of
+      the pimydoc's special character
+      (task-356)
+    * fixed issue #10 (`incoherent C2c`) and issue #5 (`seems to consume memory`)
+      by rewriting report_section_c2c__serializervsall() and
+      report_section_c2c__allvsall(). Both functions now relie on a subfunction,
+      named `explicit()` that creates the expected phrases and sentences.
+      (task-357)
+    * updated documentation (pimydoc, README.md, __init__.py)
+      (task-358)
+    * fixed issue #37: remove code structure duplicate from wisteria.py
+      remove useless duplicated doc; improved doc in README.md/__init__.py
+      (task-359)
+    * fixed issue #36: "(typo in doc)no parenthesized context managers is available"
+      in tests/cwc_pgnreader_default__tests.py
+      (task-360)
+    * Fixed issue #31: add documentation explaining why rprint() is not used
+      instead of print; use rprint() whereever it was possible.
+      (task-368)
+    * fixed minor doc. problem for fmt_nounplural()
+      (task-370)
+    * Updated demonstration reports after task-370.
+      (task-371)
+    * Fixed issue #35: improved doc for --exportreport.
+      (task-372)
+    * improved documentation in wisteria.py describing the command
+      line arguments
+      (task-373)
+    * new entries in pimydoc:
+      - "command line help for --cmp(full version)"
+      - "command line help for --cmp(short version)"
+      - "command line help for --report(full version)"
+      - "command line help for --report(short version)"
+      (task-373)
+    * Fixed #43: improved help messages for command line arguments
+      (task-375)
+    * updated __init__.py from README.ini content
+      by calling `$ readmemd2txt --pyinitfile > wisteria/__init__.py`
+      (task-376)
+    * updated demonstration reports
+      (task-376)
+    * improved README.md: doc about pypi
+      (task-376)
+
+interface
+
+    * fixed issue #14: improved error message ERRORID051
+      (task-343)
+    * fixed issue #6: improved message in report_section_a5()
+      (task-344)
+    * fixed issue #12: no clear error message when --filter value can't be parsed
+      (task-346)
+    * fixed issue #20: improved report titles A2 and A3.
+      (task-348)
+    * Fixed issue #17: new report section (B3) giving the encoded string for
+      every data object.
+      (task-349)
+    * fixed issue #24: msgwarning() messages can't be read due to wrong colors choice
+      (task-353)
+    * fixed issue #21: improved pimydocstr2str() so that messages are now much more
+      readable.
+      (task-354)
+    * Fixed issue #25: missing msginfo("About --exportreport") in wisteria.py (in D01)
+      (task-355)
+    * Fixed issue #42 : A1 report section now shows --filter value.
+      (task-370)
+      Fixed issue #27 : discarded serializers are now displayed in A2 report
+                        section,
+                        discarded data objects are now displayed in A3 report
+                        section.
+      (task-370)
+    * Fixed issue #18: detailed help for command line can be reached
+      thanks to the new --help2 argument.
+      (task-373)
+
+tasks
+
+    * task-333, task-334, task-335, task-336, task-337,
+      task-338, task-339, task-340, task-341, task-342,
+      task-343, task-344, task-345, task-346, task-347,
+      task-348, task-349, task-350, task-351, task-352,
+      task-353, task-354, task-355, task-356, task-357,
+      task-358, task-359, task-360, task-361, task-362,
+      task-363, task-364, task-365, task-366, task-367,
+      task-368, task-369, task-370, task-371, task-372,
+      task-373, task-374, task-375, task-376, task-377
+
+version
+
+    * set version to '0.2.3'
+
+```
+$ poetry show --tree (thanks to ./poetry_show_tree.sh)
+
+psutil 5.9.0 Cross-platform lib for process and system monitoring in Python.
+py-cpuinfo 8.0.0 Get CPU info with pure Python 2 & 3
+rich 10.16.2 Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+|-- colorama >=0.4.0,<0.5.0
+|-- commonmark >=0.9.0,<0.10.0
+`-- pygments >=2.6.0,<3.0.0
+wmi 1.5.1 Windows Management Instrumentation
+`-- pywin32 *
+```
+
+```
+
+```
+$ check_tools.sh
+
+* about poetry:
+Poetry version 1.1.13
+* about shellcheck:
+ShellCheck - shell script analysis tool
+version: 0.8.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+* about pycodestyle:
+2.8.0
+* about pylint:
+pylint 2.12.2
+astroid 2.11.0
+Python 3.10.2 (main, Jan 15 2022, 19:56:27) [GCC 11.1.0]
+* about pipdeptree:
+* about pimydoc:
+Pimydoc v. 0.2.9
+* about readmemd2txt:
+readmemd2txt: 0.0.5
+```
+
 [DONE] task-377
 
 Fixed a minor bug in cmdline_cmp.py: added a required import.
@@ -89,7 +421,7 @@ Fixed a minor bug in cmdline_cmp.py: added a required import.
 
     * tests: 7 tests ok out of 7
     * Pylint: 10/10
-    
+
 [DONE] task-376
 
 Fixed issue #1: check that it's still possible to ship a new pip
