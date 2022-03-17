@@ -80,6 +80,18 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-376
+
+Fixed issue #1: check that it's still possible to ship a new pip
+version. Current version is 0.2.3pre1 .
+
+    * Fixed issue #1: check that it's still possible to ship a new pip
+      version. Current version is 0.2.3pre1 .
+    * updated __init__.py from README.ini content
+      by calling `$ readmemd2txt --pyinitfile > wisteria/__init__.py`
+    * updated demonstration reports
+    * improved README.md: doc about pypi
+
 [DONE] task-375
 
 Fixed #43: improved help messages for command line arguments

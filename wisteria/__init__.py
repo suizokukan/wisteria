@@ -41,7 +41,9 @@ TABLE OF CONTENTS
     - [3.3.3] before committing
   - [3.4] coding conventions
   - [3.5] errors and warnings
-  - [3.6] git and poetry workflow
+  - [3.6] git and poetry and pypi workflow
+  - [3.6.2] pypi: ship another version
+
 - [4] FAQ
 
 [0] the project in a few words
@@ -271,6 +273,36 @@ You just want to see what the encoded string look like:
     --cmp="all" --report="titles;B3"
 
   |
+  | (pimydoc)command line help for --cmp(full version)
+  | ⋅Comparisons details.
+  | ⋅
+  | ⋅(I) serializers
+  | ⋅Test one serializer alone(1) or one serializer against another serializer(
+2) or
+  | ⋅a serializer against all serializers(3) or all serializers(4) together.
+  | ⋅
+  | ⋅    (1) --cmp="json"
+  | ⋅    (2) --cmp="json vs pickle"
+  | ⋅    (3) --cmp="json vs all"
+  | ⋅    (4) --cmp="all vs all"
+  | ⋅
+  | ⋅(II) data types:
+  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all
+data types
+  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all d
+ata types(d).
+  | ⋅
+  | ⋅    (a) --cmp="json vs pickle (cwc)"
+  | ⋅    (b) --cmp="json vs pickle (allbutcwc)"
+  | ⋅    (c) --cmp="json vs pickle (ini)"
+  | ⋅    (d) --cmp="json vs pickle (all)"
+  | ⋅
+  | ⋅NB: You may use 'vs' as well as 'against', as in:
+  | ⋅    --cmp="json vs pickle (cwc)"
+  | ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
+  |
+
+  |
   | (pimydoc)command line help for --exportreport(full version)
   | ⋅Export report by creating a new file in which
   | ⋅both report text and graphics are put together.
@@ -316,36 +348,6 @@ You just want to see what the encoded string look like:
   | ⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
   | ⋅exist you can't write:
   | ⋅     --output="console;reportfile/w=path/myreportfile"
-  |
-
-  |
-  | (pimydoc)command line help for --cmp(full version)
-  | ⋅Comparisons details.
-  | ⋅
-  | ⋅(I) serializers
-  | ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
-  | ⋅a serializer against all serializers(3) or all serializers(4) together.
-  | ⋅
-  | ⋅    (1) --cmp="json"
-  | ⋅    (2) --cmp="json vs pickle"
-  | ⋅    (3) --cmp="json vs all"
-  | ⋅    (4) --cmp="all vs all"
-  | ⋅
-  | ⋅(II) data types:
-  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
-  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
-  | ⋅
-  | ⋅    (a) --cmp="json vs pickle (cwc)"
-  | ⋅    (b) --cmp="json vs pickle (allbutcwc)"
-  | ⋅    (c) --cmp="json vs pickle (ini)"
-  | ⋅    (d) --cmp="json vs pickle (all)"
-  | ⋅
-  | ⋅NB: You may use 'vs' as well as 'against', as in:
-  | ⋅    --cmp="json vs pickle (cwc)"
-  | ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
-2) or
-data types
-ata types(d).
   |
 
 pylintrc
@@ -1101,7 +1103,8 @@ See classes.md.
   | ⋅step B: initializations & --checkup
   | ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
   | ⋅- (B/03) wisteria.globs.ARGS initialization
-  | ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
+  | ⋅- (B/04) a special case: if no argument has been given, we explicit the de
+fault values
   | ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
   | ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
   | ⋅- (B/07) msgxxx() functions can be used
@@ -1139,7 +1142,7 @@ See classes.md.
 ⋅These exit codes try to take into account the standards, in particular this
 ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
 ⋅
-⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+⋅Please note that os constants like os.EX_OK as defined in Python doc
 ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
 ⋅used for this project; these constants are only defined for Linux systems
 ⋅and this project aims Windows/OSX systems.
@@ -1165,4 +1168,13 @@ See classes.md.
 [3.4] coding conventions.
 
 See codingconventions.md.
+
+[3.6] git and poetry and pypi workflow
+
+[3.6.2] pypi: ship another version
+
+  |
+  | $ poetry build
+  | $ poetry publish
+  |
 """

@@ -22,22 +22,24 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
 - [3] [if you want to read/test/modify the code](#3-if-you-want-to-readtestmodify-the-code)
   - [3.0] [classes hierarchy and code structure](#30-classes-hierarchy-and-code-structure)
   - [3.1] [exit codes](#31-exit-codes)
-  - [3.2] [checks and tests](#31-checks-and-tests)
-    - [3.2.1] [check_tools](#311-check_tools)
-    - [3.2.2] [launch the tests](#312-launch-the-tests)
-    - [3.2.3] [check code quality](#313-check-code-quality)
-    - [3.2.4] [check pip conflicts](#314-check-pip-conflicts)
-    - [3.2.5] [search all errors/warnings codes](#315-search-all-errorswarnings-codes)
-    - [3.2.6] [automatically generate the main __init__py file](#316-automatically-generate-the-main-__init__py-file)
-  - [3.3] [code quality](#32-code-quality)
-    - [3.3.1] [code quality matters](#321-code-quality-matters)
-      - [3.3.1.1] [about pylint and pylintrc](#3211-about-pylint-and-pylintrc)
-    - [3.3.2] [how to read and write documentation](#322-how-to-read-and-write-documentation)
-      - [3.3.2.1] [about markdown files](#3221-about-markdown-files)
-    - [3.3.3] [before committing](#323-before-committing)
-  - [3.4] [coding conventions](#33-coding-conventions)
-  - [3.5] [errors and warnings](#34-errors-and-warnings)
-  - [3.6] [git and poetry workflow](#35-git-and-poetry-workflow)
+  - [3.2] [checks and tests](#32-checks-and-tests)
+    - [3.2.1] [check_tools](#321-check_tools)
+    - [3.2.2] [launch the tests](#322-launch-the-tests)
+    - [3.2.3] [check code quality](#323-check-code-quality)
+    - [3.2.4] [check pip conflicts](#324-check-pip-conflicts)
+    - [3.2.5] [search all errors/warnings codes](#325-search-all-errorswarnings-codes)
+    - [3.2.6] [automatically generate the main __init__py file](#326-automatically-generate-the-main-__init__py-file)
+  - [3.3] [code quality](#33-code-quality)
+    - [3.3.1] [code quality matters](#331-code-quality-matters)
+      - [3.3.1.1] [about pylint and pylintrc](#3311-about-pylint-and-pylintrc)
+    - [3.3.2] [how to read and write documentation](#332-how-to-read-and-write-documentation)
+      - [3.3.2.1] [about markdown files](#3321-about-markdown-files)
+    - [3.3.3] [before committing](#333-before-committing)
+  - [3.4] [coding conventions](#34-coding-conventions)
+  - [3.5] [errors and warnings](#35-errors-and-warnings)
+  - [3.6] [git and poetry and pypi workflow](#36-git-and-poetry-and-pypi-workflow)
+  - [3.6.2] [pypi: ship another version](#362-pypi-ship-another-version)
+    
 - [4] [FAQ](#4-faq)
 
 # [0] the project in a few words
@@ -1094,3 +1096,12 @@ See [classes.md](classes.md).
 ## [3.4] coding conventions.
 
 See [codingconventions.md](codingconventions.md).
+
+## [3.6] git and poetry and pypi workflow
+
+### [3.6.2] pypi: ship another version
+
+```
+$ poetry build
+$ poetry publish
+```
