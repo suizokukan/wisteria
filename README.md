@@ -238,6 +238,33 @@ You just want to see what the encoded string look like:
     --cmp="all" --report="titles;B3"
 
 ```
+(pimydoc)command line help for --cmp(full version)
+⋅Comparisons details.
+⋅
+⋅(I) serializers
+⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+⋅a serializer against all serializers(3) or all serializers(4) together.
+⋅
+⋅    (1) --cmp="json"
+⋅    (2) --cmp="json vs pickle"
+⋅    (3) --cmp="json vs all"
+⋅    (4) --cmp="all vs all"
+⋅
+⋅(II) data types:
+⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
+⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+⋅
+⋅    (a) --cmp="json vs pickle (cwc)"
+⋅    (b) --cmp="json vs pickle (allbutcwc)"
+⋅    (c) --cmp="json vs pickle (ini)"
+⋅    (d) --cmp="json vs pickle (all)"
+⋅
+⋅NB: You may use 'vs' as well as 'against', as in:
+⋅    --cmp="json vs pickle (cwc)"
+⋅NB: globs.py::REGEX_CMP defines exactly the expected format
+```
+
+```
 (pimydoc)command line help for --exportreport(full version)
 ⋅Export report by creating a new file in which
 ⋅both report text and graphics are put together.
@@ -283,36 +310,6 @@ You just want to see what the encoded string look like:
 ⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
 ⋅exist you can't write:
 ⋅     --output="console;reportfile/w=path/myreportfile"
-```
-
-```
-(pimydoc)command line help for --cmp(full version)
-⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
-⋅
-⋅(I) serializers
-⋅Test one serializer alone(1) or one serializer against another serializer(2) or
-⋅a serializer against all serializers(3) or all serializers(4) together.
-⋅
-⋅    (1) --cmp="jsonpickle(cwc)"
-⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
-⋅    (3) --cmp="jsonpickle vs all (cwc)"
-⋅    (4) --cmp="all vs all (cwc)"
-⋅
-⋅(II) data types:
-⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
-⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
-⋅
-⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
-⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
-⋅    (c) --cmp="jsonpickle vs pickle (ini)"
-⋅    (d) --cmp="jsonpickle vs pickle (all)"
-⋅
-⋅NB: You may use 'vs' as well as 'against', as if:
-⋅    --cmp="jsonpickle vs pickle (cwc)"
-⋅NB: globs.py::REGEX_CMP defines exactly the expected format
-⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
-⋅                              string is used as help message by the
-⋅                              command line --help argument.
 ```
 
 pylintrc

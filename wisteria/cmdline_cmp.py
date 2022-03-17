@@ -28,8 +28,8 @@
 """
 import re
 
-from wisteria.msg import msgerror
-from wisteria.globs import REGEX_CMP, REGEX_CMP__HELP
+from wisteria.msg import msgerror, msginfo
+from wisteria.globs import REGEX_CMP
 from wisteria.reprfmt import fmt_serializer0, fmt_serializer, fmt_nounplural
 import wisteria.globs
 
@@ -41,32 +41,29 @@ def read_cmpstring(cmpstring):
         Return a simpler representation of (str)<cmpstring>.
 
         (pimydoc)command line help for --cmp(full version)
-        ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+        ⋅Comparisons details.
         ⋅
         ⋅(I) serializers
         ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
         ⋅a serializer against all serializers(3) or all serializers(4) together.
         ⋅
-        ⋅    (1) --cmp="jsonpickle(cwc)"
-        ⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
-        ⋅    (3) --cmp="jsonpickle vs all (cwc)"
-        ⋅    (4) --cmp="all vs all (cwc)"
+        ⋅    (1) --cmp="json"
+        ⋅    (2) --cmp="json vs pickle"
+        ⋅    (3) --cmp="json vs all"
+        ⋅    (4) --cmp="all vs all"
         ⋅
         ⋅(II) data types:
         ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
         ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
         ⋅
-        ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
-        ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
-        ⋅    (c) --cmp="jsonpickle vs pickle (ini)"
-        ⋅    (d) --cmp="jsonpickle vs pickle (all)"
+        ⋅    (a) --cmp="json vs pickle (cwc)"
+        ⋅    (b) --cmp="json vs pickle (allbutcwc)"
+        ⋅    (c) --cmp="json vs pickle (ini)"
+        ⋅    (d) --cmp="json vs pickle (all)"
         ⋅
-        ⋅NB: You may use 'vs' as well as 'against', as if:
-        ⋅    --cmp="jsonpickle vs pickle (cwc)"
+        ⋅NB: You may use 'vs' as well as 'against', as in:
+        ⋅    --cmp="json vs pickle (cwc)"
         ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
-        ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
-        ⋅                              string is used as help message by the
-        ⋅                              command line --help argument.
         _______________________________________________________________________
 
         ARGUMENT: (str)cmpstring, the source string to be read.
@@ -163,6 +160,7 @@ def read_cmpstring(cmpstring):
 
         return True, serializer1, serializer2, cmpdata
 
-    msgerror(f"(ERRORID012) Ill-formed cmp string '{cmpstring}'. "
-             f"Expected syntax is '{REGEX_CMP__HELP}'.")
+    msgerror(f"(ERRORID012) Ill-formed cmp string '{cmpstring}'. ")
+    msginfo("About --cmp:")
+    msginfo(help_cmdline_cmp(details=True))
     return False, None, None, None

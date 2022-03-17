@@ -80,6 +80,16 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-375
+
+Fixed #43: improved help messages for command line arguments
+
+    * Fixed #43: improved help messages for command line arguments
+    * removed useless globs.py::REGEX_CMP__HELP
+    * renamed 'help_helpcommandlineargument()' as
+      'help_cmdline_helpdescription()' to improved code
+      readibility.
+
 [DONE] task-374
 
 Fixed issue #44: improved help_graphsfilenames() so that graphs filenames

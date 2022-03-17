@@ -29,7 +29,7 @@
     o  help_cmdline_filter(details=False)
     o  help_cmdline_output(details=False)
     o  help_cmdline_report(details=False)
-    o  help_helpcommandlineargument()
+    o  help_cmdline_helpdescription()
     o  help_graphsfilenames()
 """
 import os.path
@@ -37,7 +37,6 @@ import os.path
 from wisteria.globs import GRAPHS_GENERIC_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.globs import DEFAULT_EXPORTREPORT_FILENAME
 from wisteria.globs import REPORTFILE_PATH
-from wisteria.globs import REGEX_CMP__HELP
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import STR2REPORTSECTION_KEYS
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
@@ -58,38 +57,39 @@ def help_cmdline_cmp(details=False):
     if not details:
         return pimydocstr2str("""
         (pimydoc)command line help for --cmp(short version)
-        ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+        ⋅Comparisons settings: use e.g. --cmp="json vs pickle" to compare two
+        ⋅serializers, --cmp="json vs all" to compare a serializer
+        ⋅against all the other serializers. Use --cmp="json vs pickle(ini)
+        ⋅to select data objects from the config file, --cmp="json vs pickle(cwc)"
+        ⋅to select CWC data objects.
         ⋅See --help2 for more informations.
-        """.replace("$REGEX_CMP__HELP", REGEX_CMP__HELP))
+        """)
     return pimydocstr2str("""
     (pimydoc)command line help for --cmp(full version)
-    ⋅Comparisons details. Expected syntax: '$REGEX_CMP__HELP'.
+    ⋅Comparisons details.
     ⋅
     ⋅(I) serializers
     ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
     ⋅a serializer against all serializers(3) or all serializers(4) together.
     ⋅
-    ⋅    (1) --cmp="jsonpickle(cwc)"
-    ⋅    (2) --cmp="jsonpickle vs pickle (cwc)"
-    ⋅    (3) --cmp="jsonpickle vs all (cwc)"
-    ⋅    (4) --cmp="all vs all (cwc)"
+    ⋅    (1) --cmp="json"
+    ⋅    (2) --cmp="json vs pickle"
+    ⋅    (3) --cmp="json vs all"
+    ⋅    (4) --cmp="all vs all"
     ⋅
     ⋅(II) data types:
     ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
     ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
     ⋅
-    ⋅    (a) --cmp="jsonpickle vs pickle (cwc)"
-    ⋅    (b) --cmp="jsonpickle vs pickle (allbutcwc)"
-    ⋅    (c) --cmp="jsonpickle vs pickle (ini)"
-    ⋅    (d) --cmp="jsonpickle vs pickle (all)"
+    ⋅    (a) --cmp="json vs pickle (cwc)"
+    ⋅    (b) --cmp="json vs pickle (allbutcwc)"
+    ⋅    (c) --cmp="json vs pickle (ini)"
+    ⋅    (d) --cmp="json vs pickle (all)"
     ⋅
-    ⋅NB: You may use 'vs' as well as 'against', as if:
-    ⋅    --cmp="jsonpickle vs pickle (cwc)"
+    ⋅NB: You may use 'vs' as well as 'against', as in:
+    ⋅    --cmp="json vs pickle (cwc)"
     ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
-    ⋅    globs.py::REGEX_CMP__HELP gives an idea of what is expected; this
-    ⋅                              string is used as help message by the
-    ⋅                              command line --help argument.
-    """.replace("$REGEX_CMP__HELP", REGEX_CMP__HELP))
+    """)
 
 
 def help_cmdline_exportreport(details=False):
@@ -254,9 +254,9 @@ def help_cmdline_report(details=False):
                 "$STR2REPORTSECTION_KEYS", str(STR2REPORTSECTION_KEYS)))
 
 
-def help_helpcommandlineargument():
+def help_cmdline_helpdescription():
     """
-        help_helpcommandlineargument()
+        help_cmdline_helpdescription()
 
         Complete the --help message. If all required packages are installed,
         give some advice; if all required packages ARE NOT installed,
@@ -270,7 +270,8 @@ def help_helpcommandlineargument():
             'are also written in a file, ' \
             f'\'{DEFAULT_REPORTFILE_NAME}\' ({normpath(DEFAULT_REPORTFILE_NAME)}), ' \
             'and - if matplotlib is installed - graphs are written in files named ' \
-            f'{help_graphsfilenames()}.'
+            f'{help_graphsfilenames()}. ' \
+            'For more informations, try wisteria --help2 and read README.md .'
 
     return "\n\nERROR !\nBEWARE, MISSING REQUIRED PACKAGAGES ! " \
         "THE PROGRAM CAN'T BE EXECUTED WITHOUT THE FOLLOWING PACKAGE(S): " \
