@@ -4,10 +4,6 @@ Wisteria's roadmap & todos
 ===============================================================================
 What's next ?
 
-[? 0.2.4] améliorer la méthode utilisée (moyenne,)
-* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
-* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
-
 [? 0.2.5] vrais tests
 * tests
         * prendre un jeu de données
@@ -77,6 +73,22 @@ What's next ?
       comment signaler cette anomalie ?
 
 ===============================================================================
+
+[CURRENT] v. 0.2.4
+* --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
+* moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
+
+[DONE] task-378
+
+Fixed issue #45: fixed a bug in checkup() where a variable wasn't correctly
+defined, raising an error if the config file wasn't found.
+
+    * Fixed issue #45: fixed a bug in checkup() where a variable wasn't
+      correctly defined, raising an error if the config file wasn't found.
+    * Improved error message 001 in read_cfgfile()
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
 
 [DONE] v. 0.2.3
 

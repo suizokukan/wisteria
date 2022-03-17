@@ -861,6 +861,7 @@ def checkup():
 
     # ---- configuration file -------------------------------------------------
     msgreporttitle("Config file")
+    config = None
     if not os.path.exists(ARGS.cfgfile):
         diagnostic = "  [red]Such a file doesn't exist[/red] but " \
             "you may run this program without it. " \
@@ -877,7 +878,7 @@ def checkup():
     msgreport(diagnostic)
 
     # ---- DATA/UNVAILABLE_DATA checks
-    if not wisteria.data.check(config):
+    if config and not wisteria.data.check(config):
         msgreport("Config file and installed modules cause at least one error, see lines above.")
 
     # ---- serializers --------------------------------------------------------

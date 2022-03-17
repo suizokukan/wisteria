@@ -102,6 +102,8 @@ def read_cfgfile(filename):
     if not os.path.exists(filename):
         if not wisteria.globs.ARGS.checkup:
             msgerror(f"(ERRORID001) Missing config file '{filename}' ({normpath(filename)}).")
+            msgerror("If you read this error message it means that the config file was "
+                     "required, e.g. by the command line arguments passed to the program.")
         return None
 
     res = {"data selection": {},
