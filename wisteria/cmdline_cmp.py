@@ -29,6 +29,7 @@
 import re
 
 from wisteria.msg import msgerror, msginfo
+from wisteria.helpmsg import help_cmdline_cmp
 from wisteria.globs import REGEX_CMP
 from wisteria.reprfmt import fmt_serializer0, fmt_serializer, fmt_nounplural
 import wisteria.globs

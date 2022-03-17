@@ -80,6 +80,16 @@ What's next ?
 
 [DONE] v. 0.2.3
 
+[DONE] task-377
+
+Fixed a minor bug in cmdline_cmp.py: added a required import.
+
+    * Fixed a minor bug in cmdline_cmp.py: added a required import
+    * removed useless import helpmsg.py
+
+    * tests: 7 tests ok out of 7
+    * Pylint: 10/10
+    
 [DONE] task-376
 
 Fixed issue #1: check that it's still possible to ship a new pip

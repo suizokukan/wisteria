@@ -36,7 +36,6 @@ import os.path
 
 from wisteria.globs import GRAPHS_GENERIC_FILENAME, DEFAULT_REPORTFILE_NAME
 from wisteria.globs import DEFAULT_EXPORTREPORT_FILENAME
-from wisteria.globs import REPORTFILE_PATH
 from wisteria.globs import REPORT_SHORTCUTS
 from wisteria.globs import STR2REPORTSECTION_KEYS
 from wisteria.utils import normpath, get_missing_required_internal_modules, get_python_version
