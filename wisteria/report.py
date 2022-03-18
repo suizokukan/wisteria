@@ -373,8 +373,8 @@ def partial_report__data(show_all_data,
         # (pimydoc)PLANNED_TRANSCODINGS
         # ⋅a list:
         # ⋅    - (str)serializer,
-        # ⋅    - (int)len(serializers)
-        # ⋅    - (int)len(dataobjs)
+        # ⋅    - (str)data name,
+        # ⋅    - (str)fingerprint
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
         planned_data_names = set(
@@ -451,8 +451,8 @@ def partial_report__serializers(show_all_serializers,
         # (pimydoc)PLANNED_TRANSCODINGS
         # ⋅a list:
         # ⋅    - (str)serializer,
-        # ⋅    - (int)len(serializers)
-        # ⋅    - (int)len(dataobjs)
+        # ⋅    - (str)data name,
+        # ⋅    - (str)fingerprint
         # ⋅
         # ⋅Initialized by results.py:init_planned_transcodings()
         planned_data_serializers = set(
@@ -537,11 +537,14 @@ def report_section_a1(results,
             "* --cmp = "
             f"'[italic]{wisteria.globs.ARGS.cmp}[/italic]'")
     msgreport(
-            "* --report = "
-            f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
-    msgreport(
             "* --filter = "
             f"'[italic]{wisteria.globs.ARGS.filter}[/italic]'")
+    msgreport(
+            "* --method = "
+            f"'[italic]{wisteria.globs.ARGS.method}[/italic]'")
+    msgreport(
+            "* --report = "
+            f"'[italic]{wisteria.globs.ARGS.report}[/italic]'")
 
     msgreport()
 
@@ -741,8 +744,8 @@ def report_section_a4(results,
     # (pimydoc)PLANNED_TRANSCODINGS
     # ⋅a list:
     # ⋅    - (str)serializer,
-    # ⋅    - (int)len(serializers)
-    # ⋅    - (int)len(dataobjs)
+    # ⋅    - (str)data name,
+    # ⋅    - (str)fingerprint
     # ⋅
     # ⋅Initialized by results.py:init_planned_transcodings()
     planned_transcodings_number = len(wisteria.globs.PLANNED_TRANSCODINGS)

@@ -39,8 +39,7 @@
     o  DISCARDED_DATA
     o  DISCARDED_SERIALIZERS
 
-    o  RICHFILECONSOLE
-    o  RICHFILECONSOLE_FILEOBJECT
+    o  METHOD
 
     o  MODULES
 
@@ -60,11 +59,12 @@
 
     o  RICHCONSOLE
 
+    o  RICHFILECONSOLE
+    o  RICHFILECONSOLE_FILEOBJECT
+
     o  SERIALIZERS
 
     o  STR2REPORTSECTION_KEYS
-
-    o  TIMEITNUMBER
 
     o  TMPFILENAME
 
@@ -166,6 +166,10 @@ RICHFILECONSOLE = None
 # Both variables are initialized by main.py()
 RICHFILECONSOLE_FILEOBJECT = None
 
+# initialized by wisteria.py
+#   TODO: quel format ?
+METHOD = None, None, None, None
+
 # imported serializers modules
 MODULES = {}
 
@@ -182,8 +186,8 @@ OUTPUT = []
 # (pimydoc)PLANNED_TRANSCODINGS
 # ⋅a list:
 # ⋅    - (str)serializer,
-# ⋅    - (int)len(serializers)
-# ⋅    - (int)len(dataobjs)
+# ⋅    - (str)data name,
+# ⋅    - (str)fingerprint
 # ⋅
 # ⋅Initialized by results.py:init_planned_transcodings()
 PLANNED_TRANSCODINGS = []
@@ -298,9 +302,6 @@ STR2REPORTSECTION_KEYS = (
     'D1a',
     'D1b',
 )
-
-# number of times each serializer is called
-TIMEITNUMBER = 1
 
 # temp file default name
 TMPFILENAME = "wisteria.tmp"

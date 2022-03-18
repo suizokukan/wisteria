@@ -116,7 +116,7 @@ from wisteria.utils import normpath, get_python_version
 from wisteria.aboutproject import __projectname__, __version__
 from wisteria.helpmsg import help_graphsfilenames, help_cmdline_helpdescription
 from wisteria.helpmsg import help_cmdline_filter, help_cmdline_exportreport, help_cmdline_output
-from wisteria.helpmsg import help_cmdline_cmp, help_cmdline_report
+from wisteria.helpmsg import help_cmdline_cmp, help_cmdline_report, help_cmdline_method
 from wisteria.globs import DEFAULT_REPORTFILE_NAME
 from wisteria.globs import VERBOSITY_MINIMAL, VERBOSITY_NORMAL, VERBOSITY_DETAILS, VERBOSITY_DEBUG
 from wisteria.globs import REPORT_SHORTCUTS
@@ -226,6 +226,12 @@ PARSER.add_argument(
     help="Show detailed help messages about some command line arguments and exit.")
 
 PARSER.add_argument(
+    '--method',
+    action='store',
+    default='(shuffle=26)x5:1;RP;2;rp;3;rp;4;rp;5;RP;4;rp;3;rp;2;1',
+    help=help_cmdline_method(details=False))
+
+PARSER.add_argument(
     '--mute',
     action='store_true',
     default=False,
@@ -332,6 +338,11 @@ if ARGS.help2:
     print(help_cmdline_filter(details=True))
     print()
     print("===============")
+    print("About --method:")
+    print("===============")
+    print(help_cmdline_method(details=True))
+    print()
+    print("===============")
     print("About --output:")
     print("===============")
     print(help_cmdline_output(details=True))
@@ -425,6 +436,7 @@ import wisteria.data  # noqa
 from wisteria.wisteriaerror import WisteriaError  # noqa
 from wisteria.msg import msginfo, msgwarning, msgerror, msgdebug, msgreport, msgreporttitle  # noqa
 from wisteria.cmdline_output import parse_output_argument  # noqa
+from wisteria.methodstr import parse_methodstr  # noqa
 from wisteria.cmdline_cmp import read_cmpstring  # noqa
 from wisteria.cmdline_mymachine import mymachine  # noqa
 from wisteria.cfgfile import read_cfgfile, downloadconfigfile  # noqa
@@ -818,6 +830,20 @@ if not os.path.exists(TMPFILENAME):
 # (B/14) known data init
 # =============================================================================
 wisteria.data.init_data()
+
+
+# =============================================================================
+# (B/XX) wisteria.globs.METHOD init
+#  TODO: rénuméroter
+#  TODO : doc about METHOD ? QUEL FORMAT ?
+# =============================================================================
+wisteria.globs.METHOD = parse_methodstr(ARGS.method)
+if not wisteria.globs.METHOD[0]:
+    msgerror("(ERRORID056) "
+             f"Can't parse --method string '{ARGS.methodstr}': "
+             "the program has to stop.")
+    msginfo("About --method:")
+    msginfo(help_cmdline_method(details=True))
 
 
 # =============================================================================

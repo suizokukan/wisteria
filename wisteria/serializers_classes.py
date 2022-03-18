@@ -224,7 +224,7 @@ class SerializationResult:
             SerializationResult.__repr__()
         """
         return f"{self.encoded_object=}; {self.encoding_success=}; {self.encoding_time=}; " \
-            "{self.encoding_strlen=}; " \
+            f"{self.encoding_strlen=}; " \
             f"{self.decoding_success=}; {self.decoding_time=}; {self.reversibility=}; " \
             f"{self.mem_usage=}"
 
@@ -267,7 +267,7 @@ class SerializationResults(dict):
         o  are_all_serializers_equal_in_the_hall(self, attribute)
         o  comparison_inside_hall(self, serializer, attribute)
         o  count_serializers_compatible_with_dataobj(self, dataobj)
-        o  finish_initialization(self)
+        o  finish_initialization(self, partial=False)
         o  get_hall(self, attribute, index)
         o  get_overallscore_rank(self, serializer)
         o  get_overallscore_bestrank(self)
@@ -411,14 +411,23 @@ class SerializationResults(dict):
                 res += 1
         return res
 
-    def finish_initialization(self):
+    def finish_initialization(self,
+                              partial=False):
         """
             SerializationResults.finish_initialization()
 
             Once the initialization of <self> is over, this method must be called to
-            set self.self.serializers, self.dataobjs, self.serializers_total_number
+            set self.serializers, self.dataobjs, self.serializers_total_number
             self.dataobjs_number, self.hall and self.overallscores
+
+            If partial is True, initialize only:
+                - self.serializers
+                - self.serializers_total_number
+                - self.dataobjs
+                - self.dataobjs_number
             ___________________________________________________________________
+
+            ARGUMENT: (bool)partial for a partial initialization (see above)
 
             RETURNED VALUE: (bool)success
         """
@@ -445,6 +454,9 @@ class SerializationResults(dict):
         # ⋅      ... will be counted as ONE data object.
         # ⋅(class variable initialized in initialization in finish_initialization())
         self.dataobjs_number = count_dataobjs_number_without_cwc_variant(self.dataobjs)
+
+        if partial:
+            return True
 
         # ---- <self.hall> ----------------------------------------------------
         self.hall = {}

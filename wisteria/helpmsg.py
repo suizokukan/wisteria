@@ -28,6 +28,7 @@
     o  help_cmdline_exportreport(details=False)
     o  help_cmdline_filter(details=False)
     o  help_cmdline_output(details=False)
+    o  help_cmdline_method(details=False)
     o  help_cmdline_report(details=False)
     o  help_cmdline_helpdescription()
     o  help_graphsfilenames()
@@ -157,6 +158,30 @@ def help_cmdline_filter(details=False):
            ⋅  used;
            ⋅* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
            ⋅  only the objects that can be successfully transcoded are kept;
+           """)
+
+
+def help_cmdline_method(details=False):
+    """
+        help_cmdline_method()
+
+        Return help messages for the command line option "--method".
+        _______________________________________________________________________
+
+        ARGUMENT: (bool)details, True if a full help string has to be returned
+
+        RETURNED VALUE: (str)help message
+    """
+    if not details:
+        return pimydocstr2str("""
+        (pimydoc)command line help for --method(short version)
+        ⋅TODO
+        ⋅0 is forbidden
+        """)
+    return pimydocstr2str("""
+           (pimydoc)command line help for --method(full version)
+           ⋅TODO
+           ⋅0 is forbidden
            """)
 
 

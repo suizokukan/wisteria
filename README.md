@@ -292,6 +292,12 @@ You just want to see what the encoded string look like:
 ```
 
 ```
+(pimydoc)command line help for --method(full version)
+⋅TODO
+⋅0 is forbidden
+```
+
+```
 (pimydoc)command line help for --output(full version)
 ⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
 ⋅

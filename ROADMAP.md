@@ -78,6 +78,19 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
+[DONE] task-379
+
+--method, help_cmdline_method()
+
+    * --method, help_cmdline_method()
+    * removed useless globs.py constant `TIMEITNUMBER`
+    * new pimydoc entries:
+      - command line help for --method(full version)
+      - command line help for --method(short version)
+    * first attempt to get some average results: modified compute_results(),
+      added average_results().
+    * improved message displayed by serializers.
+
 [DONE] task-378
 
 Fixed issue #45: fixed a bug in checkup() where a variable wasn't correctly

@@ -102,7 +102,7 @@ else:
 # MEMOVERUSE# --memoveruse C++ module:
 # MEMOVERUSEimport cppyy
 
-from wisteria.globs import TIMEITNUMBER, MODULES
+from wisteria.globs import MODULES
 from wisteria.globs import VERBOSITY_DEBUG, VERBOSITY_DETAILS
 from wisteria.wisteriaerror import WisteriaError
 from wisteria.utils import trytoimport, get_python_version
@@ -291,11 +291,11 @@ def serializer_iaswn(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except module.IaswnError as error:
@@ -320,7 +320,7 @@ def serializer_iaswn(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.decode(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -430,11 +430,11 @@ def serializer_json(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except TypeError as error:
@@ -459,7 +459,7 @@ def serializer_json(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -569,11 +569,11 @@ def serializer_jsonpickle(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except TypeError as error:
@@ -598,7 +598,7 @@ def serializer_jsonpickle(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -708,11 +708,11 @@ def serializer_jsonpickle_keystrue(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except TypeError as error:
@@ -737,7 +737,7 @@ def serializer_jsonpickle_keystrue(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object, keys=True)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -848,11 +848,11 @@ def serializer_marshal(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (TypeError, ValueError) as error:
@@ -877,7 +877,7 @@ def serializer_marshal(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -988,11 +988,11 @@ def serializer_pickle(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (AttributeError, TypeError) as error:
@@ -1017,7 +1017,7 @@ def serializer_pickle(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -1128,11 +1128,11 @@ def serializer_pyyaml(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (ValueError, TypeError) as error:
@@ -1157,7 +1157,7 @@ def serializer_pyyaml(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.load(res.encoded_object, Loader=module.Loader)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -1268,11 +1268,11 @@ def serializer_simpleion(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (AssertionError, AttributeError, ValueError, TypeError) as error:
@@ -1297,7 +1297,7 @@ def serializer_simpleion(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True
@@ -1408,11 +1408,11 @@ def serializer_yajl(action="serialize",
                                globals=locals())
         res.encoding_success = True
         res.encoding_strlen = _len(res.encoded_object)
-        res.encoding_time = _timeit.timeit(TIMEITNUMBER)
+        res.encoding_time = _timeit.timeit(1)
 
         if not strictmute and wisteria.globs.ARGS.verbosity >= VERBOSITY_DETAILS:
             msginfo(
-                f"([{fingerprint}] '{module.__name__}' / '{obj_data_name}' (type: '{type(obj)}')) "
+                f"([{fingerprint}] '{module.__name__}' x '{obj_data_name}' (type: '{type(obj)}')) "
                 f"encoded string=({type(res.encoded_object)}) '{res.encoded_object}'")
 
     except (ValueError, TypeError, SystemError) as error:
@@ -1437,7 +1437,7 @@ def serializer_yajl(action="serialize",
             res.decoding_success = True  # True because not exception was raised.
             _timeit = timeit.Timer("module.loads(res.encoded_object)",
                                    globals=locals())
-            res.decoding_time = _timeit.timeit(TIMEITNUMBER)
+            res.decoding_time = _timeit.timeit(1)
 
             if obj == _decodedobj:
                 res.reversibility = True

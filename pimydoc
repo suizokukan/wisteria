@@ -31,6 +31,8 @@ REMOVE_FINAL_SPACES_IN_NEW_DOCLINES : True
 ### (pimydoc)command line help for --filter(short version)
 ### (pimydoc)command line help for --output(full version)
 ### (pimydoc)command line help for --output(short version)
+### (pimydoc)command line help for --method(full version)    
+### (pimydoc)command line help for --method(short version)        
 ### (pimydoc)command line help for --report(full version)
 ### (pimydoc)command line help for --report(short version)
 ### (pimydoc)config file format
@@ -190,6 +192,14 @@ Combinations like 'reportfile/w=$DEFAULT_REPORTFILE_NAME' are accepted.
 See by example the default value.
 See --help2 for more informations.
 ### ==========================================================================
+[(pimydoc)command line help for --method(full version)]
+TODO
+0 is forbidden
+### ==========================================================================
+[(pimydoc)command line help for --method(short version)]
+TODO
+0 is forbidden
+### ==========================================================================
 [(pimydoc)command line help for --report(full version)]
 Report format:
 you may use one of the special keywords ($REPORT_SHORTCUTS_KEYS)
@@ -333,8 +343,8 @@ len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
 [(pimydoc)PLANNED_TRANSCODINGS]
 a list:
     - (str)serializer,
-    - (int)len(serializers)
-    - (int)len(dataobjs)
+    - (str)data name,
+    - (str)fingerprint
 
 Initialized by results.py:init_planned_transcodings()
 ### ===========================================================================
