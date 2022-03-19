@@ -77,7 +77,7 @@ from wisteria.reprfmt import fmt_nounplural, fmt_mem_usage, fmt_be3s
 from wisteria.reprfmt import fmt_exaequowith, fmt_exaequowith_hall, fmt_projectversion
 from wisteria.cmdline_mymachine import mymachine
 from wisteria.textandnotes import TextAndNotes
-from wisteria.matplotgraphs import hbar2png
+from wisteria.matplotgraphs import hbar2png_resultshall
 from wisteria.cwc.cwc_utils import select__works_as_expected__function
 from wisteria.helpmsg import help_cmdline_output
 
@@ -2587,10 +2587,10 @@ def report_section_graphs(results,
 
     # (pimydoc)GRAPHS_DESCRIPTION format
     # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-    # ⋅report; each description is passed to hbar2png(). Note that
+    # ⋅report; each description is passed to hbar2png_resultshall(). Note that
     # ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
     # ⋅
-    # ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+    # ⋅- (str)attribute   : hbar2png_resultshall will read results.hall[attribute]
     # ⋅- (str)fmtstring   : format string to be applied to each value when printed
     # ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
     # ⋅- (int)value_coeff : each value will be multiplied by this number
@@ -2606,7 +2606,12 @@ def report_section_graphs(results,
         if results.hall_without_none_for_attribute(attribute):
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"About to create a new graph named '{filename}' ({normpath(filename)}).")
-            hbar2png(results.hall[attribute], filename, unit, title, fmtstring, value_coeff)
+            hbar2png_resultshall(results.hall[attribute],
+                                 filename,
+                                 unit,
+                                 title,
+                                 fmtstring,
+                                 value_coeff)
         else:
             # incoherent data: no graph.
             msgreport(f"Can't create graph '{filename}' for attribute '{attribute}' since "

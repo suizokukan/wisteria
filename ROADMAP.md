@@ -78,6 +78,12 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
+[DONE] task-380
+
+First try to create sub data graphs.
+
+    * First try to create sub data graphs.
+
 [DONE] task-379
 
 --method, help_cmdline_method()

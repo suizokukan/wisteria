@@ -51,7 +51,15 @@ from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.filterstr import parse_filterstr
 from wisteria.helpmsg import help_cmdline_filter
 from wisteria.reprfmt import fmt_nounplural
+from wisteria.matplotgraphs import hbar2png_xyz
 
+
+def normalizefilename(filename):
+    """
+        TODO
+        à déplacer dans utils
+    """
+    return filename.replace("\\", "_").replace("/", "_")
 
 def average_results(raw_results):
     """
@@ -83,6 +91,9 @@ def average_results(raw_results):
     # let's fill <res>:
     number_of_tries = 0
     for serializer in raw_results.serializers:
+        _graphs_values__encoding_time = []
+        _graphs_values__decoding_time = []
+        _graphs_values__mem_usage = []
         for data_object in raw_results.dataobjs:
             encoded_object = None
             encoding_success = False
@@ -110,10 +121,30 @@ def average_results(raw_results):
                     mem_usage += raw_serialization_result.mem_usage
                     # TODO: vérifier que encoded_object/encoding_success/encoding_strlen/
                     #                    decoding_success/reversibility sont égaux
+                _graphs_values__encoding_time.append(raw_serialization_result.encoding_time)
+                _graphs_values__decoding_time.append(raw_serialization_result.decoding_time)
+                _graphs_values__mem_usage.append(raw_serialization_result.mem_usage)
 
-                # TODO
-                # if serializer == "pickle" and data_object == "int":
-                #     print(raw_serialization_result.encoding_time)
+            # TODO
+            #  verbosity=DETAILS+, expliciter ce qui suit ("About to create...")
+            hbar2png_xyz(_graphs_values__encoding_time,
+                         f"{normalizefilename('xyz__{serializer}__{data_object}.encodingtime.png')}",
+                         "second(s)",
+                         "encoding time",
+                         "'{0:.1f}'",
+                         1)
+            hbar2png_xyz(_graphs_values__decoding_time,
+                         f"{normalizefilename('xyz__{serializer}__{data_object}.decodingtime.png')}",
+                         "second(s)",
+                         "decoding time",
+                         "'{0:.1f}'",
+                         1)
+            hbar2png_xyz(_graphs_values__mem_usage,
+                         f"{normalizefilename('xyz__{serializer}__{data_object}.memusage.png')}",
+                         "byte(s)",
+                         "mem usage",
+                         "'{0}'",
+                         1)
 
             averaged_serialization_result = SerializationResult()
             averaged_serialization_result.encoded_object = encoded_object

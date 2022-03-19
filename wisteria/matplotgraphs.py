@@ -29,8 +29,10 @@
 
     o  gradient_image(axes, extent, direction=0.5, cmap_range=(0, 1), **kwargs)
     o  gradient_bar(axes, pos_x, pos_y, height=0.4, left=0)
-    o  hbar2png(_data, filename, unit, title, fmtstring, value_coeff)
+    o  hbar2png_resultshall(_data, filename, unit, title, fmtstring, value_coeff)
 """
+import statistics
+
 try:
     from matplotlib import pyplot
     import numpy as np
@@ -108,12 +110,12 @@ def gradient_bar(axes,
                        cmap=pyplot.cm.Reds_r, cmap_range=(0, 0.8))
 
 
-def hbar2png(results_hall_attribute,
-             filename,
-             unit,
-             title,
-             fmtstring,
-             value_coeff):
+def hbar2png_resultshall(results_hall_attribute,
+                         filename,
+                         unit,
+                         title,
+                         fmtstring,
+                         value_coeff):
     """
             Create a graph with horizontal bars from <results_hall_attribute> and write it in
             <filename>.
@@ -182,4 +184,58 @@ def hbar2png(results_hall_attribute,
     pyplot.yticks(range(length), serializers_names)
     axes.set_yticks(range(length))
 
+    pyplot.savefig(filename)
+
+
+# renommer cette fonction: hbar > vbar (?)
+def hbar2png_xyz(values,
+                 filename,
+                 unit,
+                 title,
+                 fmtstring,
+                 value_coeff):
+    """
+TODO
+    """
+    pyplot.rcdefaults()
+    pyplot.rcParams.update({'axes.titlesize': 'small',
+                            'axes.labelsize': 'large',
+                            'xtick.labelsize': 'x-small',
+                            'ytick.labelsize': 'large',
+                            })
+
+    length = len(values)
+    values = tuple(item*value_coeff for item in values)
+
+    if len(tuple(0 for value in values if value < 0.000001)) == len(values):
+        # A special case: all values are (nearly or exactly) equal to 0,
+        # hence we can't apply the usual rule to set xmax:
+        ylim = 0, 0.000001  # = xmin, xmax
+    else:
+        ylim = 0, max(values)*1.2  # = xmin, xmax
+    xlim = 0, length+1  # = ymin, ymax
+
+    fig, axes = pyplot.subplots()
+    fig.subplots_adjust(top=0.8, left=0.1)
+    axes.set(xlim=xlim, ylim=ylim, autoscale_on=False)
+
+    # background image:
+    # Pylint doesn't seem to know pyplot.cm.* members:
+    #   pylint: disable=no-member
+    gradient_image(axes, direction=0.1, extent=(0, 1, 0, 1), transform=axes.transAxes,
+                   cmap=pyplot.cm.Blues, cmap_range=(0.1, 0.6))
+
+    mean = statistics.mean(values)
+    median = statistics.median(values)
+    mean_str = f"{mean:.7f}"
+    median_str = f"{median:.7f}"
+    stdev_str= f"{statistics.stdev(values):.7f}"
+
+    axes.set_title(f"mean(red): {mean_str}\nmedian(green): {median_str}\nstdev={stdev_str}")
+    axes.set_xlabel(f"{title}: iteration number")
+    axes.set_ylabel(f"{title} ({unit})")
+    axes.set_aspect('auto')
+    axes.axhline(mean, color='red', linewidth=1)
+    axes.axhline(median, color='green', linewidth=1)
+    pyplot.bar(tuple(range(1, len(values)+1)), values)
     pyplot.savefig(filename)

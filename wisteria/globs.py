@@ -387,10 +387,10 @@ def get_graphs_description():
 
             (pimydoc)GRAPHS_DESCRIPTION format
             ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-            ⋅report; each description is passed to hbar2png(). Note that
+            ⋅report; each description is passed to hbar2png_resultshall(). Note that
             ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
             ⋅
-            ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+            ⋅- (str)attribute   : hbar2png_resultshall will read results.hall[attribute]
             ⋅- (str)fmtstring   : format string to be applied to each value when printed
             ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
             ⋅- (int)value_coeff : each value will be multiplied by this number
@@ -417,10 +417,10 @@ GRAPHS_GENERIC_FILENAME = get_graphs_filename()
 
 # (pimydoc)GRAPHS_DESCRIPTION format
 # ⋅Use GRAPHS_DESCRIPTION to store the description of each graph created by the
-# ⋅report; each description is passed to hbar2png(). Note that
+# ⋅report; each description is passed to hbar2png_resultshall(). Note that
 # ⋅len(GRAPHS_DESCRIPTION) gives the number of graphs to be created.
 # ⋅
-# ⋅- (str)attribute   : hbar2png will read results.hall[attribute]
+# ⋅- (str)attribute   : hbar2png_resultshall will read results.hall[attribute]
 # ⋅- (str)fmtstring   : format string to be applied to each value when printed
 # ⋅                     on the graph; e.g. '{0}' or '{0:.1f}'
 # ⋅- (int)value_coeff : each value will be multiplied by this number
