@@ -228,7 +228,8 @@ PARSER.add_argument(
 PARSER.add_argument(
     '--method',
     action='store',
-    default='(shuffle=26)x1:1;rp;2;rp;3;rp;4;rp;5;RP;4;rp;3;rp;2;1',
+    #    default='(shuffle(26);pgm(0.00000000000001);rav(0.5|0.000001|25))x25:1;rp;2;rp;3;rp;4;rp;5;RP;4;rp;3;rp;2;1>',
+    default='(shuffle=26)x25:1;rp;2;rp;3;rp;4;rp;5;RP;4;rp;3;rp;2;1',
     help=help_cmdline_method(details=False))
 
 PARSER.add_argument(

@@ -28,6 +28,7 @@
 
     o  get_missing_required_internal_modules()
     o  get_python_version()
+    o  get_valid_filename(filename)
     o  normpath(path)
     o  pimydocstr2str(source, replacements=None)
     o  shortenedstr(string, maximallength)
@@ -71,6 +72,21 @@ def get_python_version():
         Return the Python version on one line.
     """
     return sys.version.replace(chr(0x0A), '- ')
+
+
+def get_valid_filename(filename):
+    """
+        get_valid_filename()
+
+        Return a valide filename based on the <filename> string.
+        ________________________________________________________________________
+
+        PARAMETER : (str)filename
+
+        RETURNED VALUE : (str)a valid filename
+    """
+    # special characters like \ ou / are neutralized:
+    return filename.replace("\\", "_").replace("/", "_")
 
 
 def normpath(path):

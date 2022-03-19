@@ -187,13 +187,12 @@ def hbar2png_resultshall(results_hall_attribute,
     pyplot.savefig(filename)
 
 
-# renommer cette fonction: hbar > vbar (?)
-def hbar2png_xyz(values,
-                 filename,
-                 unit,
-                 title,
-                 fmtstring,
-                 value_coeff):
+def vbar2png_subdatagraphs(values,
+                           filename,
+                           unit,
+                           title,
+                           fmtstring,
+                           value_coeff):
     """
 TODO
     """
@@ -207,12 +206,12 @@ TODO
     length = len(values)
     values = tuple(item*value_coeff for item in values)
 
-    if len(tuple(0 for value in values if value < 0.000001)) == len(values):
+    if len(tuple(0 for value in values if value < 0.0000001)) == len(values):
         # A special case: all values are (nearly or exactly) equal to 0,
         # hence we can't apply the usual rule to set xmax:
-        ylim = 0, 0.000001  # = xmin, xmax
+        ylim = 0, 0.0000001  # = xmin, xmax
     else:
-        ylim = 0, max(values)*1.2  # = xmin, xmax
+        ylim = 0, max(values)*1.1  # = xmin, xmax
     xlim = 0, length+1  # = ymin, ymax
 
     fig, axes = pyplot.subplots()
@@ -231,7 +230,7 @@ TODO
     median_str = f"{median:.7f}"
     stdev_str= f"{statistics.stdev(values):.7f}"
 
-    axes.set_title(f"mean(red): {mean_str}\nmedian(green): {median_str}\nstdev={stdev_str}")
+    axes.set_title(f"mean(red): {mean_str}\nmedian(green): {median_str}\nstandard deviation: {stdev_str}")
     axes.set_xlabel(f"{title}: iteration number")
     axes.set_ylabel(f"{title} ({unit})")
     axes.set_aspect('auto')

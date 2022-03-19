@@ -25,13 +25,14 @@
 
     ___________________________________________________________________________
 
-    o  average_results(raw_results)
+    o  average_raw_serializationresults(raw_results)
     o  compute_results(config, serializer1, serializer2, cmpdata)
     o  get_serializers_selection(serializer1, serializer2)
     o  get_data_selection(cmpdata, config)
     o  init_planned_transcodings(serializer1, serializer2, cmpdata, config, filterstr)
 """
 import random
+import statistics
 import time
 from rich.console import Console
 from rich.progress_bar import ProgressBar
@@ -44,26 +45,22 @@ from wisteria.wisteriaerror import WisteriaError
 from wisteria.msg import msgdebug, msginfo, msgerror
 from wisteria.serializers import func_serialize
 from wisteria.serializers_classes import SerializationResults, SerializationResult
-from wisteria.utils import strdigest
+from wisteria.utils import strdigest, get_valid_filename
 from wisteria.cwc.cwc_utils import is_a_cwc_name, moduleininame_to_modulefullrealname
 from wisteria.cwc.cwc_utils import modulefullrealname_to_modulerealname
 from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.filterstr import parse_filterstr
 from wisteria.helpmsg import help_cmdline_filter
 from wisteria.reprfmt import fmt_nounplural
-from wisteria.matplotgraphs import hbar2png_xyz
+from wisteria.matplotgraphs import vbar2png_subdatagraphs
+from wisteria.stats import remove_absurd_values
 
 
-def normalizefilename(filename):
+def average_raw_serializationresults(raw_results):
     """
-        TODO
-        à déplacer dans utils
-    """
-    return filename.replace("\\", "_").replace("/", "_")
+TODO à déplacer dans stats.py
 
-def average_results(raw_results):
-    """
-        average_results()
+        average_raw_serializationresults()
 
         Return a SerializationResults whose each element is a unique
         SerializationResult object.
@@ -86,75 +83,106 @@ def average_results(raw_results):
         RETURNED VALUE:    (SerializationResults, None) if no error occured
                         or (None, (int)exit_code) if an error occured
     """
+    ok = True
     res = SerializationResults()
 
     # let's fill <res>:
-    number_of_tries = 0
     for serializer in raw_results.serializers:
-        _graphs_values__encoding_time = []
-        _graphs_values__decoding_time = []
-        _graphs_values__mem_usage = []
         for data_object in raw_results.dataobjs:
-            encoded_object = None
-            encoding_success = False
-            encoding_time = None
-            encoding_strlen = None
-            decoding_success = False
-            decoding_time = None
-            reversibility = False
-            mem_usage = None
-
+            # ---- fill _graphs_values__* ----
+            _graphs_values__encoding_time = []
+            _graphs_values__decoding_time = []
+            _graphs_values__mem_usage = []
             for index, raw_serialization_result in enumerate(raw_results[serializer][data_object]):
-                number_of_tries += 1  # required to compute the average value.
-                if index == 0:
-                    encoded_object = raw_serialization_result.encoded_object
-                    encoding_success = raw_serialization_result.encoding_success
-                    encoding_time = raw_serialization_result.encoding_time
-                    encoding_strlen = raw_serialization_result.encoding_strlen
-                    decoding_success = raw_serialization_result.decoding_success
-                    decoding_time = raw_serialization_result.decoding_time
-                    reversibility = raw_serialization_result.reversibility
-                    mem_usage = raw_serialization_result.mem_usage
-                else:
-                    encoding_time += raw_serialization_result.encoding_time
-                    decoding_time += raw_serialization_result.decoding_time
-                    mem_usage += raw_serialization_result.mem_usage
-                    # TODO: vérifier que encoded_object/encoding_success/encoding_strlen/
-                    #                    decoding_success/reversibility sont égaux
+
+                # TODO
+                #  pour certaines attributs on conserve toutes les valeurs pour calculer plus
+                #  tard leur moyenne
                 _graphs_values__encoding_time.append(raw_serialization_result.encoding_time)
                 _graphs_values__decoding_time.append(raw_serialization_result.decoding_time)
                 _graphs_values__mem_usage.append(raw_serialization_result.mem_usage)
 
+                # pour d'autres attributs on vérifie juste ques les valeurs ne changent pas.
+                if index == 0:
+                    encoded_object = raw_serialization_result.encoded_object
+                    encoding_success = raw_serialization_result.encoding_success
+                    encoding_strlen = raw_serialization_result.encoding_strlen
+                    decoding_success = raw_serialization_result.decoding_success
+                    reversibility = raw_serialization_result.reversibility
+                elif raw_serialization_result.encoded_object != encoded_object:
+                    print(0/0)
+                    return None, 999  # TODO: quel code erreur ?
+                elif raw_serialization_result.encoding_success != encoding_success:
+                    print(0/0)
+                    return None, 999  # TODO: quel code erreur ?
+                elif raw_serialization_result.encoding_strlen != encoding_strlen:
+                    print(0/0)
+                    return None, 999  # TODO: quel code erreur ?
+                elif raw_serialization_result.decoding_success != decoding_success:
+                    print(0/0)
+                    return None, 999  # TODO: quel code erreur ?
+                elif raw_serialization_result.reversibility != reversibility:
+                    print(0/0)
+                    return None, 999  # TODO: quel code erreur ?
+
+            # ---- remove absurd values ----
+            ok, _graphs_values__encoding_time = remove_absurd_values(_graphs_values__encoding_time)
+            if not ok:
+                # TODO print >
+                print(f"Anomaly: too many absurd values detected in 'encoding time' series; {serializer} {data_object}")
+                print(0/0)  # TOD
+                return None, 999  # TODO: quel code erreur ?
+            ok, _graphs_values__decoding_time = remove_absurd_values(_graphs_values__decoding_time)
+            if not ok:
+                ok = False
+                print(f"Anomaly: too many absurd values detected in 'decoding time' series; {serializer} {data_object}")
+                print(0/0)  # TOD
+                return None, 999  # TODO: quel code erreur ?
+            ok, _graphs_values__mem_usage = remove_absurd_values(_graphs_values__mem_usage)
+            if not ok:
+                ok = False
+                print(f"Anomaly: too many absurd values detected in 'memusage' series; {serializer} {data_object}")
+                print(_graphs_values__mem_usage)
+                print(0/0)  # TODO
+                return None, 999  # TODO: quel code erreur ?
+
+            # ---- sub data graphs ----
             # TODO
             #  verbosity=DETAILS+, expliciter ce qui suit ("About to create...")
-            hbar2png_xyz(_graphs_values__encoding_time,
-                         f"{normalizefilename('xyz__{serializer}__{data_object}.encodingtime.png')}",
-                         "second(s)",
-                         "encoding time",
-                         "'{0:.1f}'",
-                         1)
-            hbar2png_xyz(_graphs_values__decoding_time,
-                         f"{normalizefilename('xyz__{serializer}__{data_object}.decodingtime.png')}",
-                         "second(s)",
-                         "decoding time",
-                         "'{0:.1f}'",
-                         1)
-            hbar2png_xyz(_graphs_values__mem_usage,
-                         f"{normalizefilename('xyz__{serializer}__{data_object}.memusage.png')}",
-                         "byte(s)",
-                         "mem usage",
-                         "'{0}'",
-                         1)
+            _filename = f'xyz__{serializer}__{data_object}.encodingtime.png'
+            vbar2png_subdatagraphs(
+                _graphs_values__encoding_time,
+                f"{get_valid_filename(_filename)}",
+                "second(s)",
+                f"encoding time ('{serializer}' x '{data_object}')",
+                "'{0:.1f}'",
+                1)
+            _filename = f'xyz__{serializer}__{data_object}.decodingtime.png'
+            vbar2png_subdatagraphs(
+                _graphs_values__decoding_time,
+                f"{get_valid_filename(_filename)}",
+                "second(s)",
+                f"decoding time ('{serializer}' x '{data_object}')",
+                "'{0:.1f}'",
+                1)
+            _filename = f'xyz__{serializer}__{data_object}.memusage.png'
+            vbar2png_subdatagraphs(
+                _graphs_values__mem_usage,
+                f"{get_valid_filename(_filename)}",
+                "byte(s)",
+                f"mem usage ('{serializer}' x '{data_object}')",
+                "'{0}'",
+                1)
 
             averaged_serialization_result = SerializationResult()
             averaged_serialization_result.encoded_object = encoded_object
             averaged_serialization_result.encoding_success = encoding_success
-            averaged_serialization_result.encoding_time = encoding_time / number_of_tries
+            averaged_serialization_result.encoding_time = statistics.mean(_graphs_values__encoding_time)
             averaged_serialization_result.encoding_strlen = encoding_strlen
             averaged_serialization_result.decoding_success = decoding_success
-            averaged_serialization_result.decoding_time = decoding_time / number_of_tries
+            averaged_serialization_result.decoding_time = statistics.mean(_graphs_values__decoding_time)
             averaged_serialization_result.reversibility = reversibility
-            averaged_serialization_result.mem_usage = mem_usage / number_of_tries
+            averaged_serialization_result.mem_usage = statistics.mean(_graphs_values__mem_usage)
 
             if serializer not in res:
                 res[serializer] = {}
@@ -162,17 +190,6 @@ def average_results(raw_results):
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"* average result for '{serializer}' x '{data_object}':")
                 msgdebug(res[serializer][data_object])
-
-        # TODO
-        # for index, raw_serialization_result in enumerate(raw_results[serializer][data_object]):
-        #     if raw_serialization_result.encoding_time / averaged_serialization_result.encoding_time > 0.5:
-        #         print("!",
-        #               serializer,
-        #               data_object,
-        #               raw_serialization_result.encoding_time,
-        #               averaged_serialization_result.encoding_time,
-        #               raw_serialization_result.encoding_time / averaged_serialization_result.encoding_time)
-        #         input()
 
     # to compute res.hall and so on:
     if not res.finish_initialization():
@@ -371,7 +388,7 @@ def compute_results():
         erase_progress_bar()
 
         raw_results.finish_initialization(partial=True)
-        return average_results(raw_results)
+        return average_raw_serializationresults(raw_results)
 
     except WisteriaError as exception:
         msgerror(f"An error occured: {exception}")
