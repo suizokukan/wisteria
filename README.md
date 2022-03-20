@@ -39,7 +39,7 @@ This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](ht
   - [3.5] [errors and warnings](#35-errors-and-warnings)
   - [3.6] [git and poetry and pypi workflow](#36-git-and-poetry-and-pypi-workflow)
   - [3.6.2] [pypi: ship another version](#362-pypi-ship-another-version)
-    
+
 - [4] [FAQ](#4-faq)
 
 # [0] the project in a few words
@@ -50,7 +50,7 @@ You may have a look at some reports already computed [by this script](create_dem
 
 * By example, [how does `pickle` compare to his competitors?](demonstration_reports/1/demonstration_report.md) ?
 * [How to classify serializers' weaknesses and strengths?](demonstration_reports/2/demonstration_report.md) ?
-* [Regarding the boolean values, what do the strings encoded by the different serializers look like?](demonstration_reports/3/demonstration_report.md) ?        
+* [Regarding the boolean values, what do the strings encoded by the different serializers look like?](demonstration_reports/3/demonstration_report.md) ?
 
 After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle vs marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 
@@ -1072,6 +1072,7 @@ See [classes.md](classes.md).
 
 ## [3.1] exit codes
 
+```
 (pimydoc)exit codes
 ⋅These exit codes try to take into account the standards, in particular this
 ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
@@ -1098,6 +1099,7 @@ See [classes.md](classes.md).
 ⋅*  101: internal error, an error occured while computing the results
 ⋅*  102: internal error, an error occured in main()
 ⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+```
 
 ## [3.4] coding conventions.
 

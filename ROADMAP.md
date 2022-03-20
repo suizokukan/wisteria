@@ -78,6 +78,12 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
+[DONE] task-382
+
+Fixed issue #48: improved README.md (section [3.1] exit codes)
+
+    * Fixed issue #48: improved README.md (section [3.1] exit code)
+
 [DONE] task-381
 
 sub data graphs: get_valid_filename(),
