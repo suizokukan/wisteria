@@ -979,52 +979,8 @@ dateutil (https://dateutil.readthedocs.io/en/stable/)
         (known by Wisteria as) "dateutil(parser.parse)": dateutil.parser.parse("2021-03-04")
 
 
-# [4] FAQ
-
-**Q: How to modify the report (=log) file name ?**
-
-A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.
-
-```
-(pimydoc)command line help for --output(full version)
-⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
-⋅
-⋅* 'console':
-⋅  - 'console' : if you want to write output messages to the console
-⋅
-⋅* 'reportfile='
-⋅  - either a simple string like 'report.txt'
-⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
-⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
-⋅    e.g. "report_DATETIME.txt" would become something like
-⋅         "report_2021-12-31.23.59.59.txt"
-⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
-⋅    be replaced by str(int(time.time()))
-⋅      e.g. "report_DATETIME.txt" would become something like
-⋅           "report_1635672267.txt"
-⋅
-⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
-⋅exist you can't write:
-⋅     --output="console;reportfile/w=path/myreportfile"
-```
-
-**Where is defined in the code the number of graphs?**
-
-    globs.py::GRAPHS_DESCRIPTION
-
-**How do I add a new cwc class ?**
-
-    - create another directory in wisteria/cwc, by example `wisteria/cwc/newcwc/` .
-    - A default.py file is required, namely `wisteria/cwc/newcwc/default.py`
-    for all serializers whose 'cwc' attribute is set to 'default'.
-    - Add other .py files (iaswn.py, ...) for other SERIALIZERS[].cwc values
-    - A `works_as_expected.py` file is required, namely `wisteria/cwc/newcwc/works_as_expected.py`
-    with two functions: initialize() and works_as_expected()
-    - Modify globs.py:CWC_MODULES to add your new classes
-    - Add your classes to wisteria.ini (section `data objects`)
-
 # [3] if you want to read/test/modify the code
-g
+
 ## [3.0] classes hierarchy and code structure
 
 See [classes.md](classes.md).
@@ -1113,3 +1069,47 @@ See [codingconventions.md](codingconventions.md).
 $ poetry build
 $ poetry publish
 ```
+
+# [4] FAQ
+
+**Q: How to modify the report (=log) file name ?**
+
+A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.
+
+```
+(pimydoc)command line help for --output(full version)
+⋅A string like '[console;][reportfile/w/a]=subdirectory/myreportfilename'
+⋅
+⋅* 'console':
+⋅  - 'console' : if you want to write output messages to the console
+⋅
+⋅* 'reportfile='
+⋅  - either a simple string like 'report.txt'
+⋅  - either a string containing 'DATETIME'; in this case, 'DATETIME' will
+⋅    be replaced by datetime.datetime.now().strftime("%Y-%m-%d.%H.%M.%S");
+⋅    e.g. "report_DATETIME.txt" would become something like
+⋅         "report_2021-12-31.23.59.59.txt"
+⋅  - either a string containing 'TIMESTAMP'; in this case, 'TIMESTAMP' will
+⋅    be replaced by str(int(time.time()))
+⋅      e.g. "report_DATETIME.txt" would become something like
+⋅           "report_1635672267.txt"
+⋅
+⋅BEWARE: The path to the report file must exist; e.g. if ./path/ doesn't
+⋅exist you can't write:
+⋅     --output="console;reportfile/w=path/myreportfile"
+```
+
+**Where is defined in the code the number of graphs?**
+
+    globs.py::GRAPHS_DESCRIPTION
+
+**How do I add a new cwc class ?**
+
+    - create another directory in wisteria/cwc, by example `wisteria/cwc/newcwc/` .
+    - A default.py file is required, namely `wisteria/cwc/newcwc/default.py`
+    for all serializers whose 'cwc' attribute is set to 'default'.
+    - Add other .py files (iaswn.py, ...) for other SERIALIZERS[].cwc values
+    - A `works_as_expected.py` file is required, namely `wisteria/cwc/newcwc/works_as_expected.py`
+    with two functions: initialize() and works_as_expected()
+    - Modify globs.py:CWC_MODULES to add your new classes
+    - Add your classes to wisteria.ini (section `data objects`)
