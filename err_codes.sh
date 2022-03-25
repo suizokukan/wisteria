@@ -2,11 +2,11 @@
 
 # (pimydoc)script utilities : err_codes.sh
 
-VERSION="err_codes.sh v.1/2021-09-25"
+VERSION="err_codes.sh v.2/2022-03-24"
 
 # ---- minimal/maximal indexes searched in WARNINGID$integer/ERRORID$integer strings
 min_index=0
-max_index=60
+max_index=65
 
 # ---- --help ----------------------------------------------------------------
 if [[ $# -eq 0 ]] || [[ $1 = "--help" ]] || [[ $1 = "-h" ]]; then

@@ -78,6 +78,16 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
+[DONE] task-384
+
+Fixed issue #49: no more crash when ill-formed results are created.
+
+    * Fixed issue #49: no more crash when ill-formed results are created.
+      Several safeguards have been added to results.py in
+      average_raw_serializationresults().
+    * in `err_codes.sh` max_index=65 is now set to 65
+    * new file: stats.py
+
 [DONE] task-383
 
 Fixed issue #47: improved README.md (improved section numbers)

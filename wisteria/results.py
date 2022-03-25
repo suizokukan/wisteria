@@ -42,7 +42,7 @@ import wisteria.globs
 from wisteria.globs import VERBOSITY_NORMAL, VERBOSITY_DEBUG, VERBOSITY_DETAILS
 from wisteria.globs import PROGRESSBAR_LENGTH
 from wisteria.wisteriaerror import WisteriaError
-from wisteria.msg import msgdebug, msginfo, msgerror
+from wisteria.msg import msgdebug, msginfo, msgerror, msgwarning
 from wisteria.serializers import func_serialize
 from wisteria.serializers_classes import SerializationResults, SerializationResult
 from wisteria.utils import strdigest, get_valid_filename
@@ -58,8 +58,6 @@ from wisteria.stats import remove_absurd_values
 
 def average_raw_serializationresults(raw_results):
     """
-TODO à déplacer dans stats.py
-
         average_raw_serializationresults()
 
         Return a SerializationResults whose each element is a unique
@@ -95,14 +93,16 @@ TODO à déplacer dans stats.py
             _graphs_values__mem_usage = []
             for index, raw_serialization_result in enumerate(raw_results[serializer][data_object]):
 
-                # TODO
-                #  pour certaines attributs on conserve toutes les valeurs pour calculer plus
-                #  tard leur moyenne
+                ok = True
+
+                # Safeguards: for some attributes ('encoding_time', 'decoding_time', 'mem_usage'),
+                #             we keep all values to compute later their means.
                 _graphs_values__encoding_time.append(raw_serialization_result.encoding_time)
                 _graphs_values__decoding_time.append(raw_serialization_result.decoding_time)
                 _graphs_values__mem_usage.append(raw_serialization_result.mem_usage)
 
-                # pour d'autres attributs on vérifie juste ques les valeurs ne changent pas.
+                # Safeguards: for the other attributes we just check that their value
+                #             doesn't change.
                 if index == 0:
                     encoded_object = raw_serialization_result.encoded_object
                     encoding_success = raw_serialization_result.encoding_success
@@ -110,41 +110,84 @@ TODO à déplacer dans stats.py
                     decoding_success = raw_serialization_result.decoding_success
                     reversibility = raw_serialization_result.reversibility
                 elif raw_serialization_result.encoded_object != encoded_object:
-                    print(0/0)
-                    return None, 999  # TODO: quel code erreur ?
+                    msgwarning(
+                        "(WARNINGID000) Incoherent result: 'encoded_object' changed "
+                        f"for '{serializer}' x '{data_object}': "
+                        f"'{raw_serialization_result.encoded_object}' != '{encoded_object}'")
+                    ok = False
                 elif raw_serialization_result.encoding_success != encoding_success:
-                    print(0/0)
-                    return None, 999  # TODO: quel code erreur ?
+                    msgwarning(
+                        "(WARNINGID001) Incoherent result: 'encoding_success' changed "
+                        f"for '{serializer}' x '{data_object}': "
+                        f"'{raw_serialization_result.encoding_success}' != '{encoding_success}'")
+                    ok = False
                 elif raw_serialization_result.encoding_strlen != encoding_strlen:
-                    print(0/0)
-                    return None, 999  # TODO: quel code erreur ?
+                    msgwarning(
+                        "(WARNINGID002) Incoherent result: 'encoding_strlen' changed "
+                        f"for '{serializer}' x '{data_object}': "
+                        f"'{raw_serialization_result.encoding_strlen}' != '{encoding_strlen}'")
+                    ok = False
                 elif raw_serialization_result.decoding_success != decoding_success:
-                    print(0/0)
-                    return None, 999  # TODO: quel code erreur ?
+                    msgwarning(
+                        "(WARNINGID003) Incoherent result: 'decoding_success' changed "
+                        f"for '{serializer}' x '{data_object}': "
+                        f"'{raw_serialization_result.decoding_success}' != '{decoding_success}'")
+                    ok = False
                 elif raw_serialization_result.reversibility != reversibility:
-                    print(0/0)
-                    return None, 999  # TODO: quel code erreur ?
+                    msgwarning(
+                        "(WARNINGID004) Incoherent result: 'reversibility' changed "
+                        f"for '{serializer}' x '{data_object}': "
+                        f"'{raw_serialization_result.reversibility}' != '{reversibility}'")
+                    ok = False
+
+            if not ok:
+                continue
+
+            # Safeguards: what if the results are ill-formed ?
+            if not _graphs_values__encoding_time \
+               or all(value is None for value in _graphs_values__encoding_time):
+                msgwarning("(WARNINGID005) Incorrect 'encoding time' results for "
+                           f"'{serializer}' x '{data_object}'. "
+                           f"Returned problematic data are: {_graphs_values__encoding_time}")
+                ok = False
+            if not _graphs_values__decoding_time \
+               or all(value is None for value in _graphs_values__decoding_time):
+                msgwarning("(WARNINGID006) Incorrect 'decoding time' results for "
+                           f"'{serializer}' x '{data_object}'. "
+                           f"Returned problematic data are: {_graphs_values__decoding_time}")
+                ok = False
+            if not _graphs_values__mem_usage \
+               or all(value is None for value in _graphs_values__mem_usage):
+                msgwarning("(WARNINGID007) Incorrect 'mem usage' results for "
+                           f"'{serializer}' x '{data_object}'. "
+                           f"Returned problematic data are: {_graphs_values__mem_usage}")
+                ok = False
+
+            if not ok:
+                continue
 
             # ---- remove absurd values ----
-            ok, _graphs_values__encoding_time = remove_absurd_values(_graphs_values__encoding_time)
-            if not ok:
-                # TODO print >
-                print(f"Anomaly: too many absurd values detected in 'encoding time' series; {serializer} {data_object}")
-                print(0/0)  # TOD
-                return None, 999  # TODO: quel code erreur ?
-            ok, _graphs_values__decoding_time = remove_absurd_values(_graphs_values__decoding_time)
-            if not ok:
+            _ok, _graphs_values__encoding_time = remove_absurd_values(_graphs_values__encoding_time)
+            if not _ok:
+                msgwarning("(WARNINGID008) "
+                           f"Anomaly: too many absurd values detected in 'encoding time' series;"
+                           f"'{serializer}' x '{data_object}'. "
                 ok = False
-                print(f"Anomaly: too many absurd values detected in 'decoding time' series; {serializer} {data_object}")
-                print(0/0)  # TOD
-                return None, 999  # TODO: quel code erreur ?
+            _ok, _graphs_values__decoding_time = remove_absurd_values(_graphs_values__decoding_time)
+            if not _ok:
+                msgwarning("(WARNINGID009) "
+                           f"Anomaly: too many absurd values detected in 'decoding time' series;"
+                           f"'{serializer}' x '{data_object}'. "
+                ok = False
             ok, _graphs_values__mem_usage = remove_absurd_values(_graphs_values__mem_usage)
             if not ok:
+                msgwarning("(WARNINGID010) "
+                           f"Anomaly: too many absurd values detected in 'mem usage' series;"
+                           f"'{serializer}' x '{data_object}'. "
                 ok = False
-                print(f"Anomaly: too many absurd values detected in 'memusage' series; {serializer} {data_object}")
-                print(_graphs_values__mem_usage)
-                print(0/0)  # TODO
-                return None, 999  # TODO: quel code erreur ?
+
+            if not ok:
+                continue
 
             # ---- sub data graphs ----
             # TODO
