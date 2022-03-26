@@ -32,23 +32,23 @@ TODO
         return True, values
 
     # ---- normal case ----
-    ok = True
+    success = True
 
-    max_récusés = len(values) * max_récusés_coeff
-    if max_récusés < 1:
-        max_récusés = 1
+    # max_récusés can't be set to 0, its minimal value is 1:
+    max_récusés = max(len(values) * max_récusés_coeff, 1)
 
+    # TODO : why geometric ?
     geometricmean = pseudo_geometric_mean(values)
     if geometricmean == 0:
         geometricmean = replace_0geometricmean_by
     indexes_to_be_removed = []
     for value_index, value in enumerate(values):
-        if not (0 <= abs(value/geometricmean) <= max_ratio_value_geometricmean):
+        if not 0 <= abs(value/geometricmean) <= max_ratio_value_geometricmean:
             indexes_to_be_removed.append(value_index)
     for value_index in indexes_to_be_removed[::-1]:
         del values[value_index]
 
     if len(indexes_to_be_removed) > max_récusés:
-        ok = False
+        success = False
 
-    return ok, values
+    return success, values

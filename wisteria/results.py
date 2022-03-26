@@ -81,7 +81,7 @@ def average_raw_serializationresults(raw_results):
         RETURNED VALUE:    (SerializationResults, None) if no error occured
                         or (None, (int)exit_code) if an error occured
     """
-    ok = True
+    success = True
     res = SerializationResults()
 
     # let's fill <res>:
@@ -93,7 +93,7 @@ def average_raw_serializationresults(raw_results):
             _graphs_values__mem_usage = []
             for index, raw_serialization_result in enumerate(raw_results[serializer][data_object]):
 
-                ok = True
+                success = True
 
                 # Safeguards: for some attributes ('encoding_time', 'decoding_time', 'mem_usage'),
                 #             we keep all values to compute later their means.
@@ -114,33 +114,33 @@ def average_raw_serializationresults(raw_results):
                         "(WARNINGID000) Incoherent result: 'encoded_object' changed "
                         f"for '{serializer}' x '{data_object}': "
                         f"'{raw_serialization_result.encoded_object}' != '{encoded_object}'")
-                    ok = False
+                    success = False
                 elif raw_serialization_result.encoding_success != encoding_success:
                     msgwarning(
                         "(WARNINGID001) Incoherent result: 'encoding_success' changed "
                         f"for '{serializer}' x '{data_object}': "
                         f"'{raw_serialization_result.encoding_success}' != '{encoding_success}'")
-                    ok = False
+                    success = False
                 elif raw_serialization_result.encoding_strlen != encoding_strlen:
                     msgwarning(
                         "(WARNINGID002) Incoherent result: 'encoding_strlen' changed "
                         f"for '{serializer}' x '{data_object}': "
                         f"'{raw_serialization_result.encoding_strlen}' != '{encoding_strlen}'")
-                    ok = False
+                    success = False
                 elif raw_serialization_result.decoding_success != decoding_success:
                     msgwarning(
                         "(WARNINGID003) Incoherent result: 'decoding_success' changed "
                         f"for '{serializer}' x '{data_object}': "
                         f"'{raw_serialization_result.decoding_success}' != '{decoding_success}'")
-                    ok = False
+                    success = False
                 elif raw_serialization_result.reversibility != reversibility:
                     msgwarning(
                         "(WARNINGID004) Incoherent result: 'reversibility' changed "
                         f"for '{serializer}' x '{data_object}': "
                         f"'{raw_serialization_result.reversibility}' != '{reversibility}'")
-                    ok = False
+                    success = False
 
-            if not ok:
+            if not success:
                 continue
 
             # Safeguards: what if the results are ill-formed ?
@@ -149,44 +149,47 @@ def average_raw_serializationresults(raw_results):
                 msgwarning("(WARNINGID005) Incorrect 'encoding time' results for "
                            f"'{serializer}' x '{data_object}'. "
                            f"Returned problematic data are: {_graphs_values__encoding_time}")
-                ok = False
+                success = False
             if not _graphs_values__decoding_time \
                or all(value is None for value in _graphs_values__decoding_time):
                 msgwarning("(WARNINGID006) Incorrect 'decoding time' results for "
                            f"'{serializer}' x '{data_object}'. "
                            f"Returned problematic data are: {_graphs_values__decoding_time}")
-                ok = False
+                success = False
             if not _graphs_values__mem_usage \
                or all(value is None for value in _graphs_values__mem_usage):
                 msgwarning("(WARNINGID007) Incorrect 'mem usage' results for "
                            f"'{serializer}' x '{data_object}'. "
                            f"Returned problematic data are: {_graphs_values__mem_usage}")
-                ok = False
+                success = False
 
-            if not ok:
+            if not success:
                 continue
 
             # ---- remove absurd values ----
-            _ok, _graphs_values__encoding_time = remove_absurd_values(_graphs_values__encoding_time)
-            if not _ok:
+            (_success,
+             _graphs_values__encoding_time) = remove_absurd_values(_graphs_values__encoding_time)
+            if not _success:
                 msgwarning("(WARNINGID008) "
                            f"Anomaly: too many absurd values detected in 'encoding time' series;"
-                           f"'{serializer}' x '{data_object}'. "
-                ok = False
-            _ok, _graphs_values__decoding_time = remove_absurd_values(_graphs_values__decoding_time)
-            if not _ok:
+                           f"'{serializer}' x '{data_object}'. ")
+                success = False
+            (_success,
+             _graphs_values__decoding_time) = remove_absurd_values(_graphs_values__decoding_time)
+            if not _success:
                 msgwarning("(WARNINGID009) "
                            f"Anomaly: too many absurd values detected in 'decoding time' series;"
-                           f"'{serializer}' x '{data_object}'. "
-                ok = False
-            ok, _graphs_values__mem_usage = remove_absurd_values(_graphs_values__mem_usage)
-            if not ok:
+                           f"'{serializer}' x '{data_object}'. ")
+                success = False
+            (success,
+             _graphs_values__mem_usage) = remove_absurd_values(_graphs_values__mem_usage)
+            if not success:
                 msgwarning("(WARNINGID010) "
                            f"Anomaly: too many absurd values detected in 'mem usage' series;"
-                           f"'{serializer}' x '{data_object}'. "
-                ok = False
+                           f"'{serializer}' x '{data_object}'. ")
+                success = False
 
-            if not ok:
+            if not success:
                 continue
 
             # ---- sub data graphs ----
@@ -217,19 +220,19 @@ def average_raw_serializationresults(raw_results):
                 "'{0}'",
                 1)
 
-            averaged_serialization_result = SerializationResult()
-            averaged_serialization_result.encoded_object = encoded_object
-            averaged_serialization_result.encoding_success = encoding_success
-            averaged_serialization_result.encoding_time = statistics.mean(_graphs_values__encoding_time)
-            averaged_serialization_result.encoding_strlen = encoding_strlen
-            averaged_serialization_result.decoding_success = decoding_success
-            averaged_serialization_result.decoding_time = statistics.mean(_graphs_values__decoding_time)
-            averaged_serialization_result.reversibility = reversibility
-            averaged_serialization_result.mem_usage = statistics.mean(_graphs_values__mem_usage)
+            aver_serialization_res = SerializationResult()
+            aver_serialization_res.encoded_object = encoded_object
+            aver_serialization_res.encoding_success = encoding_success
+            aver_serialization_res.encoding_time = statistics.mean(_graphs_values__encoding_time)
+            aver_serialization_res.encoding_strlen = encoding_strlen
+            aver_serialization_res.decoding_success = decoding_success
+            aver_serialization_res.decoding_time = statistics.mean(_graphs_values__decoding_time)
+            aver_serialization_res.reversibility = reversibility
+            aver_serialization_res.mem_usage = statistics.mean(_graphs_values__mem_usage)
 
             if serializer not in res:
                 res[serializer] = {}
-            res[serializer][data_object] = averaged_serialization_result
+            res[serializer][data_object] = aver_serialization_res
             if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                 msgdebug(f"* average result for '{serializer}' x '{data_object}':")
                 msgdebug(res[serializer][data_object])
@@ -242,7 +245,7 @@ def average_raw_serializationresults(raw_results):
         # ⋅These exit codes try to take into account the standards, in particular this
         # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
         # ⋅
-        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+        # ⋅Please note that `os` constants like `os.EX_SUCCESS` as defined in Python doc
         # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
         # ⋅used for this project; these constants are only defined for Linux systems
         # ⋅and this project aims Windows/OSX systems.
@@ -395,15 +398,19 @@ def compute_results():
                     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
                         if not is_a_cwc_name(data_name):
                             msgdebug(f"({transcoding_index+1}/{planned_transcodings_number}) "
-                                     f"About to call {method_part} {fmt_nounplural('time', method_part)} the transcoding function "
+                                     "About to call "
+                                     f"{method_part} {fmt_nounplural('time', method_part)} "
+                                     "the transcoding function "
                                      f"for '{serializer}' x '{data_name}' "
                                      f"[{fingerprint}]")
                         else:
-                            msgdebug("About to call {fmt_nounplural('time', method_part)} the transcoding function "
+                            msgdebug("About to call "
+                                     f"{fmt_nounplural('time', method_part)} "
+                                     "the transcoding function "
                                      f"for '{serializer}' x (cwc)'{data_name}' "
                                      f"[{fingerprint}]")
 
-                    for index in range(method_part):
+                    for _ in range(method_part):
                         if data_name not in raw_results[serializer]:
                             raw_results[serializer][data_name] = []
                         res_func = func_serialize(serializer,
@@ -412,7 +419,8 @@ def compute_results():
                         raw_results[serializer][data_name].append(res_func)
 
                     if wisteria.globs.ARGS.verbosity == VERBOSITY_DEBUG:
-                        # is serializer/data_name has been skipped, no results[serializer][data_name],
+                        # if serializer/data_name has been skipped,
+                        # no results[serializer][data_name],
                         # hence the following "if" statement:
                         if data_name in raw_results[serializer]:
                             msgdebug(f"* raw result(s) for '{serializer}' x '{data_name}' "
@@ -440,7 +448,7 @@ def compute_results():
         # ⋅These exit codes try to take into account the standards, in particular this
         # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
         # ⋅
-        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
+        # ⋅Please note that `os` constants like `os.EX_SUCCESS` as defined in Python doc
         # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
         # ⋅used for this project; these constants are only defined for Linux systems
         # ⋅and this project aims Windows/OSX systems.
@@ -583,11 +591,11 @@ def init_planned_transcodings(serializer1,
                         NB: about (bool)success: True may be returned even if len(serializers)==0 or
                             if len(dataobjs)==0.
     """
-    (parse_filterstr_ok,
+    (parse_filterstr_success,
      wisteria.globs.DISCARDED_DATA,
      wisteria.globs.DISCARDED_SERIALIZERS) = parse_filterstr(filterstr)
 
-    if not parse_filterstr_ok:
+    if not parse_filterstr_success:
         msgerror("(ERRORID052) Can't set PLANNED_TRANSCODINGS "
                  "since an error occured while parsing the filter string.")
         msginfo("About --filter:")

@@ -78,6 +78,16 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
+- pyplot warning
+- des images ont un texte en ordonnée illisible
+- les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
+    
+[DONE] task-385
+
+Improved code quality using Pylint.
+
+    * Improved code quality using Pylint.
+
 [DONE] task-384
 
 Fixed issue #49: no more crash when ill-formed results are created.

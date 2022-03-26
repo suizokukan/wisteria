@@ -228,9 +228,10 @@ TODO
     median = statistics.median(values)
     mean_str = f"{mean:.7f}"
     median_str = f"{median:.7f}"
-    stdev_str= f"{statistics.stdev(values):.7f}"
+    stdev_str = f"{statistics.stdev(values):.7f}"
 
-    axes.set_title(f"mean(red): {mean_str}\nmedian(green): {median_str}\nstandard deviation: {stdev_str}")
+    axes.set_title(
+        f"mean(red): {mean_str}\nmedian(green): {median_str}\nstandard deviation: {stdev_str}")
     axes.set_xlabel(f"{title}: iteration number")
     axes.set_ylabel(f"{title} ({unit})")
     axes.set_aspect('auto')
