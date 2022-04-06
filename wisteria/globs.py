@@ -229,7 +229,8 @@ REGEX_CMP = re.compile(r"^\s*(?P<serializer1>[^\s\(\)]+)"
                        r"((\svs\s|\sversus\s|\sagainst\s)(?P<serializer2>[^\s\(\)]+))?"
                        r"(\s*\((?P<cmpdata>all|cwc|allbutcwc|ini)\))?\s*$")
 
-# File to report path
+# Path to report file
+#  This is the main output path: report, graphs, ... will be written here.
 REPORTFILE_PATH = "."
 
 # REPORT_SHORTCUTS has two goals:

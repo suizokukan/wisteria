@@ -887,6 +887,12 @@ def checkup():
     msgreport()
 
     # ---- configuration file -------------------------------------------------
+    msgreporttitle("Output files")
+    msgreport("  All output files (report files, graphs) will be written in "
+              f"'{wisteria.globs.REPORTFILE_PATH}' ('{normpath(wisteria.globs.REPORTFILE_PATH)}').")
+    msgreport()
+
+    # ---- configuration file -------------------------------------------------
     msgreporttitle("Config file")
     config = None
     if not os.path.exists(ARGS.cfgfile):

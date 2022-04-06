@@ -1073,6 +1073,9 @@ $ poetry publish
 
 # [4] FAQ
 
+**Q: Where will the output files (=report file, graphs, ...) be written?
+A: use the --checkup argument
+
 **Q: How to modify the report (=log) file name ?**
 
 A: Use --output option (e.g. `--output="console;reportfile/w=report.txt`). You may use special keywords 'TIMESTAMP' and 'DATETIME' in the filename.

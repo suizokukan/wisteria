@@ -277,7 +277,8 @@ You just want to see what the encoded string look like:
   | ⋅Comparisons details.
   | ⋅
   | ⋅(I) serializers
-  | ⋅Test one serializer alone(1) or one serializer against another serializer(2) or
+  | ⋅Test one serializer alone(1) or one serializer against another serializer(
+2) or
   | ⋅a serializer against all serializers(3) or all serializers(4) together.
   | ⋅
   | ⋅    (1) --cmp="json"
@@ -286,8 +287,10 @@ You just want to see what the encoded string look like:
   | ⋅    (4) --cmp="all vs all"
   | ⋅
   | ⋅(II) data types:
-  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all data types
-  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all data types(d).
+  | ⋅Instead of 'cwc' (=compare what's comparable)(a) you may want to test all
+data types
+  | ⋅but cwc(b) or data types defined in the config file(c) or absolutely all d
+ata types(d).
   | ⋅
   | ⋅    (a) --cmp="json vs pickle (cwc)"
   | ⋅    (b) --cmp="json vs pickle (allbutcwc)"
@@ -297,9 +300,6 @@ You just want to see what the encoded string look like:
   | ⋅NB: You may use 'vs' as well as 'against', as in:
   | ⋅    --cmp="json vs pickle (cwc)"
   | ⋅NB: globs.py::REGEX_CMP defines exactly the expected format
-2) or
-data types
-ata types(d).
   |
 
   |
@@ -325,6 +325,12 @@ ata types(d).
   | ⋅  used;
   | ⋅* either 'data:oktrans_only' (--filter='data:oktrans_only'): in this case,
   | ⋅  only the objects that can be successfully transcoded are kept;
+  |
+
+  |
+  | (pimydoc)command line help for --method(full version)
+  | ⋅TODO
+  | ⋅0 is forbidden
   |
 
   |
@@ -1041,7 +1047,103 @@ dateutil (https://dateutil.readthedocs.io/en/stable/)
 "2021-03-04")
 
 
+[3] if you want to read/test/modify the code
+
+[3.0] classes hierarchy and code structure
+
+See classes.md.
+
+  |
+  | (pimydoc)code structure
+  | ⋅step A: command line arguments, --help message
+  | ⋅- (A/00) minimal internal imports
+  | ⋅- (A/01) command line parsing
+  | ⋅
+  | ⋅step B: initializations & --checkup
+  | ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
+  | ⋅- (B/03) wisteria.globs.ARGS initialization
+  | ⋅- (B/04) a special case: if no argument has been given, we explicit the de
+fault values
+  | ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
+  | ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
+  | ⋅- (B/07) msgxxx() functions can be used
+  | ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
+  | ⋅- (B/09) project name & version
+  | ⋅- (B/10) ARGS.report interpretation
+  | ⋅- (B/11) exit handler installation
+  | ⋅- (B/12) serializers import
+  | ⋅- (B/13) temp file opening
+  | ⋅- (B/14) known data init (to be placed after 'temp file opening')
+  | ⋅- (B/15) wisteria.globs.METHOD initialization
+  | ⋅- (B/16) checkup
+  | ⋅- (B/17) informations about the current machine
+  | ⋅- (B/18) download default config file
+  | ⋅
+  | ⋅step C: main()
+  | ⋅- (C/18) call to main()
+  | ⋅       - (C/18.1) main(): debug messages
+  | ⋅       - (C/18.2) main(): cmp string interpretation
+  | ⋅       - (C/18.3) main(): config file reading
+  | ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
+  | ⋅       - (C/18.5) main(): results computing
+  | ⋅       - (C/18.6) main(): report
+  | ⋅
+  | ⋅step D: exit_handler()
+  | ⋅- (D/01) exported report
+  | ⋅- (D/02) closing and removing of tempfile
+  | ⋅- (D/03) closing wisteria.globs.RICHFILECONSOLE_FILEOBJECT
+  | ⋅- (D/04) reset console cursor
+  | ⋅
+  |
+
+[3.1] exit codes
+
+
+(pimydoc)exit codes
+⋅These exit codes try to take into account the standards, in particular this
+⋅one: https://docs.python.org/3/library/sys.html#sys.exit
+⋅
+⋅Please note that os constants like os.EX_OK as defined in Python doc
+⋅(see https://docs.python.org/3/library/os.html#process-management) are not
+⋅used for this project; these constants are only defined for Linux systems
+⋅and this project aims Windows/OSX systems.
+⋅
+⋅*    0: normal exit code
+⋅*       normal exit code after --help/--help2
+⋅*       normal exit code after --checkup
+⋅*       normal exit code after --downloadconfigfile
+⋅*       normal exit code after --mymachine
+⋅*       normal exit code (no data to handle)
+⋅*       normal exit code (no serializer to handle)
+⋅*    1: error, given config file can't be read (missing or ill-formed file)
+⋅*    2: error, ill-formed --cmp string
+⋅*    3: error, ill-formed --output string
+⋅*    4: error, missing required module
+⋅*    5: error: an inconsistency between the data has been detected
+⋅*    6: error: can't open/create report file
+⋅*  100: internal error, data can't be loaded
+⋅*  101: internal error, an error occured while computing the results
+⋅*  102: internal error, an error occured in main()
+⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
+  |
+  |
+  | [3.4] coding conventions.
+  |
+  | See codingconventions.md.
+  |
+  | [3.6] git and poetry and pypi workflow
+  |
+  | [3.6.2] pypi: ship another version
+  |
+  |
+$ poetry build
+$ poetry publish
+
+
 [4] FAQ
+
+Q: Where will the output files (=report file, graphs, ...) be written?
+A: use the --checkup argument
 
 Q: How to modify the report (=log) file name ?
 
@@ -1087,95 +1189,4 @@ _as_expected.py
     with two functions: initialize() and works_as_expected()
     - Modify globs.py:CWC_MODULES to add your new classes
     - Add your classes to wisteria.ini (section data objects)
-
-[3] if you want to read/test/modify the code
-g
-[3.0] classes hierarchy and code structure
-
-See classes.md.
-
-  |
-  | (pimydoc)code structure
-  | ⋅step A: command line arguments, --help message
-  | ⋅- (A/00) minimal internal imports
-  | ⋅- (A/01) command line parsing
-  | ⋅
-  | ⋅step B: initializations & --checkup
-  | ⋅- (B/02) normal imports & PLATFORM_SYSTEM initialization
-  | ⋅- (B/03) wisteria.globs.ARGS initialization
-  | ⋅- (B/04) a special case: if no argument has been given, we explicit the default values
-  | ⋅- (B/05) --output string/OUTPUT+RICHCONSOLE init
-  | ⋅- (B/06) reportfile opening: update REPORTFILE_PATH & co.
-  | ⋅- (B/07) msgxxx() functions can be used
-  | ⋅- (B/08) check STR2REPORTSECTION_KEYS and STR2REPORTSECTION
-  | ⋅- (B/09) project name & version
-  | ⋅- (B/10) ARGS.report interpretation
-  | ⋅- (B/11) exit handler installation
-  | ⋅- (B/12) serializers import
-  | ⋅- (B/13) temp file opening
-  | ⋅- (B/14) known data init (to be placed after 'temp file opening')
-  | ⋅- (B/15) wisteria.globs.METHOD initialization
-  | ⋅- (B/16) checkup
-  | ⋅- (B/17) informations about the current machine
-  | ⋅- (B/18) download default config file
-  | ⋅
-  | ⋅step C: main()
-  | ⋅- (C/18) call to main()
-  | ⋅       - (C/18.1) main(): debug messages
-  | ⋅       - (C/18.2) main(): cmp string interpretation
-  | ⋅       - (C/18.3) main(): config file reading
-  | ⋅       - (C/18.4) main(): PLANNED_TRANSCODINGS initialization
-  | ⋅       - (C/18.5) main(): results computing
-  | ⋅       - (C/18.6) main(): report
-  | ⋅
-  | ⋅step D: exit_handler()
-  | ⋅- (D/01) exported report
-  | ⋅- (D/02) closing and removing of tempfile
-  | ⋅- (D/03) closing wisteria.globs.RICHFILECONSOLE_FILEOBJECT
-  | ⋅- (D/04) reset console cursor
-  | ⋅
-fault values
-  |
-
-[3.1] exit codes
-
-(pimydoc)exit codes
-⋅These exit codes try to take into account the standards, in particular this
-⋅one: https://docs.python.org/3/library/sys.html#sys.exit
-⋅
-⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
-⋅(see https://docs.python.org/3/library/os.html#process-management) are not
-⋅used for this project; these constants are only defined for Linux systems
-⋅and this project aims Windows/OSX systems.
-⋅
-⋅*    0: normal exit code
-⋅*       normal exit code after --help/--help2
-⋅*       normal exit code after --checkup
-⋅*       normal exit code after --downloadconfigfile
-⋅*       normal exit code after --mymachine
-⋅*       normal exit code (no data to handle)
-⋅*       normal exit code (no serializer to handle)
-⋅*    1: error, given config file can't be read (missing or ill-formed file)
-⋅*    2: error, ill-formed --cmp string
-⋅*    3: error, ill-formed --output string
-⋅*    4: error, missing required module
-⋅*    5: error: an inconsistency between the data has been detected
-⋅*    6: error: can't open/create report file
-⋅*  100: internal error, data can't be loaded
-⋅*  101: internal error, an error occured while computing the results
-⋅*  102: internal error, an error occured in main()
-⋅*  103: internal error, can't initialize PLANNED_TRANSCODINGS
-
-[3.4] coding conventions.
-
-See codingconventions.md.
-
-[3.6] git and poetry and pypi workflow
-
-[3.6.2] pypi: ship another version
-
-  |
-  | $ poetry build
-  | $ poetry publish
-  |
 """

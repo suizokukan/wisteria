@@ -78,9 +78,14 @@ What's next ?
 * --method = "serializer=shuffle/sorted/raw;dataobj=shuffle/sorted/raw;lenmethod=str|bytes;timeitnumber=10;iteration=1+2+...+n|n"
 * moyenne: calculer les résultats en plusieurs fois, en faisant la moyenne
 
-- pyplot warning
-- des images ont un texte en ordonnée illisible
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
+- des images ont un texte en ordonnée illisible
+
+[DONE] task-388
+
+    * improved informations displayed by --checkup: "output files" section
+    * improved doc. in globs.py about REPORTFILE_PATH variable
+    * improved doc in README.md + updated wisteria/__init__.py
 
 [DONE] task-387
 
@@ -94,7 +99,7 @@ Fixed Pyplot warning "More than 20 figures have been opened".
 
     * Fixed Pyplot warning "More than 20 figures have been opened"
       by calling manually the garbage collector.
-    
+
 [DONE] task-385
 
 Improved code quality using Pylint.
