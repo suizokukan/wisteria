@@ -245,7 +245,7 @@ def average_raw_serializationresults(raw_results):
         # ⋅These exit codes try to take into account the standards, in particular this
         # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
         # ⋅
-        # ⋅Please note that `os` constants like `os.EX_SUCCESS` as defined in Python doc
+        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
         # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
         # ⋅used for this project; these constants are only defined for Linux systems
         # ⋅and this project aims Windows/OSX systems.
@@ -448,7 +448,7 @@ def compute_results():
         # ⋅These exit codes try to take into account the standards, in particular this
         # ⋅one: https://docs.python.org/3/library/sys.html#sys.exit
         # ⋅
-        # ⋅Please note that `os` constants like `os.EX_SUCCESS` as defined in Python doc
+        # ⋅Please note that `os` constants like `os.EX_OK` as defined in Python doc
         # ⋅(see https://docs.python.org/3/library/os.html#process-management) are not
         # ⋅used for this project; these constants are only defined for Linux systems
         # ⋅and this project aims Windows/OSX systems.

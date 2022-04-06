@@ -82,6 +82,12 @@ What's next ?
 - des images ont un texte en ordonnée illisible
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 
+[DONE] task-387
+
+Re-numbered code structure parts.
+
+    * Re-numbered code structure parts. Updated pimydoc content.
+
 [DONE] task-386
 
 Fixed Pyplot warning "More than 20 figures have been opened".

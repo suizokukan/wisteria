@@ -42,9 +42,10 @@
     ⋅- (B/12) serializers import
     ⋅- (B/13) temp file opening
     ⋅- (B/14) known data init (to be placed after 'temp file opening')
-    ⋅- (B/15) checkup
-    ⋅- (B/16) informations about the current machine
-    ⋅- (B/17) download default config file
+    ⋅- (B/15) wisteria.globs.METHOD initialization
+    ⋅- (B/16) checkup
+    ⋅- (B/17) informations about the current machine
+    ⋅- (B/18) download default config file
     ⋅
     ⋅step C: main()
     ⋅- (C/18) call to main()
@@ -834,8 +835,7 @@ wisteria.data.init_data()
 
 
 # =============================================================================
-# (B/XX) wisteria.globs.METHOD init
-#  TODO: rénuméroter
+# (B/15) wisteria.globs.METHOD initialization
 #  TODO : doc about METHOD ? QUEL FORMAT ?
 # =============================================================================
 wisteria.globs.METHOD = parse_methodstr(ARGS.method)
@@ -848,7 +848,7 @@ if not wisteria.globs.METHOD[0]:
 
 
 # =============================================================================
-# (B/15) checkup
+# (B/16) checkup
 # =============================================================================
 def checkup():
     """
@@ -1058,7 +1058,7 @@ if wisteria.globs.ARGS.checkup:
 
 
 # =============================================================================
-# (B/16) informations about the current machine
+# (B/17) informations about the current machine
 # =============================================================================
 if wisteria.globs.ARGS.mymachine:
     msgreport("Informations about the current machine:")
@@ -1097,7 +1097,7 @@ if wisteria.globs.ARGS.mymachine:
 
 
 # =============================================================================
-# (B/17) download default config file
+# (B/18) download default config file
 # =============================================================================
 if wisteria.globs.ARGS.downloadconfigfile:
     downloadconfigfile()

@@ -1114,9 +1114,10 @@ See classes.md.
   | ⋅- (B/12) serializers import
   | ⋅- (B/13) temp file opening
   | ⋅- (B/14) known data init (to be placed after 'temp file opening')
-  | ⋅- (B/15) checkup
-  | ⋅- (B/16) informations about the current machine
-  | ⋅- (B/17) download default config file
+  | ⋅- (B/15) wisteria.globs.METHOD initialization
+  | ⋅- (B/16) checkup
+  | ⋅- (B/17) informations about the current machine
+  | ⋅- (B/18) download default config file
   | ⋅
   | ⋅step C: main()
   | ⋅- (C/18) call to main()
