@@ -81,6 +81,13 @@ What's next ?
 - pyplot warning
 - des images ont un texte en ordonnée illisible
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
+
+[DONE] task-386
+
+Fixed Pyplot warning "More than 20 figures have been opened".
+
+    * Fixed Pyplot warning "More than 20 figures have been opened"
+      by calling manually the garbage collector.
     
 [DONE] task-385
 

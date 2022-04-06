@@ -239,3 +239,7 @@ TODO
     axes.axhline(median, color='green', linewidth=1)
     pyplot.bar(tuple(range(1, len(values)+1)), values)
     pyplot.savefig(filename)
+
+    # Beware ! Classical pitfall here, see
+    #  https://stackoverflow.com/questions/16334588
+    pyplot.close(pyplot.gcf())
