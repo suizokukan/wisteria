@@ -275,6 +275,7 @@ STR2REPORTSECTION_KEYS = (
     'titles',
     'graphs',
     'A',
+    'A0',
     'A1',
     'A2',
     'A3',

@@ -32,6 +32,7 @@
     o  partial_report__data()
     o  partial_report__serializers()
 
+    o  report_section_a0(results, s1s2d)
     o  report_section_a1(results, s1s2d)
     o  report_section_a2(results, s1s2d)
     o  report_section_a3(results, s1s2d)
@@ -59,6 +60,7 @@
     o  report(results, s1s2d)
 """
 import os
+import sys
 
 import rich.table
 from rich.console import Console
@@ -475,6 +477,77 @@ def partial_report__serializers(show_all_serializers,
 # Since all report_() functions have the same signature, it may happen that
 # some arguments passed to the function are not used.
 #   pylint: disable=unused-argument
+def report_section_a0(results,
+                      s1s2d):
+    """
+        report_section_a0()
+
+        Sub-function of report() for report section "A1"
+        (pimydoc)report sections
+        ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
+        ⋅  - A1      : options used to create reports
+        ⋅  - A2      : list of the serializers to be used because they have been selected
+        ⋅  - A3      : list of the data objects to be used because they have been selected
+        ⋅  - A4      : list of the planned transcodings
+        ⋅  - A5      : what do the encoded strings look like? (basic types/demonstration_dataobj)
+        ⋅* B         : full details (raw results)
+        ⋅  - B1      : full details (serializers)
+        ⋅    . B1a   : full details: serializer * data object
+        ⋅    . B1b   : full details: serializers
+        ⋅    . B1c   : full details: serializers, hall of fame
+        ⋅    . B1d   : full details: full details: serializer <S> can't handle <dataobj>
+        ⋅  - B2      : full details (data objects)
+        ⋅    . B2a   : full details: data object * serializer
+        ⋅    . B2b   : full details: data objects
+        ⋅  - B3      : encoded string of all data objects and of all serializers
+        ⋅* C         : conclusions
+        ⋅  - C1      : conclusion: data objects handled/not handled by the serializer(s)
+        ⋅    . C1a   : conclusion: data objects handled by the serializer(s)
+        ⋅    . C1b   : conclusion: data objects NOT handled by the serializer(s)
+        ⋅  - C2      : conclusion: final text and data
+        ⋅    . C2a   : conclusion: serializers (not sorted)
+        ⋅    . C2b   : conclusion: overall score (based on: Σ strlen./Σ enc+dec time/enc⇆dec)
+        ⋅    . C2c   : conclusion
+        ⋅* D         : various informations
+        ⋅  - D1      : informations about the machine
+        ⋅    . D1a   : informations about the machine (no extensive details)
+        ⋅    . D1b   : informations about the machine (extensive details)
+        ⋅* graphs    : graphic visualizations
+        _______________________________________________________________________
+
+        ARGUMENTS:
+        o  results: (SerializationResults)a dict of
+                    [(str)serializer][(str)data_name] = SerializationResult
+
+        o  s1s2d: ( (str)seria1,
+                    (str)seria2,
+                    (str)cmpdata         -> 'all', 'ini', 'cwc' or 'allbutcwc', cf read_cmpstring()
+                  )
+    """
+    if "titles;" in wisteria.globs.ARGS.report:
+        msgreporttitle(
+            "(A0) Command Line Arguments")
+        msgreport()
+
+    # In sys.argv, there's no quotes ("...") anymore.
+    # So, let's add quotes around parameters, so that e.g. --cmp=pickle vs json(ini) becomes
+    # --cmp="pickle vs json(ini)"
+    res = []
+    for arg in sys.argv:
+        if "=" not in arg:
+            res.append(arg)
+        else:
+            index = arg.index("=")
+            res.append(arg[:index+1]+'"'+arg[index+1:]+'"')
+    msgreport(" ".join(res))
+
+    msgreport()
+
+
+# Since all report_() functions have the same signature, it may happen that
+# some arguments passed to the function are not used.
+#   pylint: disable=unused-argument
 def report_section_a1(results,
                       s1s2d):
     """
@@ -483,6 +556,7 @@ def report_section_a1(results,
         Sub-function of report() for report section "A1"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -557,6 +631,7 @@ def report_section_a2(results,
         Sub-function of report() for report section "A2"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -627,6 +702,7 @@ def report_section_a3(results,
         Sub-function of report() for report section "A3"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -698,6 +774,7 @@ def report_section_a4(results,
         Sub-function of report() for report section "A4"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -768,6 +845,7 @@ def report_section_a5(results,
         Sub-function of report() for report section "A5"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -841,6 +919,7 @@ def report_section_b1a(results,
         Sub-function of report() for report section "B1a"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -938,6 +1017,7 @@ def report_section_b1b(results,
         Sub-function of report() for report section "B1b"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1016,6 +1096,7 @@ def report_section_b1c(results,
         Sub-function of report() for report section "B1c"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1095,6 +1176,7 @@ def report_section_b1d(results,
         Sub-function of report() for report section "B1d"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1166,6 +1248,7 @@ def report_section_b2a(results,
         Sub-function of report() for report section "B2a"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1263,6 +1346,7 @@ def report_section_b2b(results,
         Sub-function of report() for report section "B2b"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1349,6 +1433,7 @@ def report_section_b3(results,
         Sub-function of report() for report section "B2b"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1416,6 +1501,7 @@ def report_section_c1a(results,
         Sub-function of report() for report section "C1a"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1541,6 +1627,7 @@ def report_section_c1b(results,
         Sub-function of report() for report section "C1b"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1665,6 +1752,7 @@ def report_section_c2a(results,
         Sub-function of report() for report section "C2a"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -1755,6 +1843,7 @@ def report_section_c2b(results,
         Sub-function of report() for report section "C2b"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -2358,6 +2447,7 @@ def report_section_c2c(results,
         Sub-function of report() for report section "C2c"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -2421,6 +2511,7 @@ def report_section_d1a(results,
         Sub-function of report() for report section "D1a"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -2479,6 +2570,7 @@ def report_section_d1b(results,
         Sub-function of report() for report section "D1b"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -2537,6 +2629,7 @@ def report_section_graphs(results,
         Sub-function of report() for report section "D1a"
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected
@@ -2640,11 +2733,13 @@ def report_section_graphs(results,
 STR2REPORTSECTION = {
         "titles": None,
         "graphs": (report_section_graphs,),
-        "A": (report_section_a1,
+        "A": (report_section_a0,
+              report_section_a1,
               report_section_a2,
               report_section_a3,
               report_section_a4,
               report_section_a5,),
+        "A0": (report_section_a0,),
         "A1": (report_section_a1,),
         "A2": (report_section_a2,),
         "A3": (report_section_a3,),
@@ -2703,6 +2798,7 @@ def report(results,
 
         (pimydoc)report sections
         ⋅* A         : main informations
+        ⋅  - A0      : command line arguments
         ⋅  - A1      : options used to create reports
         ⋅  - A2      : list of the serializers to be used because they have been selected
         ⋅  - A3      : list of the data objects to be used because they have been selected

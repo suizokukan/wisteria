@@ -360,6 +360,7 @@ computing the result, which is unpleasant to see.
 ### ==========================================================================
 [(pimydoc)report sections]
 * A         : main informations
+  - A0      : command line arguments
   - A1      : options used to create reports
   - A2      : list of the serializers to be used because they have been selected
   - A3      : list of the data objects to be used because they have been selected

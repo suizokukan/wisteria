@@ -81,6 +81,13 @@ What's next ?
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 - des images ont un texte en ordonnée illisible
 
+[DONE] task-389
+
+Fixed issue #53: added A0 report section.
+
+    * Fixed issue #53: added A0 report section with the command line arguments.
+    * updated pimydoc about report section arguments
+
 [DONE] task-388
 
     * improved informations displayed by --checkup: "output files" section
