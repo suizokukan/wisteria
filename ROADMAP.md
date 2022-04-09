@@ -81,6 +81,13 @@ What's next ?
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 - des images ont un texte en ordonnée illisible
 
+[DONE] task-392
+
+Fixed issue #56 and fixed issue #52: README.md improvements
+
+    * Fixed issue #56 and fixed issue #52: README.md improvements.
+    * Updated __init__.py
+
 [DONE] task-391
 
 Fixed issue #55: 'subdatagraph' > 'dataqualitygraph'.

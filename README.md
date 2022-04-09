@@ -2,7 +2,7 @@
 
 NOT YET TO BE USED. PLEASE WAIT UNTIL VERSION NUMBER 0.3 !
 
-Use [Wisteria](#01-what-about-the-name-) to compare different Python serializers.
+Use [Wisteria](#01-what-about-the-name-) to [compare different Python serializers](demonstration_reports/1/demonstration_report.md).
 
 This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
 
@@ -187,7 +187,7 @@ You want to compare all serializers between them:
 
     $ wisteria --cmp="all vs all"
 
-You want to compare 2 serializers, e.g. `json` and `pickle` but only with the data objects that can transcoded by both serializers:
+You want to compare 2 serializers, e.g. `json` and `pickle` but only with the data objects that can *successfully* be transcoded by both serializers:
 
     $ wisteria --cmp="json vs pickle" --filter="data:oktrans_only"
 
