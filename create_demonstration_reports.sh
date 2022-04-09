@@ -27,7 +27,7 @@ poetry run bin/wisteria --cmp="pickle" --report="create_demonstration_report" --
 
 echo "... filling demonstration_reports/2"
 rm -rf demonstration_reports/2/*
-poetry run bin/wisteria --cmp="pickle vs json" --report="create_demonstration_report" --output="reportfile/w=demonstration_reports/2/report.txt" --exportreport="md=demonstration_report.md"
+poetry run bin/wisteria --cmp="pickle vs json" --report="create_demonstration_report" --filter="data:oktrans_only" --output="reportfile/w=demonstration_reports/2/report.txt" --exportreport="md=demonstration_report.md"
 
 echo "... filling demonstration_reports/3"
 rm -rf demonstration_reports/3/*

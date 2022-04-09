@@ -81,6 +81,12 @@ What's next ?
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 - des images ont un texte en ordonnée illisible
 
+[DONE] task-394
+
+    * fixed a bug in create_demonstration_reports.sh: added forgotten
+      `--filter="data:oktrans_only"` for report #3.
+    * Updated demonstration report content (`$ ./create_demonstration_reports.sh`)
+
 [DONE] task-393
 
 Added a new demonstration report (pickle vs json).
