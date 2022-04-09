@@ -2,7 +2,7 @@
 
 NOT YET TO BE USED. PLEASE WAIT UNTIL VERSION NUMBER 0.3 !
 
-Use [Wisteria](#01-what-about-the-name-) to [compare different Python serializers](demonstration_reports/1/demonstration_report.md).
+Use [Wisteria](#01-what-about-the-name-) to [compare different Python serializers](demonstration_reports/2/demonstration_report.md).
 
 This is a [CLI](https://en.wikipedia.org/wiki/Command-line_interface)/[GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html)/Python 3.8+ project, available on Linux/MacOSX/Windows systems.
 
@@ -49,8 +49,9 @@ Use `Wisteria` to compare serializers like [pickle](https://docs.python.org/3/li
 You may have a look at some reports already computed [by this script](create_demonstration_reports.sh):
 
 * By example, [how does `pickle` compare to his competitors?](demonstration_reports/1/demonstration_report.md) ?
-* [How to classify serializers' weaknesses and strengths?](demonstration_reports/2/demonstration_report.md) ?
-* [Regarding the boolean values, what do the strings encoded by the different serializers look like?](demonstration_reports/3/demonstration_report.md) ?
+* [How does `pickle` compare to `json`?](demonstration_reports/2/demonstration_report.md) ?
+* [How to classify serializers' weaknesses and strengths?](demonstration_reports/3/demonstration_report.md) ?
+* [Regarding the boolean values, what do the strings encoded by the different serializers look like?](demonstration_reports/4/demonstration_report.md) ?
 
 After [installing](#1-installation) `Wisteria`, try `$ wisteria --help` and `$ wisteria --checkup` to see what can be done on your system; then execute a simple comparison like `$ wisteria --cmp="pickle vs marshal"`. Have fun [discovering the rest of the possibilities](#2-how-to-use)!
 

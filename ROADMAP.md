@@ -81,6 +81,14 @@ What's next ?
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 - des images ont un texte en ordonnée illisible
 
+[DONE] task-393
+
+Added a new demonstration report (pickle vs json).
+
+    * Added a new demonstration report (pickle vs json).
+    * Updated README.md and __init__.py (`$ readmemd2txt --pyinitfile > wisteria/__init__.py`).
+    * Updated demonstration report content (`$ ./create_demonstration_reports.sh`)
+
 [DONE] task-392
 
 Fixed issue #56 and fixed issue #52: README.md improvements

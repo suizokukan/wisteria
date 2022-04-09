@@ -1,48 +1,86 @@
 ```
+(WARNINGID010) Anomaly: too many absurd values detected in 'mem usage' series;'marshal' x 'str(long)'. 
 (A0) Command Line Arguments
 
-bin/wisteria --cfgfile="demonstration_reports/wisteria2.ini" --cmp="all(ini)" --report="titles;A0;B3" --output="reportfile/w=demonstration_reports/3/report.txt" --exportreport="md=demonstration_report.md"
+bin/wisteria --cmp="all" --report="create_demonstration_report" --filter="data:oktrans_only" --output="reportfile/w=demonstration_reports/3/report.txt" --exportreport="md=demonstration_report.md"
 
-(B3) Encoded String for all Data Objects, for all Serializers
-o  'iaswn' x 'bool/false' [0x7015b]
-   o  type: str
-   o  len:  5
-   o  repr: 'false'
+(B1b) Full Details: Serializers
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃ Serializer                   ┃ Encod. Ok ? ┃ Σ Encoded   ┃ Σ Encoded     ┃ Decod. Ok ? ┃ Σ Decoded   ┃ Reversibility ?  ┃ Σ memory     ┃
+┃                              ┃ (Max=29)    ┃ Time        ┃ Str. Length   ┃ (Max=29)    ┃ Time        ┃ (Max=29)         ┃              ┃
+┃                              ┃             ┃ (seconds)   ┃ (characters)  ┃             ┃ (seconds)   ┃                  ┃              ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ Iaswn                        │ 29          │ 0.000408    │ 9460          │ 29          │ 0.000442    │ 29 (100.00%)     │ 0 byte       │
+│                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
+│ json                         │ 29          │ 0.000212    │ 9483          │ 29          │ 0.000187    │ 29 (100.00%)     │ 0 byte       │
+│                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
+│ marshal                      │ 28 (96.55%) │ 0.000036    │ 394           │ 28 (96.55%) │ 0.000036    │ 28 (96.55%)      │ 0 byte       │
+│ pickle                       │ 29          │ 0.000069    │ 9637          │ 29          │ 0.000061    │ 29 (100.00%)     │ 0 byte       │
+│                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
+└──────────────────────────────┴─────────────┴─────────────┴───────────────┴─────────────┴─────────────┴──────────────────┴──────────────┘
 
-o  'iaswn' x 'bool/true' [0xb02a3]
-   o  type: str
-   o  len:  4
-   o  repr: 'true'
+(C1a) Conclusion: Data Objects Handled by the Serializer(s)
 
-o  'json' x 'bool/false' [0x53dcf]
-   o  type: str
-   o  len:  5
-   o  repr: 'false'
+Iaswn: According to the tests carried out on all data, Iaswn can handle 29 data objects among 29 (100.00%), namely bool/false, bool/true, demonstration_dataobj, dict(keys/str), dict(keys/str+subdicts), 
+float, int, int_-0xffff, int_-0xffffffff, int_-0xffffffffffffffff, int_-0xffffffffffffffffffffffffffffffff, int_-1, int_0, int_0xffff, int_0xffffffff, int_0xffffffffffffffff, 
+int_0xffffffffffffffffffffffffffffffff, int_1, io.string(empty), list, list(+sublists), list(empty), metaclass, none, str, str(empty), str(long), str(non ascii characters) and time(time.time) .
+json: According to the tests carried out on all data, json can handle 29 data objects among 29 (100.00%), namely bool/false, bool/true, demonstration_dataobj, dict(keys/str), dict(keys/str+subdicts), float, 
+int, int_-0xffff, int_-0xffffffff, int_-0xffffffffffffffff, int_-0xffffffffffffffffffffffffffffffff, int_-1, int_0, int_0xffff, int_0xffffffff, int_0xffffffffffffffff, int_0xffffffffffffffffffffffffffffffff,
+int_1, io.string(empty), list, list(+sublists), list(empty), metaclass, none, str, str(empty), str(long), str(non ascii characters) and time(time.time) .
+marshal: According to the tests carried out on all data, marshal can handle 28 data objects among 29 (96.55%), namely bool/false, bool/true, demonstration_dataobj, dict(keys/str), dict(keys/str+subdicts), 
+float, int, int_-0xffff, int_-0xffffffff, int_-0xffffffffffffffff, int_-0xffffffffffffffffffffffffffffffff, int_-1, int_0, int_0xffff, int_0xffffffff, int_0xffffffffffffffff, 
+int_0xffffffffffffffffffffffffffffffff, int_1, io.string(empty), list, list(+sublists), list(empty), metaclass, none, str, str(empty), str(non ascii characters) and time(time.time) .
+pickle: According to the tests carried out on all data, pickle can handle 29 data objects among 29 (100.00%), namely bool/false, bool/true, demonstration_dataobj, dict(keys/str), dict(keys/str+subdicts), 
+float, int, int_-0xffff, int_-0xffffffff, int_-0xffffffffffffffff, int_-0xffffffffffffffffffffffffffffffff, int_-1, int_0, int_0xffff, int_0xffffffff, int_0xffffffffffffffff, 
+int_0xffffffffffffffffffffffffffffffff, int_1, io.string(empty), list, list(+sublists), list(empty), metaclass, none, str, str(empty), str(long), str(non ascii characters) and time(time.time) .
 
-o  'json' x 'bool/true' [0x47757]
-   o  type: str
-   o  len:  4
-   o  repr: 'true'
+(C1b) Conclusion: Data Objects NOT Handled by the Serializer(s)
 
-o  'marshal' x 'bool/false' [0x9eba9]
-   o  type: bytes
-   o  len:  1
-   o  repr: b'F'
+Iaswn: According to the tests carried out on all data, there's no data object among the 29 used data objects that serializer Iaswn can't handle (0%).
+json: According to the tests carried out on all data, there's no data object among the 29 used data objects that serializer json can't handle (0%).
+marshal: According to the tests carried out on all data, there's no data object among the 29 used data objects that serializer marshal can't handle (0%).
+pickle: According to the tests carried out on all data, there's no data object among the 29 used data objects that serializer pickle can't handle (0%).
 
-o  'marshal' x 'bool/true' [0xeded7]
-   o  type: bytes
-   o  len:  1
-   o  repr: b'T'
+(C2a) Conclusion: Serializers (Not Sorted)
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃ Serializer                ┃ Σ Encoded Str.   ┃ Σ Encod.+Decod.  ┃ Reversibility    ┃ Memory       ┃
+┃                           ┃ Length           ┃ Time (seconds)   ┃ (Coverage Rate)  ┃              ┃
+┃                           ┃ (characters)     ┃                  ┃ (Max=29)         ┃              ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ -                         │ -                │ -                │ -                │              │
+│ Iaswn                     │ 9460             │ 0.000850         │ 29 (100.00%)     │ 0 byte       │
+│ json                      │ 9483             │ 0.000399         │ 29 (100.00%)     │ 0 byte       │
+│ marshal                   │ 394              │ 0.000072         │ 28 (96.55%)      │ 0 byte       │
+│ pickle                    │ 9637             │ 0.000130         │ 29 (100.00%)     │ 0 byte       │
+└───────────────────────────┴──────────────────┴──────────────────┴──────────────────┴──────────────┘
 
-o  'pickle' x 'bool/false' [0xa2d97]
-   o  type: bytes
-   o  len:  4
-   o  repr: b'\x80\x04\x89.'
+(C2b) Conclusion: Overall Score Based on 4 Comparisons Points (Σ Encoded Str. Length/Σ Encod.+Decod. Time/Coverage Rate/Σ memory)
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Serializer                ┃ Overall Score ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ -                         │ -             │
+│ Iaswn                     │ 11            │
+│ json                      │ 9             │
+│ marshal                   │ 14            │
+│ pickle                    │ 6             │
+└───────────────────────────┴───────────────┘
 
-o  'pickle' x 'bool/true' [0x17a29]
-   o  type: bytes
-   o  len:  4
-   o  repr: b'\x80\x04\x88.'
+(C2c) Conclusion
+According to the tests carried out on all data, marshal is the quickest to encode/decode, marshal produces the shortest strings, marshal has the best coverage and all serializers are equal when it comes to 
+memory consumption. marshal is ranked #1 among 4 serializers, according to the overall scores (¹).
+On the contrary, Iaswn is the slowest to encode/decode, pickle produces the longest strings, pickle - ex aequo with Iaswn and json - has the worst coverage and all serializers are equal when it comes to 
+memory consumption. pickle is ranked #4 among 4 serializers, according to the overall scores (¹).
+
+- notes -
+[¹] a rank based on 4 comparisons points: Σ encoded str./Σ encod.+decod. time/Coverage Rate/Σ memory
 
 ```
+
+![Slowness](report1.png)
+
+![Memory Usage](report2.png)
+
+![Encoded String Length](report3.png)
+
+![Coverage data (Reversibility)](report4.png)
 

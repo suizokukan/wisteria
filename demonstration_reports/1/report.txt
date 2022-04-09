@@ -1,7 +1,7 @@
 (WARNINGID010) Anomaly: too many absurd values detected in 'mem usage' series;'marshal' x 'str(long)'. 
 (A0) Command Line Arguments
 
-bin/wisteria --cmp="pickle" --report="create_demonstration_report" --filter="data:oktrans_only" --output="console;reportfile/w=demonstration_reports/1/report.txt" --exportreport="md=demonstration_report.md"
+bin/wisteria --cmp="pickle" --report="create_demonstration_report" --filter="data:oktrans_only" --output="reportfile/w=demonstration_reports/1/report.txt" --exportreport="md=demonstration_report.md"
 
 (B1b) Full Details: Serializers
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
@@ -9,12 +9,12 @@ bin/wisteria --cmp="pickle" --report="create_demonstration_report" --filter="dat
 ┃                              ┃ (Max=29)    ┃ Time        ┃ Str. Length   ┃ (Max=29)    ┃ Time        ┃ (Max=29)         ┃              ┃
 ┃                              ┃             ┃ (seconds)   ┃ (characters)  ┃             ┃ (seconds)   ┃                  ┃              ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
-│ Iaswn                        │ 29          │ 0.000442    │ 9460          │ 29          │ 0.000472    │ 29 (100.00%)     │ 0 byte       │
+│ Iaswn                        │ 29          │ 0.000452    │ 9460          │ 29          │ 0.000504    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ json                         │ 29          │ 0.000220    │ 9483          │ 29          │ 0.000193    │ 29 (100.00%)     │ 0 byte       │
+│ json                         │ 29          │ 0.000236    │ 9483          │ 29          │ 0.000215    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
-│ marshal                      │ 28 (96.55%) │ 0.000037    │ 394           │ 28 (96.55%) │ 0.000036    │ 28 (96.55%)      │ 0 byte       │
-│ pickle                       │ 29          │ 0.000072    │ 9637          │ 29          │ 0.000062    │ 29 (100.00%)     │ 0 byte       │
+│ marshal                      │ 28 (96.55%) │ 0.000041    │ 394           │ 28 (96.55%) │ 0.000040    │ 28 (96.55%)      │ 0 byte       │
+│ pickle                       │ 29          │ 0.000079    │ 9637          │ 29          │ 0.000069    │ 29 (100.00%)     │ 0 byte       │
 │                              │ (100.00%)   │             │               │ (100.00%)   │             │                  │              │
 └──────────────────────────────┴─────────────┴─────────────┴───────────────┴─────────────┴─────────────┴──────────────────┴──────────────┘
 
@@ -50,11 +50,11 @@ marshal: According to the tests carried out on all data, there's no data object 
 ┃                           ┃ Length           ┃ Time (seconds)   ┃ (Coverage Rate)  ┃              ┃
 ┃                           ┃ (characters)     ┃                  ┃ (Max=29)         ┃              ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
-│ pickle                    │ 9637             │ 0.000134         │ 29 (100.00%)     │ 0 byte       │
+│ pickle                    │ 9637             │ 0.000148         │ 29 (100.00%)     │ 0 byte       │
 │ -                         │ -                │ -                │ -                │              │
-│ Iaswn                     │ 9460             │ 0.000913         │ 29 (100.00%)     │ 0 byte       │
-│ json                      │ 9483             │ 0.000413         │ 29 (100.00%)     │ 0 byte       │
-│ marshal                   │ 394              │ 0.000074         │ 28 (96.55%)      │ 0 byte       │
+│ Iaswn                     │ 9460             │ 0.000956         │ 29 (100.00%)     │ 0 byte       │
+│ json                      │ 9483             │ 0.000450         │ 29 (100.00%)     │ 0 byte       │
+│ marshal                   │ 394              │ 0.000080         │ 28 (96.55%)      │ 0 byte       │
 └───────────────────────────┴──────────────────┴──────────────────┴──────────────────┴──────────────┘
 
 (C2b) Conclusion: Overall Score Based on 4 Comparisons Points (Σ Encoded Str. Length/Σ Encod.+Decod. Time/Coverage Rate/Σ memory)

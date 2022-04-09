@@ -55,6 +55,7 @@ es the shortest strings? Which one has the best coverage rate?
 You may have a look at some reports already computed by this script:
 
 * By example, how does pickle compare to his competitors? ?
+* How does pickle compare to json? ?
 * How to classify serializers' weaknesses and strengths? ?
 * Regarding the boolean values, what do the strings encoded by the different se
 rializers look like? ?
