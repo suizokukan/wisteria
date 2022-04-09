@@ -52,7 +52,7 @@ from wisteria.cwc.cwc_utils import is_this_an_appropriate_module_for_serializer
 from wisteria.filterstr import parse_filterstr
 from wisteria.helpmsg import help_cmdline_filter
 from wisteria.reprfmt import fmt_nounplural
-from wisteria.matplotgraphs import vbar2png_subdatagraphs
+from wisteria.matplotgraphs import vbar2png_dataqualitygraphs
 from wisteria.stats import remove_absurd_values
 
 
@@ -196,7 +196,7 @@ def average_raw_serializationresults(raw_results):
             # TODO
             #  verbosity=DETAILS+, expliciter ce qui suit ("About to create...")
             _filename = f'xyz__{serializer}__{data_object}.encodingtime.png'
-            vbar2png_subdatagraphs(
+            vbar2png_dataqualitygraphs(
                 _graphs_values__encoding_time,
                 f"{get_valid_filename(_filename)}",
                 "second(s)",
@@ -204,7 +204,7 @@ def average_raw_serializationresults(raw_results):
                 "'{0:.1f}'",
                 1)
             _filename = f'xyz__{serializer}__{data_object}.decodingtime.png'
-            vbar2png_subdatagraphs(
+            vbar2png_dataqualitygraphs(
                 _graphs_values__decoding_time,
                 f"{get_valid_filename(_filename)}",
                 "second(s)",
@@ -212,7 +212,7 @@ def average_raw_serializationresults(raw_results):
                 "'{0:.1f}'",
                 1)
             _filename = f'xyz__{serializer}__{data_object}.memusage.png'
-            vbar2png_subdatagraphs(
+            vbar2png_dataqualitygraphs(
                 _graphs_values__mem_usage,
                 f"{get_valid_filename(_filename)}",
                 "byte(s)",

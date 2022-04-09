@@ -187,12 +187,12 @@ def hbar2png_resultshall(results_hall_attribute,
     pyplot.savefig(filename)
 
 
-def vbar2png_subdatagraphs(values,
-                           filename,
-                           unit,
-                           title,
-                           fmtstring,
-                           value_coeff):
+def vbar2png_dataqualitygraphs(values,
+                               filename,
+                               unit,
+                               title,
+                               fmtstring,
+                               value_coeff):
     """
 TODO
     """

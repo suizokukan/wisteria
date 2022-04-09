@@ -81,6 +81,12 @@ What's next ?
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 - des images ont un texte en ordonnée illisible
 
+[DONE] task-391
+
+Fixed issue #55: 'subdatagraph' > 'dataqualitygraph'.
+
+    * Fixed issue #55: 'subdatagraph' > 'dataqualitygraph'.
+
 [DONE] task-390
 
 Fixed issue #54: demonstration reports' main file starts with the graphs.
