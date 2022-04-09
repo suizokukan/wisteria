@@ -1,3 +1,7 @@
+(A0) Command Line Arguments
+
+bin/wisteria --cfgfile="demonstration_reports/wisteria2.ini" --cmp="all(ini)" --report="titles;A0;B3" --output="reportfile/w=demonstration_reports/3/report.txt" --exportreport="md=demonstration_report.md"
+
 (B3) Encoded String for all Data Objects, for all Serializers
 o  'iaswn' x 'bool/false' [0x7015b]
    o  type: str

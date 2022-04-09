@@ -81,6 +81,21 @@ What's next ?
 - les fichiers xyz__ doivent avoir un nom et être placés dans le répertoire adéquat
 - des images ont un texte en ordonnée illisible
 
+[DONE] task-390
+
+Fixed issue #54: demonstration reports' main file starts with the graphs.
+
+    * Fixed issue #54: demonstration reports' main file starts with the graphs.
+    * updated demonstration reports
+    * create a new report shortcut in REPORT_SHORTCUTS, namely
+      'create_demonstration_report'
+    * updated create_demonstration_reports (now version 3):
+      in order to use the new report shortcut
+      'create_demonstration_report' and to place graphs at
+      the beginning of the report
+    * minor improvements in create_demonstration_reports.sh:
+      better messages, better version name
+
 [DONE] task-389
 
 Fixed issue #53: added A0 report section.

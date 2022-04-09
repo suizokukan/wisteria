@@ -245,6 +245,7 @@ REPORT_SHORTCUTS = {
     "laconic": "C;graphs;",
     "minimal": "C2c;graphs;",
     "none": "",
+    "create_demonstration_report": "graphs;titles;A0;B1b;C1a;C1b;C2a;C2b;C2c",
     }
 
 # value: None or rich.console.Console()
